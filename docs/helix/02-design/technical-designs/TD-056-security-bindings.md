@@ -2469,12 +2469,10 @@ Reject whitespace/control/non-ASCII host text before URL parsing and retain only
 
 ### Private current-query computation driver proposal — 2026-10-15
 
-Status: proposed host integration contract, not an implemented issuer or new UMF
-semantic API. Truss requested this proposal after inspecting its source: its real
-current-0.2 issuer/capture/materialization ABI is still absent. Implementation of
-the driver waits for that concrete DB-derived capture packet and current-Subject
-ABI. Weft's compiling `current_scalar.rs` consumer is a changing candidate,
-not a frozen native binding. This proposal preserves all original backend cases.
+Status: private computation child implemented below; native issuer/capture and
+guarded release integration remain unfinished. This section records the host
+contract, with the final concrete framing and lifecycle specified in the child
+implementation section. All original backend cases remain required.
 
 The trusted native host owns one private, long-lived Bun child with inherited
 private pipes. There is no public HTTP endpoint, listening server, selectable
@@ -2492,7 +2490,7 @@ interface OriginalSources {
   closure: Json;
   ontology: Json;
   associationBindings: Json;
-  extensionSelection?: readonly [{id: 'umf.actions'; version: '0.1.0'}];
+  extensionSelection: null | readonly [{id: 'umf.actions'; version: '0.1.0'}];
 }
 interface Initialize {
   kind: 'initialize';
@@ -2505,27 +2503,28 @@ The private child calls
 `compileCandidateCatalogProgram(sources.policy, sources.catalog,
 sources.closure, sources.ontology, sources.associationBindings,
 locallyIssuedExtensionClosure)` and retains the genuine returned JS object
-privately. If `extensionSelection` is present, the child first calls the original
+privately. If `extensionSelection` is non-null, the child first calls the original
 `createCandidateCoreExtensionClosure(selection)` factory and supplies its actual
 in-process result as `locallyIssuedExtensionClosure`. The current closed factory
-admits exactly `[{id:'umf.actions',version:'0.1.0'}]`; omitted selection means an
+admits exactly `[{id:'umf.actions',version:'0.1.0'}]`; null selection means an
 omitted sixth argument. Empty/extra/unknown selections refuse. This is explicit
 selection of installed original semantics, not downloading or inferring a package.
 The sixth argument is a WeakSet-issued opaque handle: a JSON object, copied report
 or serialized closure is not transportable and must never be imported.
 `associationBindings` maps directly to the compiler's semantic `bindings`
-argument; it is not Weft's physical values binding. The source envelope retains the explicit extension selection and installed
-original package/implementation fingerprints. An omitted selection stays omitted;
-no synthetic null/catalog/ontology/source transformation is inserted. Wrapper records are closed; source JSON is forwarded intact to the
+argument; it is not Weft's physical values binding. The source envelope requires
+the explicit nullable extension selection. Installed source/package fingerprints
+and runtime version are retained separately in the bundle manifest. No source
+transformation is inserted. Wrapper records are closed; source JSON is forwarded intact to the
 existing validators, including unknown extension data. Unsupported meaning
 refuses through those validators. One process retains one exact compiled source
 set; a source replacement requires a fresh child under a new native-held
 initialization. Reinitialization/import into a live child and silent cache reuse
 are refused. Native source changes invalidate the current invocation. The private
 initialization reply is `{kind:'initialized', requestId, sourceReceipt}`;
-`sourceReceipt` reports exact captured source/implementation fingerprints and
-runtime version for correlation. Original source preimages and the original
-canonical JSON helper define correspondence; no new identity algorithm is added.
+`sourceReceipt` is SHA256 of the exact initialization frame, header included,
+solely for correlation. Original source preimages and implementation provenance
+remain separately retained; a frame hash is not a semantic identity algorithm.
 A digest match does not prove DB origin, loading integrity or authority.
 
 Proposed evaluation records contain the existing callable inputs verbatim:
@@ -2649,29 +2648,20 @@ release anything until the full expected response set is received and admitted.
 No raw cut, hidden fact key/count or diagnostic detail is sent to the ordinary
 caller. These private results are not a new public read interface.
 
-Resource accounting is an explicit unresolved composition requirement. The batch
-has one shared work/text/literal ledger. Existing standalone route calls each
-have their own ledger; using the same immutable cut does not make those ledgers
-shared. Each route helper itself first runs a source inspector with a separate
-ProtectionLiteralBudget and then a read-rule scan with an operation/literal
-ledger; retained plan/frame bounds are separate too. Reserve all actual internal
-stages/maxima, not a single literal allowance per route. The native profile must specify and test a conservative whole-query
-allocation or an actual shared accounting integration before claiming an
-aggregate bound. It must also bound source/request/response bytes, operation and
-route counts, in-flight calls, compiler work, process lifetime and native staging.
-Do not silently reset budgets per use, alter data/completeness declarations to
-fit a limit, or treat a deadline as a proof of memory/work bounds. Exact launch
-limits and accounting are pending the native capture ABI. Weft requests reserved
-per-call work/fact/text/output quotas whose sum fits the query budget. Copies may
-lower only operational bounds under that explicit reservation; all source,
-subject, facts, generations, coverage, values and original tokens remain exactly
-unchanged. The host must record and verify any such lower operational bounds,
-never silently modify the captured request. Existing fixed literal/text caps
-cannot be made caller-configurable by this protocol: conservatively reserve their
-actual maxima, reject an allocation that does not fit, or prove a stricter
-qualified composition. A post-hoc serialized-length check alone is not a work,
-transient-memory or retained-identity budget proof. This decision is open, not an
-implemented whole-query bound.
+The implemented private-child profile uses practical bounded input/output and a
+native-parent deadline; it makes no aggregate work or heap guarantee. Original
+batch work/text/literal accounting remains shared and unchanged. Each standalone
+route call retains its original independent inspector and runtime ledgers; those
+are not a whole-query ledger. The profile permits at most 256 operations, including
+16 scans and 16 read-rules operations separately (32 combined), 4096 selected
+Fields, 4096 routes with 16 distinct scan labels, and 10000 facts plus graphs.
+Request/response payload limits are 4/16 MiB. Original parser/helper limits may
+refuse earlier. The parent enforces one shared deadline and owns process cleanup,
+native staging and guarded release. A deadline is not a proof of aggregate work,
+allocation or memory bounds. No custom tracing, metrics or allocation meter is
+introduced; any future aggregate guarantee requires separate implementation and
+evidence. Source, Subject, coverage and value semantics cannot be changed to fit
+a bound. This practical profile does not narrow the original acceptance cases.
 
 Native-host sequence remains: hold authentic source/caller/Subject/current guard;
 capture original source and complete fact cut; compile/compute; verify every
@@ -2685,13 +2675,13 @@ native-host responsibilities. No component receipt substitutes for that sequence
 Open integration inputs: Truss's DB-derived original source and fact-capture
 records; actual authenticated current-Subject and guard ownership ABI; native
 per-use relation/OID/ACL/type/encoding/collation checks; actual source and result
-lineage; exact launch limits and aggregate accounting; final frozen Weft binding;
+lineage; native staging limits; final frozen Weft binding;
 private-pipe framing/cancellation and no-replay behavior. Proposed transport
 rules admit one in-flight evaluation, unique bounded request/route IDs, exact
 response correlation and original route order. Duplicate, unsolicited, late,
 truncated, reordered or wrong-source replies invalidate the child/invocation;
 there is no automatic re-execution or retry after uncertain native effects.
-The final frame/byte-limit representation remains pending the native ABI. These are not inferred
+The implemented frame/byte limits are specified below. These are not inferred
 from the candidate physical binding's JSON hashes. Raw tables and graph tables
 use the same semantic callable shapes, while their native capture and physical
 mapping remain separately qualified. Delta/Ashlar also retain separate native
@@ -2702,3 +2692,24 @@ Preimplementation callable witnesses are retained in [the proposal packet](../..
 ### Independent current-source native scalar edges — 2026-10-15
 
 Independent conditional PG18.6 execution now passes17 UTF8/signed64/operator edge cases and4 exact pre-execution refusals through the actual retained current-query object. COUNT logical meaning stays separate from its native bounded text codec. Authored stage eligibility/modes/scopes remain assumptions; current source/caller/Subject capture, private result/contributor sidebands and guarded release are still absent. This does not qualify B08/P03 or a backend profile. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).
+
+### Private computation child implementation — 2026-10-15
+
+The private Bun child now implements original source compilation, route inspection
+and atomic batch plus route evaluation through the actual Truss Python pipe.
+The final ABI uses big-endian uint32 framing and nested `initialize.sources` with
+all six closed fields. `extensionSelection` is null or exactly the local actions
+0.1.0 selection; the original factory issues the opaque handle. `sourceReceipt`
+is SHA256 of the exact initialization header plus payload, solely correlation.
+Each child accepts exactly initialize, inspect-routes, evaluate, with unique
+bounded request IDs and identical owner/ordered routes. Failure is terminal;
+original semantic refusals remain untouched private results. No database
+credentials, public server, native issuer or guarded release is added.
+
+The builder discovers the original dependency closure, pins before the actual
+build, verifies the same closure and post-build pins, and retains original
+third-party license notices. Independent Astra controls and real pipe tests are
+retained in [the child packet](../../04-build/evidence/security/current-query-child-20261015/README.md).
+Native current-Subject/fact capture, primary-action correspondence, typed Weft
+contributor lineage and held-context release remain required integration work.
+No backend acceptance case is promoted.

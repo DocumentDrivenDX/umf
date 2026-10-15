@@ -1,0 +1,14 @@
+from pathlib import Path
+import hashlib,struct,json,importlib.util
+path='/private/tmp/truss-main-integration-20261010/packages/python/src/truss/_current_query_pipe.py';spec=importlib.util.spec_from_file_location('original_current_pipe',path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+f=json.loads(Path('/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/query-value-modes-source.json').read_text());ref=lambda e:{'documentId':'domain','moduleId':'m','elementId':e};dumps=lambda v:json.dumps(v,separators=(',',':')).encode()
+sources={'policy':f['policy'],'catalog':f['catalog'],'closure':f['closure'],'ontology':f['ontology'],'associationBindings':[],'extensionSelection':None};initial=dumps({'kind':'initialize','requestId':'init','sources':sources});receipt=hashlib.sha256(struct.pack('>I',len(initial))+initial).hexdigest();routes=[{'id':'predicate','use':{'scan':'s0','path':'filters/0/left','type':ref('Resource'),'field':ref('salary'),'operator':'predicate','operation':'equal','required':['equality']}}]
+pipe=module.CurrentQueryPipe(('/opt/homebrew/bin/bun','/private/tmp/umf-current-query-child-bundle-20261015-r3/current-query-child.mjs'),timeout_seconds=10)
+try:
+ a=json.loads(pipe.exchange(initial,source_receipt=receipt));assert a=={'kind':'initialized','requestId':'init','sourceReceipt':receipt}
+ b=json.loads(pipe.exchange(dumps({'kind':'inspect-routes','requestId':'inspect','sourceReceipt':receipt,'owner':f['owner'],'routes':routes}),source_receipt=receipt));assert b['kind']=='routes-inspected' and b['routeResults'][0]['result']['status']=='inspected'
+ operations=[{'id':'rules','kind':'read-rules','selection':{'type':ref('Resource')}},{'id':'cells','kind':'scan','selection':{'type':ref('Resource'),'fields':[ref('salary')]}},{'id':'original','kind':'action','request':{'action':'query-original-salary-predicate','resources':[{'type':ref('Resource'),'key':[{'string':'r1'}]}],'targets':[ref('Resource')],'fields':[]}}]
+ c=json.loads(pipe.exchange(dumps({'kind':'evaluate','requestId':'evaluate','sourceReceipt':receipt,'owner':f['owner'],'cut':f['logicalCut'],'operations':operations,'routes':routes}),source_receipt=receipt));assert c['kind']=='evaluation' and c['batch']['status']=='completed' and c['routeResults'][0]['result']['status']=='evaluated';assert c['batch']['authority'] is False
+finally:pipe.close()
+assert pipe._child.poll() is not None and pipe._cleanup_complete
+Path('/private/tmp/current-query-child-python-smoke.json').write_text(json.dumps({'scope':'Actual private Python pipe to original Bun semantic child only; no DB/native issuer or protected release','sourceReceipt':receipt,'responses':[a,b,c],'childCleanupComplete':True},indent=2)+'\n');print('Original Python pipe and semantic child: initialize/inspect/evaluate passed; child closed')

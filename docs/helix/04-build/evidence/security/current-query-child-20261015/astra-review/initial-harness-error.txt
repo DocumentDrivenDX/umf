@@ -1,0 +1,1 @@
+First independent pipe run emitted full three-call output; reviewer assertion mistakenly indexed collection rows as row.cells and assumed another fixture constant 0. Actual original fixture declares [private]. Corrected only adapter row shape and authored fixture expectation; not a product defect.

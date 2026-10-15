@@ -12270,3 +12270,13 @@ remain required and the retained gate stays 45 accepted / 113 unimplemented.
 ### Independent current-source native scalar edges — 2026-10-15
 
 Astra-reviewed independent current-query edge evidence passes17 native SQL cases and4 exact prepare refusals; all harness findings are fixed and final owned container/volumes are absent. No backend case is promoted. Truss has now supplied its concrete private-pipe/child handoff; the next implementation is the original UMF Bun child against that contract, followed by real native capture and typed-result lineage integration. See the [retained packet](evidence/security/current-scalar-native-edges-20261015/README.md).
+
+### Private computation child implementation — 2026-10-15
+
+Original UMF source compilation/inspection/evaluation now runs through a bounded
+private Bun child and the actual Truss Python pipe. The reviewed builder retains
+source closure pins and original dependency notices. Practical wire/count limits
+and parent deadline do not claim aggregate heap/work guarantees. Native Subject,
+fact capture, typed compiler lineage and guarded release remain next. No backend
+case is promoted: 45/158 accepted, 113 unimplemented, all original cases required.
+See [retained evidence](evidence/security/current-query-child-20261015/README.md).

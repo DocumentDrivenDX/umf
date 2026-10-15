@@ -1865,8 +1865,9 @@ Independently retain one live native observation outcome using configured profil
 
 ### Private computation-driver integration acceptance — 2026-10-15
 
-The proposed TD-056 private driver is not implemented. Truss must first supply
-its concrete DB-derived capture/current-Subject ABI. Preserve original B08/B12
+The TD-056 private computation child is implemented and tested through the actual
+Truss Python pipe. Native DB-derived current-Subject/fact capture and release
+integration remain unfinished. Preserve original B08/B12
 and lifecycle assertions; component tests cannot promote them.
 
 | Required check | Acceptance link | Evidence needed before native admission |
@@ -1877,7 +1878,7 @@ and lifecycle assertions; component tests cannot promote them.
 | Source-derived provisional modes, independent of the mode-free Weft operand ledger | US-056-AC6/AC7 | Original inspector/base constraint drives the scan union; actual selected routes must agree; hidden-original-only Fields never require unselected public rendering |
 | Original read cells, eligible row identity/order and route/action association | US-056-AC6 | Actual Weft occurrences, full population before filters/LIMIT, typed cell/Key correspondence, wrong/unknown/missing action and mixed-domain controls |
 | Empty population dependencies | US-056-AC6/AC7 | No shortcut around original scoped rule/action/source validation, including field-free COUNT |
-| Aggregate work/text/literal and process/staging limits | US-056-AC7 | Whole-query boundary and one-over controls; multiple independent per-use ledgers alone are insufficient |
+| Practical input/output, deadline and process/staging limits | US-056-AC7 | Exact profile boundaries and failure cleanup; original batch ledger unchanged; independent route ledgers do not establish aggregate work or heap bounds |
 | Untouched refusal/unknown/absence/null/literal transport | US-056-AC6/AC10 | Byte/token and typed identity checks; no denial-to-empty or unknown-to-permit normalization |
 | Child loss, malformed/truncated/duplicate/reordered/late reply and replay | US-056-AC7/AC10 | No private staging consumption or ordinary output from incomplete/mismatched replies; next operation freshly admitted |
 | Authentic held context through SQL/decode/release and revocation | US-057-AC1/AC2/AC3/AC7 | Native concurrent schedules, actual driver/role identity, guard/capture/release and failure evidence |
@@ -1890,3 +1891,24 @@ No row is passed by this table; all named missing tests remain required.
 ### Independent current-source native scalar edges — 2026-10-15
 
 The finite physical oracle passes17 actual current-query SQL cases and4 original-boundary refusals on PostgreSQL18.6. Require exact code/stage for negative inputs, original text/OID/domain checks, negative SQL sensitivity and owned container/volume absence. These conditional stage-value cases do not replace native action/issuer/sideband/release acceptance. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).
+
+### Private computation child implementation — 2026-10-15
+
+The private Bun child now implements original source compilation, route inspection
+and atomic batch plus route evaluation through the actual Truss Python pipe.
+The final ABI uses big-endian uint32 framing and nested `initialize.sources` with
+all six closed fields. `extensionSelection` is null or exactly the local actions
+0.1.0 selection; the original factory issues the opaque handle. `sourceReceipt`
+is SHA256 of the exact initialization header plus payload, solely correlation.
+Each child accepts exactly initialize, inspect-routes, evaluate, with unique
+bounded request IDs and identical owner/ordered routes. Failure is terminal;
+original semantic refusals remain untouched private results. No database
+credentials, public server, native issuer or guarded release is added.
+
+The builder discovers the original dependency closure, pins before the actual
+build, verifies the same closure and post-build pins, and retains original
+third-party license notices. Independent Astra controls and real pipe tests are
+retained in [the child packet](../../04-build/evidence/security/current-query-child-20261015/README.md).
+Native current-Subject/fact capture, primary-action correspondence, typed Weft
+contributor lineage and held-context release remain required integration work.
+No backend acceptance case is promoted.

@@ -1,0 +1,277 @@
+{
+  "sourceBefore": {
+    "tools/security/current-query-child.ts": "79319a4640ae1543aba683040180f4d7e6eeb9cb8686251ac8795cd5b1ce8c9d",
+    "tools/security/current-query-child-main.ts": "e6e52c7f0e16f54e577898e63150759d5b72304868ab8375e4312b52374fd9a3",
+    "tests/security/protection/query-value-modes-source.json": "2f826621bd3187857f1b4fbab5d9c818891b0df96d55d6a1d379638906e2ebda"
+  },
+  "sourceAfter": {
+    "tools/security/current-query-child.ts": "79319a4640ae1543aba683040180f4d7e6eeb9cb8686251ac8795cd5b1ce8c9d",
+    "tools/security/current-query-child-main.ts": "e6e52c7f0e16f54e577898e63150759d5b72304868ab8375e4312b52374fd9a3",
+    "tests/security/protection/query-value-modes-source.json": "2f826621bd3187857f1b4fbab5d9c818891b0df96d55d6a1d379638906e2ebda"
+  },
+  "sourceUnchanged": true,
+  "controls": [
+    {
+      "name": "three-call",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "evaluation"
+      ],
+      "bytes": 12160,
+      "seconds": 0.472652833
+    },
+    {
+      "name": "wrong-receipt",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.49319995799999994
+    },
+    {
+      "name": "changed-owner",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.462895917
+    },
+    {
+      "name": "changed-route",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.5482989999999999
+    },
+    {
+      "name": "duplicate-id",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5711,
+      "seconds": 0.48977841600000005
+    },
+    {
+      "name": "extra-member",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.5313153750000001
+    },
+    {
+      "name": "too-many-operations",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.5097344580000001
+    },
+    {
+      "name": "too-many-facts",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.5521662920000003
+    },
+    {
+      "name": "too-many-scans",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.4895620000000003
+    },
+    {
+      "name": "too-many-read-rules",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "refused"
+      ],
+      "bytes": 5712,
+      "seconds": 0.5204615829999995
+    },
+    {
+      "name": "skip-inspection",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "refused"
+      ],
+      "bytes": 289,
+      "seconds": 0.45345141699999925
+    },
+    {
+      "name": "post-evaluation",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "evaluation"
+      ],
+      "bytes": 12160,
+      "seconds": 0.4776294160000001
+    },
+    {
+      "name": "post-refusal",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [
+        "initialized",
+        "refused"
+      ],
+      "bytes": 289,
+      "seconds": 0.45340925
+    },
+    {
+      "name": "truncated-header",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [],
+      "bytes": 0,
+      "seconds": 0.37952429100000007
+    },
+    {
+      "name": "truncated-body",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [],
+      "bytes": 0,
+      "seconds": 0.39754362499999996
+    },
+    {
+      "name": "oversized-header",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [],
+      "bytes": 0,
+      "seconds": 0.3528047910000005
+    },
+    {
+      "name": "zero-header",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [],
+      "bytes": 0,
+      "seconds": 0.3920454580000001
+    },
+    {
+      "name": "invalid-utf8",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [],
+      "bytes": 0,
+      "seconds": 0.36763158299999965
+    },
+    {
+      "name": "duplicate-json-key",
+      "passed": true,
+      "exit": 2,
+      "stderr": "UMF_QUERY_CHILD_REFUSED\n",
+      "responseKinds": [],
+      "bytes": 0,
+      "seconds": 0.39643275000000067
+    },
+    {
+      "name": "stale-cut",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "evaluation"
+      ],
+      "bytes": 5885,
+      "seconds": 0.46607525000000116
+    },
+    {
+      "name": "empty-routes",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "evaluation"
+      ],
+      "bytes": 1306,
+      "seconds": 0.4871597919999999
+    },
+    {
+      "name": "mixed-32-scans-observation",
+      "passed": true,
+      "exit": 0,
+      "stderr": "",
+      "responseKinds": [
+        "initialized",
+        "routes-inspected",
+        "evaluation"
+      ],
+      "bytes": 7356,
+      "seconds": 0.5385359590000007
+    }
+  ],
+  "mixed32BatchStatus": "completed",
+  "nativeOrCloudCalls": false
+}
