@@ -53,3 +53,23 @@ uses the same captured archive, with final endpoint checks retained. An interim
 Python helper-name collision was fixed before the nine-case replay passed.
 Runtime executable/pipe path endpoint checks are not a hermetic filesystem or
 ABA theorem.
+
+## Final exact computation cohort
+
+Source commit0138bde3363c065017042b25ec16a3268be7cfaa; Bun1.4.2.
+Bundle SHA25653985fd1646df409fbd748db39b15cbb8dc0ce95442c35ad508c166c51fe7135.
+Manifest SHA2568cd232bff0b8ab2f0c8a495b05707c735fe9e5e59ba3044d71fb4cee07c9d712.
+251bundle inputs,254source pins and five original dependency notice packages.
+Final selected source pins match after replay; actual final nine-case exact oracle
+passes. The original r3 three source files have no diff from579675bd.
+
+- [Explicit computation cohort](computation-cohort.json)
+- [Final original bundle, manifest and dependency notices](original-bundle.zip)
+- [Selected reviewed sources](reviewed-source.zip)
+- [Final actual packet/pipe/bundle replay](final-interop.json)
+- [Final source/test verification](build-verification.json)
+- [Governed artifact validation](helix-validation.json)
+
+The seven governed artifacts validate with the existing global implementation-plan
+two blockers/twelve warnings unchanged. This evidence changes neither native
+case acceptance nor the qualified scope of existing formal proofs.

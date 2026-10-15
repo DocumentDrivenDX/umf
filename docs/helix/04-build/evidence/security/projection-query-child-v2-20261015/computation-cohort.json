@@ -1,0 +1,68 @@
+{
+  "id": "umf.original-read-projection-child/0.2-candidate",
+  "protocol": "umf.security.private-query-child/0.2-candidate",
+  "sourceCommit": "0138bde3363c065017042b25ec16a3268be7cfaa",
+  "sourceBranch": "codex/security-main-integration",
+  "bun": "1.4.2",
+  "bundleFile": "projection-query-child-v2.mjs",
+  "bundleSha256": "53985fd1646df409fbd748db39b15cbb8dc0ce95442c35ad508c166c51fe7135",
+  "manifestSha256": "8cd232bff0b8ab2f0c8a495b05707c735fe9e5e59ba3044d71fb4cee07c9d712",
+  "retainedArchiveSha256": "423e6ebc8ab741950dbe98a6634d3862f671af3158b0656a245c109119610303",
+  "sourcePinCount": 254,
+  "dependencyNoticePackages": [
+    {
+      "name": "ajv",
+      "version": "8.20.0",
+      "license": "MIT",
+      "files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "license": "MIT",
+      "files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "fast-uri",
+      "version": "3.1.8",
+      "license": "BSD-3-Clause",
+      "files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "license": "MIT",
+      "files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "yaml",
+      "version": "2.9.1",
+      "license": "ISC",
+      "files": [
+        "LICENSE"
+      ]
+    }
+  ],
+  "capabilities": [
+    "operator-free-read-projection"
+  ],
+  "authority": false,
+  "nativeAdmission": false,
+  "securityReady": false,
+  "oldCohort": {
+    "sourceCommit": "579675bdad79c349b06e25979108f8ac1bb7f7e0",
+    "bundleSha256": "36e2c63fb0d942c9b94141f1753bcd9b56aad9e32dec5aa1a9ee27aabc674248",
+    "unchanged": true,
+    "registrationMigration": false
+  },
+  "consumerAdoption": "Explicit native consumer/source/profile binding required; new protocol changes full initialization frame receipt. Existing r3 registrations do not admit this cohort.",
+  "custodyScope": "Exact selected source pins and closure before/after actual build; not hermetic build, ABA, executable runtime attestation or native authority"
+}
