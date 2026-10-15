@@ -1968,3 +1968,15 @@ occurrence/action/projection checks, exact typed staging/contributor bags and
 current guard/revocation/release remain required, as do raw/graph and other
 backend/principal cases. Acceptance stays 45/158 accepted, 113 unimplemented.
 See [the original replay packet](../../04-build/evidence/security/truss-current-facts-replay-20261015/README.md).
+
+### Public guarded-query replay and alternate-read gap — 2026-10-15
+
+Original Truss9a495 public workflow passes with ordinary Subject, registered
+source, exact original child/CQP, masked projection, signed64 predicate, public
+budgets and final two-host checks. Independent native probing also confirms
+granted query_objects returns both permitted and denied raw Resource values
+to that ordinary actor. Registration is not global protected-source activation.
+CONTRACT-063 / US-056-AC5 remains unmet until alternate native/public reads are
+closed or equivalently guarded; raw-table SELECT denial alone is insufficient.
+No backend case promoted; 45/158 accepted,113 unimplemented unchanged.
+See [original replay, Astra review and exact reproduction](../../04-build/evidence/security/truss-current-query-replay-20261015/README.md).
