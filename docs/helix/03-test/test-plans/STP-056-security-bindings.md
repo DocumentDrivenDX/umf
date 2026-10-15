@@ -1954,3 +1954,17 @@ revocation/source changes. No backend acceptance case is promoted by this source
 The corpus also renders salary to verify the independent read mask. A SUM-only
 query does not select that public Cell and must not require unselected rendering;
 its hidden original operand still requires exact read/action/presence admission.
+
+### Independent native fact-to-child component replay — 2026-10-15
+
+Original Truss37511eb8 tests pass from an isolated 1,124-file tracked snapshot on
+PG18.6: native six-object/five-type capture, original UMF Key receipts, original
+child, exact r1permit/r2deny and integerToken9007199254740993. Both original tests
+and owned runtime/PID/directory cleanup pass. This contributes component evidence
+to US-056-AC2/AC6/AC7; it closes no native query case. Installer capture and
+diagnostic owner/cut with a separately observed ordinary Subject do not prove
+authenticated same-held-context admission. Registered owner/Weft binding, original
+occurrence/action/projection checks, exact typed staging/contributor bags and
+current guard/revocation/release remain required, as do raw/graph and other
+backend/principal cases. Acceptance stays 45/158 accepted, 113 unimplemented.
+See [the original replay packet](../../04-build/evidence/security/truss-current-facts-replay-20261015/README.md).
