@@ -2,7 +2,7 @@
 import {copyJson} from '../../model/json';
 import {encodeCoreKeyTupleBody,type CoreKeyTupleValue} from '../../model/key-tuple';
 import {canonicalSchemaJson,type CoreLiteral} from '../../model/schema-literals';
-import {ProtectionLiteralBudget} from './protection/literals';
+import {CandidateSecurityOperationBudget} from './operation-budget-candidate';
 import {GREGORIAN_DATE_PROFILE,parseGregorianDate} from '../../adapters/gregorian-date';
 import {securityAnd,securityOr,securityNot,type SecurityTruth,type SecurityDecision} from './logic';
 import {evaluateIssuedProtectionDefinition} from './protection/functions';
@@ -26,7 +26,7 @@ export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
-function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean):CandidateCatalogActionResult|CandidateCatalogCollectionResult{
+function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget):CandidateCatalogActionResult|CandidateCatalogCollectionResult{
  const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut,request}=packet;
  shape(owner,['version','id','revision','storage'],['disclosure']);shape(cut,['version','trusted','generation','expectedGeneration','policy','ontology','protection','domains','owner','subject','facts','graphs','coverage','graphCoverage','context','valueProfiles','maxFacts','maxSteps']);shape(request,['action','resources','targets','fields']);
  if(owner.version!=='umf.security.logical-owner/0.1'||cut.version!=='umf.security.logical-facts/0.1'||cut.trusted!==true||typeof cut.generation!=='string'||!cut.generation||cut.generation!==cut.expectedGeneration||typeof owner.id!=='string'||!owner.id||typeof owner.revision!=='string'||!owner.revision)fail('Unadmitted logical cut');
@@ -35,8 +35,8 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  if(program.catalog)pin(cut.protection,program.catalog,['id','revision']);else if(cut.protection!==null)fail('Unpinned protection');
  const domains=new Map(program.closure.pins.map((p:any)=>[p.documentId,p.revision]));for(const p of list(cut.domains,256)){shape(p,['documentId','revision']);if(domains.get(p.documentId)!==p.revision)fail('Core pin mismatch');domains.delete(p.documentId);}if(domains.size)fail('Missing core pin');
  if(!Number.isSafeInteger(cut.maxFacts)||cut.maxFacts<1||cut.maxFacts>10000||!Number.isSafeInteger(cut.maxSteps)||cut.maxSteps<1||cut.maxSteps>1000000)fail('Invalid operation limits');
- let steps=0,text=0;const step=(units=1)=>{steps+=units;if(steps>cut.maxSteps)fail('Operation steps exhausted');};
- const scan=[packet];while(scan.length){step();const x=scan.pop();if(typeof x==='string')text+=x.length;else if(x&&typeof x==='object')for(const [key,value] of Object.entries(x)){text+=key.length;scan.push(value);}if(text>4_000_000)fail('Operation text exhausted');}
+ const ledger=operation??new CandidateSecurityOperationBudget(cut.maxSteps);ledger.constrain(cut.maxSteps);const step=(units=1)=>ledger.step(units);
+ const scan=[packet];while(scan.length){step();const x=scan.pop();if(typeof x==='string')ledger.snapshotText(x.length);else if(x&&typeof x==='object')for(const [key,value] of Object.entries(x)){ledger.snapshotText(key.length);scan.push(value);}}
  list(cut.facts,cut.maxFacts);list(cut.graphs,cut.maxFacts);list(request.resources,cut.maxFacts);if(cut.facts.length+cut.graphs.length+request.resources.length>cut.maxFacts)fail('Aggregate facts exhausted');
  list(cut.coverage,256);list(cut.graphCoverage,256);list(cut.context,256);list(cut.valueProfiles,4096);list(owner.storage,4096);list(request.targets,256);list(request.fields,4096);
  const ontology=program.ontology.ontology,entities=new Map<string,any>(ontology.entities.map((e:any)=>[id(e.type),e])),documents=new Map<string,any>(program.closure.documents.map((e:any)=>[e.document.id,e.document]));
@@ -48,7 +48,7 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  const member=(type:any,name:string)=>memberships.get(id(type))?.get(name);
  const field=(r:any)=>fields.get(ref(r))??fail('Missing source Field'),entity=(r:any)=>entities.get(ref(r))??fail('Missing source entity');
  const profiles=new Map<string,string>();for(const p of cut.valueProfiles){shape(p,['field','profile']);const key=ref(p.field),f=field(p.field).field;if(profiles.has(key)||p.profile!==GREGORIAN_DATE_PROFILE||f.scalarType!=='date'||f.cardinality!=='one'||!['required','absent-allowed'].includes(f.nullability)||f.itemType!==undefined||f.references?.length||Object.keys(f.facets??{}).length||Object.hasOwn(f,'allowedValues')||Object.hasOwn(f,'default'))fail('Unsupported value profile');profiles.set(key,p.profile);}
- const budget=new ProtectionLiteralBudget();
+ const budget=ledger.literal;
  const literal=(r:any,v:any):string=>{step();const selected=field(r),f=selected.field;if(f.cardinality!=='one'||f.itemType!==undefined||f.references?.some((r:any)=>r.role==='record-type'))fail('Unsupported logical literal');
   if(f.scalarType==='date'){
    if(profiles.get(id(r))!==GREGORIAN_DATE_PROFILE)fail('Explicit Gregorian profile required');budget.step();if(v===null){if(f.nullability!=='absent-allowed')fail('Required date null');return 'null';}shape(v,['date']);if(typeof v.date!=='string')fail('Date literal');parseGregorianDate(v.date);return budget.retain('date:'+v.date);
@@ -181,4 +181,9 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   }output.push(cells);
  }
  const valueProfiles=[...outputProfiles.values()];retainOutput(valueProfiles);return freeze({status:'rendered',complete:false,authority:false,rows:output,valueProfiles});
+}
+
+/** Internal multi-action composition only. The public entry always creates its own ledger. */
+export function evaluateCandidateCatalogActionWithinOperation(handle:unknown,owner:unknown,cut:unknown,request:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogActionResult {
+ try{return run(handle,owner,cut,request,false,operation) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }

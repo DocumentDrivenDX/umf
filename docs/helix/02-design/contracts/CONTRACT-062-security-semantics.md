@@ -1317,3 +1317,63 @@ Field/profile in `valueProfiles`; absent/withheld Cells assert no date value.
 Failure clears both rows and valueProfiles. Full S24/S25 write/read/blind/vault
 behavior, query-use lineage, native owner/current-authority profiles and all
 remaining backend acceptance cases remain required.
+
+
+### Private catalog-aware logical transaction admission (2026-10-15)
+
+`evaluateCandidateCatalogWrite` accepts only an original issued catalog program,
+its exact owner, an owner-bound `umf.security.catalog-write/0.1` profile and a
+`umf.security.catalog-transaction/0.1` request. Results are logical decisions with
+`complete:false, authority:false`; they are never native credentials or effects
+receipts. The profile fixes per-type create/update/delete, exhaustive Field
+mutation actions, policy/ownership actions and Field sets, original-read action
+and explicit Field-to-blind-action bindings. Ordinary roles require compatible
+original source purposes. Blind actions require exactly field purpose and MUST
+be distinct from all ordinary/read roles across every type profile. Purpose
+classification never substitutes for an actual policy grant.
+
+The profile binds every original association source (record-members or core
+relationship), including unused sources, to immutable or owned mode. Owned mode
+fixes an owner type and exact endpoint role or Record witness anchor. Every
+changed Record, including raw m2m/graph witness Records, MUST have its own listed
+mutation and complete guard. No unchecked auxiliary ownership Record exception
+exists. Removed and added incidences each require the corresponding listed
+owner anchor in the appropriate state, ownership permission and policy permission
+when the original conditions depend on that association. Create/delete retains
+the conservative ownership check even when the relevant inventory is empty.
+
+Both cuts MUST provide complete typed inventories and all Fields as present or
+known absent, and complete independent graph role/witness-attribute coverage.
+Original nominal Keys and normalized scalar values determine Record identity and
+changes; null and absence remain distinct. The complete selected Subject fact,
+context, generation and Gregorian profile selections MUST remain comparable.
+Create requires absence/presence, delete presence/absence and update presence in
+both cuts; all actual Record deltas MUST be listed. A no-op update still needs
+its object action but invents no changed Field.
+
+Record associations compare witness Keys, projections and role-labelled endpoint
+Keys. Opaque graph associations compare endpoint multisets, retaining parallel
+counts; opaque IDs are deduplication handles within a cut, never cross-cut
+identity. An equal multiset proves only equal logical incidence population. It
+does not prove absence of physical delete/reinsert, statement intent, triggers
+or hidden effects; native implementations MUST establish their own effect closure.
+
+Every mutation requires its object action and every changed Field action, plus
+policy/ownership actions where applicable. For each changed Field and required
+state, an effective original disposition under an actually permitted read OR its
+explicitly bound and actually permitted blind action is mandatory. Mask-output
+value equality never supplies original authority. Create checks proposed, delete
+original and update both states. Every changed stored-transformed carrier also
+requires its selected transform to declare an exact vault-write-only action and
+that action to be granted in every required state. Reverse, original-read and
+unrelated vault actions cannot substitute; missing declaration refuses.
+
+One monotone operation ledger spans snapshot text, both cuts, typed comparisons,
+all action evaluations and original/blind/vault alternatives. It cannot reset or
+increase its limit. Exhaustion/structural failure is indeterminate with no effects.
+The request allows 1..256 unique mutations, 1..10000 total facts/graphs/mutations,
+1..1000000 steps and 4000000 snapshot key/string UTF-16 units; shared literal
+limits also apply. These are explicit operation ledgers, not a total CPU/heap
+bound. Finite independent S24/S25 evidence qualifies this private semantic guard;
+source authentication, query/compiler lineage, native enforcement and physical
+statement/effect custody remain separate required obligations.

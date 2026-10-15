@@ -1,0 +1,22 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/operation-budget-candidate.test.ts:
+3 | export class CandidateSecurityOperationBudget {
+4 |  readonly literal=new ProtectionLiteralBudget();
+5 |  private work=0;private text=0;private limit:number;
+6 |  constructor(maxSteps:number){this.limit=this.valid(maxSteps);}
+7 |  private valid(value:number){if(!Number.isSafeInteger(value)||value<1||value>1000000)throw Error('SECURITY_OPERATION_LIMIT');return value;}
+8 |  constrain(maxSteps:number){this.limit=Math.min(this.limit,this.valid(maxSteps));if(this.work>this.limit)throw Error('SECURITY_OPERATION_WORK');}
+                                                                                                                                                  ^
+error: SECURITY_OPERATION_WORK
+      at constrain (/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/operation-budget-candidate.ts:8:143)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/operation-budget-candidate.test.ts:10:295)
+(fail) multiple write-style action checks share one step allowance across both states [62.67ms]
+(pass) comparison literal charges cannot be reset by subsequent action checks [4.14ms]
+(pass) snapshot text is cumulative across action calls rather than independently admitted per state [4.35ms]
+(pass) invalid operation accounting and cap increases cannot manufacture a fresh allowance [0.09ms]
+
+ 3 pass
+ 1 fail
+ 18 expect() calls
+Ran 4 tests across 1 file. [291.00ms]

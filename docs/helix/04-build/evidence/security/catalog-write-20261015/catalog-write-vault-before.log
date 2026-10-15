@@ -1,0 +1,29 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/catalog-write.test.ts:
+(pass) catalog transaction guard checks actual normalized original/proposed flat and graph records [107.31ms]
+(pass) masked changes require exact per-Field blind designation and actual grant in every required state [21.47ms]
+(pass) all-state ordinary grants and original visibility remain independently necessary [12.29ms]
+(pass) every changed association Record receives its own Field protections [14.80ms]
+(pass) graph role deltas require the fixed owner anchor and its own ownership grant [27.88ms]
+(pass) opaque IDs never become cross-cut identity while endpoint multiplicity remains visible [10.32ms]
+(pass) complete comparison cuts, Subject/context/profiles and exact mutation inventory cannot be weakened [33.14ms]
+28 |  for(const change of changes){const f=catalogWriteFixture();change(f);expect(run(f)).toEqual({decision:'indeterminate',complete:false,authority:false});}
+29 | });
+30 | 
+31 | test('actual stored output-carrier changes require a present vault action and its grant in every required state',()=>{
+32 |  const f=storedWriteFixture();expect(run(f).decision).toBe('deny');f.policy.rules.push({id:'vault-permit',effect:'permit',actions:['vault-write'],target:[ref('Resource')],condition:{op:'literal',value:true}});expect(run(f).decision).toBe('permit');
+33 |  f.policy.rules.at(-1).condition={op:'eq',left:{kind:'resource',field:ref('token')},right:{kind:'constant',field:ref('token'),value:{string:'old-token'}}};expect(run(f).decision).toBe('deny');delete f.catalog.transforms[0].custody.vaultWriteAction;expect(run(f).decision).toBe('indeterminate');
+                                                                                                                                                                                                                                                                                     ^
+error: expect(received).toBe(expected)
+
+Expected: "indeterminate"
+Received: "permit"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/catalog-write.test.ts:33:273)
+(fail) actual stored output-carrier changes require a present vault action and its grant in every required state [48.58ms]
+
+ 7 pass
+ 1 fail
+ 36 expect() calls
+Ran 8 tests across 1 file. [506.00ms]

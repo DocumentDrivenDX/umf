@@ -491,3 +491,27 @@ publication. Arbitrary-row conditional laws assume faithful failure accounting
 and delayed publication; finite parity does not prove native or TS refinement.
 The original 158 cases, assertions, timeouts and commands remain unchanged.
 Component evidence cannot replace full S24/S25 or native backend evidence.
+
+
+### Catalog-aware write acceptance increment
+
+S24 and S25 retain their original assertions, criteria and timeouts. Their semantic
+contract/browser implementations must exercise the actual private catalog write
+guard against independently authored Python expected outcomes, regenerate fixture
+bytes freshly, pin the full source closure before/after execution and replay exact
+row parity in Bun and real Chromium without host globals or external requests.
+S24 includes changed Field mask-equality, original/null/absence, explicit per-Field
+blind bindings and actual grants, create/update/delete required states, no-op
+object grants, flat association Records, graph Record/opaque incidence changes,
+complete listing/coverage and fixed owner roles. S25 additionally covers missing,
+unrelated and exact declared vault-write actions, grants in all required states,
+and original stored carrier/output-domain semantics.
+
+Focused actual-source weakenings must detect loss of vault declaration/grant,
+original-or-bound-blind checks, state conjunction, complete mutation listing,
+Subject stability, association ownership or shared operation accounting. Preserve
+failed source preimages and development logs. Conditional formal proofs and finite
+browser parity qualify logical admission only: native statement/effect closure,
+opaque replacement intent, authentication/current authority, query/compiler lineage
+and remaining physical/backend acceptance cases retain their separate obligations.
+An accepted S24/S25 semantic receipt does not qualify any native backend profile.

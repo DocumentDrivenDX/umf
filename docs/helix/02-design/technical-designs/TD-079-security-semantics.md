@@ -586,3 +586,31 @@ See `tests/security/catalog-collection.test.ts` and the independently reviewed
 packet under `docs/helix/04-build/evidence/security/catalog-collection-20261015/`.
 No public vocabulary interpretation, native query admission, source authentication,
 write permission or full S24/S25 qualification follows from rendered status.
+
+
+### Catalog-aware multi-target transaction guard
+
+The private write guard composes the issued action kernel with complete original
+and proposed fact cuts. Its fixed owner profile covers every live Field and every
+original association. It first validates both cuts, compares original typed Keys
+and normalized projections, enforces complete mutation listing, then derives
+ordinary, policy, ownership, original-or-explicit-blind and exact vault actions.
+The same operation budget is passed through every action call; fresh per-call
+limits cannot multiply the transaction allowance. Subject/context/profile changes
+and incomplete inventories refuse before permission composition.
+
+Raw association Records and graph Record witnesses receive their own CRUD/Field
+guards in addition to ownership anchors. Opaque graph incidences use role-labelled
+endpoint multisets, preserving parallel counts while excluding cross-cut opaque
+IDs from identity. This deliberately leaves physical replacement/trigger intent
+to native effect closure. Empty declared owned inventories retain conservative
+create/delete ownership checks. Unchanged normalized Fields do not gain fictional
+Field deltas, but listed no-op updates retain mandatory object permission.
+
+The exact wire requirements and limits are governed by CONTRACT-062. Independent
+Python-authored expected outcomes execute the actual guard in Bun and Chromium
+for S24/S25. Conditional quantified laws model complete mutation listing, required
+states, original-or-blind admission, declared/granted vault actions, retargeted
+anchors, null/absence, multiset counts and monotone budgets. These assume faithful
+executable comparison and delayed effects; they do not establish TS/SQL refinement,
+crypto execution, authenticated source ownership or native current authority.

@@ -1,0 +1,135 @@
+{
+  "status": "conditional-multi-target-write-laws",
+  "z3": "4.15.4",
+  "scope": "Conditional arbitrary Record/Field/State logical obligations, multiset arithmetic, source-role separation and monotone budget laws. Assumes faithful source/type/Key/effect comparison, exhaustive mutation/owner profiles, complete comparable cuts and exact all-state grants. No TypeScript/SQL/native refinement, source authentication, crypto/vault execution, physical opaque replacement pairing, current native authority or total CPU/heap theorem.",
+  "queries": [
+    {
+      "id": "arbitrary-record-delta-closure",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort Record 0)\n(declare-fun admitted () Bool)\n(declare-fun listed (Record) Bool)\n(declare-fun r () Record)\n(declare-fun changed (Record) Bool)\n(assert (let ((a!1 (=> admitted (forall ((r Record)) (=> (changed r) (listed r))))))\n  (and admitted a!1 (changed r) (not (listed r)))))\n(model-add admitted () Bool true)\n",
+      "model": null,
+      "scope": "Assumes faithful typed comparison and exact mutation-selector listing; executable correspondence checked separately."
+    },
+    {
+      "id": "association-fields-cannot-bypass-read-or-blind",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort State 0)\n(declare-sort Field 0)\n(declare-sort Record 0)\n(declare-fun admitted () Bool)\n(declare-fun blind (Record Field State) Bool)\n(declare-fun s () State)\n(declare-fun f () Field)\n(declare-fun r () Record)\n(declare-fun original (Record Field State) Bool)\n(declare-fun affected (Record Field) Bool)\n(declare-fun required (Record State) Bool)\n(declare-fun vaultGranted (Record Field State) Bool)\n(declare-fun vaultDeclared (Record Field) Bool)\n(declare-fun stored (Record Field) Bool)\n(declare-fun normal (Record Field State) Bool)\n(assert (let ((a!1 (forall ((r Record) (f Field) (s State))\n             (let ((a!1 (and (normal r f s)\n                             (or (original r f s) (blind r f s))\n                             (=> (stored r f)\n                                 (and (vaultDeclared r f) (vaultGranted r f s))))))\n               (=> (and (required r s) (affected r f)) a!1)))))\n  (and admitted\n       (=> admitted a!1)\n       (required r s)\n       (affected r f)\n       (not (original r f s))\n       (not (blind r f s)))))\n(model-add admitted () Bool true)\n",
+      "model": null,
+      "scope": "Arbitrary affected Record, Field and required state, including auxiliary association Records; not a native proof."
+    },
+    {
+      "id": "stored-field-needs-present-vault-declaration",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort Field 0)\n(declare-sort Record 0)\n(declare-sort State 0)\n(declare-fun admitted () Bool)\n(declare-fun vaultDeclared (Record Field) Bool)\n(declare-fun f () Field)\n(declare-fun r () Record)\n(declare-fun stored (Record Field) Bool)\n(declare-fun affected (Record Field) Bool)\n(declare-fun required (Record State) Bool)\n(declare-fun s () State)\n(declare-fun vaultGranted (Record Field State) Bool)\n(declare-fun blind (Record Field State) Bool)\n(declare-fun original (Record Field State) Bool)\n(declare-fun normal (Record Field State) Bool)\n(assert (let ((a!1 (forall ((r Record) (f Field) (s State))\n             (let ((a!1 (and (normal r f s)\n                             (or (original r f s) (blind r f s))\n                             (=> (stored r f)\n                                 (and (vaultDeclared r f) (vaultGranted r f s))))))\n               (=> (and (required r s) (affected r f)) a!1)))))\n  (and admitted\n       (=> admitted a!1)\n       (required r s)\n       (affected r f)\n       (stored r f)\n       (not (vaultDeclared r f)))))\n(model-add admitted () Bool true)\n",
+      "model": null,
+      "scope": "Requires faithful actual stored output-Field classification, exact action designation and complete mutations."
+    },
+    {
+      "id": "stored-field-needs-vault-grant-in-each-required-state",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort State 0)\n(declare-sort Field 0)\n(declare-sort Record 0)\n(declare-fun admitted () Bool)\n(declare-fun vaultGranted (Record Field State) Bool)\n(declare-fun s () State)\n(declare-fun f () Field)\n(declare-fun r () Record)\n(declare-fun vaultDeclared (Record Field) Bool)\n(declare-fun stored (Record Field) Bool)\n(declare-fun affected (Record Field) Bool)\n(declare-fun required (Record State) Bool)\n(declare-fun blind (Record Field State) Bool)\n(declare-fun original (Record Field State) Bool)\n(declare-fun normal (Record Field State) Bool)\n(assert (let ((a!1 (forall ((r Record) (f Field) (s State))\n             (let ((a!1 (and (normal r f s)\n                             (or (original r f s) (blind r f s))\n                             (=> (stored r f)\n                                 (and (vaultDeclared r f) (vaultGranted r f s))))))\n               (=> (and (required r s) (affected r f)) a!1)))))\n  (and admitted\n       (=> admitted a!1)\n       (required r s)\n       (affected r f)\n       (stored r f)\n       (vaultDeclared r f)\n       (not (vaultGranted r f s)))))\n(model-add admitted () Bool true)\n",
+      "model": null,
+      "scope": "All-state logical obligation; custody/provider execution not modeled."
+    },
+    {
+      "id": "weak-auxiliary-record-exception-countermodel",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun associationReadable () Bool)\n(declare-fun associationChanged () Bool)\n(declare-fun weakOwnership () Bool)\n(assert (and weakOwnership associationChanged (not associationReadable)))\n(model-add weakOwnership () Bool true)\n(model-add associationChanged () Bool true)\n(model-add associationReadable () Bool false)\n",
+      "model": "[associationChanged = True,\n associationReadable = False,\n weakOwnership = True]",
+      "scope": "Ownership permission alone is consistent with unreadable changed association Fields."
+    },
+    {
+      "id": "one-state-only-negative-control",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun afterGrant () Bool)\n(declare-fun beforeGrant () Bool)\n(assert (and beforeGrant (not afterGrant)))\n(model-add beforeGrant () Bool true)\n(model-add afterGrant () Bool false)\n",
+      "model": "[beforeGrant = True, afterGrant = False]",
+      "scope": "Checking original only leaves an unpermitted proposed state."
+    },
+    {
+      "id": "mask-equality-does-not-supply-original-or-blind",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun blindAllowed () Bool)\n(declare-fun originalVisible () Bool)\n(declare-fun maskEqual () Bool)\n(assert (and maskEqual (not originalVisible) (not blindAllowed)))\n(model-add maskEqual () Bool true)\n(model-add originalVisible () Bool false)\n(model-add blindAllowed () Bool false)\n",
+      "model": "[blindAllowed = False,\n originalVisible = False,\n maskEqual = True]",
+      "scope": "Displayed equality is independent from exact permission predicates."
+    },
+    {
+      "id": "global-blind-role-separation",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort Action 0)\n(declare-sort Type 0)\n(declare-fun ordinary (Type Action) Bool)\n(declare-fun a () Action)\n(declare-fun u () Type)\n(declare-fun isBlind (Type Action) Bool)\n(declare-fun t () Type)\n(assert (let ((a!1 (forall ((t Type) (u Type) (a Action))\n             (not (and (isBlind t a) (ordinary u a))))))\n  (and a!1 (isBlind t a) (ordinary u a))))\n",
+      "model": null,
+      "scope": "Assumes complete original owner profile and exact source action IDs."
+    },
+    {
+      "id": "opaque-endpoint-multiset-conservation",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-fun beforeMultiplicity () Int)\n(declare-fun afterMultiplicity () Int)\n(assert (let ((a!1 (+ (- beforeMultiplicity\n                 (ite (> beforeMultiplicity afterMultiplicity)\n                      (- beforeMultiplicity afterMultiplicity)\n                      0))\n              (ite (> afterMultiplicity beforeMultiplicity)\n                   (- afterMultiplicity beforeMultiplicity)\n                   0))))\n  (and (>= beforeMultiplicity 0)\n       (>= afterMultiplicity 0)\n       (distinct afterMultiplicity a!1))))\n",
+      "model": null,
+      "scope": "Per signature arithmetic assumes complete role-labelled normalized endpoint inventories. Opaque IDs are not identities."
+    },
+    {
+      "id": "parallel-addition-not-set-equality",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun beforeMultiplicity () Int)\n(declare-fun afterMultiplicity () Int)\n(assert (and (= beforeMultiplicity 2)\n     (= afterMultiplicity 3)\n     (= (ite (> beforeMultiplicity afterMultiplicity)\n             (- beforeMultiplicity afterMultiplicity)\n             0)\n        0)\n     (= (ite (> afterMultiplicity beforeMultiplicity)\n             (- afterMultiplicity beforeMultiplicity)\n             0)\n        1)))\n(model-add beforeMultiplicity () Int 2)\n(model-add afterMultiplicity () Int 3)\n",
+      "model": "[afterMultiplicity = 3, beforeMultiplicity = 2]",
+      "scope": "Nonempty multiplicity negative control for set-only comparison."
+    },
+    {
+      "id": "equal-logical-multiset-does-not-prove-no-physical-effect",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun beforeMultiplicity () Int)\n(declare-fun physicalReplacement () Bool)\n(declare-fun afterMultiplicity () Int)\n(assert (and (= beforeMultiplicity 2) (= afterMultiplicity 2) physicalReplacement))\n(model-add beforeMultiplicity () Int 2)\n(model-add physicalReplacement () Bool true)\n(model-add afterMultiplicity () Int 2)\n",
+      "model": "[afterMultiplicity = 2,\n physicalReplacement = True,\n beforeMultiplicity = 2]",
+      "scope": "Opaque physical replacement intent/custody remains a separate native effect-correspondence obligation."
+    },
+    {
+      "id": "both-retargeting-anchors-required",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-fun newAnchorGranted () Bool)\n(declare-fun oldAnchorGranted () Bool)\n(declare-fun retargetPermit () Bool)\n(assert (and (=> retargetPermit (and oldAnchorGranted newAnchorGranted))\n     retargetPermit\n     oldAnchorGranted\n     (not newAnchorGranted)))\n",
+      "model": null,
+      "scope": "Anchor grant shorthand includes listed mutation, exact owner binding and all required state actions."
+    },
+    {
+      "id": "known-null-and-known-absence-distinct",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-datatypes ((KnownCell 0)) (((Absent) (Null) (Present (payload Int)))))\n(assert (= Null Absent))\n",
+      "model": null,
+      "scope": "Constructor-level semantic distinction; original core null validation and executable comparison need concrete checks."
+    },
+    {
+      "id": "empty-inventory-create-delete-special-guard",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-fun ownerGrant () Bool)\n(declare-fun declaredOwnedEmpty () Bool)\n(declare-fun createDelete () Bool)\n(declare-fun permit () Bool)\n(assert (and createDelete\n     declaredOwnedEmpty\n     (not ownerGrant)\n     permit\n     (=> permit (=> (and createDelete declaredOwnedEmpty) ownerGrant))))\n",
+      "model": null,
+      "scope": "Preserves conservative declared-ownership contract independently of actual incidence deltas."
+    },
+    {
+      "id": "shared-operation-ledger-additivity",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-fun limit () Int)\n(declare-fun following () Int)\n(declare-fun prior () Int)\n(assert (and (>= prior 0)\n     (>= following 0)\n     (>= limit 0)\n     (<= (+ prior following) limit)\n     (> (+ prior following) limit)))\n",
+      "model": null,
+      "scope": "Assumes every modeled action/comparison charge is applied to the same monotone ledger before work; no total CPU/heap theorem."
+    },
+    {
+      "id": "nonempty-fully-granted-mutation-population",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-sort State 0)\n(declare-sort Field 0)\n(declare-sort Record 0)\n(declare-fun vaultGranted (Record Field State) Bool)\n(declare-fun s () State)\n(declare-fun f () Field)\n(declare-fun r () Record)\n(declare-fun vaultDeclared (Record Field) Bool)\n(declare-fun stored (Record Field) Bool)\n(declare-fun original (Record Field State) Bool)\n(declare-fun normal (Record Field State) Bool)\n(declare-fun affected (Record Field) Bool)\n(declare-fun required (Record State) Bool)\n(declare-fun listed (Record) Bool)\n(declare-fun changed (Record) Bool)\n(assert (and (changed r)\n     (listed r)\n     (required r s)\n     (affected r f)\n     (normal r f s)\n     (original r f s)\n     (stored r f)\n     (vaultDeclared r f)\n     (vaultGranted r f s)))\n(model-add f () Field Field!val!0)\n(model-add r () Record Record!val!0)\n(model-add s () State State!val!0)\n(model-add changed ((x!1 Record)) Bool true)\n(model-add listed ((x!1 Record)) Bool true)\n(model-add required ((x!1 Record) (x!2 State)) Bool true)\n(model-add vaultGranted ((x!1 Record) (x!2 Field) (x!3 State)) Bool true)\n(model-add normal ((x!1 Record) (x!2 Field) (x!3 State)) Bool true)\n(model-add original ((x!1 Record) (x!2 Field) (x!3 State)) Bool true)\n(model-add stored ((x!1 Record) (x!2 Field)) Bool true)\n(model-add vaultDeclared ((x!1 Record) (x!2 Field)) Bool true)\n(model-add affected ((x!1 Record) (x!2 Field)) Bool true)\n",
+      "model": "[f = Field!val!0,\n r = Record!val!0,\n s = State!val!0,\n changed = [else -> True],\n listed = [else -> True],\n required = [else -> True],\n vaultGranted = [else -> True],\n normal = [else -> True],\n original = [else -> True],\n stored = [else -> True],\n vaultDeclared = [else -> True],\n affected = [else -> True]]",
+      "scope": "Concrete nonvacuity population of logical obligations, not executable/native refinement."
+    }
+  ]
+}

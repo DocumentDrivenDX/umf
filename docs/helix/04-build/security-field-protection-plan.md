@@ -910,3 +910,24 @@ Evidence belongs in `evidence/security/catalog-collection-20261015/`. The remain
 goal includes query-use/compiler lineage, catalog-aware graph before/after write
 checks, original-read/blind/vault permissions, native owner/current-authority
 profiles and all unbound acceptance cases. No full S24/S25 admission is claimed.
+
+
+### Catalog-aware multi-target write increment (2026-10-15)
+
+The private catalog transaction guard compares complete original/proposed typed
+cuts, lists every changed Record and fixes ownership to original association
+sources. Each raw m2m or graph witness Record has independent mutation admission;
+owned incidence changes additionally require listed owner anchors. Opaque endpoint
+multisets preserve parallel counts without treating per-cut IDs as Record Keys.
+Subject/context/profile stability, conservative empty-inventory create/delete
+checks and one shared operation ledger span the entire comparison and permission
+phase. Every changed Field needs normal mutation permission plus actual original
+visibility or an explicit Field-bound blind grant; stored transformed carriers
+also need the selected declared vault-write action in every required state.
+
+Evidence belongs in `evidence/security/catalog-write-20261015/`, including the
+missing-vault and nullable-value failing preimages. S24/S25 can advance only on
+fresh independent full semantic assertions and real browser parity. The result
+remains incomplete and non-authoritative. Native guarded consumers, physical
+statement/effect closure, current-authority custody, query lineage and all remaining
+backend cases keep the overall implementation goal active.
