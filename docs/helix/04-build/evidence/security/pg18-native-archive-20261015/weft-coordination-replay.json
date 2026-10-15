@@ -1,0 +1,19 @@
+{
+  "commit": "f30f27b7a0b7ffbb0d6735a5b3baef71d6fc91fe",
+  "committedPinsVerified": 15,
+  "binaries": {
+    "currentMapping": "8b6326b6c29d0f4f9de87c83a1808ba958b6679663210ca42deda9b179472a54",
+    "properties": "9b609fc1282167ff86adbf390b73c7ee90bfa48f383d1cc92e67fa3dc9f3e77f",
+    "priorMainMapping": "95b1cef7ab5d923c849f259e1e8d268eb375aef25aedc053fafd7eeea0904451"
+  },
+  "replay": {
+    "scope": "legacy source/AST requirements only; no catalog storage transform/current authority/native completeness or execution qualification",
+    "checks": [
+      "operators: exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused",
+      "range: exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused",
+      "field-free-count: exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused",
+      "unsupported distinct/zero-limit/constant-false and malformed/duplicate/oversized inputs refuse with no partial stdout"
+    ]
+  },
+  "scope": "Independent coordination evidence only; does not promote any UMF or backend case."
+}

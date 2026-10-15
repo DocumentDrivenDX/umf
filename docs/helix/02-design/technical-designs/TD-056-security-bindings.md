@@ -2368,3 +2368,92 @@ changed-Field set or use a logical no-op permit as native assignment authority.
 General source lowering and current-authority/lifecycle integration remain
 required beyond this fixed native binding. No SQL refinement theorem follows
 from the seven response-only conditional formulas.
+
+
+### Planned native SECURITY LABEL archive — 2026-10-15
+
+Original pg-raw.P07/US-056-AC7 requires real native Anonymizer labels, opaque
+preservation, refused interpretation, an unverified obligation and unchanged
+admitted protection. Use the official Dalibo image selected by immutable digest
+`sha256:cedfa32f762df460091ae5b0f71a96cf21ea6300c51ff1390ea020dded778d8a`
+(linux/amd64, PostgreSQL18.6 package18.6-1.pgdg13+2 in its image configuration).
+Runtime extension/library versions and bytes still need observation. Installation
+is excluded administration in a new owned disposable fixture; no host or shared
+server is changed. Dynamic Anonymizer masking is not an admitted mechanism.
+
+Keep module ownership unchanged. Native capture/SQL/container custody stays in
+`tests/security/native/pg18-native-archive.py` and its fixed fixture/oracle files.
+A browser-compatible host test adapter in
+`tests/security/native/pg18-native-archive.ts` invokes the existing actual owners:
+readProtectionSource/writeProtectionSource, inspectProtectionCatalog and
+requireProtectionInterpretation. It imports no native driver; the ordinary
+barrier-view profile uses existing source-owned mask-write fixture SQL without
+rewriting its body. No alternate policy compiler, new public API, core member or
+catalog schema is introduced. Native content remains the existing opaque native
+member under CONTRACT-062, not a transform or trusted role declaration.
+
+Capture complete pg_seclabel and pg_shseclabel populations, including extension
+labels, with exact original provider, catalog/OID/subobject identity, label and
+UTF8 hex bytes. JSON and YAML round trips must retain that complete source; extra
+future nested native content remains opaque. Both valid mask labels and irrelevant
+trusted/schema/role labels remain data. Interpretation must actually call the
+existing refusal entrypoint; no execution/install callback may occur. A failed
+or unknown interpretation must leave the protected DDL/ACL/routine and canonical
+business state unchanged. The receipt reports native archive protection as
+unverified; archive presence cannot produce enforcement or permission.
+
+Native controls must distinguish label metadata from protection: actual source
+column/label bindings, ordinary direct-read/write denial, the same tagged masked
+view before/after archive and refusal, and an excluded administrator that reads
+the original canonical value despite the label. The provider's own validation
+and default masking configuration are inventoried, not qualified as security.
+Native label text/whitespace/quotes/Unicode and same-label/different-object identity
+need exact assertions. Missing/changed/extra captured rows must fail independent
+correspondence. No execution of label expressions or loss of unknown metadata is
+allowed. Container/volume cleanup must be verified after success and failure.
+
+This slice has no new decision calculus or proof claim. Existing conditional
+never-authority rules remain premises; serialization, catalog correspondence,
+actual refusal and unchanged native protection need executable evidence. A solver
+replay of an identity function would not prove those implementation obligations.
+P07 stays unbound until independent review and fresh original60s gate qualification.
+No P03/B08, dynamic masking, role/DDL lifecycle or whole-backend promotion follows.
+Official image/load behavior is grounded in
+https://postgresql-anonymizer.readthedocs.io/en/stable/INSTALL/ and
+https://postgresql-anonymizer.readthedocs.io/en/stable/index.html (read2026-10-15).
+
+Design review correction: local label identity includes the actual database
+OID/name and pg_seclabel scope. Shared label identity has pg_shseclabel scope
+and its actual class/object/provider; it has no native objsubid, so none is
+invented. Capture both populations and their independent native counts in one
+SQL statement/snapshot. Retain the baseline extension-owned population and
+compare it unchanged plus independently authored fixture identities/label bytes.
+Assert masking GUCs in the actual ordinary session, place MASKED role labels only
+on separate unused NOLOGIN roles, and compare the protected home before any
+label insertion as well as after archive/refusal. The authored native amount mask
+must differ from the admitted constant0. The real provider probe passes on
+Anonymizer3.2.3/PG18.6 with explicit anon preload; initial unqualified readiness
+reached a provider-not-loaded failure, so final TCP readiness and actual extension
+presence are required rather than inferred from image documentation.
+
+
+### Native SECURITY LABEL archive correspondence — 2026-10-15
+
+The fixed PostgreSQL18.6/Anonymizer3.2.3 archive spike captures complete local
+and shared native label populations in one SQL snapshot, preserves exact
+identity and UTF-8 bytes through existing protection source/catalog owners and
+JSON/YAML, and exercises actual interpretation refusal. Native labels remain
+opaque data; their authority/enforced flags never grant authority. Ordinary
+masked reads and selected protected home data, DDL, ACLs, routines, triggers,
+inheritance and role memberships remain unchanged. Dynamic masking stays off.
+
+Astra Ultra's final scoped review has no remaining blocker:45 native component
+observations,103 Bun/Chromium controls,42 pure capture/diagnostic controls and
+17 binding checks pass. Seven actual native weakenings are detected across
+explicitly retained source stages. No new calculus or implementation-refinement
+theorem is claimed. Generic native masking, compiler activation, current-writer
+closure and lifecycle admission remain outside this fixed archive result.
+
+Original P07's assertion, acceptance criterion and60s deadline are preserved;
+all other157 case definitions are exact. The fresh governed gate and final
+browser receipt are recorded in `evidence/security/pg18-native-archive-20261015/`.

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "runId": "dd0af074-d653-46ed-8d39-ea06d576a420",
+  "runId": "6c3daafc-790b-4b94-887c-3fb95e320d6c",
   "sourceDigests": {
     "tests/security/native/pg18-replay/identity.py": "29d9b13eb6afc48f0fc37a63abb2151d7b643f8934ce773a2c8610909879469a",
     "tests/security/native/pg18-replay/membership.py": "93c5809b6356d3dfb7eabab808821853ae836de687473675e7c40c7051271d7a",
@@ -10691,7 +10691,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/private/tmp/umf-pgraw-identity-journal-bxf6ie7r",
+      "journalDirectory": "/private/tmp/umf-pgraw-identity-journal-izta1dep",
       "originalQueries": 81
     },
     "managedDependencyInventory": {
@@ -10836,13 +10836,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "fce4067fa4656f79b4efba3a5b8804279c2bba311f247fb4dea4eb90f69bfa3d",
+      "containerId": "00ec70ca8df68216912069bb856bc3a19a2163b7c196b1e13637df944cab265c",
       "ownedAnonymousVolumes": [
-        "c527c5d8c8b21d510bde5caf5072a7e52cb329378a19f7d9917fcc368f9ffaf0"
+        "5db354411abb209c57704a4666d294c5c1fd73b2e2cd4b84578690a9f13ce28d"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "1285db7cb2e0bc9c7aba1ff505dbae43a946bba0e9f7085a2eb8331c1bef47d3"
+    "digest": "084fcd6f6c911dd57616358ec97b0a7e0e282e0ad19d0a17ba1b8a56c1e91710"
   },
   "scope": "Original raw TEXT resource keys and two-component resource/subject keys through native forced RLS and SCRAM ordinary actors. Exact case, Unicode, delimiter and qualified subject witnesses; fixed native hashtext collision with hash-plus-full-key authorization, hash-only leak and restoration. Fixed authored installer, not admitted compiler lowering, arbitrary cross-home/hash-algorithm identity, graph or full backend qualification.",
   "id": "pg-raw.B13",

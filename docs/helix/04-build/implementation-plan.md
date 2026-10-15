@@ -12034,3 +12034,24 @@ checks and86 failed IDs, unchanged from the immediate stored-query-source baseli
 P04 freshness passes. Targeted HELIX checks pass; the global historical two-blocker/
 twelve-warning baseline remains. P03/B08, all remaining backends and the complete
 implementation goal remain active.
+
+
+### Native label archive accepted — 2026-10-15
+
+Original pg-raw.P07 now passes46 fresh governed observations in12.409s under its
+original60s deadline. The fixed PG18.6/Anonymizer3.2.3 spike preserves complete
+native label populations, identity and bytes through existing source owners and
+JSON/YAML, refuses interpretation and keeps the selected admitted profile exact.
+Native obligations remain unverified; no native masking or execution authority is
+claimed. Astra Ultra scoped review, seven staged native weakenings and103 final
+Bun/Chromium controls are retained in
+`evidence/security/pg18-native-archive-20261015/`.
+
+The whole158-case gate reaccepts all44 previous cases plus P07:45 accepted,113
+required unbound,34 criteria. Exit1 is solely missing implementation bindings.
+All original assertions/criteria/deadlines remain; all other157 definitions are
+exact. Both strict typing configurations pass. Evidence validation has221 checks
+and the unchanged86 failed IDs. Targeted HELIX checks pass and the historical
+global two-blocker/twelve-warning baseline remains. No new formal refinement
+claim is made. P03/B08, current compiler lineage/admission, the remaining backend
+profiles and the complete security goal remain active.

@@ -1815,3 +1815,43 @@ changed-Field set or use a logical no-op permit as native assignment authority.
 General source lowering and current-authority/lifecycle integration remain
 required beyond this fixed native binding. No SQL refinement theorem follows
 from the seven response-only conditional formulas.
+
+
+### Planned P07 native archive verification — 2026-10-15
+
+Preserve the original P07 assertion, US-056-AC7 allocation and60s limit. Use real
+PostgreSQL18.6 Anonymizer provider labels in an owned immutable-image fixture;
+never fabricate pg_seclabel rows or call authored text native evidence. Assert
+complete native local/shared label capture and exact provider/object/subobject/
+UTF8 identity against an independent fixture oracle. Test existing source owners
+in Bun and Chromium on original JSON/YAML round trips, future opaque native data,
+actual interpretation refusal and zero dispatch. Native ordinary masked output,
+base/column write denial and protected definitions/ACL/canonical state must remain
+exact before/after; excluded original reads demonstrate that labels are metadata,
+not permission or independently qualified enforcement. Include missing/extra/
+changed-row and authority-flag substitution controls. Retain unverified native
+archive obligation, exact engine/extension/binary/runtime pins, independent review
+and verified cleanup. Formal applicability is implementation correspondence,
+not a newly claimed SQL/serialization theorem. P07 remains unbound pending evidence.
+
+
+### Native SECURITY LABEL archive correspondence — 2026-10-15
+
+The fixed PostgreSQL18.6/Anonymizer3.2.3 archive spike captures complete local
+and shared native label populations in one SQL snapshot, preserves exact
+identity and UTF-8 bytes through existing protection source/catalog owners and
+JSON/YAML, and exercises actual interpretation refusal. Native labels remain
+opaque data; their authority/enforced flags never grant authority. Ordinary
+masked reads and selected protected home data, DDL, ACLs, routines, triggers,
+inheritance and role memberships remain unchanged. Dynamic masking stays off.
+
+Astra Ultra's final scoped review has no remaining blocker:45 native component
+observations,103 Bun/Chromium controls,42 pure capture/diagnostic controls and
+17 binding checks pass. Seven actual native weakenings are detected across
+explicitly retained source stages. No new calculus or implementation-refinement
+theorem is claimed. Generic native masking, compiler activation, current-writer
+closure and lifecycle admission remain outside this fixed archive result.
+
+Original P07's assertion, acceptance criterion and60s deadline are preserved;
+all other157 case definitions are exact. The fresh governed gate and final
+browser receipt are recorded in `evidence/security/pg18-native-archive-20261015/`.
