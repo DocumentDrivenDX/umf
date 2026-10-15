@@ -19,7 +19,7 @@ ddx:
 
 ## Scope
 
-Story-level realization of US-079-AC1–10; CONTRACT-062/063 govern exact surfaces.
+Story-level realization of US-079-AC1–16; CONTRACT-062/063 govern exact surfaces.
 
 ## Technical Approach
 
@@ -137,3 +137,31 @@ The owner asked whether formal logic is applied to the security system. It is: p
 `tools/security/prove-existence-unbounded.py` adds a quantified first-order theorem over arbitrary indexed witness populations. It independently defines logical existence as the least upper bound in the disjunction order F < U < T, including the base F for an empty population. Z3 4.15.4 proves that the native CASE-priority algebra (any T, else any U, else F) refines that definition, that unknown-only negation cannot grant, and that empty populations yield F. Violations are UNSAT; positive and deliberately weakened/default controls are SAT. The integer index is an abstract witness label, not a native key carrier or identity conversion.
 
 This proof has no two-witness population bound. It still assumes identical, complete and stable logical/native witnesses and scalar truth correspondence. It does not prove source authentication, SQL parser/compiler implementation, native collection completeness or release authority. Native implementation diagnostics and full backend acceptance remain separate obligations. The retained script, source pins and solver results are in `existence-unbounded-formal.json`.
+
+
+## Protection catalog wire boundary — 2026-10-15
+
+CONTRACT-062 owns the concrete `umf.security.protection`0.1.0 wire carrier:
+qualified Field domains, named typed constants, tagged disclosure properties,
+per-operator modes and opaque custody/propagation obligations. The generated
+schema and package live in `spec/extensions/security-protection/`; generator
+`scripts/security-protection-schema.py` reuses the existing core literal schema.
+The public UMF entry point exports source read/write, package metadata,
+inspection and the closed interpretation requirement. The inspector snapshots source, validates wire structure and local
+identity/literal bounds, and reports unknown members without discarding them.
+It does not normalize exact numeric carriers or resolve immutable core documents.
+
+`valid` qualifies that wire subset; `complete` is false and
+`requireProtectionInterpretation` refuses. Separate domain/function closure,
+actual selected query dependencies, policy0.2 references, write/reverse action
+binding and native enforcement remain required. Predicate/aggregate dependency
+selection belongs to the existing profile-bound compiler boundary; catalog
+metadata cannot designate a convenient claimed dependency for a query. No new
+compiler/profile owner or competing lowering interface is introduced.
+
+Wire tests cover malformed known shapes, duplicate parameter names, exact
+4096-unit canonical literal boundaries, tagged disclosure and complete required
+custody declarations in Bun and Chromium. Mutation controls must distinguish
+omitted identity/bound/propagation checks. These component tests do not close
+S13–S25; their concrete full-scope runners and independent behavior oracles remain
+required under STP-079.

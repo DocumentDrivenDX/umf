@@ -10,10 +10,16 @@
         "docs/helix/04-build/evidence/security/acceptance-allocation/adbd3f28-55df-4a5f-b315-9d54b64e0ef4/receipt.json"
       ],
       "evidenceProduced": "none; documentation and plan amendment only"
+    },
+    {
+      "id": "B-SFP-001",
+      "scope": "Wire/boundary scaffold only; interpretation always refuses; no acceptance cases promoted",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/protection-wire-20261015/receipt.json"
+      ]
     }
   ],
   "remainingSlices": [
-    "B-SFP-001",
     "B-SFP-002",
     "B-SFP-003",
     "B-SFP-004",
@@ -63,7 +69,7 @@
       "B-SFP-000": "not measured"
     }
   },
-  "nextAction": "Specify nested protection wire shapes in governing contract, then implement complete catalog/domain checks and concrete S13-S25 exercising runners; keep current native authorization/guard composition separate.",
+  "nextAction": "Implement B-SFP-002 security0.2 exact protection-reference carrier and additive migration/explicit rollback refusal; then B-SFP-003 domain/function/query closure. Continue current native authorization/guard composition separately.",
   "validation": {
     "validate-evidence.py": "202 checks, 88 failures; failure IDs equal retained baseline: True. Not a passing release gate.",
     "check-acceptance-allocation.py": "passed,9 controls",
@@ -82,17 +88,8 @@
       "executed": 26,
       "accepted": 26,
       "missingBindings": 132,
-      "receipt": "docs/helix/04-build/evidence/security/protection-catalog-20261015/acceptance.json"
+      "receipt": "docs/helix/04-build/evidence/security/protection-wire-20261015/acceptance.json"
     }
   },
-  "inProgressSlices": [
-    {
-      "id": "B-SFP-001",
-      "scope": "Source preservation plus envelope schema/package and exact identity inspection; interpretation always refuses; full transform payload/domain checks remain unfinished",
-      "receipts": [
-        "docs/helix/04-build/evidence/security/protection-source-20261014/receipt.json",
-        "docs/helix/04-build/evidence/security/protection-catalog-20261015/receipt.json"
-      ]
-    }
-  ]
+  "inProgressSlices": []
 }

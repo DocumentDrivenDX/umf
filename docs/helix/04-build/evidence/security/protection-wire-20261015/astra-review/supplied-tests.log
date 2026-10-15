@@ -1,0 +1,23 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/protection/wire.test.ts:
+(pass) wire requires known kind, qualified domains and explicit transform declarations [1.73ms]
+(pass) typed literal carriers and parameter names are bounded without truncating source [1.85ms]
+(pass) parameterized disclosure properties have explicit wire shapes and typed bucket bounds [1.01ms]
+(pass) custody, reversal and hash salt have explicit unverified shapes [1.00ms]
+(pass) known wire shape never qualifies function/domain/query or native custody [0.21ms]
+
+tests/security/protection/catalog.test.ts:
+(pass) envelope inspection preserves uninterpreted payload and never grants interpretation [9.84ms]
+(pass) exact pair identities reject duplicates without separator collisions or normalization [0.27ms]
+(pass) malformed envelopes and structural bounds refuse without truncation [9.35ms]
+(pass) snapshot does not invoke getters; public metadata cannot redefine built-in schema [0.17ms]
+
+tests/security/protection/source.test.ts:
+(pass) protection source preserves unknown catalog content in JSON and YAML [1.91ms]
+(pass) protection boundary refuses host imports/globals and accepts library source [1.51ms]
+
+ 11 pass
+ 0 fail
+ 105 expect() calls
+Ran 11 tests across 3 files. [180.00ms]

@@ -476,3 +476,37 @@ inventing executable meaning. Then implement full catalog/domain validation and
 bind the original S13–S25 runners, including Bun/Chromium parity and independent
 oracles. The shared gate remains26 accepted of158 with132 missing bindings; this
 component does not change its governing plan or promote a case.
+
+
+## Execution checkpoint — B-SFP-001 wire/boundary scaffold (2026-10-15)
+
+The B-SFP-001 **wire/boundary scaffold exit is met**. This completes its package,
+schema, preservation, inspection/refusal and boundary work; it does not complete
+any S13–S25 acceptance criterion or admit transform interpretation. CONTRACT-062
+now specifies named typed parameters, tagged disclosure properties, hash salt
+custody and stored custody/propagation wire declarations. The reproducible
+`scripts/security-protection-schema.py` generator reuses the original core
+literal schema. Exact parameter names, canonical literal bounds and unknown
+member paths are checked. A private4,000,000-unit cumulative key/string text
+ledger runs after the core JSON snapshot and before schema regex/encoding; it
+is not a total snapshot allocation/CPU theorem.
+
+The public UMF entry exports source read/write, package metadata, inspection and
+`requireProtectionInterpretation`. `valid` qualifies wire shape/local bounds;
+`complete` remains false and interpretation always refuses. No native role,
+permission, custody verification or compiler profile is inferred from metadata.
+Known functions still need function-specific parameters, immutable core domain
+closure and actual selected query dependency validation under later slices.
+
+142 security tests,11 focused tests, strict types,34 Chromium controls from the
+actual root browser bundle,66 package registrations and389 schema compilation
+checks pass. Five wire mutation variants and four envelope variants require
+exact intended named test failures. Independent review passed143 wire and14
+public-entry controls on pinned final sources. The initial intermediate schema
+compile/setup failures are not behavioral proof. Evidence:
+`evidence/security/protection-wire-20261015/`.
+
+Next is B-SFP-002: the additive security0.2 reference carrier and loss-aware
+migration/rollback. Full transform interpretation remains B-SFP-003–006 work;
+all13 semantic protection cases and native protection cases remain unqualified.
+The full shared gate remains required; no narrower release criterion replaces it.

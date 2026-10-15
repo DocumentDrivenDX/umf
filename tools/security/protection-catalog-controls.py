@@ -1,7 +1,7 @@
 """Discriminate weakened scaffold implementations in isolated source copies."""
 import hashlib,json,pathlib,re,shutil,subprocess,tempfile
 root=pathlib.Path.cwd();observations=[]
-files=['src/extensions/security/protection/catalog.ts','spec/extensions/security-protection/package.json','tests/security/protection/catalog.test.ts','tools/security/protection-catalog-controls.py']
+files=['src/index.ts','src/extensions/security/protection/catalog.ts','spec/extensions/security-protection/package.json','tests/security/protection/catalog.test.ts','tools/security/protection-catalog-controls.py']
 pins={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in files}
 for name in ['original','omit-duplicate-check','omit-transform-bound','allow-unimplemented']:
  with tempfile.TemporaryDirectory(prefix='protection-catalog-control-') as folder:
@@ -10,6 +10,7 @@ for name in ['original','omit-duplicate-check','omit-transform-bound','allow-uni
    shutil.copytree(root/tree,work/tree)
   target=work/'tests/security/protection';target.mkdir(parents=True)
   shutil.copy2(root/'tests/security/protection/catalog.test.ts',target/'catalog.test.ts')
+  (work/'native').symlink_to(root/'native',target_is_directory=True)
   (work/'node_modules').symlink_to(root/'node_modules',target_is_directory=True)
   path=work/'src/extensions/security/protection/catalog.ts';text=path.read_text()
   if name=='omit-duplicate-check':
@@ -28,5 +29,5 @@ for name in ['original','omit-duplicate-check','omit-transform-bound','allow-uni
   observations.append({'id':name,'expectedExit':expected,'observedExit':run.returncode,'stdout':run.stdout,'stderr':run.stderr})
 assert pins=={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in files}
 receipt={'status':'passed','controls':observations,'sourceDigests':pins,'scope':'Isolated source mutation discrimination for envelope scaffold only; not formal proof, native evidence or S13-S25 qualification.'}
-out=root/'docs/helix/04-build/evidence/security/protection-catalog-20261015/controls.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(receipt,indent=2)+'\n')
+out=root/'docs/helix/04-build/evidence/security/protection-wire-20261015/envelope-controls.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(receipt,indent=2)+'\n')
 print(json.dumps({'status':'passed','controls':len(observations)}))

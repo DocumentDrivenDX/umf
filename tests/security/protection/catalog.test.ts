@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
-import {inspectProtectionCatalog,requireProtectionInterpretation,protectionPackage} from '../../../src/extensions/security/protection/catalog';
-import {readProtectionSource,writeProtectionSource} from '../../../src/extensions/security/protection/source';
-const catalog=()=>({vocabulary:'umf.security.protection',version:'0.1.0',id:'catalog',revision:'r1',transforms:[{id:'mask',version:'1',kind:'mask',function:'constant',future:{value:'retained'}}],native:{sql:'opaque'}});
+import {inspectProtectionCatalog,requireProtectionInterpretation,protectionPackage} from '../../../src/index';
+import {readProtectionSource,writeProtectionSource} from '../../../src/index';
+const catalog=()=>({vocabulary:'umf.security.protection',version:'0.1.0',id:'catalog',revision:'r1',transforms:[{id:'mask',version:'1',kind:'mask',function:'constant',inputDomain:{documentId:'d',moduleId:'m',elementId:'in'},outputDomain:{documentId:'d',moduleId:'m',elementId:'out'},determinism:'deterministic',reversibility:'none',disclosureProfile:[],queryUse:{},parameters:[],future:{value:'retained'}}],native:{sql:'opaque'}});
 test('envelope inspection preserves uninterpreted payload and never grants interpretation',()=>{
  // @covers US-079-AC11
  // @covers US-079-AC9
@@ -20,10 +20,10 @@ test('exact pair identities reject duplicates without separator collisions or no
  expect(result.valid).toBe(false);expect(result.diagnostics.some(d=>d.code==='PROTECTION_DUPLICATE')).toBe(true);
 });
 test('malformed envelopes and structural bounds refuse without truncation',()=>{
- for(const source of [null,{}, {...catalog(),version:'2.0.0'}, {...catalog(),transforms:[{id:'x'}]}, {...catalog(),transforms:Array.from({length:257},(_,i)=>({id:String(i),version:'1'}))}]){
+ for(const source of [null,{}, {...catalog(),version:'2.0.0'}, {...catalog(),transforms:[{id:'x'}]}, {...catalog(),transforms:Array.from({length:257},(_,i)=>({...catalog().transforms[0]!,id:String(i),version:'1'}))}]){
   const result=inspectProtectionCatalog(source);expect(result.valid).toBe(false);expect(result.complete).toBe(false);expect(result.source).toEqual(source);expect(()=>requireProtectionInterpretation(source)).toThrow();
  }
- expect(inspectProtectionCatalog({...catalog(),transforms:Array.from({length:256},(_,i)=>({id:String(i),version:'1'}))}).valid).toBe(true);
+ expect(inspectProtectionCatalog({...catalog(),transforms:Array.from({length:256},(_,i)=>({...catalog().transforms[0]!,id:String(i),version:'1'}))}).valid).toBe(true);
 });
 test('snapshot does not invoke getters; public metadata cannot redefine built-in schema',()=>{
  let calls=0;const source={get vocabulary(){calls++;return 'umf.security.protection';}};

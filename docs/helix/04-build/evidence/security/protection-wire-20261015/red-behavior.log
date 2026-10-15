@@ -1,0 +1,62 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/protection/wire.test.ts:
+(pass) wire requires known kind, qualified domains and explicit transform declarations [1.38ms]
+11 | });
+12 | test('typed literal carriers and parameter names are bounded without truncating source',()=>{
+13 |  // @covers US-079-AC11
+14 |  const parameter={name:'value',field,value:{string:'x'}};
+15 |  expect(inspect({...transform(),parameters:[parameter]}).valid).toBe(true);
+16 |  expect(inspect({...transform(),parameters:[parameter,parameter]}).valid).toBe(false);
+                                                                               ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/wire.test.ts:16:75)
+(fail) typed literal carriers and parameter names are bounded without truncating source [0.73ms]
+19 |  expect(inspect({...transform(),parameters:[{...parameter,value:{integerToken:'9007199254740993'}}]}).valid).toBe(true);
+20 |  expect(inspect({...transform(),parameters:[{...parameter,value:42}]}).valid).toBe(false);
+21 | });
+22 | test('parameterized disclosure properties have explicit wire shapes and typed bucket bounds',()=>{
+23 |  for(const property of ['equality',{kind:'prefix',length:2},{kind:'suffix',length:1},{kind:'range',bucket:{field,value:{integerToken:'10'}}}])expect(inspect({...transform(),disclosureProfile:[property]}).valid).toBe(true);
+24 |  for(const property of ['prefix(2)',{kind:'prefix',length:0},{kind:'suffix',length:1.5},{kind:'range',bucket:{value:{integerToken:'1'}}},{kind:'range',bucket:{field,value:{string:'x'.repeat(4097)}}}])expect(inspect({...transform(),disclosureProfile:[property]}).valid).toBe(false);
+                                                                                                                                                                                                                                                                                  ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/wire.test.ts:24:270)
+(fail) parameterized disclosure properties have explicit wire shapes and typed bucket bounds [0.70ms]
+(pass) custody, reversal and hash salt have explicit unverified shapes [0.80ms]
+37 |  expect(inspect({...token,reversibility:'vault',reverseAction:'reverse',custody:{...custody(),vaultRef:'vault'}}).valid).toBe(true);
+38 |  expect(inspect({...token,reversibility:'keyed'}).valid).toBe(false);
+39 | });
+40 | test('known wire shape never qualifies function/domain/query or native custody',()=>{
+41 |  const source=catalog();const result=inspectProtectionCatalog(source);expect(result.valid).toBe(true);expect(result.complete).toBe(false);expect(()=>requireProtectionInterpretation(source)).toThrow();
+42 |  const future=catalog({...transform(),future:{enabled:true},inputDomain:{...field,future:'retained'},parameters:[{name:'x',field,value:{string:'v'},future:'retained'}]});future.native={sql:'never executed'};const unknown=inspectProtectionCatalog(future);expect(unknown.source).toEqual(future);expect(unknown.diagnostics.some(d=>d.code==='PROTECTION_UNKNOWN')).toBe(true);expect(unknown.complete).toBe(false);
+                                                                                                                                                                                                                                                                                                                                                                             ^
+error: expect(received).toBe(expected)
+
+Expected: true
+Received: false
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/wire.test.ts:42:361)
+(fail) known wire shape never qualifies function/domain/query or native custody [0.31ms]
+
+tests/security/protection/catalog.test.ts:
+(pass) envelope inspection preserves uninterpreted payload and never grants interpretation [7.19ms]
+(pass) exact pair identities reject duplicates without separator collisions or normalization [0.15ms]
+(pass) malformed envelopes and structural bounds refuse without truncation [9.44ms]
+(pass) snapshot does not invoke getters; public metadata cannot redefine built-in schema [0.12ms]
+
+tests/security/protection/source.test.ts:
+(pass) protection source preserves unknown catalog content in JSON and YAML [1.99ms]
+(pass) protection boundary refuses host imports/globals and accepts library source [1.24ms]
+
+ 8 pass
+ 3 fail
+ 92 expect() calls
+Ran 11 tests across 3 files. [162.00ms]

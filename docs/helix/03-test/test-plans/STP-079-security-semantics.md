@@ -57,7 +57,7 @@ All 13 are `not-run`, without runner bindings; this allocation supplies no pass.
 | S15 | US-079-AC12 | Additive security0.1-to0.2 migration preserves legacy constant meaning; rollback refuses any non-constant reference without changing the source. |
 | S16 | US-079-AC13, US-079-AC8 | Positive and missing-property refusal controls cover predicate, join, group, order and aggregate dependencies: equality predicates/join/group require retained equality, order requires retained order, and each selected aggregate requires its declared input properties. Omitted queryUse defaults to prohibited. Deterministic transforms report implied equality even if omitted from authored properties. |
 | S17 | US-079-AC13 | Random tokenization cannot admit disclosed equality join/group; a weakened validator ignoring that dependency must be distinguished. |
-| S18 | US-079-AC11, US-079-AC3 | Catalogs over256 transforms, more than32 typed parameters or literals exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. |
+| S18 | US-079-AC11, US-079-AC3 | Catalogs over256 transforms, more than32 typed parameters or canonical JSON literal encodings exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. |
 | S19 | US-079-AC14 | Constant, partial, fixed-length-redact, range-bucket, truncate-date and prefix-only exact outputs match independently authored Python expectations; keyed/vault operations are not executed by UMF. |
 | S20 | US-079-AC14, US-079-AC7 | Canonical null, absence, withheld, transformed null, changed output domain and stored token survive disposition transport distinctly. |
 | S21 | US-079-AC15, US-079-AC3 | Hash declarations require an algorithm and declared salt custody (none or keyed); unsalted hash requires retained equality and a mandatory dictionary-attack warning obligation. Tokenize/encrypt declarations require complete stored custody and propagation metadata; keyed/vault reversibility requires a distinct reverse action. Declarations remain unverified native obligations. |
@@ -118,3 +118,17 @@ Eight new unit controls plus three dependency/write regressions pass in the fina
 owner packet, with six checks replayed through the exported browser bundle. This
 qualifies metadata derivation only. Native mapping/decoding, trusted completeness,
 authenticated subject/current authority and final disclosure still need evidence.
+
+
+## Wire component evidence (2026-10-15)
+
+`bun test tests/security/protection/` exercises AC11 wire/local-bound subsets and
+AC15 custody/reversal shape only. `bun tools/security/protection-catalog-browser.ts`
+replays the public source/inspection/refusal API from the actual root browser
+bundle. `python3 tools/security/protection-wire-controls.py` and
+`python3 tools/security/protection-catalog-controls.py` distinguish weakened
+validators by exact intended test failures, not generic import/runtime errors.
+These component checks do not bind or pass S13–S25. Core domains, function
+behavior, query dependencies, reverse/write permission binding and physical
+obligations remain required. Receipts and independent review are retained under
+`../../04-build/evidence/security/protection-wire-20261015/`.

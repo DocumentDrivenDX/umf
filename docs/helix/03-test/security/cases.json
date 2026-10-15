@@ -693,7 +693,7 @@
         "US-079-AC10"
       ],
       "name": "protection-bounds",
-      "assertion": "Catalogs over256 transforms, more than32 typed parameters or literals exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. Replay the same independent expectations in Bun and real Chromium.",
+      "assertion": "Catalogs over256 transforms, more than32 typed parameters or canonical JSON literal encodings exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. Replay the same independent expectations in Bun and real Chromium.",
       "required": true,
       "layer": "contract/browser",
       "status": "not-run",

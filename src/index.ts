@@ -440,3 +440,8 @@ export {securityPolicyDependencies,securityIdentityTransportDependencies,type Se
 export type {SecurityDependencies} from './extensions/security/dependencies';
 export {validateSecurityDisclosure,encodeSecurityDisclosure,decodeSecurityDisclosure} from './extensions/security/disclosure';
 export type {SecurityDisclosureBatch} from './extensions/security/disclosure';
+
+// Protection wire metadata only; complete interpretation remains closed.
+export {readProtectionSource,writeProtectionSource} from './extensions/security/protection/source';
+export {protectionPackage,inspectProtectionCatalog,requireProtectionInterpretation} from './extensions/security/protection/catalog';
+export type {ProtectionCatalogInspection} from './extensions/security/protection/catalog';

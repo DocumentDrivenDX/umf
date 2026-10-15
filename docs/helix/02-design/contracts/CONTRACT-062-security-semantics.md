@@ -434,6 +434,64 @@ with its parameters. `hash` declares `algorithm` and salt custody (`none` or
 `keyed`); an unsalted hash is admitted only with `equality` retained and a
 mandatory dictionary-attack warning obligation in the receipt.
 
+### Concrete catalog wire shapes — 2026-10-15
+
+The proposed catalog uses the following serialized shapes. These refine the
+members above; they do not add an executable transform or a native permission.
+Qualified references are `{documentId,moduleId,elementId}` with exact nonempty
+strings, reusing the existing security Field-reference carrier. Domain resolution
+requires the original revision-pinned core documents; a reference alone is not a
+validated domain.
+
+- `parameters` is an array of `{name,field,value}`. Names are exact, nonempty
+  strings and unique within a transform; `field` is a qualified Field reference
+  and `value` is an existing core typed literal. At most32 parameters are allowed.
+  The canonical JSON encoding of each `value` (sorted object keys, existing core
+  literal carriers) is at most4096 UTF-16 code units, including wrappers and
+  escaping. This bound also applies to a disclosure bucket's typed literal.
+- `disclosureProfile` is an array with no duplicate serialized properties.
+  Simple properties are strings: `equality`, `order`, `length`, `format`,
+  `nullity`, `cardinality`. Parameterized properties are
+  `{kind:"prefix",length:n}`, `{kind:"suffix",length:n}` (positive safe integers),
+  and `{kind:"range",bucket:{field,value}}` (the same typed constant carrier).
+  Equivalent numeric bucket spellings are not given semantic identity by this
+  structural check; exact core domain validation must establish that meaning.
+- `queryUse` is an object whose optional operator members have the modes already
+  specified above. Missing operators mean `prohibited`. Predicate comparison and
+  aggregate input dependencies belong to the actual selected query operation;
+  a catalog cannot authorize an arbitrary operator by supplying its own claimed
+  dependency. The profile-bound compiler/query validator must establish those
+  dependencies before admitting disclosed use.
+- `saltCustody` on a hash is `{kind:"none"}` or
+  `{kind:"keyed",owner,keyRef}` with nonempty opaque owner/key strings;
+  `algorithm` is a nonempty algorithm identifier. A known wire shape does not
+  qualify an algorithm implementation or verify custody.
+- `custody` has nonempty `owner`, optional nonempty `vaultRef`/`keyRef` (at least
+  one is required), boolean `formatPreserving`,
+  `storageEffect:"stored-transformed"`, and `propagation`. The latter contains
+  all five nonempty opaque declaration strings: `history`, `snapshots`,
+  `exports`, `feeds`, `caches`. These are retained unverified native obligations,
+  not executable expressions or proof of protection. Optional nonempty
+  `vaultWriteAction` identifies the separate write action; absence never admits
+  a stored-transformed mutation. Keyed reversibility requires `keyRef`; vault
+  reversibility requires `vaultRef`. Both require a nonempty `reverseAction`.
+
+Mask/generalization `function` values are the closed names above; `function` is
+not a member of hash/tokenize/encrypt, and `algorithm`/`saltCustody` belong only
+to hash. The parameters'
+function-specific names, types and relationships must be validated before that
+function is interpreted. After the core JSON snapshot (with its own value/depth controls), wire
+inspection charges cumulative object-key/string-value text up to4,000,000 UTF-16
+units before schema regex validation or canonical literal encoding. Exceeding
+that ledger yields `resource-exhausted` with retained source; this is not a
+preallocation, total heap or total CPU bound for the preceding snapshot.
+
+Shape inspection does not validate their domains,
+function behavior, effective disclosure, action distinctness, native custody or
+propagation. Unknown members remain preserved and block complete interpretation;
+`native` remains an opaque top-level archive. Typed literals reuse core carriers
+rather than JSON Number, including integer/decimal/binary exactness.
+
 ### Effective disclosure and query-use admissibility
 
 The effective retained property set is the authored `disclosureProfile` united
@@ -513,8 +571,10 @@ Package split (one catalog or two), `withhold` as a transform for NULL-only
 backends (refused for now), salt custody for keyed hashes, detokenize as action
 versus disposition (action selected here, pending Weft query-profile review)
 and per-field masks inside shared property bags remain open questions Q1, Q2,
-Q11, Q12 and Q14 in the plan. The Draft 2020-12 envelope/identity scaffold at
-`spec/extensions/security-protection/` now exists; full transform/domain schema
-text and catalog interpretation remain unfinished. Internal inspection validates
-only envelope/identity structure, always reports `complete:false`, and the
-interpretation requirement always refuses. This does not qualify S13–S25.
+Q11, Q12 and Q14 in the plan. The Draft 2020-12 wire schema at
+`spec/extensions/security-protection/` now exists. Internal inspection checks
+wire shape, exact local identities, unknown-member paths and canonical literal
+bounds; it always reports `complete:false`, and the interpretation requirement
+always refuses. Core domain closure, function-specific parameters, query
+admissibility and policy/native action binding remain unfinished. This does not
+qualify S13–S25.
