@@ -971,3 +971,22 @@ It does not complete M2 or any full backend profile: additional field-protection
 procedures, remaining P/B/L cases, native current-authority/effect custody and
 actual Truss/Ashlar/Delta consumers remain required. Never infer18 evidence from
 an old17.9 receipt. The full158-case gate remains authoritative for actual execution.
+
+
+### PostgreSQL18 projection expression prerequisite — 2026-10-15
+
+B-SFP-008 now has a private closed SQL expression compiler for the named mask,
+regex, exact bucket/date and SHA256 provider subsets. Independent Python/native
+PostgreSQL18.6 evidence passes210 vectors, with hostile search-path/literal and
+rounded-division controls; Bun refusal tests pass129 assertions and strict types
+pass. Conditional Z3 coefficient analysis retains three UNSAT laws and a SAT
+weakened algorithm. Review corrections qualify native operators and preserve
+explicit precedence and fail-closed cleanup/source custody. See
+`evidence/security/pg18-projection-expressions-20261015/` for exact scope and failures.
+
+This is only a P02 prerequisite: no catalog binding, owner-held view, ordinary
+actor or disclosure transport is admitted. Numeric values are compared as exact
+rationals, not P02 byte-exact transport. P02 remains required/unbound and the
+full gate remains40 accepted/118 unbound; no previous acceptance or backend
+support claim changes. Native guard/fullxid and actual protected consumers remain
+open, and the overall security goal remains active.
