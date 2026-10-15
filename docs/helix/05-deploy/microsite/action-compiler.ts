@@ -27,14 +27,14 @@ const closeStore=document.querySelector<HTMLButtonElement>('#store-close')!;
 const previewStore=document.querySelector<HTMLButtonElement>('#store-preview')!;
 const sealStore=document.querySelector<HTMLButtonElement>('#store-seal')!;
 const recoverStore=document.querySelector<HTMLButtonElement>('#store-recover')!;
-const bulkButtons=Object.fromEntries(['submit','recover-submit','claim','recover-claim','execute','recover-execute','review'].map(name=>[name,document.querySelector<HTMLButtonElement>('#store-'+name)!]));
-let bulkIntents:Record<string,BulkIntent>={},jobReview:any;
+const bulkButtons=Object.fromEntries(['submit','recover-submit','claim','recover-claim','execute','recover-execute','cancel','recover-cancel','history','next-history','review'].map(name=>[name,document.querySelector<HTMLButtonElement>('#store-'+name)!]));
+let bulkIntents:Record<string,BulkIntent>={},jobReview:any,feedCursor:import('./truss-browser/store.js').FeedCursor|null=null;
 function pendingExecution(){return Object.values(bulkIntents).filter(record=>record.slot.startsWith('execute:')&&(!record.outcome||(record.outcome as any).status==='indeterminate')).sort((a,b)=>Number(a.slot.split(':')[1])-Number(b.slot.split(':')[1]))[0];}
 function selectedBatch(){return pendingExecution()?Number(pendingExecution()!.slot.split(':')[1]):jobReview?.state?.nextBatch??0;}
 function latestExecution(){return pendingExecution()??Object.values(bulkIntents).filter(record=>record.slot.startsWith('execute:')).sort((a,b)=>Number(b.slot.split(':')[1])-Number(a.slot.split(':')[1]))[0];}
 function acceptJobReview(result:any){
  const job=submittedJob();
- if(!job||!result.state||result.state.job?.namespace!==job.namespace||result.state.job?.id!==job.id||result.manifest?.sha256!==intent?.reference.manifestSha256||result.state.manifestSha256!==intent?.reference.manifestSha256||!['queued','running','reconciling','stopped','completed'].includes(result.state.status)||!Number.isInteger(result.state.nextBatch)||result.state.nextBatch<0||result.state.nextBatch>10000)throw Error('Current original job review required');
+ if(!job||!result.state||result.state.job?.namespace!==job.namespace||result.state.job?.id!==job.id||result.manifest?.sha256!==intent?.reference.manifestSha256||result.state.manifestSha256!==intent?.reference.manifestSha256||!['queued','running','reconciling','stopped','completed','cancelled'].includes(result.state.status)||!Number.isInteger(result.state.nextBatch)||result.state.nextBatch<0||result.state.nextBatch>10000)throw Error('Current original job review required');
  jobReview=result;return result;
 }
 async function readCurrentJob(){
@@ -64,10 +64,13 @@ function buttons(){
  bulkButtons.submit!.disabled=blocked||intent?.outcome?.outcome!=='sealed'||!!bulkIntents.submit;
  bulkButtons['recover-submit']!.disabled=blocked||!bulkIntents.submit;
  const batch=selectedBatch(),claim=bulkIntents['claim:'+batch]?.outcome as any;
- bulkButtons.claim!.disabled=blocked||!submittedJob()||!!pendingExecution()||jobReview?.state?.status==='completed'||jobReview?.state?.status==='stopped'||!!bulkIntents['claim:'+batch];
+ bulkButtons.claim!.disabled=blocked||!submittedJob()||!!pendingExecution()||jobReview?.state?.status==='completed'||jobReview?.state?.status==='stopped'||jobReview?.state?.status==='cancelled'||!!bulkIntents['claim:'+batch];
  bulkButtons['recover-claim']!.disabled=blocked||!bulkIntents['claim:'+batch];
  bulkButtons.execute!.disabled=blocked||claim?.status!=='claimed'||!!bulkIntents['execute:'+batch]||jobReview?.state?.status!=='running';
  bulkButtons['recover-execute']!.disabled=blocked||!latestExecution();
+ bulkButtons.cancel!.disabled=blocked||!submittedJob()||!!bulkIntents.cancel||['completed','stopped','cancelled'].includes(jobReview?.state?.status);
+ bulkButtons['recover-cancel']!.disabled=blocked||!bulkIntents.cancel;
+ bulkButtons.history!.disabled=blocked;bulkButtons['next-history']!.disabled=blocked||!feedCursor;
  bulkButtons.review!.disabled=blocked||!submittedJob();
 }
 function requestStore(command:string,payload?:unknown):Promise<any>{
@@ -95,11 +98,11 @@ async function localOperation(command:string){
    payload={requestKey:reference.requestKey,attempt:reference.attempt};
   }
   if(command==='recover'){if(!intent)throw Error('Original seal intent required');payload={reference:intent.reference};}
-  if(command==='submit'||command==='claim'||command==='execute'){
+  if(command==='submit'||command==='claim'||command==='execute'||command==='cancel'){
    if(command!=='submit')await readCurrentJob();
    const batch=selectedBatch();
    if(command==='claim'&&(pendingExecution()||!['queued','running'].includes(jobReview.state.status)||jobReview.state.unresolvedBatch!==null))throw Error('Original batch must be reconciled before a new claim');
-   const slot=command==='submit'?'submit':command+':'+batch;
+   const slot=command==='submit'||command==='cancel'?command:command+':'+batch;
    if(bulkIntents[slot])throw Error('Original control retained; recover it');
    if(intent?.outcome?.outcome!=='sealed')throw Error('Original sealed manifest required');
    const control={requestKey:crypto.randomUUID(),attempt:crypto.randomUUID()};
@@ -112,24 +115,29 @@ async function localOperation(command:string){
    bulkRecord={profile:'umf.demo.bulk-intent/1',slot,context:bulkContext(),input:payload};
    await reserveBulkIntent(bulkRecord);bulkIntents[slot]=bulkRecord;intentChannel.postMessage({changed:true});
   }
-  if(command==='recover-submit'||command==='recover-claim'||command==='recover-execute'){
+  if(command==='recover-submit'||command==='recover-claim'||command==='recover-execute'||command==='recover-cancel'){
    if(command!=='recover-submit')await readCurrentJob();
-   bulkRecord=command==='recover-execute'?latestExecution():bulkIntents[command==='recover-submit'?'submit':'claim:'+selectedBatch()];
+   bulkRecord=command==='recover-execute'?latestExecution():bulkIntents[command==='recover-submit'?'submit':command==='recover-cancel'?'cancel':'claim:'+selectedBatch()];
    if(!bulkRecord)throw Error('Original bulk control required');payload=bulkRecord.input;
   }
   if(command==='review'){payload=submittedJob();if(!payload)throw Error('Original submitted job required');}
+  if(command==='history'||command==='next-history'){payload={cursor:command==='history'?null:feedCursor};if(command==='next-history'&&!feedCursor)throw Error('Original feed cursor required');}
 
  }catch(error){storeStatus.textContent='Operation not sent';catalogOutput.textContent=error instanceof Error?error.message:String(error);busy=false;buttons();return;}
  buttons();storeStatus.textContent=command==='seal'?'Seal pending; original intent saved':'Working…';
  try{
-  const result=await requestStore(command,payload);catalogOutput.textContent=JSON.stringify(result,null,2);
+  const result=await requestStore(command==='next-history'?'history':command,payload);catalogOutput.textContent=JSON.stringify(result,null,2);
   if(bulkRecord){
    const retained={...bulkRecord,outcome:result};
    await settleBulkIntent(retained);bulkIntents[retained.slot]=retained;intentChannel.postMessage({changed:true});
 
    if(result.status==='control-unknown'||result.status==='unresolved'||result.status==='indeterminate')detach();
    else if(submittedJob()){await readCurrentJob();if(retained.slot.startsWith('execute:'))await readCurrentRows();}
-   storeStatus.textContent=(retained.slot==='submit'?'Submission: ':retained.slot.startsWith('execute:')?'Batch: ':'Claim: ')+result.status;
+   storeStatus.textContent=(retained.slot==='submit'?'Submission: ':retained.slot==='cancel'?'Cancellation: ':retained.slot.startsWith('execute:')?'Batch: ':'Claim: ')+result.status;
+  }else if(command==='history'||command==='next-history'){
+   document.querySelector('#history')!.textContent=JSON.stringify(result,null,2);
+   if(result.status==='page'){feedCursor=result.cursor;storeStatus.textContent='History: '+result.events.length+' events';}
+   else storeStatus.textContent='History: '+result.status;
   }else if(command==='review'){if(result.state){acceptJobReview(result);storeStatus.textContent='Job: '+result.state.status;}else{detach();storeStatus.textContent='Job review: '+result.status;}}
   else if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';detach();}
   else if(result.outcome==='closed'){storeStatus.textContent='Store closed';detach();}

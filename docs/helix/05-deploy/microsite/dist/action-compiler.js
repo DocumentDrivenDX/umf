@@ -10,7 +10,7 @@ function parse(text) {
   if (typeof text !== "string" || text.length > 1024 * 1024)
     throw Error("Invalid bulk intent");
   const value = JSON.parse(text);
-  if (value?.profile !== "umf.demo.bulk-intent/1" || !/^(?:submit|(?:claim|execute):(?:0|[1-9][0-9]{0,3}))$/.test(value.slot) || typeof value.context !== "string" || !value.context || !value.input || typeof value.input !== "object")
+  if (value?.profile !== "umf.demo.bulk-intent/1" || !/^(?:submit|cancel|(?:claim|execute):(?:0|[1-9][0-9]{0,3}))$/.test(value.slot) || typeof value.context !== "string" || !value.context || !value.input || typeof value.input !== "object")
     throw Error("Original bulk intent required");
   return value;
 }
@@ -265,9 +265,10 @@ var closeStore = document.querySelector("#store-close");
 var previewStore = document.querySelector("#store-preview");
 var sealStore = document.querySelector("#store-seal");
 var recoverStore = document.querySelector("#store-recover");
-var bulkButtons = Object.fromEntries(["submit", "recover-submit", "claim", "recover-claim", "execute", "recover-execute", "review"].map((name) => [name, document.querySelector("#store-" + name)]));
+var bulkButtons = Object.fromEntries(["submit", "recover-submit", "claim", "recover-claim", "execute", "recover-execute", "cancel", "recover-cancel", "history", "next-history", "review"].map((name) => [name, document.querySelector("#store-" + name)]));
 var bulkIntents = {};
 var jobReview;
+var feedCursor = null;
 function pendingExecution() {
   return Object.values(bulkIntents).filter((record) => record.slot.startsWith("execute:") && (!record.outcome || record.outcome.status === "indeterminate")).sort((a, b) => Number(a.slot.split(":")[1]) - Number(b.slot.split(":")[1]))[0];
 }
@@ -279,7 +280,7 @@ function latestExecution() {
 }
 function acceptJobReview(result) {
   const job = submittedJob();
-  if (!job || !result.state || result.state.job?.namespace !== job.namespace || result.state.job?.id !== job.id || result.manifest?.sha256 !== intent?.reference.manifestSha256 || result.state.manifestSha256 !== intent?.reference.manifestSha256 || !["queued", "running", "reconciling", "stopped", "completed"].includes(result.state.status) || !Number.isInteger(result.state.nextBatch) || result.state.nextBatch < 0 || result.state.nextBatch > 1e4)
+  if (!job || !result.state || result.state.job?.namespace !== job.namespace || result.state.job?.id !== job.id || result.manifest?.sha256 !== intent?.reference.manifestSha256 || result.state.manifestSha256 !== intent?.reference.manifestSha256 || !["queued", "running", "reconciling", "stopped", "completed", "cancelled"].includes(result.state.status) || !Number.isInteger(result.state.nextBatch) || result.state.nextBatch < 0 || result.state.nextBatch > 1e4)
     throw Error("Current original job review required");
   jobReview = result;
   return result;
@@ -350,10 +351,14 @@ function buttons() {
   bulkButtons.submit.disabled = blocked || intent?.outcome?.outcome !== "sealed" || !!bulkIntents.submit;
   bulkButtons["recover-submit"].disabled = blocked || !bulkIntents.submit;
   const batch = selectedBatch(), claim = bulkIntents["claim:" + batch]?.outcome;
-  bulkButtons.claim.disabled = blocked || !submittedJob() || !!pendingExecution() || jobReview?.state?.status === "completed" || jobReview?.state?.status === "stopped" || !!bulkIntents["claim:" + batch];
+  bulkButtons.claim.disabled = blocked || !submittedJob() || !!pendingExecution() || jobReview?.state?.status === "completed" || jobReview?.state?.status === "stopped" || jobReview?.state?.status === "cancelled" || !!bulkIntents["claim:" + batch];
   bulkButtons["recover-claim"].disabled = blocked || !bulkIntents["claim:" + batch];
   bulkButtons.execute.disabled = blocked || claim?.status !== "claimed" || !!bulkIntents["execute:" + batch] || jobReview?.state?.status !== "running";
   bulkButtons["recover-execute"].disabled = blocked || !latestExecution();
+  bulkButtons.cancel.disabled = blocked || !submittedJob() || !!bulkIntents.cancel || ["completed", "stopped", "cancelled"].includes(jobReview?.state?.status);
+  bulkButtons["recover-cancel"].disabled = blocked || !bulkIntents.cancel;
+  bulkButtons.history.disabled = blocked;
+  bulkButtons["next-history"].disabled = blocked || !feedCursor;
   bulkButtons.review.disabled = blocked || !submittedJob();
 }
 function requestStore(command, payload) {
@@ -417,13 +422,13 @@ async function localOperation(command) {
         throw Error("Original seal intent required");
       payload = { reference: intent.reference };
     }
-    if (command === "submit" || command === "claim" || command === "execute") {
+    if (command === "submit" || command === "claim" || command === "execute" || command === "cancel") {
       if (command !== "submit")
         await readCurrentJob();
       const batch = selectedBatch();
       if (command === "claim" && (pendingExecution() || !["queued", "running"].includes(jobReview.state.status) || jobReview.state.unresolvedBatch !== null))
         throw Error("Original batch must be reconciled before a new claim");
-      const slot = command === "submit" ? "submit" : command + ":" + batch;
+      const slot = command === "submit" || command === "cancel" ? command : command + ":" + batch;
       if (bulkIntents[slot])
         throw Error("Original control retained; recover it");
       if (intent?.outcome?.outcome !== "sealed")
@@ -443,10 +448,10 @@ async function localOperation(command) {
       bulkIntents[slot] = bulkRecord;
       intentChannel.postMessage({ changed: true });
     }
-    if (command === "recover-submit" || command === "recover-claim" || command === "recover-execute") {
+    if (command === "recover-submit" || command === "recover-claim" || command === "recover-execute" || command === "recover-cancel") {
       if (command !== "recover-submit")
         await readCurrentJob();
-      bulkRecord = command === "recover-execute" ? latestExecution() : bulkIntents[command === "recover-submit" ? "submit" : "claim:" + selectedBatch()];
+      bulkRecord = command === "recover-execute" ? latestExecution() : bulkIntents[command === "recover-submit" ? "submit" : command === "recover-cancel" ? "cancel" : "claim:" + selectedBatch()];
       if (!bulkRecord)
         throw Error("Original bulk control required");
       payload = bulkRecord.input;
@@ -455,6 +460,11 @@ async function localOperation(command) {
       payload = submittedJob();
       if (!payload)
         throw Error("Original submitted job required");
+    }
+    if (command === "history" || command === "next-history") {
+      payload = { cursor: command === "history" ? null : feedCursor };
+      if (command === "next-history" && !feedCursor)
+        throw Error("Original feed cursor required");
     }
   } catch (error) {
     storeStatus.textContent = "Operation not sent";
@@ -466,7 +476,7 @@ async function localOperation(command) {
   buttons();
   storeStatus.textContent = command === "seal" ? "Seal pending; original intent saved" : "Working…";
   try {
-    const result = await requestStore(command, payload);
+    const result = await requestStore(command === "next-history" ? "history" : command, payload);
     catalogOutput.textContent = JSON.stringify(result, null, 2);
     if (bulkRecord) {
       const retained = { ...bulkRecord, outcome: result };
@@ -480,7 +490,14 @@ async function localOperation(command) {
         if (retained.slot.startsWith("execute:"))
           await readCurrentRows();
       }
-      storeStatus.textContent = (retained.slot === "submit" ? "Submission: " : retained.slot.startsWith("execute:") ? "Batch: " : "Claim: ") + result.status;
+      storeStatus.textContent = (retained.slot === "submit" ? "Submission: " : retained.slot === "cancel" ? "Cancellation: " : retained.slot.startsWith("execute:") ? "Batch: " : "Claim: ") + result.status;
+    } else if (command === "history" || command === "next-history") {
+      document.querySelector("#history").textContent = JSON.stringify(result, null, 2);
+      if (result.status === "page") {
+        feedCursor = result.cursor;
+        storeStatus.textContent = "History: " + result.events.length + " events";
+      } else
+        storeStatus.textContent = "History: " + result.status;
     } else if (command === "review") {
       if (result.state) {
         acceptJobReview(result);
