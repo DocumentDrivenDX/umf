@@ -312,3 +312,56 @@ isolated passing replay and the final full replay. No criterion or timeout chang
 Evidence: `../../04-build/evidence/security/protection-disclosure-20261015/`.
 Neither finite transport acceptance nor conditional formal laws grant native,
 compiler, source-authentication, storage-custody or row-policy authority.
+
+
+## Action-purpose prerequisite for S21-S23 — design2026-10-15
+
+US-079-AC3/10/15 need exhaustive ontology purpose closure and actual owner
+compatibility before reversal admission. The foundation tests must exercise
+all six categories, permissible ordinary combinations, singleton-exclusive
+reverse/vault-write/other, duplicate/missing/foreign IDs, unknown values/members,
+absent closure, empty declarations, exact ontology revision/source identity,
+caller mutation, resource limits and preserved atomic refusal. Reuse both raw
+member-association and graph-witness whole ontology resolution. Bun/Chromium
+expectations must agree through the real public API, with no host globals or
+external requests. A supplied purpose list is not a credential or an owner
+mapping. Independent symbolic controls expose omitted classification, incomplete
+inventories and missing actual owner compatibility. No S21/S22/S23 case is
+promoted by this prerequisite alone; crypto warning/propagation obligations and
+real read/query/write owner integration remain required.
+
+
+## S21-S23 declared obligation verification — 2026-10-15
+
+The fresh unchanged158-case gate accepts all37 bound cases: S01-S23 and the
+previous14 raw-native cases. The121 other required bindings remain missing,
+so the overall gate remains failed/open. S21/S22/S23 respectively retain150/186/152
+matching observations, with71/89/72 independent Python-authored checks in each
+Bun/Chromium runtime plus parity, source-custody and browser controls. All
+assertions, criteria, layers, deadlines and required IDs remain unchanged.
+
+Exhaustive authored action purposes are checked against the exact ontology pin;
+reverse/vault-write purposes remain exclusive while explicit reverse policy
+grants remain legal. Hash algorithm/salt, effective unsalted equality and the
+mandatory dictionary warning, complete token/encrypt custody, all five propagation
+channels, unused transforms, original stored token/cipher transport and atomic
+source-preserving refusal are covered. Every obligation remains unverified;
+complete:false and authority:false are retained. Actual operation-owner profile
+compatibility, source authentication, permission and native custody/propagation
+are not qualified by these tests.
+
+All200 related tests (2932 assertions), strict types, build,392 schemas and67
+packages pass. Thirteen actual-source controls reproduce exact named assertion
+failures when guards are removed. Root conditional logic analysis records8UNSAT
+laws/9SAT countermodels; independent design analysis records10UNSAT/6SAT, with
+explicit owner-compatibility premises and no program/native refinement theorem.
+Astra reviewed the complete original declaration assertions and independent
+expectations; two oracle/harness corrections, the conservative source-word guard
+failure, wrapper type failure and interrupted gate remain retained. See
+`evidence/security/protection-obligations-20261015/` from the HELIX build root.
+
+B-SFP-005's declared-model S21-S23 exits are met. Its full upstream B-SFP-003
+compiler/property dependency, S24/S25, all remaining backend/lifecycle cases and
+original current-authority/native composition remain required. No vault calls,
+crypto execution, native reversal or permission are introduced. The goal remains
+active. Existing raw-native qualification remains PostgreSQL17.9.

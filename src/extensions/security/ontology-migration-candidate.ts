@@ -2,7 +2,7 @@
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';
 import oldSchema from '../../../spec/extensions/security/ontology.schema.json';
-import candidateSchema from '../../../docs/helix/02-design/spikes/security/ontology-v0.2.schema.json';
+import candidateSchema from '../../../spec/extensions/security-v0.2/ontology.schema.json';
 const validator=createValidator(),oldCheck=validator.compile(oldSchema),newCheck=validator.compile(candidateSchema);
 const canonical=(v:any):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);
 function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}

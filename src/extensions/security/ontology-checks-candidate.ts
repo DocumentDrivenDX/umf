@@ -1,8 +1,9 @@
 /** Whole draft ontology consistency. Authenticated revisions and policy admission remain host obligations. */
+import {checkActionPurposeDeclarations} from './action-purpose-declarations';
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';
 import {validateDocument} from '../../validation/document';
-import schema from '../../../docs/helix/02-design/spikes/security/ontology-v0.2.schema.json';
+import schema from '../../../spec/extensions/security-v0.2/ontology.schema.json';
 import {checkCandidateRecordClassifications} from './association-candidate';
 import {type CandidateAssociationChecks,resolveCandidateAssociationChecks} from './association-checks';
 function close(value:any):any{if(Array.isArray(value))return value.map(close);if(value&&typeof value==='object'){const out:any=Object.fromEntries(Object.entries(value).map(([k,v])=>[k,close(v)]));if(out.properties)out.additionalProperties=false;return out;}return value;}
@@ -23,7 +24,7 @@ export function resolveCandidateSecurityOntology(input:unknown,documentsInput:un
   checkCandidateRecordClassifications(document,[entity.type],[{type:entity.type,fields:entity.fields}]);entity.fields.forEach((f:any)=>classified.add(id(f.ref)));
  }
  if(!entities.has(id(ontology.subject)))fail();const contexts=new Set<string>();for(const context of ontology.context){const token=id(context);if(contexts.has(token)||!classified.has(token))fail();contexts.add(token);}
- if(new Set(ontology.actions).size!==ontology.actions.length)fail();
+ if(new Set(ontology.actions).size!==ontology.actions.length)fail();checkActionPurposeDeclarations(ontology);
  const associations:any[]=[],seen=new Set<string>();
  for(const selector of ontology.associations){const graph=selector.kind==='core-relationship',ref=graph?selector.relationship:selector.type,token=JSON.stringify([graph?'relationship':'record',ref.documentId,ref.moduleId,graph?ref.relationshipId:ref.elementId]);if(seen.has(token))fail();seen.add(token);
   const witness=graph?selector.witness:selector.kind==='record-members'?{kind:'record-key',type:selector.type,keyId:selector.keyId}:undefined;if(!witness)fail();if(witness.kind==='record-key'&&entities.get(id(witness.type))?.keyId!==witness.keyId)fail();

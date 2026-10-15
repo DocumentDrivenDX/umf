@@ -704,3 +704,39 @@ Owner Git inventory verifies Truss remote mainb77cf1f0 and Weft remote mainc0c64
 checkout metadata before native edits. Next: full property/compiler admission,
 S21-S25 and original anchor/store/program/nonce/fullxid guarded current-authority,
 selector and seal composition. No required work is removed and the goal stays active.
+
+
+## S21-S23 declared obligation verification — 2026-10-15
+
+The fresh unchanged158-case gate accepts all37 bound cases: S01-S23 and the
+previous14 raw-native cases. The121 other required bindings remain missing,
+so the overall gate remains failed/open. S21/S22/S23 respectively retain150/186/152
+matching observations, with71/89/72 independent Python-authored checks in each
+Bun/Chromium runtime plus parity, source-custody and browser controls. All
+assertions, criteria, layers, deadlines and required IDs remain unchanged.
+
+Exhaustive authored action purposes are checked against the exact ontology pin;
+reverse/vault-write purposes remain exclusive while explicit reverse policy
+grants remain legal. Hash algorithm/salt, effective unsalted equality and the
+mandatory dictionary warning, complete token/encrypt custody, all five propagation
+channels, unused transforms, original stored token/cipher transport and atomic
+source-preserving refusal are covered. Every obligation remains unverified;
+complete:false and authority:false are retained. Actual operation-owner profile
+compatibility, source authentication, permission and native custody/propagation
+are not qualified by these tests.
+
+All200 related tests (2932 assertions), strict types, build,392 schemas and67
+packages pass. Thirteen actual-source controls reproduce exact named assertion
+failures when guards are removed. Root conditional logic analysis records8UNSAT
+laws/9SAT countermodels; independent design analysis records10UNSAT/6SAT, with
+explicit owner-compatibility premises and no program/native refinement theorem.
+Astra reviewed the complete original declaration assertions and independent
+expectations; two oracle/harness corrections, the conservative source-word guard
+failure, wrapper type failure and interrupted gate remain retained. See
+`evidence/security/protection-obligations-20261015/` from the HELIX build root.
+
+B-SFP-005's declared-model S21-S23 exits are met. Its full upstream B-SFP-003
+compiler/property dependency, S24/S25, all remaining backend/lifecycle cases and
+original current-authority/native composition remain required. No vault calls,
+crypto execution, native reversal or permission are introduced. The goal remains
+active. Existing raw-native qualification remains PostgreSQL17.9.

@@ -465,3 +465,7 @@ export * from './adapters/gregorian-date';
 export {inspectProtectionFunction,evaluateProtectionValue,type ProtectionFunctionResult} from './extensions/security/protection/functions';
 export {inspectSecurityDisclosureV2,encodeSecurityDisclosureV2,decodeSecurityDisclosureV2} from './extensions/security/protection/disclosure';
 export type {SecurityDisclosureBatchV2,SecurityDisclosureColumnV2,SecurityDisclosureCellV2,SecurityDisclosureInspectionV2} from './extensions/security/protection/disclosure';
+
+export {inspectSecurityActionPurposes,type SecurityActionPurposeInspection} from './extensions/security/action-purposes';
+export type {SecurityActionPurpose,SecurityActionPurposeDeclaration} from './extensions/security/action-purpose-declarations';
+export {inspectProtectionObligations,type ProtectionDeclarationInspection,type ProtectionDeclarationObligation,type ProtectionDeclarationObligationKind} from './extensions/security/protection/obligations';

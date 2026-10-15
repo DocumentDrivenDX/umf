@@ -1,0 +1,13 @@
+import {createHash} from 'node:crypto';
+import packet from '../../tests/security/protection/obligations-fixtures.json';
+const name='@umf/core',api=await import(name),f=structuredClone(packet.base);
+const r=api.inspectProtectionObligations(f.policy,f.catalog,f.closure,f.ontology);
+const p=api.inspectSecurityActionPurposes(f.ontology,f.closure.documents);
+if(r.status!=='declared-obligations'||p.status!=='resolved-purposes'||r.complete!==false||r.authority!==false||!r.obligations.length||r.obligations.some((x:any)=>x.status!=='unverified')||!Object.isFrozen(r))throw Error('Built declaration report differs');
+f.catalog.transforms[2]!.reverseAction='alpha';
+const denied=api.inspectProtectionObligations(f.policy,f.catalog,f.closure,f.ontology);
+if(denied.status!=='refused'||denied.obligations.length)throw Error('Built purpose alias admitted');
+const paths=['package.json','src/index.ts','src/extensions/security/action-purposes.ts','src/extensions/security/action-purpose-declarations.ts','src/extensions/security/protection/obligations.ts','spec/extensions/security-v0.2/ontology.schema.json','tests/security/protection/obligations-fixtures.json','tools/security/protection-obligations-package-smoke.ts','dist/umf.js','dist/src/index.d.ts','dist/src/extensions/security/protection/obligations.d.ts'];
+const sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
+await Bun.write('docs/helix/04-build/evidence/security/protection-obligations-20261015/package-smoke.json',JSON.stringify({status:'built-package-declarations-passed',bun:Bun.version,sourceDigests,declaredObligations:r.obligations.length,allUnverified:true,ordinaryAliasRefused:true,scope:'Actual built package API/declarations smoke only, no current permission or native custody.'},null,2)+'\n');
+console.log(JSON.stringify({status:'built-package-declarations-passed'}));

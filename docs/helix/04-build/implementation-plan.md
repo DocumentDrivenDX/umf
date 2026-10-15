@@ -11786,3 +11786,18 @@ The dedicated `security-field-protection-plan.md` records detailed scope and
 remaining work. Full property/compiler, S21-S25, native current-authorization and
 selector/seal integration remain open. No native authority or complete-goal
 claim follows; all required cases remain in scope.
+
+
+### Security declared obligation checkpoint — 2026-10-15
+
+[Retained receipt](evidence/security/protection-obligations-20261015/receipt.json)
+qualifies S21-S23 declaration/transport behavior under CONTRACT-062. All37
+bound original cases pass;121 required bindings remain missing out of158.
+The overall goal and gate remain open. Independent Python expectations replay
+232 observations in each Bun/Chromium runtime;200 regression tests, strict types,
+build,392 schemas/67 packages and13 source-mutation controls pass.
+Action purposes are exhaustive authored intent, never an operational designation
+or permission. Every custody/propagation obligation stays unverified. Full
+compiler/property admission, S24/S25, current Subject/action/owner/source checks,
+original store/program/nonce/fullxid, selector/finalizer/seal composition and
+remaining backend/lifecycle cases are the next required work.

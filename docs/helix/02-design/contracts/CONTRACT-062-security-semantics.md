@@ -950,3 +950,118 @@ still apply; no preallocation or total heap/CPU theorem is claimed. Exhaustion
 reports `resource-exhausted` and returns no validated batch. Zero columns/rows
 are permitted when all supplied metadata is valid. Array order is retained;
 identity never depends on delimiter concatenation or Unicode normalization.
+
+
+### Source-owned action purposes — draft ontology0.2 refinement2026-10-15
+
+Action IDs and policy grants MUST NOT be treated as action-purpose declarations.
+A rule MAY legitimately grant a reverse action. Names such as `read` or `reverse`
+are exact opaque IDs; their spelling MUST NOT select purpose. Native/caller
+archives and request annotations MUST NOT supply missing purpose closure.
+
+The canonical proposed ontology0.2 schema at
+`spec/extensions/security-v0.2/ontology.schema.json` MAY add
+`actionPurposes:[{action,purposes}]`; the narrower historical spike schema is
+retained separately, not a competing admitted meaning.
+When present, the array MUST be an exhaustive bijection to that ontology's
+`actions` set: one entry for every action and no duplicate/missing/extra IDs.
+It contains1..256 entries; action strings are nonempty, at most4096 UTF-16 units,
+exact and scoped by the ontology documentId/revision. `purposes` is a nonempty
+unique array drawn only from `read`, `field`, `original-authorized`, `reverse`,
+`vault-write`, `other`. A reverse or vault-write entry MUST contain exactly its
+single purpose, excluding every other purpose. `other` MUST also be a singleton;
+it explicitly means outside these protected operation classes, never unknown,
+unspecified or a default for an omitted action. Ordinary-purpose combinations
+remain subject to the owning operation profile's existing distinctness rules.
+Unknown members or purpose values remain preservable source and refuse checking.
+
+Absence retains the older draft ontology behavior; it does not establish purpose
+separation. Migration MUST NOT invent purposes from names/grants/defaults. A new
+purpose/obligation check MUST refuse when a complete purpose closure is absent.
+Whole draft ontology checking MUST validate these rules whenever the optional
+member is present; malformed purpose declarations MUST NOT be ignored.
+The ontology remains a draft; this addition is not core or native admission.
+
+`inspectSecurityActionPurposes(ontology,documents)` resolves that exact draft0.2
+ontology and its original immutable model-document entries, then requires its
+complete action-purpose closure. It returns immutable `{status,ontology,documents,
+purposes,complete:false,authority:false,diagnostics}`. Status is
+`resolved-purposes` or `refused`; refusal clears `purposes` to an empty array,
+never returning a partial accepted classification. JSON-compatible source is
+retained; snapshot failures may retain null sources. Core JSON value/depth limits
+and a private4000000 UTF-16 cumulative key/string ledger apply before checking,
+with explicit `resource-exhausted` refusal and no trimming. This is not a total
+preallocation/heap/CPU theorem. The operation never evaluates policy grants,
+executes reverse/vault operations or returns a credential.
+
+Purpose closure states authored intent only. Before any0.2 operation admission,
+each operation owner MUST check the actual action IDs derived from its original
+source-bound profile against the declared purposes. A normal read action must
+be declared read, a trusted field-action mapping field, and a Weft-derived
+originalAction original-authorized; missing/unknown/incompatible purposes refuse.
+CRUD/ownership/policy operations retain their existing owner contracts and may
+not be relabeled as reverse/vault-write/other to skip those checks. Weft alone
+continues to own target/field/operator→originalAction designation. This taxonomy
+MUST NOT add a competing binding or accept a caller-provided list as proof of
+all actual routes. Native current-authority/custody, profile inventory completeness,
+source authentication and compiler use still require their own evidence.
+
+A reverseAction must resolve to a reverse-only action in this exact ontology;
+a declared vaultWriteAction must resolve to vault-write-only. These checks do
+not reject rules that explicitly grant either action, and they do not imply
+that a subject holds those grants. Ordinary/original access returns the stored
+canonical token, never plaintext recovery. S21-S25 remain required until their
+actual obligation/evaluation paths are independently exercised and admitted.
+
+### Declared protection obligation report — draft2026-10-15
+
+`inspectProtectionObligations(policy,catalog,closure,ontology)` combines the
+existing exact source/domain/parameter checks with the complete draft0.2
+ontology purpose closure above. The policy's ontology documentId/revision MUST
+match exactly; every policy action MUST belong to that ontology. Every selected
+catalog disposition's protected/output Fields MUST equal its transform domains.
+Every catalog transform is checked, including unused declarations. No policy
+condition is evaluated and no actual operation-owner designation is inferred.
+
+A hash MUST declare a nonempty algorithm and known none/keyed salt custody.
+Unsalted hashes MUST retain effective equality (authored equality or the existing
+determinism-implied equality) and produce the mandatory dictionary warning.
+Algorithm and salt custody remain unverified declarations; no hash recipe runs.
+Tokenize/encrypt MUST carry the existing complete stored custody shape, including
+all five explicit propagation strings. Opaque declarations are retained, not
+parsed as programs or treated as proof of propagation/revocation behavior.
+Unknown source members/versions/purpose meanings refuse; an opaque declaration
+string is not an unknown operator. Consumer validation of its actual meaning
+and enforcement remains required under CONTRACT-063.
+
+Keyed/vault reversibility MUST name a reverse-only action in the exact ontology.
+A reverseAction on reversibility none refuses as contradictory. A supplied
+custody.vaultWriteAction MUST name a vault-write-only action; its absence never
+permits a stored mutation. Explicit policy grants for either action remain valid
+source and MUST NOT be mistaken for ordinary read/field-purpose designations.
+No ordinary/original disposition implies either grant or performs reversal.
+
+The immutable result retains `policy,catalog,closure,ontology,purposes,diagnostics`,
+`complete:false`, `authority:false`, `status:"declared-obligations"|"refused"`
+and `obligations`. Refusal clears all obligations, without partial accepted
+reports. An obligation is exactly `{transform:{id,version},kind,status:"unverified",
+declaration}`. Kinds and declarations are:
+
+| kind | declaration |
+| --- | --- |
+| hash-algorithm | `{algorithm}` |
+| salt-custody | Original saltCustody object |
+| dictionary-attack-warning | `{code:"UNSALTED_HASH_DICTIONARY_ATTACK",warning}` with a mandatory dictionary-attack warning string |
+| stored-custody | Original complete custody object |
+| propagation | `{channel,declaration}` for each history/snapshots/exports/feeds/caches string |
+| reverse-action | `{action,reversibility}` |
+| vault-write-action | `{action}` |
+
+Order follows catalog order, then the table's applicable hash/custody/propagation/
+write/reverse sequence; propagation channel order is history, snapshots, exports,
+feeds, caches. There is no enforced/qualified outcome. This is not a BindingReceipt
+or a credential, and all native obligations remain unverified. Existing per-source
+snapshot/text/parameter budgets and the purpose-context bound apply independently;
+no total pipeline resource theorem is claimed. Errors retain their original
+source codes or `PROTECTION_DECLARATIONS`. The complete crypto/function/query/
+policy/native gates remain separate; requireProtectionInterpretation stays closed.
