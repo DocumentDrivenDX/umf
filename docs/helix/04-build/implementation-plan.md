@@ -12207,3 +12207,32 @@ Owner clarification keeps GitHub Pages with browser WASM compilation and local s
 
 
 The [canonical coordinated implementation ledger](https://github.com/DocumentDrivenDX/umf/blob/e05e67365e03a374af0e56008263acce47307edd/docs/helix/04-build/typed-persistence-design.md#coordinated-sql-to-actions-implementation-ledger) aligns this browser lane with the typed persistence work. Its L0 preserves the original b8 model / 6f preparation / 633f producer cohort; Python generation and new access annotations are independent work. Current website registration, separately issued read grants and materialization/seal recovery are component evidence. Remaining acceptance requires public sample loading, keyed submission and control recovery, atomic execution/outcomes/replay, three items partitioned [2,1], no-op/refusal/stale-seal/duplicate/reload/ACK-loss/multi-tab/failure witnesses with state/journal/feed/receipts, Astra end-to-end review, signatures and public deployment verification. New source cohorts require separate construction and qualification; this link does not merge or relabel runtime artifacts.
+
+
+### Browser UPDATE implementation and publication boundary — 2026-10-15
+
+The frozen CONTRACT-905 browser lane now exercises original Weft compilation,
+Truss catalog/action registration, an independently issued selection-read grant,
+initial sample loading, frozen materialization/sealing, submission, claim and
+atomic execution against actual PGlite tables. Three selected Products execute
+in batches [2,1]; the fourth remains unchanged. The original UMF633 producer,
+b8 model and 6f preparation cohort remain independently pinned inside the
+reviewed provider bundle.
+
+[Website browser evidence](evidence/bulk-update/website-compiler-results.json)
+retains 22 artifact pins and actual reload/lost-acknowledgement recovery,
+strict host-intent persistence before dispatch, cross-tab recovery, original
+outcome replay, history paging and cancellation. Missing or indeterminate
+execution outcomes do not authorize redispatch. [Astra execution review](evidence/bulk-update/website-execute-review-20261015/review.json)
+and [history/cancellation review](evidence/bulk-update/website-history-cancel-review-20261015/review.json)
+record the independently checked scope, including no-op and refusal controls.
+These results supersede the earlier statement that all browser execution work
+remains open. They do not promote the separate protected native bulk cohort.
+
+Publication uses an isolated projection onto current main, preserving its
+library source, schemas and dependency lock. Regenerated current-main API guide
+documentation does not requalify the frozen producer. Public deployment remains
+open: twelve changed pages require signing, CI currently reports a schema-browser
+installed-release mismatch and a native handler commit-test failure, and the
+published GitHub Pages origin still requires end-to-end verification. Local
+runtime success and dependency progress do not complete public acceptance.

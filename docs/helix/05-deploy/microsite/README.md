@@ -11,12 +11,20 @@ The page is `action-compiler.html`; verify it with
 ephemeral static server and checks actual Chromium with external/write requests
 blocked. Example rows are explicitly unchanged by this compiler-only stage.
 
-The full browser-local Truss path is a separate CONTRACT-905 cohort using an
-issued local-store owner and independent selection-read grant. It requires a
-independently qualified sample-data bootstrap, effects, durable batch outcomes
-and execution recovery. Compilation, catalog, grants, materialization and seal
-recovery are qualified separately below. The unchanged person-required native cohort cannot be
-relabeled as local ownership. GitHub Pages remains the publishing target.
+The browser-local Truss path uses the separate [CONTRACT-905 source cohort](https://github.com/DocumentDrivenDX/umf/blob/40f011402bf8f0c9512225975b62a034f1da325c/docs/helix/02-design/contracts/CONTRACT-905-browser-local-actions.md),
+an issued local-store owner and independent selection-read grant. The reviewed
+required-String, rootless Products proof covers public loading, preparation,
+frozen materialization/sealing, keyed queueing/claiming, atomic batches, recovery,
+committed row history and cancellation. Exact component evidence is retained
+below; broader native person/session and full bulk protocols remain independent.
+GitHub Pages remains the publishing target.
+
+This website embeds the frozen original UMF ESM from `40f01140` (producer
+`633f8ad6`) inside the pinned Truss bundle. Publishing these assets against current
+main leaves its library `src/`, `spec/`, package and lock files unchanged; it does
+not qualify that different library build as the original producer. Replacing the
+frozen artifact requires a separately constructed and qualified source cohort,
+as tracked in the [shared implementation ledger](https://github.com/DocumentDrivenDX/umf/blob/e05e67365e03a374af0e56008263acce47307edd/docs/helix/04-build/typed-persistence-design.md#coordinated-sql-to-actions-implementation-ledger).
 
 Owner direction (2026-10-08): build a browsable schema explorer for domain
 packs in the existing microsite. This delivers a read-only metadata consumer
