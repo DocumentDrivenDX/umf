@@ -1,0 +1,36 @@
+{
+  "scope": "Website materialization/seal-recovery integration only; no public bootstrap or mutation execution",
+  "status": "changes_requested",
+  "findings": [
+    {
+      "id": "SEAL-WEB-01",
+      "priority": 1,
+      "file": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-compiler.ts",
+      "lines": [
+        33,
+        56,
+        62
+      ],
+      "title": "Refresh durable intent before admitting another tab after takeover",
+      "scenario": "Tab B is loaded while shared storage is empty. Tab A materializes/seals, stores pending intent and loses acknowledgement. After A detaches, B opens and prepares the same store. B still has intent=null and may materialize, mint a new request key/attempt and overwrite the original unresolved durable reference. Exclusive database ownership does not refresh B memory.",
+      "minimalCorrection": "Re-read/validate shared durable intent after open/prepare and immediately before preview/seal. Any retained intent or read error must block fresh work. Use storage events to update stale UI, plus an existing-second-tab takeover browser regression that preserves the original key/reference without a fresh seal dispatch.",
+      "independentReproduction": "page-controls-before-fix.json: 2 seal dispatches and unequal original/retained keys"
+    }
+  ],
+  "nonblockingDocumentation": [
+    "Worker line1 claims messages cannot supply SQL despite preview accepting source SQL for original compiler. README still says only open/register/close. Update to describe actual closed command surface and fixed host model."
+  ],
+  "independentChecks": {
+    "workerControls": 13,
+    "packagingControls": 8,
+    "exactBuilderOutputs": 375,
+    "originalAssets": 372,
+    "exactOwnerSourcePins": 76,
+    "currentBrowserReceiptHashes": 18
+  },
+  "limitations": [
+    "Independent page/worker controls use explicit synthetic DOM/storage/Worker/provider adapters in Bun, not PGlite or browser native execution.",
+    "Actual retained parent Chromium evidence is current for its zero-row, quota-before-dispatch and dropped-acknowledgement/reload cases; it does not yet cover the reproduced stale existing second-tab takeover.",
+    "Native execution, data bootstrap and full end-to-end mutation remain unqualified."
+  ]
+}

@@ -1,3 +1,4 @@
+import {readSealIntent,reserveSealIntent,settleSealIntent,type SealIntent as Intent} from './seal-intent';
 // The browser transports requests; original Rust WASM owns SQL/model/action semantics.
 const sql=document.querySelector<HTMLTextAreaElement>('#sql')!;
 const status=document.querySelector<HTMLElement>('#status')!;
@@ -18,33 +19,80 @@ try {
  run.disabled=false;run.addEventListener('click',compile);compile();
 }catch(error){status.textContent='Compiler unavailable';output.textContent=error instanceof Error?error.message:String(error);}
 
-// The compiler cohort above remains independent of local catalog registration.
+// Every capability and frozen-work handle remains in the dedicated worker.
 const openStore=document.querySelector<HTMLButtonElement>('#store-open')!;
 const registerStore=document.querySelector<HTMLButtonElement>('#store-register')!;
 const closeStore=document.querySelector<HTMLButtonElement>('#store-close')!;
+const previewStore=document.querySelector<HTMLButtonElement>('#store-preview')!;
+const sealStore=document.querySelector<HTMLButtonElement>('#store-seal')!;
+const recoverStore=document.querySelector<HTMLButtonElement>('#store-recover')!;
 const storeStatus=document.querySelector<HTMLElement>('#store-status')!;
 const catalogOutput=document.querySelector<HTMLElement>('#catalog')!;
-let worker:Worker|undefined,sequence=0;
+let intent:Intent|null=null,intentError='Intent journal not yet read',preview:any=null;
+async function refreshIntent(){
+ try{const retained=await readSealIntent();if(intent&&!retained)throw Error('Original intent unexpectedly missing');intent=retained;intentError='';if(intent)preview=null;}
+ catch(error){intentError=error instanceof Error?error.message:String(error);throw error;}
+}
+const intentChannel=new BroadcastChannel('umf-products-demo-control');
+intentChannel.onmessage=()=>{void refreshIntent().catch(()=>{}).finally(buttons);};
+let worker:Worker|undefined,sequence=0,available=false,prepared=false,busy=false;
 let waiting:{id:number;resolve:(value:any)=>void;reject:(error:Error)=>void}|undefined;
-function requestStore(command:string):Promise<any>{
+function buttons(){
+ openStore.disabled=busy||available;registerStore.disabled=closeStore.disabled=busy||!available;
+ previewStore.disabled=busy||!prepared||!!intent||!!intentError;
+ sealStore.disabled=busy||!prepared||!preview||!!intent||!!intentError;
+ recoverStore.disabled=busy||!prepared||!intent||!!intentError;
+}
+function requestStore(command:string,payload?:unknown):Promise<any>{
  if(waiting)throw Error('Store request already pending');
  if(!worker){
   worker=new Worker(new URL('./truss-catalog-worker.js',import.meta.url),{type:'module'});
   worker.onmessage=event=>{if(waiting&&event.data.id===waiting.id){const current=waiting;waiting=undefined;event.data.error?current.reject(new Error(event.data.error)):current.resolve(event.data.result);}};
-  worker.onerror=event=>{const current=waiting;waiting=undefined;current?.reject(new Error(event.message));worker?.terminate();worker=undefined;};
+  worker.onerror=event=>{const current=waiting;waiting=undefined;current?.reject(new Error(event.message));detach();buttons();};
  }
- return new Promise((resolve,reject)=>{waiting={id:++sequence,resolve,reject};worker!.postMessage({id:sequence,command});});
+ return new Promise((resolve,reject)=>{waiting={id:++sequence,resolve,reject};worker!.postMessage({id:sequence,command,payload});});
 }
+function detach(){worker?.terminate();worker=undefined;available=false;prepared=false;preview=null;}
 async function localOperation(command:string){
- openStore.disabled=registerStore.disabled=closeStore.disabled=true;storeStatus.textContent='Working…';
+ let payload:unknown;
+ if(busy)return;busy=true;buttons();
  try{
-  const result=await requestStore(command);
-  catalogOutput.textContent=JSON.stringify(result,null,2);
-  if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';worker?.terminate();worker=undefined;openStore.disabled=false;}
-  else if(result.outcome==='closed'){storeStatus.textContent='Store closed';worker?.terminate();worker=undefined;openStore.disabled=false;}
-  else{storeStatus.textContent=result.outcome==='available'?'Local Truss store opened':result.outcome==='refused'?'Catalog registration refused':'UPDATE prepared';registerStore.disabled=closeStore.disabled=false;}
- }catch(error){storeStatus.textContent='Local store unavailable';catalogOutput.textContent=error instanceof Error?error.message:String(error);worker?.terminate();worker=undefined;openStore.disabled=false;}
+  await refreshIntent();
+  if(command==='preview'){if(intent||intentError)throw Error('Original seal intent must be reconciled');payload={sql:sql.value};}
+  if(command==='seal'){
+   if(!preview||intent||intentError)throw Error('Fresh materialization and available intent storage required');
+   const reference={profile:'truss-browser-seal-reference/0.1' as const,storeId:preview.sealContext.storeId,incarnation:preview.sealContext.incarnation,modelSha256:preview.sealContext.modelSha256,requestKey:crypto.randomUUID(),attempt:crypto.randomUUID(),manifestSha256:preview.manifest.sha256,planSha256:preview.plan.sha256};
+   const pending:Intent={profile:'umf.demo.seal-intent/1',reference,input:preview.input,phase:'pending'};
+   // Strict atomic journal transaction must complete before dispatch.
+   await reserveSealIntent(pending);intent=pending;intentChannel.postMessage({changed:true});
+   payload={requestKey:reference.requestKey,attempt:reference.attempt};
+  }
+  if(command==='recover'){if(!intent)throw Error('Original seal intent required');payload={reference:intent.reference};}
+ }catch(error){storeStatus.textContent='Operation not sent';catalogOutput.textContent=error instanceof Error?error.message:String(error);busy=false;buttons();return;}
+ buttons();storeStatus.textContent=command==='seal'?'Seal pending; original intent saved':'Working…';
+ try{
+  const result=await requestStore(command,payload);catalogOutput.textContent=JSON.stringify(result,null,2);
+  if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';detach();}
+  else if(result.outcome==='closed'){storeStatus.textContent='Store closed';detach();}
+  else if(result.outcome==='available'){available=true;prepared=false;await refreshIntent();storeStatus.textContent='Local Truss store opened';}
+  else if(result.outcome==='prepared'){prepared=true;preview=null;await refreshIntent();storeStatus.textContent='UPDATE prepared';}
+  else if(result.outcome==='materialized'){if(result.input.sql!==sql.value){preview=null;storeStatus.textContent='Statement changed; preview again';}else{preview=result;storeStatus.textContent=`Frozen manifest: ${result.count} items, ${result.batches.length} batches`;}}
+  else if(command==='seal'||command==='recover'){
+   if(!intent)throw Error('Original intent unexpectedly unavailable');
+   const retained:Intent={...intent,phase:result.outcome==='sealed'?'settled':'pending',outcome:result};
+   intent=retained;storeStatus.textContent='Seal: '+result.outcome;
+   try{await settleSealIntent(retained);intentChannel.postMessage({changed:true});}catch{storeStatus.textContent+='; local status not saved, original pending reference retained';}
+   if(result.outcome==='unknown')detach();
+  }else{storeStatus.textContent='Operation refused';}
+ }catch(error){storeStatus.textContent=intent?'Response unavailable; original seal intent retained':'Local store unavailable';catalogOutput.textContent=error instanceof Error?error.message:String(error);detach();}
+ finally{busy=false;buttons();}
 }
 openStore.addEventListener('click',()=>void localOperation('open'));
 registerStore.addEventListener('click',()=>void localOperation('register'));
 closeStore.addEventListener('click',()=>void localOperation('close'));
+previewStore.addEventListener('click',()=>void localOperation('preview'));
+sealStore.addEventListener('click',()=>void localOperation('seal'));
+recoverStore.addEventListener('click',()=>void localOperation('recover'));
+sql.addEventListener('input',()=>{preview=null;buttons();});
+buttons();
+void refreshIntent().catch(error=>{storeStatus.textContent='Seal journal unavailable; no new seal allowed';catalogOutput.textContent=String(error);}).finally(buttons);

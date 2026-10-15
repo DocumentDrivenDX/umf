@@ -13,9 +13,9 @@ blocked. Example rows are explicitly unchanged by this compiler-only stage.
 
 The full browser-local Truss path is a separate CONTRACT-905 cohort using an
 issued local-store owner and independent selection-read grant. It requires a
-matching Weft lowering plus independently qualified action registration, selection
-grants, sealing, effects and recovery. Local compilation and the actual Truss
-PGlite core catalog are qualified separately below. The unchanged person-required native cohort cannot be
+independently qualified sample-data bootstrap, effects, durable batch outcomes
+and execution recovery. Compilation, catalog, grants, materialization and seal
+recovery are qualified separately below. The unchanged person-required native cohort cannot be
 relabeled as local ownership. GitHub Pages remains the publishing target.
 
 Owner direction (2026-10-08): build a browsable schema explorer for domain
@@ -204,16 +204,17 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
 The SQL page also opens a worker-owned Truss browser catalog using the original
-reviewed bundle from Truss `9e50daf1`. Build it with
+reviewed bundle from Truss `f8495ec6`. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
-owner capability private and accepts only open/register/close commands against the
+owner capability private and accepts open/register/preview/seal/recover/close commands against the
 fixed local Products model. Prepare UPDATE registers the actual generic Truss
 catalog, then asks Truss to admit the original local action and separately issue
 its selection-read grant. The original owner, action and grant capabilities stay
-inside the worker and are issued afresh after reopen. This does not select rows,
-seal manifests or execute UPDATEs.
+inside the worker and are issued afresh after reopen. Preview invokes the original compiler/lowerer against real Truss rows and
+constructs the original UMF frozen manifest; seal and recovery use Truss custody.
+Sample-data bootstrap and action execution remain unfinished.
 The browser verifier checks registration, unchanged retry, second-tab exclusion
 and catalog/incarnation retention after reload under a `/umf/` base path.
 
@@ -221,3 +222,16 @@ The local compiler is pinned to Weft `535b5c7`, original local model `b8ce3cfe`
 and preparation `6f5e6946`. Historical native compiler assets remain retained
 separately and are not relabelled. The compiler and catalog now use the same
 local model; sample rows remain examples until Truss action execution is wired.
+
+Before seal dispatch, the page saves the original request key, attempt, source
+intent and inert seal reference in an atomic, strict-durability IndexedDB transaction.
+Transaction completion precedes dispatch; a failed reservation sends no seal RPC.
+Fresh journal reads and cross-tab notifications prevent stale-tab intent replacement.
+A pending intent blocks a fresh seal; reload requires reopening and freshly
+preparing capabilities before recovering the original reference. All returned
+control outcomes and receipt/manifest bytes are retained, including unresolved
+absence and uncertain storage outcomes. These metadata are not authority.
+The Chromium test deliberately drops an actual sealed acknowledgement, closes the owner tab
+and recovers the same bytes from an already-open second tab. It also refuses an injected pre-dispatch storage
+quota failure. The website test selects zero rows from its unpopulated real store;
+Truss's administrative three-row fixture is not used as website bootstrap.

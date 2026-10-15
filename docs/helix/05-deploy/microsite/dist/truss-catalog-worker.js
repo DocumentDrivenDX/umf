@@ -4,12 +4,14 @@ var current;
 var pending = Promise.resolve();
 var action;
 var readGrant;
+var frozen;
+var modelSha256;
 scope.onmessage = (event) => {
-  const id = event.data?.id, command = event.data?.command;
+  const id = event.data?.id, command = event.data?.command, payload = event.data?.payload;
   pending = pending.then(async () => {
     try {
-      if (!Number.isSafeInteger(id) || !["open", "register", "close"].includes(command))
-        throw Error("Unknown catalog request");
+      if (!Number.isSafeInteger(id) || !["open", "register", "preview", "seal", "recover", "close"].includes(command))
+        throw Error("Unknown store request");
       if (command === "open") {
         if (current)
           throw Error("Store already opened");
@@ -36,13 +38,32 @@ scope.onmessage = (event) => {
           const granted = await current.store.grantSelectionRead(current.owner, issued.action);
           action = issued.action;
           readGrant = granted.grant;
+          frozen = undefined;
+          modelSha256 = issued.model.sha256;
           scope.postMessage({ id, result: { outcome: "prepared", registration: registration.outcome, catalog: await current.store.catalog(current.owner), modelSha256: issued.model.sha256, preparationSha256: issued.preparation.sha256, selectionRead: granted.declaration } });
-        } else {
+        } else if (command === "close") {
           await current.store.close(current.owner);
           current = undefined;
           action = undefined;
           readGrant = undefined;
+          frozen = undefined;
+          modelSha256 = undefined;
           scope.postMessage({ id, result: { outcome: "closed" } });
+        } else {
+          if (!action || !readGrant || !modelSha256)
+            throw Error("Fresh issued action and read grant required");
+          if (command === "preview") {
+            const input = { sql: payload?.sql, parameters: {}, batchSize: 2, maxItems: 1e4 };
+            frozen = undefined;
+            frozen = await current.store.materialize(current.owner, action, readGrant, input);
+            const info = current.store.info(current.owner);
+            scope.postMessage({ id, result: { outcome: "materialized", plan: frozen.plan, manifest: frozen.manifest, count: frozen.count, batches: frozen.batches, input, sealContext: { storeId: info.storeId, incarnation: info.incarnation, modelSha256 } } });
+          } else if (command === "seal") {
+            if (!frozen)
+              throw Error("Original materialization required");
+            scope.postMessage({ id, result: await current.store.seal(current.owner, action, readGrant, frozen.work, { requestKey: payload?.requestKey, attempt: payload?.attempt }) });
+          } else
+            scope.postMessage({ id, result: await current.store.recoverSeal(current.owner, action, readGrant, payload?.reference) });
         }
       }
     } catch (error) {
