@@ -1990,3 +1990,14 @@ indices and raw-only rendering independence are checked. This contributes to
 US-056-AC2/AC6 semantic correspondence only; no native aggregate guard or
 backend case is promoted. Acceptance45/158,113 unimplemented unchanged.
 See [scoped evidence and review](../../04-build/evidence/security/weft-sum-child-20261015/README.md).
+
+### External delegation closure counterexample — 2026-10-15
+
+Independent native testing of in-progress activation confirms a pre-existing
+PUBLIC-callable outside-schema SECURITY DEFINER function owned by runtime owner
+can read all six objects after truss-only grant lockdown, while ordinary raw
+SELECT is false and the positive guarded query still passes. Denied Resource
+rawsalary and hidden Assignment facts escape. This keeps US-056-AC5/AC8 and
+B04/B05/B10/B14 open; CONTRACT-063 requires complete delegated authority closure.
+Truss is implementing external routine/view admission checks; no verified fix
+or backend promotion is inferred. See [exact counterexample](../../04-build/evidence/security/truss-external-delegation-20261015/README.md).
