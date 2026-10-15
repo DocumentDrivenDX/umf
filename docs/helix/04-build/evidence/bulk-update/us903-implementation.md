@@ -1,0 +1,5 @@
+# US-903 portable integration and construction evidence — 2026-10-15
+
+Restored manifest inspection/assessment and bulk result validators are replayed with the new pure constructor. The [manifest browser receipt](us903-browser.json) and [constructor browser receipt](us903-construction-browser.json) record actual built public ESM in Chromium. The independent Python consumer is tests/actions-manifest-oracle.py, consuming the original fixture corpus without importing shared JS/schema validators. Final source/test/review evidence is retained in construction-receipt.json.
+
+The constructor retains exact original plan bytes, native supplied order and original Key receipt sidecars. It uses original Key tuple bytes for numeric semantic equality, checks output expansion before serialization, and returns sealed:false,complete:false,authority:false. Native identity order, selection completeness, guard issuance, current authorization, seal custody, acknowledgement recovery and execution are not established by portable tests. No whole-system/live-demo completion is claimed.

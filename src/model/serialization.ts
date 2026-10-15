@@ -12,6 +12,14 @@ function decimal(text: string): string {
   const exponent = BigInt(match[4] || '0') - BigInt((match[3] || '').length) + BigInt(digits.length - trimmed.length);
   return `${match[1] === '-' ? '-' : ''}${trimmed}e${exponent}`;
 }
+/** Original interoperable JSON-number profile, reusable by larger framed readers. */
+export function assertExactJsonNumber(token:string):void {
+ const value=Number(token);
+ if(!Number.isFinite(value)||Number.isInteger(value)&&!Number.isSafeInteger(value)||Object.is(value,-0))throw new UmfError('NUMBER','Noninteroperable JSON number');
+ // A nonzero mantissa underflowing to zero cannot preserve its meaning.
+ if(value===0&&/[1-9]/.test(token.split(/[eE]/)[0]!))throw new UmfError('NUMBER','Parsing would change the decimal value');
+ if(decimal(token)!==decimal(String(value)))throw new UmfError('NUMBER','Parsing would change the decimal value');
+}
 export function readJsonValue(text: string, format: 'json' | 'yaml' = 'yaml'): Json {
   if (text.length > LIMITS.maxTextLength) throw new UmfError('LIMIT', 'Source text exceeds limit');
   if (format === 'json') {

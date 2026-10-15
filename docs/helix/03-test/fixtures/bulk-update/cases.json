@@ -1,0 +1,650 @@
+{
+  "protocol": "bulk-update-test-cases/1",
+  "owner": "UMF US-902; independent manifest consumer UMF US-903",
+  "state": "authored expectations, runtime not executed",
+  "model": "model.json",
+  "population": [
+    {
+      "identity": "2",
+      "key": "c2",
+      "version": "1",
+      "active": true,
+      "last_seen": 50
+    },
+    {
+      "identity": "10",
+      "key": "c10",
+      "version": "3",
+      "active": true,
+      "last_seen": 90
+    },
+    {
+      "identity": "11",
+      "key": "c11",
+      "version": "2",
+      "active": true,
+      "last_seen": 99
+    },
+    {
+      "identity": "12",
+      "key": "c12",
+      "version": "1",
+      "active": true,
+      "last_seen": 150
+    }
+  ],
+  "cases": [
+    {
+      "id": "valid-update",
+      "input": {
+        "sql": "UPDATE Customer SET active=FALSE WHERE last_seen<:cutoff",
+        "cutoff": {
+          "integerToken": "100"
+        },
+        "batchSize": 2
+      },
+      "expected": {
+        "selected": [
+          "2",
+          "10",
+          "11"
+        ],
+        "partition": [
+          2,
+          1
+        ],
+        "values": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "id": "underfilled-partition",
+      "input": {
+        "counts": [
+          1,
+          2
+        ],
+        "batchSize": 2,
+        "items": 3
+      },
+      "expected": {
+        "refuse": "PAP_INVALID"
+      }
+    },
+    {
+      "id": "cross-namespace-token",
+      "input": {
+        "jobs": [
+          {
+            "namespace": "n1",
+            "id": "j"
+          },
+          {
+            "namespace": "n2",
+            "id": "j"
+          }
+        ],
+        "batch": 0,
+        "item": 0
+      },
+      "expected": {
+        "tokens": [
+          "pap1/n1/j/0/0",
+          "pap1/n2/j/0/0"
+        ]
+      }
+    },
+    {
+      "id": "masked-null-predicate",
+      "input": {
+        "row": {
+          "id": "12",
+          "active": true,
+          "last_seen": null
+        },
+        "predicate": "active=FALSE AND last_seen<100"
+      },
+      "expected": {
+        "refuse": "WFT-MUTATION-DOMAIN",
+        "runnable": false
+      }
+    },
+    {
+      "id": "forged-seal",
+      "input": {
+        "edit": "append target then recompute all digests",
+        "issuerRetainedBytesMatch": false
+      },
+      "expected": {
+        "refuse": "PAP_SEAL",
+        "runnable": false
+      }
+    },
+    {
+      "id": "registry-preservation",
+      "input": {
+        "additionalCallback": "vendor.opaque/1",
+        "actionOriginalBytes": true
+      },
+      "expected": {
+        "callbackPreserved": true,
+        "executionVerified": false
+      }
+    },
+    {
+      "id": "missing-snapshot-claim",
+      "input": {
+        "omit": "snapshot.coherentCut"
+      },
+      "expected": {
+        "compatible": false
+      }
+    },
+    {
+      "id": "stopped-submit-replay",
+      "input": {
+        "equalRetainedSubmit": true,
+        "state": "stopped"
+      },
+      "expected": {
+        "status": "submitted",
+        "state": "stopped"
+      }
+    },
+    {
+      "id": "cancelled-submit-replay",
+      "input": {
+        "equalRetainedSubmit": true,
+        "state": "cancelled"
+      },
+      "expected": {
+        "status": "submitted",
+        "state": "cancelled"
+      }
+    },
+    {
+      "id": "stale-worker",
+      "input": {
+        "fence": "1",
+        "currentFence": "2",
+        "workerAuthorized": false
+      },
+      "expected": {
+        "refuse": "AUTHORIZATION",
+        "validJobUnchanged": true
+      }
+    },
+    {
+      "id": "deleted-before-guard",
+      "input": {
+        "originalTargetAbsent": true,
+        "txInvoked": false
+      },
+      "expected": {
+        "batch": "conflict",
+        "code": "PAP_GUARD",
+        "itemTerminal": false
+      }
+    },
+    {
+      "id": "rollback-before-stop-crash",
+      "input": {
+        "effectAdmitted": true,
+        "originalTermination": "confirmed-noncommit",
+        "terminalOutcome": null,
+        "failureDisposition": null
+      },
+      "expected": {
+        "job": "stopped",
+        "code": "PAP_ABORT_DISPOSITION_UNKNOWN",
+        "retry": false
+      }
+    },
+    {
+      "id": "unknown-native-status",
+      "input": {
+        "effectAdmitted": true,
+        "pg_xact_status": null,
+        "terminalOutcome": null
+      },
+      "expected": {
+        "job": "reconciling",
+        "retry": false
+      }
+    },
+    {
+      "id": "empty-manifest",
+      "input": {
+        "items": []
+      },
+      "expected": {
+        "batches": [],
+        "job": "completed",
+        "businessReceipt": false
+      }
+    },
+    {
+      "id": "duplicate-json-member",
+      "input": {
+        "originalUtf8": "{\"protocol\":\"umf.actions.plan/1\",\"protocol\":\"other\"}"
+      },
+      "expected": {
+        "refuse": "PAP_INVALID"
+      }
+    },
+    {
+      "id": "unpaired-surrogate",
+      "input": {
+        "originalUtf8": "{\"name\":\"\\ud800\"}"
+      },
+      "expected": {
+        "refuse": "PAP_INVALID"
+      }
+    }
+  ],
+  "modelSha256": "6fdf2d51e6bd2f167f43dbb32a6ce07ecc504e81fbe969de8e93c5fe5b924594",
+  "allocatedScenarios": [
+    {
+      "criterion": "US-902-AC1",
+      "plannedTest": "registered_action",
+      "ownerCases": [
+        "valid-update",
+        "registry-preservation"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-902-AC2",
+      "plannedTest": "retain_unknown",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-902-AC3",
+      "plannedTest": "capability_assessment",
+      "ownerCases": [
+        "missing-snapshot-claim"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-902-AC4",
+      "plannedTest": "exact_values",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-902-AC5",
+      "plannedTest": "portable_boundary",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-902-AC6",
+      "plannedTest": "strict_json_bounds",
+      "ownerCases": [
+        "duplicate-json-member",
+        "unpaired-surrogate",
+        "registry-preservation"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-903-AC1",
+      "plannedTest": "complete_partition",
+      "ownerCases": [
+        "valid-update",
+        "underfilled-partition"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-903-AC2",
+      "plannedTest": "artifact_integrity",
+      "ownerCases": [
+        "forged-seal"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-903-AC3",
+      "plannedTest": "empty_and_limits",
+      "ownerCases": [
+        "empty-manifest"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-903-AC4",
+      "plannedTest": "no_false_attestation",
+      "ownerCases": [
+        "forged-seal",
+        "missing-snapshot-claim"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-903-AC5",
+      "plannedTest": "bulk_outcome_shape",
+      "ownerCases": [
+        "stopped-submit-replay",
+        "cancelled-submit-replay",
+        "stale-worker",
+        "unknown-native-status"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-903-AC6",
+      "plannedTest": "manifest_browser_parity",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": false
+    },
+    {
+      "criterion": "US-008-AC1",
+      "plannedTest": "update_plan",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-008-AC2",
+      "plannedTest": "name_and_input_resolution",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-008-AC3",
+      "plannedTest": "bounded_syntax",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-008-AC4",
+      "plannedTest": "predicate_exactness",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-008-AC5",
+      "plannedTest": "compiler_limits",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-008-AC6",
+      "plannedTest": "selection_lowering",
+      "ownerCases": [
+        "valid-update",
+        "masked-null-predicate"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-009-AC1",
+      "plannedTest": "python_no_sidecar",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-009-AC2",
+      "plannedTest": "browser_artifact_parity",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-009-AC3",
+      "plannedTest": "independent_executor",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-009-AC4",
+      "plannedTest": "no_execution_claim",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-009-AC5",
+      "plannedTest": "read_compatibility",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-046-AC1",
+      "plannedTest": "coherent_cut",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-046-AC2",
+      "plannedTest": "freeze_after_selection",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-046-AC3",
+      "plannedTest": "sealing_integrity",
+      "ownerCases": [
+        "forged-seal",
+        "underfilled-partition"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-046-AC4",
+      "plannedTest": "bounded_complete_work",
+      "ownerCases": [
+        "empty-manifest"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-046-AC5",
+      "plannedTest": "authorized_review",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC1",
+      "plannedTest": "atomic_effects",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC2",
+      "plannedTest": "identity_and_version",
+      "ownerCases": [
+        "deleted-before-guard"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC3",
+      "plannedTest": "stop_with_prefix",
+      "ownerCases": [
+        "deleted-before-guard"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC4",
+      "plannedTest": "current_authority",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC5",
+      "plannedTest": "no_op_receipt",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC6",
+      "plannedTest": "capacity_and_failure",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-047-AC7",
+      "plannedTest": "namespace_token_collision",
+      "ownerCases": [
+        "cross-namespace-token"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC1",
+      "plannedTest": "original_recovery",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC2",
+      "plannedTest": "fence_two_workers",
+      "ownerCases": [
+        "stale-worker",
+        "unknown-native-status"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC3",
+      "plannedTest": "cancel_linearization",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC4",
+      "plannedTest": "retention_and_authority",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC5",
+      "plannedTest": "joint_update_proof",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC6",
+      "plannedTest": "diagnostic_privacy",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC7",
+      "plannedTest": "formal_batch_model",
+      "ownerCases": [
+        "valid-update",
+        "rollback-before-stop-crash",
+        "unknown-native-status"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-048-AC8",
+      "plannedTest": "rollback_stop_crash",
+      "ownerCases": [
+        "rollback-before-stop-crash",
+        "unknown-native-status"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-049-AC1",
+      "plannedTest": "gateway_registration",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-049-AC2",
+      "plannedTest": "delegated_human",
+      "ownerCases": [
+        "stale-worker"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-049-AC3",
+      "plannedTest": "outer_transaction_gateway",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-049-AC4",
+      "plannedTest": "native_attempt_custody",
+      "ownerCases": [
+        "rollback-before-stop-crash",
+        "unknown-native-status"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    },
+    {
+      "criterion": "US-049-AC5",
+      "plannedTest": "gateway_native_conformance",
+      "ownerCases": [
+        "valid-update"
+      ],
+      "additionalNativeControlsOwnedByStory": true
+    }
+  ]
+}

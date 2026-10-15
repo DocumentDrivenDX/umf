@@ -109,3 +109,15 @@ export function assessAction(sourceInput:Document,identityInput:ActionIdentity,p
  });
  return copy({source:inspection.source,profile,identity,declaredCompatible:outcomes.every(o=>o.status==='supported'),executionVerified:false,outcomes,diagnostics});
 }
+
+export {inspectActionPlan,assessActionPlan,prepareActionPlanModel} from './plans';
+export type {ActionPlanArtifact,ActionPlanModelPin,PortableActionPin,PortableActionPlan,ActionPlanDiagnostic,ActionPlanSelectionInspector,ActionPlanInspectionContext,ActionPlanInspection,ActionPlanCapability,ActionPlanCapabilities,ActionPlanAssessment,PreparedActionPlanModel} from './plan-types';
+
+export {inspectActionManifest,assessActionManifest} from './manifests';
+export type {ActionManifest,ActionManifestInspection} from './manifest-types';
+
+export {validateBulkOutcome} from './bulk';
+export type {BulkOutcomeValidation} from './bulk';
+
+export {constructActionManifest} from './manifest-construction';
+export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManifest} from './manifest-construction';

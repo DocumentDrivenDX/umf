@@ -445,3 +445,7 @@ Execution status, actual test mappings and source/runtime fingerprints are recor
 in STP-901 and the current action certification evidence. Earlier prototype probes
 alone qualify only their recorded synthetic subsets. Certification requires the
 corresponding current native witnesses and complete core regression gates.
+
+## Portable action plans and frozen-manifest UPDATE — owner direction, 2026-10-13
+
+The frozen-manifest bulk UPDATE proof composes qualified explicit-key invocations under CONTRACT-904, the new bulk coordination contract. This profile remains one action/one store with exact-key selectors; bulk selection, batch receipts, worker fencing and cancellation are not added to tx/1. A qualified Truss adapter must preserve original action revision/input/expected-version/replay/authorization semantics and independently establish whole-batch atomicity and durable outcome composition. Per-item invocation receipts alone do not establish the latter.

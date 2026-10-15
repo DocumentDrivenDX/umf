@@ -1,0 +1,109 @@
+{
+  "profile": "pap-allocation/1",
+  "state": "planned",
+  "stories": [
+    {
+      "story": "US-902",
+      "testPrefix": "bulk-update-portable-action-plans",
+      "criteria": [
+        {
+          "id": "US-902-AC1",
+          "plannedTest": "registered_action",
+          "assertion": "Given exact original owner model/action bytes and explicitly supplied semantic Registry/context, when I inspect and prepare a plan model, then exact portable action pins, set effect, Field/input/frames and complete interpreted dependencies are checked with existing owner semantics, preserving installed callbacks; executor-local revisions are not portable identities and SQL cannot register an action.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-902-AC2",
+          "plannedTest": "retain_unknown",
+          "assertion": "Given unknown plan/model content or malformed recognized members, when I inspect and round-trip it, then original bytes/content remain recoverable and relevant unknown meaning blocks eligibility with source-qualified diagnostics.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-902-AC3",
+          "plannedTest": "capability_assessment",
+          "assertion": "Given exact capability profiles with defined claims/evidence and owner action obligations, when I assess one unchanged original plan using the explicit Registry/context, then each action/selection/manifest/bulk/guard/snapshot obligation is independently assessed; missing or unauthenticated evidence cannot imply execution verification.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-902-AC4",
+          "plannedTest": "exact_values",
+          "assertion": "Given supported exact boolean/integer/string literals and incompatible optional/null/key-changing/handler inputs, when I inspect, then supported values preserve spelling and unsupported executable shapes refuse without coercion.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-902-AC5",
+          "plannedTest": "portable_boundary",
+          "assertion": "Given the shared corpus, when Bun and actual Chromium inspect/assess it, then copied outputs and ordered diagnostics agree without native I/O, state evaluation or host globals.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-902-AC6",
+          "plannedTest": "strict_json_bounds",
+          "assertion": "Given duplicate JSON members, unpaired surrogates, overflowing bytes/depth/nodes or a mutated owner preparation artifact, when inspection/preparation runs with an explicit Registry, then it refuses without partial eligible output and preserves the original input/callback registry.",
+          "state": "planned",
+          "layer": "portable-contract"
+        }
+      ]
+    },
+    {
+      "story": "US-903",
+      "testPrefix": "bulk-update-frozen-action-manifests",
+      "criteria": [
+        {
+          "id": "US-903-AC1",
+          "plannedTest": "complete_partition",
+          "assertion": "Given a retained plan and manifest with three items and batchSize2, when inspected, then only the full-first [2,1] partition and exact constants/frames/identities are admitted; the underfilled [1,2] partition and missing/extra/duplicate work refuse.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC2",
+          "plannedTest": "artifact_integrity",
+          "assertion": "Given whitespace-distinct, tampered or store/epoch-mismatched artifacts, when inspected, then actual UTF-8 digests and scope are checked while original bytes remain retained; no canonical reserialization may rewrite queued intent.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC3",
+          "plannedTest": "empty_and_limits",
+          "assertion": "Given empty work and boundary/overflow cases, when inspected, then empty batches accompany empty items, exact finite boundaries are enforced and overflow yields no eligible partial work.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC4",
+          "plannedTest": "no_false_attestation",
+          "assertion": "Given a schema-valid client manifest, when assessed, then snapshot completeness, native guard issuance, current authorization and atomic replay remain separate unverified obligations; portable inspection cannot seal or execute.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC5",
+          "plannedTest": "bulk_outcome_shape",
+          "assertion": "Given every bulk/control result including submit conflict/refusal, known control noncommit, lost seal/submit/claim/cancel/reconcile acknowledgement and recovered original sampled state, when outcome schemas validate, then complete unions preserve immutable original control results and native/business uncertainty without later-state reconstruction or fresh-token permission.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC6",
+          "plannedTest": "manifest_browser_parity",
+          "assertion": "Given owner-authored portable manifest/bulk fixtures and independent expected outcomes, when Bun/Chromium inspection and the separately coded Python test consumer run, then each agrees with the independent oracle; identical shared-implementation output alone is insufficient.",
+          "state": "planned",
+          "layer": "portable-contract"
+        },
+        {
+          "id": "US-903-AC7",
+          "plannedTest": "pure_construction",
+          "assertion": "Given exact original plan bytes, resolved-action and snapshot basis declarations, ordered selected entity/guard rows and their original core Key tuple receipts, construction verifies every receipt against the pinned model, derives all action inputs/frame versions and deterministic batches, and returns an unsealed Artifact or atomically refuses. Receipt source/identity/value/bytes substitution, unknown members, duplicate work, overflow and malformed input refuse; no native selection, ordering, authorization or seal is attested.",
+          "state": "planned",
+          "layer": "portable-contract"
+        }
+      ]
+    }
+  ]
+}

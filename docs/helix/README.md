@@ -1270,3 +1270,7 @@ The [plan](04-build/artifact-collections-plan.md) and
 [evidence](04-build/evidence/artifact-collections.md) qualify reference validation,
 rights-aware download links and the updated packs.
 Security planning: [shared security feature](01-frame/features/FEAT-008-shared-security.md), [semantic contract](02-design/contracts/CONTRACT-062-security-semantics.md), and [design](02-design/solution-designs/SD-008-shared-security.md). Native qualification is separate from spike results.
+
+## Portable plan and frozen-manifest construction — 2026-10-15
+
+[US-902](01-frame/user-stories/US-902-portable-action-plans.md) and [US-903](01-frame/user-stories/US-903-frozen-action-manifests.md) define the bounded plan preparation/inspection and unsealed frozen-manifest construction slice. [CONTRACT-903](02-design/contracts/CONTRACT-903-frozen-action-manifest.md) separates the pure constructor from Truss-owned selection, ordering, guard issuance, current authorization and durable sealing. Portable success is not execution qualification.

@@ -1,0 +1,425 @@
+{
+  "scope": "US-903 public built ESM in actual Chromium; declaration/inspection only",
+  "criteria": [
+    "US-903-AC1",
+    "US-903-AC2",
+    "US-903-AC3",
+    "US-903-AC4",
+    "US-903-AC5",
+    "US-903-AC6"
+  ],
+  "browser": "153.0.8010.12",
+  "bun": "1.4.2",
+  "cases": 81,
+  "passed": true,
+  "nativeExecution": false,
+  "externalRequests": [],
+  "sourceDigest": "c1bbd8f51c9ada797ebc652d427ca94ba91a82338d1fce0b1ff78363c976899f",
+  "results": [
+    {
+      "id": "valid",
+      "eligible": true,
+      "codes": [],
+      "sourceRetained": true
+    },
+    {
+      "id": "large-opaque-metadata",
+      "eligible": true,
+      "codes": [],
+      "sourceRetained": true
+    },
+    {
+      "id": "empty",
+      "eligible": true,
+      "codes": [],
+      "sourceRetained": true
+    },
+    {
+      "id": "underfilled",
+      "eligible": false,
+      "codes": [
+        "PAP_INVALID"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "missing-batch",
+      "eligible": false,
+      "codes": [
+        "PAP_INVALID"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "ordinal",
+      "eligible": false,
+      "codes": [
+        "PAP_INVALID"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "duplicate-identity",
+      "eligible": false,
+      "codes": [
+        "PAP_SELECTION"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "duplicate-key",
+      "eligible": false,
+      "codes": [
+        "PAP_SELECTION"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "scope",
+      "eligible": false,
+      "codes": [
+        "PAP_GUARD"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "version",
+      "eligible": false,
+      "codes": [
+        "PAP_GUARD"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "missing-frame",
+      "eligible": false,
+      "codes": [
+        "PAP_INVALID"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "constant",
+      "eligible": false,
+      "codes": [
+        "PAP_ACTION"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "selection-digest",
+      "eligible": false,
+      "codes": [
+        "PAP_INTEGRITY"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "action-digest",
+      "eligible": false,
+      "codes": [
+        "PAP_ACTION"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "future-member",
+      "eligible": false,
+      "codes": [
+        "PAP_UNKNOWN"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "annotations",
+      "eligible": true,
+      "codes": [],
+      "sourceRetained": true
+    },
+    {
+      "id": "item-limit",
+      "eligible": false,
+      "codes": [
+        "PAP_LIMIT"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "input-extra",
+      "eligible": false,
+      "codes": [
+        "PAP_ACTION"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "different-guard-profile",
+      "eligible": false,
+      "codes": [
+        "PAP_PROFILE"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "malformed-capabilities",
+      "compatible": false
+    },
+    {
+      "id": "assessment",
+      "compatible": true,
+      "executionVerified": false
+    },
+    {
+      "id": "tampered-artifact",
+      "eligible": false,
+      "codes": [
+        "PAP_INTEGRITY"
+      ],
+      "sourceRetained": true
+    },
+    {
+      "id": "submit-indeterminate",
+      "valid": true
+    },
+    {
+      "id": "submit-failed",
+      "valid": true
+    },
+    {
+      "id": "claim-indeterminate",
+      "valid": true
+    },
+    {
+      "id": "claim-failed",
+      "valid": true
+    },
+    {
+      "id": "cancel-indeterminate",
+      "valid": true
+    },
+    {
+      "id": "cancel-failed",
+      "valid": true
+    },
+    {
+      "id": "reconcile-indeterminate",
+      "valid": true
+    },
+    {
+      "id": "reconcile-failed",
+      "valid": true
+    },
+    {
+      "id": "materialize-indeterminate",
+      "valid": true
+    },
+    {
+      "id": "materialize-failed",
+      "valid": true
+    },
+    {
+      "id": "submitted-stopped",
+      "valid": true
+    },
+    {
+      "id": "submitted-cancelled",
+      "valid": true
+    },
+    {
+      "id": "submitted-reconciling",
+      "valid": true
+    },
+    {
+      "id": "batch-complete-committed",
+      "valid": true
+    },
+    {
+      "id": "batch-missing-verification",
+      "valid": false
+    },
+    {
+      "id": "oracle-complete-committed",
+      "valid": true
+    },
+    {
+      "id": "oracle-partial-committed",
+      "valid": false
+    },
+    {
+      "id": "oracle-false-noop",
+      "valid": false
+    },
+    {
+      "id": "oracle-protected-refusal",
+      "valid": false
+    },
+    {
+      "id": "oracle-control-unknown",
+      "valid": true
+    },
+    {
+      "id": "oracle-control-failure",
+      "valid": true
+    },
+    {
+      "id": "oracle-wrong-recovery-operation",
+      "valid": false
+    },
+    {
+      "id": "oracle-stopped",
+      "valid": true
+    },
+    {
+      "id": "oracle-missing-stop",
+      "valid": false
+    },
+    {
+      "id": "oracle-cancelled-uncertain",
+      "valid": false
+    },
+    {
+      "id": "oracle-future-output",
+      "valid": false
+    },
+    {
+      "id": "oracle-output-id-utf16",
+      "valid": false
+    },
+    {
+      "id": "oracle-output-key-utf16",
+      "valid": false
+    },
+    {
+      "id": "oracle-map-literal-business-key",
+      "valid": true
+    },
+    {
+      "id": "oracle-array-literal",
+      "valid": true
+    },
+    {
+      "id": "oracle-outputs128",
+      "valid": true
+    },
+    {
+      "id": "oracle-outputs129",
+      "valid": false
+    },
+    {
+      "id": "oracle-effects256",
+      "valid": true
+    },
+    {
+      "id": "oracle-effects257",
+      "valid": false
+    },
+    {
+      "id": "oracle-recipe-outputs",
+      "valid": false
+    },
+    {
+      "id": "oracle-empty-effects",
+      "valid": false
+    },
+    {
+      "id": "oracle-duplicate-effects",
+      "valid": false
+    },
+    {
+      "id": "oracle-duplicate-conditions",
+      "valid": false
+    },
+    {
+      "id": "oracle-ordered-item-vector",
+      "valid": true
+    },
+    {
+      "id": "oracle-duplicate-item-vector",
+      "valid": false
+    },
+    {
+      "id": "oracle-gapped-item-vector",
+      "valid": false
+    },
+    {
+      "id": "oracle-sealed-artifact",
+      "valid": true
+    },
+    {
+      "id": "oracle-sealed-tampered",
+      "valid": false
+    },
+    {
+      "id": "manifest-numeric-framing-0.0",
+      "eligible": true,
+      "sourceRetained": true
+    },
+    {
+      "id": "bulk-numeric-framing-0.0",
+      "valid": true
+    },
+    {
+      "id": "manifest-numeric-framing-0e0",
+      "eligible": true,
+      "sourceRetained": true
+    },
+    {
+      "id": "bulk-numeric-framing-0e0",
+      "valid": true
+    },
+    {
+      "id": "manifest-numeric-framing-1.00000000000000000000000001",
+      "eligible": false,
+      "sourceRetained": true
+    },
+    {
+      "id": "bulk-numeric-framing-1.00000000000000000000000001",
+      "valid": false
+    },
+    {
+      "id": "manifest-numeric-framing-1e-9999",
+      "eligible": false,
+      "sourceRetained": true
+    },
+    {
+      "id": "bulk-numeric-framing-1e-9999",
+      "valid": false
+    },
+    {
+      "id": "manifest-numeric-framing-9007199254740993",
+      "eligible": false,
+      "sourceRetained": true
+    },
+    {
+      "id": "bulk-numeric-framing-9007199254740993",
+      "valid": false
+    },
+    {
+      "id": "manifest-numeric-framing--0",
+      "eligible": false,
+      "sourceRetained": true
+    },
+    {
+      "id": "bulk-numeric-framing--0",
+      "valid": false
+    },
+    {
+      "id": "large-bulk-numeric-framing-0.0",
+      "valid": true
+    },
+    {
+      "id": "large-bulk-numeric-framing-1e-9999",
+      "valid": false
+    },
+    {
+      "id": "browser-items10000",
+      "eligible": true,
+      "overflowEligible": false
+    },
+    {
+      "id": "browser-bytes16MiB",
+      "eligible": true,
+      "overflowRefused": true
+    }
+  ]
+}

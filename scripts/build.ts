@@ -1,3 +1,4 @@
+const identity=Bun.spawn(['bun','scripts/actions-plan-identity.ts'],{stdout:'inherit',stderr:'inherit'});if(await identity.exited)process.exit(1);
 import { rm, cp } from 'node:fs/promises';
 await rm('dist', {recursive:true,force:true});
 const result=await Bun.build({entrypoints:['src/index.ts'],outdir:'dist',naming:'umf.js',target:'browser',format:'esm',sourcemap:'external'});

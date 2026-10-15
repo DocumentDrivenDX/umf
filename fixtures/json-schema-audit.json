@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 392,
-  "passed": 392,
+  "schemas": 401,
+  "passed": 401,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -1180,6 +1180,13 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/actions/bulk.schema.json",
+      "id": "urn:umf:actions:bulk:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/actions/executor-profile.schema.json",
       "id": "urn:umf:actions:executor-profile:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -1194,8 +1201,64 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/actions/manifest-inspection.schema.json",
+      "id": "urn:umf:actions:manifest-inspection:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/manifest.schema.json",
+      "id": "urn:umf:actions:manifest:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/plan-assessment.schema.json",
+      "id": "urn:umf:actions:plan-assessment:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/plan-capabilities.schema.json",
+      "id": "urn:umf:actions:plan-capabilities:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/plan-inspection.schema.json",
+      "id": "urn:umf:actions:plan-inspection:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/plan-model.schema.json",
+      "id": "urn:umf:actions:plan-model:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/plan.schema.json",
+      "id": "urn:umf:actions:plan:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/actions/schema.json",
       "id": "urn:umf:actions:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/tx-results.schema.json",
+      "id": "urn:umf:actions:tx-results:1",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

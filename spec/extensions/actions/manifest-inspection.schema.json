@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "manifest": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:manifest:1"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:actions:manifest:1#/$defs/artifact"
+    },
+    "plan": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:plan-inspection:1"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "eligible": {
+      "type": "boolean"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:umf:actions:plan:1#/$defs/diagnostic"
+      },
+      "minItems": 0,
+      "maxItems": 128
+    }
+  },
+  "required": [
+    "manifest",
+    "source",
+    "plan",
+    "eligible",
+    "diagnostics"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:manifest-inspection:1"
+}

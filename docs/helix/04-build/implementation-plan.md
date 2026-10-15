@@ -12122,3 +12122,7 @@ Both strict typing configurations pass. The fresh original158-case gate remains
 validator retains221 checks and the same86 failed IDs after fresh formal replay.
 Current native admission, trusted cuts, backend implementations and P03/B08 remain
 open; the full goal remains active.
+
+## Portable plan and unsealed manifest construction — 2026-10-15
+
+US-902's original dependency is restored against main f1f635a9; US-903 adds constructActionManifest against the existing actions extension and original core Key tuple verifier. [Current scoped evidence](evidence/bulk-update/construction-receipt.json) records59 affected Bun tests/364assertions, both TypeScript checks,401schema resources, built ESM Chromium plan/manifest/construction controls, the independent Python consumer and Astra's28 independent controls. The three reviewed defects (numeric tuple spelling, pre-serialization expansion, missing guard version errors) have Bun/browser regressions. [Native-owner handoff](evidence/bulk-update/construction-20261015/README.md) defines the exact request/result and retained native duties. No original compiler/enrollment producer pin is replaced or retrospectively qualified; native sealing/recovery/queue/effects and the live website goal remain open.

@@ -686,3 +686,25 @@ compiler view from the shared document and refuse unsupported execution meaning.
 ### Subsystem: Extensions and Partial Participation
 
 - **FR-46** — Authors must express shared role-, attribute- and ontology-relationship-based security independently of flat relational or typed graph storage. Preserve native/unknown policies and qualify logical decisions, field disclosure, writes, history and revocation through explicit backend bindings and acceptance evidence. FEAT-008 and US-079, US-056 and US-057 govern the slice. Native execution remains consumer-owned; security core admission remains separate.
+
+## Portable action plans and frozen-manifest UPDATE — owner direction, 2026-10-13
+
+The owner selects SQL compilation to portable action plans, built against the existing `umf.actions` extension. The first implementation slice is a queued bulk UPDATE over one logical Record type with literal or typed parameter assignments and a frozen work manifest. This is a new governed slice; existing read/compiler or transactional-action evidence does not qualify it.
+
+UMF owns action declarations and reusable plan/manifest semantics; Weft owns SQL meaning, model resolution and compilation; Truss owns qualified mutation execution; the host owns durable queue storage, scheduling and workers. Ashlar may consume committed Truss changes through its existing publication path. A future Ashlar or other action executor requires separate capability and native qualification; multi-backend atomicity is excluded.
+
+- PAP-UMF-01: Portable plans must reference immutable, registered `umf.actions` declarations and typed invocations. No parallel mutation vocabulary or core action primitive is introduced.
+- PAP-UMF-02: Plan/manifest inspection must retain exact model/action/profile pins, selection basis, ordered unique target identities, typed proposed values and conflict assertions. Relevant unknown semantics block execution eligibility while unknown content remains preserved.
+- PAP-UMF-03: Capability assessment must distinguish declaration validity, executable action support, selection support, batch/replay support and independently qualified execution. Plan metadata never grants authority.
+- PAP-UMF-04: Frozen manifests define exact queued work; batch atomicity and whole-job partial completion must be explicit. The existing transactional profile is not widened silently.
+
+## Bulk UPDATE contract and story allocation — 2026-10-13
+
+Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.actions.bulk/1`, built against core0.8.0/actions0.1.0 and the existing tx/1 invocation. The first executable subset is required one-valued boolean/integer/string Fields; null/nullable, decimal and other scalar mutation domains are explicit refusals for this proof, not losses of preserved UMF meaning.
+
+| Story | Owned output | Design/test allocation |
+| --- | --- | --- |
+| [US-902](user-stories/US-902-portable-action-plans.md) | 6 planned criteria: bulk-update-portable-action-plans | [TD-902](../02-design/technical-designs/TD-902-portable-action-plans.md) / [STP-902](../03-test/test-plans/STP-902-portable-action-plans.md) |
+| [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../03-test/test-plans/STP-903-frozen-action-manifests.md) |
+
+The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.

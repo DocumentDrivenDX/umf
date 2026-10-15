@@ -469,3 +469,15 @@ export type {SecurityDisclosureBatchV2,SecurityDisclosureColumnV2,SecurityDisclo
 export {inspectSecurityActionPurposes,type SecurityActionPurposeInspection} from './extensions/security/action-purposes';
 export type {SecurityActionPurpose,SecurityActionPurposeDeclaration} from './extensions/security/action-purpose-declarations';
 export {inspectProtectionObligations,type ProtectionDeclarationInspection,type ProtectionDeclarationObligation,type ProtectionDeclarationObligationKind} from './extensions/security/protection/obligations';
+
+export {inspectActionPlan,assessActionPlan,prepareActionPlanModel} from './extensions/actions/plans';
+export type {ActionPlanArtifact,ActionPlanModelPin,PortableActionPin,PortableActionPlan,ActionPlanDiagnostic,ActionPlanSelectionInspector,ActionPlanInspectionContext,ActionPlanInspection,ActionPlanCapability,ActionPlanCapabilities,ActionPlanAssessment,PreparedActionPlanModel} from './extensions/actions/plan-types';
+
+export {inspectActionManifest,assessActionManifest} from './extensions/actions/manifests';
+export type {ActionManifest,ActionManifestInspection} from './extensions/actions/manifest-types';
+
+export {validateBulkOutcome} from './extensions/actions/bulk';
+export type {BulkOutcomeValidation} from './extensions/actions/bulk';
+
+export {constructActionManifest} from './extensions/actions/manifest-construction';
+export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManifest} from './extensions/actions/manifest-construction';

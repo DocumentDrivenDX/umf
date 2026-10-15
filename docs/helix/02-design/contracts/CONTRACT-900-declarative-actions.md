@@ -473,3 +473,7 @@ value admission; retain unknowns with warnings; allocate every obligation;
 compare exact profile/source; refuse unsupported/unknown claims; check copy
 isolation and resource limits; exercise both serializations and real Chromium.
 Executor qualification additionally requires the separate witnesses in STP-900.
+
+## Portable action plans and frozen-manifest UPDATE — owner direction, 2026-10-13
+
+PAP-UMF-01 through PAP-UMF-04 require a separately versioned portable action-plan/manifest contract built on this extension. Existing Action, Parameter, FrameEntry, recipe and authorization meaning stays authoritative. A plan references registered declarations; it does not add arbitrary executable SQL, credentials, automatic registration or new core meanings. Unknown plan content must be retained and relevant unknown obligations must block executable assessment. CONTRACT-902/903/904 now define exact companion protocol identifiers and surfaces; US-902/903 allocate schema/library implementation and portable proof, retaining this contract as action authority.
