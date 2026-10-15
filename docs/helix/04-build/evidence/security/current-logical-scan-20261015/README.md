@@ -41,6 +41,32 @@ and exact original named source bytes. It does not independently replay native
 execution or turn captured rows into a trusted security cut. Source digests are
 selected evidence pins, not a hermetic transitive build closure.
 
-No public API, native query admission, authenticated source completeness, installed
+The scan reference adds no public API. It does not establish native query admission,
+authenticated source completeness, installed
 policy, aggregate result implementation, backend authority or P03/B08 completion
 is claimed. The overall goal remains active.
+
+## Manifest integration follow-up
+
+Root integrated original owner commit1777980f as d7a640c9, preserving both appended
+execution notes. Portable constructActionManifest is public and remains unsealed,
+incomplete and non-authoritative. The combined341-test/3931-expectation suite,
+both strict TypeScript configurations, rebuilt ESM, three Chromium corpora and
+independent Python consumer pass (manifest-integration/). The current generated
+producer identity includes the integrated sources; it does not revise historical
+compiler/native enrollment pins. The post-integration full gate is separate from
+the earlier scan-only replay.
+
+The first integrated full gate failed before native execution in P04/P08 because
+their exact declared import inventories lacked the newly exported action modules.
+Both failed receipts are retained. Only those implementationSources lists gained
+the21 newly imported dependencies each; no removals, assertions, status, criteria
+or deadlines changed, and156 other definitions remain exact. The final full gate
+uses those corrected source inventories. This follow-up is separate from the
+earlier scan-only unchanged-plan replay.
+
+Final integrated replay:45accepted/113unbound/158required/34criteria; P04/P08 pass
+with corrected inventories. Within-run plan/source pins stay exact. Fresh formal
+replay passes758formulas/42receipts; evidence validation has221checks with the
+same86failed IDs. Final root gate is independent of the reviewer receipt that
+accurately recorded it pending at review time. No backend case is promoted.

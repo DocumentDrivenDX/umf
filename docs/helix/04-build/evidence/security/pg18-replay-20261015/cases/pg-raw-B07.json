@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B07",
   "backend": "pg-raw",
-  "runId": "94e3553c-28b0-41f1-a4dd-48ec901797bc",
+  "runId": "ed0c7be1-4421-4113-96c3-94a7f5e1811a",
   "command": [
     "python3",
     "tests/security/native/pg18-replay/membership.py"
@@ -273,7 +273,7 @@
     "src/extensions/security/registration.ts": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f",
     "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
     "src/extensions/security/write.ts": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0",
-    "src/index.ts": "0a9e125b81f54ac4b1f5446125a6bd6d12ea4945aa8e11cfe29bf2c81ae481d1",
+    "src/index.ts": "d2b52424cf2c1e806d8999b441c5e54b62e73b2ba7035770b18bdab43a7e669e",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "14955a4e5fd41dc0a6ab5e13ceac37bf4264ff6e35e35af462da3ee918c8eb5c",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -298,7 +298,7 @@
     "src/model/schema-properties.ts": "1bb9c41b8a904b09d679e6231a2af7b3c425e9d4d93e97a0700d296eed4773e2",
     "src/model/selection-schemas.ts": "1c0142a7e5a92ad804590e6aae6ab5d5c9e4be97f2e56baa51a36cab79f7dfd5",
     "src/model/selection.ts": "101d15bea9c048316aa557b82d6a8edab31573cd976bf30f1e50ceba11b65dda",
-    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/serialization.ts": "f7433286728e97c708f6eaa0850233d7de86547d14f7dc51c04829932a62b8c7",
     "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
     "src/projections/arrow-spark.ts": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27",
     "src/projections/avro-json-schema.ts": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866",
@@ -3452,13 +3452,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "69fe7dead64e7add59c54bcb4a52132c5b4e8be7f5da0d783ecf13ccd8e15dd7",
+      "containerId": "b6d968725c07a02b50e26f7b736fc24e2dc587ce748d98d4dcbb7f56275bd07f",
       "ownedAnonymousVolumes": [
-        "b24e83ae7081760e9f7a9451acbb3eb75ce19efda2f434a44c186b0ef4c3d374"
+        "0d97fed095bef80918991343ef39b86f2b08370e9b8701dcc8d7ea65a46c8ffa"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "83325f0f40a9055e33e542cecd736083545c9a466b2a423c6c955e57dcbb086b"
+    "digest": "9918aa67530c4a4fa0eb581911e75a2391ec781d01ff92b1a14e81ae2da12b33"
   },
   "scope": "PostgreSQL 18.6 disposable raw-table read membership, selected collection operators private-storage, definer/name-resolution and administrator-exclusion controls at a stable cut only. Native source inventory retained; complete profile, concurrent authority, compiler lowering and all other B/L cases remain unqualified."
 }

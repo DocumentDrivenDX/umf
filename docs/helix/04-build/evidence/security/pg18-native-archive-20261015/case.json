@@ -2,7 +2,7 @@
   "status": "passed",
   "acceptanceReceipt": true,
   "casePromoted": "pg-raw.P07",
-  "runId": "d76b8b54-ee63-4359-8b6a-5a1217efe86f",
+  "runId": "f77154bb-9c3d-414a-8caf-713636d6d94b",
   "sourceDigests": {
     "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
     "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
@@ -19,7 +19,7 @@
     "src/extensions/security/protection/source.ts": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb",
     "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
     "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
-    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/serialization.ts": "f7433286728e97c708f6eaa0850233d7de86547d14f7dc51c04829932a62b8c7",
     "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
     "src/validation/internal-schema.ts": "a027a6dcadc37ca0f6c137b87bce9f39e7a16765e633a35555e32c7680a51ad4",
     "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
@@ -15372,7 +15372,7 @@
     ],
     "digest": "31ad97f1c756f5b75296e4565ce651fc7607fddfc0e0d8c67ead9d6b5dfc7ad8"
   },
-  "elapsedSeconds": 12.354944291,
+  "elapsedSeconds": 12.286768624999999,
   "scope": "Complete opaque label archive on exact native Anonymizer3.2.3/PG18.6 fixture; no dynamic masking, native label interpretation, generic compiler, role/DDL lifecycle or backend admission.",
   "id": "pg-raw.P07",
   "backend": "pg-raw",

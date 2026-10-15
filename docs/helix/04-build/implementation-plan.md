@@ -12126,3 +12126,31 @@ open; the full goal remains active.
 ## Portable plan and unsealed manifest construction — 2026-10-15
 
 US-902's original dependency is restored against main f1f635a9; US-903 adds constructActionManifest against the existing actions extension and original core Key tuple verifier. [Current scoped evidence](evidence/bulk-update/construction-receipt.json) records59 affected Bun tests/364assertions, both TypeScript checks,401schema resources, built ESM Chromium plan/manifest/construction controls, the independent Python consumer and Astra's28 independent controls. The three reviewed defects (numeric tuple spelling, pre-serialization expansion, missing guard version errors) have Bun/browser regressions. [Native-owner handoff](evidence/bulk-update/construction-20261015/README.md) defines the exact request/result and retained native duties. No original compiler/enrollment producer pin is replaced or retrospectively qualified; native sealing/recovery/queue/effects and the live website goal remain open.
+
+
+### Root scan/manifest integration — 2026-10-15
+
+Original constructor owner commit1777980f is integrated as d7a640c9 after scan
+commit3015e659. Both documentation append histories are preserved. Root verifies
+all76 owner paths (only merged notes/current producer identity/fresh browser
+receipts differ). The combined suite passes341tests/3931expectations, both strict
+TypeScript configurations, all401schema resources, rebuilt ESM, all three
+Chromium action corpora and the independent Python consumer. Final Astra bridge
+review detects all three verifier weakenings and passes262actual controls plus
+an independent18-report audit.
+
+The initial integrated security gate refused P04/P08 before native execution:
+new action exports expanded their import closures beyond the declared inventory.
+Failed receipts and original case bytes are retained. Each implementationSources
+list gains21 exact dependencies; no entries removed, no assertions/status/
+criteria/deadlines changed, and156 other definitions remain exact. Final gate
+and independent review results are retained in the manifest-integration packet.
+No historical native enrollment or broader execution authority is inferred.
+
+Final integrated replay passes all45 implemented cases, including P04/P08, with
+113 explicitly unimplemented cases/158required/34criteria. Within-run plan and
+selected source pins remain exact. Fresh formal replay passes758 formulas across
+42receipts. Evidence validation retains221checks and the same86failed IDs; the
+overall goal remains active. Astra integration review verifies both exact source
+inventories and unchanged behavioral metadata; final document custody supplement
+records the appended execution notes separately.
