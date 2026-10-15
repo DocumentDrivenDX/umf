@@ -116,8 +116,16 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.3.14'
-      - name: Verify reproducible schema-browser producer
-        run: bun scripts/schema-browser-reproducibility.ts
+      - name: Check out immutable schema browser producer source
+        uses: actions/checkout@v4
+        with:
+          ref: 00755f5d2b76696b14a4750214c66f1209560939
+          path: .tools/schema-browser-original
+      - name: Install immutable producer dependencies
+        working-directory: .tools/schema-browser-original
+        run: bun install --frozen-lockfile
+      - name: Verify candidate reproducibility and original released producer
+        run: bun scripts/schema-browser-reproducibility.ts --original-source .tools/schema-browser-original
       - name: Restore action build runtime
         uses: oven-sh/setup-bun@v2
         with:
