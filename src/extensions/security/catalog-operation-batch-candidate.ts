@@ -2,10 +2,10 @@
 import {copyJson} from '../../model/json';
 import {readCandidateCatalogProgram} from './catalog-program-candidate';
 import {CandidateSecurityOperationBudget} from './operation-budget-candidate';
-import {evaluateCandidateCatalogActionWithinOperation,evaluateCandidateCatalogScanWithinOperation,type CandidateCatalogActionResult,type CandidateCatalogCollectionResult} from './catalog-runtime-candidate';
+import {evaluateCandidateCatalogActionWithinOperation,evaluateCandidateCatalogScanWithinOperation,evaluateCandidateCatalogReadRuleScanWithinOperation,type CandidateCatalogRuleScanResult,type CandidateCatalogActionResult,type CandidateCatalogCollectionResult} from './catalog-runtime-candidate';
 export interface CandidateCatalogOperationBatchResult {
  status:'completed'|'refused';complete:false;authority:false;
- operations:readonly ({id:string;kind:'scan';outcome:CandidateCatalogCollectionResult}|{id:string;kind:'action';outcome:CandidateCatalogActionResult})[];
+ operations:readonly ({id:string;kind:'scan';outcome:CandidateCatalogCollectionResult}|{id:string;kind:'action';outcome:CandidateCatalogActionResult}|{id:string;kind:'read-rules';outcome:CandidateCatalogRuleScanResult})[];
 }
 const fail=():never=>{throw Error('SECURITY_OPERATION_BATCH_REFUSED');};
 function shape(v:any,keys:string[]):void{if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!Object.hasOwn(v,k)))fail();}
@@ -24,8 +24,8 @@ export function evaluateCandidateCatalogOperationBatch(handle:unknown,ownerInput
   // Charge the retained inventory once plus every scan visit or explicit action target.
   for(const op of operations){
    if(typeof op.id!=='string'||! /^[A-Za-z][A-Za-z0-9_-]{0,63}$/.test(op.id)||ids.has(op.id))fail();ids.add(op.id);
-   if(op.kind==='scan'){
-    shape(op,['id','kind','selection']);shape(op.selection,['type','fields']);const type=ref(op.selection.type);
+   if(op.kind==='scan'||op.kind==='read-rules'){
+    shape(op,['id','kind','selection']);shape(op.selection,op.kind==='scan'?['type','fields']:['type']);const type=ref(op.selection.type);
     for(const fact of cut.facts){ledger.step();if(ref(fact.type)===type)population++;}
    }else if(op.kind==='action'){
     shape(op,['id','kind','request']);shape(op.request,['action','resources','targets','fields']);if(!Array.isArray(op.request.resources))fail();population+=op.request.resources.length;
@@ -36,6 +36,8 @@ export function evaluateCandidateCatalogOperationBatch(handle:unknown,ownerInput
   for(const op of operations){
    if(op.kind==='scan'){
     const outcome=evaluateCandidateCatalogScanWithinOperation(handle,owner,cut,op.selection,ledger);if(outcome.status!=='rendered')fail();results.push({id:op.id,kind:'scan',outcome});
+   }else if(op.kind==='read-rules'){
+    const outcome=evaluateCandidateCatalogReadRuleScanWithinOperation(handle,owner,cut,op.selection,ledger);if(outcome.status!=='evaluated')fail();results.push({id:op.id,kind:'read-rules',outcome});
    }else{
     const outcome=evaluateCandidateCatalogActionWithinOperation(handle,owner,cut,op.request,ledger);if(outcome.status!=='evaluated')fail();results.push({id:op.id,kind:'action',outcome});
    }

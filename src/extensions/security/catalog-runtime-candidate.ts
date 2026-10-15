@@ -20,12 +20,19 @@ function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Objec
 export interface CandidateCatalogActionResult {status:'evaluated'|'refused';complete:false;authority:false;rows:readonly {decision:SecurityDecision;dispositions:readonly unknown[]}[]}
 /** Original compiled scoped rule truth on a supplied complete typed population. No disclosure rendering. */
 export interface CandidateCatalogRuleScanResult {status:'evaluated'|'refused';complete:false;authority:false;rows:readonly {resource:unknown;decision:SecurityDecision;rules:readonly {ruleIndex:number;truth:SecurityTruth}[]}[]}
-export function evaluateCandidateCatalogReadRuleScan(handle:unknown,ownerInput:unknown,cut:unknown,selectionInput:unknown):CandidateCatalogRuleScanResult {
+function readRuleScan(handle:unknown,ownerInput:unknown,cut:unknown,selectionInput:unknown,operation?:CandidateSecurityOperationBudget):CandidateCatalogRuleScanResult {
  try{
   const packet:any=copyJson({owner:ownerInput,selection:selectionInput});shape(packet.selection,['type']);
   if(!packet.owner?.disclosure)fail('Original owner read action required');
-  return run(handle,packet.owner,cut,{type:packet.selection.type,fields:[]},false,undefined,true,true) as CandidateCatalogRuleScanResult;
+  return run(handle,packet.owner,cut,{type:packet.selection.type,fields:[]},false,operation,true,true) as CandidateCatalogRuleScanResult;
  }catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
+}
+export function evaluateCandidateCatalogReadRuleScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogRuleScanResult {
+ return readRuleScan(handle,owner,cut,selection);
+}
+/** Private composition leaf. Every trace/condition charge uses the supplied operation ledger. */
+export function evaluateCandidateCatalogReadRuleScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogRuleScanResult {
+ return readRuleScan(handle,owner,cut,selection,operation);
 }
 export interface CandidateCatalogCollectionResult {status:'rendered'|'refused';complete:false;authority:false;rows:readonly (readonly SecurityOutput[])[];valueProfiles:readonly {field:unknown;profile:string}[]}
 /** Atomic logical collection: denied rows are filtered; U/conflict/any rendering failure refuses the whole batch. */

@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B15",
   "backend": "pg-raw",
-  "runId": "a3a4f826-160d-4d1a-ba8d-ee2fa7c8420d",
+  "runId": "bdc11035-c553-4aa4-a742-0036ad658837",
   "command": [
     "python3",
     "tests/security/native/pg18-replay/membership.py"
@@ -6967,13 +6967,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "8e51ab244667afedb1459fd33f07d1cbf2425118a252966bc9c47aff540e8434",
+      "containerId": "e97caef0ac8584e81c25412dbf3842b8363302955dbda6b227492beeb7c55747",
       "ownedAnonymousVolumes": [
-        "ebc23468e20efc087400ab9bd5c4ca0cc2dbe2abb31a3e264c0df25c6ea13fd8"
+        "5ddff577efedc091168dc3ca606605585d5179679fd122a339322e8f5cb350bf"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "da8c31e291b7abc338f548c13a81fc2b2a318549443c2654f66e125e4e079a83"
+    "digest": "5648bfbd28eb843e55f9c5fa5aabd0b077b5cf9bfc7fdf2d6f7fb640bf24f316"
   },
   "scope": "PostgreSQL 18.6 disposable raw-table read membership, selected collection operators private-storage, definer/name-resolution and administrator-exclusion controls at a stable cut only. Native source inventory retained; complete profile, concurrent authority, compiler lowering and all other B/L cases remain unqualified."
 }

@@ -725,3 +725,8 @@ Use a separately authored six-Boolean-context fixture to enumerate all64 states 
 ### Actual route activation controls — 2026-10-15
 
 For all64 context states, compare actual original compiled rule truth and resulting route choice with an independent finite oracle. Cover complete flat Record and graph witness membership, stale source/cut pins, missing context/coverage, invalid late rows, empty populations, unknown/denied decisions, caller guard/mode/action/truth injection, forged handles, immutable results and operation exhaustion. Field-free eligibility must not force a hidden original operand through public disclosure. Native current authority, exact issued occurrence/action correspondence and original integrated acceptance cases remain mandatory and unpromoted.
+
+
+### Same-cut rule/action composition controls — 2026-10-15
+
+For S08/S16/S20/S22 and P03/B08 prerequisites, compose original field-free rule evidence and separate action duties on one detached complete cut. Preserve permit/deny/U and rule/source indices, private resource identity and operation order; do not render hidden operands through public masking. Test missing public disclosure, action denial, valid flat/graph membership revocation, empty original dependencies, closed shapes and caller truth/action/branch injection, stale cuts, source/accessor forgery, all-or-nothing late failure, frozen detached results and cumulative fact/work/text/literal exhaustion. Freeze the original fixture work threshold independently and retain calibration; standalone successes must not bypass whole-operation limits. Browser correspondence and conditional composition proofs do not establish issued query correspondence or native authority. All original158cases/34criteria remain required.
