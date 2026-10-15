@@ -2,7 +2,7 @@
   "status": "passed",
   "acceptanceReceipt": true,
   "casePromoted": "pg-raw.P04",
-  "runId": "1d0cff6c-8dba-4cb9-b980-5dd6986f0782",
+  "runId": "c0f4ee23-cc49-45d0-8418-36afe3c5abf9",
   "sourceDigests": {
     "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
     "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
@@ -46,7 +46,7 @@
     "src/extensions/actions/manifest-types.ts": "d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47",
     "src/extensions/actions/manifests.ts": "c5d703d046d80de1d1396fd424e8d0119b0727e9e594ddcb8260192342b581d4",
     "src/extensions/actions/plan-artifacts.ts": "e4dc6f6d24142cc03e5b7a3d1fcb84cbe7e4c6928ef66a204aa820d7632f8043",
-    "src/extensions/actions/plan-identity.ts": "25da4ebc23a1253b3a8a398e011a7c9dcf095f3af8d5d34bf476edc055c9ce25",
+    "src/extensions/actions/plan-identity.ts": "44140534b00e5074ee727eddbec86f0df163503846e3bb748f9d9e5fa554cb93",
     "src/extensions/actions/plan-structure.ts": "ccd0090cc10589c0d9687075fdabc945fd94b98d260d1381cc368481ecf25e15",
     "src/extensions/actions/plan-types.ts": "3c73b0c0acf53c781331653470c9b821fb6d4beaa0059e50b37b4c55338b0025",
     "src/extensions/actions/plans.ts": "2505633ab94816d91193595f61761305c0bb843a6db909543fe0fc30bf3d8458",
@@ -24290,7 +24290,7 @@
       }
     ]
   },
-  "elapsedSeconds": 44.83553025,
+  "elapsedSeconds": 45.397427916,
   "runtimeSourceDigests": {
     "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
     "/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/.runkit_example.js": "e37e85bf1db5d53a6e4e38a9cac83db25208f28c09a2fa19e3971877c8a7b8cf",
