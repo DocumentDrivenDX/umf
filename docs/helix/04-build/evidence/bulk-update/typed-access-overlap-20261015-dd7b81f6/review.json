@@ -1,0 +1,291 @@
+{
+  "reviewer": "Astra Ultra",
+  "reviewedAt": "2026-10-15T17:42:28.006702+00:00",
+  "scope": "New typed-access proposal overlap with accepted/current action-plan, manifest, bulk and browser-local website interfaces; not a complete independent audit of raw SQL/Spark/Ashlar designs",
+  "pins": {
+    "typedAccess": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+    "website": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+    "reviewedLocalCompiler": "535b5c7a45a50ad4a744f0e7dacc6bdedc56d87d",
+    "newWeftLowererMentionedByParent": "4f5b73d (not source/runtime reviewed in this turn)"
+  },
+  "verdict": "Three concrete adapter/catalog design gaps require reconciliation before typed SDK bulk/action adoption. None requires replacing the free-SQL browser compiler or changing the existing b8/633f String-first cohort. Preserve original rich engine APIs while implementing current demo gates.",
+  "findings": [
+    {
+      "id": "TA-01",
+      "priority": "P1",
+      "scope": "US087 typed Truss bulk adapter adoption; preserve original provider API while this is fixed",
+      "title": "ManifestBulkPlan drops required original control outcomes and submission identity",
+      "references": [
+        {
+          "path": "CONTRACT-072-runtime-targets.md",
+          "lines": "183-192"
+        },
+        {
+          "path": "TD-087-truss-target-adapter.md",
+          "lines": "75-82"
+        },
+        {
+          "path": "STP-087-truss-target-adapter.md",
+          "lines": "50"
+        },
+        {
+          "path": "CONTRACT-904-bulk-action-coordination.md",
+          "lines": "38-52"
+        }
+      ],
+      "failure": "A materialize or submit control transaction commits but acknowledgement is lost. seal()->Manifest / submit(manifest)->BulkJob cannot return the original ControlUnknown recovery reference; submission also has no public caller-key or specified stable-key capture despite TD087 requiring one. A wrapper throwing a generic error or issuing a fresh seal/key loses original custody and can create different work. Known control failures/refusals/conflicts are likewise unspecified.",
+      "correction": "Define the full seal/submit result or typed exception mapping with original immutable ControlRecoveryRef, protected-safe code and retained exact result; expose or explicitly capture the original submission key and durable attempt capability. Provide an engine-delegating recovery path. Never retry/re-materialize on unknown. Add seal/submit ACK-loss, known-noncommit, TOKEN_REUSE, refusal and original-recovery tests to AC6."
+    },
+    {
+      "id": "TA-02",
+      "priority": "P2",
+      "scope": "US087 typed action adapter adoption; current engine result must remain complete",
+      "title": "Action outcome projection cannot satisfy promised native code and outcome preservation",
+      "references": [
+        {
+          "path": "CONTRACT-072-runtime-targets.md",
+          "lines": "142-178"
+        },
+        {
+          "path": "TD-087-truss-target-adapter.md",
+          "lines": "58-72"
+        },
+        {
+          "path": "STP-087-truss-target-adapter.md",
+          "lines": "46-49"
+        },
+        {
+          "path": "CONTRACT-901-transactional-action-profile.md",
+          "lines": "173-220,223-232"
+        }
+      ],
+      "failure": "Native conflict TOKEN_REUSE versus EXPECTED_VERSION is reduced to Conflict(retained), and denied(code) becomes bare Denied, although TD/STP087 demand original codes. A committed net no-op is exposed as business change committed with output/receipt only, discarding native revision/changes/noOp/verification. Original replay cannot recover that omitted meaning through the stated API.",
+      "correction": "Retain the complete original engine result in an immutable tagged carrier, with typed projections as convenience views; require protected-safe codes on Conflict/Denied and preserve noOp/verification/change/revision information. Define Indeterminate as engine-specific unknown, not universally nonreconcilable, and retain original keyed request for host-owned resolution. Add same-key replay and no-op/code-preservation controls."
+    },
+    {
+      "id": "TA-03",
+      "priority": "P2",
+      "scope": "US086/087 catalog command contract and W0 output dependency; not current free-SQL browser execution",
+      "title": "Catalog variant artifact shape only describes reads, not original mutation-plan input",
+      "references": [
+        {
+          "path": "CONTRACT-071-query-command-catalog.md",
+          "lines": "247-250,267-284,332-338"
+        },
+        {
+          "path": "TD-086-precompiled-bulk-commands.md",
+          "lines": "31-47"
+        },
+        {
+          "path": "weft-requirements-typed-access.md",
+          "lines": "67-93"
+        }
+      ],
+      "failure": "A Truss command must retain an original CONTRACT902 plan and complete selection lowering, including preflights/typed parameters/identity-Key-version output/bounds/obligations. The currently specified artifact choices are native SQL or truss-page; those do not represent this command carrier. Implementers must invent a shape or replace the original mutation artifact with a read-page/statement summary. Digest comparison is also inconsistent between lowered selection only and plan-plus-lowering.",
+      "correction": "Define a separate command variant that retains the exact original plan and owner lowering result plus complete source/action/preparation/backend pins. Specify one Weft-owned versioned structural-digest projection including all non-value meaning; bind both catalog and instantiation to it. Until WR-I3/W0 supplies that surface, refuse this SDK catalog path rather than hash stripped SQL or plan bytes locally."
+    }
+  ],
+  "apiIntegrationMapping": [
+    {
+      "stage": "Browser compile",
+      "mapping": "User SQL -> original pinned Weft WASM -> exact CONTRACT902 plan Artifact; remains outside CONTRACT071 Python catalog runtime; no generated Python requirement or alternate compiler."
+    },
+    {
+      "stage": "Optional future typed catalog",
+      "mapping": "Generated catalog command + validated parameters -> pinned Weft instantiate/lower -> original owner structural digest equality before any store operation. PLAN_DRIFT never repairs/recompiles changed intent after sealing."
+    },
+    {
+      "stage": "Engine registration",
+      "mapping": "Original model/action/preparation/binding installation and exact local owner/read-grant issuance remain Truss-owned; no catalog metadata or Python DTO grants authority."
+    },
+    {
+      "stage": "preview",
+      "mapping": "Engine-authorized bounded advisory read with complete-population preflights; preview confers no guard, seal, reservation or later selected-row guarantee."
+    },
+    {
+      "stage": "seal",
+      "mapping": "Engine materializes fresh coherent complete selection, original Key receipts/identity/version guards, ordered full-first batches and issuer-owned seal. Preserve full original control result/recovery and exact manifest bytes."
+    },
+    {
+      "stage": "submit",
+      "mapping": "Stable caller submission key + exact sealed Artifact + original out-of-band owner/control-attempt custody -> complete original submit union. No new key, seal or job after unknown acknowledgement."
+    },
+    {
+      "stage": "Host worker",
+      "mapping": "claim -> execute original batch -> lookup/reconcile original custody; full atomic item/batch outcomes and contiguous job prefix, fencing/cancel/retirement/retention. Keep execute as engine batch operation, not ManifestBulkPlan.execute(). No automatic business retries."
+    },
+    {
+      "stage": "Recovery/status",
+      "mapping": "Expose or delegate original recoverControl, status/review, lookup, reconcile and cancel with complete original result unions and current owner authorization; raw-table PG status/Conflict mapping is not local-bulk recovery."
+    }
+  ],
+  "followUpRequirements": [
+    {
+      "topic": "Local profile versus native SDK target",
+      "detail": "C069/TD087 describe native authenticated-subject/role tx1 and native-client witnesses. Browser local-owner/local-tx/local-bulk must have its own explicitly admitted targetProfile and adoption witnesses; kind truss, never pretend raw postgresql/native-session/person. Current CONTRACT905 already establishes that separation; no broadened/native qualification is claimed."
+    },
+    {
+      "topic": "New umf.access content",
+      "detail": "Adding CONTRACT070 views changes full model bytes and currently relevant unknown semantic closure. Keep original b8/6f5e/633f immutable. Future SDK annotated model requires original extension interpretation, a new owner preparation/source cohort, new Weft pins and Truss catalog admission; never strip the extension or edit hashes."
+    },
+    {
+      "topic": "Wider SET/null and missing-state queries",
+      "detail": "WR-A9 and U3 are planned expansion, not current support. CONTRACT902:62 requires a new profile for future subsets; C905 remains constant required scalar set first proof. Required malformed/missing stored rows must continue to fail complete-population preflights; future S2 UNKNOWN behavior for legitimately nullable/missing Fields cannot reinterpret required-row corruption."
+    },
+    {
+      "topic": "Raw table AtomicBulkPlan",
+      "detail": "CONTRACT073:35-42,128-141 applies only raw-table targets and explicitly excludes Truss/Ashlar. Its no-manifest execute/atomicity/idempotency/reconciliation model cannot replace local-bulk custody. It does not force current demo architecture changes."
+    },
+    {
+      "topic": "Source guards and ordering",
+      "detail": "Keep current source/profile/binding/revision ownership checks at engine admission and effect transaction, original Key byte identity and full-first [2,1] partition. SDK target.verify or structural digest is not current native authorization, seal or original control custody."
+    }
+  ],
+  "storyDisposition": {
+    "US086": "Raw-table story; needs W0/W3 plus its own raw profile qualification. Current demo evidence is not acceptance. Command artifact/digest gap must be closed before catalog implementation depends on it.",
+    "US087": "Native typed adapter not ready for complete action/bulk adoption until TA01/02/03 and T1/native witnesses. Current browser-local provider may proceed independently preserving complete existing contracts.",
+    "US088": "Separate Ashlar resolver/decoder dependency; not qualified or fully reviewed here.",
+    "currentWebsite": "e02fc219 local compile+catalog checkpoint retains its existing scoped review. Action/read-grant/seal/effect execution and final E2E proof remain open engine gates."
+  },
+  "checks": "Read-only exact git source inspection and contract comparison only; no new runtime execution or structural-check-as-proof claim",
+  "sources": [
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md",
+      "sha256": "0b436940945c656fc5aac0dfdda40b3aee47db07271ace89011a0864dbbb5194",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md",
+      "sha256": "8f492a2e9def6f4a916c872d127583c518ca2679017952775e60ce5267acf506",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/contracts/CONTRACT-070-access-extension.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+      "sha256": "35ea83b4e3ba4a504139310aef1c1380e888d492238156af2ac1d019d0ce3405",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+      "sha256": "6bbd1451e99cae57d66e89fab6b471bd2f0bcc2e160a2681813eaf367ee8d1cf",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md",
+      "sha256": "197c9083393dafc01263df16d6ab02edf6b8fcb1178ba8ad5de0ba22a2b7635c",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md",
+      "sha256": "68200dca530959d195e1cad82cd70ce3e4febefabbae4e88fe4017a4e2d13a98",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/04-build/weft-requirements-typed-access.md",
+      "sha256": "bfbf87427ec5d3ba89e5a1fdfcdc6b0a14d62b2dec85e322a2c2ad1b642ae95e",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/04-build/weft-requirements-typed-access.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/04-build/typed-persistence-design.md",
+      "sha256": "74be4a2ce912ae2ed7ca82524d065df13bd1200ccdc127f3333a69b4ee25d6ac",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/04-build/typed-persistence-design.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/01-frame/user-stories/US-086-precompiled-bulk-commands.md",
+      "sha256": "31271fefedbfda164d325f680ef0a99b915c019f11f0b4e8b5c085b616a474d9",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/01-frame/user-stories/US-086-precompiled-bulk-commands.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/01-frame/user-stories/US-087-truss-target-adapter.md",
+      "sha256": "40b5a99dde7cdd332a5b755b015d4020e60a107a26416df4b75ba6b483587317",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/01-frame/user-stories/US-087-truss-target-adapter.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/technical-designs/TD-086-precompiled-bulk-commands.md",
+      "sha256": "3c038189d303805ded46b98727ce04bea80e05e96ba512f5ac20a1dafd0d8db5",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/technical-designs/TD-086-precompiled-bulk-commands.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md",
+      "sha256": "377fb0e037c36ef76b71c2768e022bca835bf7762200fd3686858eb07cd54cbd",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md"
+    },
+    {
+      "commit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+      "path": "docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md",
+      "sha256": "2c4dd2981b6ff663447180109e02b16c74383f7f34a79ee5792de2408f3b28df",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/typed-access/docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
+      "sha256": "3d0a8f71df96523da3381e8aab8e8630426734479c0d80e0578af8910b01a834",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/02-design/contracts/CONTRACT-902-portable-action-plan.md",
+      "sha256": "3f6ab888b8460fe531b405d42c72194cc59471ff47898f6784eb1f35b2340360",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/02-design/contracts/CONTRACT-902-portable-action-plan.md"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/02-design/contracts/CONTRACT-903-frozen-action-manifest.md",
+      "sha256": "a80f9321c79c59419d1c62a83168b4b0b8cdaa4db9e59e2b2c60709663c7d581",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/02-design/contracts/CONTRACT-903-frozen-action-manifest.md"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/02-design/contracts/CONTRACT-904-bulk-action-coordination.md",
+      "sha256": "e04952c81a369fb043997825ddabe2dac74eeaa956c30a7091c027ee4c94b279",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/02-design/contracts/CONTRACT-904-bulk-action-coordination.md"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/02-design/contracts/CONTRACT-905-browser-local-actions.md",
+      "sha256": "806537486449df3508d0d96925cb11eac2e46e3e084165fe925b480390184cce",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/02-design/contracts/CONTRACT-905-browser-local-actions.md"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/03-test/fixtures/bulk-update/local-products-model.json",
+      "sha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/03-test/fixtures/bulk-update/local-products-model.json"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/03-test/fixtures/bulk-update/local-products-input.json",
+      "sha256": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/03-test/fixtures/bulk-update/local-products-input.json"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/05-deploy/microsite/action-compiler.ts",
+      "sha256": "69e4a029314ed115e9231d996f3fc2b75609cd1f8090c4b73069631870d95e57",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/05-deploy/microsite/action-compiler.ts"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/05-deploy/microsite/truss-catalog-worker.ts",
+      "sha256": "f1fb15d3efb2b61b90aa7f855a355c4e5a40af9d30a0d753401c645eab640e2f",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/05-deploy/microsite/truss-catalog-worker.ts"
+    },
+    {
+      "commit": "e02fc2198a2fab3f84d0d01673d2d1100ea5a395",
+      "path": "docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json",
+      "sha256": "11f1cf08dc250726dadd92b48469b6c16548b12e167e92c84c2a5fa769788acf",
+      "retained": "/private/tmp/umf-typed-access-overlap-review-20261015-dd7b81f6/website/docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json"
+    }
+  ]
+}

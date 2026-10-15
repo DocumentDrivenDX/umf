@@ -1,0 +1,78 @@
+{
+  "reviewer": "Astra Ultra independent review subagent",
+  "date": "2026-10-15",
+  "checkout": "/Users/erik/.codex/worktrees/security-action-source-custody/umf",
+  "baseCommit": "40f011402bf8f0c9512225975b62a034f1da325c",
+  "workingTreeReview": true,
+  "verdict": "No open implementation or Pages-build blocker in reviewed static browser compiler component; four prior findings closed.",
+  "scope": "GitHub Pages static original Weft WASM compilation with unchanged original native action/preparation cohort, no service or Truss effects.",
+  "findings": [],
+  "resolvedFindings": [
+    {
+      "priority": "P1",
+      "title": "Unsigned compiler page blocked Pages gate",
+      "resolution": "Final page attestation independently verified using exact Innsigle4185eb56beb7b52beaa4a00c2fc897f93d44b939; verify --all exits0 with17 valid claims."
+    },
+    {
+      "priority": "P2",
+      "title": "Compiler browser check/input triggers absent from Pages CI",
+      "resolution": "Both original fixture paths appear in push/PR filters; browser verifier follows Chromium installation."
+    },
+    {
+      "priority": "P2",
+      "title": "Browser receipt lacked source/asset correspondence",
+      "resolution": "Receipt now retains five served asset hashes and five verifier/builder/page-source/original-input hashes, all independently matched to current files."
+    },
+    {
+      "priority": "P3",
+      "title": "Verifier portability and write blocking",
+      "resolution": "Screenshot uses node:os tmpdir(); non-GET requests abort before continuation."
+    }
+  ],
+  "independentChecks": {
+    "originalWasmAndCohortControls": 30,
+    "originalProducer": {
+      "build": "sha256:bf743dbbd943f4bf3533c88f8e9547815a4d6a62b2ec9a67c5210d51975151ea",
+      "id": "umf.actions.plan-model",
+      "version": "1"
+    },
+    "wasmSha256": "ee95eb1a360cc7e7fd53f671b1efb5d0bb4cdf7bbeae6193dcfef77c78dadf74",
+    "generatedJavaScriptMatchesCurrentSource": true,
+    "currentBrowserReceiptHashes": 10,
+    "pinnedSignatureClaims": 17,
+    "actualBrowserExecutedByReviewer": false,
+    "browserLimitation": "Independent browser attempt was blocked at sandbox loopback listen with EADDRINUSE for port0. Retained original Chromium153.0.8010.12 proof was inspected; reviewer makes no independent Chromium execution claim."
+  },
+  "sourceHashes": {
+    "action-compiler.html": "7a3b4d3278ede477aaa92c7b04f85cc1381ce9ddd27b958d3b85f02fa7645c79",
+    "action-compiler.js": "7a7c80282d6c8b1545c0a34b89aa087df4d8b62ded31c7d1303c14a9d4bec4cf",
+    "action-compiler/model.json": "b5ec19900e4355538395200f65e3f70a4edf2e6b9dd1753deac04a6d9ef41337",
+    "action-compiler/weft_wasm_bg.wasm": "ee95eb1a360cc7e7fd53f671b1efb5d0bb4cdf7bbeae6193dcfef77c78dadf74",
+    "action-compiler/weft_wasm.js": "cc83a7c707b267b30ab6b06dcf579c020c993a794c7279e8871c4993af86d013",
+    "docs/helix/05-deploy/microsite/verify-action-compiler.ts": "d510c4b939435e51adfd91831dc45ba3b309236ba2cda867228e4fa8d7d54954",
+    "docs/helix/05-deploy/microsite/build-action-compiler.ts": "f7a0279a79a9d0a9ca8a17e30e7be4f977a5d3491568f1d104ffd39c77b98594",
+    "docs/helix/05-deploy/microsite/action-compiler.ts": "c49b446f1b9b2744aa060621fd9d7ad9816684914e76fbb5b80afe6d8e2f4813",
+    "tests/security/preparation-program-original/program-configuration.json": "1cbb2b21c79a1483f062bfaef69877636cc07126bcace03ce3836ba37dc558de",
+    "tests/security/preparation-program-original/program-request.json": "020ba8534978c9ff6ef9f142a188139327a0cbc466228ed23783d354a91fbbeb",
+    ".github/workflows/microsite.yml": "3b28fd7804bc5ef9bbf15a0f425b8d4c7abfb6fdff7b52a6e10aa4fef1c7d6cc",
+    ".innsigle/public/claims/action-compiler-html.attestation.json": "2e527f11d68648ef5a68533f5079cd7e244c2c1a9113313ffc5cd01bab7accbc",
+    "docs/helix/05-deploy/microsite/README.md": "32345e95348d47f8187f55860a68d38d06907cd5a729c14c7b45e2fc5c686f16",
+    "docs/helix/05-deploy/microsite/assets/weft-mutation/provenance.json": "f5789ea7c4873af3e738749840953c3bde2aee93e11dba4b03e02f413aceba56",
+    "docs/helix/05-deploy/microsite/assets/weft-mutation/original-browser-receipt.json": "0953cb4c0e5706418251d6807039fa17f887712ce7e46ff456c85b5b778088e4",
+    "docs/helix/04-build/evidence/bulk-update/website-compiler-results.json": "7f3778df6b4a33dbc54b35ab94bb1aa675a15d07a16eb4e9193fa4445e2608a4"
+  },
+  "evidenceHashes": {
+    "wasm-correspondence.json": "5b3ff6521e2f67c4004d2f22a30e7b7c002daf8d20023467f5975d39123414e7",
+    "fixed-correspondence.json": "fb49c864a7c3da74aebb4e1c62338770525de21121b6fd8ff16bf3c3ca5cb1f6",
+    "signature-check.log": "e1646e89da37c40155e4a1bcded1517ee9035253b7d5dfca253017ce5a3c765c",
+    "signature-check-fixed.log": "c1c9119f9372ac74064ba2dc24737e6eed1faef50503234feaeb05391143e5fc",
+    "browser-check.log": "14907f322a76a841a5965fd9f50f68c8bc139bd2eac15f950f302489e50a2f31"
+  },
+  "exclusions": [
+    "No deployment has been performed or independently qualified by this review.",
+    "No new local Weft compilation/source rebuild cohort, Truss provider, authentication, selection/seal, storage mutation or recovery support is claimed.",
+    "Original b7 person-required/bulk-editor model, tx1 invocation and bf743 preparation remain unchanged.",
+    "The retained32-case original Python/WASM parity receipt remains historical evidence; current30 independent checks execute the retained WASM in Bun."
+  ],
+  "repositoryEditsByReviewer": false
+}
