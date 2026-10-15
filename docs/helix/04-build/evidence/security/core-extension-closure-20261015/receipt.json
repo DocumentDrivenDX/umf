@@ -25,7 +25,9 @@
     "toolsTypecheck": "passed",
     "chromium": "153.0.8010.12",
     "browserControls": 14,
-    "externalRequests": 0
+    "externalRequests": 0,
+    "integratedSecurityDateTests": 283,
+    "integratedSecurityDateAssertions": 3413
   },
   "authority": false,
   "nativeExecution": false,
@@ -43,6 +45,7 @@
     "failed-original-source.log": "d2ca96534b2bcb4779c0bfa6a3d2b2b76dd0c1a93d2fd07125671547de7bd466",
     "result.json": "d3b6338aea94853f28bb60c223a1e58e7953475ae5a91294709b6f871c9b80fb",
     "astra-review.json": "3a8c5263080bf50ce5401a06a07e01411be83d87c290290cc3caed51e61080d0",
+    "security-tests-integrated.log": "5462d05d3e10337743ef4025035f24054193d2c0241f857e18eb3aaa3737845b",
     "security-tests-final.log": "2111ab03ee5830e71c087e217881f3edbe1ac93086f6e5313fbd757d256a870a",
     "actions-regression.log": "75fbfa5256ed890c176f6ea21a4dcfd97ce6b515dace55647a21805c3b72c6d9",
     "browser-result.json": "46dfb78d1fbf2cab82115daf1b1e008f50a2ad07a26c83e16ab4c89784367e17",
@@ -55,5 +58,6 @@
     "authored-sources.json",
     "lowered-sources.json",
     "result.json"
-  ]
+  ],
+  "integrationBase": "dd5b4ea91c61a14435fef801d99a46e2f167dbc3"
 }
