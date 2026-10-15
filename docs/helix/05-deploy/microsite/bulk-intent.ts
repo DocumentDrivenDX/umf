@@ -4,7 +4,7 @@ function encode(value:BulkIntent){const text=JSON.stringify(value);if(text.lengt
 function parse(text:unknown):BulkIntent{
  if(typeof text!=='string'||text.length>1024*1024)throw Error('Invalid bulk intent');
  const value=JSON.parse(text);
- if(value?.profile!=='umf.demo.bulk-intent/1'||!/^submit$|^claim:[0-9]{1,5}$/.test(value.slot)||typeof value.context!=='string'||!value.context||!value.input||typeof value.input!=='object')throw Error('Original bulk intent required');
+ if(value?.profile!=='umf.demo.bulk-intent/1'||!/^(?:submit|(?:claim|execute):(?:0|[1-9][0-9]{0,3}))$/.test(value.slot)||typeof value.context!=='string'||!value.context||!value.input||typeof value.input!=='object')throw Error('Original bulk intent required');
  return value;
 }
 async function transaction<T>(mode:IDBTransactionMode,run:(object:IDBObjectStore,set:(value:T)=>void,fail:(error:unknown)=>void)=>void):Promise<T>{

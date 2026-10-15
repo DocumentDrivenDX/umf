@@ -9,7 +9,7 @@ scope.onmessage=event=>{
  const id=event.data?.id,command=event.data?.command,payload=event.data?.payload;
  pending=pending.then(async()=>{
   try{
-   if(!Number.isSafeInteger(id)||!['open','register','preview','seal','recover','submit','recover-submit','claim','recover-claim','review','close'].includes(command))throw Error('Unknown store request');
+   if(!Number.isSafeInteger(id)||!['open','register','preview','seal','recover','submit','recover-submit','claim','recover-claim','review','execute','recover-execute','rows','close'].includes(command))throw Error('Unknown store request');
    if(command==='open'){
     if(current)throw Error('Store already opened');
     const {openBrowserStore}=await import('./truss-browser/store.js');
@@ -52,6 +52,9 @@ scope.onmessage=event=>{
      else if(command==='recover-submit')scope.postMessage({id,result:await current.store.recoverSubmit(current.owner,action,readGrant,payload)});
      else if(command==='claim')scope.postMessage({id,result:await current.store.claim(current.owner,action,readGrant,payload)});
      else if(command==='recover-claim')scope.postMessage({id,result:await current.store.recoverClaim(current.owner,action,readGrant,payload)});
+     else if(command==='execute')scope.postMessage({id,result:await current.store.executeBatch(current.owner,action,readGrant,payload)});
+     else if(command==='recover-execute')scope.postMessage({id,result:await current.store.recoverBatch(current.owner,action,readGrant,payload)});
+     else if(command==='rows')scope.postMessage({id,result:{rows:await current.store.readObjects(current.owner,{documentId:'product-local-action-demo',module:'sales',record:'products'})}});
      else if(command==='review')scope.postMessage({id,result:await current.store.reviewJob(current.owner,action,readGrant,payload)});
      else scope.postMessage({id,result:await current.store.recoverSeal(current.owner,action,readGrant,payload?.reference)});
     }

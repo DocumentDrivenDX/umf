@@ -12,7 +12,7 @@ try {
  await context.addInitScript(()=>{
   const test=globalThis as any;test.__sealDispatches=[];test.__bulkDispatches=[];
   const originalPost=Worker.prototype.postMessage;
-  Worker.prototype.postMessage=function(message:any,...args:any[]){if(message?.command==='seal')test.__sealDispatches.push({message,persisted:test.__completedIntent});if(['submit','claim'].includes(message?.command))test.__bulkDispatches.push({message,persisted:test.__completedIntent});return Reflect.apply(originalPost,this,[message,...args]);};
+  Worker.prototype.postMessage=function(message:any,...args:any[]){if(message?.command==='seal')test.__sealDispatches.push({message,persisted:test.__completedIntent});if(['submit','claim','execute'].includes(message?.command))test.__bulkDispatches.push({message,persisted:test.__completedIntent});return Reflect.apply(originalPost,this,[message,...args]);};
   const txWrites=new WeakMap<IDBTransaction,unknown>();
   const completion=Object.getOwnPropertyDescriptor(IDBTransaction.prototype,'oncomplete')!;
   Object.defineProperty(IDBTransaction.prototype,'oncomplete',{...completion,set:function(this:IDBTransaction,listener:any){completion.set!.call(this,function(this:IDBTransaction,event:Event){if(txWrites.has(this))test.__completedIntent=txWrites.get(this);listener?.call(this,event);});}});
@@ -25,7 +25,7 @@ try {
    return Reflect.apply(originalAdd,this,[value,...args]);
   };
   const descriptor=Object.getOwnPropertyDescriptor(Worker.prototype,'onmessage');if(!descriptor?.set)throw Error('Worker event instrumentation unavailable');
-  Object.defineProperty(Worker.prototype,'onmessage',{...descriptor,set:function(this:Worker,listener:any){descriptor.set!.call(this,typeof listener==='function'?function(this:Worker,event:MessageEvent){if(test.__dropSubmitAck&&event.data?.result?.status==='submitted'){test.__dropSubmitAck=false;test.__droppedSubmit=event.data.result;return;}if(test.__dropClaimAck&&event.data?.result?.status==='claimed'){test.__dropClaimAck=false;test.__droppedClaim=event.data.result;return;}if(test.__dropPreparedAck&&event.data?.result?.outcome==='prepared'){test.__dropPreparedAck=false;test.__droppedPrepared=event.data.result;return;}if(test.__dropSealAck&&event.data?.result?.outcome==='sealed'){test.__dropSealAck=false;test.__droppedSeal=event.data.result;return;}listener.call(this,event);}:listener);}});
+  Object.defineProperty(Worker.prototype,'onmessage',{...descriptor,set:function(this:Worker,listener:any){descriptor.set!.call(this,typeof listener==='function'?function(this:Worker,event:MessageEvent){if(test.__dropBatchAck&&event.data?.result?.status==='committed'){test.__dropBatchAck=false;test.__droppedBatch=event.data.result;return;}if(test.__dropSubmitAck&&event.data?.result?.status==='submitted'){test.__dropSubmitAck=false;test.__droppedSubmit=event.data.result;return;}if(test.__dropClaimAck&&event.data?.result?.status==='claimed'){test.__dropClaimAck=false;test.__droppedClaim=event.data.result;return;}if(test.__dropPreparedAck&&event.data?.result?.outcome==='prepared'){test.__dropPreparedAck=false;test.__droppedPrepared=event.data.result;return;}if(test.__dropSealAck&&event.data?.result?.outcome==='sealed'){test.__dropSealAck=false;test.__droppedSeal=event.data.result;return;}listener.call(this,event);}:listener);}});
  });
  await page.goto(origin+'/action-compiler.html');
  await page.waitForFunction(()=>document.querySelector('#status')?.textContent!=='Loading compiler…');
@@ -113,8 +113,30 @@ try {
  await page.locator('#store-review').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Job: running');
  const job=JSON.parse((await page.locator('#catalog').textContent())!);
  if(job.state.committedBatches!==0||job.state.nextBatch!==0||job.manifest.utf8!==recovered.manifest.utf8)throw Error('Claim executed or changed original manifest');
+ await page.evaluate(()=>{(globalThis as any).__denyIntentWrite=true;});await page.locator('#store-execute').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Operation not sent');
+ if(await page.evaluate(()=>(globalThis as any).__bulkDispatches.length)!==0)throw Error('Execution dispatched before refused intent write');
+ await page.evaluate(()=>{(globalThis as any).__denyIntentWrite=false;(globalThis as any).__dropBatchAck=true;});await page.locator('#store-execute').click();await page.waitForFunction(()=>!!(globalThis as any).__droppedBatch);
+ const firstBatch=await page.evaluate(()=>({outcome:(globalThis as any).__droppedBatch,dispatch:(globalThis as any).__bulkDispatches[0]}));
+ if(firstBatch.outcome.batch!==0||firstBatch.outcome.items.length!==2||JSON.stringify(JSON.parse(firstBatch.dispatch.persisted).input)!==JSON.stringify(firstBatch.dispatch.message.payload))throw Error('Original execute input or actual first batch differs');
+ await page.reload();await page.locator('#store-open').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
+ await page.locator('#store-register').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
+ if(await page.locator('#store-execute').isEnabled()||await page.locator('#store-claim').isEnabled())throw Error('Lost execution response allowed fresh dispatch');
+ await page.locator('#store-recover-execute').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Batch: committed');
+ if(JSON.stringify(JSON.parse((await page.locator('#catalog').textContent())!))!==JSON.stringify(firstBatch.outcome))throw Error('Batch recovery changed original items/receipt');
+ await page.locator('#store-claim').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Claim: claimed');
+ const secondClaim=JSON.parse((await page.locator('#catalog').textContent())!);if(secondClaim.batch!==1)throw Error('Next claim did not use fresh authoritative progress');
+ await page.locator('#store-execute').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Batch: committed');
+ const secondBatch=JSON.parse((await page.locator('#catalog').textContent())!);if(secondBatch.batch!==1||secondBatch.items.length!==1)throw Error('Final batch differs');
+ const changedRows=JSON.parse((await page.locator('#stored-products').textContent())!);
+ if(changedRows.length!==4)throw Error('Actual Truss object count differs');
+ for(const row of changedRows){const id=row.fields.find((field:any)=>field.field==='product-id')?.value,name=row.fields.find((field:any)=>field.field==='product-name')?.value,original=registered.rows.find((item:any)=>item.id===row.id);
+  if(!original||name!==(id==='spare'?'Untouched':'Bulk')||BigInt(row.version)!==BigInt(original.version)+(id==='spare'?0n:1n))throw Error('Native data/version or untouched row differs');}
+ for(const item of [...firstBatch.outcome.items,...secondBatch.items])if(item.result.noOp||item.result.changes.length!==1||!item.result.verification.requiredEffects||!item.result.verification.frame||!item.result.verification.keysUnchanged)throw Error('Original per-item result/verification differs');
+ await page.locator('#store-recover-execute').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Batch: committed');
+ if(JSON.stringify(JSON.parse((await page.locator('#catalog').textContent())!))!==JSON.stringify(secondBatch)||JSON.stringify(JSON.parse((await page.locator('#stored-products').textContent())!))!==JSON.stringify(changedRows))throw Error('Batch replay changed original result/data');
+ await page.locator('#store-review').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Job: completed');
+ const completed=JSON.parse((await page.locator('#catalog').textContent())!);if(completed.state.committedBatches!==2||completed.state.nextBatch!==2||completed.manifest.utf8!==recovered.manifest.utf8)throw Error('Completed job progress or manifest differs');
  await page.locator('#store-close').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store closed');
-
  await page.setViewportSize({width:390,height:844});
  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');
  if(errors.length||external.length||writes.length)throw Error(JSON.stringify({errors,external,writes}));
@@ -140,10 +162,35 @@ try {
  const absent=JSON.parse((await interruptedPage.locator('#catalog').textContent())!);
  if(absent.load.outcome!=='unresolved'||absent.load.code!=='not_found'||await interruptedPage.locator('#store-preview').isEnabled())throw Error('Missing load recovery redispatched or allowed preparation');
  await interrupted.close();
+ // Explicit interruption after the strict host execute reservation, before native admission.
+ const missingBatch=await browser.newContext();let interruptBatch=true;
+ await missingBatch.route('**/*',async route=>{
+  const request=route.request();if(!request.url().startsWith(origin+'/')||request.method()!=='GET')throw Error('Unexpected missing-batch request');
+  if(interruptBatch&&request.url().endsWith('/truss-catalog-worker.js')){
+   interruptBatch=false;const original=await Bun.file(join(root,'truss-catalog-worker.js')).text(),call='await current.store.executeBatch(current.owner, action, readGrant, payload)';
+   if(!original.includes(call))throw Error('Execute interruption boundary unavailable');
+   return route.fulfill({contentType:'text/javascript',body:original.replace(call,'(()=>{throw Error("Injected interruption after execute reservation");})()')});
+  }
+  return route.continue();
+ });
+ const missingPage=await missingBatch.newPage();await missingPage.goto(origin+'/action-compiler.html');
+ async function openMissing(){await missingPage.locator('#store-open').click();await missingPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');await missingPage.locator('#store-register').click();await missingPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');}
+ await openMissing();
+ for(const [command,status] of [['preview','Frozen manifest: 1 items, 1 batches'],['seal','Seal: sealed'],['submit','Submission: submitted'],['claim','Claim: claimed']]){await missingPage.locator('#store-'+command).click();await missingPage.waitForFunction(expected=>document.querySelector('#store-status')?.textContent===expected,status);}
+ await missingPage.locator('#store-execute').click();await missingPage.waitForFunction(()=>document.querySelector('#catalog')?.textContent?.includes('Injected interruption after execute reservation'));
+ await missingPage.reload();await openMissing();
+ if(await missingPage.locator('#store-execute').isEnabled()||await missingPage.locator('#store-claim').isEnabled())throw Error('Missing batch outcome permitted fresh execution/claim');
+ await missingPage.locator('#store-recover-execute').click();await missingPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Batch: indeterminate');
+ await openMissing();
+ const stillOriginal=JSON.parse((await missingPage.locator('#stored-products').textContent())!);
+ if(stillOriginal.length!==4||stillOriginal.some((row:any)=>row.version!=='1'||row.fields.some((field:any)=>field.field==='product-name'&&!['Sample','Untouched'].includes(field.value))))throw Error('Missing batch recovery redispatched effects');
+ await missingPage.locator('#store-review').click();await missingPage.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Job: running');
+ if(JSON.parse((await missingPage.locator('#catalog').textContent())!).state.committedBatches!==0)throw Error('Missing batch recovery advanced progress');
+ await missingBatch.close();
  const hashes:Record<string,string>={};
  for(const path of ['action-compiler.html','action-compiler.js','action-compiler/model.json','action-compiler/weft_wasm_bg.wasm','action-compiler/weft_wasm.js','truss-catalog-worker.js','truss-browser/store.js','truss-browser/manifest.json','truss-browser/layout.sql','truss-browser/model.json']){const response=await page.request.get(origin+'/'+path);if(!response.ok())throw Error('Asset unavailable: '+path);hashes[path]=createHash('sha256').update(await response.body()).digest('hex');}
  for(const path of ['docs/helix/05-deploy/microsite/verify-action-compiler.ts','docs/helix/05-deploy/microsite/build-action-compiler.ts','docs/helix/05-deploy/microsite/action-compiler.ts','docs/helix/05-deploy/microsite/seal-intent.ts','docs/helix/05-deploy/microsite/load-intent.ts','docs/helix/05-deploy/microsite/bulk-intent.ts','docs/helix/05-deploy/microsite/truss-catalog-worker.ts','docs/helix/05-deploy/microsite/build-truss-browser.ts','docs/helix/03-test/fixtures/bulk-update/local-products-input.json','docs/helix/03-test/fixtures/bulk-update/local-products-model.json','docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json'])hashes[path]=createHash('sha256').update(new Uint8Array(await Bun.file(resolve(import.meta.dir,'../../../..',path)).arrayBuffer())).digest('hex');
- const report={hashes,scope:'GitHub Pages-compatible local-profile Weft WASM compilation entirely in browser; unchanged example data; actual Truss catalog/grants, public four-object loading/replay, three-row [2,1] materialization and seal recovery after dropped acknowledgement; durable keyed submission/claim and exact ACK-loss recovery; no batch execution',browser:browser.version(),passed:true,catalogRegistration:true,catalogReopen:true,secondTabExclusion:true,actionReadPreparation:true,publicDataLoading:true,loadReplay:true,loadAckLossRecovery:true,loadMissingRecoveryNoRedispatch:true,threeRowMaterialization:true,submitClaimCustody:true,submitAckLossRecovery:true,claimAckLossRecovery:true,persistBeforeSeal:true,quotaRefusalBeforeDispatch:true,lostSealAckRecovery:true,existingTabTakeover:true,refusals:3,unicode:true,mobile:true,externalRequests:external,writeRequests:writes};
+ const report={hashes,scope:'GitHub Pages-compatible local-profile Weft WASM compilation entirely in browser; unchanged example data; actual Truss catalog/grants, public four-object loading/replay, three-row [2,1] materialization and seal recovery after dropped acknowledgement; durable keyed submission/claim and exact ACK-loss recovery; actual three-row [2,1] UPDATE execution, original item receipts/replay/reopen recovery; public feed/cancel/retention unfinished',browser:browser.version(),passed:true,catalogRegistration:true,catalogReopen:true,secondTabExclusion:true,actionReadPreparation:true,publicDataLoading:true,loadReplay:true,loadAckLossRecovery:true,loadMissingRecoveryNoRedispatch:true,threeRowMaterialization:true,submitClaimCustody:true,submitAckLossRecovery:true,claimAckLossRecovery:true,actualBatchExecution:true,executeAckLossRecovery:true,executeMissingRecoveryNoRedispatch:true,executionReplay:true,completedTwoBatches:true,untouchedFourthRow:true,persistBeforeSeal:true,quotaRefusalBeforeDispatch:true,lostSealAckRecovery:true,existingTabTakeover:true,refusals:3,unicode:true,mobile:true,externalRequests:external,writeRequests:writes};
  await Bun.write(new URL('../../04-build/evidence/bulk-update/website-compiler-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report));
 }finally{await browser.close();server?.stop(true);}

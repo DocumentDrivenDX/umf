@@ -27,8 +27,21 @@ const closeStore=document.querySelector<HTMLButtonElement>('#store-close')!;
 const previewStore=document.querySelector<HTMLButtonElement>('#store-preview')!;
 const sealStore=document.querySelector<HTMLButtonElement>('#store-seal')!;
 const recoverStore=document.querySelector<HTMLButtonElement>('#store-recover')!;
-const bulkButtons=Object.fromEntries(['submit','recover-submit','claim','recover-claim','review'].map(name=>[name,document.querySelector<HTMLButtonElement>('#store-'+name)!]));
-let bulkIntents:Record<string,BulkIntent>={};
+const bulkButtons=Object.fromEntries(['submit','recover-submit','claim','recover-claim','execute','recover-execute','review'].map(name=>[name,document.querySelector<HTMLButtonElement>('#store-'+name)!]));
+let bulkIntents:Record<string,BulkIntent>={},jobReview:any;
+function pendingExecution(){return Object.values(bulkIntents).filter(record=>record.slot.startsWith('execute:')&&(!record.outcome||(record.outcome as any).status==='indeterminate')).sort((a,b)=>Number(a.slot.split(':')[1])-Number(b.slot.split(':')[1]))[0];}
+function selectedBatch(){return pendingExecution()?Number(pendingExecution()!.slot.split(':')[1]):jobReview?.state?.nextBatch??0;}
+function latestExecution(){return pendingExecution()??Object.values(bulkIntents).filter(record=>record.slot.startsWith('execute:')).sort((a,b)=>Number(b.slot.split(':')[1])-Number(a.slot.split(':')[1]))[0];}
+function acceptJobReview(result:any){
+ const job=submittedJob();
+ if(!job||!result.state||result.state.job?.namespace!==job.namespace||result.state.job?.id!==job.id||result.manifest?.sha256!==intent?.reference.manifestSha256||result.state.manifestSha256!==intent?.reference.manifestSha256||!['queued','running','reconciling','stopped','completed'].includes(result.state.status)||!Number.isInteger(result.state.nextBatch)||result.state.nextBatch<0||result.state.nextBatch>10000)throw Error('Current original job review required');
+ jobReview=result;return result;
+}
+async function readCurrentJob(){
+ try{const job=submittedJob();if(!job)throw Error('Original submitted job required');return acceptJobReview(await requestStore('review',job));}catch(error){detach();throw error;}
+}
+async function readCurrentRows(){const result=await requestStore('rows');document.querySelector('#stored-products')!.textContent=JSON.stringify(result.rows,null,2);}
+
 function submittedJob(){const result=bulkIntents.submit?.outcome as any;return result?.status==='submitted'?result.state.job:null;}
 function bulkContext(){if(!intent)throw Error('Original seal intent required');return JSON.stringify(intent.reference);}
 const storeStatus=document.querySelector<HTMLElement>('#store-status')!;
@@ -50,8 +63,11 @@ function buttons(){
  const blocked=busy||!prepared||!!intentError;
  bulkButtons.submit!.disabled=blocked||intent?.outcome?.outcome!=='sealed'||!!bulkIntents.submit;
  bulkButtons['recover-submit']!.disabled=blocked||!bulkIntents.submit;
- bulkButtons.claim!.disabled=blocked||!submittedJob()||!!bulkIntents['claim:0'];
- bulkButtons['recover-claim']!.disabled=blocked||!bulkIntents['claim:0'];
+ const batch=selectedBatch(),claim=bulkIntents['claim:'+batch]?.outcome as any;
+ bulkButtons.claim!.disabled=blocked||!submittedJob()||!!pendingExecution()||jobReview?.state?.status==='completed'||jobReview?.state?.status==='stopped'||!!bulkIntents['claim:'+batch];
+ bulkButtons['recover-claim']!.disabled=blocked||!bulkIntents['claim:'+batch];
+ bulkButtons.execute!.disabled=blocked||claim?.status!=='claimed'||!!bulkIntents['execute:'+batch]||jobReview?.state?.status!=='running';
+ bulkButtons['recover-execute']!.disabled=blocked||!latestExecution();
  bulkButtons.review!.disabled=blocked||!submittedJob();
 }
 function requestStore(command:string,payload?:unknown):Promise<any>{
@@ -63,7 +79,7 @@ function requestStore(command:string,payload?:unknown):Promise<any>{
  }
  return new Promise((resolve,reject)=>{waiting={id:++sequence,resolve,reject};worker!.postMessage({id:sequence,command,payload});});
 }
-function detach(){worker?.terminate();worker=undefined;available=false;prepared=false;preview=null;}
+function detach(){worker?.terminate();worker=undefined;available=false;prepared=false;preview=null;jobReview=undefined;}
 async function localOperation(command:string){
  let payload:unknown,bulkRecord:BulkIntent|undefined;
  if(busy)return;busy=true;buttons();
@@ -79,18 +95,26 @@ async function localOperation(command:string){
    payload={requestKey:reference.requestKey,attempt:reference.attempt};
   }
   if(command==='recover'){if(!intent)throw Error('Original seal intent required');payload={reference:intent.reference};}
-  if(command==='submit'||command==='claim'){
-   const slot=command==='submit'?'submit':'claim:0';
+  if(command==='submit'||command==='claim'||command==='execute'){
+   if(command!=='submit')await readCurrentJob();
+   const batch=selectedBatch();
+   if(command==='claim'&&(pendingExecution()||!['queued','running'].includes(jobReview.state.status)||jobReview.state.unresolvedBatch!==null))throw Error('Original batch must be reconciled before a new claim');
+   const slot=command==='submit'?'submit':command+':'+batch;
    if(bulkIntents[slot])throw Error('Original control retained; recover it');
    if(intent?.outcome?.outcome!=='sealed')throw Error('Original sealed manifest required');
    const control={requestKey:crypto.randomUUID(),attempt:crypto.randomUUID()};
-   if(command==='claim'&&!submittedJob())throw Error('Original submitted job required');
-   payload=command==='submit'?{key:crypto.randomUUID(),reference:intent.reference,control}:{job:submittedJob(),control};
+   if(command!=='submit'&&!submittedJob())throw Error('Original submitted job required');
+   if(command==='execute'){
+    const claimed=bulkIntents['claim:'+batch]?.outcome as any;
+    if(claimed?.status!=='claimed'||claimed.batch!==batch||jobReview.state.status!=='running')throw Error('Original claim and current native admission required');
+    payload={job:submittedJob(),batch,fence:claimed.fence};
+   }else payload=command==='submit'?{key:crypto.randomUUID(),reference:intent.reference,control}:{job:submittedJob(),control};
    bulkRecord={profile:'umf.demo.bulk-intent/1',slot,context:bulkContext(),input:payload};
    await reserveBulkIntent(bulkRecord);bulkIntents[slot]=bulkRecord;intentChannel.postMessage({changed:true});
   }
-  if(command==='recover-submit'||command==='recover-claim'){
-   bulkRecord=bulkIntents[command==='recover-submit'?'submit':'claim:0'];
+  if(command==='recover-submit'||command==='recover-claim'||command==='recover-execute'){
+   if(command!=='recover-submit')await readCurrentJob();
+   bulkRecord=command==='recover-execute'?latestExecution():bulkIntents[command==='recover-submit'?'submit':'claim:'+selectedBatch()];
    if(!bulkRecord)throw Error('Original bulk control required');payload=bulkRecord.input;
   }
   if(command==='review'){payload=submittedJob();if(!payload)throw Error('Original submitted job required');}
@@ -102,14 +126,16 @@ async function localOperation(command:string){
   if(bulkRecord){
    const retained={...bulkRecord,outcome:result};
    await settleBulkIntent(retained);bulkIntents[retained.slot]=retained;intentChannel.postMessage({changed:true});
-   storeStatus.textContent=(retained.slot==='submit'?'Submission: ':'Claim: ')+result.status;
-   if(result.status==='control-unknown'||result.status==='unresolved')detach();
-  }else if(command==='review'){storeStatus.textContent=result.state?'Job: '+result.state.status:'Job review: '+result.status;}
+
+   if(result.status==='control-unknown'||result.status==='unresolved'||result.status==='indeterminate')detach();
+   else if(submittedJob()){await readCurrentJob();if(retained.slot.startsWith('execute:'))await readCurrentRows();}
+   storeStatus.textContent=(retained.slot==='submit'?'Submission: ':retained.slot.startsWith('execute:')?'Batch: ':'Claim: ')+result.status;
+  }else if(command==='review'){if(result.state){acceptJobReview(result);storeStatus.textContent='Job: '+result.state.status;}else{detach();storeStatus.textContent='Job review: '+result.status;}}
   else if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';detach();}
   else if(result.outcome==='closed'){storeStatus.textContent='Store closed';detach();}
   else if(result.outcome==='available'){available=true;prepared=false;await refreshIntent();storeStatus.textContent='Local Truss store opened';}
   else if(result.outcome==='bootstrap-unavailable'){storeStatus.textContent='Sample loading requires recovery; original request retained';detach();}
-  else if(result.outcome==='prepared'){document.querySelector('#stored-products')!.textContent=JSON.stringify(result.rows,null,2);prepared=true;preview=null;await refreshIntent();storeStatus.textContent='UPDATE prepared';}
+  else if(result.outcome==='prepared'){document.querySelector('#stored-products')!.textContent=JSON.stringify(result.rows,null,2);prepared=true;preview=null;await refreshIntent();if(submittedJob())await readCurrentJob();storeStatus.textContent='UPDATE prepared';}
   else if(result.outcome==='materialized'){if(result.input.sql!==sql.value){preview=null;storeStatus.textContent='Statement changed; preview again';}else{preview=result;storeStatus.textContent=`Frozen manifest: ${result.count} items, ${result.batches.length} batches`;}}
   else if(command==='seal'||command==='recover'){
    if(!intent)throw Error('Original intent unexpectedly unavailable');

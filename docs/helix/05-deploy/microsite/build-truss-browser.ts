@@ -24,4 +24,4 @@ await writeFile(join(output,'manifest.json'),archive.manifestUtf8);
 await writeFile(join(output,'model.json'),await Bun.file(new URL('../../03-test/fixtures/bulk-update/local-products-input.json',import.meta.url)).text());
 const build=await Bun.build({entrypoints:[join(import.meta.dir,'truss-catalog-worker.ts')],target:'browser',format:'esm',external:['./truss-browser/store.js'],outdir:join(import.meta.dir,'dist'),naming:'truss-catalog-worker.js'});
 if(!build.success)throw Error(build.logs.join('\n'));
-console.log('Built pinned Truss browser catalog assets; no action execution support.');
+console.log('Built pinned Truss browser assets from the exact original manifest.');

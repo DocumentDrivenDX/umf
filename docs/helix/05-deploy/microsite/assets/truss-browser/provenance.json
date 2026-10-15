@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "b120e1def3a989ad65783746e7355c38bf3a17c3",
-  "manifestSha256": "cef94c0f606d945db3b41523df7763911233d256342f763e15d87847c1e92c30",
-  "archiveSha256": "8e7da96b1b7685e2992290fba31c7e9bafb0481407cca15e78670a907a887eff",
-  "scope": "Reviewed public load/read/recovery, materialization/seal, keyed submission and claim/recovery. No batch effects."
+  "sourceCommit": "a9048c83dac30be9926ba765d639732ecee437c8",
+  "manifestSha256": "1d8b6668d0e7596139b522e0cdc1829b06a2b26bc1e39bf8af4677c59465f387",
+  "archiveSha256": "d30f137548b9f46221a65fa6d9f06db5070bed4df016520e5746b575d03b289b",
+  "scope": "Reviewed local public load, preparation, sealing, submission, claiming and atomic frozen batch execution/recovery. Feed, cancellation and retention unfinished; no full local-bulk/native904 claim."
 }

@@ -204,17 +204,17 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
 The SQL page also opens a worker-owned Truss browser catalog using the original
-reviewed bundle from Truss `b120e1de`. Build it with
+reviewed bundle from Truss `a9048c83`. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
-owner capability private and accepts open/register/preview/seal/recover/submit/recover-submit/claim/recover-claim/review/close commands against the
+owner capability private and accepts open/register/preview/seal/recover/submit/recover-submit/claim/recover-claim/execute/recover-execute/rows/review/close commands against the
 fixed local Products model. Prepare UPDATE registers the actual generic Truss
 catalog, then asks Truss to admit the original local action and separately issue
 its selection-read grant. The original owner, action and grant capabilities stay
 inside the worker and are issued afresh after reopen. Preview invokes the original compiler/lowerer against real Truss rows and
 constructs the original UMF frozen manifest; seal and recovery use Truss custody.
-Prepare UPDATE loads the four original samples through public `loadObjects`, reads the actual generic Truss rows through `readObjects`, and commits the exact original load input/control to a strict IndexedDB admission transaction before its first dispatch. Every later prepare/reopen calls `recoverLoad`; missing recovery stops preparation and never redispatches a load. It replays the creation receipt without resetting current values. All unsuccessful load outcomes remain visible and detach the worker. Action batch execution remains unfinished.
+Prepare UPDATE loads the four original samples through public `loadObjects`, reads the actual generic Truss rows through `readObjects`, and commits the exact original load input/control to a strict IndexedDB admission transaction before its first dispatch. Every later prepare/reopen calls `recoverLoad`; missing recovery stops preparation and never redispatches a load. It replays the creation receipt without resetting current values. All unsuccessful load outcomes remain visible and detach the worker. Actual frozen batches execute through the owned Truss API. Public feed, cancellation and retention remain unfinished; no full local-bulk/native904 claim is made.
 The browser verifier checks registration, unchanged retry, second-tab exclusion
 and catalog/incarnation retention after reload under a `/umf/` base path.
 
@@ -244,7 +244,6 @@ blocks fresh dispatch even from a stale tab; recovery reuses the exact input wit
 fresh private engine capabilities. All returned result variants are retained.
 Unknown and unresolved outcomes detach the worker without a new request or
 attempt. The first-claim control is retained even after recovery: neither lease
-expiry nor observing a recovered claim grants execution eligibility. No batch
-execution is exposed in this component. The browser verifier drops the actual
+expiry nor observing a recovered claim grants execution eligibility. Execution uses a separate strict `execute:n` intent for each batch; once it exists only `recoverBatch` is called. Fresh authoritative job progress chooses the next batch. A recovered claim correlates the first execution input; actual current authorization, active fence, PostgreSQL lease and engine admission decide whether it may execute. Indeterminate execution detaches without redispatch. The browser verifier drops the actual
 initial submission and claim acknowledgements, reopens and recovers the original
-job, fence and lease, and verifies zero committed batches and unchanged manifest.
+job, fence and lease, and verifies the original manifest. Execution tests drop the actual first committed batch response, recover the exact full item results and receipt after reopen, finish batches [2,1], and verify actual row values/versions, unchanged fourth object and duplicate replay.
