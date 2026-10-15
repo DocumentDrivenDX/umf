@@ -2264,3 +2264,27 @@ full shared implementation goal remain unchanged.
 The internal Record-members, scalar-label and direct reference-link owners now select separately closed result0.2 for exact original core0.8 sources. Original core0.7 continues to select result0.1 and its unchanged result schemas. Meaning algorithms retain ordered/opaque membership, scalar future labels, repeated qualified links and unverified provenance/type assertions. Current annotations, defaults and facets remain in the complete copied source; these inspectors do not infer their native enforcement or authenticate author/issuer authority. No public root export is added.
 
 `../../04-build/evidence/security/core08-owner-20261013/receipt.json` retains four passing owner suites,48 current controls agreeing in Bun/Chromium153, eight independent Astra controls, typing and388-schema/65-package audits. The initial unsupported0.8 controls were updated to future0.9; source0.7 result assertions remain unchanged. A mismatched future scalar/facet test source was corrected rather than broadening document validity. These owners are prerequisites for the separate Truss core0.8 producer; they do not implement its native ingress/report/migration, guarded catalog assessment, compiler physical mapping or protected execution. The original132-case scope remains unchanged.
+
+
+## Semantic Field requests and released DTO computation — 2026-10-15
+
+A typed Field query boundary must refuse prohibited requests before dispatch and
+output, including empty selections, omitted output Fields and LIMIT0/false
+predicates. It must use the existing compiler's actual Field/operator/action
+lineage, preserve original source modes and prevent canonical raw fallback.
+Caller-supplied required properties or a conditional metadata refusal cannot
+substitute for that execution boundary. B08 remains open.
+
+Ordinary SQL SELECT on a disclosed DTO permits further computation on released
+values. Catalog queryUse refusal at a typed Field boundary cannot be represented
+as a database-wide prohibition on those computations. The PG18 observation
+component deliberately retains successful disclosed SQL alongside conditional
+helper refusals, and separately verifies canonical carrier privilege denials.
+These are three distinct outcomes. A fresh hidden raw-threshold view changes
+selection after an excluded hidden-value mutation while legitimate disclosures
+remain fixed, demonstrating why a barrier flag alone does not qualify predicate
+lineage. The control is not an admitted route or completion of P03/B08.
+
+Evidence: `../../04-build/evidence/security/pg18-query-observations-20261015/`.
+No native current-authority, protected query producer or whole-backend qualification
+follows from this component.

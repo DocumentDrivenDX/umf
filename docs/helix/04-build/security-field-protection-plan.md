@@ -1110,3 +1110,31 @@ for those missing implementations. Evidence validation has 219 checks and exactl
 the same 88 failed IDs as before; the new P08 freshness check passes. Every
 original assertion, criterion and timeout is preserved. All tokenize obligations
 remain unverified; no tokenization enforcement is claimed. The goal stays active.
+
+
+### Query observation component and remaining admission work — 2026-10-15
+
+The observation-only PG 18.6 probe passes 305 observations over unchanged P02
+generalize/hash carriers and the P08 ORIGINAL stored-token Field. It retains an
+independent per-actor Python oracle, null/duplicate/empty-actor controls, actual
+SCRAM authentication, raw carrier denials, an actual within-bucket input
+invariance control and a fresh
+raw-threshold weakened-view counterexample with restoration. Conditional shared
+property reports retain authored probe assumptions and authority:false. Prohibited
+source variants are inspected but never installed. Native DTO computation still
+succeeds; this is evidence of the execution-boundary gap, not prohibited-query
+enforcement. See `evidence/security/pg18-query-observations-20261015/`.
+
+Remaining P03 work must integrate actual existing Weft-owned Field/operator
+lineage and native dispatch, resolve ORIGINAL stored Fields through exact
+owner.storageTransform, preserve mixed queryUse sources, and prove prohibited
+requests refuse before execution even on empty query paths. Retain authored
+equality acknowledgment, fixed transform/key/domain scope, actual predicate and
+aggregate dependencies and raw-fallback refusal. Do not add an alternative UMF
+query compiler or fabricate transformed token reads. Broader B08 lifecycle and
+current-authority work remains separate.
+
+No original case assertion, allocation, command or timeout changes. P03 remains
+not-run/unbound and the last full gate remains 43 accepted/115 required unbound
+across 158 cases/34 criteria. This component is not a new acceptance receipt or
+formal refinement proof. The overall implementation goal stays active.

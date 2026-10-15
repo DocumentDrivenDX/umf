@@ -641,3 +641,34 @@ current Subject/action/owner authority, source/DDL closure, permit, selector,
 finalizer, seal or required backend case is qualified. Production guard-home
 inventory and lifecycle stages remain separate obligations; the full security
 goal stays active and the gate remains40 accepted/118 unbound.
+
+
+### Disclosed query observations and existing compiler ownership — 2026-10-15
+
+The observation-only PostgreSQL 18.6 component under
+`tests/security/native/pg18-query-observations.py` executes predicate, order,
+group, join and Field-dependent aggregate probes on unchanged P02 generalize/hash
+carriers and the original P08 stored-token carrier. Its independent oracle covers
+per-actor duplicate equality classes, nulls, an empty actor and stable ordering.
+The 305 native observations are not an acceptance receipt; P03 stays unbound.
+
+The query admission implementation belongs to the existing Weft profile-bound
+lineage producer. The probe's authored equality/order dependencies are test
+assumptions, not compiler credentials. Actual selected predicates and aggregates
+must supply their dependencies through that owner; UMF must not add a competing
+query compiler or designation interface. Deterministic output equality is not
+injectivity, canonical equality reflection or permission to rewrite a disclosed
+join against raw inputs. P03 additionally requires authored equality acknowledgment
+for deterministic hash/token joins; implied leakage alone cannot satisfy it.
+
+Two interface gaps remain unresolved. The existing query helper selects transformed
+read dispositions, whereas P08's token is an ORIGINAL canonical Field selected by
+owner.storage and its exact storageTransform. The owner must resolve that real
+Field and token output domain without synthesizing a plaintext read transform.
+Also, P02 projection profile0.1 requires every queryUse mode explicitly disclosed.
+Mixed-mode integration needs an explicitly governed source-preserving owner/profile
+change; stripping modes or compiling an all-disclosed replacement is invalid.
+Neither interface change is implemented or approved by this observation component.
+
+See `../../04-build/evidence/security/pg18-query-observations-20261015/` for
+source-pinned design review, native evidence and qualification limits.
