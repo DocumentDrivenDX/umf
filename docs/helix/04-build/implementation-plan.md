@@ -12254,3 +12254,15 @@ A live Databricks actor recheck failed instead of establishing the independent p
 ### Exhaustive finite route composition — 2026-10-15
 
 The original compiled kernel and route evaluator pass all 13,122 finite truth/order cases in Bun and Chromium. Six private weakenings are detected; the security directory suite passes 304 tests and 4,684 assertions. Source-only coverage does not promote backend cases; current native lowering/held-context integration remains open. See [retained evidence](evidence/security/three-valued-route-exhaustion-20261015/README.md).
+
+### Native computation adapter contract proposal — 2026-10-15
+
+TD-056 now maps exact private Bun initialization/evaluation inputs to the
+existing original source compiler, atomic batch evaluator and per-use route
+helper. STP-056 records native integration/refusal/lifecycle tests. Truss requested
+this contract and explicitly needs its DB-derived source/fact/current-Subject
+capture ABI before driver implementation; no issuer or semantic wrapper is
+implemented here. Independent route calls do not share the atomic batch ledger:
+whole-query accounting is explicitly open. Weft's current-scalar consumer is a
+compiling, unfrozen candidate. No backend case is promoted; all 158 original cases
+remain required and the retained gate stays 45 accepted / 113 unimplemented.

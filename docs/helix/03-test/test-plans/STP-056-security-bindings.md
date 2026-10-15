@@ -1862,3 +1862,27 @@ browser receipt are recorded in `evidence/security/pg18-native-archive-20261015/
 Exercise pending-before-CLI, preexisting-success invalidation, stage-specific partial failures, unknown counts, malformed response/configuration and redaction with synthetic non-credential fixtures. Check aliases, duplicate ordinary actors, one-actor insufficiency and mismatched contexts. Use actual owned subprocess termination and overlapping processes to verify pending visibility, working-directory-independent canonical output and latest-pending-attempt publication; older success must not overwrite newer failure, and a terminal attempt may not republish. Retain source-drift and evidence-write failure controls. Test malformed host text before URL normalization, including controls/space and credentials/query/fragment material. No synthetic actor supplies native identity/grant evidence.
 
 Independently retain one live native observation outcome using configured profiles, including sanitized failure; never reuse historical success after an incomplete attempt. Two independent non-installer principals, a dedicated disposable namespace/compute and real SQL/grant inventories remain required for original Delta/Ashlar backend cases. This POSIX host-tool work changes no semantic/browser kernel and closes no original native acceptance case.
+
+### Private computation-driver integration acceptance — 2026-10-15
+
+The proposed TD-056 private driver is not implemented. Truss must first supply
+its concrete DB-derived capture/current-Subject ABI. Preserve original B08/B12
+and lifecycle assertions; component tests cannot promote them.
+
+| Required check | Acceptance link | Evidence needed before native admission |
+| --- | --- | --- |
+| Locally issued extension semantics | US-056-AC1/AC2/AC7 | Original installed factory accepts only its closed selection; serialized/copied handles and unknown/extra packages refuse without staging |
+| Exact private original handle, source closure and caller/Subject cut | US-056-AC1/AC2/AC10 | Native capture plus genuine child compilation; fabricated source/hash/handle and alternate caller controls refuse |
+| Designated primary action equals original owner read action | US-056-AC1/AC6 | A different weaker read-purpose action with otherwise valid owner/cut pins refuses before planning or staging |
+| Source-derived provisional modes, independent of the mode-free Weft operand ledger | US-056-AC6/AC7 | Original inspector/base constraint drives the scan union; actual selected routes must agree; hidden-original-only Fields never require unselected public rendering |
+| Original read cells, eligible row identity/order and route/action association | US-056-AC6 | Actual Weft occurrences, full population before filters/LIMIT, typed cell/Key correspondence, wrong/unknown/missing action and mixed-domain controls |
+| Empty population dependencies | US-056-AC6/AC7 | No shortcut around original scoped rule/action/source validation, including field-free COUNT |
+| Aggregate work/text/literal and process/staging limits | US-056-AC7 | Whole-query boundary and one-over controls; multiple independent per-use ledgers alone are insufficient |
+| Untouched refusal/unknown/absence/null/literal transport | US-056-AC6/AC10 | Byte/token and typed identity checks; no denial-to-empty or unknown-to-permit normalization |
+| Child loss, malformed/truncated/duplicate/reordered/late reply and replay | US-056-AC7/AC10 | No private staging consumption or ordinary output from incomplete/mismatched replies; next operation freshly admitted |
+| Authentic held context through SQL/decode/release and revocation | US-057-AC1/AC2/AC3/AC7 | Native concurrent schedules, actual driver/role identity, guard/capture/release and failure evidence |
+
+Require actual raw and graph capture fixtures and native source inventories;
+copying the raw fixture does not qualify graph storage. Databricks/Ashlar need
+independent principals, native compute/publication and current-authority evidence.
+No row is passed by this table; all named missing tests remain required.
