@@ -73,3 +73,23 @@ passes. The original r3 three source files have no diff from579675bd.
 The seven governed artifacts validate with the existing global implementation-plan
 two blockers/twelve warnings unchanged. This evidence changes neither native
 case acceptance nor the qualified scope of existing formal proofs.
+
+Native adoption caveat confirmed with Weft/Truss: the same Weft native module
+can pair with either frozen r3 or v2. A module-only consumer lookup cannot select
+between indistinguishable appended rows. Native adoption must explicitly bind
+protocol, UMF bundle/source and initializer profile deterministically. This
+computation cohort creates no native consumer row or source registration.
+
+## Independent Astra review
+
+The user-requested Astra reviewer reports no remaining blocker in this bounded
+child/projection interoperability scope after both verifier fixes. Original
+control receipts retain47framing/context/bound controls,12mixed original route/
+projection/action controls,9actual response positives and25outcome mutations.
+Five historical first-cell predicate survivors are retained and now refused.
+The independent builder emits the same53985fd1bundle. No native database campaign
+was duplicated. Root independently checks original control receipt success and
+final verifier source hash before retaining the evidence.
+
+- [Review conclusion and exact control pins](astra-review.json)
+- [Original reviewer control sources/results, including historical failures](astra-review-controls.zip)

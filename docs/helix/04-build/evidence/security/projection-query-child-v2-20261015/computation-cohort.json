@@ -64,5 +64,6 @@
     "registrationMigration": false
   },
   "consumerAdoption": "Explicit native consumer/source/profile binding required; new protocol changes full initialization frame receipt. Existing r3 registrations do not admit this cohort.",
-  "custodyScope": "Exact selected source pins and closure before/after actual build; not hermetic build, ABA, executable runtime attestation or native authority"
+  "custodyScope": "Exact selected source pins and closure before/after actual build; not hermetic build, ABA, executable runtime attestation or native authority",
+  "consumerSelectionConstraint": "Same Weft module can pair with both r3 and V2 UMF; module-only runtime matching cannot disambiguate appended consumer rows. Native consumer must explicitly and deterministically bind selected protocol, UMF bundle/source and initializer profile, preserving old cohort separately."
 }
