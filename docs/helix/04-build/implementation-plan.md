@@ -11861,3 +11861,30 @@ rationals, not P02 byte-exact transport. P02 remains required/unbound and the
 full gate remains40 accepted/118 unbound; no previous acceptance or backend
 support claim changes. Native guard/fullxid and actual protected consumers remain
 open, and the overall security goal remains active.
+
+
+### Durable native preparation D claim — 2026-10-15
+
+The private native lifecycle bridge in
+`tests/security/native/pg18-preparation-data-claim.sql` binds an immutable,
+independently committed E claim to exact original Truss anchor/program/store
+bytes and physical D fullxid/incarnation, plus the original C transaction. E is
+the excluded control issuer; C is the ordinary fresh RC coordinator; D retains
+its original RR snapshot. Only C reads the later committed row. Unique anchor,
+NOWAIT issuer serialization and immutable storage prohibit successor reassignment.
+E-to-C commit uncertainty refuses; D ending before E commit burns that claim.
+Same-D retry is identity idempotence, not one execution or permission.
+
+Actual original Weft/Truss products enrollment and PG18.6 fixture evidence passes
+32 observations, including the old RR visibility boundary, rollback/successor
+and concurrent issuer controls. The original identity-only program resolver
+still accepts a same-PID successor D, while claim reuse refuses. Conditional
+transition analysis retains7 UNSAT/2 SAT, not SQL refinement. Exact private ABI,
+selected source/runtime pins, scope and initial failed concurrency oracle are
+retained under `evidence/security/preparation-data-claim-20261015/`.
+
+This is a native guarded-issuance prerequisite only. No public/core admission,
+current Subject/action/owner authority, source/DDL closure, permit, selector,
+finalizer, seal or required backend case is qualified. Production guard-home
+inventory and lifecycle stages remain separate obligations; the full security
+goal stays active and the gate remains40 accepted/118 unbound.

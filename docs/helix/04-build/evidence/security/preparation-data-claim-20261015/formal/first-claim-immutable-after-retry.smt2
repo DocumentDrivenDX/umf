@@ -1,0 +1,18 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun first_D_xid () (_ BitVec 64))
+(declare-fun original_anchor () Int)
+(declare-fun successor_D_xid () (_ BitVec 64))
+(assert
+ (let ((?x11 ((as const (Array Int (_ BitVec 64))) (_ bv0 64))))
+(let ((?x14 (store ?x11 original_anchor first_D_xid)))
+(let ((?x12 (select ?x11 original_anchor)))
+(let (($x13 (= (_ bv0 64) ?x12)))
+(let ((?x15 (ite $x13 ?x14 ?x11)))
+(let ((?x18 (select ?x15 original_anchor)))
+(let (($x19 (= (_ bv0 64) ?x18)))
+(let ((?x21 (ite $x19 (store ?x15 original_anchor successor_D_xid) ?x15)))
+(let (($x34 (and (distinct (_ bv0 64) successor_D_xid) true)))
+(let (($x33 (and (distinct (_ bv0 64) first_D_xid) true)))
+(and $x33 $x34 (and (distinct (select ?x21 original_anchor) first_D_xid) true)))))))))))))
+(check-sat)

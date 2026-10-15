@@ -1,0 +1,50 @@
+{
+  "status": "passed-identity-lifecycle-prerequisite-only",
+  "complete": false,
+  "authority": false,
+  "protectedExecution": false,
+  "originalTrussCommit": "e79d67df35c6f214e2c218a5844aa938432a2436",
+  "nativeObservations": 32,
+  "independentNativeObservations": 32,
+  "independentNativeMutationsDetected": 2,
+  "conditionalProofs": {
+    "unsat": 7,
+    "sat": 2,
+    "sqlRefinement": false
+  },
+  "selectedSourcePins": 431,
+  "runtimeBinaryPins": 3,
+  "sourceClosureHermetic": false,
+  "requiredCasesPromoted": [],
+  "requiredGate": {
+    "accepted": 40,
+    "unbound": 118,
+    "total": 158
+  },
+  "freshness": {
+    "checks": 216,
+    "failedIds": 88,
+    "exactBaselineUnchanged": true
+  },
+  "files": {
+    "README.md": "28680ff91409350d819674796b10c0ffbae3c4f75e8a1aa5ef467ba31b02f77f",
+    "astra-review.json": "1c9dc39735bee8f5fedd7df36f6da27ebe3e32e5bb6142db9027f21391bdd46e",
+    "astra-review.zip": "bb98c337eaffd583ba25636936b24aaeb9c153ff80196c09093e6a75c056a197",
+    "concurrency-oracle-preimage.py.txt": "0c5276be640314ebecb350890f25d9aaa3a97caaa69954ac9ae62bc9df1fdd58",
+    "failures.json": "a5c34ee428b9fa82bab130050afff8f2b3a6d4c93f84d6bef410b8d2580fc0d3",
+    "formal/D-ended-before-E-commit-burns-claim.smt2": "e5c831c0b174477016d999b02d8bcfca267c18bca6fe4f1b6af6807de48dfa2a",
+    "formal/claim-identity-does-not-establish-permission.smt2": "df2ccf9577c032adb2b7d92d3e021f93033a26d5a90301f967952ff4055af745",
+    "formal/competing-different-claims-cannot-both-succeed.smt2": "d1069496f5c7ab4501bac46b0a8c4c7ec5f542d2f109de4bab8e143bca0b4d65",
+    "formal/erase-on-D-rollback-allows-rebinding.smt2": "b10d8afb15c34fd6e80cbf48e375ce4a902c96a8de4a71f65f1ad6f7e4093a7d",
+    "formal/first-claim-immutable-after-retry.smt2": "6767cbff9d87ca8e4d9e00d879c9368a71cc213e26c451799932a7722ce4d69f",
+    "formal/old-D-snapshot-cannot-see-later-E-claim.smt2": "f4dc955268b66cb66c239eb501e98b2b43a918ca9a0c4a13f91e159469b2645e",
+    "formal/pending-E-not-consumable.smt2": "7d64df8a97e1a300f1d54f33cb79849ecba1a15b6635dc0c3414aa3610483a21",
+    "formal/receipt.json": "842efa2c335659a4ca8db112b7c12b03e6605091da6e1471fc5f4ddf00d833b0",
+    "formal/same-PID-successor-C-refused.smt2": "14ad9746f6894c891fe813403666cf632228d49fc9d498ec099b2862cdb03b66",
+    "formal/same-PID-successor-D-refused.smt2": "1b88b559ad65bdb2b02c627b8a295a2d798bfe805fc780a966e9cf40a5f602f5",
+    "helix-validation.json": "6d8351b566f72c39dc7ba26d141438a16d9cc33bb4120d4108eb98c5b4c7b65c",
+    "native-receipt.json": "b62f66f9e988ae5dbffcd7353455aba8183bffaf24559c93d88390e1b017a839",
+    "phase-validation.json": "d6b0a386aba4bee714209bdd183c4502b70348dd3f7690cffa4550d4362846c5",
+    "validation-summary.json": "f8bda3d1723c171daa1ca6c52a0b878a8fa78cf50524e2636e0d0cb1431a6d6e"
+  }
+}
