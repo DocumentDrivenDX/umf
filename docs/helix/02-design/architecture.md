@@ -624,3 +624,45 @@ Unknown third-party redistribution rights block full source export.
 ## Domain pack ontology targets
 
 [SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.
+
+## Proposed typed persistence compiler and Module Boundaries
+
+FR-52–54 and FEAT-028–030 introduce design-time source generation inside UMF.
+[ADR-004](adr/ADR-004-design-time-persistence-generation.md) proposes the boundary.
+This does not add an application runtime or change ADR-002's single-package policy.
+[CONTRACT-067](contracts/CONTRACT-067-persistence-compiler.md) owns compilation;
+CONTRACT-068 owns generated access and CONTRACT-069 owns adoption conformance.
+[Design entry point](../04-build/typed-persistence-design.md).
+
+| Planned module | Owned types/responsibility | Allowed dependencies | Forbidden dependencies |
+| --- | --- | --- | --- |
+| `src/compilation/admission/` | Input admission, identity/dependency closure, assertion census | Existing public core/validation/registry APIs | Target emitters, host I/O, consumer internals |
+| `src/compilation/ir/` | Private immutable resolved nodes, provenance and obligations | Core value types | Pydantic/SQLAlchemy/PySpark representations, emitters, host globals |
+| `src/compilation/targets/python/` | Python source renderer and generated validators/codecs | IR public boundary, literal renderer | Other target internals, execution code |
+| `src/compilation/targets/postgresql/` | Typed table/mapping emission | IR, public Python renderer, existing public PostgreSQL projections | Drivers, sessions, Truss internals |
+| `src/compilation/targets/spark/` | Spark schema/table emission | IR, public Python renderer, public Spark/Delta projections | Spark session, Ashlar internals |
+| `src/compilation/adoption/` | Truss/Ashlar packet validation and conformance metadata | Public compiler results/contracts | Consumer internals, native execution, issuer/custody fabrication |
+| `src/compilation/bundle/` | Manifest, source archive, deterministic hashing/output | IR/public target results, portable hash implementation | Filesystem, dependency loading, execution |
+| `src/compilation/index.ts` | Public facade and trusted profile composition | Public boundaries above | Private cross-module access or artifact-selected loading |
+| `scripts/compile-persistence.ts` | Host source loading/staging/atomic selection | Public compiler facade, host APIs | Semantic reimplementation, DB connections |
+
+Only the facade constructs the compile pipeline; trusted target profiles are
+explicit arguments, never discovered from metadata. Module public barrels own
+interfaces; internal types remain private. Canonical model interpretation remains
+in existing public UMF APIs, rather than a second semantic implementation.
+Existing advanced Python semantic gaps in CONTRACT-051 are not assumed resolved.
+
+The planned boundary command is `bun scripts/check-compilation-boundaries.ts`.
+Before feature implementation it must reject forbidden imports, import cycles,
+private-module reach-through and host globals, and accept explicit permitted
+imports. It runs locally, through the repository's adopted pre-commit integration
+and in CI. No new pre-commit framework is implied; the adoption slice must record
+the chosen hook/CI wiring and failures. Semantic invariants require separate
+review and behavioral tests; import checks cannot prove them.
+
+Generated output is an independently usable Python source package with locked
+external runtime dependencies and generated local helpers. Separate publication
+of the compiler/helper runtime requires a later packaging decision. Consumers
+own sessions, connection pools, Weft lowering, policy, migrations and operations.
+Truss compiles physical generic storage independently of domain DTOs; Ashlar
+composes generated declarations with its original resolver/publication protocol.

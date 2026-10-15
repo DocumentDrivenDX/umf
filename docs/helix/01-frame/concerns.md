@@ -88,3 +88,20 @@ censoring, coordinate uncertainty and source-specific reuse restrictions.
 ## Shared security concern application (2026-10-08)
 
 FEAT-008 retains the selected fidelity, qualified identity, bounded processing, conformance, browser portability and durable runtime-boundary concerns. Policy metadata is untrusted input; authenticated attributes and current authority are host obligations. No account UI or authentication-provider slot is added to this library. Unknown policy meaning may be retained but cannot authorize execution.
+
+## Typed persistence generation application
+
+FEAT-028–030 explicitly adopt the existing fidelity, identity, reproducibility,
+bounded-processing, conformance and consumer-runtime concerns. ADR-002's
+`typescript-bun` language-runtime filler remains owner-selected; Python is a
+generation target, not a replacement implementation runtime. No UI, authentication
+provider or datastore slot is selected for this offline library capability.
+
+Select `modularity-and-encapsulation` for the new handwritten compiler modules
+under the installed HELIX source-code baseline. Scope initial enforcement to
+`src/compilation/` and its tooling entrypoint; existing unrelated repository
+modules are not silently declared conformant or refactored. Architecture owns
+the module map, CONTRACT-067–069 own public boundaries, and the implementation
+plan sequences checker adoption before compiler work. Remaining semantic review
+checks include relevant-assertion closure, codec invariants and execution bypass.
+No additional package split or runtime helper distribution is selected.

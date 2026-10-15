@@ -12162,3 +12162,17 @@ source/schema/fixture digests verify. `current-logical-scan-20261015/final-weft-
 retains exact provenance, separately qualified from owner-native/build evidence.
 No runtime/test/schema/case definition changed in this provenance-only follow-up;
 45accepted/113unbound and the active overall goal remain.
+
+## Proposed typed persistence generation
+
+FR-52–54 and FEAT-028–030 are specified in the
+[typed persistence design and build handoff](typed-persistence-design.md). That
+scoped plan allocates B-TP-000–010 to US/TD/STP-080–085: boundary adoption and
+profile spike, portable compiler and writer, Python models, PostgreSQL, Spark/
+Delta, managed Unity Catalog, and separate Truss/Ashlar conformance. It retains
+exact native/browser evidence and rollback obligations.
+
+The owner requested specifications, Astra review and a Claude opinion prompt.
+This does not authorize implementation or reorder TableSpec-first integration.
+Exact dependency locks, consumer-local adoption choices and an implementation
+spending ceiling remain explicit readiness gates in the focused plan.

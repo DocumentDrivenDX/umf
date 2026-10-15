@@ -708,3 +708,36 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 | [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../03-test/test-plans/STP-903-frozen-action-manifests.md) |
 
 The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+
+### Subsystem: Physical Bindings and Authored Generation — typed persistence
+
+Owner-directed design extension; release sequencing remains separately selected.
+
+- **FR-52 — Generated Python instance models.** A maintainer must be able to
+  compile pinned UMF selections into statically inspectable Python instance
+  models, preserving explicitly bound presence/null carriers, default declarations without
+  execution, ordered key DTOs and exact
+  values. Generation must retain unknown source content and a complete selected
+  assertion support report, refuse uninterpreted relevant semantics and reproduce
+  the same source bytes. The compiler runs at design/build time; generated
+  applications require no compiler or JavaScript runtime. FEAT-028 and US-080/081
+  govern this capability.
+- **FR-53 — Generated PostgreSQL access.** A maintainer must be able to generate
+  typed physical declarations and qualified codecs from explicit PostgreSQL
+  bindings. Ordinary SQLAlchemy mappings and generic engine storage must remain
+  distinct. Truss adoption must preserve fixed generic storage and protected
+  execution, transaction, journal and feed semantics. Connections, query lowering,
+  migrations and business execution stay consumer-owned. FEAT-029 and US-082/084
+  govern this capability.
+- **FR-54 — Generated analytical table access.** A maintainer must be able to
+  generate Spark schemas, Delta/Unity Catalog declaration proposals and typed
+  materialized-row boundaries from explicit bindings. Static types must not claim
+  arbitrary DataFrame correctness or catalog key enforcement. Ashlar adoption
+  must preserve exact publication vectors, retention, source/ACK custody and
+  fencing. FEAT-030 and US-083/085 govern this capability.
+
+Acceptance for FR-52 requires deterministic generation, static positive/negative
+examples and exact-value/presence counterexamples. FR-53 additionally requires
+pinned PostgreSQL native and Truss protocol witnesses. FR-54 requires separately
+qualified Spark/Delta, managed Unity Catalog and Ashlar publication witnesses.
+Specifications and local-only tests establish none of those native support claims.

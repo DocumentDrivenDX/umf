@@ -3226,3 +3226,31 @@ email qualification remain separate gates.
 ## Shared security acceptance allocation
 
 FEAT-008 and US-079, US-056 and US-057 define the owner-requested security slice. STP-079 allocates authoring/typing/composition/disclosure/portable evaluation to contract and browser integration tests. STP-056 allocates backend mappings, bypass, privacy and drift to native integration. STP-057 allocates writes/history/revocation/propagation to native concurrent integration. All P0 criteria require 100% exercising coverage with canonical citations; missing native runs block qualification. The per-AC matrices live in the story plans. Backend procedures SEC-PG-RAW, SEC-TRUSS, SEC-DELTA-RAW and SEC-ASHLAR supplement this strategy; SQL Server is a future admission witness, not an initial release backend.
+
+## Typed persistence compiler strategy
+
+FR-52–54, FEAT-028–030, CONTRACT-067–069 and STP-080–085 define proposed
+coverage. STPs own the per-AC test matrices. No planned test is current evidence.
+
+- Portable unit/contract: exact source retention, assertion census/dependency
+  closure, unsafe-meaning refusals, deterministic manifests, hostile literals,
+  bounded output, writer ownership, missing/default/null/UNSET and exact codecs.
+- Boundary: the scoped compiler checker must accept permitted imports and reject
+  forbidden imports, cycles/private access and host globals. Review must also
+  inspect semantic ownership, immutable-state encapsulation and bypass paths.
+- Browser: run the same compiler corpus in Bun and real Chromium and compare
+  exact output bytes and diagnostics. Python/native oracles remain host-side.
+- Static: generated source must pass pinned Python type checking; invalid field,
+  constructor, key and named-projection cases must fail for the expected reason,
+  not missing imports. Explicitly untyped Spark/raw SQL escapes confer no proof.
+- Native: independent PostgreSQL, Spark/Delta and managed Unity Catalog lanes
+  preserve versions/configuration and original observations. Python validation
+  and local schema checks do not replace database enforcement or managed evidence.
+- Consumer: original/generated isolated witnesses preserve Truss transaction/
+  journal/feed and Ashlar publication/resolver/ACK behavior. Include concurrency,
+  rollback, stale authority and uncertain-outcome controls. No live double writes.
+
+Evidence must retain exact source/profile locks, commands, actual versions,
+expected/observed outcomes, failed attempts and capture limits. Environment-blocked
+managed/protected lanes remain unqualified; they may not be silently skipped in
+an overall adoption claim. No OTel service or UI is introduced by this slice.

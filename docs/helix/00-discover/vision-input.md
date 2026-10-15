@@ -506,3 +506,17 @@ URLs must resolve to pack-owned entries without losing selected definitions.
 Show only declared UMF meaning; inheritance, equivalence and native ontology
 reasoning are not inferred. Table/record links use CONTRACT-053's explicit
 record-to-table identity convention within the same pack/version.
+
+## Owner direction: generated typed persistence substrate
+
+The owner requests design-time UMF-to-Python generation for a robust typed
+persistence interface targeting PostgreSQL and Spark SQL / Unity Catalog, owned
+in the UMF repository. Truss and Ashlar should be evaluated as adopters of a
+shared generated substrate while retaining their mutable-graph and immutable-
+publication execution semantics. The requested deliverable is HELIX specifications,
+an Astra review and a prompt for an independent Claude opinion. This direction
+authorizes specification work, not implementation, migrations or production adoption.
+
+[FEAT-028](../01-frame/features/FEAT-028-python-model-generation.md), FEAT-029
+and FEAT-030 frame the proposal. The proposal does not displace the previously
+selected TableSpec-first integration priority.

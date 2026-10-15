@@ -1,0 +1,111 @@
+{
+  "kind": "design-review",
+  "date": "2026-10-15",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "reasoningEffort": "high",
+    "task": "/root/astra_design_review"
+  },
+  "scope": "FEAT-028–030, ADR-004, CONTRACT-067–069, SD-028–030, US/TD/STP-080–085 and affected governing documents",
+  "rounds": [
+    {
+      "round": 1,
+      "verdict": "Sound architectural direction; seven actionable contract corrections required before implementation handoff.",
+      "findingIds": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6",
+        "A7"
+      ],
+      "additionalSuggestion": "Precisely specify canonical JSON serialization and independent digest vectors."
+    },
+    {
+      "round": 2,
+      "verdict": "All seven original findings substantively resolved; no remaining P1. Two bounded clarifications remain.",
+      "findingIds": [
+        "A8",
+        "A9"
+      ]
+    },
+    {
+      "round": 3,
+      "qualification": "Draft ready for independent second opinion and recorded qualification gates; not implementation/native adoption readiness.",
+      "conclusion": "Verified both corrected paragraphs. Nested carriers, array/map absence, Patch null policy, and KEY_IDENTITY.inputDigest are now explicit and consistent. Hashing and DTO equality are appropriately separated from UMF key semantics.",
+      "closure": "Review closed: no unresolved findings from this review."
+    }
+  ],
+  "findings": [
+    {
+      "id": "A1",
+      "severity": "P1",
+      "issue": "Core availability/default declarations did not define omission/null carriers or default execution.",
+      "disposition": "resolved",
+      "correction": "Complete explicit valueBindings; preserve-only default policy; pre-default versus stored-row validity separated; FR52/PY02/AC1 and tests aligned."
+    },
+    {
+      "id": "A2",
+      "severity": "P1",
+      "issue": "Bare aliases could collapse module-qualified Fields.",
+      "disposition": "resolved",
+      "correction": "0.1 refuses equal bare IDs across qualified membership, including aliases, nested records and projections; explicit counterexample allocated."
+    },
+    {
+      "id": "A3",
+      "severity": "P1",
+      "issue": "Raw Spark TimestampType naive local datetime conflicts with aware instant admission.",
+      "disposition": "resolved",
+      "correction": "Explicit exact epoch-microsecond text transport; raw datetime refuses; process/session timezone, negative epoch, DST and precision controls allocated."
+    },
+    {
+      "id": "A4",
+      "severity": "P2",
+      "issue": "Backend schema/configuration admission and codec signatures were underspecified.",
+      "disposition": "resolved",
+      "correction": "Exact passive schema observation and SchemaMatch, ordered metadata and named/full-row decoders; driver transport explicitly separately qualified; no authorization inferred."
+    },
+    {
+      "id": "A5",
+      "severity": "P2",
+      "issue": "Valid Python identifiers may be private Pydantic fields or shadow imports.",
+      "disposition": "resolved",
+      "correction": "Target-aware public field/package restrictions and complete reserved/imported sets; static/runtime negative fixtures allocated."
+    },
+    {
+      "id": "A6",
+      "severity": "P2",
+      "issue": "Generated key identity/encoding claims lacked a public boundary.",
+      "disposition": "resolved",
+      "correction": "Explicit immutable qualified KEY_IDENTITY, no generated UMF encoder/equality API, disabled key hashing, existing qualified consumer codec retained; golden-vector adoption requirement."
+    },
+    {
+      "id": "A7",
+      "severity": "P2",
+      "issue": "Primary Python gate omitted static-negative harness.",
+      "disposition": "resolved",
+      "correction": "STP-081 runs test_static.py and requires intended diagnostics with valid imports."
+    },
+    {
+      "id": "A8",
+      "severity": "P2",
+      "issue": "Nested primitive carriers and Patch null relation needed explicit policy.",
+      "disposition": "resolved",
+      "correction": "Reached item/value bindings, exact native/profile carrier rules or refusal, no array omission/UNSET, absent map key separate from null, Patch null equals create.null in 0.1 or refuses."
+    },
+    {
+      "id": "A9",
+      "severity": "P3",
+      "issue": "Key identity prose mentioned an unlisted digest.",
+      "disposition": "resolved",
+      "correction": "KEY_IDENTITY explicitly contains inputDigest."
+    }
+  ],
+  "additionalCorrection": "RFC8785 JCS defines exact canonical bytes; shared Unicode/number/digest controls allocated.",
+  "limitations": [
+    "Model review is design evidence, not implementation correctness or native qualification.",
+    "No consumer contract was adopted or overwritten.",
+    "Exact dependency locks, native/managed evidence, consumer-local scope choices and implementation authorization remain future gates."
+  ]
+}
