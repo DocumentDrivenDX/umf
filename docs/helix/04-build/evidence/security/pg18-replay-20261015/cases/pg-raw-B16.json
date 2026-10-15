@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B16",
   "backend": "pg-raw",
-  "runId": "78831def-e805-4647-a4aa-a7e1722292da",
+  "runId": "a94769d8-e841-4945-b6c6-298dbdbd4c36",
   "command": [
     "python3",
     "tests/security/native/pg18-replay/scale.py"
@@ -966,7 +966,7 @@
         [
           {
             "state": "text",
-            "text": "357"
+            "text": "362"
           }
         ]
       ],
@@ -974,7 +974,7 @@
         [
           {
             "state": "text",
-            "text": "357"
+            "text": "362"
           }
         ]
       ]
@@ -1865,9 +1865,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.093,
+            "Planning Time": 0.091,
             "Triggers": [],
-            "Execution Time": 7.318
+            "Execution Time": 6.081
           }
         ],
         "excludedAssessorPlan": [
@@ -1935,9 +1935,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.087,
+            "Planning Time": 0.09,
             "Triggers": [],
-            "Execution Time": 0.059
+            "Execution Time": 0.054
           }
         ]
       },
@@ -2071,9 +2071,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.092,
+            "Planning Time": 0.096,
             "Triggers": [],
-            "Execution Time": 725.87
+            "Execution Time": 644.025
           }
         ],
         "excludedAssessorPlan": [
@@ -2141,9 +2141,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.092,
+            "Planning Time": 0.094,
             "Triggers": [],
-            "Execution Time": 2.964
+            "Execution Time": 2.855
           }
         ]
       },
@@ -2277,7 +2277,7 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.103,
+            "Planning Time": 0.101,
             "Triggers": [],
             "JIT": {
               "Functions": 4,
@@ -2288,7 +2288,7 @@
                 "Deforming": true
               }
             },
-            "Execution Time": 7353.11
+            "Execution Time": 7484.006
           }
         ],
         "excludedAssessorPlan": [
@@ -2413,9 +2413,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.115,
+            "Planning Time": 0.181,
             "Triggers": [],
-            "Execution Time": 15.397
+            "Execution Time": 16.182
           }
         ]
       }
@@ -2657,7 +2657,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-d__k0v71",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-znqaikb6",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -2898,7 +2898,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-o0avfp2f",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-pw7g_01h",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3094,7 +3094,7 @@
               [
                 {
                   "state": "text",
-                  "text": "357"
+                  "text": "362"
                 }
               ]
             ],
@@ -3102,7 +3102,7 @@
               [
                 {
                   "state": "text",
-                  "text": "357"
+                  "text": "362"
                 }
               ]
             ]
@@ -3223,7 +3223,7 @@
         "journalEvidence": {
           "originalQueries": 76,
           "leases": 4,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-kkjnbx8w",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-3037zc7x",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3369,13 +3369,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "2e04783242665aa486864bad77443511bc07a6e9ce43e07afb06549afff78b62",
+      "containerId": "5408c51e71f72f5d21b8c70b926ef2a5496bf15ced2eccaa27a708bb7a92e821",
       "ownedAnonymousVolumes": [
-        "e513bdab31340ffce85df930f5ae5a9c9fd43f9e2c744e267001cb7b05f6cc19"
+        "0595855e493ab201969971ed55c84ee032bbe07db653a3ffb8f5ea0b158bedb9"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "53aca768f3608cb5776f33509d05aeaf1a49ff8bf16df9d5a0ee506afd9a3190"
+    "digest": "4d85cb54f534fb391ed096629b20456ee2ea9708efa125095c9fce3161f51cb8"
   },
   "scope": "Authored PostgreSQL18.6 forced-RLS raw profile at stable cut, exact total populations 1k/100k/1M, independent counts/samples, paired native plans and actual-driver text aggregate/native timeout/no partial output/failed transaction/explicit same-session recovery. No arbitrary workload SLA, streaming/final-publication, full diagnostic closure, graph or Delta qualification."
 }

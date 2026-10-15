@@ -1,0 +1,124 @@
+{
+  "status": "no-open-actionable-findings-in-fixed-P02-scope",
+  "reviewedAtUtc": "2026-10-15T10:05:00.794240+00:00",
+  "authoritativeRoot": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+  "head": "a8f73415aef8052e2dedeb3bc644426824675d14",
+  "nativeImage": "postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+  "requirement": {
+    "id": "pg-raw.P02",
+    "assertion": "Owner-held security_barrier views project each catalog transform (mask function classes, generalize buckets/date truncation, hash) for the authored Resource fields; per-actor disclosed values match the independent Python oracle byte-exact, with storageEffect and output-domain metadata on the disclosure transport; the base table grants no ordinary SELECT.",
+    "covers": [
+      "US-056-AC6"
+    ],
+    "required": true,
+    "layer": "native",
+    "timeoutMs": 60000
+  },
+  "caseAtReview": {
+    "status": "not-run",
+    "command": null
+  },
+  "evidence": {
+    "finalCompilerControls": 150,
+    "finalSourceCompilerMutants": 6,
+    "independentFinalNativeObservations": 85,
+    "independentFinalNativeTypedCells": 156,
+    "independentFinalNativeSeconds": 9.61,
+    "nativeEarlierSourceMutants": 3,
+    "nativeOriginalBeforeFinalFraming": {
+      "observations": 83,
+      "seconds": 10.223
+    },
+    "refusalAndCleanupComparisonControls": 32,
+    "formal": {
+      "queries": 9,
+      "unsat": 7,
+      "sat": 2,
+      "scope": "conditional mathematical model, not native/program refinement"
+    },
+    "selectedRepositoryDigests": 33,
+    "selectedRuntimeDigests": 539
+  },
+  "finalSourcePins": {
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
+    "docs/helix/03-test/security/cases.json": "b057a4a17291a7f761759b1f7f0d65237407930e409d0e07fdc2607b75fa6137",
+    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
+    "spec/core/extension-package.schema.json": "fe26a341e31ee0ef9433411122dbb43c5c809037bc96e277ec046b145221e794",
+    "spec/core/facet-document.schema.json": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
+    "spec/core/field-document.schema.json": "1c8cabaa17e7dbcd4b5cd51fdf26c69e8db3de1511ac825952a11d9ad02411bc",
+    "spec/core/key-document.schema.json": "2957e2ca8b0b800ad0e52a53e5cb1f053519c415aaed834f7fe650d21aeae4bf",
+    "spec/core/nullability-document.schema.json": "eaaf77c2f22370335baeb49daed162e31cf84b0b6493633960025785d0bf0156",
+    "spec/core/relationship-document.schema.json": "1ba5a38f95e135c3d4e6757259e6c7c75edb9aaa3fff98931f92e1890ded450d",
+    "spec/core/schema-properties-document.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "spec/core/schema.json": "59fa4e6964d9b3f1f264d103784484402b756a7e0d1b896b2a5bedd559814b19",
+    "spec/extensions/security-protection/package.json": "df3dbb7faa2df45dc395caeb829340e84deb4dfd4f1940c2f6dd846aa9d55e1f",
+    "src/extensions/security/protection/catalog.ts": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3",
+    "src/extensions/security/protection/core-fields.ts": "87e28f4692eb1b7158d04a344f091a195695b3c5278fef676608af143d248cc5",
+    "src/extensions/security/protection/literals.ts": "5d271dfcdba2b837a4876eb3696732a79220f40e5740af3ce0a1c50027efe466",
+    "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "src/registry/registry.ts": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6",
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/validation/internal-schema.ts": "a027a6dcadc37ca0f6c137b87bce9f39e7a16765e633a35555e32c7680a51ad4",
+    "src/validation/keys.ts": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb",
+    "src/validation/relationships.ts": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8",
+    "src/validation/schema-properties.ts": "db5e4a0cbb2de5fc1dd5b5720c03ec36470739deb0b81522036f5171614588bd",
+    "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg18-catalog-compile.ts": "00f0db96cbeaf5033e786cc7d30e240939a705ddf77f70973c93f0bac1a9ad55",
+    "tests/security/native/pg18-catalog-oracle.py": "53708fcd22c7a7bacbb12d5ed015493a1b68ad78d80267152e8c3631da396813",
+    "tests/security/native/pg18-catalog-projection.py": "1d6a7eb886c1e1ca8eb7e6c737ac2525d5e6faea76ceb2b24daf4490c2ab358f",
+    "tools/security/protection-pg18-catalog.ts": "64778fc77696ae45ebaa399aa774c1a0a6d85ac7a9e5950cfdfe074600a6c399",
+    "tools/security/protection-pg18-expressions.ts": "5b13ded8969085f55fa12e07bba2af87089ae3c47b0ba14dc1c8dac5ae83572c",
+    "tools/security/prove-pg18-catalog-bounds.py": "3ce051f1cc578b04a331caa7d63fa208b506d5fc245a91eff067d6148857bf0d"
+  },
+  "resolvedFindings": [
+    {
+      "id": "core-revision-carriers",
+      "witness": "quick-initial.json"
+    },
+    {
+      "id": "range-property-closure",
+      "witness": "quick-initial.json"
+    },
+    {
+      "id": "native-jsonb-metadata-representability",
+      "witness": "metadata-utf8-initial.json"
+    },
+    {
+      "id": "lost-volume-observation",
+      "witness": "fault-controls.json"
+    },
+    {
+      "id": "reserved-native-columns",
+      "witness": "system-columns-initial.json",
+      "primaryDocumentation": "https://www.postgresql.org/docs/18/ddl-system-columns.html"
+    }
+  ],
+  "nativeMutationScope": "The three native weakening runs use snapshot-pins.json; final native replay uses final-source-pins.json. No inheritance of source qualification is asserted.",
+  "sourceEdits": false,
+  "acceptancePromotions": [],
+  "limits": [
+    "Fixed authored catalog, typed physical profile and three ordinary SCRAM actors only.",
+    "Canonical JSON bytes compare exact typed values after object-key ordering; not raw server formatting equivalence.",
+    "Private native transport; not fabricated .2 policy or issuer lineage.",
+    "No P03/P04/P05, arbitrary permission compiler, production/native authority/lifecycle, or other-backend qualification.",
+    "Core validation precedes literal budget; no total CPU/heap theorem.",
+    "Sandbox mutation receipts are sensitivity evidence, not successful product receipts."
+  ],
+  "resultDigests": {
+    "controls-current.json": "20c2c9c605ee632957a5e0354e1a73ed6115fd6532eda5bcb9a4bccf5b108472",
+    "current-pure-mutations.json": "bb4835f0df6787c06bd48deb7f271081d3557cd25be324646c78225e46e85baf",
+    "native-controls.json": "98c85b5231b3b4d3f6d10f4d338ab3bda031998ba78bfbaf58f66981cc96d31b",
+    "independent-native-final.json": "4e2f1d178e2d6a661ed8cd0f06f952402ac0bfe7b64c51f81ce49f6840bdeb1f",
+    "independent-native-final-run.json": "3dfd196d7825c71a13563511fb79b696d9781126041eab149871257d57af62c1",
+    "fault-controls.json": "ec724c08bdc0504b142d3251c35c20d94ac6749412831e76cc31a5e9f095ed08",
+    "formal-replay/receipt.json": "fda22dc9801fd73efb1ccdfca52e976e66ce47f51342719249bbbd5fe595ad36",
+    "parent-prebinding-native.json": "f4e72201f7866afe04786ff55ec576eab63773202c65946f94048ba0eb7d590b",
+    "review.md": "e2e7a3625055dbf649f29dab63c7d01a246674fe193a1e95d5ca5e7de88b07f3"
+  }
+}

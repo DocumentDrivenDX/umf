@@ -1,0 +1,10 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/native/pg18-projection-expressions.test.ts:
+(pass) closed expression input and provider refuse unsupported SQL/semantics atomically [1.27ms]
+(pass) quotes, slash and supplementary scalars remain SQL literals; no native permit [0.04ms]
+
+ 2 pass
+ 0 fail
+ 129 expect() calls
+Ran 2 tests across 1 file. [21.00ms]

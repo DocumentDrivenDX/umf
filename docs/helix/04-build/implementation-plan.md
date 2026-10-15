@@ -11888,3 +11888,44 @@ current Subject/action/owner authority, source/DDL closure, permit, selector,
 finalizer, seal or required backend case is qualified. Production guard-home
 inventory and lifecycle stages remain separate obligations; the full security
 goal stays active and the gate remains40 accepted/118 unbound.
+
+
+### PostgreSQL18 authored catalog barrier-view projection — 2026-10-15
+
+B-SFP-008 implements the original `pg-raw.P02` / `US-056-AC6` assertion with a
+private closed catalog-to-view compiler and an independent Python transport
+oracle. Thirteen authored Resource Fields cover pure masks, bounded regex,
+exact integer/decimal buckets, Gregorian date truncation and SHA256. Original
+core closure/pins and catalog/physical bindings are retained. Native input CHECK
+constraints prevent implicit rounding; static whole-domain bounds require every
+admitted output to fit its authored domain before SQL is emitted.
+
+Fresh PostgreSQL18.6 evidence uses owner-held security_barrier views with FORCE
+RLS, SCRAM ordinary identities, no effective table/column base SELECT, complete
+42501 refusals and unchanged canonical storage. Five rounds include Unicode,
+nulls, exact large coefficients, date/bucket extremes, distinct Field carriers
+and independently different null signatures. The final prebinding run passes93
+observations/260 typed Cells; actual acceptance is established separately by the
+full governed gate. Assertions, criterion allocation and the60s case budget remain
+unchanged. See `evidence/security/pg18-catalog-projection-20261015/` for selected
+source/runtime pins, inventories, owned cleanup, review and retained failures.
+
+Seven conditional UNSAT bounds and two SAT weakened-premise witnesses qualify
+mathematical floor/length/escaping assumptions, not executable refinement or
+native authority. The private JSON disclosure transport retains input/output
+Field references, transform identity and separate canonical/disclosed-only
+storage enums. Core pins remain in its compiled closure context. It does not
+claim general security0.2 Cell lineage or policy-permission compilation; row
+eligibility remains the separately qualified fixed raw SESSION_USER membership
+profile. Unsupported providers, query-use meanings and native domains refuse.
+
+P03 query-property closure, P04 protected writes, P05 generated carriers, other
+P cases, current-authority/guard lifecycle and actual Truss/Ashlar/Delta consumers
+remain open. M2 and the overall security goal remain active.
+
+The fresh full158-case gate accepted P02 and all previous40 accepted cases:
+41 accepted/117 required unbound across34 criteria. It exits1 solely because
+those117 implementations remain absent. Evidence validation has217 checks and
+88 failed IDs, exactly the prior failed-ID set; its new `fresh-case-pg-raw.P02`
+check passes. These scoped results do not qualify the whole backend or complete
+the security goal.
