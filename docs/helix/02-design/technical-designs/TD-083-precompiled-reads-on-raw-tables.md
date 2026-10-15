@@ -34,7 +34,7 @@ pinned Weft Python binding with that text, the pinned UMF documents and the
 target's binding source. The tool records Weft's response verbatim: statement
 text, parameter carriers, ordered output descriptors, host obligations and the
 structural digest. It adds the build-side checks Weft does not own: every read is
-bounded, ordering is the complete unique Key ascending, and page and limit sizes
+bounded, ordering uses admitted sort carriers with the complete selected Key tie-breaker, and page and limit sizes
 are at most 1,000. Any blocked response or failed check stops the build before
 anything is written. Output goes through the same staging, swap and drift-check
 writer as TD-080, limited to the stage-two reserved paths and their catalog manifest.
@@ -65,11 +65,7 @@ metadata and table UUID) and compares them with the binding and CONTRACT-070
 ColumnSets. Lakebase targets carry a major version plus an explicit set of
 qualified minors.
 
-**Pages.** `.page(size, after)` is Weft's `entity-page` profile: a keyset page on
-the complete unique Key. The adapter streams at most `size` rows; the runtime
-builds `Page[R, K]` whose `next_after` is a `Continuation[K]` holding the last Key
-and the target identity digest (CONTRACT-072). A continuation from a target with
-another identity raises `StaleContinuation` before any statement. Pages are live
+**Pages.** The target-qualified general keyset profile carries every requested sort component plus complete selected Key tie-breaker, with explicit directions and null placement. Use the existing entity-page profile only where that owner profile admits the exact ordering. Runtime retains authorized hidden sort values separately from the public projection. Continuation validation binds catalog/entry/variant, effective ordering, non-cursor parameters and target identity under CONTRACT-072 before dispatch.  Pages are live
 by default. With `snapshot=True` (QC-09, Weft WR-A12) the first page records the
 table versions Weft pins with `VERSION AS OF` in the continuation, and later pages
 bind them; the build refuses snapshot declarations for `postgresql` and
@@ -233,3 +229,7 @@ consumer's package directory and pins. A schema change in the database causes
 | Lakebase minor upgrades break running services | `verify()` refuses unlisted minors; requalification is an explicit pin change |
 | Exact identity equality conflicts with a set of qualified minors | Contract clarification requested; this design matches minors by set membership |
 | Managed endpoints are unavailable to CI | Native lanes report not-run; local fakes never count as native witnesses |
+
+### Full continuation qualification
+
+US-083-AC6 additionally requires mixed ASC/DESC, explicit null placement, hidden sort columns excluded from the public projection, and changed filter arguments. Reject a cursor after catalog, entry, variant, ordering, parameter or target changes before dispatch. Hidden values require read authorization. Assert exact-once traversal only on unchanged data; mutable raw tables provide no snapshot guarantee between pages.

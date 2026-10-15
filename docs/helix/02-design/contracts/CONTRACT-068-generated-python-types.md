@@ -54,8 +54,7 @@ Every generated model uses Pydantic 2 with `strict=True`, `extra="forbid"`,
 `frozen=True`, `revalidate_instances="always"` and `hide_input_in_errors=True`.
 No field alias, `validation_alias` or `serialization_alias` is generated; Python
 attribute names are the constructor parameter names that type checkers see.
-Generated classes are marked `typing.final` and define `__init_subclass__` to
-raise `TypeError`, so no subclass can restore hashing or bypass configuration.
+Generated classes are marked `typing.final`; their shared runtime base enforces the generated final-model metadata with a runtime subclass guard, so no subclass can restore hashing or bypass configuration. Generated classes contain no custom raise/validation branches.
 
 Codec boundaries revalidate the complete value graph from raw attribute values
 rather than trusting a previously constructed instance, `model_construct` or
@@ -98,13 +97,13 @@ is an engine obligation recorded in the manifest.
 | Embedding vector | `Vector`: fixed-dimension tuple of finite float32 values, only for Fields referenced by a CONTRACT-074 vector index |
 | Other floating point | not supported in 0.1; selecting such a Field refuses with `LOSS` |
 
-Generated validators MUST agree with UMF's `validateCoreFieldValue` and
+The metadata-driven runtime validators MUST agree with UMF's `validateCoreFieldValue` and
 `validateCoreRecordValues` on a shared golden-vector corpus. Where they cannot,
 the disposition is not `exact` and strict generation refuses.
 
 ### Keys
 
-`<Record>Key` preserves declared component order. Its constant `KEY_IDENTITY` is
+`<Record>Key` aliases the exact `RecordView.selectedKey` DTO. Each additionally referenced Key gets a distinct `<Record><KeyId>Key` DTO and identity; generation refuses a reference whose Key cannot be represented, rather than coercing alternate Keys. Each DTO preserves declared component order. Its constant `KEY_IDENTITY` is
 `{documentId, coreVersion, module, element, key}`, matching UMF's
 `CoreKeyIdentity` plus document and core identity; it carries no build digest.
 The manifest's input digest is exposed separately as `BUNDLE_INPUT_DIGEST`. Key
@@ -120,7 +119,7 @@ and requires it to block.
 
 `<Record>.c.<field>` is a `Column[<Record>, T]` (the `c` namespace is a `ClassVar`
 on the row model). Its comparison operators accept `T`, a covariant `Param[T]` or
-another `Column[Any, T]` and return `Predicate[<Record>]`, so a type checker
+another `Column[<Record>, T]` of the same owner and return `Predicate[<Record>]`, so a type checker
 rejects wrong operand types and predicates over another Record. Because `Column`
 overrides `__eq__`, it is unhashable; the narrower `__eq__` signature is an
 intentional override whose checker diagnostic the `umf_access` runtime package
@@ -143,31 +142,35 @@ CONTRACT-071 capture raises `QueryOutsideCatalog`. They never produce SQL.
 
 For each selected CONTRACT-900 action:
 
-- `<Action>` is an immutable `ActionRef` constant naming the action's module and
-  ID and its input and output types. It is what `@command(action=...)` and
-  executors receive.
+- `<Action>` is an immutable `ActionRef` constant with its input/output types and
+  `source:{documentId,coreVersion,module,action,documentSha256,actionPointer,
+  invocation:{id,version}}`. The digest is of the exact retained UTF-8 document
+  source; the pointer identifies the original action declaration. Complete source
+  context, not a same-named action, is its compilation identity. It is what
+  `@command(action=...)` and executors receive. It is not an issued action revision,
+  role grant, seal or authorization capability.
 - `<Action>Input` has one field per parameter. Value parameters use their Field
   carrier; optional parameters are `T | MISSING`. Entity parameters are typed as
-  the target Record's Key DTO.
+  the exact parameter-declared Key DTO, not an inferred primary Key.
 - `<Action>Output` has one field per declared output; graph-write recipes have no
   business outputs and return the runtime's typed receipt instead.
 - `Committed[<Action>Output]` also carries `created` and `changed`: tuples of the
   generated Key DTOs of the Records in the action's write frame.
 - Every client method takes a keyword-only `timeout: timedelta | None = None`
-  and raises `ActionTimedOut` when the deadline expired before commit
+  and raises `ActionTimedOut` only when positive original native/engine evidence establishes deadline expiry with no commit
   (CONTRACT-072 Timeouts).
-- Each client method has a companion `<action>.validate(input) ->
+- Each client method has a companion `<action>.validate(input, *, timeout=None) ->
   ValidationResult` (CONTRACT-072) that checks the input against the target
   without changing anything.
 - `<Action>Rejected` is an exception carrying `code` typed as a `Literal` union of
-  the action's failure codes and `retryable: bool` from the declaration.
+  the action's failure codes plus reserved `ENTITY_MISSING`, and `retryable: bool` from the original classified result. Protocol refusals retain their separate exception types.
 - The generated `Actions` class takes a CONTRACT-072 `ActionExecutor` and has one
-  method per action, `def <action>(self, input: <Action>Input) ->
-  Committed[<Action>Output]` (`Committed[None]` for recipes without business
+  callable endpoint per action, `__call__(input: <Action>Input, *, timeout: timedelta | None = None) ->
+  <Action>Committed` (output `None` for recipes without business
   outputs), with no idempotency key.
 - The generated `ReplayingActions` class takes a CONTRACT-072
   `ReplayingActionExecutor` and has one method per action, `def <action>(self,
-  input: <Action>Input, *, idempotency_key: str) -> Committed[<Action>Output]`,
+  input: <Action>Input, *, idempotency_key: str, timeout: timedelta | None = None) -> <Action>Committed`,
   with the key required. It delegates to `invoke_keyed`. Raw-table targets do not
   implement `ReplayingActionExecutor`, so type checking rejects them here.
 - Both constructors check their executor against the runtime-checkable protocol
@@ -176,10 +179,14 @@ For each selected CONTRACT-900 action:
 - Client methods map CONTRACT-072 outcomes: `Committed` returns the output and
   receipt; `Replayed` returns or raises the original result; `Rejected` raises
   `<Action>Rejected`; `Denied` raises `ActionDenied`; `Conflict(retained)` raises
-  `ActionConflict`; `Indeterminate` raises `ActionIndeterminate`. `ActionRefused`
+  `ActionConflict`; `TimedOut` raises `ActionTimedOut`; `Indeterminate` raises `ActionIndeterminate`. Every engine
+  projection/exception retains CONTRACT-072's complete `original` result, safe
+  code and original source/revision/recovery context. `ActionRefused`
   and `ActionFailed` raised by the executor propagate unchanged. Each method
   validates and encodes the input and delegates to the executor. It never
   constructs SQL.
+
+Each named action endpoint is a generated typed descriptor exposing `__call__` and `validate`; the method signatures above describe its call surface. Sync/async overloads follow CONTRACT-072 and every timeout defaults to the target's required deadline. Static/runtime conformance must exercise both endpoint operations; the typing spike does not qualify them.
 
 ### Codecs and errors
 
@@ -222,7 +229,7 @@ and are never translated into empty results or success.
 
 With the CONTRACT-070 `Order` view: `OrderPatch()` encodes `{}`;
 `OrderPatch(memo=None)` encodes `{"memo": None}`; `OrderPatch(amount=None)`
-refuses. `OrderCreate(order_id="o-1", amount=Decimal("125.5"))` is valid for
+refuses. `OrderCreate(order_id="o-1", amount=Decimal("125.5"), placed_at=datetime(2026, 10, 15, tzinfo=timezone.utc))` is valid for
 `numeric(12,2)`; `Decimal("1.234")` refuses rather than rounding.
 `Order.c.amount > "5"` fails type checking; comparing `Order.c.amount` with a
 `Param[Decimal]` passes.
@@ -233,3 +240,7 @@ refuses. `OrderCreate(order_id="o-1", amount=Decimal("125.5"))` is valid for
 - [ ] Static positive/negative corpus passes on each pinned checker.
 - [ ] Golden-vector agreement with UMF core validators.
 - [ ] `ReplayingActions` over an `ActionExecutor`, and `.into()` with another Record's projection, fail type checking on each pinned checker.
+
+### Action-specific committed result typing
+
+Each selected action emits `<Action>Committed`, an immutable typed result view over `Committed[<Action>Output]`, with read-only `created` and `changed` properties narrowed to tuples of that action's exact possible Key DTO union (empty tuple type when none). The generated endpoint returns that named result rather than erasing it to generic Committed; recipes without output use output None. The shared runtime factory builds the view from the complete original result/metadata; generated source adds annotations, not conversion logic. The original net change inventory also retains deletion and link/unlink identities; the two convenient Key tuples never replace it. All three checkers must validate covariance/read-only narrowing and reveal exact tuple types under US-085-AC9 before this ABI qualifies.

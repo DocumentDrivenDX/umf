@@ -50,18 +50,29 @@ The generator runs in four pure steps:
 
 The host tool is a separate module. `generate` verifies the checked-in package
 against its previous manifest inventory, writes the candidate into a sibling
-staging directory and swaps directories by rename. `check` calls the generator in
-memory and compares bytes with the checked-in tree.
+staging directory and uses CONTRACT-067's serialized, recoverable directory
+replacement. The build runner serializes generate/catalog/check; hot imports and
+concurrent writers are unsupported. Keep the complete old package as backup
+until replacement succeeds, restore it on second-rename failure and report
+unresolved filesystem state. `check` regenerates in memory and compares bytes.
 
 Trade-off: generation refuses rather than guesses. A missing view, an
 ambiguous name or an uninterpreted assertion stops generation, even when a
 plausible Python type exists.
 
-**Stage-two paths.** CONTRACT-067 reserves `queries.py`, `_umf/catalog.json`
-and `_umf/catalog-manifest.json` for CONTRACT-071 stage two. The stage-one writer
-and drift check ignore exactly those paths; stage two verifies them against its
-own manifest and reports `CATALOG_STALE` when the stage-one digest changes. AC5
-and AC6 tests include a package that already has catalog files.
+**Stage-two paths.** CONTRACT-067 reserves `queries.py`, `_umf/catalog.json`,
+`_umf/catalog-manifest.json` and `_umf/privileges.json` for stage two. Stage one
+copies existing reserved files byte-for-byte through its staging replacement
+without claiming ownership or validating their contents. Stage two preserves all
+stage-one files. Its retained old inputDigest makes it stale after regeneration;
+CATALOG_STALE blocks execution/check until rebuilt. AC5/AC6 retain byte hashes of
+all four files across replacement and inject failures at both rename boundaries.
+
+Selected identity and occurrence resolution follow CONTRACT-070: selectedKey
+is explicit and exact; relationship/action Keys never substitute it. Item/value
+positions use their nested allow-table context, with missing=false independently
+of container nullability. Reused Fields with incompatible contexts refuse.
+AC2 includes nullable/non-null array/map cases and multiple/foreign/missing Keys.
 
 ## Component Changes
 
@@ -146,5 +157,5 @@ leaving a half-written tree. No data or schema migration is involved.
 | Risk | Mitigation |
 | --- | --- |
 | Public inspectors do not cover every assertion kind | Profile omits the kind; generation refuses it as unknown until UMF adds the inspector |
-| Stage-one writer touches stage-two files | Reserved-path fixtures in AC5/AC6 fail the build if stage one reads or writes them |
+| Stage-one writer touches stage-two files | Reserved-path fixtures in AC5/AC6 assert byte-for-byte preservation without stage-one ownership or regeneration |
 | Bun/Chromium differences in Unicode or sorting | Use explicit code-point sorting and JCS; parity harness gates the build |

@@ -85,17 +85,17 @@ Weft is the only SQL lowering for every target; UMF builds no interim lowering.
 UMF's requests to Weft are written as
 [the Weft requirements](weft-requirements-typed-access.md) and were delivered to
 Weft as `docs/helix/00-discover/umf-typed-access-requirements-input.md` (Weft
-commits `bfe0b88` and `c7431eb`). A Weft agent is implementing them. UMF work proceeds in
+commits `bfe0b88`, `c7431eb` and `588e615`). A Weft agent is implementing them. UMF work proceeds in
 parallel: generation, types, DSL and static typing need no Weft change, and each
 catalog slice is qualified per target as the matching Weft requirement lands.
 
 | ID | Owner | Needed capability | Weft requirements | Blocks |
 | --- | --- | --- | --- | --- |
 | W-0 | Weft | Compile inputs and outputs the catalog needs: structural digest, logical SQL echo, carriers, raw-table security profile | WR-I3, WR-I4, WR-I6 | B-TP-006 onward |
-| W-1 | Weft | Tranche A query forms (comparisons, null tests, OR/NOT, IN, ordering, general keyset pages, counts, temporal values, aggregates and buckets, prefix and term filters, snapshot pages) | WR-A1 to WR-A12 | Forms beyond today's Weft subset, per target |
-| W-2 | Weft | Raw-table read backends: Postgres and Lakebase, then Unity Catalog and Spark/Delta, over UMF bindings and `umf.access` ColumnSets | WR-B1, WR-B2, WR-B5 | B-TP-008, B-TP-009 |
-| W-3 | Weft | Bulk UPDATE extensions and plan templates; set-based mutations on raw tables. Weft's existing Truss mutation backend admits only string and boolean fields | WR-A9, WR-I5, WR-B3, WR-B6 | B-TP-007, B-TP-011 |
-| W-4 | Weft | Action lowering on Postgres and Lakebase, then Unity Catalog and Spark/Delta | WR-B4, WR-B6 | B-TP-010 |
+| W-1 | Weft | Tranche A query forms (comparisons, null tests, OR/NOT, IN, ordering, general keyset pages, counts, temporal values, aggregates and buckets, prefix and term filters, snapshot pages, null-safe distinctness and declared to-one joins) | WR-A1 to WR-A14 | Forms beyond today's Weft subset, per target |
+| W-2 | Weft | Raw-table read backends: Postgres and Lakebase, then Unity Catalog and Spark/Delta, over UMF bindings and `umf.access` ColumnSets | WR-B1, WR-B2, WR-B5, WR-B7 | B-TP-008, B-TP-009 |
+| W-3 | Weft | Distinct manifest catalog/template and native atomic-program interfaces; no raw reuse of frozen/batch plans. Wider value support is separately gated by U-3/WR-A9. Weft's existing Truss mutation backend admits only string and boolean fields | WR-A9, WR-I5, WR-B3, WR-B6 | B-TP-007, B-TP-011 |
+| W-4 | Weft | Action lowering, validate-only rollback programs and created/changed Keys on Postgres and Lakebase, then Unity Catalog and Spark/Delta | WR-B4, WR-B6 | B-TP-010 |
 | W-5 | Weft | Search lowering | WR-C1 to WR-C5 | B-TP-012 |
 | W-6 | Weft | Released Python distribution that the catalog build can pin | WR-I1 | Release of any catalog-dependent scope |
 | T-1 | Truss | Public action admission, read and bulk APIs callable by an adapter; Truss-local adoption design; typed carriers for timestamp and binary fields and exact values (CONTRACT-069 current limits); attribution is decided by Truss admission from the host-supplied connection, not by the SDK | — | B-TP-013 |
@@ -104,26 +104,41 @@ catalog slice is qualified per target as the matching Weft requirement lands.
 | U-2 | UMF | CONTRACT-042 binding profiles for `lakebase`, `unity-catalog` and `spark-delta` that `umf.access` ColumnSets can reference | — | B-TP-002, B-TP-008 |
 | U-3 | UMF | CONTRACT-902 null and wider value domains for bulk SET, matching WR-A9 | — | Bulk `SET NULL` and non-string/boolean SET |
 
+## Coordinated SQL-to-actions implementation ledger
+
+This is the canonical shared dependency matrix for this SDK and the existing SQL-to-actions work. It does not replace either owner's governing action protocol. The SQL-to-actions implementation plan's “Portable plan/unsealed manifest construction” and “Browser-local declaration profile” sections link to this ledger after publication. Browser work proceeds independently of Python generation.
+
+| Lane / order | Owner and exact boundary | Prerequisites and completion evidence |
+| --- | --- | --- |
+| L0: existing browser String UPDATE proof | Weft lowering; UMF construction; Truss registration, issued read grant, frozen selection, sealing, submit and workers | Existing local Products source cohort b8 model / 6f preparation / 633f producer remains immutable. Current tracked branch `codex/security-action-source-custody`, checkpoint a3852847, has worker-owned registration and read grants; this is component evidence, not end-to-end acceptance. Remaining gates: provider frozen materialization and Key receipts/seal; keyed submit with full control recovery; atomic batch outcomes/replay; browser cases below; Astra E2E; signature/build/deploy/public verification. No Python SDK, catalog template or new umf.access annotation is prerequisite. |
+| L1: shared semantics and ABI | UMF CONTRACT-067–074; exact full-document ActionRef, selected/per-Key DTOs, presence/null policy, complete original results/control recovery and full cursor context | B-TP-001–005; stage ownership and deterministic generated artifacts; exact source/profile pins. Specification correction is not runtime qualification. |
+| L2: catalog compilation and first-consumer reads | Weft owns versioned structural digest and complete read/manifest/native-command/search artifacts, including all security and source inputs | W-0, WR-I3/I5/I6 owner interface and golden corpus; missing output is WEFT_BLOCKED. Praxis raw reads start independently at WR-A1/A2/A3/A5/A8/A13 + WR-B1/B2/B7, with async/stream/timeout/schema-binding and third-checker gates scoped to the claimed surface. Manifest W-3, raw W-3 and wider SET U-3/WR-A9 are independent gates. No local SQL lowering, local digest stripping or profile cast. |
+| L3: Truss SDK adoption | Truss owns protected read/action/control APIs and workers; UMF owns SDK ABI and shared conformance | Reads may qualify first (B-TP-006). Actions B-TP-013 require exact revision correspondence and complete original tx/1 results. Bulk B-TP-007 additionally requires Truss action gateway and control adoption, original attempts/submission keys and recovery before a job reference exists. Browser L0 does not qualify US-087 or the wider SDK surface. |
+| L4: raw native targets | UMF raw adapters over Weft programs; native privileges and CONTRACT-073 admission | Qualify TD-085 action execution, side-effect closure/fence, role semantics, count/precondition/no-op classification, concurrency and receipt/reconciliation first (B-TP-010). Then TD-086 atomic bulk B-TP-009; each backend separately. Native SQL, tx/1 human/session profiles and browser-local owner/905 remain separate profiles. |
+| L5: search and publication consumers | Weft search programs; UMF raw search runtime; Ashlar owns publication/resolver/ACK protocols | Search needs bounded programs and current filtered hydration before per-platform witnesses. Ashlar B-TP-014 requires its original pin/retention/read equality witnesses and never receives a bypass mutation path. |
+| L6: source-cohort integration | Each producer/provider owner, coordinated by UMF and SQL-to-actions maintainers | New umf.access annotations change full model bytes: prepare, admit, compile and qualify a new cohort. Merging later UMF sources also changes global producer identity even if action meaning is unchanged. Retain original frozen artifacts, build and separately qualify the new cohort; never relabel old hashes or rewrite pins to simulate acceptance. |
+
+L0's browser witness set includes three items in batches [2,1], no-op, refusal, stale/foreign seal, duplicate submission, reload, ACK loss, multiple tabs and injected failure, with state/journal/feed/receipt and recovery observations. Keep the original worker and admission protocols intact; generated persistence never bypasses actions. Truss native person/SCRAM proofs, local-owner proofs and raw native-session proofs cannot substitute for one another.
+
+Owner observations used for coordination: SQL-to-actions source at `e02fc2198a2fab3f84d0d01673d2d1100ea5a395`, later worker checkpoint `a3852847`; Weft `94b2de5e` CONTRACT-006; Truss `a9cfb691` CONTRACT-013; Ashlar `855ab296`. These are separate repository snapshots, not claims of implementation at the expanded SDK baseline. Before implementation, resolve and retain full owner commit/artifact hashes in the adoption packet. The SQL-to-actions owner retains its construction and local-profile receipts under `evidence/bulk-update/`; this ledger does not transfer their authority.
+
 ## Implementation Slices
 
 All paths and commands are planned. Do not label an absent command passing.
-Slices B-TP-000 to B-TP-005 need no Weft change. Truss is the first catalog
-target because Weft already compiles Truss reads and bulk updates; raw Postgres
-and Lakebase follow as Weft's raw-table backends land, then Unity Catalog and
-Spark/Delta.
+Slices B-TP-000 to B-TP-005 need no Weft change. Praxis makes Lakebase/Postgres 18 schema-neutral reads the first consumer path: B-TP-008 starts when WR-B1/B2/B7 and its minimum query forms land, in parallel with the existing Truss slices. Wider forms qualify independently; Unity Catalog and Spark/Delta follow their own backend gates.
 
 | Slice | Story / artifacts | Depends on | Validation gate / observable outcome |
 | --- | --- | --- | --- |
 | B-TP-000 | Architecture module map | Approved scope | Boundary checker for `src/compilation/` and `python/umf_access/` wired locally and in CI |
-| B-TP-001 | CONTRACT-067/068/071 | B-TP-000 | Compatibility spike pins Python, Pydantic (2.14 or later), pyright and mypy versions and settings, drivers and platform versions; extends the DSL typing spike to the full error table and `MISSING` strictness; generated output is tested against the pinned `umf_access` runtime ABI |
+| B-TP-001 | CONTRACT-067/068/071 | B-TP-000 | Compatibility spike pins Python 3.11+, Pydantic 2.14+, pyright, mypy (check_untyped_defs) and ty versions and settings, drivers and platform versions; extends the DSL typing spike to the full error table and `MISSING` strictness; generated output is tested against the pinned `umf_access` runtime ABI |
 | B-TP-002 | US/TD/STP-080 | B-TP-001, U-2 for raw-table ColumnSets | `umf.access` schema and every allow-table row have fixtures |
 | B-TP-003 | US/TD/STP-080 | B-TP-002 | Stage-one generator, census, drift check and hand-edit refusal; Bun and Chromium bytes agree |
 | B-TP-004 | US/TD/STP-081 | B-TP-003 | Models, keys and codecs pass value, presence and golden-vector corpora |
-| B-TP-005 | US/TD/STP-082 | B-TP-004 | DSL capture, rendering to Weft SQL and static corpora pass on pinned pyright and mypy; the renderer's output for every tranche-A form matches the Weft requirements' grammar |
+| B-TP-005 | US/TD/STP-082 | B-TP-004 | DSL capture, rendering to Weft SQL and static corpora pass on pinned pyright, mypy and ty; the renderer's output for every tranche-A form matches the Weft requirements' grammar |
 | B-TP-006 | US/TD/STP-083, 087 | B-TP-005, W-0, T-1 reads | Catalog build and reads against Truss for the forms Weft supports today, executed through Truss's read path; unsupported forms refuse with `WEFT_BLOCKED` |
-| B-TP-007 | US/TD/STP-086, 087 | B-TP-006, W-3 | Bulk UPDATE on Truss through CONTRACT-009, sealed manifests and coordination; exercises `PLAN_DRIFT` until plan templates land |
-| B-TP-008 | US/TD/STP-083 | B-TP-005, W-0, W-1, W-2 | Reads on pinned Postgres and Lakebase, including `verify()` refusals and the shared acceptance corpus |
-| B-TP-009 | US/TD/STP-086 | B-TP-008, W-3 | Atomic, bounded bulk commands on Postgres and Lakebase |
+| B-TP-007 | US/TD/STP-086, 087 | B-TP-006, W-3 manifest catalog interface, T-1 qualified action gateway and control protocols | Bulk UPDATE on Truss through CONTRACT-009, sealed manifests and coordination; exercises `PLAN_DRIFT` until plan templates land |
+| B-TP-008 | US/TD/STP-083 | B-TP-005, W-0, WR-A1/A2/A3/A5/A8/A13, WR-B1/B2/B7 and applicable U-2 | Schema-neutral reads on pinned Postgres 18 and Lakebase, including `verify()` refusals and the shared acceptance corpus |
+| B-TP-009 | US/TD/STP-086 | B-TP-010 (qualified TD-085 foundation), W-3 native atomic program | Atomic, bounded bulk commands on Postgres and Lakebase |
 | B-TP-010 | US/TD/STP-085 | B-TP-008, W-4 | Actions on Postgres and Lakebase pass conformance and native witnesses, including commit-loss reconciliation |
 | B-TP-011 | US/TD/STP-083, 085, 086 | B-TP-010, W-2, W-3, W-4 | Unity Catalog and local Spark/Delta reads, bulk and single-statement actions; Unity Catalog on a separately selected workspace or left unqualified |
 | B-TP-012 | US/TD/STP-084 | B-TP-008, W-5 | Search on Lakebase and Postgres; Unity Catalog vector search on a selected workspace |
@@ -184,7 +199,7 @@ checker. Its feedback is reflected as follows:
   schema in the catalog, generated code or call sites; the host binds it per
   connection.
 - **Per-user connections**: targets declare `sessionPrincipal: human`; per-user
-  pools satisfy `person-required` actions, and a separate `service` target serves
+  pools can satisfy `person-required` only through qualified native authentication/principal correspondence, and a separate `service` target serves
   batch jobs. `verify()` results are cached so per-request pooled connections pay
   only a schema-resolution check.
 - **Timeouts**: every call takes a timeout; `TimedOut` means nothing committed;
@@ -212,10 +227,8 @@ checker. Its feedback is reflected as follows:
 - The SDK uses whatever connections the host supplies (per-user or service
   account). Raw-table targets declare `sessionPrincipal`; `person-required`
   actions compile only for `human` targets. Truss decides attribution itself.
-- On raw Delta tables, Key uniqueness relies on the SDK being the sole writer,
-  recorded as a host obligation.
-- Truss is the first catalog target, then Postgres and Lakebase, then Unity
-  Catalog and Spark/Delta.
+- On raw Delta tables, sole SDK writing is a host obligation, not a uniqueness proof; concurrent creates need a qualified native conflict or serialized per-Key path, otherwise creates refuse.
+- Lakebase/Postgres 18 schema-neutral reads are the first consumer path, parallel with Truss. Each further backend and form requires its own qualification.
 
 ## Open Owner Decisions
 
@@ -235,3 +248,9 @@ records the independent second opinion requested by
 decisions that followed, and how this revision disposes of each finding. The
 [Fable review record](evidence/typed-persistence/fable-review.json) covers the
 revised plan, including which claims were verified or refuted.
+
+### Expanded-spec review
+
+Astra reviewed exact baseline `dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba`; its report and correction dispositions are retained in `evidence/typed-persistence/astra-expanded-review.json`. The independent SQL-to-actions overlap review is retained alongside it. Historical review verdicts cover only their named snapshots. All new runtime/native cases remain UNTESTED.
+
+The final focused review of the consumer-reconciled working tree is recorded in [Astra rereview](evidence/typed-persistence/astra-reconciled-rereview.json), including source hashes and remaining qualification gates. [Fresh typing replay](evidence/typed-persistence/consumer-reconciliation/typing-replay.json) reproduces only the existing scoped spike; it does not establish expanded SDK or native support.

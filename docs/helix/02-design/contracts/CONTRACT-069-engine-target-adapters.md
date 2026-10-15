@@ -59,13 +59,24 @@ Implements `ReadTarget`, `ReplayingActionExecutor` and
   idempotency key, and replay follows CONTRACT-901 as implemented by Truss. Only
   concurrency conflicts map to `Conflict`. A failure before COMMIT keeps Truss's
   classification: it is a confirmed rollback and raises `ActionFailed` with
-  Truss's code, never `Conflict`.
+  Truss's code, never `Conflict`. Before dispatch the adapter MUST match the
+  complete CONTRACT-068 ActionRef source/invocation to Truss's original accepted
+  registration and resolve its exact issued CONTRACT-901 RevisionRef. The target
+  holds that original correspondence and out-of-band authority from the engine;
+  names or a caller-created revision string cannot establish it. Source mismatch,
+  retired/rebound registration or missing correspondence refuses before invocation.
+  Replay stays bound to the original revision/request under current original-outcome
+  authorization, never redirected to latest. Preserve the complete original result
+  and its codes, no-op, changes, verification and revision per CONTRACT-072.
 - **Bulk.** Catalog commands compile through Weft's Truss mutation backend.
-  `TrussTarget.plan` returns a `ManifestBulkPlan`: `preview()` reads the selection
-  through Truss's read path, `seal()` asks Truss to materialize and seal a
-  CONTRACT-903 manifest and returns it, and `submit(manifest)` hands that sealed
-  manifest to CONTRACT-904 coordination and returns a `BulkJob`. Host workers claim
-  and run the batches through Truss. The plan has no `execute()`.
+  `TrussTarget.plan` returns a `ManifestBulkPlan`: `preview()` uses the original
+  read path; `seal(attempt=...)` delegates original materialization/sealing;
+  `submit(sealed, submission_key=..., attempt=...)` delegates CONTRACT-904.
+  Calls preserve the complete original control union, stable submission identity
+  and original attempt/recovery custody as CONTRACT-072 specifies. `recover_control`
+  delegates original recovery only; unknown ACK never triggers a new seal/key/job.
+  Host workers retain execution and original status/lookup/reconcile/cancel APIs.
+  The plan has no `execute()`.
 - **Values.** The adapter converts between CONTRACT-068 carriers and Truss's
   public carriers (`ABSENT` and `MISSING`, exact text tokens and `Decimal` or
   `datetime`). Truss retains authored lexical spelling for exact values; a decoded
@@ -85,6 +96,13 @@ Implements `ReadTarget`, `ReplayingActionExecutor` and
   catalog statements executed through Truss's read path. Generated code never
   receives table handles, connections with write privileges, or SQLAlchemy
   mappings for Truss storage.
+
+The native tx/1 adapter above and CONTRACT-905 browser-local owner adapter are
+separate exact target profiles. Browser-local capabilities and local-tx/local-bulk
+cannot satisfy person-required/native bulk authority. Future SDK annotations
+change full source bytes and require a new prepared/admitted compiler/provider
+cohort; they MUST NOT be appended to a retained browser sample and relabeled as
+its original source. A target kind of `truss` alone establishes none of this.
 
 ### Ashlar adapter
 

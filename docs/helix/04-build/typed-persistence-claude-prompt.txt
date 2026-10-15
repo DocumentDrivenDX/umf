@@ -1,94 +1,22 @@
-Give an independent, adversarial second opinion on this proposed design. Read the
-actual specifications and governing sources; do not implement or edit anything.
+Give an independent adversarial review of the UMF typed access SDK specifications, without implementing or editing them.
 
-Repository: /Users/erik/.codex/worktrees/20bc/umf
-Sibling consumer checkouts: /Users/erik/Projects/truss and /Users/erik/Projects/ashlar
-If your checkout paths differ, resolve the same repository-relative paths. If you
-cannot access these files, request the design bundle; do not pretend to review it.
+Review the exact published commit containing this prompt on codex/typed-persistence-specs (the requester will provide its full SHA). Record git rev-parse HEAD and confirm a clean checkout; do not silently review a newer branch tip. Baseline expansion dd7b81f6 and Praxis update6950b663 are historical inputs, not the final reviewed tree.
 
-Start with AGENTS.md, .helix.yml and docs/helix/README.md. Follow the installed
-HELIX skill for review; do not copy its catalog into any repository. The scoped
-entry point is docs/helix/04-build/typed-persistence-design.md.
+Start with AGENTS.md, .helix.yml, docs/helix/README.md and the installed HELIX review workflow. Entry point: docs/helix/04-build/typed-persistence-design.md, especially the coordinated SQL-to-actions ledger and First Consumer Feedback. Read FEAT-028–031, ADR-004, CONTRACT-067–074, SD-028–031, US/TD/STP-080–088 and weft-requirements-typed-access.md. Read research-palantir-osdk.md and the scoped typing-spike README and fresh consumer-reconciliation evidence. Do not treat a prototype type check as SDK/native qualification.
 
-Read the proposal:
-- docs/helix/01-frame/prd.md, FR-52 through FR-54, plus FR-41/43/44 and NFR-50.
-- docs/helix/01-frame/features/FEAT-028-python-model-generation.md
-- docs/helix/01-frame/features/FEAT-029-postgresql-access-generation.md
-- docs/helix/01-frame/features/FEAT-030-spark-access-generation.md
-- docs/helix/02-design/adr/ADR-004-design-time-persistence-generation.md
-- docs/helix/02-design/contracts/CONTRACT-067-persistence-compiler.md
-- docs/helix/02-design/contracts/CONTRACT-068-generated-python-access.md
-- docs/helix/02-design/contracts/CONTRACT-069-engine-substrate-adoption.md
-- SD-028 through SD-030 in docs/helix/02-design/solution-designs/.
-- US-080 through US-085, their TDs and STPs in the matching activity directories.
-- Appended compiler boundaries in architecture.md, selected concerns, TP-001 and
-  the canonical implementation-plan.md reference to the scoped build handoff.
+Check governing CONTRACT-040/041/042/049/051/064/065 and CONTRACT-900–904. CONTRACT-905 belongs to the separately qualified browser-local workstream; resolve its pinned owner source from the ledger rather than assuming it exists in this checkout. Truss and Ashlar sibling sources are contextual and separately pinned; record exact versions if read. Weft owns all SQL lowering and the structural digest/program interfaces. Truss owns original registration, admission, selection, seals, control recovery, workers, journal/feed and ACK; Ashlar owns publication/pin/retention and ACK. Generated persistence must preserve those protocols.
 
-Read existing authority when assessing compatibility: CONTRACT-040 core ideals,
-CONTRACT-041 relationships, CONTRACT-042 physical bindings, CONTRACT-049 schema
-properties/default/key semantics, CONTRACT-051 Python document consumers,
-CONTRACT-017 Spark, CONTRACT-064 Delta DDL and CONTRACT-065 exact instants.
-Generated application models are distinct from Pydantic models of UMF documents.
+Challenge concrete implementability and contradictions:
+1. Thin generated Python3.11+/Pydantic2.14+ classes/metadata over pinned umf_access runtime; explicit keyword-only update fields; pyright/mypy/ty and uncovered typing forms. No hidden generated validators or checker suppressions.
+2. Complete full-document action pins and trusted issued-revision correspondence; original result preservation, exact per-Key DTO identities, reserved rejection codes, no-op/verification and returned created/changed Keys.
+3. Complete bulk control unions, host-issued attempt custody, stable submission keys and protected original recovery, including ACK loss before a job reference. Distinguish raw atomic native programs from frozen/batch manifests and browser-local authority.
+4. Presence/null/default/Key semantics, nested items/map values, exact values and codec parity. SQL NULL is present; MISSING alone omits a filter.
+5. Full cursors with mixed ordering/null placement, hidden authorized sort outputs, filter/catalog/runtime binding context and snapshot vectors. Live mutations may repeat/miss rows. Joined snapshots and bounded streams must retain their original qualified view.
+6. Schema-neutral Postgres18/Lakebase resolution, pg_catalog qualification, per-user pools, host expected schemas, temporary shadowing, DDL invalidation and cache safety. Authentication/role authorization is never a cached host label.
+7. Native side-effect dependency closure and unchanged-closure fences; human roles versus service sessions; atomic role/precondition/maxItems/result checks; concurrent Delta creates; original store/incarnation reconciliation. TimedOut requires positive noncommit proof, including async cancellation and self-committing statement dispatch boundaries.
+8. Search execution programs, signed score semantics, original-filter recheck during asynchronous hydration, partial-result opt-in and no false current top-k claim.
+9. One coherent dependency ledger: current browser String proof continues independently; first-consumer Lakebase reads run parallel with Truss; broader forms and adoption qualify separately. New annotations/producer sources require fresh cohorts, never relabeled old pins.
 
-For downstream adoption read each sibling's AGENTS.md and docs/helix/README.md.
-Truss's ADR-002 fixes generic storage; its current storage-handoff, installation
-and protected-operation contracts govern actual runtime admission. Ashlar's
-CONTRACT-001 through CONTRACT-004 govern publication, reads, tables and resolver.
-Do not rely on Truss's stale top-level README as current implementation evidence.
-Sibling sources are contextual: this proposal has not adopted or amended them.
+Form your own findings before reading astra-expanded-review.json and sql-to-actions-overlap-review.json, then assess the correction dispositions and any focused rereview record. Historical verdicts cover their named sources only.
 
-The intended architecture is a design/build-time portable TypeScript compiler in
-UMF, developed with Bun and verified in real Chromium. It generates ordinary
-Python source: separate Pydantic row/create/patch/key/named-projection models,
-exact codecs, PostgreSQL SQLAlchemy/Core declarations and Spark/Delta/catalog
-proposals. Generated applications need no compiler or JavaScript runtime. The
-initial package policy stays unchanged; helpers are generated local source.
-
-Connections, sessions, migrations and execution remain consumer-owned. Weft owns
-logical SQL lowering. Truss must retain fixed generic storage and protected
-transaction/mutation/journal/feed behavior. Ashlar must retain immutable full
-UUID/version publication vectors, resolver/pin custody, fencing and source/ACK
-protocols. Source generation alone confers no execution authority.
-
-Challenge these choices rather than merely restating them:
-1. Is this the right abstraction and repository boundary? Compare direct source
-   generation, runtime models, SQLModel, SQLAlchemy Core/ORM and existing schema
-   generators. Identify avoidable machinery and duplicated interpretation.
-2. Can another team implement the contracts without inventing missing semantics?
-   Check input/profile/version boundaries, closure, assertion census, report-mode
-   safety, fingerprints, source maps and atomic generated-file ownership.
-3. Are presence/null carriers, preserve-only default declarations, nested values,
-   alias collisions, nominal/static typing and mutable-instance revalidation sound?
-   Identify exact counterexamples, including qualified Field identities.
-4. Are decimal/integer/time/key guarantees honest? Spark instant transport is
-   explicitly epoch-microsecond text; raw naive TimestampType datetimes refuse.
-   Key models are DTOs; existing consumer-qualified UMF key-byte encoding remains
-   separate. Do the chosen limitations permit useful first delivery?
-5. Are schema observations and SchemaMatch limited correctly? Check empty results,
-   ordered/duplicate columns, session/process timezone differences and separation
-   of shape matching from current native identity, retention and authorization.
-6. Would Truss and Ashlar benefit from this substrate? Identify bypass, flush,
-   cascade, retry, concurrency, partial publication and uncertain ACK hazards.
-   Should either adopt only a narrower part, or avoid adopting it altogether?
-7. Are static tests, independent native witnesses and build slices sufficient?
-   Separate local Spark/Delta, managed Unity Catalog and protected consumer proof.
-   Missing implementation is expected; missing allocated proof or an impossible
-   acceptance criterion is a design issue. No live databases are needed to review.
-
-Form your own findings before reading the prior review record:
-docs/helix/04-build/evidence/typed-persistence/astra-review.json.
-Then assess whether Astra's fixes hold and whether it missed a material issue.
-Do not accept a conclusion just because another model agreed.
-
-Return:
-- A clear verdict: sound as proposed, sound with specified changes, or reject the
-  approach; distinguish draft-design readiness from implementation/adoption.
-- Severity-ranked findings with exact artifact/section, concrete failure example,
-  consequence and smallest correction. Avoid generic best-practice lists.
-- The strongest credible alternative and why it might be better.
-- At most five owner decisions that truly cannot be settled from the sources.
-- A recommended smallest end-to-end proof and the evidence that would falsify it.
-
-Use current primary sources for external library/runtime facts. Do not invent
-support claims, execute migrations, install dependencies, send messages or rewrite
-the specifications. Give a substantive independent opinion, not implementation.
+Return a clear draft-design verdict, severity-ranked actionable findings with exact file/section, counterexample and smallest correction; strongest credible alternative; at most five genuinely unresolved owner decisions; and the smallest falsifiable end-to-end proof. Distinguish specified future gates from missing semantics. Use current primary sources for external facts. Do not install dependencies, contact agents, run migrations or claim support without executable evidence.

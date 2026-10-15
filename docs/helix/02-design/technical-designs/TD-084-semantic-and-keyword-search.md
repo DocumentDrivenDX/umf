@@ -37,7 +37,7 @@ a `@final` `s` namespace whose attributes are `VectorIndex[Doc]` or
 
 **Types.** `Query.search(...)` returns `RankedQuery[O, R]`, a class that defines
 only `into`, `select` and `top`. Omitting the other methods, rather than raising
-from them, is what lets both checkers reject `order_by`, `page`, `count`,
+from them, is what lets all three checkers reject `order_by`, `page`, `count`,
 `exists` and `update`. `near` takes `Param[str]`, `near_vector` takes
 `Param[Vector]`, `matches` takes `Param[str]`; `hybrid(*legs: SearchLeg[O], fusion)`
 is generic in one `O`, so legs over different Records do not unify.
@@ -47,14 +47,17 @@ calling Weft, the tool checks each configured target against a fixed capability
 table derived from CONTRACT-074 and the target's search binding: metric, ranking
 family, analyzer, exactness, `computedBy`, fusion and pre-filter support,
 including whether the binding declares `filtering: partial`, which needs the
-query's `allow_partial=True`. Any
+query's `allow_partial=True`; asynchronous filtered current-row hydration
+requires the same opt-in. Any
 authored property the target cannot implement refuses with `SEARCH_UNSUPPORTED`;
 the table has no fallback entries. Filters must use `filterable` Fields
 (`SEARCH_FILTER`), and `k` must not exceed the smallest `maxK` or 1,000
 (`SEARCH_LIMIT`). `spark-delta`, `truss` and `ashlar` have no rows in the table,
 so every search refuses for them. Admitted declarations then compile through
-Weft search lowering, and the entry records the mechanism, exactness and
-freshness obligations.
+Weft search lowering, and the CONTRACT-071 search-program entry records each
+leg, embedding carriers, bounded fusion, filtered hydration and parameter mapping,
+mechanism, exactness and freshness obligations. No hydration SQL is invented at
+runtime; unavailable predicate lowering refuses at build.
 
 **Runtime.** For `.near` on a host-computed index, the runtime takes an
 `Embedder` from the target's search configuration, compares
@@ -68,10 +71,15 @@ leg as its own catalog variant retrieving `depth` candidates (default twice the
 **Results.** Results are `Scored[R]` with `rank`, and `score` labeled with its
 kind or `None`. When the index is separate from the table (Vector Search), the
 target returns keys and scores; the runtime then reads each row through a
-bounded single-key catalog `get` (Weft has no tuple-`IN`), at most `k` reads,
-drops keys without rows, counts them as stale without refilling, and keeps rank
-order. Hydrated rows reflect current table state while scores reflect the index
-at its last refresh. Exact-index ties are broken by the complete Key ascending.
+bounded single-key catalog query conjoining the selected Key with the complete
+original predicate and bound filter parameters under current admission, at most
+`k` reads. Absent or now-nonmatching rows count as stale without refill; surviving
+ranks remain ordered. Denials/errors propagate rather than count as stale.
+Hydrated rows reflect current state; scores reflect the index at its last
+refresh. Filtered asynchronous hydration requires partial opt-in and labels the
+result partial; it cannot promise current complete top-k. Exact-index ties use
+the complete declared selectedKey ascending. One call deadline covers embedding,
+all legs and hydration, not a fresh budget per subrequest.
 
 **Spike coverage.** The typing spike in
 `docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/` does not
@@ -127,9 +135,9 @@ query text.
 | AC ID | Planned test | Design assertion | Location |
 | --- | --- | --- | --- |
 | US-084-AC1 | `authored_semantics_not_substituted` | Each unsupported property refuses per target with `SEARCH_UNSUPPORTED`; no catalog written | `python/umf_access/tests/test_search_build.py` |
-| US-084-AC2 | `ranked_query_restrictions` | Static negatives on both checkers; `SEARCH_FILTER`; `SEARCH_LIMIT` | `tests/compilation/python/static/search/`, `python/umf_access/tests/test_search_build.py` |
+| US-084-AC2 | `ranked_query_restrictions` | Static negatives on all three checkers; `SEARCH_FILTER`; `SEARCH_LIMIT` | `tests/compilation/python/static/search/`, `python/umf_access/tests/test_search_build.py` |
 | US-084-AC3 | `embedder_identity_enforced` | `EMBEDDER_MISMATCH` before send for identity and vector faults; `SEARCH_DECLARATION` at generation | `python/umf_access/tests/test_search_runtime.py`, `tests/compilation/access-generator.test.ts` |
-| US-084-AC4 | `stale_keys_dropped` | Stale count, rank order, labeled scores, Key tie-break, freshness obligation | `python/umf_access/tests/test_search_runtime.py`, `python/umf_access/tests/native/test_search_native.py` |
+| US-084-AC4 | `stale_keys_dropped` | Deleted/changed-filter stale count; predicate-preserving hydration; partial opt-in; denial propagation; rank order and selectedKey tie-break | `python/umf_access/tests/test_search_runtime.py`, `python/umf_access/tests/native/test_search_native.py` |
 | US-084-AC5 | `plain_syntax_is_inert` | Catalog text unchanged; bound parameter; plain-term result equality | `python/umf_access/tests/native/test_search_native.py` |
 | US-084-AC6 | `unsupported_targets_refuse` | Every search kind refuses on `spark-delta`, `truss`, `ashlar`; exact reads still build | `python/umf_access/tests/test_search_build.py` |
 

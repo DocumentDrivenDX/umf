@@ -143,16 +143,24 @@ def find_docs_hybrid(q: Param[str]):
   candidate retrieval) MUST be declared `filtering: partial` in its binding. A
   filtered search on such a binding refuses at catalog build with `SEARCH_FILTER`
   unless the query opts in with `.top(k, allow_partial=True)`; the result then
-  reports `partial: true`.
+  reports `partial: true`. For an asynchronous separate index, completeness is
+  relative to that index's admitted snapshot, not the current base table. A
+  filtered query using current-row hydration also requires `allow_partial=True`
+  and reports `partial:true`, because changed or deleted candidates can reduce
+  the result below `k` without refill. A synchronous mechanism may claim complete
+  current-row filtering only when its index selection and hydration share the
+  qualified snapshot. Authorization and the original predicate still apply to
+  every returned current row.
 - `k` MUST be at most the smallest `maxK` across selected targets and at most
   1,000.
 
 ### Results
 
 `.top(k)` returns `SearchResult[R]`, an immutable sequence of `Scored[R]` with three
-attributes: `stale: int` (index hits dropped because their rows no longer exist),
-`approximate: bool` and `partial: bool` (the query opted into a partial-filtering
-mechanism). `Scored[R]` has `item: R`, `rank: int` (1-based) and
+attributes: `stale: int` (index hits dropped because their rows no longer exist
+or no longer satisfy the original filter),
+`approximate: bool` and `partial: bool` (the query opted into partial filtering
+or asynchronous filtered hydration). `Scored[R]` has `item: R`, `rank: int` (1-based) and
 `score: Score | None`, where
 `Score` is `{value: float, kind}` and `kind` is `cosine-distance`,
 `dot-similarity`, `l2-distance`, `bm25`, `rrf` or `implementation-defined`.
@@ -163,15 +171,28 @@ the manifest.
 
 When the index lives apart from the Record's table (for example a Vector Search
 index), the target first retrieves keys and scores, then reads each row through a
-bounded single-key catalog `get`, because Weft has no tuple-`IN` form; a search
-performs at most `k` such reads. Keys whose rows no longer exist are dropped and
-counted in the result's `stale` attribute; rows are never fabricated, and dropped
-hits are not refilled, so a result may hold fewer than `k` items. Hydrated rows
+bounded single-key catalog hydration query that conjoins the exact selected Key
+with the complete original pre-search predicate and original bound filter
+parameters under current native admission; an unfiltered `get` is forbidden.
+If Weft cannot lower that predicate for hydration, the search refuses at build.
+A search performs at most `k` hydration reads. Absent or now-nonmatching candidates
+are dropped and counted in `stale`; rows are never fabricated and dropped hits
+are not refilled, so a result may hold fewer than `k` items. Native denial/error
+propagates and is never counted as an absent candidate. Hydrated rows
 reflect the table's state at read time, while ranks and scores reflect the index
 at its last refresh; a row may therefore no longer match the text or vector that
 ranked it.
 `asynchronous` freshness means a committed write may be missing from, or stale
-in, search results; the manifest records this as a host obligation.
+in, search results; the manifest records this as a host obligation. A changed
+tenant/category/filter value cannot cause an out-of-filter row to be returned.
+The selected Key is CONTRACT-070 `selectedKey`, with exact declared component
+order and equality. Score freshness never grants permission to omit filtering.
+
+The CONTRACT-071 search-program artifact pins each leg, embedding input/output
+carrier, bounded fusion rule and hydration entry plus filter parameter mapping.
+Runtime execution only selects/binds those precompiled entries; it invents no
+SQL or predicate. The call's timeout covers embedding, every leg and hydration
+as one budget, with current target admission for each database operation.
 
 ### Embedder
 
@@ -223,5 +244,6 @@ later `search_across` form returning typed per-Record lists.
 
 - [ ] Each candidate mechanism has native evidence on its pinned platform version.
 - [ ] Refusals for unsupported metrics, ranking families, filters and targets have fixtures.
-- [ ] Stale-key hydration (single-key reads, no refill) and embedder mismatch behave as specified.
-- [ ] Filtered searches return the top `k` matching rows when at least `k` exist, or refuse without `allow_partial=True` on a `partial` binding.
+- [ ] Stale-key hydration (single-key filtered reads, no refill), changed-tenant/category candidates and embedder mismatch behave as specified.
+- [ ] Asynchronous filtered hydration refuses without partial opt-in, reports shortfalls and never treats native denial/error as a stale hit.
+- [ ] Complete-filter claims use a qualified coherent index/table snapshot; partial bindings and asynchronous filtered hydration refuse without `allow_partial=True`.

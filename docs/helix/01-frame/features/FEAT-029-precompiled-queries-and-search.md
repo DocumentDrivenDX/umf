@@ -174,9 +174,7 @@ are never parsed as SQL or search syntax.
 
 - A form that type-checks but that Weft cannot lower for some selected target
   fails the build with `WEFT_BLOCKED`.
-- Ordering a row read by anything other than the complete unique Key, or an
-  unbounded list, fails the build in 0.1. Grouped reads order by group keys or
-  aggregates with the complete group key appended.
+- Admitted row ordering appends the complete selected Key as tie-breaker; unsupported sorts or unbounded reads refuse. Groups append the complete group key.
 - `avg_` without a scale, a date bucket of an instant without a zone, a term
   filter without a declared keyword index, and a snapshot page on `postgresql`,
   `lakebase` or Truss each refuse; none falls back to a weaker form.
@@ -232,6 +230,6 @@ provide the targets that execute catalog entries.
 ## Out of Scope
 
 Free-form or ad-hoc SQL, lazily executed querysets, ORM sessions and change
-tracking, pandas-style masks and `query()` strings, non-key ordering and full
+tracking, pandas-style masks and `query()` strings, unsupported ordering and full
 related-row includes in 0.1, index building and embedding production, and
 multi-Record search (`search_across` is a later candidate).

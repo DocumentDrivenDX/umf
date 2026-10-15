@@ -83,3 +83,5 @@ later spike or the US-082 corpora exercise them on all three pinned checkers):
 - `starts_with`, term filters and `.page(..., snapshot=True)`.
 - Sync/async overloads of generated functions on target type.
 - `Committed` with typed `created`/`changed` Keys and `validate()` results.
+
+Fresh replay after the consumer update is recorded in [consumer reconciliation](../consumer-reconciliation/typing-replay.json), with exact source hashes and new logs. It checks only the enumerated twelve negative errors, targeting 3.11 on a 3.14 host; it does not qualify the uncovered forms or execution on a 3.11 interpreter.

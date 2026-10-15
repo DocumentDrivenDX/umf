@@ -23,7 +23,7 @@ ddx:
 
 ## Scope and Objective
 
-Prove that the pinned pyright and mypy accept correct declarations and reject
+Prove that the pinned pyright, mypy and ty accept correct declarations and reject
 every error in the CONTRACT-071 typing table, that schema changes surface through
 regeneration, that runtime guards stop misuse the checkers cannot see, and that
 capture refuses declarations outside the contract. All tests and commands are
@@ -87,3 +87,7 @@ implementing the DSL; they must fail first for missing modules and then for the
 right reasons. Each AC needs a real assertion with its `@covers` tag. Done only
 when both checkers produce exactly the expected diagnostics and all runtime and
 capture tests pass, with evidence recorded.
+
+US-082-AC6 also asserts three runtime bindings (MISSING/null/non-null): only omission removes the filter; equality to null yields UNKNOWN, while explicit is_null() selects nulls. Count only presence variants. Retain exact trusted module source and build-tool pins; no sandbox claim.
+
+Join typing criteria additionally reject self/repeated/ambiguous Record paths and foreign RHS comparisons hidden under an otherwise valid owning predicate. Positive owner-set cases exercise one through four distinct to-one joins; optional-side projections must be nullable on all three checkers and match left-missing native rows.

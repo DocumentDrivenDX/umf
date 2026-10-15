@@ -49,6 +49,11 @@ the manifest records default execution as an engine obligation.
 `__init_subclass__` that raises `TypeError`. No field aliases are emitted, so
 constructor parameter names are what type checkers see.
 
+Required `placed_at` in the CONTRACT-070 fixture must be supplied to Create.
+Nested item/value carriers distinguish explicit null from an omitted map key;
+MISSING is forbidden inside arrays and for present map values. Validate reused
+Field occurrences against every context and refuse incompatible views.
+
 **Exact values in shared validators.** Carrier checks live once in
 `umf_access.values` (decimal scale and precision via `Decimal.as_tuple()`,
 integer width bounds, `date` versus `datetime`, instant awareness and precision,
@@ -78,7 +83,10 @@ omitting `MISSING`. `decode_*` checks the column inventory for duplicates, gaps
 and extras before building a mapping, converts carriers to Python values and
 validates. Neither trusts an existing instance.
 
-**Keys and actions.** `<Record>Key` keeps declared component order, sets
+**Keys and actions.** Emit exact per-referenced-Key DTOs as CONTRACT-068 defines;
+`<Record>Key` aliases only CONTRACT-070 selectedKey. Action/relationship inputs
+use their exact referenced Key DTO and reject another Key, even if its component
+Python types match. Each DTO keeps its own declared component order, sets
 `__hash__ = None` and exposes `KEY_IDENTITY`; the package exposes
 `BUNDLE_INPUT_DIGEST`. `<Action>Input` uses Key DTOs for entity parameters and
 `T | MISSING` for optional ones; `<Action>Rejected.code` is a `Literal` union.
@@ -137,7 +145,7 @@ values into storage. Imports perform no I/O.
 | US-081-AC3 | `boundaries_revalidate` | Subclass `TypeError`; `model_construct`, `model_copy(update=...)` and nested-mutation refusals at codecs; value-free messages | `python/umf_access/tests/test_codecs.py` |
 | US-081-AC4 | `keys_and_action_types` | Key order, `KEY_IDENTITY`, `__hash__ is None`, separate digest constant, action input and failure-code types | `python/umf_access/tests/test_generated_models.py` |
 | US-081-AC5 | `decode_checks_columns` | Inventory refusals before mapping; full revalidation on decode | `python/umf_access/tests/test_codecs.py` |
-| US-081-AC6 | `static_and_isolated_import` | Corpora pass and fail as expected on both pinned checkers; no `alias`, `validation_alias` or `serialization_alias` in generated source; override renames the parameter but not the encoded key; docstrings cite pointers; isolated import loads no forbidden module and opens no file or socket | `python/umf_access/tests/test_static_corpus.py`, `python/umf_access/tests/test_isolated_import.py` |
+| US-081-AC6 | `static_and_isolated_import` | Corpora pass and fail as expected on all three pinned checkers; no `alias`, `validation_alias` or `serialization_alias` in generated source; override renames the parameter but not the encoded key; docstrings cite pointers; isolated import loads no forbidden module and opens no file or socket | `python/umf_access/tests/test_static_corpus.py`, `python/umf_access/tests/test_isolated_import.py` |
 | US-081-AC7 | `runtime_fix_without_regeneration` | One generated package under two runtime builds with the same ABI, one with a seeded scale defect; verdict follows the runtime; package bytes and `umf-access check` unchanged | `python/umf_access/tests/test_runtime_driven_codecs.py` |
 | US-081-AC8 | `generated_codecs_are_thin` | Syntax-tree inspection: each codec body is one runtime call with metadata; metadata tables are literals and name references; no `if`, `raise`, `try`, comparison or loop outside field declarations | `python/umf_access/tests/test_runtime_driven_codecs.py` |
 | US-081-AC9 | `clean_on_three_checkers` | pyright, mypy and ty at pinned versions, targeting Python 3.11, report zero diagnostics on the generated package and positive corpus; no suppression comment in generated source; encodings run on 3.11 | `python/umf_access/tests/test_static_corpus.py` |

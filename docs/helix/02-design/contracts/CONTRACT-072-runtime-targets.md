@@ -70,7 +70,7 @@ Any difference raises `TargetMismatch`. Lakebase applies minor versions
 automatically, so a Lakebase target qualifies a major version plus an explicit
 set of observed minor versions; an unlisted minor refuses until qualified.
 Verification checks shape and identity only; it confers no authorization and
-does not prove the shape stays unchanged after it runs.
+does not prove the shape stays unchanged after it runs. For action claims, the host supplies pinned `nativeAdmission` descriptors: declared native relation identities, dependency-closure/profile digest, the qualified action-time unchanged-closure fence, authenticated principal/profile correspondence and original writer-incarnation/restore-epoch custody. CONTRACT-073 requires admission at the effect transaction; first-use shape verification is insufficient. Missing or changed proof refuses the affected action. Reconnect must establish original namespace continuity before transaction reconciliation; otherwise return Indeterminate. Native descriptors confer no action or role authority.
 
 Verification results are cached per process, keyed by the target identity, the
 database identity (Postgres system identifier and database name) and, for
@@ -104,15 +104,28 @@ whose index needs a host embedder and has none raises `ObligationUnmet`.
 ### Continuations
 
 `Page[R, K]` carries `items: tuple[R, ...]` and `next_after: Continuation[K] |
-None`. A `Continuation[K]` is an immutable runtime value holding the last Key of
-the page and the `TargetIdentity.digest()` of the target that read it. Passing it
-back as `after` resumes the keyset only on a target whose current identity digest
-is equal; otherwise the call raises `StaleContinuation` before any statement is
-sent. Passing `None` starts a new read. Continuations are not persisted by the
-runtime and carry no authorization.
+None`. A continuation is an immutable value containing `key:K`,
+`sortValues:tuple[EncodedValue,...]`, `targetIdentityDigest`, `catalogDigest`,
+`entryName`, `variantDigest` and `argumentsDigest`. `sortValues` covers EVERY
+declared ordering component, including the complete appended Key and explicit
+null/missing markers, in the exact mixed-direction/null-placement order. The
+catalog variant defines those carriers and ordering; a Key alone cannot resume
+general WR-A6 ordering. Hidden sort/Key outputs are retained as continuation data
+even when the returned projection excludes them; their disclosure must be
+authorized by the original read path or that page form refuses.
 
-Pages are live by default: keyset continuation never repeats a row, but rows
-inserted or changed between pages may be missed or seen. A declaration with
+`argumentsDigest` is JCS/SHA-256 of the validated encoded non-continuation
+arguments, including optional-parameter presence. Entry/variant/catalog and all
+target identity fields must match the current call; any mismatch, wrong sort
+inventory/carrier or changed filter raises `StaleContinuation` before dispatch.
+The initial call uses `after=None`. Target identity includes the engine's
+accepted model/action binding context and, on Ashlar, its publication vector.
+The SDK does not promise a cross-page snapshot on mutable raw tables; callers
+requiring that property must use an admitted snapshot form below or a qualified shared transaction.
+Continuations are process-local, not persisted or authenticated credentials, and
+confer no authorization; the engine still admits each read independently.
+
+Pages are live by default: unchanged data traverses without repeats, but a row whose sort value changes can be repeated or missed; inserts/deletes may also alter traversal. A declaration with
 `.page(..., snapshot=True)` reads every page of one continuation at the same table
 versions, recorded in the `Continuation`; no row is skipped or repeated because of
 concurrent writes. Snapshot pages compile for `unity-catalog` and `spark-delta`
@@ -125,17 +138,17 @@ raises `StaleContinuation`.
 
 ```python
 class ReadTarget(Protocol):
-    def execute_read(self, entry: CatalogVariant, params: BoundParams) -> RowStream: ...
+    def execute_read(self, entry: CatalogVariant, params: BoundParams, *, timeout: timedelta | None = None) -> RowStream: ...
 
 @runtime_checkable
 class ActionExecutor(Protocol):
-    def invoke(self, action: ActionRef, input: EncodedInput) -> ActionOutcome: ...
-    def validate(self, action: ActionRef, input: EncodedInput) -> ValidationResult: ...
+    def invoke(self, action: ActionRef, input: EncodedInput, *, timeout: timedelta | None = None) -> ActionOutcome: ...
+    def validate(self, action: ActionRef, input: EncodedInput, *, timeout: timedelta | None = None) -> ValidationResult: ...
 
 @runtime_checkable
 class ReplayingActionExecutor(ActionExecutor, Protocol):
     def invoke_keyed(self, action: ActionRef, input: EncodedInput, *,
-                     idempotency_key: str) -> ActionOutcome: ...
+                     idempotency_key: str, timeout: timedelta | None = None) -> ActionOutcome: ...
 ```
 
 Idempotency is a static capability, not a runtime option. An `ActionExecutor`
@@ -147,14 +160,14 @@ client over `ActionExecutor` and a `ReplayingActions` client over
 `ReplayingActionExecutor`, so type checking rejects passing a raw-table target to
 `ReplayingActions`.
 
-Raw-table executors resolve `action` to the catalog entry of kind `action` for
+Raw-table executors resolve the exact source-bound `action` to the catalog entry of kind `action` for
 their pinned target and run its statement program under CONTRACT-073; a missing
 entry raises `NotCompiledForTarget`. Engine executors pass the action identity to
 the engine (CONTRACT-069).
 
 ```python
 class BulkTarget(Protocol[PlanT_co]):
-    def plan(self, entry: CatalogVariant, params: BoundParams) -> PlanT_co: ...
+    def plan(self, entry: CatalogVariant, params: BoundParams, *, timeout: timedelta | None = None) -> PlanT_co: ...
 ```
 
 Raw-table targets are `BulkTarget[AtomicBulkPlan]`; the Truss adapter is
@@ -180,19 +193,17 @@ A valid result is advisory: state can change before `invoke`.
 ### Timeouts
 
 Every generated query, stream, action and bulk call accepts `timeout:
-timedelta | None`. `None` uses the target's configured `default_timeout`; targets
-MUST be constructed with a default, so no call runs unbounded. The runtime applies
+timedelta | None = None`. `None` uses the target's configured `default_timeout`; targets
+MUST be constructed with a positive finite default, so no call runs unbounded. Explicit negative timeouts refuse before dispatch; zero means an already expired deadline with no dispatch. The runtime applies
 the deadline natively (`SET LOCAL statement_timeout` inside the transaction on
 Postgres and Lakebase; the driver's query timeout and cancellation on Databricks
 and Spark) and also enforces it client-side.
 
-- A read that exceeds its deadline raises `QueryTimeout`; no partial result is
-  returned.
+- A page/read that exceeds its deadline raises `QueryTimeout`; no partial page is returned. A stream may already have yielded complete earlier pages: it raises explicitly and never represents the prefix as a completed export.
 - An action or bulk call whose deadline expires before the commit is sent is
-  cancelled and rolled back. Its outcome is `TimedOut`: **nothing was committed**.
+  cancelled and rolled back. Only positive native/engine proof of original noncommit permits `TimedOut`: **nothing was committed**. A deadline or cancellation request alone, including async task cancellation before COMMIT, is not proof; unresolved cleanup remains Indeterminate and retains original custody.
 - If the deadline expires after the commit was sent, the outcome is decided exactly
-  as for a lost connection (CONTRACT-073): reconciled to `Committed` or
-  `Conflict` on Postgres and Lakebase, otherwise `Indeterminate`.
+  as for a lost connection (CONTRACT-073): reconciled to `Committed`, positively established `TimedOut` (original deadline plus aborted status), or `ActionFailed(ABORTED_CAUSE_UNKNOWN)` on Postgres/Lakebase; Conflict requires original explicit concurrency/token evidence. Otherwise it is `Indeterminate`.
 - `Indeterminate` is therefore the only outcome in which a timed-out write may have
   committed.
 
@@ -228,29 +239,50 @@ other targets are sync only until their drivers' async support is qualified.
 
 ### Outcomes
 
+Engine outcomes retain an immutable `original: OriginalOutcome` alongside every
+typed projection and every raised engine failure. It contains the complete
+original authorized result (all members, unknown content, revision, changes,
+noOp, verification, code and receipt), the exact source-bound ActionRef and the
+original request identity/recovery context supplied by the engine. If original
+transport bytes are supplied, retain those exact bytes as well. Never rebuild an
+original result from a reduced projection, later status or a new invocation.
+Opaque issuer/recovery capabilities remain out of band with the engine; this
+carrier cannot mint, serialize or authenticate them. Only already-authorized
+result content may be exposed, and it MUST NOT be logged automatically.
+Raw-table outcomes instead retain `original: NativeOutcomeDetails`, a separate native-profile carrier (not a tx/1 result). It includes exact source/profile, native program result markers and diagnostics, noOp, declared-effect verification, complete CONTRACT-900 net changes (created/updated/deleted entity identities and linked/unlinked association identities), typed created/changed convenience identities, authenticated/effective native attribution, receipt and original transaction/settlement context. Required members must be produced in the qualified atomic program; missing information cannot be fabricated from a later read. Failed/unknown results retain whatever original evidence is available and explicitly mark unknown members. Raw details confer no engine registration/replay/control authority.
+
 `ActionOutcome` is exactly one of:
 
 | Outcome | Meaning | Generated client behavior |
 | --- | --- | --- |
-| `Committed(output, receipt, created, changed)` | Business change committed; `created` and `changed` are the Keys of entities the action created and changed (CONTRACT-900 `identities: created-and-changed`) | Returns typed output, receipt and Keys |
+| `Committed(output, receipt, created, changed, original)` | Invocation committed, including a net no-op; typed Keys preserve exact declared identity and original engine result | Returns typed output, receipt, created/changed Keys and complete original outcome |
 | `Rejected(code)` | Declared business failure (a false precondition, or CONTRACT-901 `ENTITY_MISSING`); no change | Raises `<Action>Rejected` |
-| `Denied` | Authorization failure, including a failed in-program role check; no change | Raises `ActionDenied` |
+| `Denied(code, original)` | Authorization failure, including a failed in-program role check; no change | Raises `ActionDenied` preserving the protected-safe native/engine code |
 | `Replayed(original)` | Equal retained request under an idempotency key; the original outcome is returned | Returns or raises the original |
-| `Conflict(retained: bool)` | Concurrency or serialization failure; nothing committed | Raises `ActionConflict(retained)`. `retained=False`: the caller may retry as a new attempt. `retained=True`: a durable tx/1 conflict recorded under an idempotency key; terminal for that key |
-| `TimedOut` | Deadline expired before the commit was sent; rolled back, nothing committed | Raises `ActionTimedOut` |
-| `Indeterminate` | Commit outcome unknown and not reconcilable (CONTRACT-073) | Raises `ActionIndeterminate`; never retried automatically |
+| `Conflict(retained: bool, code, original)` | Explicit concurrency/version/token-conflict result; nothing committed | Raises `ActionConflict` preserving code and complete original result; retained is determined by the original result/protocol, never key presence alone |
+| `TimedOut(original)` | Deadline expired and native/engine evidence positively establishes nothing committed | Raises `ActionTimedOut` preserving original classification |
+| `Indeterminate(original)` | Original outcome currently unknown | Raises `ActionIndeterminate`; host/engine may reconcile original custody; never retried automatically |
 
 Two failures are raised by the executor rather than returned as outcomes:
 
-- `ActionRefused(code)`: the request was refused before any statement was sent.
+- `ActionRefused(code)`: the request was refused before any business effect was committed; read-only admission/preflight statements may have run.
   `code` is a CONTRACT-073 code (for example `NATIVE_PROFILE_UNSUPPORTED`,
   `ROLE_MAPPING_MISSING`, `TRANSACTION_STATE`) or the code of a tx/1 `unsupported`
   or `expired` result. Nothing changed.
 - `ActionFailed(code, cause)`: execution started and was rolled back with a known
   outcome: a postcondition false or erroring, a constraint violation, another
   native error during the program, or a tx/1 `failed` result. `cause` wraps the
-  native exception unchanged; for engines `code` is the engine's code. Nothing
-  committed.
+  native exception unchanged; for engines `code` and `original` preserve the
+  engine's classification. Nothing committed. A proven abort with unknown cause
+  is `ActionFailed("ABORTED_CAUSE_UNKNOWN", cause)`, never an invented conflict.
+
+`Rejected`, `Replayed`, refused and failed engine results also retain `original`.
+Exception projections expose the original protected-safe code without dropping
+unknown result members. A committed no-op retains `noOp:true`, empty net changes
+and original verification; it is not described as a business change. Replay
+preserves the complete original result, not only its typed output. Indeterminate
+retains the original request/recovery context for the engine's existing lookup;
+the SDK's lack of an action lookup convenience does not discard that custody.
 
 CONTRACT-901 tx/1 results map to these as follows. Executors for engines that
 speak tx/1 (CONTRACT-069) MUST use this table; raw-table executors produce the
@@ -260,7 +292,7 @@ same outcomes from native signals (CONTRACT-073).
 | --- | --- |
 | `committed` | `Committed(output, receipt)`; `Replayed(Committed(...))` when the executor's result identifies a retained replay |
 | `rejected` | `Rejected(code)`; `Replayed(Rejected(code))` when identified as a replay |
-| `conflict` | `Conflict(retained=True)` when the request carried an idempotency key (for example `EXPECTED_VERSION` recorded under the key, or `TOKEN_REUSE`); otherwise `Conflict(retained=False)` |
+| `conflict` | Preserve original code/result; `retained=True` only when original protocol evidence identifies a retained terminal conflict. A pre-admission `TOKEN_REUSE` does not become a newly retained outcome merely because a key was supplied |
 | `denied` | `Denied` |
 | `unsupported`, `expired` | `ActionRefused(code)` |
 | `failed` | `ActionFailed(code)`, including `TRANSIENT_ABORT` after the executor's own bounded internal retries |
@@ -278,8 +310,30 @@ after that:
 
 | Plan | Targets | Methods |
 | --- | --- | --- |
-| `AtomicBulkPlan` | Raw tables (CONTRACT-073) | `preview()`; `execute() -> BulkOutcome`, where `BulkOutcome` is `{selected, changed, receipt}`: the number of selected identities, the number of rows changed and the commit receipt. Failures raise as for actions (`ActionConflict`, `ActionIndeterminate`, `ActionFailed`, `ActionRefused`) |
-| `ManifestBulkPlan` | Truss (CONTRACT-069) | `preview()`; `seal() -> Manifest`, a sealed CONTRACT-903 manifest; `submit(manifest) -> BulkJob`, which hands the sealed manifest to CONTRACT-904 coordination and returns the job reference and its reported status. Host workers run the batches through the engine; the SDK runs no worker loop. There is no `execute()` |
+| `AtomicBulkPlan` | Raw tables (CONTRACT-073) | `preview(timeout=...)`; `execute(timeout=...) -> BulkOutcome`, where `BulkOutcome` is `{selected, changed, receipt, original: NativeOutcomeDetails}`: the number of selected identities, the number of rows changed and the commit receipt. Failures raise as for actions (`ActionConflict`, `ActionIndeterminate`, `ActionFailed`, `ActionRefused`, `ActionTimedOut`) |
+| `ManifestBulkPlan` | Truss (CONTRACT-069) | `preview(timeout=...)`; `seal(*, attempt: ControlAttempt, timeout=...) -> SealControlResult`; `submit(sealed, *, submission_key: str, attempt: ControlAttempt, timeout=...) -> SubmitControlResult`; `recover_control(recovery: ControlRecoveryRef, *, timeout=...) -> ControlResult`. Host workers execute batches through the engine. There is no `execute()` |
+
+`SealControlResult` and `SubmitControlResult` retain the COMPLETE original
+engine materialize/submit unions: sealed/submitted success, original Refusal,
+TOKEN_REUSE conflict, ControlUnknown and ControlFailure. Their typed convenience
+views never replace the original result. `ControlAttempt` is an opaque original
+host/engine-issued durable attempt capability, supplied out of band; the adapter
+neither fabricates it nor turns its recovery reference into authority. `sealed`
+is the exact original Artifact with its issuer-owned seal custody. `submission_key`
+is the original stable caller submission key, explicitly required and retained
+with the exact request. A changed request under that key follows CONTRACT-904.
+
+`recover_control` delegates to original `recoverControl` under current engine
+authorization and preserves its full result. After unknown seal/submit ACK,
+retain the SAME attempt/recovery/request and block fresh mutation; do not issue a
+new seal, job, key or attempt as an implicit retry. Known control noncommit is
+ControlFailure, not business Conflict. Engine `status`, `review`, `lookup`,
+`reconcile` and `cancel` remain available through the host's original qualified
+bulk-control client; the adapter must retain its association with the plan/job
+and must not replace those APIs with a lossy BulkJob status. No worker loop,
+lease/fence handling or business retry is introduced in the SDK. Browser-local
+CONTRACT-905 has its separately admitted control/owner profile; it is never
+silently mapped to native human bulk authority.
 
 ### Transport carriers
 
@@ -308,8 +362,7 @@ catalog_target)` takes a local Spark session with Delta. Adapters:
 - for reads, may run inside a host-owned transaction; for actions and bulk
   commands, follow CONTRACT-073 transaction rules;
 - for reads, surface native exceptions unchanged; for actions and bulk commands,
-  classify them as CONTRACT-073 states, wrapping unclassified native errors in
-  `ActionFailed`. Errors never become empty results.
+  classify them as CONTRACT-073 states, wrapping unclassified native errors in `ActionFailed` only after positive known rollback; uncertain settlement remains Indeterminate. Errors never become empty results.
 
 ### Conformance suite
 
@@ -335,14 +388,14 @@ changes protocol shapes is a new ABI.
 | --- | --- |
 | `TargetMismatch` | Version, identity or shape differs from pins, result columns are inconsistent, or a schema-neutral table resolves unexpectedly |
 | `QueryTimeout` | A read or stream page exceeded its deadline |
-| `ActionTimedOut` | Outcome `TimedOut`: deadline expired before commit; nothing committed |
+| `ActionTimedOut` | Outcome `TimedOut`: deadline expired and positive original evidence proves no commit |
 | `NotCompiledForTarget` | No catalog entry matches the target identity |
 | `ObligationUnmet` | A Weft host obligation cannot be applied |
 | `StaleContinuation` | A continuation was passed to a target whose identity digest differs from the one that produced it |
 | `ActionDenied` | Outcome `Denied` |
 | `ActionConflict(retained)` | Outcome `Conflict` |
 | `ActionIndeterminate` | Outcome `Indeterminate` |
-| `ActionRefused(code)` | Refused before any statement was sent (CONTRACT-073 codes, tx/1 `unsupported` or `expired`) |
+| `ActionRefused(code)` | Refused without committed business effects (read-only checks may run; CONTRACT-073 codes, tx/1 `unsupported` or `expired`) |
 | `ActionFailed(code, cause)` | Known rollback during execution; `cause` is the native or engine error |
 | `TypeError` | A generated client was constructed with an executor that does not implement its required protocol |
 | Native driver errors | Re-raised unchanged on reads |
@@ -363,3 +416,15 @@ checking, because the target implements only `ActionExecutor`.
 - [ ] Verify detects added, dropped, retyped and identity/generation-changed columns.
 - [ ] Commit-loss injection yields `Indeterminate` when it cannot be reconciled, and on Postgres/Lakebase with a reconnection factory the reconciled outcome equals an independent observation; never a retry.
 - [ ] Every tx/1 status maps as tabulated; continuation reuse on a changed identity raises `StaleContinuation`.
+
+### Runtime binding and cache safety
+
+The catalog remains schema-neutral. Host construction supplies expected database/store and resolved-relation/schema inventory out of band; it is never inferred from search_path or embedded as schema text in generated SQL. The effective runtime binding context includes database identity/incarnation, exact resolved relation identities and schemas, original security/principal context, and schemaBinding. Continuations additionally retain its digest and snapshot vector, rejecting cross-schema, cross-store or different-admission reuse before dispatch, even when the compile-time catalog identity matches. Snapshot pages bind every relation in a joined query, not just the root.
+
+The cheap resolution check runs on each connection checkout/use-boundary that may change search_path/role, observes effective pg_catalog-first resolution (including temporary-schema shadowing), and rejects unexpected relations. Cached schema results never cache grants, principal admission or action dependency fences. Cross-connection shape-cache reuse requires a qualified host DDL invalidation/immutable-schema obligation; without that proof refresh verification on checkout. Replacing a relation with the same name invalidates the relation-identity key. Native metadata queries and builtin references are pg_catalog-qualified. Missing verification privileges refuse rather than assume identity. No host label alone authenticates a human.
+
+On Spark/Unity Catalog a self-committing mutation statement or atomic-block dispatch is the commit-uncertainty boundary; there need not be a separate COMMIT RPC. Timer expiry, callback error or cancellation after dispatch never proves noncommit. Manifest control deadlines preserve the original control protocol unknown/recovery classifications rather than projecting business TimedOut onto uncertain control state.
+
+Streams require an idle host connection and own only their explicitly opened read-only repeatable-read unit, closing/rolling it back on exhaustion, bound, timeout, exception or async cancellation. An already-active transaction refuses unless the host supplies a separately qualified compatible snapshot wrapper with explicit cleanup ownership; the SDK never commits/rolls back unrelated host work. Stream memory is bounded by page size, not max_rows.
+
+A pooled connection with unresolved cancellation/transaction cleanup is quarantined by the host and cannot be returned for reuse until original native settlement establishes a safe state; no new transaction is opened to mask that uncertainty.

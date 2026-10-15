@@ -68,11 +68,11 @@ All members are required; arrays other than `sources` and `records` may be empty
 
 The generator follows explicit local membership, Field, item/value, Key and
 Relationship references from the selected Records and actions. Records reached
-only through relationships or entity parameters get Key DTOs, not row models,
+only through relationships or entity parameters get exact referenced-Key DTOs, not row models,
 unless they are also selected. Every `umf.access` search index on a selected
 Record is generated into its `s` namespace; indexes on unselected Records are
 reported as unselected. Every selected Record MUST have a `umf.access`
-RecordView; a missing view refuses. Action value parameters use their Field's
+RecordView with explicit selectedKey; a missing view/selection refuses. Referenced alternate Keys are closed and generated with distinct identities, or the affected generation request refuses; no Key equivalence or primary-Key inference is permitted. Action value parameters use their Field's
 carrier with presence from the parameter's `required` flag and null only when
 the Field admits null (CONTRACT-900). Actions whose bindings, conditions or
 authorization reference an unselected and unreached element refuse. The generator
@@ -160,6 +160,16 @@ staging directory on the same filesystem and swaps it in with directory renames.
 A failure before the swap leaves the previous package intact; a failure after
 the swap reports the new package as written. No lock files, digest directories
 or selection pointers are used; version control supplies review and history.
+Only one cooperating build invocation may own an output directory; the build runner
+must serialize generate/catalog/check operations. Concurrent writers and hot
+runtime imports during replacement are unsupported and must not be claimed atomic.
+The writer retains a recoverable backup until the replacement succeeds, restores
+it on a failed second rename, and reports any unresolved filesystem state. It
+never removes the only complete old package on failure. Stage one copies the
+existing four reserved stage-two files byte-for-byte into staging; ignoring them
+for ownership checks MUST NOT delete them. Their unchanged old stage-one digest
+then causes CATALOG_STALE until stage two is rebuilt. Stage two preserves every
+stage-one file and touches only its own reserved files.
 
 `umf-access check` regenerates in memory and exits non-zero when any byte differs
 from the checked-in package. CI MUST run it. Generated files are not hand-edit

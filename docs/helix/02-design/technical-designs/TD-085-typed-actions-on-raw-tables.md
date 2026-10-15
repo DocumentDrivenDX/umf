@@ -32,7 +32,7 @@ or SQL lowering (Weft).
 exports, for every selected raw-table target, through Weft's action lowering.
 Before calling Weft it checks the CONTRACT-073 refusal rules that do not depend
 on lowering: policy authorization, `person-required` attribution on a target whose
-`sessionPrincipal` is `service`, handler
+`sessionPrincipal` is `service`, roles/1 on a service target (independent of attribution), unqualified role profiles, handler
 bindings, a missing `roleMappings` entry, a missing `security` source and, on
 `spark-delta`, `administrativeSingleTenant` not set (CONTRACT-071 target
 configuration). After lowering it refuses multi-statement programs
@@ -52,8 +52,9 @@ time. The raw-table target then:
 
 1. raises `ActionRefused` with the recorded code for a non-executable entry,
    before touching the connection;
-2. checks that the identity was verified and matches the entry pins
-   (`NotCompiledForTarget` otherwise);
+2. checks identity and entry pins, then performs CONTRACT-073 action-time
+   native dependency/authority closure admission under the qualified fence; a
+   cached shape verification never supplies that fence;
 3. on `postgresql`/`lakebase`, reads the psycopg transaction status and refuses
    anything but idle (`ActionRefused` with `TRANSACTION_STATE`); then opens one
    transaction with `SERIALIZABLE` isolation, applies Weft obligations, runs the
@@ -66,12 +67,13 @@ time. The raw-table target then:
 | Native result | Postgres / Lakebase signal | Delta signal | Outcome |
 | --- | --- | --- | --- |
 | Committed | COMMIT acknowledged | Commit result with table versions | `Committed(output, receipt, created, changed)` |
-| Deadline before commit | `statement_timeout` cancellation (SQLSTATE `57014`) or client deadline before COMMIT is sent; rolled back | Driver cancellation before the committing statement is sent | `TimedOut` |
+| Deadline with confirmed original noncommit | Positive cancellation/rollback, or qualified original aborted status | Independently confirmed native noncommit | `TimedOut` |
 | Precondition false | Program's declared precondition marker | Same, folded into statement result | `Rejected(code)` |
 | Authorization | Program's role-check marker; SQLSTATE `42501` | Program's role-check marker | `Denied` |
 | Concurrency | SQLSTATE `40001`, `40P01` | Delta concurrent-modification exception | `Conflict(retained=False)` |
 | Commit unknown | Connection error after COMMIT was sent | Connection error after submission of the committing statement | Postgres/Lakebase: reconciled as below; Delta: `Indeterminate` |
-| Anything else | Native exception | Native exception | `ActionFailed(code, cause)` wrapping the native exception; rolled back |
+| Known rollback/noncommit | Native exception and positive original settlement | Same | `ActionFailed(code, cause)` |
+| Unresolved settlement | Disconnect/cancellation without original termination evidence | Same | `Indeterminate`, including before the commit phase flag |
 
 The program reports a false precondition and a failed role check by markers
 Weft defines in the lowered program (for example a declared SQLSTATE raised by
@@ -79,32 +81,32 @@ the program, or a result row). The adapter maps only markers recorded in the
 catalog entry; it never parses error message text. A failed role check is
 `Denied` and is never reported as `Rejected`.
 
-Commit-unknown detection uses a phase flag set immediately before the commit
-request is written. A connection failure before it is set means the
-transaction is known not to have committed; the native error is wrapped in
-`ActionFailed`. A connection failure while it is set starts reconciliation on
-Postgres and Lakebase (CONTRACT-073): if the host constructed the target with
-`reconnect=`, the adapter calls that factory once, runs `pg_xact_status` for the
-captured ID, closes the connection, and returns `Committed` (`committed`),
-`Conflict(retained=False)` (`aborted`) or `Indeterminate` (`in progress` after
-the configured bounded wait, `NULL` or any error). Without a factory, and on
-Delta targets, the outcome is `Indeterminate`. The runtime never resends the
-program.
+Commit detection records dispatch phases but never treats a phase flag alone as
+proof of rollback. With `reconnect=`, the adapter uses the factory once, verifies
+the original writer/store/incarnation and restore-epoch custody, then observes
+`pg_catalog.pg_xact_status` for the captured xid. Committed status returns the
+complete result captured before COMMIT. Aborted status yields `TimedOut` only
+when a deadline expired; otherwise it raises
+`ActionFailed("ABORTED_CAUSE_UNKNOWN", original_error)`. No generic abort becomes
+a concurrency conflict. Missing original results, wrong/diverged/restored scope,
+unverified replicas, `NULL` and unresolved status yield `Indeterminate`. The
+runtime never resends a program and never releases uncertain connections for
+reuse. Async task cancellation follows the same settlement rule.
 
-**Receipts.** Postgres/Lakebase: `{store: system identifier and database name,
-epoch:"pg", version: txid}`, with the ID from `pg_current_xact_id()` captured
-inside the transaction before COMMIT. Delta: `{store: table UUIDs, epoch:"delta", version:
-committed table versions}` from the native commit result. If the pinned platform
-does not return versions, the target is unqualified for actions and `verify()`
-reports it.
+**Receipts.** Use CONTRACT-073's exact string-valued native receipt. The store
+encodes original database identity (Postgres/Lakebase) or ordered UUIDs (Delta),
+the epoch identifies qualified original store incarnation/restore custody, and
+the version encodes captured xid8 or this commit's exact table-version vector.
+No constant `pg`/`delta` epoch or later history head substitutes for original
+scope/commit evidence. Native attribution is separate outcome metadata.
 
 **Validation (AT-07).** Each executable entry also records Weft's validate-only
 program (WR-B4). `validate()` runs the same pre-checks as `invoke` (entry refused,
 pins, idle connection), then runs that program in a transaction it always rolls
 back, and returns `ValidationResult` with every failing declared code and
 `complete=True`; nothing is committed even when every check passes
-(US-085-AC8). The program also returns the Keys of created and changed entities,
-which the adapter decodes with the generated Key codecs into `Committed.created`
+(US-085-AC8). The invoke program separately returns the Keys of created and changed entities,
+which the adapter decodes through the shared runtime using generated Key metadata into `Committed.created`
 and `Committed.changed` (US-085-AC9).
 
 **Async (AT-08).** `AsyncPostgresTarget` and `AsyncLakebaseTarget` share the
@@ -112,21 +114,26 @@ and `Committed.changed` (US-085-AC9).
 adapters over psycopg 3's `AsyncConnection`; only I/O calls differ
 (US-085-AC10).
 
-**Timeouts (AT-09).** Every call takes a keyword-only `timeout`; `None` uses the
-target's required `default_timeout`. Inside the transaction the adapter runs
-`SET LOCAL statement_timeout` and also keeps a client-side deadline. Expiry before
-the commit phase flag is set cancels the statement, rolls back and returns
-`TimedOut`, raised as `ActionTimedOut`. Expiry after the flag is set is handled
-exactly as a lost connection, so the outcome is reconciled or `Indeterminate`
-and never `TimedOut` (US-085-AC11).
+**Timeouts (AT-09).** Every call takes keyword-only `timeout`; `None` uses the
+required target default. The single deadline includes admission, execution and
+cleanup/reconciliation; native statement timeouts use the remaining budget.
+A cancellation request is not rollback evidence. Return `TimedOut` only after
+confirmed original noncommit; a qualified aborted xid after deadline expiry
+also permits it. Confirmed commit returns the retained success. If settlement
+cannot be established in the bounded cleanup/reconciliation window, return
+`Indeterminate` and quarantine original custody (US-085-AC11). Validation has
+no commit instruction but still requires confirmed noncommit before asserting
+its timeout/rollback result.
 
 **Composite actions and per-user sessions (AT-10, AT-04).** Related changes are
 one action with several effects; Weft lowers them into one program, which runs in
 the single `SERIALIZABLE` transaction above (US-085-AC12). Neither the generated
 clients nor the runtime offer a transaction across action calls. A target whose
 configuration declares `sessionPrincipal: human` compiles `person-required`
-actions and records the human-session host obligation in the entry; the receipt
-records the committing connection's `current_user` (US-085-AC13).
+actions only with the qualified host human/session binding. Original outcome
+attribution records `session_user` and `current_user` separately, and roles/1
+checks the authenticated human (US-085-AC13). Service-role authorization is
+not inferred from native-session attribution.
 
 Trade-off: refusing early and loudly over providing partial guarantees. There is
 no fallback to a weaker isolation level, separate statements or retries.
@@ -148,7 +155,7 @@ Planned files (none exist yet):
 
 | AC | Component realization |
 | --- | --- |
-| US-085-AC1 | Generated method signature (CONTRACT-068) plus `postgresql`/`lakebase` SERIALIZABLE transaction and `pg` receipt |
+| US-085-AC1 | Generated method signature (CONTRACT-068) plus `postgresql`/`lakebase` SERIALIZABLE transaction and original-incarnation receipt |
 | US-085-AC2 | Precondition and role-check markers from the catalog entry; `Rejected` and `Denied` classification |
 | US-085-AC3 | SQLSTATE and Delta exception classification to `Conflict(retained=False)`; no retry path exists |
 | US-085-AC4 | Commit phase flag, `pg_current_xact_id()` capture, `reconnect=` reconciliation and `Indeterminate` classification |
@@ -158,9 +165,9 @@ Planned files (none exist yet):
 | US-085-AC8 | Validate-only program in the entry; always-rolled-back transaction; `ValidationResult` with every failing code |
 | US-085-AC9 | Returned Keys decoded into `Committed.created` and `Committed.changed` with generated Key codecs |
 | US-085-AC10 | `AsyncPostgresTarget` and `AsyncLakebaseTarget` sharing the sync procedure; generated async overloads |
-| US-085-AC11 | `SET LOCAL statement_timeout` and client deadline; `TimedOut` before the commit phase flag; commit-loss path after it |
+| US-085-AC11 | `SET LOCAL statement_timeout` and client deadline; `TimedOut` only with positive noncommit; otherwise reconciled result or indeterminate |
 | US-085-AC12 | Multi-effect program in one transaction; no cross-action transaction surface |
-| US-085-AC13 | `sessionPrincipal: human` build path, recorded host obligation and `current_user` receipt |
+| US-085-AC13 | Qualified human-session admission and separate original/effective attribution |
 
 ## API/Interface Design
 
@@ -174,9 +181,7 @@ Planned files (none exist yet):
 | Action catalog entries, `roleMappings`, `administrativeSingleTenant`, `security` | CONTRACT-071, CONTRACT-073 | Program, markers, obligations, refusals; target configuration |
 | Refusal codes carried by `ActionRefused` | CONTRACT-073 | `NATIVE_PROFILE_UNSUPPORTED`, `ROLE_MAPPING_MISSING`, `TRANSACTION_STATE` |
 
-CONTRACT-071 records action entries with the other catalog entries; the exact
-shape of a non-executable refusal entry is this design's proposal and needs
-contract text before implementation.
+CONTRACT-071 owns executable and refusal entry shapes; this design consumes them.
 
 ## Data Model Changes
 
@@ -197,11 +202,13 @@ The host supplies connections, roles and grants; the runtime creates none.
 The runtime sends only catalog program text with bound parameters. Authorization
 is checked inside the program against mapped native roles, and a failure is
 `Denied`; native privileges, row-level security, row filters and masks still
-apply; `verify()` confers no authorization. The receipt records the native
-session principal with no claim of a human subject. Validation errors name the
+apply; cached `verify()` confers no authorization or effect-transaction fence.
+The original outcome records authenticated and effective identities separately. Validation errors name the
 field and rule, never the value. Native errors are wrapped unchanged in
 `ActionFailed` and are not logged with parameters. The reconciliation connection
-from `reconnect=` runs only the `pg_xact_status` query.
+from `reconnect=` performs qualified read-only original-scope checks before the
+`pg_catalog.pg_xact_status` query. Native dependency closure and its fence are
+mandatory under CONTRACT-073; unexpressed cascades/triggers refuse.
 
 ## Testing
 
@@ -217,9 +224,11 @@ from `reconnect=` runs only the `pg_xact_status` query.
 | US-085-AC8 | `raw_action_validate_reports_all` | Both failing codes, `complete=True`; valid input has no failures; rollback and no change observed independently (Weft WR-B4) | UMF conformance + native lane |
 | US-085-AC9 | `raw_action_returns_created_and_changed_keys` | `created` and `changed` equal independently read Keys; static types are Key DTO tuples (Weft WR-B4) | UMF static + native lane |
 | US-085-AC10 | `async_raw_action_matches_sync` | Async outcomes, receipts and validation results equal sync ones on the same fixtures; awaitable types on pinned checkers | UMF static + native lane |
-| US-085-AC11 | `raw_action_timeouts` | `ActionTimedOut` with no change before commit; after COMMIT is sent, reconciled outcome or `ActionIndeterminate`, never `ActionTimedOut` | UMF conformance + native lane |
+| US-085-AC11 | `raw_action_timeouts` | `ActionTimedOut` with no change before commit; after dispatch, original settlement determines committed, confirmed timeout/noncommit or indeterminate | UMF conformance + native lane |
 | US-085-AC12 | `multi_effect_action_atomic` | Both rows or neither; both Keys in `created`; public-surface inventory finds no cross-action transaction API | UMF conformance + native lane |
-| US-085-AC13 | `person_required_on_human_target` | Entry compiles with the human-session obligation; each receipt names its connection's `current_user` | UMF build + native lane |
+| US-085-AC13 | `person_required_on_human_target` | Entry compiles with the human-session obligation; original attribution separates authenticated human and effective execution role | UMF build + native lane |
+
+| US-085-AC14 | `native_dependency_closure_fenced` | Unexpressed cascade/trigger and changed routine/policy refuse; replacement cannot escape the fence; cached verify does not bypass admission | UMF conformance + native lane |
 
 STP-085 owns the authoritative mapping and commands.
 
