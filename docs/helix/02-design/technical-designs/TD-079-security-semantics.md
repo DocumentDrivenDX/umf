@@ -964,3 +964,19 @@ Domains include source descriptors and cannot be treated as selected output by
 array position. Work/output limits refuse without partial alternatives or echo
 of an unvalidated selection. Existing r3 child protocol and all registered
 native cohorts remain unchanged; a future bridge needs explicit version/pins.
+
+### Private projection child v2 — 2026-10-15
+
+`tools/security/projection-query-child-v2.ts` composes the original source-only
+projection inspector and original batch/route evaluators on one local program.
+`projection-query-child-main-v2.ts` owns only framed stdin/stdout computation;
+`build-projection-query-child-v2.ts` pins the selected dependency closure before
+and after the actual build and preserves original dependency notices. Separate
+files and mandatory protocol prevent silently upgrading frozen r3 consumers.
+
+The parent retains original Weft CQP projection occurrences/descriptors and maps
+qualified Type/Field arguments without dummy operators. Source metadata can type
+an empty output only after the independently required nonempty unanimous domain
+checks; it does not prove eligibility or choose the final scalar. Original rule
+folding, exact source/consumer admission and guarded native release are mandatory.
+The new child supplies no database provider or private diagnostic boundary.

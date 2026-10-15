@@ -12385,3 +12385,19 @@ Original source-fold/descriptor/native admission remain required; empty metadata
 is not a permission or a guessed scalar domain. No r3 child protocol/bundle or
 backend cohort changes here. No case promoted:45/158 accepted,113 unimplemented.
 See [source, final portable evidence and review](evidence/security/read-projection-20261015/README.md).
+
+### Versioned original projection child — 2026-10-15
+
+The separate v2 child carries original operator-free read-projection metadata on
+one original local program, alongside existing original batch/route computations.
+Mandatory protocol, exact canonical inspection context and terminal refusals
+prevent silent r3 upgrade. All317securitytests/4934assertions and typecheck pass.
+Actual publicWeft034 packets regenerate byte-exact and traverse the original
+Truss generic pipe into the built child in nine supplied-cut controls. FALSE and
+LIMIT remain compiler inputs, not executed SQL. Oldr3 source/bundle/registrations
+remain frozen; native adoption needs an explicit new source/consumer cohort.
+No native case promotion:45/158 accepted,113 unimplemented; original132 IDs/hash
+37308740 preserved. pg-raw.B10 retains diagnostic leakage/no full registered
+runner; Delta B04/B10 have no native runner and ordinary identity/deployment
+qualification remains missing. This transport implements no diagnostic provider.
+See [versioned source and evidence](evidence/security/projection-query-child-v2-20261015/README.md).

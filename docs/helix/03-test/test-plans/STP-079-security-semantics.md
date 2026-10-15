@@ -747,3 +747,18 @@ independent of read metadata. Check whole serialized-result limits at -1/exact/+
 including framing, plus large invalid selection refusal without echo. Run the
 same portable corpus in Chromium. No native case or source permission is inferred;
 r3 transport is unchanged and no backend adoption is implied by helper tests.
+
+### Versioned projection child controls — 2026-10-15
+
+For US-079-AC3/AC7/AC10 prerequisites, test the actual v2 subprocess and exact
+built bundle through the original Truss generic pipe. Regenerate actual public
+Weft projection packets byte-exact, including plain salary, FALSE, LIMIT0 and live
+stored-token projections with no invented query operators. Retain original model
+and opaque source byte custody. Compare source metadata and batch results with
+original functions; test empty population, query-prohibited read independence,
+withheld/missing/conflicting active transforms, imported handles, changed source
+receipt/owner/projection order, duplicate IDs, foreign Fields, stale cuts, terminal
+refusal, invalid UTF-8, fragmented frames and exact response limits. FALSE/LIMIT
+are compiler inputs here, not executed SQL. Native enforcement requires its own
+qualified cohort and original integrated assertions. Frozen r3 compatibility is
+explicit refusal, not protocol downgrade or registration migration.

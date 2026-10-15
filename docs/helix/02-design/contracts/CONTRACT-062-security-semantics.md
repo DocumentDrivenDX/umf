@@ -1647,3 +1647,28 @@ and guarded release remain independent. Unknown/conflicting/withheld/missing
 output cases cannot become guessed scalar domains. Metadata refusal is atomic.
 The initial private helper bounds serialized output including framing to4,000,000
 UTF-16 code units; that is not a UTF-8 frame limit or aggregate heap/work theorem.
+
+### Separately versioned private projection transport — 2026-10-15
+
+The optional `umf.security.private-query-child/0.2-candidate` transport carries
+operator-free qualified Type/Field projections alongside genuine query routes.
+Each closed request and response declares that exact protocol. One actual local
+program is compiled from original source input; imported handles refuse. The
+sequence initialize → inspect-inputs → evaluate binds the canonical owner, ordered
+routes and ordered projections and the full framed initialization receipt.
+That receipt correlates bytes; it is not source admission, runtime authority or
+a permit. Projection identifiers are distinct from all route identifiers.
+
+Both inspection and evaluation return unchanged original projection metadata.
+A completed batch remains separate from permission and a projection alternative
+remains separate from an active, uniform scalar domain. Query-use prohibition
+does not invent an operator for a plain projection. Missing/withheld/conflicting
+outputs and empty populations preserve original source semantics.
+
+The v2 transport has independent artifact/source/consumer custody. Frozen r3
+source579675bd and its bundle/registrations remain unchanged. Its protocol cannot
+be inferred from compatible framing. Native adoption requires an explicit new
+consumer/source cohort, including the changed full initializer bytes/receipt;
+no old registration migrates automatically. Requests are bounded to4MiB, replies
+to16MiB UTF-8, projections256, routes4096, operations256, scans16 and facts10000.
+These transport bounds do not prove aggregate heap/time or native noninterference.
