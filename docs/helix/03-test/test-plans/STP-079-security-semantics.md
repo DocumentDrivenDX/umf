@@ -452,3 +452,23 @@ checks, exact pin/domain checks, issuance, live membership and expansion prechar
 Test repeated/mixed-source normalization to detect cache poisoning or cross-scope
 reuse. Independent Bun/Chromium parity and conditional formal analysis remain
 separate from native admission and fullS24/S25 qualification.
+
+
+### Canonical action kernel component checks
+
+`tests/security/catalog-runtime.test.ts` exercises US-079-AC3/4/5/6/10 at the
+private logical component boundary: actual Staff/project membership in flat and
+graph sources, parallel/opaque/Record witnesses, independent completeness,
+false-branch and empty-request preflight, typed null/absence, duplicate normalized
+Keys, explicit Gregorian profiles, exact pins and exhaustive stored-carrier
+bindings, original/withheld/transform-conflict composition and atomic refusals.
+Opaque reference metadata compatibility has paired flat/graph positives and
+record-type/malformed negatives. Independent Astra controls must execute the real
+module in Bun and Chromium, retain mutations and source hashes, and verify the
+whole-operation disposition accounting witness. Finite oracle parity and
+conditional formal laws do not establish executable/native refinement.
+
+These component checks supplement the unchanged 158 required acceptance cases.
+No S24/S25 assertion is retired, weakened, or promoted: full rendered Cells,
+original-read/blind-write comparison, vault permission and native enforcement
+still require their original case evidence.

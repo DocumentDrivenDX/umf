@@ -529,3 +529,32 @@ cannot supply an alternate checker/context. This addresses an independently
 reproduced short-exponent normalization gap without changing core value semantics.
 Source validation and all aggregate runtime heap/CPU behavior remain outside that
 component bound. Explicit bindings are retained alongside their typed effects.
+
+
+### Canonical fact/action kernel increment
+
+The private runtime now executes the actual compact catalog program over typed
+Record facts and independent graph incidences. Owner/fact-cut/request packets use
+`umf.security.logical-owner/0.1` and `umf.security.logical-facts/0.1`; exact wire
+examples are in `tests/security/catalog-runtime-fixture.ts`. Fact generations,
+policy/catalog/ontology/core revisions and owner revisions must match. These are
+host attestations and do not authenticate a native session.
+
+One original core Key encoder indexes inventory and all endpoint selectors.
+Coverage distinguishes complete type inventories, Field projections, graph
+incidences, roles and witness attributes. Source preflight precedes evaluation
+even on empty requests. The implementation returns effective source dispositions,
+not rendered Cells. Future rendering must use one fresh operation ledger and
+compiler-issued transform context, and withhold publication of incomplete batches.
+Calling a public per-cell evaluator that resets budgets is insufficient.
+
+Opaque non-record reference metadata is accepted consistently in flat endpoint
+domain correspondence and graph scalar/Key paths, without inferring foreign-key
+or inherited-domain semantics. The retained before/after regression demonstrates
+the prior flat-only refusal. Astra's disposition multiplication witness motivates
+explicit accounting before each repeated traversal. See execution evidence under
+`docs/helix/04-build/evidence/security/catalog-runtime-20261015/`.
+
+Logical decisions, pure rendering, read/blind-write/vault permissions and native
+installation remain separate obligations. This increment does not qualify full
+S24/S25 or any backend security profile.

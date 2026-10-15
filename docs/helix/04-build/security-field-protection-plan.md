@@ -878,3 +878,19 @@ also replay. All61 selected source pins stay stable and the full cases.json is
 byte-identical to7a940678. The pre-correction numeric witness and final weakened/
 corrected comparison are retained. No actionable blocker remains within this
 private compiler scope; full runtime/native authority andS24/S25 stay unqualified.
+
+
+### Canonical action kernel execution increment (2026-10-15)
+
+The private catalog runtime evaluates actual issued programs using original typed
+Record Keys, independent graph incidence coverage and effective source
+dispositions. Its result remains incomplete and non-authoritative. It does not
+render Cells or grant backend permissions. The flat/graph opaque-reference
+compatibility correction preserves source metadata and rejects record-type
+semantics; its failing preimage is retained. Astra's resource multiplication
+witness led to charging every disposition traversal before work.
+
+Execution evidence is retained in `evidence/security/catalog-runtime-20261015/`.
+The remaining goal includes pure collection rendering with shared runtime
+budgets, catalog-aware original read/blind-write/vault checks, exact owner/native
+profiles and all required backend cases. No full S24/S25 admission is claimed.

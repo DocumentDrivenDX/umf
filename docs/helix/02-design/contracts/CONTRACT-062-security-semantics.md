@@ -1224,3 +1224,44 @@ scope, using the existing tracked core checker. A short exponent must not bypass
 that ledger. The ledger is distinct from the whole-catalog recipe budget and
 does not establish a bound for core source validation or a total CPU/heap theorem.
 The explicit binding input MUST remain frozen in the program's source closure.
+
+
+### Private canonical action kernel (2026-10-15)
+
+`evaluateCandidateCatalogAction` consumes only an originally issued catalog-program
+handle and snapshots a logical owner, a pinned fact cut, and an action request.
+Its `complete:false, authority:false` result is an action/disposition vector, not
+a collection publication permit or a native credential. Structural, source,
+coverage or operation-budget failure MUST return `refused` with no rows. An
+`evaluated` vector can contain deny, indeterminate or conflict rows; consumers
+MUST NOT interpret that status as permission to publish data.
+
+The owner declares every live type/Field storage binding. A stored-transformed
+Field MUST equal the exact selected storage transform's output domain. Its input
+domain is not the stored carrier domain. A declared reverse/vault-write action
+provides no permission. Opaque core reference metadata with exact role/module/element
+shape is preserved without changing primitive equality domains; record-type
+semantics remain unsupported by this scalar/Key profile.
+
+Subjects and resources are selectors into one inventory indexed by original typed
+Key encodings. Duplicate normalized identities and contradictory Key projections
+refuse. Null is known; explicit absence reads unknown; missing required projections
+refuse. Graph incidences have independent completeness and role/attribute coverage.
+Record witnesses resolve actual Record facts; opaque witnesses cannot supply Record
+attributes or identity comparisons. Distinct parallel witnesses remain distinct.
+A complete endpoint inventory does not imply a complete incidence inventory.
+
+All scoped condition dependencies MUST preflight, including false branches and
+empty resource requests. Conditions preserve Kleene F/T/U, with existential T
+preferred over U over F; a scoped unknown rule makes the action indeterminate.
+Effective dispositions preserve withheld priority and exact transform identity
+conflicts. Original dispositions require known original Field projections.
+
+The operation admits at most 10000 inventory/request selector entries, a declared
+step limit of at most 1000000, and 4000000 key/string UTF-16 units after snapshot.
+One runtime literal/comparison ledger spans all rows and nested quantifiers. Each
+selected Field, rule and disclosure traversal is step-charged before disposition
+composition, including withheld paths. These are explicit operation ledgers, not
+a proof of total snapshot/core-validation CPU or heap cost. Dates require the
+exact CONTRACT-066 Gregorian value profile. Pure transform Cell rendering, query
+use admission, graph-aware write comparison and native authority remain required.

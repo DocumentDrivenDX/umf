@@ -41,8 +41,10 @@ export function requireCandidateEndpointDomainCorrespondence(plan:CandidateRecor
  function domain(r:SecurityRef):string{
   const modules=document.modules.filter((m:any)=>m.id===r.moduleId);if(r.documentId!==document.id||modules.length!==1)return fail();
   const fields=modules[0].elements.filter((f:any)=>f.id===r.elementId);if(fields.length!==1)return fail();const f=fields[0];
-  const known=['id','kind','name','description','title','aliases','examples','extensions','scalarType','nullability','cardinality','facets','allowedValues'];
+  const known=['id','kind','name','description','title','aliases','examples','extensions','scalarType','nullability','cardinality','facets','allowedValues','references'];
   if(Object.keys(f).some(k=>!known.includes(k))||f.kind!=='field'||!['boolean','string','integer','decimal','binary'].includes(f.scalarType)||f.cardinality!=='one'||f.nullability!=='required'||(f.extensions&&Object.keys(f.extensions).length))return fail();
+  if(f.references!==undefined){if(!Array.isArray(f.references))return fail();for(const reference of f.references){shape(reference,['role','module','element']);Object.values(reference).forEach(text);if(reference.role==='record-type')return fail();}}
+  // Opaque link metadata does not alter the primitive equality domain.
   const facets=f.facets??{};if(!facets||typeof facets!=='object'||Array.isArray(facets))return fail();
   if(Object.keys(facets).some(k=>!['length','precision','scale','integerWidth','range'].includes(k)))return fail();
   for(const [group,allowed] of Object.entries({length:['min','max','unit'],integerWidth:['bits','signed'],range:['min','max','minInclusive','maxInclusive']})){
