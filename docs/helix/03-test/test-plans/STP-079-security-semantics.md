@@ -205,3 +205,37 @@ observations and S14 has114. All prior27 bound cases pass;129 bindings remain
 missing. This closes the B-SFP-002 slice exit only. Full protection applicability,
 parameter values, query-use and backend qualification remain open. Retained
 fresh receipt: `../../04-build/evidence/security/protection-domains-20261015/acceptance.json`.
+
+
+## Conditional protection property runners — 2026-10-15
+
+The independent `query-oracle.ts` has272 expected observations per runtime:
+S16=135, S17=33, S18=104. The fresh `query-acceptance.ts` wrapper executes the
+actual public API in Bun and real Chromium, compares all original rows, checks
+source endpoints/browser boundaries and emits the original case/run binding.
+S16 exercises positive and missing properties for all five operators, mandatory
+join/group/order dependencies, implied equality, default prohibition and distinct
+original-action requirements. Dependencies are supplied assumptions; actual
+compiler provenance remains B08 work. S17 exercises the random-token hard rule
+even with authored equality. S18 includes exact256/32/4096 positive/overflow
+bounds, original typed refinements and exact shared-ledger100000/100001 controls.
+
+The original158 required assertions/coverage/layers/timeouts remain unchanged.
+Only S16-S18 runner bindings and S13/S14's new private Field-index source
+dependency change. Source mutation controls require the precise named failures;
+conditional Z3 queries retain both UNSAT laws and SAT countermodels. Neither
+supports a general interpreter, function-applicability or native-authority claim.
+The full gate must execute all earlier bound cases again; a standalone oracle
+receipt cannot promote a case. Evidence:
+`../../04-build/evidence/security/protection-query-20261015/`.
+
+
+### S16-S18 whole-gate result
+
+The fresh whole158-case run accepts32 bound cases; all earlier29 remain passing.
+S16 has276 observations, S17 has76 (including both-runtime actual mutant
+discrimination and original-source correspondence), and S18 has214. Required
+unbound cases remain126. The overall gate is failed/open, and B-SFP-003 remains
+in progress for function applicability and actual compiler-derived dependencies.
+See the retained `protection-query-20261015/acceptance.json`; the previous29/129
+tally describes the preceding checkpoint.

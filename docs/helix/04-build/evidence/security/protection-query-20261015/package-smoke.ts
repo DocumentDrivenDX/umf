@@ -1,0 +1,10 @@
+import {createHash} from 'node:crypto';
+import {domainFixture} from '/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/domain-fixture';
+const root='/Users/erik/.codex/worktrees/security-main-integration/umf';
+const api=await import(root+'/dist/umf.js');
+const f=domainFixture();f.catalog.transforms[0].queryUse.join='disclosed';
+const p=api.validateProtectionParameters(f.policy,f.catalog,f.closure),q=api.inspectProtectionQueryProperties(f.policy,f.catalog,f.closure,{ruleIndex:0,disclosureIndex:0,operator:'join',required:['equality']});
+if(p.status!=='validated-parameters'||q.status!=='compatible-properties'||p.authority!==false||q.authority!==false)throw Error('Actual built package smoke failed');
+const declaration=await Bun.file(root+'/dist/src/index.d.ts').text();if(!declaration.includes('validateProtectionParameters')||!declaration.includes('inspectProtectionQueryProperties'))throw Error('Missing emitted public declarations');
+const dist=await Bun.file(root+'/dist/umf.js').arrayBuffer();
+console.log(JSON.stringify({status:'passed',parameterStatus:p.status,queryStatus:q.status,authority:false,entry:'dist/umf.js',bun:Bun.version,bundleSha256:createHash('sha256').update(new Uint8Array(dist)).digest('hex'),scope:'Actual built ESM and declaration export smoke, not native authority or complete interpreter.'}));

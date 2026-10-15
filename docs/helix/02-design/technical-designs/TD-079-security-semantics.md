@@ -221,3 +221,29 @@ identity/revision/Field guards and atomic refusal; they assume the correctness o
 core validation, map construction and snapshot/encoding operations. They do not
 prove executable or native refinement. Evidence is under
 `04-build/evidence/security/protection-domains-20261015/` from the HELIX root.
+
+
+## Conditional typed declarations and query properties — 2026-10-15
+
+`validateProtectionParameters` checks every authored parameter and range-bucket
+literal with the original core literal semantics, after exact pinned domain
+resolution. `inspectProtectionQueryProperties` compares an exact selected catalog
+disposition against retained, supplied operator-property requirements. Effective
+properties retain authored provenance separately from implied same-scope equality.
+Join/group require equality, order requires order, omitted modes prohibit, and
+random-token disclosed join/group refuse even with authored equality.
+
+Compatibility is conditional on supplied dependencies and declared transform
+facts. It never attests actual compiler derivation, original-action authorization
+or native admission. Deterministic stability allows collisions; it does not
+establish injectivity, canonical-value equality or query rewrite equivalence.
+Parameterized range properties use original typed literal equality within the
+same exact pinned Field; unsupported equality and unproven entailment refuse.
+
+Private work and normalized-text ledgers are shared across both stages of one
+query check; core closure validation precedes these ledgers. A private nested
+Field index preserves qualified identity without repeated long-prefix keys.
+These are bounded interpretation guards, not a theorem about total heap/CPU.
+Function names/arity, parameter-domain/output compatibility, actual compiler
+lineage and native enforcement remain required B-SFP-003 and later work.
+Evidence: `04-build/evidence/security/protection-query-20261015/` from HELIX root.

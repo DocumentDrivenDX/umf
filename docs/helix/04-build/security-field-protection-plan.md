@@ -574,3 +574,40 @@ applicability, typed parameter validation and effective disclosure/query-use
 admission against actual compiler-derived dependencies. Remaining slices and all
 backend cases remain required. Evidence:
 `evidence/security/protection-domains-20261015/`.
+
+
+## Execution checkpoint — B-SFP-003 conditional semantics (2026-10-15)
+
+B-SFP-003 remains in progress. Generic typed parameter/range-bucket declarations
+now use the original core literal checker. Conditional query property comparison
+retains exact selected source and supplied dependency assumptions; join/group
+require equality, order requires order, deterministic declarations report implied
+same-scope equality, omitted modes prohibit, and random-token disclosed join/group
+refuse even with authored equality. Original-authorized mode remains a separate
+action requirement. Compatibility never grants authority or attests actual
+compiler dependencies. Deterministic equality permits collisions.
+
+S16/S17/S18 now have reviewed fresh Bun1.4.2/Chromium153.0.8010.12 bindings. The
+independent oracle has272 expectations per runtime; whole-gate observations are
+276/76/214 respectively, including a fresh S17 actual guard-removal control with
+10 exact failures in each runtime. All original assertions, coverage, layers and
+timeouts remain unchanged. S13/S14 add the new nested Field-index dependency.
+The complete158-case gate accepts32 cases; all earlier29 still pass, and126
+required bindings remain missing. This supersedes the preceding29/129 tally.
+
+All171 security tests (2279 assertions), strict types, the actual standard built
+ESM/declaration smoke,391 schema compilations and67 package registrations pass.
+Five query mutation variants and six domain mutation variants discriminate exact
+named failures. Eighteen independently replayed conditional Z3 checks retain
+eight UNSAT laws and ten SAT countermodels (including collisions, key-scope
+differences and false dependency provenance); no executable/native refinement
+theorem is claimed. Freshness validation reports208 checks/88 failures, exactly
+the prior failed-ID set. The release gate remains open.
+
+Remaining B-SFP-003 work includes transform-specific function names/arity,
+parameter/input/output applicability and actual compiler-derived query
+dependencies. B-SFP-004 onward and every backend acceptance case remain required.
+The original native accepted subset remains PostgreSQL17.9; separately retained
+PG18 bridge identity components do not establish current authorization, guarded
+permits or protected selector/seal composition. Evidence:
+`evidence/security/protection-query-20261015/`.

@@ -456,3 +456,7 @@ export {evaluateSecurityPolicyV2LegacyAccess} from './extensions/security/policy
 export type {SecurityPolicyV2LegacyAccess} from './extensions/security/policy-v2-legacy-access';
 export {resolveSecurityProtectionDomains} from './extensions/security/protection/domains';
 export type {ProtectionCoreClosure,ProtectionDomainOccurrence,SecurityProtectionDomainResolution} from './extensions/security/protection/domains';
+export {validateProtectionParameters} from './extensions/security/protection/parameters';
+export type {ProtectionParameterValidation} from './extensions/security/protection/parameters';
+export {inspectProtectionQueryProperties} from './extensions/security/protection/queries';
+export type {ProtectionQueryPropertyInspection} from './extensions/security/protection/queries';

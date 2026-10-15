@@ -1,3 +1,4 @@
+import {ProtectionFieldIndex} from './core-fields';
 /** Qualified core-definition closure; no function compatibility or native admission. */
 import schema from '../../../../spec/extensions/security-protection/domain-resolution.schema.json';
 import {copyJson} from '../../../model/json';
@@ -62,12 +63,9 @@ export function resolveSecurityProtectionDomains(policyInput:unknown,catalogInpu
  }
  for(const [id] of pins)if(!documents.has(id))add('PROTECTION_DOMAIN_PIN','/closure/pins','Pinned document missing');
  if(diagnostics.some(d=>d.severity==='error'))return finish('refused');
- const fields=new Map<string,ProtectionDomainOccurrence['definition']>();
- for(const [documentIndex,entry] of resolved.documents.entries())for(const [moduleIndex,module] of entry.document.modules.entries())for(const [elementIndex,element] of module.elements.entries()){
-  if(element.kind==='field')fields.set(JSON.stringify([entry.document.id,module.id,element.id]),{documentIndex,moduleIndex,elementIndex});
- }
+ const fields=new ProtectionFieldIndex(resolved);
  const locate=(ref:SecurityRef,source:ProtectionDomainOccurrence['source'],path:string)=>{
-  const definition=fields.get(JSON.stringify([ref.documentId,ref.moduleId,ref.elementId]));
+  const selected=fields.get(ref),definition=selected?{documentIndex:selected.documentIndex,moduleIndex:selected.moduleIndex,elementIndex:selected.elementIndex}:undefined;
   if(definition===undefined)add('PROTECTION_DOMAIN_REFERENCE','/'+source+path,'Exact qualified Field definition missing');
   else domains.push({source,path,ref,definition});
  };

@@ -498,16 +498,74 @@ rather than JSON Number, including integer/decimal/binary exactness.
 
 The effective retained property set is the authored `disclosureProfile` united
 with the properties implied by `determinism`: `deterministic` and
-`keyed-deterministic` always imply `equality` (equality classes survive the
-transform); `random` implies nothing. An operator MAY be `disclosed` only when
+`keyed-deterministic` always imply `equality` within one fixed transform,
+parameter and key scope: equal canonical inputs yield equal disclosed values.
+Collisions may merge distinct inputs; this is stable disclosed equivalence, not
+injectivity, equality reflection or a proof of an original-value query rewrite.
+Constant masks and colliding hashes are explicit counterexamples to reflection.
+This conservative reported property is conditional on qualified function behavior;
+a declaration alone is not a proof. `random` implies nothing. An operator MAY be `disclosed` only when
 the effective set contains what that operator depends on: `join` and `group`
 need `equality`; `order` needs `order`; `aggregate` needs the aggregate's input
 property; `predicate` needs the property its comparison uses. A validator MUST
 refuse a `disclosed` selection whose dependency is not retained, and a receipt
 MUST report implied leakage (for example `equality` on a deterministic token)
 even when it is not authored. `random` tokenization therefore cannot admit
-`join` or `group` as `disclosed`. These rules derive from the catalog; a
+`join` or `group` as `disclosed`, even if its authored profile claims `equality`.
+This is an explicit stability/admission rule; random output values still have
+ordinary equality. Disclosed operators consume disclosed values, not canonical
+values. Original-value rewrites require separately qualified owner laws and
+authority. These rules derive from the catalog; a
 backend's observed behavior never widens them.
+
+### Conditional property requirements and typed declaration checks
+
+`validateProtectionParameters(policy,catalog,closure)` reuses qualified core
+resolution and checks every typed parameter and range-bucket literal against
+its exact retained Field using the existing core literal checker. It returns
+`validated-parameters` or `refused`, retained snapshots, diagnostics and per-source
+validation coordinates; failure clears the coordinates. It never assigns a
+function's parameter names, arity, type compatibility or output behavior.
+Unknown/unsupported literal semantics refuse; no JSON equality fallback exists.
+
+`inspectProtectionQueryProperties(policy,catalog,closure,use)` checks one selected
+catalog disposition. `use` is `{ruleIndex,disclosureIndex,operator,required}`;
+indices select an actual transformed catalog disposition in the retained policy,
+`operator` is predicate/join/group/order/aggregate, and `required` is a nonempty
+array of at most32 retained-property instances. Unknown use members refuse.
+The operation retains these dependency assumptions. They MUST come from the
+actual profile-bound compiler when used in a query; this helper does not attest
+that derivation, issue a compiler profile, or accept an original-action name.
+
+Join/group unconditionally add an equality requirement; order adds order.
+Predicate and aggregate requirements must be separately derived for the actual
+selected comparison/aggregate. A caller choosing a convenient nonempty list does
+not establish the real operation's dependencies. Test expectations must specify
+those dependencies independently. No prefix/suffix/range entailment is invented:
+parameterized properties match exact instances, with range literals checked at
+the same qualified Field/revision and compared by original core literal identity.
+Equivalent numeric/binary carriers match without rewriting retained source;
+null/container/float/temporal equality needs a separately qualified rule.
+
+Effective properties are authored properties united with implied equality for
+deterministic/keyed-deterministic declarations. Reports retain authored source,
+implied properties, effective properties, required assumptions and missing
+properties separately. Missing queryUse means prohibited. Results are
+`compatible-properties`, `prohibited`, `requires-original-action` or `refused`;
+all carry `complete:false` and `authority:false`. Original-authorized mode never
+becomes compatible merely because properties match; the existing designated
+action/current-authority boundary remains required. Disclosed random-token
+join/group always refuses. Matching properties does not qualify function facts,
+ontology validity, raw-value access, query lineage or native execution.
+
+Both public checks use private literal/property work and normalized identity-text
+ledgers,100,000 units each per check. Query inspection shares these ledgers across
+parameter and property stages. Numeric coefficient cost is charged before core
+expansion; encoded key/identity text is checked before retention (encoding scratch
+may precede that charge). Core document validation/domain indexing precedes these
+ledgers and has its own limits; no total pipeline heap/CPU theorem is claimed.
+Resource exhaustion refuses without trimming. Source literal wire bounds remain
+32 parameters/4096 canonical UTF-16 units and256 transforms.
 
 ### Disposition reference in `umf.security` 0.2.0
 
