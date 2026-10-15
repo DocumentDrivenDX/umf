@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "currentSourceSha256": "41b6f42ab2bb91e858e645296e6220b8aa247ef6d9f3ec77bf3007bd85144338",
+  "reconstructedPriorSourceSha256": "156805f5bd7cda7928f5ca4c5811fd491c4e5c9d9c89bbd3bad5f491b17b434c",
+  "priorReviewedSourceSha256": "156805f5bd7cda7928f5ca4c5811fd491c4e5c9d9c89bbd3bad5f491b17b434c",
+  "currentFixtureSha256": "2d6ef4f3b8020e2c63ad6b6bb005ae94665647f1ffa3eee44996a142a14518dd",
+  "reconstructedPriorFixtureSha256": "51e8369da78c88c68d625e764d291121109a4e13d89be02d4dd27048ddbd4cae",
+  "changes": [
+    "Required raw bindingEnvelope Artifact retained in original packet",
+    "Original Artifact reader validates envelope; parsed binding must equal supplied contained binding Artifact",
+    "Fixture reads and retains original program-binding.json wrapper bytes"
+  ]
+}

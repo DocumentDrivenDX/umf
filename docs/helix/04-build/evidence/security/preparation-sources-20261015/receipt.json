@@ -1,0 +1,53 @@
+{
+  "protocol": "umf-preparation-sources-evidence/1",
+  "sourceSha256": "41b6f42ab2bb91e858e645296e6220b8aa247ef6d9f3ec77bf3007bd85144338",
+  "scope": "Private host-only catalog-null literal-permit plain String source obligation packet; no native authorization, browser execution or bulk execution qualification.",
+  "tests": {
+    "passed": 291,
+    "failed": 0,
+    "assertions": 3479,
+    "files": 48
+  },
+  "typechecks": [
+    "tsconfig.json",
+    "tsconfig.tools.json"
+  ],
+  "astraVerdict": "no-open-implementation-blocker-in-reviewed-private-host-scope",
+  "nativeRemaining": [
+    "authenticated owner sources and exact enrolled bytes",
+    "original human/action/owner current authority",
+    "D-owned source cuts and fresh C correspondence",
+    "protected selector/finalizer/effects"
+  ],
+  "evidenceSha256": {
+    "README.md": "50a0e6e1f2ee4155efbc598bfda1377291c9cc20b249bc92f9282444473dda67",
+    "astra-review/binding-envelope-controls.ts": "bb160d5578dab98580a2af1744c0e704cfcb61059b63e7a8564c8bd656b5a88f",
+    "astra-review/binding-envelope-results.json": "8f6489d52d96aa59dc7c2c2f04effa24a38ed7d461c6216652b5fc8a28c0bc9b",
+    "astra-review/cli-outer-bom.json": "777e0e288d51af73e992c634689e7011109419168458ab32fb3ebde39190deb9",
+    "astra-review/cli-outer-bom.stderr.log": "96676dfa851df650a0c98428e43c2e98fb5c2750d846fe4ce56ce54e71f8b619",
+    "astra-review/cli-positive-output.json": "44ab9701dc45390fba25a0e4fbf3f3be68abb71202e13579e14dc1adf9d5854d",
+    "astra-review/cli-results.json": "8555a4df27bba35a757b3d8dc5a506cbf78153bfe589c1217dbaa317b5125384",
+    "astra-review/delta-results.json": "59418ba600946f46c4098ef7a12f2f6788b3d30abce35f6519fd916486135cab",
+    "astra-review/independent-controls.ts": "93165161cebb823ef8e443245943a23debffa760b9b6c93b06f4e7cbb3b595c8",
+    "astra-review/independent-results.json": "be1dfdc71e19890315884b01d325fe298036ae6c469966b0b8ea788562c4eac9",
+    "astra-review/original-artifact-correspondence.json": "9a62ef303f2c16916942eaa532ba3968416d2e251c47c1d48d7e7a571ec223fe",
+    "astra-review/prior-156805f5/cli-outer-bom.json": "1f3c2b0a1f0fee252c649cfb8b778c664affc550d93d94c08401f4c7bfd3bd57",
+    "astra-review/prior-156805f5/cli-outer-bom.stderr.log": "3da3831f5db5673d371a45aacf81a213d3e6d0e65bb14a2af633f64c21311c5b",
+    "astra-review/prior-156805f5/cli-positive-output.json": "c8a423d364d1eb9e79cb8f34cf075ed229fcce42379048e8b25103df8ef85411",
+    "astra-review/prior-156805f5/cli-results.json": "9d8932f6050d342d18b72c679ea73e15ab1b1acf52a50a198c3f81b1eae5a01e",
+    "astra-review/prior-156805f5/delta-results.json": "7d5de02f36b6371d7c647089a33dc33cef906580737c907f5ba9ec00f6918d10",
+    "astra-review/prior-156805f5/independent-controls.ts": "93165161cebb823ef8e443245943a23debffa760b9b6c93b06f4e7cbb3b595c8",
+    "astra-review/prior-156805f5/independent-results.json": "c9b7b9bd9d962189ab0ecf95fd5c01e57979b95e5a8831b619444da5e3b9f54a",
+    "astra-review/prior-156805f5/original-artifact-correspondence.json": "9a62ef303f2c16916942eaa532ba3968416d2e251c47c1d48d7e7a571ec223fe",
+    "astra-review/prior-156805f5/review.json": "2231a6df236aa28c7a65e8b1534eb010d2158b4c939a5b115d618d410bff5d36",
+    "astra-review/prior-156805f5/unit-tests.log": "f37a7151a6fd679136ab6e27586725e5f0c3232c95ded2fecccad5dfdcabc7f0",
+    "astra-review/prior-156805f5/verify-delta.py": "5a349327e5603d940b2460c708514bd9dea6d885f7ba3a3cb321a937ea913ccc",
+    "astra-review/review.json": "4b1492deda8c1341a31440e637e92bf72ae2df0008ba435368ce85b19a3e14e3",
+    "astra-review/unit-tests.log": "edaf39ac9d5963bce93fb8358756cf5c3b2d78aa6e9d364ccad36e81c71d6dc4",
+    "astra-review/verify-delta.py": "25ef7b2fa7fc130bedf0f7628477a42a64ac830287f08d478cca9f22635d346b",
+    "input.json": "4ef6a9faf4c8e098f43a1949bc425145570f6e7616f22af9dabbe773c00d9e19",
+    "output.json": "44ab9701dc45390fba25a0e4fbf3f3be68abb71202e13579e14dc1adf9d5854d",
+    "tests.log": "5639c856c4e0c3a4c6229539cb2873a52da7b005c961f8a9bc33474fc528f892",
+    "typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+  }
+}

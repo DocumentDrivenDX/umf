@@ -1,0 +1,59 @@
+{
+  "passed": true,
+  "sourceSha256": "41b6f42ab2bb91e858e645296e6220b8aa247ef6d9f3ec77bf3007bd85144338",
+  "probeSha256": "bb160d5578dab98580a2af1744c0e704cfcb61059b63e7a8564c8bd656b5a88f",
+  "runtime": "Bun 1.4.2",
+  "browserExecution": false,
+  "nativeExecution": false,
+  "count": 8,
+  "getterCalls": 0,
+  "results": [
+    {
+      "name": "original-wrapper-bytes",
+      "expected": "retain-exact",
+      "passed": true
+    },
+    {
+      "name": "missing",
+      "expected": "refuse",
+      "error": "Error: PREPARATION_SOURCE_UNSUPPORTED: closed shape policy/ontology/catalog/coreClosure/bindings/owner/writeProfile/subjectMapping/configuration/request/compileResponse/binding/bindingEnvelope/loweringInvocation",
+      "passed": true
+    },
+    {
+      "name": "null",
+      "expected": "refuse",
+      "error": "Error: PREPARATION_SOURCE_UNSUPPORTED: closed shape mediaType/utf8/sha256",
+      "passed": true
+    },
+    {
+      "name": "different-contained-binding",
+      "expected": "refuse",
+      "error": "Error: PREPARATION_SOURCE_UNSUPPORTED: original raw binding Artifact envelope correspondence",
+      "passed": true
+    },
+    {
+      "name": "bad-wrapper-hash",
+      "expected": "refuse",
+      "error": "Error: PREPARATION_SOURCE_UNSUPPORTED: original bounded Artifact bytes/hash",
+      "passed": true
+    },
+    {
+      "name": "unknown-wrapper-member",
+      "expected": "refuse",
+      "error": "Error: PREPARATION_SOURCE_UNSUPPORTED: closed shape mediaType/utf8/sha256",
+      "passed": true
+    },
+    {
+      "name": "getter",
+      "expected": "refuse",
+      "error": "UmfError: Hidden fields and accessors cannot be serialized faithfully",
+      "passed": true
+    },
+    {
+      "name": "equal-contents-different-wrapper-bytes",
+      "expected": "retain-new-bytes-without-authority",
+      "passed": true,
+      "requiresOriginalNativeEnrollmentComparison": true
+    }
+  ]
+}

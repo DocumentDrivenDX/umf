@@ -1,0 +1,16 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/preparation-sources.test.ts:
+(pass) original enrolled products packet derives separate read/update/Field requirements from explicit owner designations [87.95ms]
+(pass) authored owner profile actually passes existing logical write consumer for original/proposed products [35.94ms]
+(pass) native Subject carrier uses original String Key codec with exact Unicode and explicit refusal domains [14.52ms]
+(pass) review controls refuse getter execution, profile drift, unknown selection meaning and refined Subject domains [330.64ms]
+(pass) exact selected interface, provenance, batch bounds and Subject Key are independently checked [193.85ms]
+(pass) selected predicate restrictions and unknown lowering obligations are never dropped [128.40ms]
+(pass) actual host CLI emits the typed packet and refuses replacement-decoded transport bytes [598.33ms]
+(pass) missing owner actions and unsupported obligations refuse before any native installation [349.90ms]
+
+ 8 pass
+ 0 fail
+ 66 expect() calls
+Ran 8 tests across 1 file. [2.00s]

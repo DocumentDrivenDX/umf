@@ -1250,6 +1250,71 @@ fail-closed for actions-bearing sources; this increment qualifies the genuinely
 unpinned/null-catalog source-compilation path only. Original native owner
 bindings, compiler provenance and guarded consumer admission remain required.
 
+### Private preparation source packet candidate (2026-10-15)
+
+The host-only `tools/security/protection-preparation-sources.ts` compiler consumes
+closed `PreparationSourceInputs`: exact JSON Artifacts for `policy`, `ontology`,
+`coreClosure`, `bindings`, `owner`, `writeProfile`, `subjectMapping`,
+`configuration`, `request`, `compileResponse`, `binding`, `bindingEnvelope`, and
+`loweringInvocation`, plus `catalog` explicitly null in this first subset.
+Each Artifact retains its original UTF-8 text and SHA256. Raw unpaired surrogates,
+duplicate JSON members, unknown packet members and mismatched digests refuse.
+Original core snapshot/structural limits still apply; transport ceilings of16MiB
+per Artifact and64MiB per packet do not widen those original limits or establish
+a whole-pipeline allocation/CPU bound.
+`bindingEnvelope` additionally retains the exact original serialized binding
+Artifact wrapper, not only its contained native JSON. It must decode to the
+same `binding` Artifact. Native enrollment comparison uses those wrapper bytes
+as well, preserving its original whitespace/order rather than reconstructing it.
+
+The tool invokes the actual canonical source compiler with original actions0.1
+registration. It selects only unprotected, unrefined required String Fields,
+literal-true permits, original disclosure, equality/conjunction selection and
+one bounded set-action frame. Catalog, graph, context, blind-write, policy-change,
+ownership-change and other condition/recipe requirements refuse. Predicate-use
+prohibited or original-authorized modes refuse; unprotected omitted/disclosed
+predicate mode is supported. Unknown original lowering obligations refuse.
+
+The original `umf.security.logical-owner/0.1` and
+`umf.security.catalog-write/0.1` declarations supply read, distinct CRUD, policy,
+ownership and complete Field-action designations. No action name is inferred
+from a rule or role. The selected update requires its separate object-update
+and Field-write permits, plus original-read permission in both states; ordinary
+Field permission cannot stand in for blind permission. The compiler derives
+the read union from actual selection dependencies, ordered Key and assigned
+Fields, checks selected ontology/core/native Key correspondence, and retains
+native type/property IDs from the original binding. It verifies original
+interface/core versions, plan/source/action/recipe/frame/provenance and exact
+registration/lowering request/result/parameter/column/order/bound correspondence.
+Opaque SQL text is retained, never executed or authenticated by this tool.
+
+The explicit `truss.preparation-subject/0.1-candidate` owner mapping relates the
+original ontology Subject's selected single unrefined String Key to
+`truss.action_subject_binding.principal_identity` under canonical JSON-string
+UTF-8 reference identity and `truss.local-scram/0.1` human classification.
+`derivePreparationSubjectKey` checks actual principal bytes and invokes original
+`encode-core-key-tuple/3.0.0`, `umf-key-tuple-v1`; it does not reinterpret arbitrary
+opaque identity bytes as a Key or infer a Staff Record. BOM, noncanonical bytes,
+invalid UTF-8, NUL, unpaired surrogates, refined domains and identity over4096
+bytes refuse. This proposal does not qualify the native mapping implementation
+or the authenticity/current human status of its input.
+
+Output `truss.preparation-source-obligations/0.1-candidate` retains every source,
+selected compiler profile, explicit Subject mapping, native Fields, separate
+read/write/action-role requirements and unresolved native obligations. It always
+has `complete:false, authority:false`. The original native consumer MUST
+authenticate the authored owner/policy/ontology/closure sources and compare ALL
+compiler configuration/request/response/binding/lowering bytes with the original
+enrolled invocation before use. A supplied digest, copied output, local compiler
+success or declared source/module pin cannot issue that provenance or permission.
+Current human/action/owner authority, store/program/anchor/nonce/fullxid one-shot
+claim, source/DDL/legacy-facade/serving-copy custody, complete preflights and
+protected selector/finalizer/effects remain independent native requirements.
+The authored products fixture supplies a real logical-write positive and source
+refusals; it does not install or activate a Truss guard or qualify whole-system
+enforcement. The CLI accepts one bounded packet file and emits this inert JSON
+output; Bun/Node APIs remain outside the browser library.
+
 
 ### Private canonical action kernel (2026-10-15)
 

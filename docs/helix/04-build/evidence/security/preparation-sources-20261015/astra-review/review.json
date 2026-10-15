@@ -1,0 +1,74 @@
+{
+  "protocol": "astra-preparation-source-scoped-review/1",
+  "reviewedAtUTC": "2026-10-15T11:06:02.363259+00:00",
+  "reviewer": "Astra Ultra subagent /root/astra_review",
+  "verdict": "no-open-implementation-blocker-in-reviewed-private-host-scope",
+  "source": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/tools/security/protection-preparation-sources.ts",
+  "sourceSha256": "41b6f42ab2bb91e858e645296e6220b8aa247ef6d9f3ec77bf3007bd85144338",
+  "testSha256": "2b3b7c6fc1fbf0c8ba76e100667928eb6ab6dd106a942cbef65910b03e9e0882",
+  "fixtureSha256": "2d6ef4f3b8020e2c63ad6b6bb005ae94665647f1ffa3eee44996a142a14518dd",
+  "scope": "Private host-side catalog-null, literal-permit, unprotected plain required String selection/set source obligations and canonical UTF8 Subject String Key codec. No native permission is issued.",
+  "findings": [],
+  "verification": {
+    "unitTests": {
+      "passed": 8,
+      "failed": 0,
+      "assertions": 66,
+      "log": "unit-tests.log"
+    },
+    "independentCorrespondenceNegativeControls": 11,
+    "independentQueryPositiveControls": 2,
+    "independentCodecControls": 28,
+    "originalArtifactsExact": 5,
+    "actualCLI": {
+      "positive": true,
+      "invalidUTF8Refused": "unit test actual CLI control",
+      "outerBOMRefused": true,
+      "matchesParentRetainedOutput": true,
+      "parentInput": "/private/tmp/umf-preparation-source-packet-20261015-r2/input.json"
+    },
+    "deltaReconstructsPreviouslyReviewedHash": true,
+    "bindingEnvelopeControls": 8
+  },
+  "executionScope": {
+    "BunHostRuntime": true,
+    "browserExecution": false,
+    "nativeExecution": false,
+    "independentBrowserClaim": false,
+    "note": "The retained independent probes are fresh replays of prior inline controls; no earlier probe file was retained."
+  },
+  "remainingNativeRequirements": [
+    "Authenticate every authored policy/ontology/owner/write-profile/Subject source",
+    "Compare all retained compiler bytes to the original enrolled native compiler invocation",
+    "Original native human/action-role authority",
+    "Issued store/program/anchor and committed one-shot claim custody",
+    "Current coherent source/caller/owner cuts and full serving-surface inventory",
+    "Run all original complete-population preflights and refuse overflow",
+    "Protected selector/finalizer/effect custody"
+  ],
+  "evidenceFiles": {
+    "binding-envelope-controls.ts": "bb160d5578dab98580a2af1744c0e704cfcb61059b63e7a8564c8bd656b5a88f",
+    "binding-envelope-results.json": "8f6489d52d96aa59dc7c2c2f04effa24a38ed7d461c6216652b5fc8a28c0bc9b",
+    "cli-outer-bom.json": "777e0e288d51af73e992c634689e7011109419168458ab32fb3ebde39190deb9",
+    "cli-outer-bom.stderr.log": "96676dfa851df650a0c98428e43c2e98fb5c2750d846fe4ce56ce54e71f8b619",
+    "cli-positive-output.json": "44ab9701dc45390fba25a0e4fbf3f3be68abb71202e13579e14dc1adf9d5854d",
+    "cli-results.json": "8555a4df27bba35a757b3d8dc5a506cbf78153bfe589c1217dbaa317b5125384",
+    "delta-results.json": "59418ba600946f46c4098ef7a12f2f6788b3d30abce35f6519fd916486135cab",
+    "independent-controls.ts": "93165161cebb823ef8e443245943a23debffa760b9b6c93b06f4e7cbb3b595c8",
+    "independent-results.json": "be1dfdc71e19890315884b01d325fe298036ae6c469966b0b8ea788562c4eac9",
+    "original-artifact-correspondence.json": "9a62ef303f2c16916942eaa532ba3968416d2e251c47c1d48d7e7a571ec223fe",
+    "unit-tests.log": "edaf39ac9d5963bce93fb8358756cf5c3b2d78aa6e9d364ccad36e81c71d6dc4",
+    "verify-delta.py": "25ef7b2fa7fc130bedf0f7628477a42a64ac830287f08d478cca9f22635d346b"
+  },
+  "delta": {
+    "previousReviewedSourceSha256": "156805f5bd7cda7928f5ca4c5811fd491c4e5c9d9c89bbd3bad5f491b17b434c",
+    "exactReconstructionPassed": true,
+    "description": [
+      "Required raw bindingEnvelope Artifact retained in original packet",
+      "Original Artifact reader validates envelope; parsed binding must equal supplied contained binding Artifact",
+      "Fixture reads and retains original program-binding.json wrapper bytes"
+    ],
+    "findings": []
+  },
+  "previousEvidenceDirectory": "prior-156805f5"
+}
