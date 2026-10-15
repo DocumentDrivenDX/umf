@@ -4,7 +4,8 @@ import {UmfError,type Document,type Element} from '../../../model/types';
 export class ProtectionLiteralBudget {
  private work=0;private text=0;
  step(units=1){this.work+=units;if(this.work>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: literal work exceeds100000 units');}
- retain(identity:string):string{this.text+=identity.length;if(this.text>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: retained identity text exceeds100000 units');return identity;}
+ reserveText(units:number):void{if(!Number.isSafeInteger(units)||units<0)throw new UmfError('PROTECTION_LITERAL_BOUND','Invalid retained text charge');this.text+=units;if(this.text>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: retained identity text exceeds100000 units');}
+ retain(identity:string):string{this.reserveText(identity.length);return identity;}
  private numeric(field:Element,value:CoreLiteral){
   if(value===null||typeof value!=='object')return;
   const token=(value as any)[field.scalarType==='decimal'?'decimalToken':'integerToken'];

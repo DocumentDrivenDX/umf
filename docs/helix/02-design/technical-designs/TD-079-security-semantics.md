@@ -558,3 +558,31 @@ explicit accounting before each repeated traversal. See execution evidence under
 Logical decisions, pure rendering, read/blind-write/vault permissions and native
 installation remain separate obligations. This increment does not qualify full
 S24/S25 or any backend security profile.
+
+
+### Atomic pure collection execution
+
+The canonical action runtime now has a collection entry point that reuses its
+snapshot and ledgers. It filters deny rows and publishes Cells only after all
+selected rows pass action composition, output dependency preflight and recipe
+evaluation. Late unknown/conflict/output failure or exhaustion discards the whole
+result. Original/null/absent, withheld, and transformed Cells retain their existing
+meanings. Source-independent inline constants and present-input catalog recipes
+remain distinct.
+
+The compiler retains its original private issued definition result; a WeakMap
+holds only immutable parameters/Field lookup, not the compile ledger. Collection
+execution supplies one new budget that also covers the action stage. Recipe
+selection follows the effective source disposition. Cached operation-local recipe
+lookups are metered; no whole policy/catalog/core validation occurs per Cell.
+The owner supplies an exact read action with source purpose compatibility and
+still needs an actual policy grant. Gregorian results carry exact output-profile
+metadata. Output capacity and retained framing/reference/value text are charged.
+
+Empty targets use conservative source-scoped output preflight with guaranteed
+withheld/transform priority and inline independence. Actual nonempty targets use
+effective row dispositions so withholding does not invent plaintext dependence.
+See `tests/security/catalog-collection.test.ts` and the independently reviewed
+packet under `docs/helix/04-build/evidence/security/catalog-collection-20261015/`.
+No public vocabulary interpretation, native query admission, source authentication,
+write permission or full S24/S25 qualification follows from rendered status.

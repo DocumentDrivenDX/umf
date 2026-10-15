@@ -1,0 +1,112 @@
+{
+  "status": "reviewed-no-remaining-actionable-findings-within-stated-component-scope",
+  "reviewedAtUtc": "2026-10-15T07:10:34.619958+00:00",
+  "baseline": "20cf9f112df8b56d9ad0a5fa687f9275fece19a0",
+  "scope": "Private canonical catalog collection renderer and compiler-issued pure definition bridge. Actual scoped policy grants, deny filtering, atomic refusal, SecurityOutput-style cells and explicit Gregorian output profiles under supplied logical owner/cut premises. No repository sources changed by reviewer.",
+  "sources": {
+    "selectedCount": 75,
+    "beforeAfterIdentical": true,
+    "manifest": "source-pins-after.json",
+    "closure": "Selected static relative-import closure plus selected tests, canonical schemas, contract and metadata; not entire root/runtime provenance."
+  },
+  "keySourcePins": {
+    "src/extensions/security/catalog-runtime-candidate.ts": "5323c65e3bac55aaf2dd4b379010314667badf338a59d10f06ff2dcdb43468ba",
+    "src/extensions/security/catalog-program-candidate.ts": "7539321d7651e31f0c10b3bed6f027d27bac4527589d33bb71e924b8e1719086",
+    "src/extensions/security/protection/functions.ts": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db",
+    "src/extensions/security/protection/literals.ts": "5d271dfcdba2b837a4876eb3696732a79220f40e5740af3ce0a1c50027efe466",
+    "tests/security/catalog-collection.test.ts": "45b682ddf00b3d12329cfb76adc4b8ca36999f52fec2b23182c19fbf56628a7b",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "2c0d71bf9177a43cab652a5a24639b9bf3f41d1031c118714e1ca5de78e6482b"
+  },
+  "independentChecks": {
+    "collection": 525,
+    "priorActionRegression": 1088,
+    "totalEachRuntime": 1613,
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "allPassed": true,
+    "fullRowParity": true,
+    "externalRequests": 0,
+    "pageErrors": [],
+    "hostGlobalsAbsent": true,
+    "recipeExpectedValues": "459 reused independent Python-authored recipe fixtures; 66 additional independently authored collection/custody/resource controls. Negative recipes may refuse during genuine source compilation or runtime; no claim every refusal reaches rendering.",
+    "mutations": {
+      "original": 525,
+      "sourceWeakenings": 15,
+      "allDetected": true,
+      "allSelectedFailuresObserved": true,
+      "scope": "Bun replay of actual isolated source changes; selected diagnostic failures, not universal necessity/completeness."
+    },
+    "repositoryFocusedTests": {
+      "tests": 37,
+      "assertions": 219,
+      "failures": 0
+    },
+    "formal": {
+      "queries": 14,
+      "unsat": 8,
+      "sat": 6,
+      "scope": "Independent replay of parent-authored conditional formulas. Faithful failure accounting, complete population and delayed publication are premises; no TypeScript/native/authority refinement."
+    }
+  },
+  "resolvedFindings": [
+    {
+      "issue": "Empty requested target initially bypassed output coverage/recipe/profile preflight.",
+      "before": "empty-witness-result.json + exact empty-preflight-before.ts",
+      "after": "Identical witness refuses; final static source-scoped preflight and unconditional withholding/transformation suppression independently covered."
+    },
+    {
+      "issue": "Initial design would have changed legacy inline constant and denied-row collection semantics.",
+      "resolution": "Final renderer filters deny rows, refuses whole batch on U/conflict/failure, preserves input-independent inline constants, refuses catalog known absence and retains original absence/null distinctly."
+    }
+  ],
+  "remainingFindings": [],
+  "limits": [
+    "Conservative source-scoped empty-target preflight is not blanket equivalence to all legacy collection behavior. Conditional withholding does not suppress potential plaintext dependencies; unconditional withholding and transformation suppression are explicit selected rules.",
+    "Issued private program/definition identity is model custody, not authenticated source, caller, compiler or native authority. Owner/cut completeness and provenance remain trusted premises.",
+    "Pure function output is tested against independent finite expected values and original core domains. Hash/token/encrypt/native execution, keys/vaults/reversal/propagation are not implemented or authorized. Stored original token remains the canonical stored token.",
+    "Operation step/literal/text and retained-output ledgers are bounded selected work; no total CPU, pre-snapshot allocation or heap theorem. Per-cell resets and action/render resets are independently killed.",
+    "No streaming, public .2 interpretation, native admission, query rewrite, write grant, crypto/custody enforcement or S24/S25 promotion. All 158 acceptance cases remain byte-identical to baseline.",
+    "Parent whole gate and full regression results were reported separately; reviewer did not rerun native acceptance or qualify them as independent evidence."
+  ],
+  "developmentEvidence": {
+    "expanded.log": "Retained oracle calibration failure: output-only 30x3000 characters fit the actual ledger. Replaced with independently excessive combined action+render work; expected refusal unchanged for the corrected input.",
+    "initial-selector-labels-*": "Four selected mutation expectation labels initially misspelled existing oracle IDs. Original full failed sets retained; final selector names corrected without changing semantic expectations or source mutations.",
+    "initial.log/final-collection.log": "Earlier finite oracle stages retained as development evidence, not exact final 525-control qualification."
+  },
+  "artifacts": {
+    "oracle.ts": "6e3acda7738bf57d6c4475039d0fa5ac52fb1fe25bd283fd8711403b0d58dcb9",
+    "function-oracle.py": "fa4861d217eb8ca67b7ac27f2988d92e9368648f0f4c15e2c74fbbaf2b945717",
+    "function-fixtures.json": "5327e1151fbc43de7957933ba511af2630f403d7633a1686fc35967cd65b7602",
+    "base-fixture.json": "79754c2b71451f9953c20d8466b6193cdf50930e7d9186fb36bd773f0054d5f1",
+    "all-oracle.ts": "3292ab3c501dc6697fdf8e440a1b990effcab0a609578506af63a181d92c86a5",
+    "run-all.ts": "7f2541e05bc313cbea101ae242eefdd7bf45645e5c016f8daadf89e49c3ece35",
+    "all-results.json": "ded6f79a7f91e451dfbb93e6680e67a3c2f9a3a12247c7b65a65a055f24e710a",
+    "all.log": "fdeee05ffecd53f357cb1d85463210e6274627511447137fd3e2e5dbf487385c",
+    "run-browser.ts": "08296a5fd315132991ff4cfa33f3d064770491b0730cf181f1ebf2925344eed5",
+    "browser-results.json": "d8d061d7c0ae2e18af92937597838831aa5cd65a2362642be924460ecd1b4385",
+    "browser.log": "33f6adcf475704654a2f7f5c819e318c61b46d8eb1bf218e62a3397e0636a1d5",
+    "mutations.py": "730f4bf9fbdc3749bd5a520ec7c529b5d190b013177b43848305024589d6d3c7",
+    "mutation-results.json": "8a135804a338b6d10a1787c94881746b4c2f6fc8d018d14fa279223c7b25cb48",
+    "mutation-validation.json": "b8b709b447128fd89e1a1b6d50220462b1f6e613aabd9f3b1e4c0e145b95a33c",
+    "mutations.log": "e88b363f47c978b90b7c4b5ae11ae971a987209448d1d6ecb3365a74b5c8442d",
+    "focused-tests.log": "08b16583203653d48e2092217c52133050dae5a7ef03b00e3da0dd817ab60361",
+    "formal.py": "5d61bcae560e0a50c7b292b8582c61e3cc2c120331f08dfca60f4d052edd3cdb",
+    "formal-replay.json": "5ac5307975779d7473cfbad9b57ff53d4d69539fa117709fa6cf9895ad7b2011",
+    "source-pins-before.json": "60638b316cb2aea28d8d66f90a2edaea0f51da53ea685f0bc533be9617ce5584",
+    "source-pins-after.json": "60638b316cb2aea28d8d66f90a2edaea0f51da53ea685f0bc533be9617ce5584",
+    "case-preservation.json": "c35f356bf76681ea27c010610a568c84f790d08128164467e47316bc70cc523d",
+    "empty-preflight-before.ts": "05b20e959bc83f8b274b1fb0319f773cf0f04aa5d846da2d6556ccc072a6232f",
+    "empty-preflight-before.json": "1cd748f3685ffdd9d4a5a55281f64b711b6e80154ef1144aaac99aa1e317cfc3",
+    "empty-witness.ts": "db85330498df5607182b6e81289080c3b6410cb739c74814a1f74f686fd8f1fa",
+    "empty-witness-result.json": "cae3838f3f9910b33524144fa586a61beabc809940140d53bbfdf4e3a3d1a381",
+    "empty-witness-final.ts": "5168c5251654d6689136f4f4ff98f73d9628157e0469aa54dc878e185f20db78",
+    "empty-witness-final-result.json": "6328f8cf67807a3ffe9a138e98d5b8297543b82d45481ded5da5e86f501eb587",
+    "empty-witness-final.log": "e25e6be1de11d688138ba1e07b69ab735fffea9281843e8c5e55288d7391eea5",
+    "initial.log": "30bff81b88b0defd7b32c6ad46dbf428f2f4be5c2c5ba71f7b679ce7e350a352",
+    "expanded.log": "1a24e34eeb84e353a97249b27516df10bc0f06c3d805a7de1c4197ad6ae67648",
+    "final-collection.log": "3f2a4b57b7a51820112177c09448e682a21e6f977636f3cbf9e82d0325ca9a1e",
+    "initial-selector-labels-mutations.py": "fa9b306d08323909086214fef0494ebf78d6b72ead5adf2617ee550bc696c728",
+    "initial-selector-labels-mutation-results.json": "740426c66cd0e49151c859cf295b30d9d9e4cf799b37cc3dab887e642e6efe76",
+    "initial-selector-labels-mutations.log": "e88b363f47c978b90b7c4b5ae11ae971a987209448d1d6ecb3365a74b5c8442d"
+  }
+}

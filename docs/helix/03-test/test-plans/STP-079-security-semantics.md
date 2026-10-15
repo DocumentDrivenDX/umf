@@ -472,3 +472,22 @@ These component checks supplement the unchanged 158 required acceptance cases.
 No S24/S25 assertion is retired, weakened, or promoted: full rendered Cells,
 original-read/blind-write comparison, vault permission and native enforcement
 still require their original case evidence.
+
+
+### Atomic collection component checks
+
+`tests/security/catalog-collection.test.ts` extends the private logical AC3/4/5/6/10
+checks to actual output Cells: flat/graph original/null/absence/withheld; every
+admitted pure recipe with exact numeric/Unicode/date output; source-independent
+inline null/absence/unavailable compatibility; catalog present-input requirements;
+exact owner read role plus real grants; denial filtering; late U/conflict/output
+refinement failure and repeated-resource output budget exhaustion. Empty targets
+exercise input coverage and unconditional withholding/transform suppression.
+
+Independent Bun/Chromium controls and source weakenings must exercise actual
+collection output, definition-context custody, one shared action/render ledger,
+output framing/refs/profile text, typed input/output refinements and atomic
+publication. Arbitrary-row conditional laws assume faithful failure accounting
+and delayed publication; finite parity does not prove native or TS refinement.
+The original 158 cases, assertions, timeouts and commands remain unchanged.
+Component evidence cannot replace full S24/S25 or native backend evidence.

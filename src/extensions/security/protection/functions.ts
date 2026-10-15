@@ -7,6 +7,8 @@ import {checkProtectionParametersWithinBudget,protectionFieldIndex,type Protecti
 import {ProtectionLiteralBudget} from './literals';
 import type {ProtectionFieldLocation} from './core-fields';
 
+const issuedDefinitions=new WeakMap<object,{parameters:ProtectionParameterValidation;fields:ReturnType<typeof protectionFieldIndex>}>();
+
 type FunctionStatus='reference-ready'|'transformed'|'refused';
 export interface ProtectionFunctionResult extends Omit<ProtectionParameterValidation,'status'|'validated'> {
  status:FunctionStatus;selection:Json;input:Json;value:Json;
@@ -63,7 +65,7 @@ function inspect(policy:unknown,catalog:unknown,closure:unknown,requestInput:unk
  try{
   selection=copyJson(requestInput);
   if(selection===null||typeof selection!=='object'||Array.isArray(selection))fail('Exact selection object required');
-  const request=selection as Record<string,Json>,names=definitionContext?['transformIndex']:evaluate?['ruleIndex','disclosureIndex','value']:['ruleIndex','disclosureIndex'];
+  const request=selection as Record<string,Json>,names=definitionContext?(evaluate?['transformIndex','value']:['transformIndex']):evaluate?['ruleIndex','disclosureIndex','value']:['ruleIndex','disclosureIndex'];
   if(Object.keys(request).length!==names.length||Object.keys(request).some(key=>!names.includes(key))||names.some(key=>!Object.hasOwn(request,key))
    ||!(definitionContext?[request.transformIndex]:[request.ruleIndex,request.disclosureIndex]).every(n=>typeof n==='number'&&Number.isSafeInteger(n)&&n>=0))fail('Closed selection with nonnegative safe indices and explicit present value required');
   if(evaluate)input=request.value!;
@@ -164,5 +166,14 @@ export function checkProtectionFunctionDefinitions(policy:unknown,catalog:unknow
   if(result.status!=='reference-ready'){refused=true;diagnostics.push(...result.diagnostics.filter(d=>d.severity==='error').map(d=>({...d,path:'/transforms/'+transformIndex+d.path})));break;}
   definitions.push({transformIndex,inputDomain:result.inputDomain,outputDomain:result.outputDomain,valueProfile:result.valueProfile});
  }
- return freeze({...parameters,status:refused?'refused':'validated-parameters',validated:refused?[]:parameters.validated,definitions:refused?[]:definitions,diagnostics});
+ const result=freeze({...parameters,status:refused?'refused' as const:'validated-parameters' as const,validated:refused?[]:parameters.validated,definitions:refused?[]:definitions,diagnostics});
+ if(!refused)issuedDefinitions.set(result,{parameters,fields:fields!});return result;
+}
+
+/** Private runtime composition: original compiler-issued definitions, caller-owned operation ledger.
+ * No source revalidation, fresh per-cell ledger, native operation or permission is supplied. */
+export function evaluateIssuedProtectionDefinition(issued:unknown,transformIndex:number,value:unknown,budget:ProtectionLiteralBudget):ProtectionFunctionResult {
+ const context=issued&&typeof issued==='object'?issuedDefinitions.get(issued):undefined;
+ if(!context)fail('Original issued definition context required');
+ return inspect(null,null,null,{transformIndex,value},true,{...context,budget});
 }

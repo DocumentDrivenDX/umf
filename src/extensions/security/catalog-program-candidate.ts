@@ -25,7 +25,7 @@ function expansion(policy:any):{targets:number;nodes:number;operands:number;cond
 export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:unknown,closureInput:unknown,ontologyInput:unknown,bindingsInput:unknown=[]):unknown{
  const packet:any=copyJson({policy:policyInput,catalog:catalogInput,closure:closureInput,ontology:ontologyInput,bindings:bindingsInput});textBound(packet);
  const inspection=inspectSecurityPolicyV2Source(packet.policy);if(!inspection.valid||inspection.diagnostics.some(d=>d.code==='SECURITY_V2_UNKNOWN'))fail('Known canonical policy source required');
- let policy:any=inspection.source,catalog:any=null,definitions:any[]=[],obligations:any[]=[];
+ let policy:any=inspection.source,catalog:any=null,definitions:any[]=[],obligations:any[]=[],functionDefinitions:unknown=null;
  const charged=expansion(policy);
  shape(packet.closure,['pins','documents']);if(!Array.isArray(packet.closure.pins)||!Array.isArray(packet.closure.documents)||packet.closure.pins.length>256||packet.closure.documents.length>256)fail('Bounded core closure required');
  for(const pin of packet.closure.pins){shape(pin,['documentId','revision']);if(typeof pin.documentId!=='string'||!pin.documentId||typeof pin.revision!=='string'||!pin.revision)fail('Exact closure pins required');}
@@ -33,7 +33,7 @@ export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:
  if(Object.hasOwn(policy,'protection')){
   const typed=checkProtectionFunctionDefinitions(policy,packet.catalog,packet.closure);if(typed.status==='refused')fail('Whole catalog function/domain closure failed');
   const declared=inspectProtectionObligations(typed.policy,typed.catalog,typed.closure,packet.ontology);if(declared.status==='refused')fail('Exact declared obligations/purposes required');
-  policy=typed.policy;catalog=typed.catalog;definitions=[...typed.definitions];obligations=[...declared.obligations];
+  functionDefinitions=typed;policy=typed.policy;catalog=typed.catalog;definitions=[...typed.definitions];obligations=[...declared.obligations];
  }else if(packet.catalog!==null)fail('Unpinned policy cannot acquire catalog semantics');
  const root=resolveCandidateSecurityOntology(packet.ontology,packet.closure.documents),ontology:any=root.ontology;
  if(policy.ontology.documentId!==ontology.documentId||policy.ontology.revision!==ontology.revision)fail('Exact ontology pin required');
@@ -82,7 +82,7 @@ export function compileCandidateCatalogProgram(policyInput:unknown,catalogInput:
    const condition=compileCandidateAssociationCondition(normalized,root.associations);requireIssuedCandidateCompactCondition(condition,root.associations,scope);conditions.push(freeze({ruleIndex,target,condition,scope}));
   }
  }
- const source=freeze({policy,catalog,ontology:root,closure:{pins:packet.closure.pins,documents:root.documents},definitions,obligations,bindings:packet.bindings,conditions,charged:{...charged,descriptorUnits,expandedText}});
+ const source=freeze({policy,catalog,ontology:root,closure:{pins:packet.closure.pins,documents:root.documents},definitions,functionDefinitions,obligations,bindings:packet.bindings,conditions,charged:{...charged,descriptorUnits,expandedText}});
  const handle=Object.freeze({kind:'candidate-catalog-program/0.1',complete:false,authority:false});programs.set(handle,source);return handle;
 }
 /** Private runtime bridge: only the exact original compiled handle resolves. */

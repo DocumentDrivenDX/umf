@@ -5,6 +5,8 @@ import {canonicalSchemaJson,type CoreLiteral} from '../../model/schema-literals'
 import {ProtectionLiteralBudget} from './protection/literals';
 import {GREGORIAN_DATE_PROFILE,parseGregorianDate} from '../../adapters/gregorian-date';
 import {securityAnd,securityOr,securityNot,type SecurityTruth,type SecurityDecision} from './logic';
+import {evaluateIssuedProtectionDefinition} from './protection/functions';
+import type {SecurityOutput} from './evaluate';
 import {readCandidateCatalogProgram} from './catalog-program-candidate';
 const fail=(message:string):never=>{throw Error('SECURITY_CATALOG_RUNTIME: '+message);};
 const id=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
@@ -15,13 +17,18 @@ function ref(r:any):string{shape(r,['documentId','moduleId','elementId']);if(Obj
 function relationship(r:any):string{shape(r,['documentId','moduleId','relationshipId']);if(Object.values(r).some(v=>typeof v!=='string'||!v))fail('Exact relationship reference');return relationId(r);}
 function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
 export interface CandidateCatalogActionResult {status:'evaluated'|'refused';complete:false;authority:false;rows:readonly {decision:SecurityDecision;dispositions:readonly unknown[]}[]}
+export interface CandidateCatalogCollectionResult {status:'rendered'|'refused';complete:false;authority:false;rows:readonly (readonly SecurityOutput[])[];valueProfiles:readonly {field:unknown;profile:string}[]}
+/** Atomic logical collection: denied rows are filtered; U/conflict/any rendering failure refuses the whole batch. */
+export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,cut:unknown,request:unknown):CandidateCatalogCollectionResult {
+ try{return run(handle,owner,cut,request,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
+}
 /** owner/cut must originate from a trusted host. This function does not authenticate their provenance. */
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
- try{return run(handle,ownerInput,cutInput,requestInput);}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
+ try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
-function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
+function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean):CandidateCatalogActionResult|CandidateCatalogCollectionResult{
  const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut,request}=packet;
- shape(owner,['version','id','revision','storage']);shape(cut,['version','trusted','generation','expectedGeneration','policy','ontology','protection','domains','owner','subject','facts','graphs','coverage','graphCoverage','context','valueProfiles','maxFacts','maxSteps']);shape(request,['action','resources','targets','fields']);
+ shape(owner,['version','id','revision','storage'],['disclosure']);shape(cut,['version','trusted','generation','expectedGeneration','policy','ontology','protection','domains','owner','subject','facts','graphs','coverage','graphCoverage','context','valueProfiles','maxFacts','maxSteps']);shape(request,['action','resources','targets','fields']);
  if(owner.version!=='umf.security.logical-owner/0.1'||cut.version!=='umf.security.logical-facts/0.1'||cut.trusted!==true||typeof cut.generation!=='string'||!cut.generation||cut.generation!==cut.expectedGeneration||typeof owner.id!=='string'||!owner.id||typeof owner.revision!=='string'||!owner.revision)fail('Unadmitted logical cut');
  const pin=(actual:any,expected:any,keys:string[])=>{shape(actual,keys);if(keys.some(k=>actual[k]!==expected[k]))fail('Stale source/owner pin');};
  pin(cut.owner,owner,['id','revision']);pin(cut.policy,program.policy,['id','revision']);pin(cut.ontology,program.ontology.ontology,['documentId','revision']);
@@ -35,6 +42,8 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  const ontology=program.ontology.ontology,entities=new Map<string,any>(ontology.entities.map((e:any)=>[id(e.type),e])),documents=new Map<string,any>(program.closure.documents.map((e:any)=>[e.document.id,e.document]));
  const fields=new Map<string,{document:any;field:any}>(),records=new Map<string,any>();
  for(const document of documents.values())for(const module of document.modules)for(const field of module.elements){const key=id({documentId:document.id,moduleId:module.id,elementId:field.id});if(field.kind==='field')fields.set(key,{document,field});else if(field.kind==='record')records.set(key,field);}
+ if(Object.hasOwn(owner,'disclosure')){shape(owner.disclosure,['readAction']);const action=owner.disclosure.readAction;if(typeof action!=='string'||!action||!ontology.actionPurposes?.some((p:any)=>p.action===action&&p.purposes.includes('read')))fail('Exact owner read action and source read purpose required');}
+ if(render&&(!owner.disclosure||request.action!==owner.disclosure.readAction))fail('Collection requires exact owner read action');
  const memberships=new Map<string,Map<string,any>>();for(const e of entities.values()){step();memberships.set(id(e.type),new Map(e.fields.map((f:any)=>[id(f.ref),f])));}
  const member=(type:any,name:string)=>memberships.get(id(type))?.get(name);
  const field=(r:any)=>fields.get(ref(r))??fail('Missing source Field'),entity=(r:any)=>entities.get(ref(r))??fail('Missing source entity');
@@ -135,5 +144,41 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   }
   rows.push({decision,dispositions:decision==='permit'?dispositions:[]});
  }
- return freeze({status:'evaluated',complete:false,authority:false,rows});
+ if(!render)return freeze({status:'evaluated',complete:false,authority:false,rows});
+ if(rows.some(r=>r.decision==='indeterminate'||r.decision==='conflict'))fail('Collection decision is unresolved');
+ const selected=rows.map((r,i)=>({row:r,resource:resources[i]})).filter(r=>r.row.decision==='permit');
+ const recipeCache=new WeakMap<object,number>();
+ const recipe=(d:any)=>{step();const cached=recipeCache.get(d);if(cached!==undefined)return cached;const index=program.catalog?.transforms.findIndex((t:any)=>{step();return t.id===d.transform&&t.version===d.version;})??-1,definition=program.definitions.find((x:any)=>{step();return x.transformIndex===index;});if(index<0||!definition||!program.functionDefinitions)fail('No issued pure definition for selected directive');
+  if(definition.valueProfile&&(profiles.get(id(definition.inputDomain))!==definition.valueProfile||profiles.get(id(definition.outputDomain))!==definition.valueProfile))fail('Exact input/output value profiles required');recipeCache.set(d,index);return index;};
+ // Empty target populations still require the source-scoped output plan. A
+ // literal-true withholding permit suppresses every competing disposition on
+ // that Field; conditional withholding cannot prove the same for unknown rows.
+ const resourceTypes=new Set<string>();for(const resource of resources){step();resourceTypes.add(id(resource.type));}
+ for(const target of request.targets)if(!resourceTypes.has(id(target)))for(const r of request.fields){step();const directives:any[]=[];let alwaysWithheld=false,alwaysTransformed=false,defaultOriginal=false;
+  for(const condition of scoped(target)){step();const rule=program.policy.rules[condition.ruleIndex];if(rule.effect!=='permit')continue;let found=false;
+   for(const disclosure of rule.disclosure??[]){step();if(id(disclosure.field)!==id(r))continue;found=true;const d=disclosure.disposition;directives.push(d);if(condition.condition.expression.op==='literal'&&condition.condition.expression.value===true){if(d.kind==='withheld')alwaysWithheld=true;if(d.kind==='transformed')alwaysTransformed=true;}}
+   if(!found&&member(target,id(r)).protection==='unprotected')defaultOriginal=true;
+  }
+  if(alwaysWithheld)continue;if(defaultOriginal&&!alwaysTransformed)admitField(target,r,[]);
+  for(const d of directives){step();if(d.kind==='original'&&!alwaysTransformed)admitField(target,r,[]);else if(d.kind==='transformed'){if(d.vocabulary==='umf.security.protection'){recipe(d);admitField(target,r,[]);}else literal(d.field,d.value);}}
+ }
+ // Preflight every effective input before constructing any Cell. Legacy inline
+ // constants remain source-independent. Catalog functions require present input.
+ for(const {row,resource} of selected)for(const {field:r,disposition:d} of row.dispositions){step();if(d.kind==='withheld')continue;if(d.kind==='original'){admitField(resource.type,r,[resource]);continue;}
+  if(d.vocabulary!=='umf.security.protection'){literal(d.field,d.value);continue;}
+  recipe(d);admitField(resource.type,r,[resource]);if(value(resource,r)===undefined)fail('Catalog recipe requires present input, not absence');
+ }
+ const totalCells=selected.reduce((n,x)=>n+x.row.dispositions.length,0);step(totalCells+selected.length);budget.step(totalCells+selected.length);budget.reserveText(128+2+Math.max(0,selected.length-1));for(const x of selected)budget.reserveText(2+Math.max(0,x.row.dispositions.length-1));
+ const output:SecurityOutput[][]=[],outputProfiles=new Map<string,{field:any;profile:string}>();
+ const retainOutput=(value:any)=>{const pending:any[]=[value];while(pending.length){step();budget.step();const v=pending.pop();if(typeof v==='string'){budget.step(v.length);budget.reserveText(JSON.stringify(v).length);}else if(v&&typeof v==='object'){const entries=Object.entries(v);budget.reserveText(2+Math.max(0,entries.length-1));for(const [key,child] of entries){budget.step(key.length);budget.reserveText(JSON.stringify(key).length+1);pending.push(child);}}else budget.reserveText(JSON.stringify(v).length);}return value;};
+ const retainCell=(cell:SecurityOutput)=>{const r=cell.disposition==='transformed'?cell.outputType:cell.field;if((cell.disposition==='original'||cell.disposition==='transformed')&&field(r).field.scalarType==='date'){if(profiles.get(id(r))!==GREGORIAN_DATE_PROFILE)fail('Rendered date requires exact output profile');outputProfiles.set(id(r),{field:r,profile:GREGORIAN_DATE_PROFILE});}return retainOutput(cell);};
+ for(const {row,resource} of selected){const cells:SecurityOutput[]=[];for(const {field:r,disposition:d} of row.dispositions){step();let cell:SecurityOutput;
+   if(d.kind==='withheld')cell={field:r,disposition:'withheld'};
+   else if(d.kind==='original'){const v=value(resource,r);cell=v===undefined?{field:r,disposition:'absent'}:{field:r,disposition:'original',value:v};}
+   else if(d.vocabulary!=='umf.security.protection')cell={field:r,disposition:'transformed',outputType:d.field,value:d.value};
+   else{const result=evaluateIssuedProtectionDefinition(program.functionDefinitions,recipe(d),value(resource,r),budget);if(result.status!=='transformed')fail('Pure recipe evaluation refused');cell={field:r,disposition:'transformed',outputType:d.field,value:result.value as CoreLiteral};}
+   cells.push(retainCell(cell));
+  }output.push(cells);
+ }
+ const valueProfiles=[...outputProfiles.values()];retainOutput(valueProfiles);return freeze({status:'rendered',complete:false,authority:false,rows:output,valueProfiles});
 }

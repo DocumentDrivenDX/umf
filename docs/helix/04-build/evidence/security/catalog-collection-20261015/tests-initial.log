@@ -1,0 +1,14 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/catalog-collection.test.ts:
+(pass) atomic collection preserves original, absent, null and withheld cells across flat and graph facts [83.64ms]
+(pass) legacy inline constants remain independent of source null, absence or unavailable projection [9.08ms]
+(pass) catalog collection runs all admitted pure recipes with exact typed outputs [47.57ms]
+(pass) catalog constant validates present null but refuses known absence and unavailable input [24.26ms]
+(pass) Gregorian rendered output retains exact value-profile context [10.20ms]
+(pass) owner read role, actual grant, forged handles and empty-request metadata remain enforced [9.82ms]
+
+ 6 pass
+ 0 fail
+ 36 expect() calls
+Ran 6 tests across 1 file. [581.00ms]

@@ -894,3 +894,19 @@ Execution evidence is retained in `evidence/security/catalog-runtime-20261015/`.
 The remaining goal includes pure collection rendering with shared runtime
 budgets, catalog-aware original read/blind-write/vault checks, exact owner/native
 profiles and all required backend cases. No full S24/S25 admission is claimed.
+
+
+### Atomic collection rendering increment (2026-10-15)
+
+The private canonical collection renderer consumes the issued catalog program and
+uses a single snapshot plus fresh shared action/render ledgers. It filters deny
+rows, refuses whole batches on U/conflict/failure, preserves inline constant
+independence and original/null/absence/withheld semantics, and executes only
+compiler-issued pure recipes over present inputs. Exact owner read roles and
+source purposes remain separate from actual policy grants. Output framing,
+references and Gregorian profile context are retained and budgeted.
+
+Evidence belongs in `evidence/security/catalog-collection-20261015/`. The remaining
+goal includes query-use/compiler lineage, catalog-aware graph before/after write
+checks, original-read/blind/vault permissions, native owner/current-authority
+profiles and all unbound acceptance cases. No full S24/S25 admission is claimed.

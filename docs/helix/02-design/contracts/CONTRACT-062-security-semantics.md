@@ -1265,3 +1265,55 @@ composition, including withheld paths. These are explicit operation ledgers, not
 a proof of total snapshot/core-validation CPU or heap cost. Dates require the
 exact CONTRACT-066 Gregorian value profile. Pure transform Cell rendering, query
 use admission, graph-aware write comparison and native authority remain required.
+
+
+### Private atomic pure collection rendering (2026-10-15)
+
+`evaluateCandidateCatalogCollection` uses the same originally issued catalog
+program, single snapshotted owner/cut/request and operation ledgers as the action
+kernel. Its owner MUST supply `disclosure:{readAction}`. The exact request action
+MUST equal that owner action and its original ontology declaration MUST include
+read purpose. Missing purpose closure, incompatible purpose or malformed supplied
+disclosure profile refuses even on empty requests. Classification does not supply
+a policy grant or authenticate the owner. The action kernel validates the optional
+disclosure profile whenever supplied, but does not require one for other actions.
+
+The renderer retains collection semantics: deny rows are filtered in source order;
+any indeterminate, conflict, structural, coverage, recipe, output-refinement or
+budget failure clears the entire output. It never streams a valid prefix. A
+`rendered` result remains `complete:false, authority:false`; it is not a native
+query credential. Rows use the existing original/transformed/withheld/absent Cell
+forms. Original null remains a present null. Original absence emits absent.
+Legacy inline constants remain typed, source-independent output, including when
+the original Field is null, known absent or unavailable. Catalog recipes require
+a present validated input, including constant/null-out; known absence refuses
+rather than inventing a Cell. Present null follows the exact recipe/domain rules.
+
+Only exact compiler-issued pure definition contexts may execute. They retain the
+original immutable validated parameters and Field index, never the compiler's
+exhausted budget. The runtime derives a recipe from the actual effective catalog
+disposition identity, never a caller substitution, and shares one fresh operation
+ledger across conditions, rows, recipe input/output validation and retained Cells.
+No per-Cell public value evaluator, repeated whole-source validation, crypto,
+vault or native function is invoked. Stored original tokens remain stored tokens,
+with no input-domain override, reverse operation or implicit vault grant.
+
+All effective per-row rendering inputs preflight before any Cell is retained.
+Each requested target with no selected resource rows additionally preflights its
+source-scoped potential output dependencies. A literal-true withholding permit
+suppresses competing dependencies; a literal-true transform suppresses original
+or default-original dependencies. Conditional withholding cannot prove that no
+unknown future row needs original data. Potential catalog recipes and profiles
+remain checked; legacy inline constants never acquire source-input dependence.
+This is a conservative source preflight for empty targets, not an assertion that
+all possible source condition combinations were symbolically simplified.
+
+Row/Field output capacity is step-charged before Cell allocation. Retained output
+framing, qualified reference strings, escaped string text and profile metadata
+consume the same 100000-unit runtime work/text ledgers as fact/value processing.
+These explicit ledgers do not establish total snapshot, source preparation, CPU
+or heap bounds. Every actual rendered Gregorian value retains its exact output
+Field/profile in `valueProfiles`; absent/withheld Cells assert no date value.
+Failure clears both rows and valueProfiles. Full S24/S25 write/read/blind/vault
+behavior, query-use lineage, native owner/current-authority profiles and all
+remaining backend acceptance cases remain required.
