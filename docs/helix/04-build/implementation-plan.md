@@ -12328,3 +12328,13 @@ CONTRACT-063 / US-056-AC5 remains unmet until alternate native/public reads are
 closed or equivalently guarded; raw-table SELECT denial alone is insufficient.
 No backend case promoted; 45/158 accepted,113 unimplemented unchanged.
 See [original replay, Astra review and exact reproduction](evidence/security/truss-current-query-replay-20261015/README.md).
+
+### Actual explicit SUM packet / original policy interoperability — 2026-10-15
+
+Five supplied-cut cases plus two producer controls pass with exact new Weft
+capability and unchanged original UMF child. Whole typed operations, independent
+SUM action, global/grouped nullability, live original salary origin, branch
+indices and raw-only rendering independence are checked. This contributes to
+US-056-AC2/AC6 semantic correspondence only; no native aggregate guard or
+backend case is promoted. Acceptance45/158,113 unimplemented unchanged.
+See [scoped evidence and review](evidence/security/weft-sum-child-20261015/README.md).
