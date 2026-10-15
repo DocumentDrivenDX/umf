@@ -12362,3 +12362,14 @@ quiescence, not complete native writer/effect/lifecycle or managed deployment
 qualification. Existing B04/B05/B06/B10/B11/B14/L12 procedures are expanded; all
 30 Truss cases remain required. No case promoted:45/158 accepted,113 unimplemented.
 See [separate exact source/wheel cohorts](evidence/security/truss-protected-query-replay-20261015/README.md).
+
+### Published compiler artifact correspondence — 2026-10-15
+
+Actual public Weft0.4.33ARM archive8ea8 differs from testedCIarchivedfe0, but all
+five member payloads are byte-identical. Original Trussad794577 selects its
+explicit published ABI2 manifest and refuses retained CI selection;467 tracked
+source files and original UMF assets correspond. Official release API asset
+digests/sizes match local public wheel and checksums. This is artifact/consumer
+correspondence only: no database rerun, Linux/aggregate/native authority or
+release-readiness promotion. Earlier CI native receipt remains immutable.
+Acceptance45/158,113 unimplemented unchanged. See [exact evidence](evidence/security/published-weft-cohort-20261015/README.md).

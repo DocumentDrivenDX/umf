@@ -1,0 +1,45 @@
+{
+  "status": "reviewed-no-blocker-within-stated-scope",
+  "harnessSha256": "8d621183e5e7797bc20bdb80e6da0abdc029694db1dab75847272d9796cfa32a",
+  "trussCommit": "ad794577539be9d059708a1f7e3a71857c644cbc",
+  "independentVerification": {
+    "sourceArchiveMemberChecks": 16,
+    "focusedControls": 14,
+    "committedSourceFiles": 467,
+    "loadedModuleRecordsVerified": 51,
+    "wheelPayloadsByteIdentical": 5,
+    "databaseRuns": 0,
+    "cloudCalls": 0
+  },
+  "focusedControls": {
+    "extractedOriginalWheelGuards": 8,
+    "actualOriginalConsumerControls": 6,
+    "details": "Exact payload baseline; duplicate/omitted/extra member, changed shim/metadata, symlink, post-install mutation refusals. Actual public consumer dictionary and _match_consumer positive; stale CI, wrong ABI, extra member and wrong child declarations refuse."
+  },
+  "conclusions": [
+    "Both archive digests are exact and distinct. Each archive contains the same five unique members, and all five uncompressed member payloads compare byte-for-byte. Current installed member hashes, original source/archive digests and harness/input pins match the retained R2 receipt.",
+    "Independent read-only git archive correspondence confirms all 467 inputs came from the exact committed Truss source. Every one of the 51 recorded loaded Truss modules maps to its exact committed source. Original UMF child and manifest hashes match their explicit expected values.",
+    "Independent CPU-only execution of original committed _actual_consumer/_match_consumer with the actual public-extracted native module confirms the expected public ARM ABI2 dictionary and rejects a retained CI-archive consumer manifest without implicit migration.",
+    "The original runtime chooses a canonical cohort by native-module digest. Since CI and public wheel payloads are identical, it cannot infer which ZIP historically installed that module. This tool proves public extraction for this run; stale-manifest rejection is not a claim that a CI-installed identical module is distinguishable or refused.",
+    "The old edebb CI-wheel four-method native receipt remains separate and is not relabeled. No new database run, aggregate enrollment, Linux-native execution or backend case promotion follows from archive payload correspondence."
+  ],
+  "findings": [],
+  "limits": [
+    "Selected current local artifact and source correspondence only. No reproducible-build theorem, independent release authenticity, signature validation, package-manager install history or complete transitive runtime-binary inventory.",
+    "Parent-supplied GitHub API metadata and verification were inspected and pinned as separate publication evidence; reviewer did not repeat the network/API query.",
+    "The new Linux cohort is a source declaration only in this review; no Linux import/native qualification.",
+    "Extracted ZIP negative controls bypass only the earlier fixed archive-digest preflight to exercise the actual original payload guards. They are guard sensitivity checks, not end-to-end modified-release executions.",
+    "No source/partner checkout edits. All 158 current case definitions match HEAD and all 30 Truss cases remain. Prior native qualification and open requirements retain their original scope."
+  ],
+  "history": {
+    "rootRun": "/private/tmp/umf-weft-public-cohort-20261015-r2",
+    "rootReceiptSha256": "11cea41d5700de8cd59cd45fe260bda90e20998a5e8749a7ae3eef6b6910ed8b",
+    "reviewerCalibration": "calibration.json retains a corrected reviewer child-digest transcription typo; no source or behavior change.",
+    "priorCiReviewArchive": "/private/tmp/truss-protected-query-ci-replay-astra-20261015.zip",
+    "priorCiReviewSha256": "d5fda5bcd0af0d0db7794f874c54b3becad04df5f67557912d3730ff6ab72c18"
+  },
+  "largeArchiveReferencedNotDuplicated": {
+    "path": "/private/tmp/umf-weft-public-cohort-20261015-r2/original-inputs.zip",
+    "sha256": "861cf045c1a371dc1ebd6d937d7363242833a5ad406100198531786754b07204"
+  }
+}
