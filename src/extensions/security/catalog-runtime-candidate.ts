@@ -219,3 +219,8 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
 export function evaluateCandidateCatalogActionWithinOperation(handle:unknown,owner:unknown,cut:unknown,request:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogActionResult {
  try{return run(handle,owner,cut,request,false,operation) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
+
+/** Private composition leaf; callers must provide one shared operation ledger. */
+export function evaluateCandidateCatalogScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogCollectionResult {
+ try{return run(handle,owner,cut,selection,true,operation,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
+}

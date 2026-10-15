@@ -909,3 +909,10 @@ the formal model; do not infer a producer loss, since the original report retain
 the information. Weft reports there is still no committed native0.2 SQL lowerer
 or canonical policy/catalog0.2 originalAction designation; those are next cohort
 implementation requirements, distinct from legacy relationship profile0.2.
+
+
+### Atomic mixed logical operations — 2026-10-15
+
+The private supplied-operation boundary composes typed population read rendering and explicit canonical action checks using one detached owner/cut snapshot and one cumulative work/text/literal ledger. Charge inventory once plus every scan population visit and explicit action target across the entire bounded ordered list. A late structural/preflight/render/budget refusal releases an empty operation list. Preserve caller operation IDs and typed outcomes; do not flatten read Cells into action dispositions or infer original operator values from action success.
+
+A completed batch means the requested diagnostic evaluations completed. Each action can still deny, be indeterminate or conflict; those decisions must remain explicit and a consumer must enforce the actual action duty. It is not whole-query admission or an original-action designation. The compiler still owns exact occurrence/role/purpose selection and the native consumer still owns authentication, registration/current-cut custody and final release. No supplied batch is a native credential. Public projection rendering remains independent of separately authorized hidden-use actions.

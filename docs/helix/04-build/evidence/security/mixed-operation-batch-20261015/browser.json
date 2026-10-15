@@ -1,0 +1,645 @@
+{
+  "status": "passed",
+  "controls": 50,
+  "browser": "153.0.8010.12",
+  "bun": "1.4.2",
+  "selectedSourceDigests": {
+    "src/extensions/security/catalog-operation-batch-candidate.ts": "3a17a918c15f1abf8e16662d53638fb6689ae1cdb65a567dc466991d465198b9",
+    "tests/security/protection/query-value-modes-source.json": "2f826621bd3187857f1b4fbab5d9c818891b0df96d55d6a1d379638906e2ebda",
+    "tests/security/protection/current-query-source.json": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059",
+    "tests/security/catalog-operation-batch-corpus.ts": "536d4bceefe13fb2f06bdf00b1640e3b2c33bde8d606c076d22e891c5a5f2457",
+    "tests/security/catalog-operation-batch.test.ts": "4e40bd9401c4d0e9c01eec114e1e98e78d166cbc49703216e40da07741390ca2",
+    "tools/security/catalog-operation-batch-browser.ts": "b075c4182ac04af4fdee3d29a0ae8aa33df79010caf5b74e4373284194ad298d",
+    "src/extensions/security/catalog-program-candidate.ts": "e8c2db84126e5ebf4dcf5bd33efe80c8a2235e7ab192d17105cda64ab8facc6d",
+    "src/extensions/security/stored-query-candidate.ts": "20047d25e63eaacba0f1aaa29fb37c61f9b28a2ee0c61acf308b37b97911e7e2",
+    "src/extensions/security/catalog-storage-candidate.ts": "4002872f2ce14b46a9320bfd388081df09c1d3efe7eea49b26ba8c8d3ce6b181",
+    "src/extensions/security/catalog-runtime-candidate.ts": "d22af3c6a9fee17b69e529e73a7b2adf4138a23ac310d29f31d10901fac40e32",
+    "src/extensions/security/operation-budget-candidate.ts": "cba50f93e51b489ee5aa12d56b8f002ac54af0d78916abde2c90f2d9c6aa22e5",
+    "tests/security/catalog-runtime-fixture.ts": "b229fae7b24df9e20668720782295c03584f02cd7c3ec39b22d3dc706ee019e3",
+    "tests/security/evaluation-fixture.ts": "ecb9bbae23a4b26232fda959c59aa4dbe79a111699c670f1356dd0c7d251d8ad",
+    "tests/security/fixture.ts": "572f914713ea24d3e06b85a953cc9176fd98adf2e585e1cd6d838f27c1b694c6",
+    "tests/security/protection/current-query-read-scenarios.json": "de7e5a72f59fde30b5d57704f9f1513bafbf0e77a8f9094ae566fbbd582ecc3f",
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
+    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1"
+  },
+  "sourcesUnchanged": true,
+  "globals": {
+    "Bun": "undefined",
+    "process": "undefined"
+  },
+  "pageErrors": [],
+  "externalRequests": 0,
+  "observations": [
+    {
+      "id": "masked-read-and-separate-original",
+      "expected": {
+        "status": "completed",
+        "ids": [
+          "projection",
+          "original"
+        ],
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "disposition": "transformed",
+              "outputType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salaryMaskLabel"
+              },
+              "value": {
+                "string": "[private]"
+              }
+            }
+          ]
+        ],
+        "decision": "permit",
+        "dispositions": [],
+        "authority": false,
+        "complete": false
+      },
+      "observed": {
+        "status": "completed",
+        "ids": [
+          "projection",
+          "original"
+        ],
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "disposition": "transformed",
+              "outputType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salaryMaskLabel"
+              },
+              "value": {
+                "string": "[private]"
+              }
+            }
+          ]
+        ],
+        "decision": "permit",
+        "dispositions": [],
+        "authority": false,
+        "complete": false
+      },
+      "passed": true
+    },
+    {
+      "id": "completed-is-not-permitted",
+      "expected": [
+        "completed",
+        "deny",
+        "[private]"
+      ],
+      "observed": [
+        "completed",
+        "deny",
+        "[private]"
+      ],
+      "passed": true
+    },
+    {
+      "id": "flat:same-cut-mixed",
+      "expected": [
+        "completed",
+        {
+          "integerToken": "100"
+        },
+        "permit"
+      ],
+      "observed": [
+        "completed",
+        {
+          "integerToken": "100"
+        },
+        "permit"
+      ],
+      "passed": true
+    },
+    {
+      "id": "graph:same-cut-mixed",
+      "expected": [
+        "completed",
+        {
+          "integerToken": "100"
+        },
+        "permit"
+      ],
+      "observed": [
+        "completed",
+        {
+          "integerToken": "100"
+        },
+        "permit"
+      ],
+      "passed": true
+    },
+    {
+      "id": "late-unknown-action",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "late-unknown-action:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "late-unknown-scan",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "late-unknown-scan:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "duplicate-operation-id",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "duplicate-operation-id:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "invalid-id",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "invalid-id:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "extra-authority",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "extra-authority:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "unknown-kind",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "unknown-kind:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "empty",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "empty:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "over-limit",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "over-limit:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "read-action-override",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "read-action-override:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "action-request-extra",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "action-request-extra:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "stale-cut",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "stale-cut:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "late-action-dependencies-after-field-free-scan",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "late-action-dependencies-after-field-free-scan:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "empty-complete-targets",
+      "expected": [
+        "completed",
+        [],
+        []
+      ],
+      "observed": [
+        "completed",
+        [],
+        []
+      ],
+      "passed": true
+    },
+    {
+      "id": "empty-still-needs-original-action-dependencies",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "empty-still-needs-original-action-dependencies:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "independent-fact-budgets-pass",
+      "expected": [
+        "rendered",
+        "evaluated"
+      ],
+      "observed": [
+        "rendered",
+        "evaluated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "aggregate-action-and-scan-population",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "aggregate-action-and-scan-population:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "independent-work-ledgers-pass",
+      "expected": [
+        "rendered",
+        "evaluated"
+      ],
+      "observed": [
+        "rendered",
+        "evaluated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "shared-mixed-work-budget",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "shared-mixed-work-budget:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "independent-literal-ledgers-pass",
+      "expected": [
+        "rendered",
+        "evaluated"
+      ],
+      "observed": [
+        "rendered",
+        "evaluated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "shared-mixed-literal-budget",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "shared-mixed-literal-budget:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "independent-text-ledgers-pass",
+      "expected": [
+        "rendered",
+        "evaluated"
+      ],
+      "observed": [
+        "rendered",
+        "evaluated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "shared-mixed-text-budget",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "observed": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "operations": []
+      },
+      "passed": true
+    },
+    {
+      "id": "shared-mixed-text-budget:unchanged",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "deep-frozen",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "detached-results",
+      "expected": [
+        "projection",
+        "[private]"
+      ],
+      "observed": [
+        "projection",
+        "[private]"
+      ],
+      "passed": true
+    },
+    {
+      "id": "forged-handle",
+      "expected": "refused",
+      "observed": "refused",
+      "passed": true
+    },
+    {
+      "id": "copied-handle",
+      "expected": "refused",
+      "observed": "refused",
+      "passed": true
+    },
+    {
+      "id": "accessor-refuses",
+      "expected": "refused",
+      "observed": "refused",
+      "passed": true
+    },
+    {
+      "id": "no-getter-calls",
+      "expected": 0,
+      "observed": 0,
+      "passed": true
+    },
+    {
+      "id": "ordered-duties-and-live-opaque-original",
+      "expected": [
+        "second",
+        "first",
+        "original",
+        "opaque-token"
+      ],
+      "observed": [
+        "second",
+        "first",
+        "original",
+        "opaque-token"
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "Atomic ordered supplied mixed reads/action checks through the existing logical kernel in Bun/Chromium. Completed evaluations can retain deny/indeterminate/conflict decisions and never grant query permission. Selected source pins are not a hermetic closure. Trusted cut completeness remains a premise; no compiler readset attestation, native authority, query execution or backend qualification."
+}

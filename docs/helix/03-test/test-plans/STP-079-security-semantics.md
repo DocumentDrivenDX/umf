@@ -706,3 +706,10 @@ state supplied source/mode/type/scope correctness as premises, without compiler,
 TypeScript or SQL refinement. Retain exact solver/native sources and failures.
 The original158case definitions/34criteria remain unchanged and the full goal
 continues to require all missing backend implementations.
+
+
+### Mixed logical operation controls — 2026-10-15
+
+Extend the supplied-batch prerequisite for S08/S16/S20/S22 and P03/B08 with reads plus distinct original-use action checks: retain masked public output, live opaque stored output, ordered operation IDs, and explicit denied action decisions. Exercise ordinary relational associations and graph relationship witnesses, empty populations, missing action dependency coverage even when empty, stale cuts, caller shape/authority injection, forged handles and accessor refusal. Every late structural or resource failure must erase preceding results.
+
+Demonstrate independent single operations can pass while the mixed whole operation refuses shared fact, work, text and literal exhaustion. Preserve detached frozen results and unchanged inputs. Independently replay the same corpus in Chromium without host globals or external requests. Conditional formal analysis should separate structural completion from permission and show how independent resets or prefix release violate atomic/budget requirements; it does not prove the actual kernel or native query execution. No original acceptance definition is replaced or promoted.
