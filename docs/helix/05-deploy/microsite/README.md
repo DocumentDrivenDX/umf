@@ -1,5 +1,22 @@
 # UMF microsite schema explorer
 
+## Browser SQL-to-actions compiler
+
+`bun docs/helix/05-deploy/microsite/build-action-compiler.ts` builds the original
+Weft WASM compiler and its exact pinned UMF preparation cohort into static assets.
+It needs no compiler service or mutable Weft checkout. The retained compressed
+WASM and wrapper are verified against their original SHA256 before publication.
+The page is `action-compiler.html`; verify it with
+`bun docs/helix/05-deploy/microsite/verify-action-compiler.ts`, which starts an
+ephemeral static server and checks actual Chromium with external/write requests
+blocked. Example rows are explicitly unchanged by this compiler-only stage.
+
+The full browser-local Truss path is a separate CONTRACT-905 cohort using an
+issued local-store owner and independent selection-read grant. It requires a
+fresh matching Weft build, actual Truss PGlite provider and independently qualified
+sealing/effects/durability. The unchanged person-required native cohort cannot be
+relabeled as local ownership. GitHub Pages remains the publishing target.
+
 Owner direction (2026-10-08): build a browsable schema explorer for domain
 packs in the existing microsite. This delivers a read-only metadata consumer
 under PRD FR-39/FR-41. Domain-pack ownership and definitions remain with the
