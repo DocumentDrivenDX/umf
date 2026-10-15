@@ -12280,3 +12280,13 @@ and parent deadline do not claim aggregate heap/work guarantees. Native Subject,
 fact capture, typed compiler lineage and guarded release remain next. No backend
 case is promoted: 45/158 accepted, 113 unimplemented, all original cases required.
 See [retained evidence](evidence/security/current-query-child-20261015/README.md).
+
+### Actual compiler packet and original child correspondence — 2026-10-15
+
+Five actual typed Weft packet cases pass original UMF source inspection, atomic
+read/action/scan evaluation and route selection over the supplied original
+fixture cut. Exact populations/Cells and empty-tuple COUNT scans are checked;
+inactive assignment denies without rendering. This is conditional computation
+evidence, not SQL/native authorization, contributor lineage or guarded release.
+All original backend cases remain required and acceptance stays 45/158.
+See [retained interop evidence](evidence/security/weft-current-child-20261015/README.md).

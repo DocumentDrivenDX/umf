@@ -1912,3 +1912,13 @@ retained in [the child packet](../../04-build/evidence/security/current-query-ch
 Native current-Subject/fact capture, primary-action correspondence, typed Weft
 contributor lineage and held-context release remain required integration work.
 No backend acceptance case is promoted.
+
+### Actual compiler packet and original child correspondence — 2026-10-15
+
+Five actual typed Weft packet cases pass original UMF source inspection, atomic
+read/action/scan evaluation and route selection over the supplied original
+fixture cut. Exact populations/Cells and empty-tuple COUNT scans are checked;
+inactive assignment denies without rendering. This is conditional computation
+evidence, not SQL/native authorization, contributor lineage or guarded release.
+All original backend cases remain required and acceptance stays 45/158.
+See [retained interop evidence](../../04-build/evidence/security/weft-current-child-20261015/README.md).
