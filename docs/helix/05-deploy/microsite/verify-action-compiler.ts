@@ -28,18 +28,22 @@ try {
  await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
  const opened=JSON.parse((await page.locator('#catalog').textContent())!);
  await page.locator('#store-register').click();
- await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent?.startsWith('Products catalog '));
+ await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
  const registered=JSON.parse((await page.locator('#catalog').textContent())!);
- if(!['registered','unchanged'].includes(registered.outcome)||registered.catalog.types.length!==1||registered.catalog.properties.length!==2||registered.catalog.keys.length!==1)throw Error('Actual catalog registration differs');
+ if(registered.outcome!=='prepared'||!['registered','unchanged'].includes(registered.registration)||registered.catalog.types.length!==1||registered.catalog.properties.length!==2||registered.catalog.keys.length!==1)throw Error('Actual catalog registration differs');
+ if(['owner','action','grant','readGrant'].some(key=>Object.hasOwn(registered,key)))throw Error('Worker exposed authority capability');
+ if(registered.preparationSha256!=='6f5e69462c327da970f07ca1f6253dbacc4db0badf1335b7d91e3f38eb67ad40'||registered.selectionRead.profile.id!=='umf.actions.local-store-read'||registered.selectionRead.fields.length!==2)throw Error('Original action/read-grant preparation differs');
  if(registered.catalog.document.sourceSha256!=='b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27')throw Error('Catalog source differs');
  await page.locator('#store-register').click();
- await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Products catalog unchanged');
+ await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
  const second=await page.context().newPage();await second.goto(origin+'/action-compiler.html');await second.locator('#store-open').click();
  await second.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store is in use in another tab');await second.close();
  await page.locator('#store-close').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store closed');
  await page.reload();await page.locator('#store-open').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
  const reopened=JSON.parse((await page.locator('#catalog').textContent())!);
  if(reopened.info.storeId!==opened.info.storeId||reopened.info.incarnation!==opened.info.incarnation||JSON.stringify(reopened.catalog)!==JSON.stringify(registered.catalog))throw Error('Catalog or incarnation changed on reopen');
+ await page.locator('#store-register').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');
+ const reissued=JSON.parse((await page.locator('#catalog').textContent())!);if(reissued.preparationSha256!==registered.preparationSha256||JSON.stringify(reissued.selectionRead)!==JSON.stringify(registered.selectionRead))throw Error('Reopened action/read preparation differs');
  await page.locator('#store-close').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Store closed');
  await page.setViewportSize({width:390,height:844});
  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');
@@ -48,7 +52,7 @@ try {
  const hashes:Record<string,string>={};
  for(const path of ['action-compiler.html','action-compiler.js','action-compiler/model.json','action-compiler/weft_wasm_bg.wasm','action-compiler/weft_wasm.js','truss-catalog-worker.js','truss-browser/store.js','truss-browser/manifest.json','truss-browser/layout.sql','truss-browser/model.json']){const response=await page.request.get(origin+'/'+path);if(!response.ok())throw Error('Asset unavailable: '+path);hashes[path]=createHash('sha256').update(await response.body()).digest('hex');}
  for(const path of ['docs/helix/05-deploy/microsite/verify-action-compiler.ts','docs/helix/05-deploy/microsite/build-action-compiler.ts','docs/helix/05-deploy/microsite/action-compiler.ts','docs/helix/05-deploy/microsite/truss-catalog-worker.ts','docs/helix/05-deploy/microsite/build-truss-browser.ts','docs/helix/03-test/fixtures/bulk-update/local-products-input.json','docs/helix/03-test/fixtures/bulk-update/local-products-model.json','docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json'])hashes[path]=createHash('sha256').update(new Uint8Array(await Bun.file(resolve(import.meta.dir,'../../../..',path)).arrayBuffer())).digest('hex');
- const report={hashes,scope:'GitHub Pages-compatible local-profile Weft WASM compilation entirely in browser; unchanged example data; actual Truss core catalog registration and persistence only; no action execution',browser:browser.version(),passed:true,catalogRegistration:true,catalogReopen:true,secondTabExclusion:true,refusals:3,unicode:true,mobile:true,externalRequests:external,writeRequests:writes};
+ const report={hashes,scope:'GitHub Pages-compatible local-profile Weft WASM compilation entirely in browser; unchanged example data; actual Truss catalog and separate action/read-grant issuance; no selection, sealing or execution',browser:browser.version(),passed:true,catalogRegistration:true,catalogReopen:true,secondTabExclusion:true,actionReadPreparation:true,refusals:3,unicode:true,mobile:true,externalRequests:external,writeRequests:writes};
  await Bun.write(new URL('../../04-build/evidence/bulk-update/website-compiler-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report));
 }finally{await browser.close();server?.stop(true);}

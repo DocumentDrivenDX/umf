@@ -81,7 +81,7 @@ async function localOperation(command) {
       worker = undefined;
       openStore.disabled = false;
     } else {
-      storeStatus.textContent = result.outcome === "available" ? "Local Truss store opened" : result.outcome === "refused" ? "Catalog registration refused" : "Products catalog " + result.outcome;
+      storeStatus.textContent = result.outcome === "available" ? "Local Truss store opened" : result.outcome === "refused" ? "Catalog registration refused" : "UPDATE prepared";
       registerStore.disabled = closeStore.disabled = false;
     }
   } catch (error) {

@@ -42,7 +42,7 @@ async function localOperation(command:string){
   catalogOutput.textContent=JSON.stringify(result,null,2);
   if(result.outcome==='unavailable'){storeStatus.textContent='Store is in use in another tab';worker?.terminate();worker=undefined;openStore.disabled=false;}
   else if(result.outcome==='closed'){storeStatus.textContent='Store closed';worker?.terminate();worker=undefined;openStore.disabled=false;}
-  else{storeStatus.textContent=result.outcome==='available'?'Local Truss store opened':result.outcome==='refused'?'Catalog registration refused':'Products catalog '+result.outcome;registerStore.disabled=closeStore.disabled=false;}
+  else{storeStatus.textContent=result.outcome==='available'?'Local Truss store opened':result.outcome==='refused'?'Catalog registration refused':'UPDATE prepared';registerStore.disabled=closeStore.disabled=false;}
  }catch(error){storeStatus.textContent='Local store unavailable';catalogOutput.textContent=error instanceof Error?error.message:String(error);worker?.terminate();worker=undefined;openStore.disabled=false;}
 }
 openStore.addEventListener('click',()=>void localOperation('open'));

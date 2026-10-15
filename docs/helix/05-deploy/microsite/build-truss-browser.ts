@@ -12,7 +12,7 @@ if(hash(archive.manifestUtf8)!==provenance.manifestSha256)throw Error('Original 
 const manifest=JSON.parse(archive.manifestUtf8),files=new Map<string,Uint8Array>();
 if(manifest.interfaceVersion!=='truss-browser-assets/0.1'||manifest.pglite!=='0.5.10'||!Array.isArray(archive.files))throw Error('Unsupported Truss assets');
 for(const file of archive.files){
- if(typeof file.path!=='string'||!file.path.split('/').every((part:string)=>/^[a-zA-Z0-9_.-]+$/.test(part)&&part!=='.'&&part!=='..')||file.path==='manifest.json'||files.has(file.path))throw Error('Invalid Truss asset path');
+ if(typeof file.path!=='string'||!file.path.split('/').every((part:string)=>/^[a-zA-Z0-9_@.-]+$/.test(part)&&part!=='.'&&part!=='..')||file.path==='manifest.json'||files.has(file.path))throw Error('Invalid Truss asset path');
  const bytes=Buffer.from(file.base64,'base64'),expected=manifest.assets[file.path];
  if(!expected||bytes.length!==expected.bytes||hash(bytes)!==expected.sha256)throw Error('Original Truss asset differs: '+file.path);
  files.set(file.path,bytes);

@@ -2,6 +2,8 @@
 var scope = globalThis;
 var current;
 var pending = Promise.resolve();
+var action;
+var readGrant;
 scope.onmessage = (event) => {
   const id = event.data?.id, command = event.data?.command;
   pending = pending.then(async () => {
@@ -25,11 +27,21 @@ scope.onmessage = (event) => {
           if (!response.ok)
             throw Error("Model unavailable");
           const input = await response.json(), request = input.request;
-          const result = await current.store.registerDocument(current.owner, { documentId: request.modelPin.documentId, documentRevision: request.modelPin.revision, sourceUtf8: request.model.utf8 });
-          scope.postMessage({ id, result });
+          const registration = await current.store.registerDocument(current.owner, { documentId: request.modelPin.documentId, documentRevision: request.modelPin.revision, sourceUtf8: request.model.utf8 });
+          if (registration.outcome === "refused") {
+            scope.postMessage({ id, result: registration });
+            return;
+          }
+          const issued = await current.store.registerAction(current.owner, request.action.identity);
+          const granted = await current.store.grantSelectionRead(current.owner, issued.action);
+          action = issued.action;
+          readGrant = granted.grant;
+          scope.postMessage({ id, result: { outcome: "prepared", registration: registration.outcome, catalog: await current.store.catalog(current.owner), modelSha256: issued.model.sha256, preparationSha256: issued.preparation.sha256, selectionRead: granted.declaration } });
         } else {
           await current.store.close(current.owner);
           current = undefined;
+          action = undefined;
+          readGrant = undefined;
           scope.postMessage({ id, result: { outcome: "closed" } });
         }
       }

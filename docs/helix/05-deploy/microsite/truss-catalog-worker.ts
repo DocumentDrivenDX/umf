@@ -1,7 +1,8 @@
 // Opaque Truss capabilities stay in this worker. Messages cannot supply SQL or models.
-import type {StoreOpen} from './truss-browser/store.js';
+import type {StoreOpen,LocalAction,SelectionReadGrant} from './truss-browser/store.js';
 const scope=globalThis as unknown as DedicatedWorkerGlobalScope;
 let current:StoreOpen|undefined,pending=Promise.resolve();
+let action:LocalAction|undefined,readGrant:SelectionReadGrant|undefined;
 scope.onmessage=event=>{
  const id=event.data?.id,command=event.data?.command;
  pending=pending.then(async()=>{
@@ -18,9 +19,13 @@ scope.onmessage=event=>{
     if(command==='register'){
      const response=await fetch(new URL('./truss-browser/model.json',import.meta.url));if(!response.ok)throw Error('Model unavailable');
      const input=await response.json(),request=input.request;
-     const result=await current.store.registerDocument(current.owner,{documentId:request.modelPin.documentId,documentRevision:request.modelPin.revision,sourceUtf8:request.model.utf8});
-     scope.postMessage({id,result});
-    }else{await current.store.close(current.owner);current=undefined;scope.postMessage({id,result:{outcome:'closed'}});}
+     const registration=await current.store.registerDocument(current.owner,{documentId:request.modelPin.documentId,documentRevision:request.modelPin.revision,sourceUtf8:request.model.utf8}) as {outcome:string};
+     if(registration.outcome==='refused'){scope.postMessage({id,result:registration});return;}
+     const issued=await current.store.registerAction(current.owner,request.action.identity);
+     const granted=await current.store.grantSelectionRead(current.owner,issued.action);
+     action=issued.action;readGrant=granted.grant;
+     scope.postMessage({id,result:{outcome:'prepared',registration:registration.outcome,catalog:await current.store.catalog(current.owner),modelSha256:issued.model.sha256,preparationSha256:issued.preparation.sha256,selectionRead:granted.declaration}});
+    }else{await current.store.close(current.owner);current=undefined;action=undefined;readGrant=undefined;scope.postMessage({id,result:{outcome:'closed'}});}
    }
   }catch(error){scope.postMessage({id,error:error instanceof Error?error.message:String(error)});}
  });

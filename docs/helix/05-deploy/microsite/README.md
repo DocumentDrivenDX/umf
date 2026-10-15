@@ -204,14 +204,16 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
 The SQL page also opens a worker-owned Truss browser catalog using the original
-reviewed bundle from Truss `a75e614e`. Build it with
+reviewed bundle from Truss `9e50daf1`. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
 owner capability private and accepts only open/register/close commands against the
-fixed local Products model. Registration uses actual generic Truss catalog tables
-and preserves the original model including opaque action declarations. It does
-not register action authority, issue selection-read grants or execute UPDATEs.
+fixed local Products model. Prepare UPDATE registers the actual generic Truss
+catalog, then asks Truss to admit the original local action and separately issue
+its selection-read grant. The original owner, action and grant capabilities stay
+inside the worker and are issued afresh after reopen. This does not select rows,
+seal manifests or execute UPDATEs.
 The browser verifier checks registration, unchanged retry, second-tab exclusion
 and catalog/incarnation retention after reload under a `/umf/` base path.
 
