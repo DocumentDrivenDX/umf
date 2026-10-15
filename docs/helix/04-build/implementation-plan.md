@@ -11929,3 +11929,41 @@ those117 implementations remain absent. Evidence validation has217 checks and
 88 failed IDs, exactly the prior failed-ID set; its new `fresh-case-pg-raw.P02`
 check passes. These scoped results do not qualify the whole backend or complete
 the security goal.
+
+
+### PostgreSQL 18 virtual generated carrier refusal — 2026-10-15
+
+B-SFP-008 implements the permitted refusal branch of original `pg-raw.P05` /
+`US-056-AC7`. A private carrier admission boundary accepts only the qualified
+catalog barrier-view plan. Virtual generated mask/withhold requests and unknown
+carrier meanings retain their original JSON and refuse with no SQL or fallback.
+The original P02 compiler is unchanged. The installer consumes the exact ordered
+returned statements, not a separately reconstructed plan.
+
+Fresh PostgreSQL 18.6 native prebinding evidence passes 68 observations. Actual
+SCRAM ordinary actors retain independent typed disclosures and have no effective
+base SELECT/column SELECT, owner SET or read-all-data route. Refusal leaves native
+object inventory and data unchanged; owner FORCE RLS/security_barrier properties
+are explicitly observed. A separate excluded virtual-column probe observes
+independent generated/base privileges, immutable built-in routine metadata and
+planner expression expansion. Replacing only that probe expression with its
+original base value exposes the preimage through the same generated-column grant;
+restoration recovers the masked result. This is an excluded unsafe-expression
+control, not a universal virtual-column exploit or planner vulnerability.
+
+PostgreSQL 18 does not enforce the leakproof generation condition documented for
+fully secure virtual-column privilege separation. This bounded profile refuses
+virtual carriers because full expression/planner closure remains unqualified.
+Original P05 assertion, criterion and 60s timeout remain unchanged; only the fresh
+full gate can accept the case. Evidence and review are retained under
+`evidence/security/pg18-generated-carrier-20261015/`. No general policy permission,
+protected-write, query-property, current-authority lifecycle or Truss/Ashlar/Delta
+support is inferred. M2 and the overall security goal remain active.
+
+The fresh full 158-case gate accepted P05's refusal branch and all previous 41
+cases against integrated registry baseline 9641f715: 42 accepted, 116 required
+unbound, 34 criteria. It exits 1 solely for those missing implementations. The
+13 affected semantic cases now fingerprint newly introduced registry dependencies;
+all 158 assertions, allocations and timeouts remain unchanged. Evidence validation
+has 218 checks and the same 88 failed IDs as before; the added P05 freshness check
+passes. The security goal remains active.

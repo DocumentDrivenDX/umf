@@ -1,0 +1,15 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/core-extension-closure.test.ts:
+(pass) original products action extension survives explicit source custody and real policy compilation [88.41ms]
+(pass) absent or forged closure cannot grant extension interpretation [2.18ms]
+(pass) only exact original selected extension version is admitted, not callback or hash claims [0.05ms]
+(pass) unregistered vocabulary and malformed actions retain fail-closed behavior [49.23ms]
+(pass) registry access cannot mutate subsequent captures or original source snapshots [43.16ms]
+(pass) selection accessors never execute and mutable public package cannot drift from retained closure [15.75ms]
+(pass) actions metadata cannot be widened before the closure module loads in a fresh process [535.84ms]
+
+ 7 pass
+ 0 fail
+ 31 expect() calls
+Ran 7 tests across 1 file. [1157.00ms]

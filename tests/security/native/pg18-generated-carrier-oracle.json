@@ -1,0 +1,10 @@
+{
+  "case": "pg-raw.P05",
+  "serverVersionNum": "180006",
+  "admittedCarrier": "barrier-view",
+  "refusedCarriers": ["virtual-generated", "stored-generated", null, true, {}, ["barrier-view"]],
+  "virtualValues": [["A", "a***"], ["B", "b***"], ["N", null]],
+  "weakenedValues": [["A", "alpha-private"], ["B", "beta-private"], ["N", null]],
+  "refusal": {"status": "refused", "scope": "statement", "sqlstate": "42501", "rows": []},
+  "scope": "Virtual generated carriers refused. Native probes qualify only the observed PG18.6 privilege and expression behavior; no universal virtual-column exploit or leakproofness theorem."
+}

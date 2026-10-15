@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "runId": "8f61a634-9e76-4534-9730-f1f34a1cc560",
+  "runId": "2cd99344-9e81-471a-89f3-97f285dfbef0",
   "versions": {
     "postgresql": {
       "number": "180006",
@@ -21702,7 +21702,7 @@
         [
           {
             "state": "text",
-            "text": "1390"
+            "text": "1391"
           }
         ]
       ],
@@ -21710,7 +21710,7 @@
         [
           {
             "state": "text",
-            "text": "1390"
+            "text": "1391"
           }
         ]
       ]
@@ -22218,7 +22218,7 @@
         [
           {
             "state": "text",
-            "text": "1421"
+            "text": "1422"
           }
         ]
       ],
@@ -22226,7 +22226,7 @@
         [
           {
             "state": "text",
-            "text": "1421"
+            "text": "1422"
           }
         ]
       ]
@@ -39517,10 +39517,10 @@
       "assertionId": "pg-raw.L02:same-session:rollback-recovery",
       "expected": [
         {
-          "pid": "2709"
+          "pid": "2710"
         },
         {
-          "pid": "2709",
+          "pid": "2710",
           "value": "updated"
         },
         [
@@ -39529,15 +39529,15 @@
           "updated"
         ],
         {
-          "pid": "2709"
+          "pid": "2710"
         }
       ],
       "observed": [
         {
-          "pid": "2709"
+          "pid": "2710"
         },
         {
-          "pid": "2709",
+          "pid": "2710",
           "value": "updated"
         },
         [
@@ -39546,7 +39546,7 @@
           "updated"
         ],
         {
-          "pid": "2709"
+          "pid": "2710"
         }
       ]
     },
@@ -54463,7 +54463,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-l_sfhfq0",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-rseuxbfu",
       "originalQueries": 15
     },
     {
@@ -54560,7 +54560,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-ycd36hn6",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-wedwyp2h",
       "originalQueries": 20
     },
     {
@@ -54657,7 +54657,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-5t294m89",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-fuymp4s9",
       "originalQueries": 20
     },
     {
@@ -54754,7 +54754,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-i3ee26yf",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-7253y0xa",
       "originalQueries": 20
     },
     {
@@ -54851,7 +54851,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-hiei96zw",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-bysyrvsw",
       "originalQueries": 20
     },
     {
@@ -54957,7 +54957,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-eksajsnh",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-l_agf93j",
       "originalQueries": 15
     },
     {
@@ -55033,7 +55033,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-g0resyob",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-8dcqhpc5",
       "originalQueries": 15
     },
     {
@@ -55130,7 +55130,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-0pld9p48",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-fvg826am",
       "originalQueries": 20
     },
     {
@@ -55206,7 +55206,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-adhhlkbc",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-vgdtzlfo",
       "originalQueries": 15
     },
     {
@@ -55303,7 +55303,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-cpi488ly",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-njrv9gjj",
       "originalQueries": 20
     },
     {
@@ -55400,7 +55400,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-cwo6p45p",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-fr0sr8sp",
       "originalQueries": 20
     },
     {
@@ -55497,7 +55497,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-8gf1kd4f",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-gje6x_nr",
       "originalQueries": 20
     },
     {
@@ -55594,7 +55594,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-hvb0alg3",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-4g8fzm23",
       "originalQueries": 20
     },
     {
@@ -55691,7 +55691,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-2d8q6p4w",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-sjokeide",
       "originalQueries": 20
     },
     {
@@ -55788,7 +55788,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-vpcwsn01",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-9ruqrd2m",
       "originalQueries": 20
     },
     {
@@ -55894,7 +55894,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-v3rix8je",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-ad93en8f",
       "originalQueries": 15
     },
     {
@@ -55970,7 +55970,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-3xc8t1j7",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-3b6_fjem",
       "originalQueries": 15
     },
     {
@@ -56067,7 +56067,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-l1cipvhe",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-xd1hca__",
       "originalQueries": 20
     },
     {
@@ -56164,7 +56164,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-ap5ytz10",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-cm4xl3y8",
       "originalQueries": 20
     },
     {
@@ -56270,7 +56270,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-ueqf4kzf",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-4dtgd0e6",
       "originalQueries": 15
     },
     {
@@ -56346,7 +56346,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-_s5wfs_z",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-znf10tre",
       "originalQueries": 15
     },
     {
@@ -56443,7 +56443,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-h1kpfh7x",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-k50k4a93",
       "originalQueries": 20
     },
     {
@@ -56540,7 +56540,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-mq2zz44d",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-j9ry9obx",
       "originalQueries": 20
     },
     {
@@ -56646,7 +56646,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-0_pzd78z",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-mcqadqy_",
       "originalQueries": 15
     },
     {
@@ -56743,7 +56743,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-tv9a0oaw",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-1q7v6h9e",
       "originalQueries": 20
     },
     {
@@ -56840,7 +56840,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-g3abcv6v",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-kabcb3lg",
       "originalQueries": 20
     },
     {
@@ -56937,7 +56937,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-tjkg69qe",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-004aazhl",
       "originalQueries": 20
     },
     {
@@ -57043,7 +57043,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-fz216p9j",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-ae7fwt57",
       "originalQueries": 15
     },
     {
@@ -57119,7 +57119,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-q2im4th1",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-mswy5d4p",
       "originalQueries": 15
     },
     {
@@ -57147,7 +57147,7 @@
             [
               {
                 "state": "text",
-                "text": "1390"
+                "text": "1391"
               }
             ]
           ],
@@ -57155,7 +57155,7 @@
             [
               {
                 "state": "text",
-                "text": "1390"
+                "text": "1391"
               }
             ]
           ]
@@ -57216,7 +57216,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-08i7gotu",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-6tq_xk6c",
       "originalQueries": 20
     },
     {
@@ -57244,7 +57244,7 @@
             [
               {
                 "state": "text",
-                "text": "1421"
+                "text": "1422"
               }
             ]
           ],
@@ -57252,7 +57252,7 @@
             [
               {
                 "state": "text",
-                "text": "1421"
+                "text": "1422"
               }
             ]
           ]
@@ -57313,7 +57313,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-hf97mlmc",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-yaji0prg",
       "originalQueries": 20
     },
     {
@@ -57419,7 +57419,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-rq503daz",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-geoz3sfa",
       "originalQueries": 15
     },
     {
@@ -57525,7 +57525,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-nwshx1jm",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-ylpgd1gp",
       "originalQueries": 15
     },
     {
@@ -57631,7 +57631,7 @@
         "probe": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
         "runtimeImporter": "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js"
       },
-      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-8f61a634-9e76-4534-9730-f1f34a1cc560-5h8hvfdp",
+      "journalDirectory": "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-write-2cd99344-9e81-471a-89f3-97f285dfbef0-3x37lryg",
       "originalQueries": 15
     }
   ],
@@ -61417,13 +61417,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "a71b126e7f90adb678b15b576a6153b301f194ba0a8f73d236d3f20d94967469",
+      "containerId": "dac4d86e38d98ab599161452e18177c3afbd3ca4a5c4205ac22fcd50c78fb7cf",
       "ownedAnonymousVolumes": [
-        "e96fe2560bc3a1f3cbd4de7de30a3db3165d41e2ae7a20ae6473e33de640cacf"
+        "8457ca5a347146db99759d00bc2e9e1674ee0cb474b54b9d3dd977e9d879fc6a"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "1f23797ea68ed0a9b7af1e0cfae60575d398ee2ee619f848270b2d30d3ec9cfa"
+    "digest": "1e815ce720d4555fb672dd6dcb5889506b9c6178dd226ca78e4c3cd611ad4a3a"
   },
   "scope": "34 fixed native field-write vectors: original/proposed membership and distinct field/ownership/policy actions, independent complete committed business snapshots, native nontransactional excluded approval witness for dependent multirow rollback, ordinary direct SQL/private fact and trigger/TRUNCATE controls. Separate ordinary psql same-PID 42501/25P02, explicit rollback and fresh transaction recovery are observed with complete business-state preservation. Actual public pg-runtime decodes each fixed write RETURNING result, retains original journal bijection with missing/duplicate controls, observes commit/rollback acknowledgment and same-PID failed-transaction recovery. Excluded installer restores the seed between runtime and psql phases. Authored PostgreSQL18.6 stable-cut raw write mapping with independently checked native authority dependencies. Native WHERE/RETURNING read precondition is independently checked; write-without-read is not qualified by this profile. General compiler/refinement, concurrent authority/final publication, graph and complete backend qualification remain open.",
   "id": "pg-raw.L02",
