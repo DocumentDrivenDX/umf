@@ -12055,3 +12055,19 @@ and the unchanged86 failed IDs. Targeted HELIX checks pass and the historical
 global two-blocker/twelve-warning baseline remains. No new formal refinement
 claim is made. P03/B08, current compiler lineage/admission, the remaining backend
 profiles and the complete security goal remain active.
+
+
+### Current-model query source integration — 2026-10-15
+
+Added an explicitly named/revisioned current core/policy/ontology/protection/owner
+fixture without changing historical unnamed sources. Actual Weft Application AST
+lineage matches current UMF storage-owner resolution in75 fresh source-pinned
+controls;19 Bun/Chromium source controls and five focused tests/107 expectations
+pass. A separately revisioned logical read policy permits the opaque token only
+for active project staff; original undisclosed token read stays indeterminate.
+The evidence packet is `evidence/security/current-query-source-20261015/`.
+
+No UMF public API/core/schema or original acceptance binding changes. The latest
+whole gate remains45accepted/113unbound across158 required cases/34criteria.
+Current read-mode lowering, mixed-mode physical integration, native authority
+and P03/B08 remain open; the full goal stays active.

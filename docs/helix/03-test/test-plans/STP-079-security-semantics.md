@@ -538,3 +538,55 @@ logical regressions and the fresh full required-case gate. Add the extracted
 validator to the affected case source fingerprints without changing assertions,
 allocations or timeouts. P03/B08 stay unbound; these are source consistency tests,
 not native query admission or proof of key/provider correspondence.
+
+
+### Current source profile for query-lineage integration — 2026-10-15
+
+The new `tests/security/protection/current-query-source.json` is an explicitly
+authored source profile, not a migration of historical unnamed fixtures. It
+retains current core0.8, policy0.2, ontology0.2, protection0.1 and logical-owner0.1
+semantics while declaring queryable element names and int64 facets under new
+revision pins. Existing current UMF owners validate the complete source packet;
+no legacy policy or synthetic plaintext transform is substituted.
+
+Five queries exercise stored-token equality, self-join/group occurrences, an
+unselected token ordering dependency, numeric SUM and field-free COUNT. The
+fixture's expected uses are authored test expectations. Weft's actual Application
+parser/resolver must independently derive occurrence-sensitive source lineage,
+without interpreting the opaque current policy/catalog or inventing mode/action
+claims. UMF then matches the original revisions and exact live (type,Field) to
+the complete storage owner. Numeric SUM remains unsupported; COUNT supplies no
+invented Field dependency but retains its scan.
+
+The portable source-owner corpus rejects stale core/document/ontology/catalog
+pins, legacy policy substitution, missing live members, storage-transform drift,
+missing unrelated storage and canonical downgrade. Random-token join refuses;
+original-authorized mode still requires action. Nineteen Bun/Chromium observations
+pass at the retained selected source pins. These are correspondence controls,
+not a new solver/refinement proof, query attestation, current ORIGINAL-read permit,
+mixed-mode physical integration or native qualification. P03/B08 and the original
+158-case requirements stay unchanged.
+
+
+#### Actual compiler correspondence and separate logical read controls
+
+The host-only `tools/security/current-query-lineage.ts` invokes the frozen actual
+Weft Application parser/resolver on independently encoded exact current sources.
+Seventy-five checks match original request/SQL/model/plan hashes, uninterpreted
+opaque source custody, full scan/use populations and distinct occurrence paths
+to the existing current storage owner. Self-join/group, unselected token ordering,
+unsupported numeric SUM and field-free COUNT remain distinct. Caller property,
+mode or authority overrides and source digest substitutions refuse without a
+partial report. Selected source pins are retained, without a hermeticity claim.
+
+The original r1 policy discloses salary but not the protected token. Its actual
+logical token read is indeterminate, even when query properties are compatible.
+The separately authored `current-query-read-scenarios.json` pins the r1 fixture
+SHA and explicitly revises policy to named-query-token-read-r2, adding ORIGINAL
+stored-token disclosure. Complete supplied logical facts permit active project
+staff, deny inactive or different-project staff, and refuse missing coverage or
+stale policy pins. This reads the opaque stored token, not its pre-storage input.
+Five focused/current resolver tests pass107 expectations. Current native fact
+custody, actual query read-mode lowering, key scope, mixed-mode physical execution
+and P03/B08 acceptance remain unfinished. Existing conditional formal models are
+not extended or promoted to compiler/native refinement by these tests.
