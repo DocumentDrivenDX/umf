@@ -12349,3 +12349,16 @@ rawsalary and hidden Assignment facts escape. This keeps US-056-AC5/AC8 and
 B04/B05/B10/B14 open; CONTRACT-063 requires complete delegated authority closure.
 Truss is implementing external routine/view admission checks; no verified fix
 or backend promotion is inferred. See [exact counterexample](evidence/security/truss-external-delegation-20261015/README.md).
+
+### Independent explicit protected activation replays — 2026-10-15
+
+Exact committed Truss123cd2ec/privateABI2wheel and edebb67f/standardCI0.4.33ABI2
+cohorts each pass four native public workflows. Masked exact predicates and empty
+populations work; legacy data facades/regrant paths refuse. Privileged external
+definers, transitive column-granted views and unenrolled elevated roles refuse
+activation; finalCIcohort also rejects external internal-routine attachments.
+This closes exercised namespace-only paths under trusted activation/DDL
+quiescence, not complete native writer/effect/lifecycle or managed deployment
+qualification. Existing B04/B05/B06/B10/B11/B14/L12 procedures are expanded; all
+30 Truss cases remain required. No case promoted:45/158 accepted,113 unimplemented.
+See [separate exact source/wheel cohorts](evidence/security/truss-protected-query-replay-20261015/README.md).
