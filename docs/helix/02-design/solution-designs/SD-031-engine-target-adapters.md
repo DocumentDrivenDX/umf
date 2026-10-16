@@ -34,7 +34,7 @@ sibling contract.
 
 | Requirement | Design element | Verification owner |
 | --- | --- | --- |
-| EA-01 | `TrussTarget`: reads through Truss's read path, actions through protected admission as a `ReplayingActionExecutor`, bulk through `ManifestBulkPlan` (`preview`, `seal`, `submit`) and CONTRACT-903/904; carrier mapping, `ABSENT` refusal and lexical-spelling refusal | US-087 / STP-087 |
+| EA-01 | `TrussTarget`: reads through Truss's read path, actions through protected admission as a `ReplayingActionExecutor` with `validate()` mapped to Truss's preview, bulk through `ManifestBulkPlan` (`preview`, `seal`, `submit`) and CONTRACT-903/904; carrier mapping, `ABSENT` refusal and lexical-spelling refusal | US-087 / STP-087 |
 | EA-02 | `AshlarTarget`: `ReadTarget` only, resolver-pinned execution, `Continuation[K]` bound to the publication's identity digest | US-088 / STP-088 |
 | EA-03 | Engine-local adoption designs, adoption packet, conformance suite, engine witnesses, storage-access prohibition | US-087, US-088 / STP-087, STP-088 |
 
@@ -96,7 +96,10 @@ digest raises `StaleContinuation` on any other publication. Truss carriers inclu
 `Decimal` keeps the value but not the authored spelling. Truss `ABSENT` for a
 Field bound by a relational ColumnSet refuses with `ADOPTION_MISMATCH`. Truss
 results map to SDK outcomes through the CONTRACT-072 tx/1 table; only concurrency
-conflicts become `Conflict`.
+conflicts become `Conflict`. `TrussTarget.validate()` maps to Truss's action
+preview operation and returns its findings as a `ValidationResult`, with
+`complete` set to what Truss reports: false when the preview stops at the first
+failure, never true unless Truss evaluated every check.
 
 ## System Decomposition
 
@@ -122,7 +125,8 @@ unauthorized subjects, identical state, journal, feed, receipt and ACK on commit
 `Conflict` with rollback for concurrent conflicts, Truss's own classification
 (confirmed rollback, raised as `ActionFailed`) for injected failures before
 COMMIT, replay of equal idempotent requests, and bulk sealing, submission and
-coordinated execution matching Truss's own bulk path. STP-088 owns the Ashlar witnesses: equal rows to
+coordinated execution matching Truss's own bulk path, and `validate()` matching
+Truss's preview with its `complete` flag (US-087-AC8). STP-088 owns the Ashlar witnesses: equal rows to
 the resolver path; refusals for replaced or expired snapshots, renamed aliases
 and identity change between resolve and read; and empty pages only for complete
 empty publications, and `StaleContinuation` for continuations from another

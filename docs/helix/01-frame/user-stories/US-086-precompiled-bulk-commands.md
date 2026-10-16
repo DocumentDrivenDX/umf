@@ -13,7 +13,7 @@ ddx:
 
 # US-086: Run precompiled bulk commands
 
-**Feature:** [[FEAT-030]]. **Feature Requirements:** AT-05; FEAT-029 QC-03.
+**Feature:** [[FEAT-030]]. **Feature Requirements:** AT-05, AT-09; FEAT-029 QC-03.
 **PRD Requirements:** FR-54. **Priority:** P0 within the proposal.
 
 ## Story
@@ -30,8 +30,7 @@ limit, and never run SQL assembled from runtime input.
 A bulk command is a CONTRACT-071 declaration such as
 `Customer.objects.filter(Customer.c.last_seen < cutoff).update(active=False)`
 bound to a UMF action. The catalog build compiles it through Weft's mutation
-compiler (Weft CONTRACT-009, `weft-mutation/0.1.0`) against the action's
-CONTRACT-902 plan-model preparation. The generated function returns a
+compiler through the distinct native-bulk/0.1 program interface required by CONTRACT-071/073. Weft CONTRACT-006's existing frozen/batch CONTRACT-902 path is not that native interface; raw commands stay WEFT_BLOCKED until the new owner output qualifies. The generated function returns a
 `BulkPlan`.
 
 Weft's plans embed constant values, so at run time the target asks the pinned
@@ -47,7 +46,7 @@ have, so they are used only on Truss (US-087).
 1. The developer declares a command with `@command(action=DeactivateCustomer)`.
    The type checker validates the `.update(...)` fields and values.
 2. The catalog build compiles it for each selected raw-table target, recording
-   the statement template and its structural digest.
+   the complete native program, source/profile pins and Weft-owned versioned structural digest.
 3. The service calls `deactivate_stale(target, cutoff=...)` and gets a
    `BulkPlan`.
 4. `plan.preview()` shows the bounded set of selected identities and a statement
@@ -62,6 +61,7 @@ have, so they are used only on Truss (US-087).
 - [ ] **US-086-AC4** — Given a selection that matches `maxItems + 1` or more rows, when the developer calls `preview()` or `execute()`, then the command refuses with `BULK_LIMIT`, returns no truncated selection, and leaves every row unchanged.
 - [ ] **US-086-AC5** — Given runtime plan instantiation whose structural digest differs from the catalog's, when the developer calls `preview()` or `execute()`, then the command refuses with `PLAN_DRIFT` before any statement is sent to the target.
 - [ ] **US-086-AC6** — Given a raw-table `BulkPlan`, when the developer needs resumable or batched execution, then the plan exposes no `seal()` (pinned type checkers report the attribute as unknown), no CONTRACT-903 manifest or CONTRACT-904 control state is created, and the Truss manifest path remains governed by US-087.
+- [ ] **US-086-AC7** — Given a compiled command on a verified `postgresql` or `lakebase` target whose table another connection has locked, when the developer calls `execute(timeout=timedelta(milliseconds=200))`, then it raises `ActionTimedOut` and no selected row changed; and when the deadline instead passes after the commit is sent, the call never raises `ActionTimedOut` and is decided as for a lost commit (US-085-AC4).
 
 ## Edge Cases
 
@@ -85,13 +85,14 @@ have, so they are used only on Truss (US-087).
 | bulk_over_limit_refuses | US-086-AC4 | `maxItems + 1` matching rows | `BULK_LIMIT`; no rows changed; no truncated list |
 | bulk_plan_drift_refuses | US-086-AC5 | Catalog digest that differs from instantiation | `PLAN_DRIFT`; zero statements sent |
 | bulk_raw_has_no_manifest_path | US-086-AC6 | Raw-table `BulkPlan`; static `seal()` call | Checker error; no manifest or control rows |
+| bulk_timeout_commits_nothing | US-086-AC7 | Locked table before commit; deadline after commit sent | `ActionTimedOut` with no change; commit-loss rules after the commit is sent |
 
 ## Dependencies
 
 US-082 (DSL capture and static typing), US-083 (catalog build and `verify()`) and
 US-085 (raw-table transaction and outcome rules). CONTRACT-071, CONTRACT-072,
-CONTRACT-073, CONTRACT-902; Weft CONTRACT-009 and raw-table mutation selection
-backends (W-3). Feature requirements: AT-05 and FEAT-029 QC-03; PRD FR-54.
+CONTRACT-073 native-bulk/0.1; Weft CONTRACT-006 plus the required separate native interface and raw-table mutation selection
+backends (W-3). Feature requirements: AT-05, AT-09 and FEAT-029 QC-03; PRD FR-54.
 TD-086 owns implementation detail; STP-086 owns the test mapping.
 
 ## Out of Scope

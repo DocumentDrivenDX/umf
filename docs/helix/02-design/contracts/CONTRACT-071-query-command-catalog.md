@@ -39,7 +39,8 @@ query modules, and calls Weft's Python binding as a build-time compiler. Weft ow
 SQL dialects, lowering, backend bindings, parameter carriers and result decoders;
 this contract never constructs native SQL itself. Execution belongs to
 CONTRACT-072. Single-entity writes go through generated action clients
-(CONTRACT-068), not this catalog. Ad-hoc runtime queries are out of scope for 0.1.
+(CONTRACT-068); their raw-table statement programs are also catalog entries as
+defined below. Ad-hoc runtime queries are out of scope for 0.1.
 
 ## Normative Surface
 
@@ -76,6 +77,14 @@ parameters and literals, ending in a terminal. Capture calls it once with symbol
 parameters; any I/O, randomness or dependence on mutable global state is outside
 the contract, and the tool captures twice and refuses differing results with
 `CAPTURE_NONDETERMINISTIC`.
+
+Query modules are explicitly selected TRUSTED build-time Python code, not inert
+UMF metadata. Import/capture executes that code in the host build environment;
+two equal captures cannot prove purity or prevent side effects. This is not a
+sandbox or an authorization mechanism. Do not import modules selected by an
+untrusted document, plugin discovery or remote reference. Record module bytes
+and trusted dependency/profile pins in catalog provenance. The no-artifact-code
+rule concerns inert UMF data; it does not pretend Python imports are passive.
 
 ### Conventions
 
@@ -123,12 +132,16 @@ Deliberate choices:
 ### Typing rules
 
 Static checking is the first gate after generation; the DSL is designed so that a
-pinned type checker (pyright and mypy, both without plugins) rejects these errors
+pinned type checker (pyright, mypy and ty, all without plugins) rejects these errors
 before any build or run. Profiles MUST pin mypy's `check_untyped_defs` (or
 `strict`), because mypy otherwise skips unannotated function bodies, and MUST run
-pyright in the environment where the pinned dependencies are installed. The
+pyright and ty in the environment where the pinned dependencies are installed.
+Generated code targets Python 3.11 and later. The `umf_access` runtime carries
+the checker-specific suppressions its operator overloads need (for mypy, pyright
+and ty); generated code needs none. The
 [DSL typing spike](../../04-build/evidence/typed-persistence/dsl-typing-spike/README.md)
-records both checkers rejecting every row below:
+records pyright, mypy and ty, targeting Python 3.11, rejecting every row below that
+it covers:
 
 | Error | How it is rejected |
 | --- | --- |
@@ -137,40 +150,42 @@ records both checkers rejecting every row below:
 | Wrong parameter type | `Column[Order, datetime] >= Param[str]` has no matching overload |
 | Column from another record | `Column` and `Predicate` are generic over the owning Record; `Order.objects.filter(Customer.c.name == x)` is a `Predicate[Customer]` where `Predicate[Order]` is required |
 | Wrong `==` / `!=` operand | Python falls back to `object.__eq__` returning `bool`; the enclosing `filter` rejects `bool` |
-| Unknown, generated or immutable update field, or wrong value type | `.update(**values: Unpack[<Record>Update])` with a generated `TypedDict` of mutable fields |
+| Unknown, generated or immutable update field, or wrong value type | `.update()` is generated per Record with one explicit keyword-only parameter per mutable field |
 | Wrong query arguments at call sites | Generated catalog functions have exact keyword signatures and return types |
+| Column from a Record not in the query | `.join(Matter.c.client)` changes the query type to `Joined[Matter, Client, R]`, whose `filter` accepts `Predicate[Matter] | Predicate[Client]`; columns of any other Record are rejected. Columns of a left-joined Record are typed `T | None` in results |
+| Aggregate misuse | `avg_` without `scale` is a missing keyword argument; `sum_` over a `Column[O, str]` has no matching overload; aggregate results are typed `Agg[O, T | None]`, so `.select(Order.c.status, sum_(Order.c.amount))` rows are `tuple[str, Decimal | None]` |
 | Wrong result use | Generated catalog functions declare exact return types: `.all()` gives `list[R]`, `.first()` gives `R | None`, `.select(a, b)` gives `tuple[A, B]` rows, `.page()` gives `Page[R, K]`. Inside declaration modules pyright infers these; mypy infers `Any` for unannotated declarations, so call sites, not declarations, carry this guarantee |
 | Projection of another Record | `.into()` on each Record's query root is a set of generated overloads accepting only that Record's declared projection models |
 | `None` passed as "absent" to an optional filter | `if_present` accepts only `Param[T | MISSING]`; a no-`MISSING` parameter selects an invalid-filter marker that the enclosing `filter` rejects |
 
 `Param` is covariant, so a `Param[str]` is accepted where a nullable string column
-is compared. `.select` overloads cover up to eight columns; wider projections use
-a declared projection model with `.into`.
+is compared. `.select` overloads accept columns, aggregate expressions
+(`Agg[O, T]`) and bucket expressions (`Bucket[O, T]`) and cover up to eight
+items; wider projections use a declared projection model with `.into`.
 
 Result and helper types:
 
 - `Page[R, K]` carries `items: tuple[R, ...]` and `next_after: Continuation[K] |
-  None`, where `K` is the Record's Key DTO. `Continuation[K]` records the target
-  identity digest (CONTRACT-072); passing it to a target with a different identity
-  raises `StaleContinuation`.
+  None`, where `K` is the RecordView's explicitly selected Key DTO. `Continuation[K]` records the target
+identity, catalog/entry/variant and encoded filter digests plus every sort value
+(CONTRACT-072); changing any of these raises `StaleContinuation`.
 - `.include_keys(rel, limit=n)` changes the row type from `R` to `WithKeys[R, K]`,
   with `row: R` and `keys: RelatedKeys[K]`, where `RelatedKeys[K]` has
   `items: tuple[K, ...]` and `truncated: bool` (true when more than `n` related
   keys exist). Like `.select` and `.into`, it returns a new query type rather than
   `Self`.
-- `if_present(p, f)` accepts only parameters whose declared union includes
-  `MISSING`. Ordered overloads give a parameter without `MISSING` an
-  `InvalidOptionalFilter` result, rejected by the enclosing `filter`; the runtime
-  keeps any required overlap diagnostic suppression internal. Capture also
-  rejects a parameter whose declaration excludes `MISSING`. `None` is a value,
-  meaning `IS NULL` where the column admits null; it never means "absent".
+- `if_present(p, f)` accepts only `Param[T | MISSING]`. `MISSING` alone omits a filter. `None` is a present SQL-null value: comparison with it yields UNKNOWN under S2; it does not rewrite equality to `IS NULL`. Use explicit `.is_null()` for that predicate. `Param[T | None | MISSING]` has two presence variants; null stays in the present variant and is never a third variant.
+  Ordered overloads give a parameter whose declaration excludes `MISSING` an
+  `InvalidOptionalFilter` result, rejected by the enclosing `filter`; required
+  overlap diagnostic suppression stays internal to the runtime. Capture also
+  rejects a parameter whose declaration excludes `MISSING`.
 - `Column` overrides `__eq__`, which makes it unhashable. The narrower `__eq__`
   signature is an intentional override; the `umf_access` runtime package
   suppresses the checker's override diagnostic internally, so developer code sees
   none.
 
 Not yet covered by the typing spike, and therefore unqualified until the B-TP-001
-compatibility spike or the US-082 corpora show them on both pinned checkers:
+compatibility spike or the US-082 corpora show them on all three pinned checkers:
 `if_present` with `MISSING`, `group_by().count()`, `RankedQuery` and `Scored`,
 `include_keys`, `Page[R, K]`, and the per-Record `.into()` overloads.
 
@@ -184,14 +199,15 @@ column attributes carry docstrings citing their UMF source pointer, so editor
 go-to-definition reaches the authored meaning.
 
 The remaining gates, in order, are the catalog build (forms Weft cannot compile
-for every selected target, unbounded reads, invalid ordering), target `verify()`
+for every selected target, unbounded reads, ordering without a complete unique
+Key tiebreak or unsupported WR-A6 continuation), target `verify()`
 before first use (CONTRACT-072) and codec validation of every bound value.
 
 ### DSL surface in 0.1
 
 The 0.1 surface is the form set UMF requested from Weft in
 [the Weft requirements](../../04-build/weft-requirements-typed-access.md)
-(tranche A), and its meaning follows that document's shared semantics S1 to S10:
+(tranche A), and its meaning follows that document's shared semantics S1 to S17:
 SQL three-valued logic, explicit null placement, binary string order, exact
 numeric and instant comparison, and a complete-Key tiebreak on every ordering.
 Generated types expose every form below. Each catalog target either compiles a
@@ -216,6 +232,14 @@ whose backend has not yet delivered that requirement.
 | `.select(*cols)`, `.into(P)` | Typed tuple or declared projection | existing |
 | `if_present(p, f)` | Optional filter applied only when `p` is not `MISSING` | variant expansion (no Weft change) |
 | `.filter(...).update(**values)` | Bulk update through the named action, including `None` for nullable Fields | existing for string/boolean equality; WR-A9, WR-I5 otherwise |
+| `sum_(c)`, `min_(c)`, `max_(c)`, `avg_(c, scale=n)`, `count()`, `count_distinct(c)`, `approx_count_distinct(c)` | Aggregates under S11, used in `.select(...)` after `.group_by(...)` or over the whole filtered set | WR-A10 (`count()` and `sum_` exist today) |
+| `c.bucket_width(w)`, `c.date_bucket(unit, zone=z)` | Fixed-width and date buckets (S12) as group keys; `zone` is required for instants | WR-A10 |
+| `.order_by(sum_(c).desc(), ...)` | Ordering groups by aggregates or group keys, with the group key as tiebreak | WR-A10 |
+| `c.starts_with(p)` | Binary, case-sensitive prefix match (S13) | WR-A11 |
+| `c.matches_all_terms(q)`, `c.matches_any_term(q)` | Unranked term filters using a declared keyword index's analyzer (S14) | WR-A11 |
+| `.page(size=n, after=c, snapshot=True)` | Snapshot pages (S15; CONTRACT-072 Continuations) | WR-A12 |
+| `c.is_distinct_from(v)`, `c.is_not_distinct_from(v)` | Null-safe inequality and equality (S16), never UNKNOWN | WR-A13 |
+| `.join(M.c.rel)` | Follow a declared to-one relationship; inner when required, left when optional (S17); later predicates, ordering and `.select` may use the joined Record's columns | WR-A14 (equality joins exist today) |
 | `.search(...)` | Ranked search (CONTRACT-074) | tranche C |
 
 `include` of full related rows is expressed as two catalog queries (keys, then
@@ -232,7 +256,7 @@ targets, weft:{distribution,version}, umf:{documents}}`:
   scanning or entry-point discovery.
 - `targets` is an ordered list of `{id, backendId, backendVersion,
   targetProfile, bindingSource, platform, security, roleMappings,
-  administrativeSingleTenant}`. `platform` names the CONTRACT-072 target kind and
+  administrativeSingleTenant, sessionPrincipal, schemaBinding, nativeAdmission}`. `platform` names the CONTRACT-072 target kind and
   its pinned versions. `security` names the pinned `umf.security` policy and
   ontology source that Weft's compiler (0.5) requires; it is part of the request
   identity and its digest. `roleMappings` is an exact map from each action role ID
@@ -240,36 +264,42 @@ targets, weft:{distribution,version}, umf:{documents}}`:
   selected action has role authorization. `administrativeSingleTenant` is a
   boolean, valid only for `spark-delta` targets, that declares the target
   single-tenant administrative for CONTRACT-073 authorization; it defaults to
-  false. `sessionPrincipal` is `human` or `service` and declares what the host's
+  false. `nativeAdmission` carries CONTRACT-072 host/native proof descriptors; `sessionPrincipal` is `human` or `service` and declares what the host's
   connections for this target authenticate as (per-user connections or a service
-  account); it governs CONTRACT-073 attribution. None of these is inferred, and the
-  SDK never creates or inspects connections to check them.
+  account); it governs CONTRACT-073 attribution. `schemaBinding` is `qualified`
+  (statements name each table's schema from the binding) or `search-path`
+  (statements name tables without a schema and the host binds the schema per
+  connection; Weft WR-B7, CONTRACT-072 schema-neutral targets). With
+  `search-path`, nothing in the catalog, generated code or call sites names a
+  schema, so one catalog serves every deployment of an application. None of these is inferred, and the
+  SDK never creates connections. Native verification/admission through host connections must establish the claimed principal/profile correspondence; a host label alone proves nothing.
 - Compilation renders each captured query to canonical Weft SQL text using the
   authored module `namespace`, Record `name` and member Field `name`, as required
-  by Weft's logical name resolver. Generated metadata retains those names
-  separately from exact module/element/Field identities and Python `names`
-  overrides. Missing or ambiguous logical names refuse; IDs and Python names
-  MUST NOT be substituted. Compilation submits that text
+  by Weft's logical name resolver. These names remain separate from schema IDs
+  and Python overrides; missing or ambiguous names refuse without substitution.
+  Compilation submits that text
   with the pinned UMF documents, the target binding and the target's `security`
   source to the pinned Weft version, and records Weft's response. A blocked response for any variant on any target
   fails the build with Weft's diagnostics retained.
-- Commands compile through Weft's mutation compiler against the named action's
-  CONTRACT-902 plan-model preparation, using witness parameter values of the
-  correct carriers. The catalog records the lowered statement template and its
-  structural digest (Weft output with parameter values removed).
+- Truss manifest commands compile through Weft's mutation compiler against the
+  named action's original CONTRACT-902 preparation and its exact invocation
+  profile, using witness values of the correct carriers. Raw-table commands
+  instead require Weft's distinct CONTRACT-073 `umf.actions.native-bulk/0.1`
+  program output; they MUST NOT reinterpret a CONTRACT-902 plan as a raw atomic
+  SQL program. Missing owner output refuses with `WEFT_BLOCKED`.
 
 Actions are compiled too. For every raw-table target (CONTRACT-073), the tool
 compiles each action selected in the stage-one package through Weft's action
 lowering into a catalog entry of kind `action`. Engine targets (CONTRACT-069) get
 no action entries; their adapters execute actions through the engine.
 
-Stage two owns exactly three reserved paths inside the stage-one package:
-`<package>/queries.py`, `<package>/_umf/catalog.json` and
-`<package>/_umf/catalog-manifest.json`. CONTRACT-067 reserves these paths and its
+Stage two owns exactly four reserved paths inside the stage-one package:
+`<package>/queries.py`, `<package>/_umf/catalog.json`,
+`<package>/_umf/catalog-manifest.json` and `<package>/_umf/privileges.json`. CONTRACT-067 reserves these paths and its
 writer and drift check ignore them. The catalog manifest records an inventory of
-the stage-two files and the stage-one `inputDigest` the catalog was built
+the stage-two files and the stage-one `inputDigest` and `runtimeAbi` the catalog was built
 against; if the checked-in stage-one manifest has a different digest the catalog
-is stale and `umf-access catalog --check` fails with `CATALOG_STALE`. Stage two
+is stale and `umf-access catalog --check` fails with `CATALOG_STALE`. Runtime catalog load/use MUST compare the catalog manifest's stage-one inputDigest and runtimeAbi against the loaded generated metadata before any target call; mismatch raises CATALOG_STALE, even when --check was not run. A process with mixed loaded generations must refuse rather than reuse old query/codec entries. Stage two
 uses the same hand-edit refusal and staging rules as CONTRACT-067.
 `umf-access catalog --check` recompiles and fails on any byte difference.
 
@@ -291,6 +321,33 @@ carrier}[], outputs, obligations, structuralDigest}`:
   continuation are arguments of Truss's read API rather than a SQL `LIMIT`.
 - `outputs` is Weft's ordered result descriptor list with decoders, and
   `obligations` are Weft's host obligations, retained verbatim.
+
+Those artifact alternatives apply only to reads. Command variants MUST instead
+retain one of these closed, distinct carriers:
+
+- `kind:"truss-command"` with `originalPlan` (complete original CONTRACT-902
+  Artifact), `preparation` (exact original preparation/source bytes and producer
+  identity), `sourcePins`, `lowering` (complete original Weft selection result,
+  preflights, parameters, identity/Key/version outputs, bounds and obligations),
+  `parameters`, `maxItems`, and `structuralDigest`.
+- `kind:"native-command"` with `profile:"umf.actions.native-bulk/0.1"`, the
+  complete original Weft `program`, preflight/count/role/precondition markers,
+  `sourcePins`, `parameters`, `maxItems`, `receipt`, `obligations`, and
+  `structuralDigest`. It has no CONTRACT-902/903 manifest semantics.
+
+`sourcePins` retains exact original logical documents, ActionRef source,
+preparation/producer when applicable, invocation profile, backend/profile,
+binding and security source identities/digests. Retain complete owner artifacts,
+not a SQL summary or a page artifact standing in for a mutation plan.
+
+`structuralDigest` is `{owner,version,sha256}` supplied by the SAME pinned Weft
+compile/instantiate interface. Its versioned projection includes complete
+non-value plan/program, lowering/preflight/output/bound/obligation and source/
+profile meaning; only declared parameter VALUE slots may vary. UMF never defines
+it by stripping SQL or locally hashing an edited plan. Until WR-I3/I5 supply and
+qualify this owner interface, SDK command catalog generation/instantiation refuses
+with `WEFT_BLOCKED`; the separate browser free-SQL proof does not need this SDK
+catalog surface. Read structural digests carry the same owner/version tag.
 
 Action entries (`kind:"action"`, raw-table targets only) have no variants. An
 executable action entry is `{name, kind, targetId, weft, umfPins, action:{module,
@@ -316,15 +373,15 @@ kind, targetId, refusal:{code, diagnostics}}`, so the runtime raises
 ```python
 def customer_orders(target: ReadTarget, *, customer: CustomerKey,
                     status: str | MISSING = MISSING,
-                    after: Continuation[OrderKey] | None
+                    after: Continuation[OrderKey] | None = None,
+                    timeout: timedelta | None = None
                     ) -> Page[OrderSummary, OrderKey]: ...
-def deactivate_stale(target: BulkTarget[P], *, cutoff: int) -> P: ...
+def deactivate_stale(target: BulkTarget[P], *, cutoff: int, timeout: timedelta | None = None) -> P: ...
 ```
 
 A `Param[K | None]` page cursor in a declaration becomes a `Continuation[K] |
 None` argument of the generated function; the runtime checks the continuation's
-identity digest and binds its complete ordered continuation values, including
-the Key, under shared semantics S7. Bulk functions return the plan type of their
+complete target/catalog/query/variant/argument context and binds its full effective sort tuple, including the selected Key. Bulk functions return the plan type of their
 target (CONTRACT-072 `AtomicBulkPlan` or `ManifestBulkPlan`).
 
 ### Runtime rules
@@ -341,16 +398,56 @@ target (CONTRACT-072 `AtomicBulkPlan` or `ManifestBulkPlan`).
   decoding rules) MUST be enforced by the CONTRACT-072 target before execution.
 - Bulk commands return a `BulkPlan`. Because Weft's mutation plans embed
   constant values, the target instantiates the plan by calling the pinned Weft
-  compiler with the catalog's SQL template and the validated parameter values,
-  then MUST verify that the lowered selection's structural digest equals the
-  catalog's. A mismatch refuses with `PLAN_DRIFT`. This is the only runtime use of
+  compiler with the catalog's logical template and validated parameter values,
+  then MUST compare the COMPLETE owner/version/digest tuple for the original
+  plan/program AND lowering with the catalog's. A mismatch refuses with
+  `PLAN_DRIFT` before any store/control operation. Matching structure never issues
+  authority or substitutes for source/revision checks at sealing/effect time.
+  This is the only runtime use of
   Weft; a Weft plan-template capability that binds values without recompilation
   is the intended replacement.
+
+### Privilege report
+
+Because every statement a package can run is in its catalog, stage two also writes
+`<package>/_umf/privileges.json`: for each target, the tables and columns each
+entry reads or writes, the operations used (`SELECT`, `INSERT`, `UPDATE`, `DELETE`,
+`MERGE`), the functions it calls (for example role-membership checks) and the
+search indexes it uses, plus a proposed least-privilege grant script in the
+target's own syntax (Postgres and Lakebase `GRANT`, Unity Catalog `GRANT`). The
+report is review material for the host, which owns credentials and applies grants;
+the SDK never executes it. The report inventories catalog operations AND all required runtime metadata, verification, admission, dependency-closure, reconciliation and snapshot operations/functions, distinguishing known grants from unresolved/host-only obligations. Native least privilege must be qualified per target; grants alone do not prove human/role identity, DDL fencing, restore continuity or access to original engine control custody. Mark incomplete inventories explicitly and refuse affected capability qualification; do not advertise blanket sufficiency.
+
+### Timeouts and streams
+
+Every generated function takes a keyword-only `timeout: timedelta | None = None`
+(CONTRACT-072 Timeouts). Declarations ending in `.page(...)` also generate a
+`<name>_stream` function (CONTRACT-072 Streams) for bounded exports beyond one
+page.
+
+### Async calls
+
+Generated functions are overloaded on the target type (CONTRACT-072 Async
+targets): with a sync target they return the result; with an async target they
+return an awaitable of the same result type. Declarations are written once.
 
 ### Bounds
 
 At most 1,000 declarations per package, 16 variants per declaration, 64
 parameters per declaration and Weft's own statement and plan bounds.
+
+## Prior Art
+
+Palantir's Ontology SDK generates a per-application typed client from an ontology,
+offers typed filters, link traversal, aggregations, vector search, a `$snapshot`
+paging option and write-only-through-actions with validation results and returned
+edits, and since its 2.0 release splits a thin generated layer from a shared
+client. This contract follows the same shape. It differs deliberately: queries
+are compiled at build time rather than sent to a platform service; `is_in` and
+`!=` are included with stated null semantics; page sizes are capped; prefix
+matching is binary and case-sensitive; and authorization stays with the target
+platform, with the privilege report as the counterpart to the OSDK's scoped
+application token.
 
 ## Precedence and Compatibility
 
@@ -389,3 +486,13 @@ Truss runtime binding 0.4 when the target reports 0.5 raises
 - [ ] Every DSL row has a positive and a Weft-blocked negative case per target.
 - [ ] Runtime refuses unpinned targets, plan drift and stale continuations; no runtime path accepts SQL text.
 - [ ] Every variant records logical SQL, the full Weft request identity and its execution artifact.
+
+### Search execution artifacts
+
+Search variants use `{kind:"search-program",version,sourcePins,legs,embedding,fusion,hydration,maxK,maxDepth,outputs,obligations,structuralDigest}` from the pinned Weft interface. Each leg names its exact native statement/artifact and parameters, ordering and score conversion; embedding binds the model identity; fusion fixes the algorithm and bounds. Hydration names bounded catalog entries reapplying the original filters and native admission. All nested artifacts and obligations participate in the owner/version digest. Runtime executes only this finite program and supplies values; it invents no SQL. Unsupported program outputs refuse with `WEFT_BLOCKED`.
+
+Grouped counts must remain bounded by an admitted limit/page; a global aggregate returning one row may count an arbitrarily large population but must use an exact integer result carrier.
+
+### Bounded join typing and ambiguity
+
+`Joined[O1,O2,R]` is the one-join form of a generated bounded owner-set query family (root plus one through four joined Records). Filters/selects admit only members of that exact set. Until an explicit alias-binding surface qualifies, self joins, repeated target Record types, multiple paths reaching the same type, or any ambiguous bare column owner refuse at capture/build; never infer billing versus shipping from a class name. Optional join provenance makes the right-hand projected value nullable even when the native Field is required; dedicated overload/projection corpora on all three checkers and left-missing native rows must prove that transformation before qualification. Column-to-column comparisons in0.1 accept only the same owning Record; comparisons across joined owners remain unsupported until a context-bound operand API qualifies.

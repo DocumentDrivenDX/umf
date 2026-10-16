@@ -2,7 +2,7 @@
 from __future__ import annotations
 from datetime import datetime
 from decimal import Decimal
-from typing import ClassVar, TypedDict, Unpack, final
+from typing import ClassVar, final
 from pydantic import BaseModel, ConfigDict, MISSING
 from dsl import Column, Query, Predicate
 
@@ -16,12 +16,10 @@ class OrderColumns:
     memo: Column["Order", str | None] = Column("Order", "memo")
     placed_at: Column["Order", datetime] = Column("Order", "placedAt")
 
-class OrderUpdate(TypedDict, total=False):
-    amount: Decimal
-    memo: str | None
-
 class OrderQuery(Query["Order", "Order"]):
-    def update(self, **values: Unpack[OrderUpdate]) -> "Bulk": return Bulk(("update", self, values))
+    def update(self, *, amount: Decimal | MISSING = MISSING,
+               memo: str | None | MISSING = MISSING) -> "Bulk":
+        return Bulk(("update", self, {"amount": amount, "memo": memo}))
 
 class Bulk:
     def __init__(self, node: object) -> None: self.node = node

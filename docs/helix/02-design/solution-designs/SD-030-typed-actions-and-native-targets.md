@@ -43,6 +43,10 @@ SD-031.
 | AT-04 | CONTRACT-073 obligations table, build-time refusals, outcome classification, Postgres/Lakebase commit-loss reconciliation | US-085 / STP-085 |
 | AT-05 | Single atomic bulk program, `AtomicBulkPlan.preview()` read-only, `execute() -> BulkOutcome`, `maxItems` refusal | US-086 / STP-086 |
 | AT-06 | `umf_access.conformance` suite with injected commit loss | US-085 / STP-085 |
+| AT-07 | `ActionExecutor.validate()` and generated `<action>.validate(input)` returning `ValidationResult`; Weft WR-B4 validate-only program in an always-rolled-back transaction; `Committed.created` and `Committed.changed` Key DTOs from the program's returned Keys | US-085 / STP-085 (raw tables); US-087 / STP-087 (Truss preview mapping) |
+| AT-08 | `AsyncActionExecutor`; `AsyncPostgresTarget` and `AsyncLakebaseTarget` over psycopg 3's async connection; generated sync/async overloads | US-085 / STP-085 |
+| AT-09 | Keyword-only `timeout` on action and bulk calls; native `SET LOCAL statement_timeout` or driver cancellation plus a client-side deadline; `TimedOut` before the commit is sent; commit-phase deadline handled by commit-loss reconciliation | US-085 / STP-085 (actions); US-086 / STP-086 (bulk) |
+| AT-10 | Multi-effect actions as one CONTRACT-073 program; no cross-action transaction surface in generated clients or the runtime | US-085 / STP-085 |
 
 ## Solution Approaches
 
@@ -80,11 +84,12 @@ flowchart LR
   R --> N
   BT --> P[BulkPlan preview/execute] --> N
   N --> O{Outcome}
-  O --> C[Committed + receipt]
+  O --> C[Committed + receipt + Keys]
   O --> J[Rejected code]
   O --> D[Denied]
   O --> F[Conflict]
   O --> I[Indeterminate]
+  O --> TO[TimedOut]
 ```
 
 `TargetIdentity` is `{kind, backendId, backendVersion, targetProfile,
@@ -123,7 +128,13 @@ pinned per target; none is qualified by this design.
 STP-085 owns client typing (including static rejection of raw-table targets by
 `ReplayingActions`), outcome mapping, profile refusals (policy authorization,
 `person-required` attribution on service-principal targets, handler bindings), adapter action conformance and
-commit-loss injection and reconciliation. STP-086 owns bulk preview/execute
+commit-loss injection and reconciliation, and also `validate()` reporting every
+failing precondition with no effect (US-085-AC8), typed created and changed Keys
+on `Committed` (US-085-AC9) and async invocation on Postgres and Lakebase
+(US-085-AC10); the first two depend on Weft WR-B4. STP-085 also owns action
+timeouts (US-085-AC11), multi-effect atomic actions with no cross-action
+transaction (US-085-AC12) and `person-required` actions on `human`-principal
+targets (US-085-AC13); STP-086 owns bulk timeouts (US-086-AC7). STP-086 owns bulk preview/execute
 agreement. STP-083 owns `verify()` detection of added, dropped, retyped and
 identity- or generation-changed columns and the Lakebase minor-version refusal
 (US-083-AC5). Every CONTRACT-073 obligation row needs native positive and negative

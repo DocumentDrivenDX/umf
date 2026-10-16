@@ -61,7 +61,9 @@ an unknown member on a selected Record blocks generation (CONTRACT-067
 
 ### RecordView
 
-`{record:RecordRef, fields:FieldView[]}`. `fields` MUST cover every owned member
+`{record:RecordRef, selectedKey:KeyRef, fields:FieldView[]}`. `selectedKey` is required and names an exact declared Key of this Record. It selects identity for `get`, deterministic ordering, paging and search hydration; no primary Key or first Key is inferred. Missing, foreign or unresolved selection refuses with `ACCESS_REFERENCE`. Alternate Keys remain distinct: an action entity parameter or relationship names its exact declared Key and uses that Key's generated DTO (CONTRACT-068), or generation refuses; it never substitutes `selectedKey`. All declared Key component Fields remain immutable.
+
+`fields` MUST cover every owned member
 Field of the Record and every reached item/value Field exactly once, in Record
 member order followed by nesting order. Missing or duplicate entries refuse.
 
@@ -108,6 +110,17 @@ The table is keyed by five core facts:
 Presence is written `missing/null`, so `F/T` means `{missing:false,
 null:true}`. The `row` presence depends on whether the Field is bound by a
 relational ColumnSet:
+
+The table's engine-only `T/T` and `T/F` alternatives apply only to owned Record
+members, not item/value occurrences. For an item/value Field use `F/F` when core
+availability is required or absent-allowed excludes null, and `F/T` when
+absent-allowed admits null; both row and create MUST have missing false.
+A Field reused as both an owned member and an item/value position must satisfy
+both contexts; incompatible presence/carrier requirements refuse rather than
+letting one occurrence change another. These are the complete nested alternatives;
+unspecified/ambiguous nested meaning refuses. A nullable array item/map value is
+not an omitted position/key, and container nullability never determines its entries.
+Reuse with incompatible native nested carriers refuses.
 
 - A Field bound by any relational ColumnSet (`postgresql`, `lakebase`,
   `spark-delta`, `unity-catalog`) can never have `row.missing:true`: relational
@@ -186,6 +199,17 @@ SearchIndex and SearchBinding shapes, and their validation rules, are defined in
 CONTRACT-074. They are part of this extension so that search semantics are
 authored and reviewed with the rest of the document.
 
+### Notes for consumers
+
+- Timestamp and date Fields cannot be Key components (CONTRACT-040 blocks temporal
+  Key equality). A table keyed on a time bucket authors a separate, non-temporal
+  key Field holding the bucket (for example an integer bucket number or canonical
+  text such as `2026-10-15T14`), alongside the timestamp Field itself.
+- ColumnSets are the authored physical facts that typed access relies on. A
+  consumer that emits its own DDL should emit it from the same UMF documents and
+  bindings, and check in CI that its DDL matches the ColumnSets; `verify()`
+  (CONTRACT-072) also detects drift when the application starts.
+
 ## Precedence and Compatibility
 
 Core contracts own value meaning; CONTRACT-042 owns physical placement; this
@@ -209,16 +233,17 @@ All errors are declaration errors reported with JSON Pointers; none is repaired.
 ## Examples
 
 An `Order` Record with Key `orderId`, required decimal `amount` (precision 12,
-scale 2), absent-allowed string `memo`, required timestamp `placedAt` with default
-`on:"missing"`, and engine-assigned 64-bit integer `revision`:
+scale 2), absent-allowed string `memo`, required explicitly supplied timestamp
+`placedAt`, and engine-assigned 64-bit integer `revision`. No temporal core default
+is asserted: CONTRACT-049 does not admit one in this profile.
 
 ```json
 {"umf.access": {
-  "views": [{"record": {"module": "commerce", "element": "Order"}, "fields": [
+  "views": [{"record": {"module": "commerce", "element": "Order"}, "selectedKey": {"module": "commerce", "element": "Order", "key": "orderId"}, "fields": [
     {"field": {"module": "commerce", "element": "orderId"}, "row": {"missing": false, "null": false}, "create": {"missing": false, "null": false}, "mutable": false, "generated": false},
     {"field": {"module": "commerce", "element": "amount"},  "row": {"missing": false, "null": false}, "create": {"missing": false, "null": false}, "mutable": true,  "generated": false},
     {"field": {"module": "commerce", "element": "memo"},    "row": {"missing": false, "null": true},  "create": {"missing": true,  "null": true},  "mutable": true,  "generated": false},
-    {"field": {"module": "commerce", "element": "placedAt"},"row": {"missing": false, "null": false}, "create": {"missing": true,  "null": false}, "mutable": false, "generated": false, "temporal": "instant"},
+    {"field": {"module": "commerce", "element": "placedAt"},"row": {"missing": false, "null": false}, "create": {"missing": false, "null": false}, "mutable": false, "generated": false, "temporal": "instant"},
     {"field": {"module": "commerce", "element": "revision"},"row": {"missing": false, "null": false}, "create": {"missing": true,  "null": false}, "mutable": false, "generated": true}
   ]}],
   "columns": [{"binding": {"sourceId": "orders-binding", "module": "commerce"},
@@ -227,7 +252,7 @@ scale 2), absent-allowed string `memo`, required timestamp `placedAt` with defau
       {"field": {"module": "commerce", "element": "orderId"},  "type": "text",          "notNull": true,  "generation": null},
       {"field": {"module": "commerce", "element": "amount"},   "type": "numeric(12,2)", "notNull": true,  "generation": null},
       {"field": {"module": "commerce", "element": "memo"},     "type": "text",          "notNull": false, "generation": null},
-      {"field": {"module": "commerce", "element": "placedAt"}, "type": "timestamptz",   "notNull": true,  "generation": "default"},
+      {"field": {"module": "commerce", "element": "placedAt"}, "type": "timestamptz",   "notNull": true,  "generation": null},
       {"field": {"module": "commerce", "element": "revision"}, "type": "bigint",        "notNull": true,  "generation": "identity"}
     ]}]
 }}
@@ -241,6 +266,8 @@ Removing the width facet from `revision` refuses its NativeColumn entry with
 ## Validation Checklist
 
 - [ ] Extension schema and conflict-table tests implement this draft.
+- [ ] Multiple Keys require an explicit valid selectedKey; alternate action/relationship Keys never substitute it.
+- [ ] Nullable array items/map values admit explicit null without omitted positions; shared incompatible occurrence bindings refuse.
 - [ ] Every allow-table row has positive fixtures for each listed presence and negative fixtures for the unlisted ones, for both ColumnSet-bound and engine-only Records.
 - [ ] Temporal Key components and integer or decimal Fields without width or precision/scale facets refuse.
 - [ ] Native type compatibility rules are qualified per target platform version.

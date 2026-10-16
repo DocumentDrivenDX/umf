@@ -29,8 +29,8 @@ class Ordering(Generic[O]):
 class Column(Generic[O, T]):
     owner: str; name: str
     def _cmp(self, op: str, other: object) -> Predicate[O]: return Predicate((op, self.name, other))
-    def __eq__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("eq", other)  # type: ignore[override]
-    def __ne__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("ne", other)  # type: ignore[override]
+    def __eq__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("eq", other)  # type: ignore[override]  # ty: ignore[invalid-method-override]
+    def __ne__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("ne", other)  # type: ignore[override]  # ty: ignore[invalid-method-override]
     def __lt__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("lt", other)
     def __le__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("le", other)
     def __gt__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]: return self._cmp("gt", other)
@@ -41,7 +41,7 @@ class Column(Generic[O, T]):
     def desc(self) -> Ordering[O]: return Ordering(self.name, True)
 
 def if_present(p: Param[T | None] | Param[T], build: Callable[[Param[T]], Predicate[O]]) -> Predicate[O]:
-    return Predicate(("if_present", p.name, build(p).node))  # type: ignore[arg-type]
+    return Predicate(("if_present", p.name, build(p).node))  # type: ignore[arg-type]  # ty: ignore[invalid-argument-type]
 
 R = TypeVar("R")
 @dataclass(frozen=True)

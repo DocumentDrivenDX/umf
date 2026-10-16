@@ -13,7 +13,7 @@ ddx:
 
 # US-082: Declare queries that a type checker verifies
 
-**Feature:** [[FEAT-029]]. **Feature Requirements:** QC-01, QC-02.
+**Feature:** [[FEAT-029]]. **Feature Requirements:** QC-01, QC-02, QC-07, QC-13; FEAT-028 TM-08 for ty.
 **PRD Requirements:** FR-53. **Priority:** P0 within the proposal.
 
 ## Story
@@ -41,7 +41,10 @@ CONTRACT-071 typing error table (`bad.py`, E1–E9) on pyright 1.1.414 and mypy
 mypy does not check a function with no annotations unless `check_untyped_defs`
 is enabled, and mypy infers `Any` as the return type of a declaration without a
 return annotation. Result-type checks under mypy therefore rely on the generated
-`queries.py` signatures, and the profile must pin the checker configuration.
+`queries.py` signatures, and the profile must pin the checker configuration. The
+spike also passes on ty targeting Python 3.11, after bulk `update()` moved to
+explicit keyword-only parameters, because ty does not reject unknown keys in an
+unpacked `TypedDict`.
 
 ## Walkthrough
 
@@ -64,6 +67,9 @@ return annotation. Result-type checks under mypy therefore rely on the generated
 - [ ] **US-082-AC4** — Given a passing corpus and a regenerated package after a Field rename, a Field retype and a Field removal in UMF, when both pinned checkers run on the unchanged corpus, then every affected declaration and call site is reported, a `names` override that keeps the old Python name makes the rename corpus pass unchanged, the manifest diff marks each change, and each generated column attribute's docstring cites its UMF source pointer.
 - [ ] **US-082-AC5** — Given DSL values at runtime, when a predicate is used with `and`, `or`, `not` or a chained comparison, or a field expression or query root is evaluated outside capture, then `__bool__` raises `TypeError` and evaluation raises `QueryOutsideCatalog`; and the public `umf_access` and generated surfaces expose no method that accepts a column name, lookup string, ordering string or query text.
 - [ ] **US-082-AC6** — Given declarations that type-check but break capture rules (a parameter not annotated `Param[T]` with a supported carrier, an unsupported DSL form, a body that reads mutable global state or randomness, and five optional filters producing 32 variants), when the catalog tool captures them, then it refuses with `CAPTURE_SIGNATURE`, `CAPTURE_UNSUPPORTED`, `CAPTURE_NONDETERMINISTIC` and `VARIANT_LIMIT` respectively and writes no catalog.
+- [ ] **US-082-AC7** — Given aggregate declarations, when both pinned checkers run, then `avg_(Order.c.amount)` without `scale` and `sum_(Order.c.status)` over a string column each fail on both checkers with their expected diagnostic, while a declaration grouping by `Order.c.status` and `Order.c.amount.bucket_width(Decimal("100"))` and selecting the status, that bucket and `sum_(Order.c.amount)` type-checks on both checkers, pyright reveals the aggregate as `Agg[Order, Decimal | None]` and the bucket as `Bucket[Order, Decimal]`, and the generated call site's rows are typed `tuple[str, Decimal, Decimal | None]`.
+- [ ] **US-082-AC8** — Given declarations that join `Order` to `Customer` along a required to-one relationship and to `Carrier` along an optional one, when pinned pyright, mypy and ty check them, then the joined query is typed `Joined[Order, Customer, R]`, a filter on a `Customer` column is accepted, a filter on a column of a Record not in the query fails on all three checkers with its expected diagnostic, and the generated call site types a selected `Customer` name as `str` and a selected `Carrier` name as `str | None`.
+- [ ] **US-082-AC9** — Given the positive query corpus and the negative files of US-082-AC2, US-082-AC3, US-082-AC7 and US-082-AC8, when the pinned ty runs with the profile configuration targeting Python 3.11, then the positive corpus reports no errors and each negative file fails with its expected ty diagnostic at its expected line, including an unknown keyword and a wrongly typed value passed to a generated `update()`.
 
 ## Edge Cases
 
@@ -87,12 +93,15 @@ return annotation. Result-type checks under mypy therefore rely on the generated
 | refactor_by_regeneration | US-082-AC4 | Rename, retype, removal; rename with `names` override | All affected sites reported; override passes; manifest diff and docstrings |
 | runtime_guards_and_no_strings | US-082-AC5 | `and`/`or`/`not`, chained comparison, evaluation outside capture; public-surface inventory | `TypeError`; `QueryOutsideCatalog`; no string-accepting API |
 | capture_refusals | US-082-AC6 | Bad annotation, unsupported form, nondeterminism, 32 variants | Named refusal codes; no catalog written |
+| aggregate_typing | US-082-AC7 | `avg_` without scale; `sum_` over a string column; grouped `select` with a width bucket and a sum | Expected diagnostics on both checkers; typed tuple rows with `Agg` and `Bucket` items |
+| join_typing | US-082-AC8 | Required and optional to-one joins; filter on a Record outside the query | `Joined` type; rejection on three checkers; `T` and `T \| None` columns |
+| ty_rejects_typing_table | US-082-AC9 | Positive corpus and negative files on ty targeting Python 3.11 | No errors on positives; expected ty diagnostic per negative file, including `update()` keywords |
 
 ## Dependencies
 
 US-080 and US-081 (generated package and types); CONTRACT-068 field expressions;
 CONTRACT-071 DSL, typing rules and capture; pinned pyright and mypy with the
-profile's configuration (ADR-004). Feature requirements QC-01, QC-02; PRD FR-53.
+profile's configuration (ADR-004). Feature requirements QC-01, QC-02, QC-07, QC-13; FEAT-028 TM-08; PRD FR-53.
 TD-082 owns implementation detail; STP-082 owns the test mapping.
 
 ## Out of Scope

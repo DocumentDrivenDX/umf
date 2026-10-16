@@ -39,11 +39,20 @@ Weft does.
 | Requirement | Design element | Verification owner |
 | --- | --- | --- |
 | QC-01 | `umf_access` DSL classes: `Column`, `Predicate`, `Param`, query roots, immutable builders | US-082 / STP-082 |
-| QC-02 | Generic `Column[Record, T]` and `Predicate[Record]`, operator overloads, `__bool__` refusal, `Unpack[<Record>Update]`, typed terminals | US-082 / STP-082 |
+| QC-02 | Generic `Column[Record, T]` and `Predicate[Record]`, operator overloads, `__bool__` refusal, generated `update()` with explicit keyword-only parameters, typed terminals | US-082 / STP-082 |
 | QC-03 | Capture twice, variant expansion, Weft compilation per target, catalog writer and `--check` | US-083 / STP-083 |
 | QC-04 | Generated catalog functions, variant selection, codec validation, pin match, `verify()` precondition | US-083 / STP-083 |
 | QC-05 | Terminal types, keyset `Page[R, K]` with `Continuation[K]`, 1,000-row caps, `.select` overloads and per-Record `.into` overloads | US-083 / STP-083 |
 | QC-06 | `s` namespace, `RankedQuery`, `Scored[R]`, embedder identity check, freshness obligations | US-084 / STP-084 |
+| QC-07 | `Agg[O, T]` and `Bucket[O, T]` expressions, aggregate and bucket functions, `.select` overloads over columns, aggregates and buckets; Weft WR-A10 lowering under S11 and S12 | US-082 / STP-082 (typing); US-083 / STP-083 (results) |
+| QC-08 | `starts_with`, `matches_all_terms`, `matches_any_term` predicates; keyword-index check at build; Weft WR-A11 lowering under S13 and S14 | US-083 / STP-083 |
+| QC-09 | `.page(..., snapshot=True)`; table versions in `Continuation[K]`; build refusal on targets without snapshots; Weft WR-A12 | US-083 / STP-083 |
+| QC-10 | Privilege report writer for `_umf/privileges.json` and per-target grant scripts | US-083 / STP-083 |
+| QC-11 | Generated sync/async overloads; `AsyncReadTarget` adapters `AsyncPostgresTarget` and `AsyncLakebaseTarget` | US-083 / STP-083 |
+| QC-12 | `schemaBinding: "search-path"` target configuration; Weft WR-B7 unqualified statements; `verify()` search-path resolution and `pg_catalog`-first checks; per-process verification cache keyed by target identity, database identity and resolved schemas | US-083 / STP-083 |
+| QC-13 | `is_distinct_from` and `is_not_distinct_from` predicates (WR-A13); `.join(rel)` returning `Joined[O1, O2, R]` with `T \| None` columns for left joins (WR-A14) | US-082 / STP-082 (typing); US-083 / STP-083 (results) |
+| QC-14 | Generated `<name>_stream` functions; one `REPEATABLE READ READ ONLY` transaction on Postgres and Lakebase; snapshot pages on Delta and Unity Catalog | US-083 / STP-083 |
+| QC-15 | Keyword-only `timeout` on generated query and stream functions; required target `default_timeout`; native `statement_timeout` or driver cancellation plus a client-side deadline; `QueryTimeout` | US-083 / STP-083 |
 
 ## Solution Approaches
 
@@ -97,9 +106,12 @@ freshness and `maxK` per target.
 
 ## System Decomposition
 
-TD-082 owns the DSL classes and the static typing corpus. TD-083 owns capture,
+TD-082 owns the DSL classes, including aggregate and bucket expressions, and the
+static typing corpus. TD-083 owns capture,
 variant expansion, the Weft compile step, catalog and `queries.py` writing, drift
-check, and runtime variant selection and binding. TD-084 owns search: index
+check, runtime variant selection and binding, snapshot continuations, the
+privilege report, the async read adapters, schema-neutral verification and its
+cache, streams and read timeouts. TD-084 owns search: index
 declarations, the `s` namespace, `RankedQuery`, hybrid fusion, embedder checks,
 stale-key hydration through single-key reads and score labeling. All of it lives in the `umf_access`
 Python distribution; the `build` extra carries Weft's Python binding. Execution
@@ -107,8 +119,10 @@ itself is CONTRACT-072 and SD-030.
 
 ## Technology Rationale
 
-Python generics with `Self`-returning builders, overloads and `TypedDict` with
-`Unpack` are understood by both pyright and mypy without plugins. A local DSL
+Python generics with `Self`-returning builders, overloads and explicit
+keyword-only parameters are understood by pyright, mypy and ty without plugins.
+Bulk `update()` uses explicit parameters rather than `Unpack[TypedDict]` because
+ty does not reject unknown keys in unpacked TypedDict keyword arguments. A local DSL
 typing spike exercised several CONTRACT-071 negative rows on pyright and mypy; it
 is design input, not qualification. In that spike mypy revealed `Any` for
 decorated query results where pyright revealed the precise type, so the
@@ -123,7 +137,14 @@ CONTRACT-071 lists as not yet covered by the typing spike. STP-083 owns capture
 refusals, a positive and a Weft-blocked negative case per DSL row per target,
 drift check, pin refusals and plan drift, and also `verify()` detection of column
 drift and the Lakebase unlisted-minor refusal (US-083-AC5), which FEAT-030
-relies on. STP-084 owns search declaration
+relies on. STP-082 also owns aggregate typing (US-082-AC7), join typing
+(US-082-AC8) and the ty corpus run (US-082-AC9). STP-083 also owns
+aggregate and bucket exactness (US-083-AC7, Weft WR-A10), prefix and term filters
+(US-083-AC8, WR-A11), snapshot and live pages (US-083-AC9, WR-A12), privilege
+report sufficiency (US-083-AC10), async reads (US-083-AC11), schema-neutral
+catalogs (US-083-AC12, WR-B7), the verification cache (US-083-AC13), null-safe
+distinctness and joins (US-083-AC14, WR-A13, WR-A14), bounded streams
+(US-083-AC15) and read timeouts (US-083-AC16). STP-084 owns search declaration
 refusals, filter and `k` limits, embedder mismatch, stale-key hydration and native
 search witnesses. Weft-dependent rows stay planned until the Weft capabilities
 exist.

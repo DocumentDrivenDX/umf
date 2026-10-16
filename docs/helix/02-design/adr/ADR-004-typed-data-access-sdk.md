@@ -75,6 +75,17 @@ column, relationship and index is a generated typed attribute instead.
 Weft already owns logical SQL lowering for Truss and Ashlar. Adding raw-table
 backends to Weft keeps one lowering implementation per target.
 
+### Prior art: Palantir Ontology SDK
+
+The OSDK generates a per-application typed client from an ontology, allows writes
+only through named actions, and since 2.0 keeps the generated layer thin over a
+shared client library. This design follows those choices (generated code is typed
+classes plus metadata; validation and conversion live in `umf_access`). It differs
+in compiling queries at build time, in leaving authorization with the target
+platform (with a generated least-privilege report instead of a scoped platform
+token), and in stating null, ordering and exactness semantics explicitly.
+See [the OSDK research note](../../00-discover/research-palantir-osdk.md).
+
 ### Over generating SQLAlchemy or PySpark mappings
 
 Those mappings are write paths in their own right and duplicate Weft's physical

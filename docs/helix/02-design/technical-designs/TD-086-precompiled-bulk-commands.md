@@ -23,28 +23,16 @@ ddx:
 One journey: a `@command` bulk update compiled into the catalog and run on a
 raw-table target. CONTRACT-071 owns the DSL, catalog and `PLAN_DRIFT`;
 CONTRACT-072 owns `AtomicBulkPlan` and `BulkOutcome`; CONTRACT-073 owns atomicity, `maxItems` and
-`BULK_LIMIT` on raw tables; Weft CONTRACT-009 owns the mutation dialect, plan and
+`BULK_LIMIT` on raw tables; Weft CONTRACT-006 owns the mutation dialect, plan and
 selection lowering. The Truss path is TD-087.
 
 ## Technical Approach
 
 **Build.** Capture renders the declaration to Weft mutation SQL
 (`UPDATE <Record> SET <field> = :p ... WHERE ...`) with named parameters only.
-The build calls Weft's `compileMutation` with the model, the action's CONTRACT-902
-plan-model preparation and witness values of the right carriers, then lowers the
-selection through the target's raw-table selection backend with the plan's
-`maxItems`. It records `{sqlTemplate, parameters, maxItems, lowering summary,
-structuralDigest}` per target, where the digest is computed over Weft's plan and
-lowering with parameter values removed. A blocked response fails the build with
-`WEFT_BLOCKED`. The named action's CONTRACT-073 refusals (US-085) are applied to
-the command on the same target.
+The build requests the distinct Weft-owned `umf.actions.native-bulk/0.1` program described by CONTRACT-071/073. It records the complete atomic program, preflights, role/precondition checks, source/action pins, count/limit proof, parameters, obligations and owner/version structural digest. It must not reuse CONTRACT-902 frozen/batch preparation as a raw atomic carrier. Missing owner output fails with `WEFT_BLOCKED`.
 
-**Instantiate.** The generated function validates arguments with CONTRACT-068
-codecs and calls `target.plan(entry, params)`. The target calls the pinned Weft
-compiler with the recorded template and the validated values, lowers the
-selection again, recomputes the structural digest and compares it with the
-catalog. A difference raises `PLAN_DRIFT` before any connection use. This is the
-only runtime use of Weft; a Weft plan-template capability (W-3, Weft WR-I5) would replace it.
+**Instantiate.** Validate parameters, call the same pinned Weft owner interface and compare its complete structural digest before connection use. Only declared parameter holes may differ. UMF never recomputes a local stripped-SQL digest. Templates may remove runtime compilation after WR-I5 qualifies.
 
 **Preview.** On `postgresql`/`lakebase`, `preview()` opens a `READ ONLY`
 `SERIALIZABLE` transaction, runs the preflight and the selection with a
@@ -61,7 +49,13 @@ inside the transaction; the preview result is advisory and is not reused. The
 sentinel check aborts the unit with `ActionRefused` carrying `BULK_LIMIT`.
 Outcome classification, commit-loss reconciliation and receipts reuse TD-085.
 `execute()` returns `BulkOutcome {selected, changed, receipt}`, or raises
-`ActionConflict`, `ActionIndeterminate`, `ActionFailed` or `ActionRefused`.
+`ActionConflict`, `ActionIndeterminate`, `ActionTimedOut`, `ActionFailed` or
+`ActionRefused`.
+
+**Timeouts (AT-09).** `preview()` and `execute()` take a keyword-only `timeout`
+with the target's `default_timeout` as fallback, applied with TD-085's deadline
+procedure: expiry before the commit is sent rolls back and raises
+`ActionTimedOut`; expiry after it follows commit-loss handling (US-086-AC7).
 
 Raw-table targets are `BulkTarget[AtomicBulkPlan]`, and `AtomicBulkPlan` has no
 `seal()` or `submit()` method, so a call to either is a static error; no manifest
@@ -85,12 +79,13 @@ Planned files (none exist yet):
 
 | AC | Component realization |
 | --- | --- |
-| US-086-AC1 | Generated `<Record>Update` TypedDict (CONTRACT-068) and `build/commands.py` catalog entries |
+| US-086-AC1 | Generated `update()` signature with explicit keyword-only parameters (CONTRACT-068) and `build/commands.py` catalog entries |
 | US-086-AC2 | Read-only preview transaction or query with sentinel |
 | US-086-AC3 | Atomic execution per platform; TD-085 classification and receipts |
 | US-086-AC4 | `maxItems + 1` sentinel in preview and execute; `BULK_LIMIT` |
 | US-086-AC5 | Runtime instantiation and digest comparison before connection use |
 | US-086-AC6 | `AtomicBulkPlan` type without `seal()` or `submit()`; no manifest writer on raw targets |
+| US-086-AC7 | TD-085 deadline procedure in `execute()`; `TimedOut` before the commit phase flag |
 
 ## API/Interface Design
 
@@ -100,7 +95,7 @@ Planned files (none exist yet):
 | `BulkTarget[AtomicBulkPlan].plan`, `AtomicBulkPlan.preview/execute`, `BulkOutcome` | CONTRACT-072 | Runtime surface |
 | `BULK_LIMIT`, `TRANSACTION_STATE` carried by `ActionRefused` | CONTRACT-073 | Raw-table refusals |
 | `PLAN_DRIFT`, `WEFT_BLOCKED` | CONTRACT-071 | Instantiation and build refusals |
-| `compileMutation`, selection lowering | Weft CONTRACT-009 | Plan and selection program |
+| `compileMutation`, selection lowering | Weft CONTRACT-006 | Plan and selection program |
 
 CONTRACT-072 defines `execute()` as returning `BulkOutcome {selected, changed,
 receipt}` and keeps `seal()` and `submit()` on the separate Truss
@@ -113,7 +108,7 @@ tables.
 
 ## Integration Points
 
-Weft CONTRACT-009 currently defines the dialect, plan and a Truss selection
+Weft CONTRACT-006 currently defines the dialect, plan and a Truss selection
 backend. Raw-table selection backends and the set-based update program for
 Postgres, Lakebase and Delta are the Weft dependency W-3; until they exist,
 commands refuse at build on raw tables.
@@ -131,11 +126,12 @@ values.
 | AC | Test | Assertion | Owner |
 | --- | --- | --- | --- |
 | US-086-AC1 | `bulk_command_compiles_typed` | Checker diagnostics for bad fields and values; catalog entry members; `WEFT_BLOCKED` with Weft diagnostics | UMF static and build tests |
-| US-086-AC2 | `bulk_preview_is_read_only` | Identities equal an independent query; table versions and txid unchanged | UMF conformance + native lane |
+| US-086-AC2 | `bulk_preview_is_read_only` | Identities equal an independent query; business state, journal/audit mutation records and table data versions unchanged; transaction-ID allocation alone is not a mutation witness | UMF conformance + native lane |
 | US-086-AC3 | `bulk_execute_all_or_nothing` | All selected rows changed or none; conflict and commit-loss outcomes as TD-085 | UMF conformance + native lane |
 | US-086-AC4 | `bulk_over_limit_refuses` | `BULK_LIMIT` at `maxItems + 1`; success at exactly `maxItems`; no row changed on refusal | UMF conformance + native lane |
 | US-086-AC5 | `bulk_plan_drift_refuses` | `PLAN_DRIFT`; recording connection sees zero statements | UMF conformance |
 | US-086-AC6 | `bulk_raw_has_no_manifest_path` | Static error for `seal()`; no manifest or control objects after execute | UMF static and conformance |
+| US-086-AC7 | `bulk_timeout_commits_nothing` | `ActionTimedOut` and no changed row when the deadline passes before commit; commit-loss outcome, never `ActionTimedOut`, after the commit is sent | UMF conformance + native lane |
 
 STP-086 owns the authoritative mapping and commands.
 

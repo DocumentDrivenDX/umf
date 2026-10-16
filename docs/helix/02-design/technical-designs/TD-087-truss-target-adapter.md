@@ -57,29 +57,30 @@ result through the CONTRACT-072 tx/1 table:
 
 | Truss result | Outcome or raised failure |
 | --- | --- |
-| tx/1 `committed` | `Committed(output, receipt)` with Truss's receipt unchanged |
-| tx/1 `rejected` with a declared code | `Rejected(code)` |
+| tx/1 `committed` | `Committed(output, receipt, original)` with complete original revision, changes, noOp, verification and receipt unchanged |
+| tx/1 `rejected` with a declared code | `Rejected(code, original)` including reserved ENTITY_MISSING |
 | Equal keyed request returning a retained outcome | `Replayed(original)` when Truss's result identifies the replay; otherwise the original outcome as returned |
 | CONTRACT-004 `retry` (serialization failure or deadlock) | `Conflict(retained=False)` |
-| tx/1 `conflict` (including `request_conflict` and `version_conflict` codes) | `Conflict(retained=True)` under an idempotency key, otherwise `Conflict(retained=False)`; Truss's code kept; never `Committed` |
+| tx/1 `conflict` (including `request_conflict` and `version_conflict` codes) | `Conflict(retained, code, original)`; retained derives only from original protocol evidence, never presence of a key; pre-admission TOKEN_REUSE is not a newly retained result |
 | `commit_unknown` or tx/1 `indeterminate` | `Indeterminate` |
 | tx/1 `denied` | `Denied` |
 | tx/1 `unsupported`, `expired` | `ActionRefused` with Truss's code |
 | tx/1 `failed`, other Truss errors with a known rollback | `ActionFailed` with Truss's code and error |
 
-Only concurrency conflicts become `Conflict`. A failure injected before COMMIT
+`TrussTarget.validate()` sends the action identity and encoded input to Truss's
+action preview operation, never to admission, and maps Truss's findings to
+`ValidationResult` failures with Truss's codes. `complete` is copied from what
+Truss reports: true only when Truss says it evaluated every check, false when its
+preview stops at the first failure (US-087-AC8).
+
+Conflict classification follows the original protocol, including request-token conflicts; it is never inferred from a generic abort. A failure injected before COMMIT
 keeps Truss's classification: a confirmed rollback with no effects, raised as
 `ActionFailed`, never relabeled `Conflict` (CONTRACT-069). The adapter never
 retries.
 
 **Bulk.** Commands compile through Weft's Truss mutation backend
-(`CurrentTrussMutationBackend`, Weft CONTRACT-009). `TrussTarget.plan` returns a
-`ManifestBulkPlan` whose `preview()` uses Truss's read path, `seal()` asks Truss
-to materialize and seal a CONTRACT-903 manifest and returns it, and
-`submit(manifest)` hands the sealed manifest to Truss's CONTRACT-904 `submit` with
-a caller key and returns a `BulkJob` with the job reference and its reported
-status. The plan has no `execute()`. Batches are then claimed and executed by host
-workers through Truss; the SDK runs no worker loop and holds no fence or lease.
+(qualified Truss mutation selection backend, Weft CONTRACT-006). `TrussTarget.plan` returns a
+`ManifestBulkPlan` whose `preview()` uses the protected read path. `seal(*,attempt)` and `submit(sealed,*,submission_key,attempt)` preserve the complete CONTRACT-904 original result unions and host-issued attempt custody. `recover_control(original_ref)` uses Truss's original protected recovery path. Refusal, conflict, control failure and unknown acknowledgement remain observable before any job reference is available. Never mint another attempt, seal, job or submission key to resolve uncertainty. The SDK writes no control tables, runs no worker loop, and retains original status/review/lookup/reconcile/cancel authority in Truss. Native bulk and the separately qualified local-owner CONTRACT-905 profile remain distinct.
 
 **Values.** The adapter converts between CONTRACT-068 carriers and Truss's public
 carriers (`MISSING` and Truss's absent marker, exact text tokens, `Decimal` and
@@ -120,6 +121,7 @@ the suite must fail), `python/umf_access/build/truss.py`,
 | US-087-AC5 | `conformance/actions.py` replay cases (enabled for executors that support keys) |
 | US-087-AC6 | `conformance/bulk.py` Truss-plan cases; Truss twin-store bulk witness |
 | US-087-AC7 | `conformance/values.py` lexical-spelling refusal case; Truss value-definition fixture |
+| US-087-AC8 | `conformance/actions.py` validation cases honoring `complete`; Truss witness comparing with its native preview |
 
 ## API/Interface Design
 
@@ -168,6 +170,7 @@ do not reveal hidden existence.
 | US-087-AC5 | `truss_idempotent_replay` | Original outcome byte-equal; request-conflict refusal; no new journal or feed entry | UMF conformance; Truss witness |
 | US-087-AC6 | `truss_bulk_manifest_parity` | Sealed manifest, submitted `BulkJob`, batch outcomes and job status equal Truss's bulk path | Truss witness |
 | US-087-AC7 | `truss_lexical_spelling_refusal` | `LEXICAL_SPELLING_REQUIRED` before admission; no write; read decodes | UMF conformance; Truss witness |
+| US-087-AC8 | `truss_validate_maps_preview` | Findings equal Truss's preview; `complete` as Truss reports; no admission, state, journal or feed change | UMF conformance; Truss witness |
 
 STP-087 owns the authoritative allocation between UMF and Truss.
 
