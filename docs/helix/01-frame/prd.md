@@ -708,3 +708,20 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 | [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../03-test/test-plans/STP-903-frozen-action-manifests.md) |
 
 The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+
+
+## Native 128-bit values and UUIDs — owner direction, 2026-10-15
+
+Under FR-3/8/20/21/28/39/41, UMF must expose first-class exact 128-bit values
+and Universally Unique Identifiers (UUIDs), independently of physical storage.
+Consumers must retain all bits, distinguish UUID identity from integer arithmetic,
+and use exact equality and keys. Signed/unsigned 128-bit integers reuse integer
+width facets. Adapters must support useful lossless representations including
+native UUID, sixteen bytes, canonical string and paired 64-bit integers where
+supported. Carrier choice must preserve logical identity and make enforcement,
+comparison, ordering and interoperability differences explicit. Paired integers
+may be optimal for a particular workload; no universal layout or performance
+claim follows. Native refinements and original representations remain recoverable.
+[FEAT-005 IDEAL-09](features/FEAT-005-core-ideals.md),
+[SD-005](../02-design/solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-067](../02-design/contracts/CONTRACT-067-128-bit-uuid.md) define the design.

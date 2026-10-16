@@ -624,3 +624,29 @@ Unknown third-party redistribution rights block full source export.
 ## Domain pack ontology targets
 
 [SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.
+
+
+## Proposed 128-bit and UUID module boundaries
+
+[SD-005](solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-067](contracts/CONTRACT-067-128-bit-uuid.md) extend the portable core
+under FEAT-005 IDEAL-09. The proposed 0.9.0 profile adds bits128 and UUID meaning;
+integer width facets retain arithmetic meaning. This is a design boundary, not
+an implementation inventory update.
+
+| Module | Owns | Dependencies and exclusions |
+| --- | --- | --- |
+| `src/model/bit128.ts` (new) | Immutable JSON-safe exact value codecs and comparisons | No document, adapter, registry, filesystem, network or host-runtime imports |
+| `src/model/uuid.ts` (new) | UUID text/byte view over exact bits | May import bit128 and portable error types; no generation or native layout assumptions |
+| `src/model/schema-literals.ts`, `src/validation/` | Field-context checks, literal and facet interpretation | Import portable value codecs; codecs must not import these coordinators |
+| `src/model/key-tuple.ts` | Versioned key framing over validated literal payloads | Reuse codecs; no native database comparison or storage imports |
+| `src/extensions/binding/` | Independently versioned physical carrier declarations | Resolve supplied logical identity; no database execution or core-to-binding back import |
+| `src/core-ideals/`, `src/adapters/`, `src/projections/` | Native identity classification and qualified target mappings | Import core codecs; no importing native adapters into portable value modules |
+| `scripts/`, `native/`, consumer runtimes | Independent oracles, benchmark harnesses and actual storage execution | Never imported by the browser library; consumer codecs remain consumer-owned |
+
+Construction/export integration belongs in `src/index.ts`; codec modules receive
+values and explicit options and never select a runtime backend. Proposed boundary
+verification: `bun run typecheck`, `bun run build`, plus a focused import-closure
+check in the new UUID browser harness rejecting host imports/globals and external
+requests. Browser execution must exercise the public bundle; typechecking alone
+is insufficient. No service, schema registry or entropy source is introduced.
