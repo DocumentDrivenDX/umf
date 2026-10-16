@@ -28,7 +28,17 @@ try {
   Object.defineProperty(Worker.prototype,'onmessage',{...descriptor,set:function(this:Worker,listener:any){descriptor.set!.call(this,typeof listener==='function'?function(this:Worker,event:MessageEvent){if(test.__dropCancelAck&&event.data?.result?.status==='cancelled'){test.__dropCancelAck=false;test.__droppedCancel=event.data.result;return;}if(test.__dropBatchAck&&event.data?.result?.status==='committed'){test.__dropBatchAck=false;test.__droppedBatch=event.data.result;return;}if(test.__dropSubmitAck&&event.data?.result?.status==='submitted'){test.__dropSubmitAck=false;test.__droppedSubmit=event.data.result;return;}if(test.__dropClaimAck&&event.data?.result?.status==='claimed'){test.__dropClaimAck=false;test.__droppedClaim=event.data.result;return;}if(test.__dropPreparedAck&&event.data?.result?.outcome==='prepared'){test.__dropPreparedAck=false;test.__droppedPrepared=event.data.result;return;}if(test.__dropSealAck&&event.data?.result?.outcome==='sealed'){test.__dropSealAck=false;test.__droppedSeal=event.data.result;return;}listener.call(this,event);}:listener);}});
  };
  await context.addInitScript(instrument);
- await page.goto(origin+'/index.html');onHomepage=false;await page.locator('a[href="action-compiler.html"]').click();
+ await page.goto(origin+'/index.html');onHomepage=false;
+ // A cold module fetch must not expose a clickable store control without a handler.
+ let releaseModule!:()=>void;
+ const moduleReady=new Promise<void>(resolve=>{releaseModule=resolve;});
+ const holdModule=async(route:any)=>{await moduleReady;await route.continue();};
+ await context.route('**/action-compiler.js',holdModule);
+ const navigation=page.locator('a[href="action-compiler.html"]').click({noWaitAfter:true});
+ await page.locator('#store-open').waitFor({state:'attached'});
+ const storeInitiallyDisabled=await page.locator('#store-open').isDisabled();
+ releaseModule();await navigation;await context.unroute('**/action-compiler.js',holdModule);
+ if(!storeInitiallyDisabled)throw Error('Store control enabled before module initialization');
  await page.waitForFunction(()=>document.querySelector('#status')?.textContent!=='Loading compiler…');
  if(await page.locator('#status').textContent()!=='Portable action plan compiled')throw Error(JSON.stringify({status:await page.locator('#status').textContent(),output:await page.locator('#plan').textContent(),errors,external,writes}));
  const samples=await page.locator('#samples').textContent();
