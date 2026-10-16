@@ -1,5 +1,7 @@
 # UMF project documentation
 
+The experimental non-temporal SDK now has [installed native integration evidence](04-build/evidence/typed-persistence/integrated-native-20261016/README.md) for schema/instance/codec E2Es, catalog reads, actions, atomic bulk, exact search, async execution and local Delta snapshot reads. Temporal qualification remains **HELD**. Truss/Ashlar SDK adoption, Delta action/bulk prerequisites and managed-service qualification remain unfinished.
+
 The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Lakebase service execution remains unverified.
 
 ## Proposed typed data access SDK

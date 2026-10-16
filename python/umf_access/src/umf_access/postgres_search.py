@@ -216,7 +216,7 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
                     except StopIteration as done:return done.value
                     kind=operation[0]
                     if kind=='embed':
-                        result=operation[1].embed(operation[2])
+                        result=await asyncio.to_thread(operation[1].embed,operation[2])
                         if inspect.isawaitable(result):result=await result
                     elif kind=='begin':await self.connection.execute('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');began=True;result=None
                     elif kind=='execute':

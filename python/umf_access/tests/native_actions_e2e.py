@@ -151,6 +151,18 @@ try:
  assert isinstance(result,Denied)
  cases.append('native session membership denial')
  admin.execute('GRANT native_approver TO erik')
+ admin.execute('REVOKE UPDATE ON native_app.orders FROM erik')
+ result=executor.invoke(Approve,{'order':OrderKey(id='o-1')})
+ assert isinstance(result,Denied) and conn.info.transaction_status==0
+ admin.execute('GRANT UPDATE ON native_app.orders TO erik')
+ cases.append('native UPDATE privilege denial remains Denied with confirmed rollback')
+ from umf_access.protocols import TimedOut
+ admin.execute('BEGIN');admin.execute("SELECT * FROM native_app.orders WHERE id='o-1' FOR UPDATE")
+ try:
+  result=executor.invoke(Approve,{'order':OrderKey(id='o-1')},timeout=timedelta(milliseconds=30))
+  assert isinstance(result,TimedOut) and conn.info.transaction_status==0
+ finally:admin.execute('ROLLBACK')
+ cases.append('actual native row-lock timeout confirms rollback before returning TimedOut')
  # Lose the commit acknowledgement after a real native COMMIT. Reconciliation
  # uses another actual connection, original store/epoch and the retained xid8.
  class LostAck:

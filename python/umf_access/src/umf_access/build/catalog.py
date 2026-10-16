@@ -78,6 +78,7 @@ def resolve_configuration(configuration: dict[str,Any], root: Path) -> tuple[dic
     Compact inline configurations retain their experimental profile. The full
     profile additionally pins the installed compiler and original UMF sources.
     """
+    root=root.resolve()
     compact={'package','modules','targets'}
     if set(configuration) not in (compact,compact|{'weft','umf'}):
         raise CatalogBuildError('unknown or missing catalog configuration member')

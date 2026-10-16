@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys,json,os,subprocess,tempfile,asyncio,hashlib
+from importlib.metadata import version
 from datetime import timedelta
 root=Path(__file__).resolve().parents[3];generated=Path(os.environ['UMF_SEARCH_GENERATED_ROOT'])
 sys.path.insert(0,str(generated))
@@ -28,6 +29,9 @@ def filtered(q:Param[Vector],minimum:Param[str]):return Doc.objects.filter(Doc.c
 ''')
 model=(root/'fixtures/access/search/model.json').read_text();binding={'version':'umf.raw-read-binding/0.1','schema':'search_app','modelJson':model,'modelSha256':hashlib.sha256(model.encode()).hexdigest(),'tables':[{'logical':['search','Doc'],'native':'docs','key':['id'],'columns':[{'logical':f,'native':f,'carrier':'string','nullable':False} for f in ['id','body']]}],'relationships':[]}
 config={'package':'search_docs','modules':['search_declarations'],'targets':[{'id':'local','kind':'postgresql','backendId':'weft-postgresql','backendVersion':'raw-read/0.1','targetProfile':'weft.raw-read/0.1','binding':binding,'platform':[{'name':'postgresql','versions':['180006']}],'vectorBindings':[{'field':{'module':'search','element':'embedding'},'native':'embedding','dimensions':3,'extensionSchema':'public','extensionVersion':'0.8.7'}]}]}
+(generated/'original-model.json').write_text(model)
+config['weft']={'distribution':'weft-sql','version':version('weft-sql')}
+config['umf']={'documents':[{'path':'original-model.json','sha256':hashlib.sha256(model.encode()).hexdigest()}]}
 (generated/'search-config.json').write_text(json.dumps(config))
 for extra in ([],['--check']):
  command(sys.executable,'-B','-m','umf_access.build.catalog','catalog','--config',generated/'search-config.json','--root',generated,*extra)
@@ -95,6 +99,25 @@ try:
   await t.verify()
   result=await queries.combined(t,term='cats');assert [h.item.id for h in result]==['a','b','c']
   assert c.info.transaction_status==0
+  class Slow(Embedding):
+   def embed(self,texts):
+    import time
+    time.sleep(.15)
+    return super().embed(texts)
+  class Observed:
+   calls=0
+   @property
+   def info(self):return c.info
+   async def execute(self,*a,**kw):self.calls+=1;return await c.execute(*a,**kw)
+   async def rollback(self):return await c.rollback()
+   async def close(self):return await c.close()
+  observed=Observed();slow=AsyncPostgresSearchTarget(observed,configuration,embedders={'semantic':Slow()})
+  pulse=asyncio.create_task(asyncio.sleep(.005))
+  try:await queries.embedded(slow,term='cats',timeout=timedelta(milliseconds=25))
+  except TimedOut:pass
+  else:raise AssertionError('blocking host embedder defeated async call deadline')
+  assert pulse.done() and observed.calls==0 and c.info.transaction_status==0
+  cases.append('blocking host embedder stays off the async loop; timeout returns before any native dispatch')
   await c.close()
  asyncio.run(async_cases());cases.append('actual async keyword/vector/RRF target and cleanup parity')
  admin.execute('DROP INDEX search_app.doc_semantic');admin.execute('CREATE INDEX doc_semantic ON search_app.docs USING hnsw (embedding public.vector_l2_ops)')
