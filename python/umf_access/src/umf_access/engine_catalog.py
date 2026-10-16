@@ -39,8 +39,8 @@ class EngineRead(CatalogRead[P, R]):
         method: str,
         page_size: int | None = None,
     ) -> EngineRead[P, R]:
-        if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999 or method != "truss-runtime"):
-            raise ReadBuildError("original Truss page size must be in 1..999")
+        if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999 or method not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
+            raise ReadBuildError("original engine page size must be in 1..999")
         compile_method = getattr(compiler, "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
         if not callable(compile_method):
             raise ReadBuildError(
@@ -113,8 +113,8 @@ class EngineRead(CatalogRead[P, R]):
         ):
             raise ReadBuildError("original compiled engine program required")
         page = program["version"] == "weft.engine-page/0.1"
-        if page and (program.get("after") is not None or type(program.get("pageSize")) is not int or not 1 <= program["pageSize"] <= 999 or program.get("compiler") != "truss-runtime"):
-            raise ReadBuildError("original first-page Truss catalog required")
+        if page and (program.get("after") is not None or type(program.get("pageSize")) is not int or not 1 <= program["pageSize"] <= 999 or program.get("compiler") not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
+            raise ReadBuildError("original first-page engine catalog required")
         structural = dict(program)
         pin = structural.pop("structuralDigest", None)
         if pin != {

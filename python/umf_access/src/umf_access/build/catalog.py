@@ -754,18 +754,18 @@ def compile_catalog(
                 entry_class = "CatalogRead"
                 if engine:
                     if terminal == "page":
-                        if kind != "truss":
-                            raise CatalogBuildError("WEFT_BLOCKED: original engine page compiler unavailable")
                         logical = render_logical(replace(current, node=Node("all", current.node.args[:2])), binding=binding, owner_bound=True)
                     method = target.get("engineCompiler")
                     if method not in (
                         {"truss-runtime"}
                         if kind == "truss"
-                        else {"registered", "ashlar-spark4", "ashlar-dbsql-20261016"}
+                        else {"registered", "ashlar-spark4", "ashlar-dbsql-20261016", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"}
                     ):
                         raise CatalogBuildError(
                             "explicit engine compiler selection required"
                         )
+                    if terminal == "page" and kind == "ashlar" and method not in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"):
+                        raise CatalogBuildError("WEFT_BLOCKED: separately registered original Ashlar page compiler required")
                     original = target.get("engineRequests", {}).get(
                         name + ":" + str(vi)
                     )
