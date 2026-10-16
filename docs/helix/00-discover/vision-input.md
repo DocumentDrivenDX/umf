@@ -507,6 +507,67 @@ Show only declared UMF meaning; inheritance, equivalence and native ontology
 reasoning are not inferred. Table/record links use CONTRACT-053's explicit
 record-to-table identity convention within the same pack/version.
 
+
+## Praxis request: typed SDK joins and aggregates (2026-10-15)
+
+Source: owner-supplied Praxis feature request in this chat. Capture status:
+accepted capability; the first implementation has [scoped execution evidence](../04-build/evidence/typed-reporting/README.md). Praxis hosts first-party apps in a Databricks App,
+with each app owning tables declared in UMF in its own PostgreSQL 18 schema.
+Prebill needs report reads and totals; named statements are the current stopgap.
+The SDK was located in checkout `39bf/umf`, subsequently archived as source snapshot `8c9d0fb6`; its implementation foundation is restored here.
+
+### Required outcome
+
+- Typed relationship walks, such as `Order.objects.join(Order.c.customer)`,
+  with inner and left joins and typed `into(Projection)` results spanning records.
+  Support joined-column filters, ordering and keyset paging, retaining the
+  existing page-size cap (numeric cap requires the governing SDK artifact).
+  Declare a maximum join depth and enforce it during catalog build.
+- Follow only UMF-declared relationships within the app's own schema. Declared
+  relationships alone do not prove schema confinement: validate every resolved
+  endpoint and physical binding against the app schema during catalog build.
+- Typed count, sum, avg, min and max, grouping on one or more declared columns,
+  preserving exact Decimal results. Having-style aggregate filters are requested
+  if inexpensive; supported operators and cost remain a design decision.
+- Permit declared, reviewed SQL for shapes beyond the DSL: fixed at build time,
+  compiled through Weft into the checked-in catalog, bound parameters only,
+  read-only transaction, per-call timeout and row cap. Unsupported target shapes
+  must refuse during build, with no runtime fallback. Read-only SQL admission
+  must address callable side effects; read-only transaction mode alone does
+  not establish that arbitrary SQL is safe.
+- Every read uses the caller's own connection from the per-user pool and the
+  caller's role, including all joined scans and aggregate inputs. Preserve
+  Praxis-generated row-level security (RLS) policies from UMF row scope; require
+  no principal switching, privileged execution or bypass. Acceptance must prove
+  role isolation on all participating tables, including left joins and totals.
+- Qualify PostgreSQL 18 and Lakebase separately; older PostgreSQL versions do
+  not satisfy this request. Pin the Lakebase service/version profile during
+  qualification. Require no functions, views or triggers in the app schema.
+- Extend the reported 12-error typing prototype for ty, pyright and mypy:
+  wrong joined column, incompatible projection, left-join nullable value misuse,
+  invalid aggregate input and invalid grouping. Include positive cases, exact
+  Decimal decoding, null/empty-set results and full generated-package checks.
+- Per-call timeout and typed `TimedOut` cover joins, aggregates and reviewed SQL.
+  Row caps bound returned rows, while timeout also bounds aggregate execution.
+
+### Proposed choices and unresolved delivery dependencies
+
+Owner-selected bound (2026-10-15): at most **three relationship edges per query** (also
+bounding each root-to-record path to three), rejected during catalog build.
+Include row-multiplying joins in projection/paging tests; stable keyset ordering
+must identify joined result rows, rather than assume the root key is unique.
+The owner accepted this limit and reviewed-SQL-first sequencing on 2026-10-15.
+[FR-53 reporting amendment](../01-frame/prd.md#praxis-reporting-amendment--2026-10-15) requires them; qualification remains scoped to the linked evidence.
+
+Prefer reviewed-SQL aggregate support first to unblock Prebill's existing named
+statement shapes; native aggregate DSL follows. Typed relationship joins remain
+part of the requested first target milestone. The escape hatch still requires
+compiler admission, typed parameter/result declarations and target qualification.
+
+The latest requirements were located in checkout `20bc/umf`: WR-B7 owns schema-neutral search-path binding and WR-A14 owns relationship joins. Its US-081-AC9 requires the full generated commerce package, including actions, to pass ty, pyright and mypy on Python 3.11. Joins added to that package are covered; negative misuse tests remain a separate obligation.
+
+The 2026-10-15 implementation milestone delivers the first scoped PostgreSQL 18 read path: generated to-one joins, reviewed aggregate SQL, caller-role RLS, nullable joined keyset paging and typed timeouts. The full generated package and 19 misuse cases pass all three checkers on Python 3.11. Lakebase 18 compilation is checked, but no Lakebase service endpoint was available for native execution. No service delivery date or broader native compatibility is asserted. See the execution evidence for remaining subsets and exact versions.
+
 ## Owner direction: generated typed persistence substrate
 
 The owner requested design-time UMF-to-Python generation for typed persistence on

@@ -37,7 +37,7 @@ def check(root: Path) -> int:
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation",
-               "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime"}
+               "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime"}
     extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"}}
 
     def fail(path: Path, code: str, message: str) -> None:

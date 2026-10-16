@@ -45,9 +45,9 @@ class GeneratedProjections(unittest.TestCase):
                     doc = cls.body[index + 1]
                     self.assertIsInstance(doc, ast.Expr)
                     self.assertIsInstance(doc.value, ast.Constant)
-                    self.assertIn("UMF source logical#/modules/0/elements/", doc.value.value)
+                    self.assertTrue(doc.value.value.startswith(("UMF source logical#/modules/0/elements/", "UMF source logical#/modules/0/relationships/")))
                     count += 1
-        self.assertEqual(count, 9)
+        self.assertEqual(count, 10)
 
 
 if __name__ == "__main__":
