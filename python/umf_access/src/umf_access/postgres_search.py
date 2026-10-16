@@ -1,25 +1,33 @@
 """Native same-table search: shared sync/async snapshot, admission and decoding."""
 from __future__ import annotations
-from collections.abc import Mapping, Generator
-from datetime import timedelta
-from decimal import Decimal
-from dataclasses import dataclass
+
 import asyncio
 import inspect
 import json
 import math
 import struct
 import time
+from collections.abc import Mapping
+from dataclasses import dataclass
+from datetime import timedelta
+from decimal import Decimal
 from typing import Any, Protocol, cast
-from .adoption import TargetIdentity
-from .targets import PostgresTarget,AsyncPostgresTarget,PostgresConfiguration,binding_digest,_milliseconds,TargetMismatch
-from .postgres_read import native_read_admission,_ROLE,ReadObligationUnmet,TimedOut
-from .search_catalog import SearchEntry,SearchVariant
-from .dsl import SearchResult,Scored,Score
-from .types import Vector,StrictModel
-from .values import validate_vector
+
 from .codec_support import checked_row
-from .native_program import canonical_json
+from .dsl import Score, Scored, SearchResult
+from .postgres_read import _ROLE, ReadObligationUnmet, TimedOut, native_read_admission
+from .search_catalog import SearchEntry, SearchVariant
+from .targets import (
+    AsyncPostgresTarget,
+    PostgresConfiguration,
+    PostgresTarget,
+    TargetMismatch,
+    _milliseconds,
+    binding_digest,
+)
+from .types import Vector
+from .values import validate_vector
+
 
 class SearchError(ValueError):pass
 class EmbedderMismatch(SearchError):pass
@@ -83,7 +91,7 @@ def _hits(entry:SearchEntry,columns:tuple[str,...],rows:list[Any]) -> list[_Hit]
         item=tuple(getattr(decoded,n) for n in entry.tuple_fields) if entry.tuple_fields else decoded
         key_values=tuple(_decode(checked[v['name']],v) for v in keys)
         by_ref={(v['field']['module'],v['field']['element']):value for v,value in zip(keys,key_values,strict=True)}
-        entry.key_model.model_validate({name:by_ref[(module,field)] for module,field,name in getattr(entry.key_model,'UMF_FIELDS')},strict=True)
+        entry.key_model.model_validate({name:by_ref[(module,field)] for module,field,name in entry.key_model.UMF_FIELDS},strict=True)
         if key_values in seen:raise SearchError('duplicate complete search Key')
         seen.add(key_values)
         score_value=checked['__umf_score']
@@ -191,7 +199,7 @@ class PostgresSearchTarget(PostgresTarget):
         except BaseException as error:
             if began:
                 try:self.connection.rollback()
-                except BaseException:self.connection.close();raise ReadObligationUnmet('search cleanup failed') from error
+                except BaseException:self.connection.close();raise ReadObligationUnmet('search cleanup failed') from error  # noqa: BLE001 -- Rollback/quarantine must cover cancellation and preserve the original cause.
             if getattr(error,'sqlstate',None)=='57014' or isinstance(error,TimeoutError):raise TimedOut('search deadline expired') from error
             raise
     def verify(self)->None:
@@ -232,7 +240,7 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
                     async with asyncio.timeout(2):await self.connection.rollback()
                 task=asyncio.create_task(cleanup())
                 try:await asyncio.shield(task)
-                except BaseException:
+                except BaseException:  # noqa: BLE001 -- Rollback/quarantine must cover cancellation and preserve the original cause.
                     await self.connection.close();raise ReadObligationUnmet('search cleanup failed') from error
             if getattr(error,'sqlstate',None)=='57014' or isinstance(error,TimeoutError):raise TimedOut('search deadline expired') from error
             raise

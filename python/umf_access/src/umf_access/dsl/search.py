@@ -1,14 +1,17 @@
 """Typed bounded ranked-search declarations. No native queries or embedders."""
 from __future__ import annotations
+
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
-from typing import Any, Generic, TypeVar, Literal, overload, cast
 from math import isfinite
+from typing import Any, Generic, Literal, TypeVar, overload
+
 from pydantic import BaseModel
+
 from ..types import Vector
-from ._context import require_capture, CaptureError
-from ._nodes import Node, RecordRef, ProjectionRef, FieldRef, Terminal, JoinProjection
-from ._expressions import Param, Column, operand
+from ._context import CaptureError, require_capture
+from ._expressions import Column, Param, operand
+from ._nodes import JoinProjection, Node, ProjectionRef, RecordRef, Terminal
 
 O=TypeVar('O');R=TypeVar('R');P=TypeVar('P',bound=BaseModel)
 T1=TypeVar('T1');T2=TypeVar('T2');T3=TypeVar('T3');T4=TypeVar('T4');T5=TypeVar('T5');T6=TypeVar('T6');T7=TypeVar('T7');T8=TypeVar('T8')

@@ -4,14 +4,16 @@ Original JSON and transport bytes are retained exactly. Recovery custody is an
 opaque host object and never becomes serializable authority in this carrier.
 """
 from __future__ import annotations
+
+import json
+from collections.abc import AsyncGenerator, Awaitable, Generator, Mapping
 from dataclasses import dataclass, field
 from datetime import timedelta
-from collections.abc import Mapping, Awaitable, Generator, AsyncGenerator
-import json
 from math import isfinite
-from typing import Any, Generic, Protocol, TypeVar, runtime_checkable, cast, overload
-from .types import ActionRef, StrictModel, MISSING
+from typing import Any, Generic, Protocol, TypeVar, cast, overload, runtime_checkable
+
 from .codec_support import revalidate_model
+from .types import MISSING, ActionRef, StrictModel
 
 I = TypeVar("I", bound=StrictModel)
 O = TypeVar("O")
@@ -31,7 +33,7 @@ class OriginalOutcome:
             if type(text) is not str or len(text.encode("utf-8")) > 4_194_304:
                 raise ValueError("bounded original JSON required")
             if not isinstance(json.loads(text), dict):
-                raise ValueError("original object required")
+                raise ValueError("original object required")  # noqa: TRY004 -- Invalid original JSON representation remains a domain ValueError.
         if self.transport is not None and type(self.transport) is not bytes:
             raise TypeError("immutable original transport required")
 
@@ -161,8 +163,8 @@ class AsyncActionExecutor(Protocol):
 class AsyncReplayingActionExecutor(AsyncActionExecutor, Protocol):
     async def invoke_keyed(self, action: ActionRef[StrictModel, object], input: Mapping[str, object], *, idempotency_key: str, timeout: timedelta | None = None) -> ActionOutcome: ...
 
-ExecutorT = TypeVar("ExecutorT", bound=ActionExecutor | AsyncActionExecutor, covariant=True)
-ReplayingExecutorT = TypeVar("ReplayingExecutorT", bound=ReplayingActionExecutor | AsyncReplayingActionExecutor, covariant=True)
+ExecutorT = TypeVar("ExecutorT", bound=ActionExecutor | AsyncActionExecutor, covariant=True)  # noqa: PLC0105 -- Public generated-client TypeVar import ABI.
+ReplayingExecutorT = TypeVar("ReplayingExecutorT", bound=ReplayingActionExecutor | AsyncReplayingActionExecutor, covariant=True)  # noqa: PLC0105 -- Public generated-client TypeVar import ABI.
 
 class ActionError(RuntimeError):
     def __init__(self, code: str, original: OutcomeDetails | None = None):
@@ -317,9 +319,11 @@ class ReplayingActionEndpoint(Generic[I, C, ReplayingExecutorT]):
 
 
 from pydantic import BaseModel
-from .reviewed import CatalogRead
-from .pages import ReadPage, ReadContinuation
+
 from .adoption import TargetIdentity
+from .pages import ReadContinuation, ReadPage
+from .reviewed import CatalogRead
+
 ReadP = TypeVar("ReadP", bound=BaseModel)
 ReadR = TypeVar("ReadR", bound=BaseModel)
 class ReadTarget(Protocol):

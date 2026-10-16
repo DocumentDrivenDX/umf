@@ -1,15 +1,17 @@
 """Freeze one installed runtime wheel; generated replay has a separate identity."""
 from __future__ import annotations
+
 import argparse
 import hashlib
 import json
 import os
-from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+from pathlib import Path
+
 from replay_installed import inspect_wheel, isolated_environment, sha
 
 
@@ -59,7 +61,7 @@ def main() -> int:
     env['UV_CACHE_DIR']=str(args.uv_cache_dir.resolve())
     commands=[]
     def execute(label: str, command: list[str]) -> subprocess.CompletedProcess:
-        result=subprocess.run(command,cwd='/private/tmp',env=env,text=True,capture_output=True)
+        result=subprocess.run(command,cwd='/private/tmp',env=env,text=True,capture_output=True, check=False)
         commands.append({'label':label,'command':command,'exitCode':result.returncode,'stdout':result.stdout,'stderr':result.stderr})
         (destination/'commands.json').write_text(json.dumps(commands,indent=2)+'\n')
         if result.returncode:
@@ -72,7 +74,7 @@ def main() -> int:
     config=destination/'runtime-import-config.json'
     config.write_text(json.dumps({'profile':profile,'wheel':str(wheel)},indent=2)+'\n')
     probe=execute('isolated-runtime-bytes-abi-exports',[str(python),'-I','-B',str(Path(__file__).with_name('replay_installed.py')),'--runtime-only-child',str(config)])
-    record={'kind':'immutable-installed-runtime-snapshot','createdAt':datetime.now(timezone.utc).isoformat(),'wheel':str(wheel),'wheelSha256':digest,'python':str(python),'runtimeAbi':profile['runtimeAbi'],'sourceManifest':str(destination/'source-manifest.json'),'profile':str(destination/'profile.json'),'buildReport':str(destination/'build.json'),'commands':str(destination/'commands.json'),'importProbe':json.loads(probe.stdout),'generatedReplay':'UNTESTED; no generated package is coupled to this runtime snapshot','generatedIdentityPolicy':'Generated snapshots use SHA256 of exact wheelSha256 + generatorSourceDigest + inputDigest; refuse replacement of existing snapshot directory','helperSha256':sha(Path(__file__)),'importVerifierSha256':sha(Path(__file__).with_name('replay_installed.py')),'nativeTargets':'UNTESTED; no native drivers installed'}
+    record={'kind':'immutable-installed-runtime-snapshot','createdAt':datetime.now(UTC).isoformat(),'wheel':str(wheel),'wheelSha256':digest,'python':str(python),'runtimeAbi':profile['runtimeAbi'],'sourceManifest':str(destination/'source-manifest.json'),'profile':str(destination/'profile.json'),'buildReport':str(destination/'build.json'),'commands':str(destination/'commands.json'),'importProbe':json.loads(probe.stdout),'generatedReplay':'UNTESTED; no generated package is coupled to this runtime snapshot','generatedIdentityPolicy':'Generated snapshots use SHA256 of exact wheelSha256 + generatorSourceDigest + inputDigest; refuse replacement of existing snapshot directory','helperSha256':sha(Path(__file__)),'importVerifierSha256':sha(Path(__file__).with_name('replay_installed.py')),'nativeTargets':'UNTESTED; no native drivers installed'}
     (destination/'snapshot.json').write_text(json.dumps(record,indent=2)+'\n')
     (args.snapshot_root.resolve().parent/'latest-runtime-snapshot.json').write_text(json.dumps(record,indent=2)+'\n')
     print(json.dumps({'python':str(python),'wheel':str(wheel),'wheelSha256':digest,'snapshot':str(destination/'snapshot.json')}))

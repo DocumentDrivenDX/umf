@@ -1,11 +1,11 @@
 """Value-graph and inventory boundaries for generated codecs, without I/O."""
 from collections.abc import Sequence
-from datetime import timezone
-from typing import TypeVar, TypedDict, get_args, cast, Any, Annotated
+from datetime import UTC
+from typing import Annotated, Any, TypedDict, TypeVar, cast, get_args
 
 from pydantic import BaseModel, ValidationError
 
-from .types import CodecError, StrictModel, MISSING
+from .types import MISSING, CodecError, StrictModel
 from .values import validate_instant
 
 M = TypeVar("M", bound=StrictModel)
@@ -123,7 +123,7 @@ def _convert(value: object, field: CodecField) -> object:
     if value is None or value is MISSING:
         return value
     if field["kind"] == "instant":
-        return validate_instant(value).astimezone(timezone.utc)
+        return validate_instant(value).astimezone(UTC)
     if field["kind"] in ("array", "map"):
         child = field["item"]
         if child is None:
@@ -180,6 +180,7 @@ def decode_model(model_type: type[M], columns: Sequence[str], row: Sequence[obje
 def make_projection_model(name: str, fields: tuple[tuple[str, type[StrictModel], str], ...], *, nullable_fields: tuple[str,...] = ()) -> type[StrictModel]:
     """Build-time and inert stage-two projection metadata, reusing Field validators."""
     from copy import copy
+
     from pydantic import create_model
     if not fields or len({alias for alias, _, _ in fields}) != len(fields):
         raise CodecError("distinct projection fields required")

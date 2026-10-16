@@ -1,21 +1,18 @@
 """Shared local codec boundary; target transport and temporal qualification held."""
-import ast
-from decimal import Decimal
-from pathlib import Path
 import unittest
-from unittest.mock import patch
+from decimal import Decimal
 from typing import Annotated, ClassVar
+from unittest.mock import patch
 
 from pydantic import BeforeValidator
-from umf_access.types import StrictModel, MISSING
-from umf_access.values import validate_decimal
-from umf_access.codec_support import CodecField, encode_model, decode_model
+from umf_access.codec_support import decode_model, encode_model
+from umf_access.types import MISSING, StrictModel
 
 
 def check_amount(value):
     # Resolve the function from its owner on every call, just as generated
     # wrappers do. Patching the shared runtime changes an unchanged model.
-    import umf_access.values as values
+    from umf_access import values
     return values.validate_decimal(value, precision=12, scale=2)
 
 
@@ -54,7 +51,7 @@ class RuntimeCodecTests(unittest.TestCase):
                          (field("memo", "same"), field("amount", "same"))):
             with patch("umf_access.codec_support._build_mapping") as mapping:
                 with self.assertRaises(ValueError):
-                    decode_model(Patch, ["memo", "totalAmount"], [None, Decimal("1")], metadata)
+                    decode_model(Patch, ["memo", "totalAmount"], [None, Decimal(1)], metadata)
                 mapping.assert_not_called()
         for columns, row in ((["memo", "memo"], [None, None]),
                              (["memo"], [None]), (["memo", "totalAmount"], [None])):

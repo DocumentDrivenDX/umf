@@ -1,22 +1,28 @@
 from __future__ import annotations
+
 """Pure in-memory capture of explicitly supplied declarations, never module scanning."""
+import inspect
+import json
+from collections.abc import Callable
 from dataclasses import dataclass, fields, is_dataclass
 from datetime import date, datetime
 from decimal import Decimal
-import inspect
-import json
 from itertools import combinations
 from types import UnionType
-from typing import Any, Callable, Union, cast, get_args, get_origin, get_type_hints
-from pydantic import BaseModel, MISSING
+from typing import Any, Union, cast, get_args, get_origin, get_type_hints
+
+from pydantic import MISSING, BaseModel
 
 from .dsl import Join, Param, Terminal
-from .types import ActionRef, Vector
+from .dsl._context import CURRENT, CaptureContext
+from .dsl._context import CaptureError as CaptureError  # noqa: PLC0414 -- Explicit typed public re-export.
+from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, key_identity
+from .dsl._nodes import KeyLiteral as CapturedKey  # noqa: F401 -- Retained public compatibility alias.
+from .dsl._nodes import Node as ExpressionNode  # noqa: F401 -- Retained public compatibility alias.
+from .dsl._nodes import ProjectionRef as ProjectionRef  # noqa: PLC0414 -- Explicit typed public re-export.
+from .dsl.render import render_logical as render_logical  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.search import SearchLeg
-from .dsl._context import CURRENT, CaptureContext, CaptureError as CaptureError
-from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, key_identity, ProjectionRef as ProjectionRef
-from .dsl._nodes import Node as ExpressionNode, KeyLiteral as CapturedKey
-from .dsl.render import render_logical as render_logical
+from .types import ActionRef, Vector
 
 
 @dataclass(frozen=True)
@@ -243,4 +249,4 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
         if not isinstance(reference, ActionRef):
             raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
         action = (reference.module, reference.action)
-    return CapturedDeclaration(cast(str, getattr(function, "__name__")), kind, parameters, tuple(variants), action)
+    return CapturedDeclaration(cast(str, function.__name__), kind, parameters, tuple(variants), action)

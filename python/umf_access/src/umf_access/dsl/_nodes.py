@@ -1,11 +1,13 @@
 from __future__ import annotations
+
 """Immutable logical identity and expression data; no backend names or handles."""
 from collections.abc import Mapping
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime, timezone
 from decimal import Decimal
-from typing import Literal, cast, get_args, Generic, TypeVar
-from pydantic import BaseModel, MISSING
+from typing import Generic, Literal, TypeVar, cast, get_args
+
+from pydantic import MISSING, BaseModel
 
 from ._context import CaptureError
 
@@ -108,7 +110,7 @@ def literal(value: object) -> Node:
         if value.fold or (value.tzinfo is not None and type(value.tzinfo) is not timezone):
             raise ValueError("timestamp literal requires fixed-offset, unfolded carrier")
         kind = "instant" if value.tzinfo is not None else "local"
-        normalized = value.astimezone(timezone.utc) if kind == "instant" else value
+        normalized = value.astimezone(UTC) if kind == "instant" else value
         return Node(kind, (normalized.isoformat(timespec="microseconds"),))
     if type(value) is date:
         return Node("date", (value.isoformat(),))

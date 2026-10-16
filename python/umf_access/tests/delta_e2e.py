@@ -1,12 +1,19 @@
 """Owned actual Spark4/Delta4: CLI catalog -> public typed snapshot reads."""
-import json,os,sys,tempfile,subprocess,hashlib
-from pathlib import Path
-from datetime import timedelta
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import tempfile
 from dataclasses import replace
+from datetime import timedelta
+from pathlib import Path
+
 root=Path(__file__).resolve().parents[3];generated=Path(os.environ['UMF_DELTA_GENERATED_ROOT']);sys.path.insert(0,str(generated))
 from pyspark.sql import SparkSession
-from umf_access.delta_read import SparkDeltaTarget,SparkConfiguration,DeltaSnapshot
-from umf_access.targets import binding_digest,TargetMismatch
+from umf_access.delta_read import DeltaSnapshot, SparkConfiguration, SparkDeltaTarget
+from umf_access.targets import TargetMismatch, binding_digest
+
 jars=Path(os.environ['UMF_DELTA_JARS']);expected={'delta-spark_2.13-4.0.0.jar':'538511702aae0ef6973a6a70af3d4543c9009f8edbed786a00737e2d3cd7f04e','delta-storage-4.0.0.jar':'9bdb9fb450f1e119eba53feb427f331b0d09072d26485b8273883ad72c9a2e1d'}
 assert all(hashlib.sha256((jars/n).read_bytes()).hexdigest()==sha for n,sha in expected.items())
 work=Path(tempfile.mkdtemp(prefix='umf-sdk-delta4-',dir='/private/tmp'));cases=[]
@@ -26,7 +33,7 @@ try:
  config={'package':'native_sales','modules':['delta_declarations'],'targets':[{'id':'owned','kind':'spark-delta','backendId':'weft-databricks','backendVersion':'raw-read/0.1','targetProfile':'weft.raw-read/0.1','binding':binding,'snapshots':{'orders':version},'platform':[{'name':'spark','versions':['4.0.1']},{'name':'delta','versions':['4.0.0']}]}]}
  (generated/'config.json').write_text(json.dumps(config))
  for extra in ([],['--check']):
-  result=subprocess.run([sys.executable,'-B','-m','umf_access.build.catalog','catalog','--root',str(generated),'--config',str(generated/'config.json'),*extra],capture_output=True,text=True)
+  result=subprocess.run([sys.executable,'-B','-m','umf_access.build.catalog','catalog','--root',str(generated),'--config',str(generated/'config.json'),*extra],capture_output=True,text=True, check=False)
   assert result.returncode==0,result.stdout+result.stderr
  from native_sales import queries
  configuration=SparkConfiguration('sdk_spark',binding_digest(binding),(DeltaSnapshot('orders',detail['id'],version),),timedelta(seconds=30),True)

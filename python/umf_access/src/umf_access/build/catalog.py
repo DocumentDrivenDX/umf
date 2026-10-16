@@ -4,11 +4,7 @@ Only the build tool imports declarations and Weft. Runtime code contains inert
 catalog artifacts and explicit model references; it never imports declarations.
 """
 from __future__ import annotations
-from pathlib import Path
-from dataclasses import replace
-from collections.abc import Callable
-from types import UnionType
-from typing import Any, get_args, get_origin, cast, Union
+
 import argparse
 import hashlib
 import importlib
@@ -21,15 +17,21 @@ import re
 import shutil
 import sys
 import tempfile
-from pydantic import BaseModel, MISSING, create_model
-from ..capture import capture, CapturedVariant, ProjectionRef
-from ..dsl import Node, FieldRef, RecordRef, render_logical
-from ..reviewed import ReviewedSQL, ReadCompiler
-from ..types import StrictModel, RUNTIME_IDENTITY, ActionRef
+from dataclasses import replace
+from pathlib import Path
+from types import UnionType
+from typing import Any, Union, cast, get_args, get_origin
+
+from pydantic import MISSING, create_model
+
+from ..capture import ProjectionRef, capture
+from ..codec_support import make_projection_model
+from ..dsl import FieldRef, Node, RecordRef, render_logical
 from ..native_program import NativeProgram, program_json
+from ..reviewed import ReadCompiler, ReviewedSQL
+from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
 from .commands import emit_command
 from .search import emit_search
-from ..codec_support import make_projection_model
 
 OWNED=("queries.py","_umf/catalog.json","_umf/catalog-manifest.json","_umf/privileges.json")
 
@@ -47,6 +49,7 @@ def _read(path: Path) -> bytes:
 
 def _type(annotation: object, package: str) -> str:
     from decimal import Decimal
+
     from ..types import Vector
     if annotation==Vector:return "Vector"
     from datetime import date, datetime

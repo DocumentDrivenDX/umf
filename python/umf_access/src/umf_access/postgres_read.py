@@ -4,28 +4,31 @@ No pools, credentials, compiler imports, role switches or runtime query lowering
 The supplied connection must be idle; the read owns only its own transaction.
 """
 from __future__ import annotations
-from collections.abc import Mapping, Sequence, Generator, AsyncGenerator
-from contextlib import nullcontext
-from decimal import Decimal
-from typing import Any, Generic, Protocol, cast
-from dataclasses import dataclass
+
 import hashlib
 import json
 import math
 import time
+from collections.abc import AsyncGenerator, Generator, Sequence
+from contextlib import nullcontext
+from decimal import Decimal
+from typing import Any, Protocol, Self, cast
+
 from .reviewed import CatalogRead, P, R, ReadBuildError
+
 
 class TimedOut(TimeoutError):
     pass
 
 from .pages import ReadObligationUnmet, StaleContinuation
 
+
 class Cursor(Protocol):
     description: Any
     def execute(self, query: str, params: Sequence[object] | None = None) -> object: ...
     def fetchone(self) -> Any: ...
     def fetchmany(self, size: int = 1) -> list[Any]: ...
-    def __enter__(self) -> Cursor: ...
+    def __enter__(self) -> Self: ...
     def __exit__(self, *args: object) -> object: ...
 
 class Connection(Protocol):
@@ -82,7 +85,6 @@ _TYPES = {"integer": {"int2", "int4", "int8"}, "decimal": {"numeric"},
 
 
 from .pages import ReadContinuation, ReadPage
-
 
 
 def _checked_sort_values(fields: list[dict[str,object]], values: Sequence[object]) -> tuple[object,...]:
@@ -221,7 +223,7 @@ def _execute(connection: Connection, entry: CatalogRead[P, R], params: P | None,
                        timeout_ms=timeout_ms, after=after, _snapshot=_snapshot, _verify_only=_verify_only)
     begin = next(program)  # All call/identity checks precede transaction entry.
     try:
-        with nullcontext() if _snapshot else connection.transaction():
+        with nullcontext() if _snapshot else connection.transaction():  # noqa: SIM117 -- Keep transaction and refusal/cleanup scopes explicit.
             with connection.cursor() as raw:
                 if not _snapshot:
                     raw.execute("SET TRANSACTION READ ONLY")
@@ -271,7 +273,7 @@ async def _async_execute(connection: AsyncConnection, entry: CatalogRead[P, R], 
                        timeout_ms=timeout_ms, after=after, _snapshot=_snapshot, _verify_only=_verify_only)
     begin = next(program)
     try:
-        async with nullcontext() if _snapshot else connection.transaction():
+        async with nullcontext() if _snapshot else connection.transaction():  # noqa: SIM117 -- Keep transaction and refusal/cleanup scopes explicit.
             async with connection.cursor() as raw:
                 if not _snapshot:
                     await raw.execute("SET TRANSACTION READ ONLY")

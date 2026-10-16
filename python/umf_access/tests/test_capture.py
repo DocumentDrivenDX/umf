@@ -1,8 +1,7 @@
 """Capture's in-memory boundary: no catalog writer or Weft substitute."""
-from decimal import Decimal
 import unittest
-from pydantic import MISSING
 
+from pydantic import MISSING
 from umf_access.capture import CaptureError, capture
 from umf_access.dsl import Column, FieldRef, Param, Query, RecordRef, if_present, query
 
@@ -153,7 +152,7 @@ class PresenceBounds(unittest.TestCase):
         for combine in (lambda p: p | (memo == "x"), lambda p: p & (memo == "x"), lambda p: ~p):
             @query
             def declaration(a: Param[str | MISSING]):
-                return objects.filter(combine(if_present(a, lambda p: memo == p))).limit(10).all()
+                return objects.filter(combine(if_present(a, lambda p: memo == p))).limit(10).all()  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
 
             with self.subTest(combine=combine):
                 with self.assertRaises(CaptureError) as caught:
@@ -269,3 +268,18 @@ class TemporalProfileCapture(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CaptureCompatibilityExports(unittest.TestCase):
+    def test_public_compatibility_aliases_remain_importable(self):
+        from umf_access.capture import CapturedKey, ExpressionNode
+        from umf_access.dsl._nodes import KeyLiteral, Node
+        self.assertIs(ExpressionNode, Node)
+        self.assertIs(CapturedKey, KeyLiteral)
+
+
+class GeneratedClientTypeVarExports(unittest.TestCase):
+    def test_executor_typevars_remain_importable(self):
+        from umf_access.protocols import ExecutorT, ReplayingExecutorT
+        self.assertEqual(ExecutorT.__name__, "ExecutorT")
+        self.assertEqual(ReplayingExecutorT.__name__, "ReplayingExecutorT")

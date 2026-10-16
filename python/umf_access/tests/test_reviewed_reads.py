@@ -1,20 +1,35 @@
 """Real Weft compilation; native cases run only against an explicit test cluster."""
 from __future__ import annotations
-import copy
+
 import hashlib
 import json
 import os
-from pathlib import Path
 import subprocess
 import unittest
 from decimal import Decimal
+from pathlib import Path
 from typing import ClassVar
-from pydantic import ConfigDict
-from umf_access.types import StrictModel
-from umf_access.reviewed import ReviewedSQL, CatalogRead, ReadBuildError, build_query
-from umf_access.postgres_read import execute_read, execute_page, execute_stream, ReadObligationUnmet, TimedOut
+
 from umf_access.capture import capture
-from umf_access.dsl import Column, FieldRef, Join, JoinProjection, Query, RecordRef, query
+from umf_access.dsl import (
+    Column,
+    FieldRef,
+    Join,
+    JoinProjection,
+    Query,
+    RecordRef,
+    query,
+)
+from umf_access.postgres_read import (
+    ReadObligationUnmet,
+    TimedOut,
+    execute_page,
+    execute_read,
+    execute_stream,
+)
+from umf_access.reviewed import CatalogRead, ReadBuildError, ReviewedSQL, build_query
+from umf_access.types import StrictModel
+
 
 class Compiler:
     def compile_raw_read_json(self, request: str) -> str:
@@ -238,8 +253,13 @@ class Native(unittest.TestCase):
 
     def test_async_reads_pages_snapshot_close_and_timeout_match_sync(self):
         import asyncio
+
         from psycopg import AsyncConnection
-        from umf_access.postgres_read import execute_read_async, execute_page_async, execute_stream_async
+        from umf_access.postgres_read import (
+            execute_page_async,
+            execute_read_async,
+            execute_stream_async,
+        )
         entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(Compiler(), target="postgresql18", binding=binding())
         async def scenario():
             async with await AsyncConnection.connect(os.environ["UMF_PG_TEST_DSN"], user="praxis_a", autocommit=True) as connection:
@@ -274,8 +294,8 @@ class Native(unittest.TestCase):
 
     def test_two_roles_see_only_own_totals(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(Compiler(), target="postgresql18", binding=binding())
-        a = execute_read(self.a, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test")
-        b = execute_read(self.b, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test")
+        a = execute_read(self.a, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test")
+        b = execute_read(self.b, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test")
         self.assertEqual({r.total for r in a}, {Decimal("0.30"), Decimal("0.70")})
         self.assertEqual(b[0].total, Decimal("123.45"))
         self.assertEqual(self.a.info.transaction_status, 0)
@@ -293,7 +313,6 @@ class Native(unittest.TestCase):
 
     def _generated_binding(self):
         import commerce
-        schema = "praxis_test"
         if not self.admin.execute("SELECT pg_catalog.to_regclass('praxis_test.generated_orders')").fetchone()[0]:
             self.admin.execute("CREATE TABLE praxis_test.generated_orders (order_id text PRIMARY KEY, owner_role text NOT NULL)")
             self.admin.execute("CREATE TABLE praxis_test.generated_customers (customer_id text PRIMARY KEY, name text NOT NULL, owner_role text NOT NULL)")
@@ -344,7 +363,7 @@ class Native(unittest.TestCase):
         globals()["GeneratedOrderKey"] = OrderKey
         globals()["Param"] = Param
         @query
-        def paged(after: Param[GeneratedOrderKey | None]):
+        def paged(after: Param[GeneratedOrderKey | None]):  # noqa: F821 -- Generated Key type is injected into globals for get_type_hints.
             return Order.objects.join(Order.c.customer).order_by(Customer.c.name.asc()).into(OrderCustomerProjection).page(size=1, after=after)
         # Customer is another actual emitted Record, not a handwritten stand-in.
         globals()["Customer"] = commerce.Customer
@@ -356,12 +375,15 @@ class Native(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get("UMF_GENERATED_REPORTING_PACKAGE"), "generated reporting fixture required")
     def test_catalog_cli_public_functions_sync_async_and_drift(self):
-        import commerce, tempfile, shutil, sys
+        import shutil
+        import sys
+        import tempfile
+
         bound = self._generated_binding()
         source = Path(__file__).parent / "catalog_e2e.py"
         with tempfile.TemporaryDirectory(prefix="umf-catalog-native-") as temporary:
             root=Path(temporary)
-            generated=subprocess.run(['bun',str(Path(__file__).resolve().parents[3]/'scripts/generate-access-reporting-fixture.ts'),str(root),'--reads-only'],cwd=Path(__file__).resolve().parents[3],capture_output=True,text=True)
+            generated=subprocess.run(['bun',str(Path(__file__).resolve().parents[3]/'scripts/generate-access-reporting-fixture.ts'),str(root),'--reads-only'],cwd=Path(__file__).resolve().parents[3],capture_output=True,text=True, check=False)
             self.assertEqual(generated.returncode,0,generated.stdout+generated.stderr)
             # Previous stage-two artifacts, if present, belong to another explicit module selection.
             for path in ("queries.py","_umf/catalog.json","_umf/catalog-manifest.json","_umf/privileges.json"):
@@ -371,7 +393,7 @@ class Native(unittest.TestCase):
             shutil.copyfile(Path(__file__).parent/'catalog_declarations.py',root/'declarations.py')
             env=dict(os.environ)
             for name in ('PYTHONPATH','PYTHONHOME','MYPYPATH'):env.pop(name,None)
-            result=subprocess.run([sys.executable,'-I','-B',str(source),str(root)],env=env,capture_output=True,text=True)
+            result=subprocess.run([sys.executable,'-I','-B',str(source),str(root)],env=env,capture_output=True,text=True, check=False)
             self.assertEqual(result.returncode,0,result.stdout+result.stderr)
             self.assertIn('catalog native E2E: pass',result.stdout)
 
@@ -394,9 +416,8 @@ class Native(unittest.TestCase):
             execute_read(self.admin, entry, Empty(), app_schema="praxis_test")
         with self.assertRaises(ReadObligationUnmet):
             execute_read(self.a, entry, Empty(), app_schema="praxis_other")
-        with self.a.transaction():
-            with self.assertRaises(ReadObligationUnmet):
-                execute_read(self.a, entry, Empty(), app_schema="praxis_test")
+        with self.a.transaction(), self.assertRaises(ReadObligationUnmet):
+            execute_read(self.a, entry, Empty(), app_schema="praxis_test")
 
     def test_timeout_is_typed_and_caller_connection_remains_usable(self):
         entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2).build(Compiler(), target="postgresql18", binding=binding())

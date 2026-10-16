@@ -1,21 +1,35 @@
 """Installed CLI -> generated public call -> actual caller-role database execution."""
-import asyncio,json,os,subprocess,sys
+import asyncio
+import json
+import os
+import subprocess
+import sys
 from datetime import timedelta
 from pathlib import Path
+
 import psycopg
+
 root=Path(sys.argv[1]);config=json.loads((root/'config.json').read_text())
 def cli(*args):
-    return subprocess.run([sys.executable,'-I','-B','-m','umf_access.build.catalog','catalog','--config',str(root/'config.json'),'--root',str(root),*args],capture_output=True,text=True)
+    return subprocess.run([sys.executable,'-I','-B','-m','umf_access.build.catalog','catalog','--config',str(root/'config.json'),'--root',str(root),*args],capture_output=True,text=True, check=False)
 first=cli();assert first.returncode==0,first.stdout+first.stderr
 before={str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
 check=cli('--check');assert check.returncode==0,check.stdout+check.stderr
 assert before=={str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
 sys.path.insert(0,str(root))
+from dataclasses import replace
+
 from commerce import queries
-from umf_access.targets import PostgresTarget,AsyncPostgresTarget,PostgresConfiguration,binding_digest,TargetMismatch
 from umf_access.catalog import NotCompiledForTarget
 from umf_access.postgres_read import TimedOut
-from dataclasses import replace
+from umf_access.targets import (
+    AsyncPostgresTarget,
+    PostgresConfiguration,
+    PostgresTarget,
+    TargetMismatch,
+    binding_digest,
+)
+
 binding=config['targets'][0]['binding']
 configuration=PostgresConfiguration('praxis_test',binding_digest(binding),(int(config['targets'][0]['platform'][0]['versions'][0]),),timedelta(seconds=5))
 with psycopg.connect(os.environ['UMF_PG_TEST_DSN'],user='praxis_a',autocommit=True) as connection:

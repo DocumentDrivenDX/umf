@@ -1,13 +1,16 @@
 """Immutable source-frozen native programs; no execution or compiler discovery."""
 from __future__ import annotations
-from collections.abc import Mapping
-from dataclasses import dataclass
+
 import hashlib
 import json
+from collections.abc import Mapping
+from dataclasses import dataclass
 from typing import Any
-from .types import RUNTIME_IDENTITY, ActionRef
+
 from .protocols import ActionRefused
 from .reviewed import parameter_style
+from .types import RUNTIME_IDENTITY, ActionRef
+
 
 class ProgramBuildError(ValueError):
     def __init__(self, original_json: str):

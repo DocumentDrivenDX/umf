@@ -1,7 +1,8 @@
 """Trusted build-time declarations for real installed catalog E2E."""
 from commerce import Order, OrderCustomerProjection, OrderKey
-from umf_access import query, Param, if_present
 from pydantic import MISSING
+from umf_access import Param, if_present, query
+
 
 @query
 def joined():

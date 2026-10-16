@@ -1,11 +1,12 @@
 """Actual generated non-temporal codec checks; target carriers unqualified."""
 import ast
+import unittest
 from decimal import Decimal
 from pathlib import Path
-import unittest
+
 import commerce
 from commerce import OrderPatch
-from commerce.codecs import encode_Order_patch, decode_OrderSummary
+from commerce.codecs import decode_OrderSummary, encode_Order_patch
 
 
 class GeneratedCodecTests(unittest.TestCase):
