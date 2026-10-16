@@ -1,0 +1,1378 @@
+{
+  "versions": {
+    "avro": "1.12.0",
+    "fastavro": "1.12.2",
+    "pyarrow": "21.0.0"
+  },
+  "inputSha256": "0ec92398a1ec18e2356e20d826c6735f2f5635382e6d6ac4c82d25dbb979927e",
+  "observations": [
+    {
+      "system": "avro",
+      "stage": "mixed",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455"
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455"
+                }
+              ]
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455"
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "avro",
+      "stage": "containers",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "avro",
+      "stage": "associations",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "association"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "0",
+                    "linkId_lo": "0"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "first"
+                },
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "-1",
+                    "linkId_lo": "-1"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "second"
+                }
+              ],
+              "invalidRows": []
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "0",
+                    "linkId_lo": "0"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "first"
+                },
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "-1",
+                    "linkId_lo": "-1"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "second"
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "avro",
+      "stage": "associations-polymorphic",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "-8603657889541918977"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "association"
+          },
+          "engines": [
+            {
+              "engine": "apache",
+              "rows": [
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "0",
+                    "linkId_lo": "0"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "first",
+                  "alt_hi__pair": null
+                },
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "-1",
+                    "linkId_lo": "-1"
+                  },
+                  "left_hi__pair": null,
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "second",
+                  "alt_hi__pair": {
+                    "alt_hi": "-1",
+                    "alt_lo": "-1"
+                  }
+                }
+              ],
+              "invalidRows": []
+            },
+            {
+              "engine": "fastavro",
+              "rows": [
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "0",
+                    "linkId_lo": "0"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "first",
+                  "alt_hi__pair": null
+                },
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "-1",
+                    "linkId_lo": "-1"
+                  },
+                  "left_hi__pair": null,
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "second",
+                  "alt_hi__pair": {
+                    "alt_hi": "-1",
+                    "alt_lo": "-1"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "parquet",
+      "stage": "mixed",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455"
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "parquet",
+      "stage": "containers",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "parquet",
+      "stage": "associations",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "association"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "0",
+                    "linkId_lo": "0"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "first"
+                },
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "-1",
+                    "linkId_lo": "-1"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "second"
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    },
+    {
+      "system": "parquet",
+      "stage": "associations-polymorphic",
+      "records": [
+        {
+          "record": {
+            "module": "m",
+            "element": "parent"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "0",
+                    "id_lo": "0"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "child"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "-9223372036854775808",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ],
+              "invalidRows": [
+                {
+                  "id_hi__pair": {
+                    "id_hi": "-1",
+                    "id_lo": "-1"
+                  },
+                  "parent_hi__pair": null,
+                  "label": "\u96ea O'Brien",
+                  "count": "not-an-integer",
+                  "active": "false",
+                  "price": "1234567890123456.7890",
+                  "blob": "00ff80",
+                  "observed": "2026-10-16T12:34:56.123456789+05:30",
+                  "ratio": "-0",
+                  "wide": "340282366920938463463374607431768211455",
+                  "itemMap": {
+                    "empty": [],
+                    "missing": null,
+                    "values": [
+                      null,
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      },
+                      {
+                        "hi": "4822678189205111",
+                        "lo": "9843086184167632639"
+                      }
+                    ]
+                  },
+                  "detailObject": {
+                    "m0": "present group",
+                    "m1": []
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "record": {
+            "module": "m",
+            "element": "association"
+          },
+          "engines": [
+            {
+              "engine": "pyarrow",
+              "rows": [
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "0",
+                    "linkId_lo": "0"
+                  },
+                  "left_hi__pair": {
+                    "left_hi": "0",
+                    "left_lo": "0"
+                  },
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "first",
+                  "alt_hi__pair": null
+                },
+                {
+                  "linkId_hi__pair": {
+                    "linkId_hi": "-1",
+                    "linkId_lo": "-1"
+                  },
+                  "left_hi__pair": null,
+                  "right_hi__pair": {
+                    "right_hi": "-1",
+                    "right_lo": "-1"
+                  },
+                  "note": "second",
+                  "alt_hi__pair": {
+                    "alt_hi": "-1",
+                    "alt_lo": "-1"
+                  }
+                }
+              ],
+              "invalidRows": []
+            }
+          ]
+        }
+      ],
+      "independentScalarAndNestedUuidChecks": true
+    }
+  ]
+}

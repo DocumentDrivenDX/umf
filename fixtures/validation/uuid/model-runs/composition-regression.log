@@ -1,0 +1,19 @@
+{"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-YrMD91","scope":"Fresh owned-fixture UUID qualification; stops at first failed step"}
+{"step":1,"total":17,"key":"build","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","run","build"]}
+{"step":2,"total":17,"key":"typecheck","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","run","typecheck"]}
+{"step":3,"total":17,"key":"schemas","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","run","test:schemas"]}
+{"step":4,"total":17,"key":"tests","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/run-tests.ts","tests/uuid-model.test.ts","tests/uuid-file-model.test.ts","tests/bit128.test.ts","tests/uuid.test.ts","tests/core-uuid.test.ts","tests/core-uuid-key.test.ts","tests/core-uuid-transition.test.ts","tests/binding-uuid.test.ts","tests/uuid-native-projection.test.ts"]}
+{"step":5,"total":17,"key":"bindingRegression","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/run-tests.ts","tests/binding"]}
+{"step":6,"total":17,"key":"postgresql","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/sql-model-oracle.ts","postgresql"]}
+{"step":7,"total":17,"key":"sqlserver","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/sql-model-oracle.ts","sqlserver"]}
+{"step":8,"total":17,"key":"artifacts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/file-model-artifacts.ts"]}
+{"step":9,"total":17,"key":"files","command":["/tmp/umf-uuid-native-env/bin/python","scripts/uuid/file-model-oracle.py"]}
+{"step":10,"total":17,"key":"tablespec","command":["/Users/erik/Projects/tablespec/.venv/bin/python","scripts/uuid/tablespec-model-oracle.py"]}
+{"step":11,"total":17,"key":"nativeAdapters","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/native-adapter-roundtrips.ts"]}
+{"step":12,"total":17,"key":"returned","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/verify-returned.ts"]}
+{"step":13,"total":17,"key":"browser","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/model-browser.ts"]}
+{"step":14,"total":17,"key":"coreBrowser","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid-browser.ts"]}
+{"step":15,"total":17,"key":"qualification","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/model-gates.ts"]}
+{"step":16,"total":17,"key":"conformance","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/conformance.ts"]}
+{"step":17,"total":17,"key":"conformanceTests","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","tests/uuid-conformance.test.ts"]}
+{"complete":true,"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-YrMD91","commands":{"build":0,"typecheck":0,"schemas":0,"tests":0,"bindingRegression":0,"postgresql":0,"sqlserver":0,"artifacts":0,"files":0,"tablespec":0,"nativeAdapters":0,"returned":0,"browser":0,"coreBrowser":0,"qualification":0,"conformance":0,"conformanceTests":0}}

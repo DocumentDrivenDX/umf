@@ -1,8 +1,8 @@
 # UMF project documentation
 
-The experimental non-temporal SDK now has [installed native integration evidence](04-build/evidence/typed-persistence/integrated-native-20261016/README.md) for schema/instance/codec E2Es, catalog reads, actions, atomic bulk, exact search, async execution and local Delta snapshot reads. Temporal qualification remains **HELD**. Truss/Ashlar SDK adoption, Delta action/bulk prerequisites and managed-service qualification remain unfinished.
+The experimental non-temporal SDK now has [installed native integration evidence](04-build/evidence/typed-persistence/integrated-native-20261016/README.md) for schema/instance/codec E2Es, catalog reads, actions, atomic bulk, exact search, async execution and local Delta snapshot reads. Temporal qualification remains **HELD**. [Original engine and Delta evidence](04-build/evidence/typed-persistence/engine-adoption-20261016/README.md) qualifies ordinary Truss reads, held Ashlar publications and local atomic Delta actions/bulk. [Managed Lakebase evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md) qualifies the pinned read/catalog and exact search cohort. Protected Truss action/current-policy/manifest adoption, managed mutation authority and broader backend forms remain unfinished.
 
-The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Lakebase service execution remains unverified.
+The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Pinned Lakebase 18.6 read/catalog and exact pgvector 0.8.6 search execution now has [isolated native evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md); other managed forms remain separately gated.
 
 ## Proposed typed data access SDK
 
@@ -1302,7 +1302,7 @@ Security planning: [shared security feature](01-frame/features/FEAT-008-shared-s
 [CONTRACT-076](02-design/contracts/CONTRACT-076-128-bit-uuid.md) specify first-class
 opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
 versioned keys and native/bytes/text/two64-bit physical carriers. This is an
-implementable design, not implemented core0.9.0 or qualified native support.
+implemented core0.9.0 design; current qualified native support is recorded below.
 
 
 The initial [128-bit/UUID implementation](04-build/evidence/uuid-implementation.md)
@@ -1310,3 +1310,22 @@ now provides experimental core0.9 values, literals, keys, copied authoring,
 inspection/selection, retained migration and explicit carrier codecs/proposals.
 Native observations qualify specific schemas and datum paths; complete ideal,
 five-binding, relationship/index and consumer-execution gates remain separate.
+
+
+Qualified128-bit/UUID ideal admission and five-priority carrier/model delivery
+now pass under the explicit uuid-model1 profile. The [completion record](04-build/evidence/uuid-adapter-completion.md)
+records complete singular Record/Key/index/FK SQL layouts, native constraints and
+transaction observations, Avro/Parquet grouped pairs and actual TableSpec/Spark
+string fallback. Native equivalence, wider composition and deployed consumer
+adoption are separate; unsupported meanings still refuse or remain residuals.
+
+
+The separately selected `uuid-model2` profile now qualifies mixed flat Records,
+finite nested arrays/maps and explicit groups, then association Records with
+polymorphic endpoint alternatives across all five priority targets.
+[Composition evidence and limits](04-build/evidence/uuid-composition.md) records
+native returned values, adapter recovery, complete-snapshot integrity checks,
+Chromium and source-bound gates. SQL/TableSpec JSON and file scalar text are
+explicit storage choices with residual enforcement obligations. Model1 retains
+its original interpretation; consumer execution and native equivalence remain
+separate.

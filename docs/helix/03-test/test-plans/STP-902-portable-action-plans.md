@@ -41,6 +41,7 @@ Prove US-902's original portable or native outcomes under its contracted profile
 | US-902-AC4 | `exact_values` | supported values preserve spelling and unsupported executable shapes refuse without coercion. | `@covers US-902-AC4` | portable-contract | `tests/actions-plan.test.ts` |
 | US-902-AC5 | `portable_boundary` | copied outputs and ordered diagnostics agree without native I/O, state evaluation or host globals. | `@covers US-902-AC5` | portable-contract | `tests/actions-plan.test.ts` |
 | US-902-AC6 | `strict_json_bounds` | it refuses without partial eligible output and preserves the original input/callback registry. | `@covers US-902-AC6` | portable-contract | `tests/actions-plan.test.ts` |
+| US-902-AC7 | `local_profile_bundle` | exact local bundle, native/mixed/unknown refusal and separate custody claims | `@covers US-902-AC7` | portable-contract | `tests/actions-local-profile.test.ts` |
 
 ## Executable Proof
 
@@ -61,3 +62,7 @@ Existing core0.8.0 and actions0.1.0 semantic APIs; no runtime executor dependenc
 ## Initial implementation execution
 
 The original planned test mapping now has executable controls in `tests/actions-plan.test.ts` and the shared `tests/actions-plan-corpus.ts`. Actual Chromium imports the built public ESM through `scripts/actions-plan-browser.ts`. See [implementation evidence](../../04-build/evidence/bulk-update/us902-implementation.md) and [browser receipt](../../04-build/evidence/bulk-update/us902-browser.json). This is portable declaration evidence; native and downstream gates remain open.
+
+## Browser-local profiles — US-902-AC7
+
+tests/actions-local-profile.test.ts and actual Chromium controls verify original native preparation remains unchanged, exact local pair syntax/resources/invocation, unknown/mixed pair refusal, separate bulk.localOwner vs bulk.principal, original Key/manifest construction and no authority from compatible claims. Native PGlite/Truss/Weft and storage recovery qualification is separately mandatory under CONTRACT-905.

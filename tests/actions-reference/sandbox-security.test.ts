@@ -37,8 +37,19 @@ test('native process bound refuses additional forks while successful children ar
   await Promise.all(starts);for(const child of jobs)if(child.pid)child.kill('SIGKILL');await Promise.all(closes);return {started,errors,pids:fs.readFileSync('/sys/fs/cgroup/pids.max','utf8').trim()};
  `),{},()=>{},5000,value=>observations.push(value)) as {started:number;errors:string[];pids:string};expect(result.pids).toBe('32');expect(result.started).toBeGreaterThan(0);expect(result.started).toBeLessThan(32);expect(result.errors.length).toBeGreaterThan(0);expect(result.started+result.errors.length).toBe(64);expect([...new Set(result.errors)]).toEqual(['EAGAIN']);await absent(observations.find(value=>value.stage==='finished')!.container);
 },15000);
+test('natural EOF preserves successful results and refuses an early exit without a result',async()=>{
+ for(const source of ['return {ok:true};','process.exit(0);','process.exit(137);']){
+  const observations:ReferenceHandlerObservation[]=[];
+  const result=runReferenceHandler(program(source),{},()=>{},5000,value=>observations.push(value));
+  if(source.startsWith('return'))await expect(result).resolves.toEqual({ok:true});
+  else await expect(result).rejects.toMatchObject({code:'FRAME_ACCESS'});
+  const finished=observations.find(value=>value.stage==='finished');
+  if(source==='process.exit(137);')expect(finished?.exitCode).toBe(137);
+  expect(finished?.oomKilled).toBe(false);expect(finished?.cleanupConfirmed).toBe(true);await absent(finished!.container);
+ }
+},15000);
 test('actual cgroup memory exhaustion yields LIMIT with native OOM evidence and confirmed removal',async()=>{
- const observations:ReferenceHandlerObservation[]=[],seen:string[]=[];await expect(runReferenceHandler(program(`const fs=await import('node:fs');await gateway.read('limits',{module:'qualification',element:fs.readFileSync('/sys/fs/cgroup/memory.max','utf8').trim()});const buffers=[];for(;;)buffers.push(Buffer.alloc(8*1024*1024,1));`),{},(_operation,args)=>{seen.push((args[1] as {element:string}).element);return true;},5000,value=>observations.push(value))).rejects.toMatchObject({code:'LIMIT'});expect(seen).toEqual(['134217728']);const finished=observations.find(value=>value.stage==='finished');expect(finished?.oomKilled).toBe(true);expect(finished?.cleanupConfirmed).toBe(true);await absent(finished!.container);
+ const observations:ReferenceHandlerObservation[]=[],seen:string[]=[];let failure:unknown;try{await runReferenceHandler(program(`const fs=await import('node:fs');await gateway.read('limits',{module:'qualification',element:fs.readFileSync('/sys/fs/cgroup/memory.max','utf8').trim()});const buffers=[];for(;;)buffers.push(Buffer.alloc(8*1024*1024,1));`),{},(_operation,args)=>{seen.push((args[1] as {element:string}).element);return true;},5000,value=>observations.push(value));}catch(error){failure=error;}const finished=observations.find(value=>value.stage==='finished');expect({failure,seen,finished}).toMatchObject({failure:{code:'LIMIT'},seen:['134217728'],finished:{oomKilled:true,cleanupConfirmed:true}});await absent(finished!.container);
 },15000);
 test('timeout, malformed protocol and dispatch refusal each independently confirm owned removal',async()=>{
  for(const entry of [{source:'while(true){}',code:'LIMIT',timeout:1500},{source:`process.stdout.write('not-json\\n');return {};`,code:'FRAME_ACCESS',timeout:5000},{source:`await gateway.exists('outside');return {};`,code:'FRAME_ACCESS',timeout:5000}]){const observations:ReferenceHandlerObservation[]=[];await expect(runReferenceHandler(program(entry.source),{},()=>{throw Object.assign(Error('Outside frozen frame'),{code:'FRAME_ACCESS'});},entry.timeout,value=>observations.push(value))).rejects.toMatchObject({code:entry.code});const finished=observations.find(value=>value.stage==='finished');expect(finished?.cleanupConfirmed).toBe(true);await absent(finished!.container);}

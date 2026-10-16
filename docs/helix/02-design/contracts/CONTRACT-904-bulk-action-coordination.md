@@ -122,3 +122,7 @@ PAP_* validation codes follow CONTRACT-902/903; PAP_FENCE denotes stale/absent c
 ## Examples
 
 Two one-item batches: batch 0 commits; batch 1 observes a changed version, records conflict and stops. Batch 0 stays committed. A crash after batch 0 commit before acknowledgement returns the original complete receipt on lookup after restart; only then may batch 1 be admitted. A cancel racing batch 0 serializes before or after that transaction, never splitting it.
+
+### Separate local bulk companion
+
+CONTRACT-905 defines umf.actions.local-bulk/1. It does not change this bulk/1 protocol, human delegation, native custody or claims. A local capability cannot be supplied as bulk.principal or accepted as a bulk/1 seal. Shared frozen-intent and result carrier shapes do not confer shared authority or runtime qualification.

@@ -1,3 +1,4 @@
+import {resolveBit128ModelLayout} from './bit128-layout';
 import manifest from '../../../spec/extensions/binding-128/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -29,7 +30,7 @@ export function inspectBit128Binding(bindingInput:Document,logicalInput:Document
   const logicalValidation=validateDocument(logical);
   if(logical.umf!=='0.9.0'||!logicalValidation.valid||payload.logical.documentId!==logical.id||payload.logical.coreVersion!==logical.umf)throw new UmfError('BINDING_MODEL','Exact valid core0.9 source required');
   const unknown=(o:object,known:string[],path:string)=>{for(const k of Object.keys(o))if(!known.includes(k))add('BINDING_UNKNOWN',path+'/'+pointer(k),'Unknown carrier meaning retained','warning');};
-  unknown(payload,['profile','logical','target','elements','fields','relationships','indexes'],'/extensions/umf.binding');
+  unknown(payload,['profile','logical','target','elements','fields','relationships','indexes',...(payload.target.subset==='uuid-model2'?['groups']:[])],'/extensions/umf.binding');
   unknown(payload.logical,['documentId','coreVersion'],'/logical');unknown(payload.target,['system','version','subset'],'/target');
   const key=(r:{module:string;element:string})=>JSON.stringify([r.module,r.element]);
   const elements=new Map(logical.modules.flatMap(m=>m.elements.map(e=>[key({module:m.id,element:e.id}),e] as const)));
@@ -48,7 +49,7 @@ export function inspectBit128Binding(bindingInput:Document,logicalInput:Document
    if(!field||field.kind!=='field')add('BINDING_REFERENCE',path,'Explicit logical Field required');
    const owners=logical.modules.flatMap(m=>m.elements.filter(e=>e.kind==='record'&&((e.members??[]) as {module:string;element:string}[]).some(r=>key(r)===key(row))).map(e=>key({module:m.id,element:e.id})));
    const table=tables.get(key(row))??(owners.length===1?tables.get(owners[0]!):undefined);
-   if(!table)add('BINDING_TABLE',path,'Explicit target table/record binding required');
+   if(!table&&payload.target.subset!=='uuid-model2')add('BINDING_TABLE',path,'Explicit target table/record binding required');
    let columns:string[]=[];
    if(row.storage==='scalar-carrier'){
     unknown(row,['module','element','storage','carrier'],path);
@@ -62,10 +63,11 @@ export function inspectBit128Binding(bindingInput:Document,logicalInput:Document
     columns=row.storage==='column'?[row.column!]:[row.documentColumn!];
     if(row.storage==='column'&&(!row.column||row.path!==undefined||row.documentColumn!==undefined)||row.storage==='embedded'&&(!row.documentColumn||!row.path?.length||row.column!==undefined))add('BINDING_PATH',path,'Malformed native storage declaration');
    }
-   for(const col of columns){const slot=JSON.stringify([table,col]);if(slots.has(slot))add('BINDING_SLOT_COLLISION',path,'Physical slot reused');slots.add(slot);}
+   for(const col of columns){const slot=JSON.stringify([table??key(row),col]);if(slots.has(slot))add('BINDING_SLOT_COLLISION',path,'Physical slot reused');slots.add(slot);}
   }
   // Initial scalar-only profile must not silently certify unenforced index/relationship layouts.
-  if(payload.indexes.length||payload.relationships.length)add('BINDING_UNQUALIFIED_LAYOUT','/indexes','Index and relationship carrier execution is not admitted; declarations remain retained','warning');
+  if(['uuid-model1','uuid-model2'].includes(payload.target.subset)){diagnostics.push(...logicalValidation.diagnostics.filter(d=>!diagnostics.some(x=>x.code===d.code&&x.path===d.path)));resolveBit128ModelLayout(payload,logical);}
+  else if(payload.indexes.length||payload.relationships.length)add('BINDING_UNQUALIFIED_LAYOUT','/indexes','Index and relationship carrier execution is not admitted; declarations remain retained','warning');
  }catch(error){if(!(error instanceof UmfError))throw error;add(error.code,error.path,error.message);}
  return {valid:!diagnostics.some(d=>d.severity==='error'),complete:diagnostics.length===0,diagnostics};
 }

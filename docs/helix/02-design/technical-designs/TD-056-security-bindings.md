@@ -2899,3 +2899,29 @@ relationship declarations/endpoint alternatives and the unfiltered edge census
 must correspond to the original accepted model under held cuts. Supplied catalog
 or cursor fixtures cannot prove that native source/current-authority boundary.
 No backend criterion is promoted by these component controls.
+
+## Nested ontology truth correspondence — 2026-10-16
+
+The formal model now expands the actual four-relationship ownership/membership
+join: StaffAssignment and AssignmentProject share one Assignment identity;
+OwnershipResource and OwnershipProject share one Ownership identity; both paths
+meet at the same Project. Identities are abstract complete qualified type/key
+identities, and logical endpoint kinds and selected Staff/Resource kinds are
+explicit premises. Activity has F/U/T truth. A path with T dominates U across
+other complete witnesses; no T and at least one U yields U; an empty path yieldsF.
+
+`tools/security/prove-nested-ontology-refinement.py` proves conditional equality
+of logical/native nested truth and negation under complete sound incidence,
+exact directed endpoint identity and total activity-truth correspondence.
+Nonvacuous true/unknown/false, empty and mixedT/U populations are checked. SAT
+controls expose split Ownership witnesses, unrelated active Assignments,
+unknown-as-true, early unknown dominance and missing correspondence. Eighteen
+queries replay with Z34.15.4:5UNSAT/13SAT.
+
+These are first-order conditional correspondence claims. An observed U inside
+complete admitted facts is distinct from missing coverage, which must refuse
+under the original preflight. No codec or key injectivity, implementation
+translation, runtime limits/termination, source/caller/current authority or
+guarded release is proved. The native graph collector must establish the
+premises through actual source binding and held host guards before backend
+admission; supplied metadata cannot establish them.

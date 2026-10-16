@@ -717,3 +717,41 @@ verification: `bun run typecheck`, `bun run build`, plus a focused import-closur
 check in the new UUID browser harness rejecting host imports/globals and external
 requests. Browser execution must exercise the public bundle; typechecking alone
 is insufficient. No service, schema registry or entropy source is introduced.
+
+### Qualified128-bit model composition modules
+
+The separately selected CONTRACT-076 uuid-model1 profile composes singular
+UUID/bits128 Records without changing carrier1 or older adapter interpretations.
+`extensions/binding/bit128-layout.ts` resolves complete membership, slot ownership,
+Keys and explicit relationship/index layouts; `bit128-record.ts` owns copied
+complete-row tokens. `projections/bit128-model.ts` coordinates source validation,
+policy, result schema and exact recovery. SQL DDL belongs in
+`bit128-sql-model.ts`; Avro/Parquet/TableSpec bundles and pair grouping belong in
+`bit128-file-model.ts`, with JSON-safe driver-boundary tokens in
+`bit128-file-values.ts`. These modules do not execute transports or import host
+APIs. Native harnesses and admission/delivery verification stay in `scripts/uuid/`.
+The public-bundle browser and forbidden-host/value-layer controls verify the
+portable boundary. Existing mixed/container/association/partition profiles are
+not silently widened; unsupported composition refuses and native file enforcement
+limits remain residuals. No persistent routine metadata receipt is added.
+
+### UUID model2 composition boundaries
+
+CONTRACT-076's explicitly selected `uuid-model2` adds mixed scalar leaves,
+finite array/map/group shapes and explicit junction endpoint alternatives.
+`binding/model-source.ts` owns copied source resolution shared by projections and
+snapshot validation. `model-scalar.ts` owns exact scalar tokens and SQL type
+selection; `model-shape.ts` owns finite shape resolution; `model-shape-values.ts`
+owns recursive value/group validation; `model-associations.ts` lowers explicit
+endpoint alternatives into a private FK view; `model-dataset.ts` validates complete
+finite populations, Keys, references and distinct-endpoint counts. These binding
+modules import portable model/validation helpers, never projections or native
+runtimes. Existing bit128 value modules retain their smaller dependency boundary.
+
+`projections/model-shape-schema.ts` renders nested Avro/Parquet schemas;
+`model-shape-mappings.ts` reports tagged native paths. SQL uses explicit JSON
+storage for composites; TableSpec uses explicit JSON/exact-text fallback. All
+native enforcement gaps remain residuals. Host-only composition qualification
+stays under `scripts/uuid/`; public-bundle Chromium execution and current-source
+fingerprint refusal controls verify portability and proof freshness. Library
+functions do not execute transactions or claim native lifecycle equivalence.

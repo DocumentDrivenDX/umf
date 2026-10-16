@@ -327,8 +327,8 @@ export * from './core-ideals/facets-parquet-projection';
 
 export * from './model/keys';
 export * from './model/key-transition';
-export {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes} from './model/key-tuple';
-export type {CoreKeyIdentity,CoreKeyTupleValue,CoreKeyTupleReceipt} from './model/key-tuple';
+export {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes,prepareCoreKeyTuples} from './model/key-tuple';
+export type {CoreKeyIdentity,CoreKeyTupleValue,CoreKeyTupleReceipt,PreparedCoreKeyTuples} from './model/key-tuple';
 export type {CoreKeyDefinition,CoreKeyFieldReference} from './validation/keys';
 export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema.json';
 export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
@@ -394,7 +394,7 @@ export type {Action,ActionIdentity,ActionParameter,ActionReference,ActionKeyRefe
 // Explicit bounded consumer interpretation, separate from inert metadata inspection.
 export {compileActionRule,actionExpressionLimits} from './extensions/actions/expression';
 export type {ActionExpression,ActionRulePhase,CompiledActionRule,ActionExpressionType} from './extensions/actions/expression';
-export {compileActionSelector,selectActionIdentity,admitActionInputs} from './extensions/actions/selector';
+export {compileActionSelector,selectActionIdentity,admitActionInputs,prepareActionIdentities} from './extensions/actions/selector';
 export type {ActionInputs,ActionEntityInput,CompiledActionSelector,SelectedActionIdentity} from './extensions/actions/selector';
 export {evaluateActionRule,actionFieldValueKey} from './extensions/actions/evaluation';
 export type {ActionFrameState,ActionBusinessState,ActionRuleState} from './extensions/actions/evaluation';
@@ -481,6 +481,8 @@ export type {BulkOutcomeValidation} from './extensions/actions/bulk';
 
 export {constructActionManifest} from './extensions/actions/manifest-construction';
 export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManifest} from './extensions/actions/manifest-construction';
+
+export type {PreparedActionIdentities} from './extensions/actions/selector';
 export * from './adapters/access-temporal';
 export { RAW_TABLE_BINDING_SUBSET, rawTableBindingProfiles, inspectRawTableBinding } from './extensions/binding/raw-profiles';
 export type { RawTableBindingTarget } from './extensions/binding/raw-profiles';
@@ -503,3 +505,10 @@ export {default as coreRelationshipOperationV3Schema} from '../spec/core/relatio
 export {default as coreBit128SelectionSchema} from '../spec/core/bit128-selection.schema.json';
 export {default as coreBit128TransitionSchema} from '../spec/core/bit128-transition.schema.json';
 export {default as coreBit128RelationshipSelectionSchema} from '../spec/core/relationship-metadata-selection-v2.schema.json';
+export {projectBit128Model,recoverBit128ModelProjection,type Bit128ModelProjection} from './projections/bit128-model';
+export * from './extensions/binding/bit128-record';
+export * from './projections/bit128-file-values';
+export {default as bit128ModelProjectionSchema} from '../spec/projections/bit128-model.schema.json';
+
+export {validateBit128Dataset,type Bit128DatasetRecord} from './extensions/binding/model-dataset';
+export type {ModelLiteral} from './extensions/binding/model-shape-values';

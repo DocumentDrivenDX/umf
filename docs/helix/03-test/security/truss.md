@@ -574,3 +574,150 @@ prove adversarial DDL fencing or live policy migration. Full backend acceptance
 still requires the other scenarios above, original source/current-authority
 custody, output lifetime and original acceptance runner evidence. No reproduction
 or source inspection alone promotes a case.
+
+
+### Complete native capture at closing
+
+This expands truss.B02/B11/B12/B15 and L11 under US-056-AC2/AC9/AC10 and
+US-057-AC7. It adds no case IDs or acceptance promotions. Qualify the selected
+closing mechanism over the complete original native fact, ordered Key and graph
+occurrence populations before public release, including selections unused by
+the projected query. A source/profile label or supplied completion flag cannot
+replace the original native capture or authenticated host custody.
+
+For a profile using closing recapture, execute these controls inside the same
+held native transaction and shared operation deadline:
+
+1. Capture original source bytes, typed facts, complete coverage, Key receipts
+   and native row identities/versions; retain every graph occurrence, including
+   parallel edges and complete endpoint roles.
+2. Reobserve the unchanged complete population and compare all retained source,
+   fact, coverage, Key, graph and native provenance components. Require a
+   successful comparison without issuing authority or releasing data.
+3. Mutate one own-transaction dependency at a time: delete an edge; change only
+   an edge version; retarget one endpoint to another valid Record of the same
+   type; change only an object version; change a non-key authorization value.
+   Require the intended closing comparison to refuse, not an unrelated SQL,
+   codec, startup or source-shape error. Preserve versions even when logical
+   projections otherwise compare equal.
+4. Restore each original savepoint and require a fresh successful comparison.
+   Repeat comparison after original semantic evaluation and whole-batch
+   inspection; no cached successful check may substitute for the current one.
+5. From an independent native writer, attempt changes to object, Key and edge
+   homes at the capture, inspection and closing boundaries. Retain actual lock
+   outcomes through outer settlement. Unsupported filtering, incomplete census,
+   source failure and opening/closing expiry refuse without partial output.
+
+A raw-only capture that rejects every core relationship may describe empty graph
+populations explicitly. It must not supply empty defaults for missing or
+unsupported graph capture. For the Python candidate's exact capture type, wrong profiles and replacement
+subclasses cannot attest this profile's original physical capture.
+
+Retain exact sources, commands, native/driver/runtime versions, original and
+changed row bytes/locators, expected semantic resources, refusal stages,
+restorations, original transaction outcome and verified cleanup. Supplied source
+wrappers remain diagnostic evidence; they do not qualify native source admission.
+Endpoint equality cannot prove absence of transient changes or mutation after
+the check. Continuous source/authority cuts, authenticated Subject, revocation
+ordering and final guarded release remain independent mandatory obligations.
+
+Privileged fixture mutation is fault injection into the selected closing check,
+not proof of containing a malicious database owner or superuser. CONTRACT-063's
+explicit installer/integrity exclusions and ordinary non-reachability remain
+binding. Admitted maintenance/host-extension and trigger paths still belong to
+the protected source closure and must preserve actual-effect/result conformance;
+privilege exclusion cannot justify omitting their effects or required checks.
+
+
+### Exact native scalar and ordered-Key correspondence
+
+Expand truss.B02/B07/B08/B09/B12/B13/B15 under US-056-AC2/AC6/AC7/AC10
+with independently authored native scalar expectations. These are prerequisites,
+not new case IDs or acceptance promotions. Exercise public writes, complete
+native capture, original semantic evaluation and whole-batch inspection using
+the same declared domains and ordered Keys.
+
+1. Preserve integer tokens beyond binary64 exact range and at both signed64
+   endpoints. Preserve decimal precision/scale boundaries, trailing zeros and
+   negative zero without a floating-point intermediary in the fixture.
+2. Include binary zero/high bytes, empty binary and a multi-component authored
+   Key whose second component is binary. Compare original component order and
+   exact bytes through native capture and semantic output; empty is not absent.
+3. Distinguish composed/decomposed Unicode, supplementary characters and empty
+   text. Require exact Boolean type. For an optional field, separately exercise
+   present-null, absent and present-empty-text in native facts and tagged cells.
+4. Inject integer overflow/underflow and decimal precision/scale violations into
+   a hidden or ownerless row while a different row otherwise qualifies. Require
+   the original global domain check to refuse before any resources, decisions
+   or batch; eligibility filtering must not hide invalid population members.
+5. Inject malformed native binary encoding, numeric Boolean and required-field
+   null separately. Require their intended capture-stage refusal, then restore
+   each savepoint and compare the complete original capture again.
+6. Exercise an unsupported native string such as U+0000 through the public write
+   API. Assert the actual structured refusal and diagnostic stage, settle the
+   caller transaction and independently compare canonical rows. A refusal must
+   not be described as normalization, replacement or successful round trip.
+
+Retain original tokens/bytes, selected source and runtime pins, domain facets,
+ordered Key receipts, exact rendered cells, hidden-row negatives, transaction
+outcomes and cleanup. Qualify each refusal by the stage actually observed;
+unrelated startup, SQL or decoder errors cannot establish a semantic refusal.
+A finite passing corpus does not discharge all codec/domain correspondence,
+query-operator equivalence, timestamps, collections, continuous authority or
+final guarded-release obligations. Diagnostic source substitution cannot
+qualify native source admission, and endpoint source hashes cannot establish
+continuous source custody.
+
+
+### Issued compiler association and native definition correspondence
+
+For truss.B02/B09/B12/B15, require the backend to obtain association requirements
+from the actual retained compiler preparation, alongside that same preparation's
+Record/member/ordered-Key requirements. Caller-supplied report JSON, equal bytes
+from another parent, a reconstructed parent, source labels or a completion flag
+cannot supply issuance or a held operation.
+
+Compare complete source/preparation/model hashes and model pins. Account for
+every original association occurrence in order, including ones unused by the SQL
+projection. Keep Record and Relationship namespaces distinct. Join selected and
+authored endpoint Keys without inventing a source Key or default target Key;
+compare full ordered components and native property/Key identities. Compare
+native relationship identities, typed endpoint alternatives, multiplicities,
+lifecycle, direction, composition, inverse and physical edge columns. Record
+member endpoints also require original owner/member/target correspondence.
+Unsupported realizations must refuse explicitly without collapsing authored
+branches, duplicate occurrences or record-backed witnesses.
+
+Exercise actual native column/definition drift, missing/duplicate/foreign native
+identities, wrong Key order, endpoint-type changes and equal-data parent
+substitution. Require the intended correspondence refusal, preserve caller prior
+work and verify restored metadata after rollback. Retain original issued data,
+actual accepted sources, fresh native observation, original context/parent
+custody and independent native expectations. Historical assessment profiles or
+synthetic unit carriers cannot qualify a newer native observation profile.
+
+Definition correspondence does not prove complete graph occurrence populations,
+codec/domain equivalence, whole-source semantics, authenticated Subject/current
+authority, source registration or final guarded release. Those original
+obligations remain independently required; a metadata join cannot promote them.
+
+
+For a composed context/population profile, start from the committed registered
+original sources and issue the compiler parent/current once. Match the complete
+Record/member/Key and graph definition joins to every native/logical occurrence,
+including parallel edges and empty complete coverage. Treat coverage fields as
+unique full-identity membership regardless of ontology field order; preserve
+authored Key component order separately and test permutations of each. Retain
+that same actual parent/current through semantic evaluation, SQL staging and whole-batch
+inspection. Changing SQL or the retained source request must refuse before a
+replacement parent or semantic child is constructed. Equal report bytes do not
+supply object continuity.
+
+Exercise actual registered source capture without provider substitution, preserve
+original opaque UTF8 and consumer selection, and compare native row incidence to
+logical endpoint Keys. Repeat closing observation with the retained context;
+mutate an edge version or other dependency in the caller transaction and require
+refusal, then restore and require equality. Keep any earlier diagnostic setup
+separate from this registered-source evidence. Source archival and same-context
+population correspondence still do not authenticate the Subject or establish a
+continuous native authority issuer or guarded public release.

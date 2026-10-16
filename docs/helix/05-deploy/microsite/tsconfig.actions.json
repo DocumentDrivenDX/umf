@@ -1,0 +1,5 @@
+{
+ "extends":"../../../../tsconfig.json",
+ "compilerOptions":{"types":["bun"],"lib":["ES2022","DOM","WebWorker"],"noEmit":true},
+ "include":["action-runtime-assets.d.ts","action-compiler.ts","truss-catalog-worker.ts","build-action-compiler.ts","build-truss-browser.ts","verify-action-compiler.ts"]
+}

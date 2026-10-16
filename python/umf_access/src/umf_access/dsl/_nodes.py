@@ -1,6 +1,7 @@
+"""Immutable logical identity and expression data; no backend names or handles."""
+
 from __future__ import annotations
 
-"""Immutable logical identity and expression data; no backend names or handles."""
 from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timezone
@@ -40,7 +41,9 @@ class FieldRef:
     source: GeneratedSource | None = None
 
     def __post_init__(self) -> None:
-        if any(type(v) is not str or not v for v in (self.module, self.element, self.field)):
+        if any(
+            type(v) is not str or not v for v in (self.module, self.element, self.field)
+        ):
             raise TypeError("field identity requires nonempty schema IDs")
         if self.field_module is None:
             object.__setattr__(self, "field_module", self.module)
@@ -65,7 +68,11 @@ class RecordRef:
             raise TypeError("selected Key identity requires a nonempty schema ID")
         if type(self.module) is not str or not self.module or type(self.element) is not str or not self.element:
             raise TypeError("record identity requires nonempty schema IDs")
-        if type(self.key) is not tuple or not self.key or any(not isinstance(cast(object, f), FieldRef) for f in self.key):
+        if (
+            type(self.key) is not tuple
+            or not self.key
+            or any(not isinstance(cast(object, f), FieldRef) for f in self.key)
+        ):
             raise TypeError("record identity requires an immutable complete Key")
         if any((f.module, f.element) != (self.module, self.element) for f in self.key):
             raise TypeError("Key fields must belong to the record")
@@ -92,19 +99,32 @@ class KeyLiteral:
 
 def key_identity(model: type[BaseModel]) -> tuple[tuple[str, str], ...]:
     def temporal(annotation: object) -> bool:
-        return annotation is date or annotation is datetime or any(temporal(arg) for arg in get_args(annotation))
+        return (
+            annotation is date
+            or annotation is datetime
+            or any(temporal(arg) for arg in get_args(annotation))
+        )
 
-    if any(temporal(cast(object, field.annotation)) for field in model.model_fields.values()):
+    if any(
+        temporal(cast(object, field.annotation))
+        for field in model.model_fields.values()
+    ):
         raise CaptureError("CAPTURE_SIGNATURE", "temporal Keys are outside access 0.1")
     raw: object = getattr(model, "KEY_IDENTITY", None)
     expected = {"documentId", "coreVersion", "module", "element", "key"}
     if not isinstance(raw, Mapping):
-        raise CaptureError("CAPTURE_SIGNATURE", "model parameter requires generated Key identity")
+        raise CaptureError(
+            "CAPTURE_SIGNATURE", "model parameter requires generated Key identity"
+        )
     identity = cast(Mapping[str, object], raw)
-    if set(identity) != expected or any(type(value) is not str or not value for value in identity.values()):
+    if set(identity) != expected or any(
+        type(value) is not str or not value for value in identity.values()
+    ):
         raise CaptureError("CAPTURE_SIGNATURE", "Key identity is incomplete")
     if identity["coreVersion"] != "0.8.0":
-        raise CaptureError("CAPTURE_SIGNATURE", "Key core version is outside access 0.1")
+        raise CaptureError(
+            "CAPTURE_SIGNATURE", "Key core version is outside access 0.1"
+        )
     return tuple((name, cast(str, identity[name])) for name in sorted(expected))
 
 
@@ -130,8 +150,12 @@ def literal(value: object) -> Node:
     if type(value) is bytes:
         return Node("binary", (value.hex(),))
     if type(value) is datetime:
-        if value.fold or (value.tzinfo is not None and type(value.tzinfo) is not timezone):
-            raise ValueError("timestamp literal requires fixed-offset, unfolded carrier")
+        if value.fold or (
+            value.tzinfo is not None and type(value.tzinfo) is not timezone
+        ):
+            raise ValueError(
+                "timestamp literal requires fixed-offset, unfolded carrier"
+            )
         kind = "instant" if value.tzinfo is not None else "local"
         normalized = value.astimezone(UTC) if kind == "instant" else value
         return Node(kind, (normalized.isoformat(timespec="microseconds"),))
@@ -146,9 +170,11 @@ def literal(value: object) -> Node:
         return Node("key", (KeyLiteral(key_identity(type(value)), tuple(literal(getattr(value, name)) for name in type(value).model_fields), getattr(type(value), "UMF_SOURCE", None)),))
     raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported literal carrier")
 
+
 R = TypeVar("R")
-O = TypeVar("O")
-ProjectionModel = TypeVar("ProjectionModel",bound=BaseModel)
+OutputT = TypeVar("OutputT")
+ProjectionModel = TypeVar("ProjectionModel", bound=BaseModel)
+
 
 @dataclass(frozen=True)
 class Terminal(Generic[R]):
@@ -159,7 +185,7 @@ class Terminal(Generic[R]):
 
 
 @dataclass(frozen=True)
-class JoinProjection(Generic[O, ProjectionModel]):
+class JoinProjection(Generic[OutputT, ProjectionModel]):
     model: type[ProjectionModel]
 
     def __post_init__(self) -> None:

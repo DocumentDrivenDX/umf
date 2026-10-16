@@ -381,6 +381,35 @@
       "items": {
         "$ref": "#/$defs/index"
       }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "module",
+          "element",
+          "members"
+        ],
+        "properties": {
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "element": {
+            "type": "string",
+            "minLength": 1
+          },
+          "members": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/elementRef"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
     }
   },
   "$defs": {

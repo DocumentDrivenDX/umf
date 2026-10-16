@@ -10,6 +10,9 @@ on:
       - 'docs/helix/02-design/contracts/**'
       - 'docs/helix/04-build/evidence/actions-documentation*'
       - 'docs/helix/04-build/evidence/actions-certification*'
+      - 'docs/helix/03-test/fixtures/bulk-update/local-products-*.json'
+      - 'tests/security/preparation-program-original/program-configuration.json'
+      - 'tests/security/preparation-program-original/program-request.json'
       - 'fixtures/actions/**'
       - 'scripts/actions-docs/**'
       - 'docs/helix/05-deploy/schema-browser/**'
@@ -55,6 +58,9 @@ on:
       - 'docs/helix/02-design/contracts/**'
       - 'docs/helix/04-build/evidence/actions-documentation*'
       - 'docs/helix/04-build/evidence/actions-certification*'
+      - 'docs/helix/03-test/fixtures/bulk-update/local-products-*.json'
+      - 'tests/security/preparation-program-original/program-configuration.json'
+      - 'tests/security/preparation-program-original/program-request.json'
       - 'fixtures/actions/**'
       - 'scripts/actions-docs/**'
       - 'docs/helix/05-deploy/schema-browser/**'
@@ -114,8 +120,16 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.3.14'
-      - name: Verify reproducible schema-browser producer
-        run: bun scripts/schema-browser-reproducibility.ts
+      - name: Check out immutable schema browser producer source
+        uses: actions/checkout@v4
+        with:
+          ref: 00755f5d2b76696b14a4750214c66f1209560939
+          path: .tools/schema-browser-original
+      - name: Install immutable producer dependencies
+        working-directory: .tools/schema-browser-original
+        run: bun install --frozen-lockfile
+      - name: Verify candidate reproducibility and original released producer
+        run: bun scripts/schema-browser-reproducibility.ts --original-source .tools/schema-browser-original
       - name: Restore action build runtime
         uses: oven-sh/setup-bun@v2
         with:
@@ -138,12 +152,20 @@ jobs:
         run: python3 scripts/build-document-research-release.py
       - name: Build browser playground
         run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
+      - name: Check browser action integration types
+        run: bun x tsc -p docs/helix/05-deploy/microsite/tsconfig.actions.json
+      - name: Build pinned Truss browser catalog assets
+        run: bun docs/helix/05-deploy/microsite/build-truss-browser.ts
+      - name: Build original browser SQL-to-actions compiler
+        run: bun docs/helix/05-deploy/microsite/build-action-compiler.ts
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
       - name: Install pinned released schema browser assets
         run: bun docs/helix/05-deploy/schema-browser/publish-site.ts
       - name: Install browser qualification runtime
         run: bun x playwright install --with-deps chromium
+      - name: Qualify browser SQL-to-actions compiler
+        run: bun docs/helix/05-deploy/microsite/verify-action-compiler.ts
       - name: Qualify reusable browser package
         run: bun scripts/schema-browser-package-browser.ts
       - name: Qualify strict-CSP schema browser embedding

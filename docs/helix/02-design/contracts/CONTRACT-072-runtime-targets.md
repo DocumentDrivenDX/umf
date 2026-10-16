@@ -118,6 +118,14 @@ authorized by the original read path or that page form refuses.
 arguments, including optional-parameter presence. Entry/variant/catalog and all
 target identity fields must match the current call; any mismatch, wrong sort
 inventory/carrier or changed filter raises `StaleContinuation` before dispatch.
+Engine continuations may additionally retain `owner_cursor: bytes | None`, an
+immutable original owner token bounded to 65,536 bytes. Generated functions retain
+those exact bytes alongside the typed ordering values. The owner independently
+checks their complete current context and agreement with the typed Key before
+executing page data SQL. This token is inert navigation custody, never permission;
+the SDK must not reconstruct it from display values or discard it during typed
+continuation conversion.
+
 The initial call uses `after=None`. Target identity includes the engine's
 accepted model/action binding context and, on Ashlar, its publication vector.
 The SDK does not promise a cross-page snapshot on mutable raw tables; callers

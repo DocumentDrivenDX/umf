@@ -12220,6 +12220,18 @@ same-store execution. Native ABI/mode/property/relationship admission and releas
 authority remain open; mutation0.1 custody is not repurposed. No criterion/case is
 promoted and the overall goal remains active.
 
+## Browser-local declaration profile — 2026-10-15
+
+Owner clarification keeps GitHub Pages with browser WASM compilation and local sample execution. CONTRACT-905 defines a separate local-owner bundle, independent selection-read grant and local bulk companion, preserving tx1/human/delegation semantics. [Portable evidence](evidence/bulk-update/local-profile-20261015/receipt.json) records346regression tests/4016assertions,56original action tests/343assertions, both strict TypeScript checks, actual Chromium and Astra58independent controls. The two review findings (selection-read policy mapping and allocation) are resolved. [Owned source handoff](evidence/bulk-update/local-profile-20261015/README.md) retains exact new model/preparation/request/seed/provenance. Actual Weft local compilation, Truss PGlite schema/capabilities/lowering/sealing/execution/durability and protected native66 completion remain open; no executable backend claim is made.
+
+
+## Reusable action and Key declarations — 2026-10-16
+
+CONTRACT-901 defines `prepareCoreKeyTuples` and `prepareActionIdentities` for one immutable copied declaration lifetime. Reuse successful declaration checks; keep input literals, exact receipts and selector identity checks on every call. Native authorization, guards, effects and transaction checks remain executor duties. Existing stateless APIs remain the equivalence oracle.
+
+The focused gate is `bun test tests/actions/prepared-identities.test.ts tests/core/key-tuple.test.ts tests/actions/interpreter.test.ts` (28 tests,474 assertions). `bun scripts/actions-prepared-browser.ts <report> <exact-esm>` compares83 shared cases in actual Chromium. The scoped source passed Astra review, including independent output, unknown-dependency, accessor, foreign-receipt and mutation-isolation controls. These pure checks do not measure or qualify native execution.
+
+Next, use a separately pinned new UMF/Weft producer cohort in Truss; do not relabel the previous producer. Re-run the actual1024-row UPDATE, point UPDATE, replay/reopen readback and latency measurements with the same workloads. Publication remains gated on the integrated review, acceptable measured single/bulk behavior and the requested stress matrix; declaration preparation alone does not close those gates.
 
 ### Query value origin/source spike — 2026-10-15
 
@@ -12480,6 +12492,49 @@ Implementation commit `25a38767` integrates with the fourteen newer remote-main 
 ### PR #21 merge reconciliation — 2026-10-16
 
 The reviewed SDK repairs are reconciled with main `0b2bf0c1`, preserving source-bound action clients, catalog generation guards, snapshot exports and independent UUID changes. [Fresh merge verification](evidence/typed-persistence/pr21-merge-20261016/verification.json) scopes the new local source/wheel checks separately from earlier receipts. Python lint and schema-browser reproducibility/integrity CI blockers are corrected; published release parity remains an explicit fail-closed qualification. The shared typed SDK slice matrix and frozen browser/performance holds remain governing.
+### Five-adapter128-bit completion execution — 2026-10-16
+
+Owner authorization: finish PostgreSQL and SQL Server end to end, then Avro,
+Parquet and TableSpec, including qualification gates. CONTRACT-076, SD-005 and
+FEAT-005 IDEAL-09 govern. Preserve the existing core0.9 and carrier1 profiles;
+introduce a separately selected model profile for composition rather than
+silently promoting old receipts. Portable modules own schema/value recipes;
+fixture-only host scripts own native execution. Consumer deployment remains
+outside UMF. Catalog: installed HELIX0.17.0 workflows/graph.yml.
+
+Execution sequence and exits:
+1. Resolve complete explicit carrier layouts; expand every pair into both slots
+   for SQL tables, Keys, indexes and foreign keys. Verify constraints, external
+   malformed writes, complete-row codecs, transaction rollback and actual native
+   catalog/read recovery on PostgreSQL17 and SQL Server2022.
+2. Compose Avro/Parquet records and paired presence, classify actual native output,
+   and retain native unsupported enforcement as explicit residuals.
+3. Qualify TableSpec canonical text through its actual Spark path; unsupported
+   exact64-bit carrier choices stay blocked, never narrowed to signed32-bit.
+4. Run current-source portable/browser/native matrix, negative controls and
+   two-system admission/five-system delivery checks. Native equivalence and
+   consumer-runtime adoption require their own evidence, not a schema receipt.
+
+Continuation evidence: `evidence/uuid-adapter-completion.md`. Initial probe ceiling
+is provisionally30000 model tokens including implementation, checks and review;
+no comparable metered baseline is available and this runtime exposes no per-turn
+usage meter or enforced cap. Reassess only at a meaningful checkpoint. Existing
+module boundaries and browser host-import negative controls remain mandatory.
+
+Five-adapter128-bit execution closeout — 2026-10-16: the explicit uuid-model1
+subset now passes separate qualified ideal admission and five-priority delivery.
+PostgreSQL17.9 and SQL Server2022 each recover2,709 native rows across seven
+carrier cases, with Key/FK/default/allowed-value controls, rollback and actual
+concurrent writer barriers. Avro/fastavro and signed/unsigned PyArrow paths pass
+8,978 checks; actual TableSpec/Spark4.0.1 recovers780 rows. Native-returned data
+passes9,750 portable decodes;32 adapter cases recover128 authored/native sources
+through JSON/YAML. Chromium model checks7038 plus the refreshed core codec/key/
+migration/import-boundary campaign pass. The scoped suites and legacy binding
+regression pass; source-bound gate tests refuse stale/missing/unsafe/falsified
+proofs. [Completion, exact scope, retries and limits](evidence/uuid-adapter-completion.md)
+record what is accepted. Native equivalence, wider mixed/container/association/
+partition composition, portable native-index order and consumer deployment are
+not promoted by these gates. No full-repository replay is asserted.
 ### Weft bounded String prerequisite and current core gate — 2026-10-16
 
 Bounded required Unicode String compilation and actual issued-object Python/WASM bridges are committed directly to Weft main 8e0f4cb, with no SDK bump or implicit feature activation. Frozen/committed source campaigns pass 348 core, 20 Databricks and 119 PostgreSQL compiler-library tests plus both 26-command bridge campaigns; Astra Ultra finds no actionable issue over 1,593 independent controls. [Cross-repository source/artifact custody and qualification](evidence/security/bounded-current-string-compiler-20261016/README.md) retain exact tested revisions, original failures and the separate actual original-Token logical-state probe. No database, native current-cut/caller custody or guarded-release acceptance follows from this compiler component.
@@ -12596,6 +12651,18 @@ the158-case plan digest remains unchanged. Integrate this component directly
 to main; next complete the separately reviewed Truss consumer and actual
 ordinary-role/current-cut/closing-guard evidence.
 
+### Prepared API integration with current main — 2026-10-16
+
+The merge retains current main's core 0.9.0 stateless tuple codecs and keeps the
+prepared profile limited to core 0.8.0. Astra found a foreign v4 receipt refusal
+difference; version-dispatched receipt validation now preserves the stateless
+code/path, including stale-source and malformed receipt cases. The corrected
+focused gate passes29tests/480assertions, the existing plan/local/manifest gate
+passes48tests/296assertions, UUID/128-bit checks pass6tests/6663assertions, both
+strict TypeScript configurations pass, and86public ESM cases agree in Chromium.
+The merged producer is distinct from the frozen c1/6b browser integration cohort;
+these source checks do not qualify a replacement compiler or native executor.
+
 ### Nested graph condition budget repair candidate — 2026-10-16
 
 The previous turn integrated the reviewed held inspector and all629 review
@@ -12654,3 +12721,95 @@ regressions and regenerated guide verification. Still pending: configured
 1Password-backed Innsigle resealing, final-head remote CI and PR21 merge. Full
 STP/temporal/managed service and Truss/Ashlar adoption qualification remain open;
 no native managed-service or frozen cohort claim is promoted by this merge.
+## Nested ontology F/U/T formal extension — 2026-10-16
+
+The [retained conditional proof](evidence/security/nested-ontology-refinement-20261016/README.md)
+models the four-relationship same-Assignment/same-Ownership join with typed
+logical endpoints and F/U/T activity. Root18SMT queries pass5UNSAT/13SAT. Astra
+Ultra replays18, adds22 solver queries and2304 abstract truth cases, and reports
+no actionable finding. Exact source, SMT/models, development iterations and
+qualified TD056/STP056 records are retained. This does not prove implementation
+translation, codec correspondence, native authority or release; missing coverage
+is not U. No acceptance case is promoted and the shared158/34 scope remains
+45implemented/113missing. The canonical gate remains historical for the changed
+semantic kernel; the prior scoped revalidation is not a fresh158-case gate.
+
+The native graph collector prerequisite is separately reviewed and on Trussmain
+5f676884, with custody-only documentation correction59360445. Its native tests
+qualify the original9e328d91 engine/source cohort and explicitly substitute the
+accepted-source provider. Actual native binding and original host guard/release
+composition remain required before graph read admission. Existing206951/d333
+consumer assets are not implicitly repinned by either formal or native evidence.
+
+
+### Reviewed native source prerequisites on Truss main — 2026-10-16
+
+Truss31ce4449 adds the strict supplied-source descriptor0.1 and CONTRACT-013;984d6a65 adds the unexported stock-cursor observer0.2 with all four retained R1 findings resolved in a separate Astra R2 review. [Tracked component evidence](evidence/security/native-source-correspondence-20261016/README.md) checks every retention-manifest member at the immutable merged Truss commit. No old consumer, registration, ABI/default cohort or source assessor is repinned. Descriptor0.1 deliberately rejects observer0.2.
+
+Source/installed tests pass15 for descriptor and7 for observer; wheel correspondence is499/500 members at their separately retained epochs. Actual native observer4passes/8.156s apply only to the captured PostgreSQL18.6/native0.71 overlay; original59360445 differs at six paths. Later main source checks pass22 with4 native tests skipped and1485 boundary imports; no current-main native claim follows.
+
+The next correspondence boundary must use the actual borrowed Weft preparation and existing UMF resolution APIs. Its operation-specific report/hash cannot be embedded into the same persistent native descriptor that the preparation already contains: that would create a self-hash cycle. Persistent descriptors retain original model pins and explicit mappings; fresh witnesses join context-specific requirements after selection. No placeholder preparation, reconstructed context or Python policy/key interpreter establishes admission. Actual Field/ordered-Key/edge/codec mapping, native registration, authenticated source/Subject continuity and final guarded release remain open. No acceptance promotion; shared158/34 scope remains45implemented/113missing.
+
+
+### UUID five-adapter main integration — 2026-10-16
+
+Integrated `3b496c6e` with24 newer main commits, retaining both execution logs.
+Fresh merged-source build/typecheck/schema,105 scoped tests, native database,
+file/Spark, source-recovery and browser checks pass. The conformance hash test
+needed an explicit30-second budget; refreshed qualification/conformance and
+verify-only pass after that test-only adjustment. See
+[evidence and retained retry](evidence/uuid-adapter-completion.md).
+
+### UUID composition execution — 2026-10-16
+
+Owner authorizes mixed flat Records, then recursive containers/groups, then
+associations across the five priority adapters with qualification gates.
+CONTRACT-076 governs an explicitly selected composition profile; historical
+uuid-model1 behavior remains fixed. First extend shared scalar/layout lowering
+and full-row codecs; next implement explicit recursive storage and dataset
+recovery; then association endpoint mappings and integrity checks. Each stage
+requires focused positive/refusal tests, independent native values and browser
+public API evidence before support promotion. No new support gate is admitted
+by this execution entry. Work is single-agent; token/spending metering is
+unavailable. Verification, retries and evidence review are included in scope.
+
+
+### UUID composition closeout — 2026-10-16
+
+Completed the authorized sequence under explicit uuid-model2: mixed flat scalar/
+UUID Records, finite arrays/maps and declared groups, then keyed association
+Records and polymorphic endpoint alternatives. New snapshot validation enforces
+Keys/unique indexes, references, endpoint choice and distinct-endpoint bounds.
+The final14-phase composition runner passes20 native target/stage cases,72
+returned rows,16 native-invalid refusals,116 source recoveries, real Chromium
+and both gate tests. The original17-phase model1 qualification also passes on
+the shared final source. [Evidence, retries and remaining boundaries](evidence/uuid-composition.md)
+qualify115 distinct scoped tests; no full-repository, native-equivalence or
+consumer-deployment claim is made. Governed IDs/frontmatter/traceability are retained.
+
+### Typed SDK original Truss pages — 2026-10-16
+
+[Original page custody and native evidence](evidence/typed-persistence/engine-pages-native-20261016/README.md) adds complete owner page programs, native opaque/typed cursor agreement and real generated page calls. Installed Truss14 controls pass on both pinned interpreters; full SDK native replays/126 units each, Rust6, Chromium32 and all three pinned positive/24-negative reporting checkers pass. Compiler source remains an explicitly unpublished combined preview; published compiler/default recapture, protected action/manifest bulk and remaining backend gates stay open. Truss's RC-only read authority does not qualify snapshot streams. B-TP-003 remains OPEN and temporal qualification HELD.
+
+
+### UUID composition main integration — 2026-10-16
+
+Integrated `6aea0792` with50 newer main commits at `5e7a4670`, preserving both
+execution logs. Regenerated generated identity and conflicting qualification
+receipts; fresh17-phase model1 and14-phase model2 campaigns pass on merged
+source. Both native/browser and source-bound gates pass. The later `902c9f71`
+security test-documentation correction changes no qualified source/schema.
+[Integration evidence](evidence/uuid-composition.md#main-integration--2026-10-16)
+retains scope and the115-test boundary.
+
+
+### Current-main SDK and release convergence — 2026-10-16
+
+PR21's reviewed safeguards now coexist with main d40988e7's newer engine-owned
+catalog/target APIs. Independent Astra review and fresh source/installed/native
+checks are retained in [the exact-source packet](evidence/typed-persistence/pr21-d409-release-20261016/README.md).
+The bundled TypeScript SDK prepares version0.3.0; the separate Python runtime
+retains its experimental0.1.0.dev0 version and scoped qualification. Open PR27
+reference and PR29 guide signatures will be consolidated before final signing,
+remote CI, main deployment and release. None of those publication steps is
+claimed complete by the local source evidence.

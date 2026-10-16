@@ -1,4 +1,5 @@
 """Red helper tests against a proposed ABI; generator integration still pending."""
+
 import unittest
 from dataclasses import FrozenInstanceError
 from decimal import Decimal
@@ -15,8 +16,10 @@ from umf_access.types import (
 )
 from umf_access.values import validate_decimal
 
-Amount = Annotated[Decimal, AfterValidator(
-    lambda value: validate_decimal(value, precision=12, scale=2))]
+Amount = Annotated[
+    Decimal,
+    AfterValidator(lambda value: validate_decimal(value, precision=12, scale=2)),
+]
 
 
 @final
@@ -111,7 +114,9 @@ class CodecBoundaryTests(unittest.TestCase):
         value.patches.append(value)
         with self.assertRaises(ValueError):
             revalidate_model(Nested, value)
-        mapped = Mapped.model_construct(patches={"private-map-key": [Patch.model_construct(amount="private-value")]})
+        mapped = Mapped.model_construct(
+            patches={"private-map-key": [Patch.model_construct(amount="private-value")]}
+        )
         with self.assertRaises(ValueError) as caught:
             revalidate_model(Mapped, mapped)
         self.assertNotIn("private-map-key", str(caught.exception))
@@ -127,8 +132,10 @@ class CodecBoundaryTests(unittest.TestCase):
             action.action = "changed"
         with self.assertRaises(TypeError):
             type("MutableAction", (ActionRef,), {})
-        for kwargs in ({"module":"", "action":"x", "input_type":Patch, "output_type":Nested},
-                       {"module":"m", "action":"x", "input_type":dict, "output_type":Nested}):
+        for kwargs in (
+            {"module": "", "action": "x", "input_type": Patch, "output_type": Nested},
+            {"module": "m", "action": "x", "input_type": dict, "output_type": Nested},
+        ):
             with self.assertRaises((ValueError, TypeError)):
                 ActionRef(**kwargs, source=ActionSource("unit", "0.8.0", kwargs["module"] or "m", "x", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
         with self.assertRaises(ValueError):
@@ -139,16 +146,23 @@ class CodecBoundaryTests(unittest.TestCase):
 
     # @covers US-081-AC5
     def test_inventory_is_checked_before_mapping(self):
-        for columns, row in ((["amount", "amount"], [1, 2]),
-                             ([], []), (["unexpected"], [1]),
-                             (["amount"], []), (["amount"], [1, 2])):
+        for columns, row in (
+            (["amount", "amount"], [1, 2]),
+            ([], []),
+            (["unexpected"], [1]),
+            (["amount"], []),
+            (["amount"], [1, 2]),
+        ):
             with patch("umf_access.codec_support._build_mapping") as mapping:
                 with self.assertRaises(ValueError):
                     checked_row(["amount"], columns, row)
                 mapping.assert_not_called()
-        self.assertEqual(checked_row(["memo", "amount"], ["amount", "memo"],
-                                     [Decimal("1.20"), None]),
-                         {"amount": Decimal("1.20"), "memo": None})
+        self.assertEqual(
+            checked_row(
+                ["memo", "amount"], ["amount", "memo"], [Decimal("1.20"), None]
+            ),
+            {"amount": Decimal("1.20"), "memo": None},
+        )
 
 
 if __name__ == "__main__":

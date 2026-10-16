@@ -1,4 +1,5 @@
 """B-TP-005 unit contract; generated commerce acceptance is a separate gate."""
+
 import unittest
 from decimal import Decimal
 
@@ -56,7 +57,7 @@ class RuntimeGuards(unittest.TestCase):
     # @covers US-082-AC5
     def test_field_evaluation_outside_capture_refuses(self):
         with self.assertRaises(QueryOutsideCatalog):
-            _ = amount > Decimal(1)
+            assert amount > Decimal(1)
 
     # @covers US-082-AC5
     def test_query_root_evaluation_outside_capture_refuses(self):
@@ -66,17 +67,20 @@ class RuntimeGuards(unittest.TestCase):
     # @covers US-082-AC5
     def test_predicate_boolean_operators_refuse(self):
         for operation in (
-            lambda p: bool(p), lambda p: p and p,
-            lambda p: p or p, lambda p: not p,
+            bool,
+            lambda p: p and p,
+            lambda p: p or p,
+            lambda p: not p,
         ):
+
             @query
             def declaration(minimum: Param[Decimal]):
-                operation(amount > minimum)  # noqa: B023 -- Declaration is captured synchronously inside this loop.
+                # This refusal callback is invoked synchronously inside this iteration.
+                operation(amount > minimum)  # noqa: B023
                 return objects.limit(1).all()
 
-            with self.subTest(operation=operation):  # noqa: SIM117 -- Keep transaction/test failure scopes explicit.
-                with self.assertRaises(TypeError):
-                    capture(declaration)
+            with self.subTest(operation=operation), self.assertRaises(TypeError):
+                capture(declaration)
 
     # @covers US-082-AC5
     def test_chained_comparison_refuses(self):
@@ -103,13 +107,14 @@ class RuntimeGuards(unittest.TestCase):
             lambda: objects.filter(amount__gt=1),
             lambda: objects.filter("amount > 1"),
         ):
+
             @query
             def declaration():
-                return operation()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
+                # This refusal callback is invoked synchronously inside this iteration.
+                return operation()  # noqa: B023
 
-            with self.subTest(operation=operation):  # noqa: SIM117 -- Keep transaction/test failure scopes explicit.
-                with self.assertRaises(TypeError):
-                    capture(declaration)
+            with self.subTest(operation=operation), self.assertRaises(TypeError):
+                capture(declaration)
 
     # @covers US-082-AC1
     def test_where_exact_alias_and_immutable_builders(self):
@@ -130,7 +135,12 @@ class RuntimeGuards(unittest.TestCase):
 class SchemaIdentityAndContinuations(unittest.TestCase):
     # @covers US-082-AC5
     def test_cross_module_field_identity_survives_capture(self):
-        reference = FieldRef(module="commerce", element="Order", field="shared_amount", field_module="common")
+        reference = FieldRef(
+            module="commerce",
+            element="Order",
+            field="shared_amount",
+            field_module="common",
+        )
         column = Column[Order, Decimal](reference)
 
         @query
@@ -144,7 +154,9 @@ class SchemaIdentityAndContinuations(unittest.TestCase):
 
     # @covers US-082-AC5
     def test_foreign_record_filter_refuses_even_without_checker(self):
-        other = Column[object, str](FieldRef(module="commerce", element="Customer", field="name"))
+        other = Column[object, str](
+            FieldRef(module="commerce", element="Customer", field="name")
+        )
 
         @query
         def declaration():
@@ -160,20 +172,33 @@ class SchemaIdentityAndContinuations(unittest.TestCase):
         from pydantic import MISSING
         from umf_access.dsl import Continuation
 
-        continuation = Continuation(key="o-1", sort_values=(None, MISSING, Decimal("1.20"), "o-1"), identity_digest="target-v1")
+        continuation = Continuation(
+            key="o-1",
+            sort_values=(None, MISSING, Decimal("1.20"), "o-1"),
+            identity_digest="target-v1",
+        )
         self.assertIs(continuation.sort_values[1], MISSING)
         self.assertEqual(str(continuation.sort_values[2]), "1.20")
         self.assertEqual(continuation.key, "o-1")
         with self.assertRaises(FrozenInstanceError):
             continuation.identity_digest = "other"
         with self.assertRaises(TypeError):
-            Continuation(key="o-1", sort_values=([1], "o-1"), identity_digest="target-v1")
+            Continuation(
+                key="o-1", sort_values=([1], "o-1"), identity_digest="target-v1"
+            )
 
     # @covers US-082-AC5
     def test_root_reexports_are_exact_and_guarded(self):
-        from umf_access import Column as PublicColumn
-        from umf_access import Param as PublicParam
-        from umf_access import query as public_query
+        from umf_access import (
+            Column as PublicColumn,
+        )
+        from umf_access import (
+            Param as PublicParam,
+        )
+        from umf_access import (
+            query as public_query,
+        )
+
         self.assertIs(PublicColumn, Column)
         self.assertIs(public_query, query)
         self.assertIs(PublicParam, Param)
@@ -187,9 +212,21 @@ class GeneratedDelegationHooks(unittest.TestCase):
         from pydantic import BaseModel
         from umf_access.dsl.render import render_logical
 
-        field = FieldRef(module="commerce", element="Order", field="amount-id", logical_name="Amount")
-        key = FieldRef(module="commerce", element="Order", field="id", logical_name="ID")
-        root = Query[Order, Order, str](RecordRef(module="commerce", element="Order", key=(key,), logical_namespace="sales", logical_name="Orders"))
+        field = FieldRef(
+            module="commerce", element="Order", field="amount-id", logical_name="Amount"
+        )
+        key = FieldRef(
+            module="commerce", element="Order", field="id", logical_name="ID"
+        )
+        root = Query[Order, Order, str](
+            RecordRef(
+                module="commerce",
+                element="Order",
+                key=(key,),
+                logical_namespace="sales",
+                logical_name="Orders",
+            )
+        )
 
         class UnitProjection(BaseModel):
             amount: Decimal
@@ -206,7 +243,10 @@ class GeneratedDelegationHooks(unittest.TestCase):
         projection = captured.variants[0].node.args[1][0].args[0]
         self.assertEqual(projection.name, UnitProjection.__qualname__)
         self.assertEqual(projection.module, UnitProjection.__module__)
-        self.assertEqual(render_logical(captured.variants[0]), 'SELECT "r"."Amount" AS "amount" FROM "sales"."Orders" AS "r" LIMIT 10')
+        self.assertEqual(
+            render_logical(captured.variants[0]),
+            'SELECT "r"."Amount" AS "amount" FROM "sales"."Orders" AS "r" LIMIT 10',
+        )
 
     # @covers US-082-AC6
     def test_projection_without_explicit_metadata_refuses(self):
@@ -232,14 +272,28 @@ class GeneratedDelegationHooks(unittest.TestCase):
         from umf_access.dsl import command
         from umf_access.dsl.render import render_logical
 
-        id_ref = FieldRef(module="commerce", element="Order", field="order-id", logical_name="OrderID")
-        amount_ref = FieldRef(module="commerce", element="Order", field="amount-id", logical_name="Amount")
-        memo_ref = FieldRef(module="commerce", element="Order", field="memo-id", logical_name="Memo")
-        record = RecordRef(module="commerce", element="Order", key=(id_ref,), logical_namespace="sales", logical_name="Orders")
+        id_ref = FieldRef(
+            module="commerce", element="Order", field="order-id", logical_name="OrderID"
+        )
+        amount_ref = FieldRef(
+            module="commerce", element="Order", field="amount-id", logical_name="Amount"
+        )
+        memo_ref = FieldRef(
+            module="commerce", element="Order", field="memo-id", logical_name="Memo"
+        )
+        record = RecordRef(
+            module="commerce",
+            element="Order",
+            key=(id_ref,),
+            logical_namespace="sales",
+            logical_name="Orders",
+        )
         unit_amount = Column[Order, Decimal](amount_ref)
 
         class UnitRoot(Query[Order, Order, str]):
-            UMF_UPDATE_FIELDS: ClassVar[Mapping[str, FieldRef]] = MappingProxyType({"python_memo": memo_ref})
+            UMF_UPDATE_FIELDS: ClassVar[Mapping[str, FieldRef]] = MappingProxyType(
+                {"python_memo": memo_ref}
+            )
 
         from umf_access.types import ActionRef, ActionSource, StrictModel
 
@@ -250,7 +304,11 @@ class GeneratedDelegationHooks(unittest.TestCase):
 
         @command(action=action)
         def declaration(minimum: Param[Decimal], memo_value: Param[str]):
-            return UnitRoot(record).filter(unit_amount > minimum)._update({"python_memo": memo_value})
+            return (
+                UnitRoot(record)
+                .filter(unit_amount > minimum)
+                ._update({"python_memo": memo_value})
+            )
 
         captured = capture(declaration)
         self.assertEqual(captured.action, action.source)
@@ -271,7 +329,9 @@ class GeneratedDelegationHooks(unittest.TestCase):
         from umf_access.capture import CaptureError
         from umf_access.dsl import Related
 
-        relation = Related[Order, str](FieldRef(module="commerce", element="Order", field="customer"))
+        relation = Related[Order, str](
+            FieldRef(module="commerce", element="Order", field="customer")
+        )
 
         class UnitProjection(BaseModel):
             amount: Decimal
@@ -282,9 +342,11 @@ class GeneratedDelegationHooks(unittest.TestCase):
             lambda q: q._into(UnitProjection),
             lambda q: q.include_keys(relation, limit=5),
         ):
+
             @query
             def declaration():
-                return change(objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
+                # This refusal callback is invoked synchronously inside this iteration.
+                return change(objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023
 
             with self.subTest(change=change), self.assertRaises(CaptureError) as caught:
                 capture(declaration)

@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 420,
-  "passed": 420,
+  "schemas": 421,
+  "passed": 421,
   "results": [
     {
       "path": "spec/compilation/access-manifest.schema.json",
@@ -2792,6 +2792,13 @@
     {
       "path": "spec/projections/avro-tablespec.schema.json",
       "id": "urn:umf:projection:avro-tablespec:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/bit128-model.schema.json",
+      "id": "urn:umf:projection:bit128-model:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

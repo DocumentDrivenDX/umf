@@ -20,7 +20,7 @@ ddx:
 **Feature:** [FEAT-005 IDEAL-09](../../01-frame/features/FEAT-005-core-ideals.md).
 **Authority:** owner direction, 2026-10-15; FR-3/8/20/21/28/39/41.
 **Shared interface:** [CONTRACT-076](../contracts/CONTRACT-076-128-bit-uuid.md).
-**Status:** initial experimental implementation with scoped portable/native evidence.
+**Status:** implemented with qualified uuid-model1 ideal admission and five-priority delivery; native equivalence and consumer adoption remain separate.
 [Execution and remaining gates](../../04-build/evidence/uuid-implementation.md)
 separate working APIs from full ideal/binding acceptance.
 
@@ -239,3 +239,26 @@ committed native writes or reinterpret persisted v2 keys.
 No new runtime dependency, mandatory storage layout, UUID generator or cross-repo
 implementation is required to accept this design. Native evidence and optional
 benchmarks determine supported subsets and optimal layouts later.
+
+
+The [five-adapter completion record](../../04-build/evidence/uuid-adapter-completion.md)
+records PostgreSQL/SQL Server model constraints and transactions, grouped Avro/
+Parquet carriers, actual TableSpec/Spark fallback, both recoveries and the separate
+source-bound admission/delivery checks. Its declared subset and residuals govern
+the support claim; earlier proposed verification tables retain design context.
+
+### Owner-authorized model composition — 2026-10-16
+
+The next explicit profile is `uuid-model2`: mixed flat Records first, finite
+arrays/maps and explicitly grouped Fields second, then association Records with
+endpoint alternatives. CONTRACT-076 owns the exact layout, typed group values,
+composite mapping and dataset validation APIs. One shared resolver/value pipeline
+serves all five targets. SQL native scalars and JSON composites, nested Avro/
+Parquet schemas and TableSpec exact-text/JSON fallback preserve value domains
+without asserting equal native enforcement. Scalar, shape, association and finite
+snapshot modules keep their responsibilities separate. Admission requires current
+native reads/writes and source recovery for each stage/target, actual Chromium
+public API checks, and negative controls on missing/stale/falsified evidence.
+Earlier model1 evidence remains scoped and is refreshed separately after changes
+to the shared implementation. Consumer concurrency, lifecycle execution, arbitrary
+native edit reconciliation and physical migration remain separately qualified.
