@@ -213,7 +213,7 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 
 The SQL page also opens a worker-owned Truss browser catalog using the reviewed
 canonical provider described by `assets/truss-browser/provenance.json`, built from
-Truss commit `2a8bd1fee8ee8d644e6d47fff37145ff161170bb`. The manifest
+Truss commit `64b8f813ca82f240e8030bf2970955939f80b725`. The manifest
 captures every actual source hash. This website candidate is not published. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
@@ -234,9 +234,11 @@ The new layout 0.2 store and its dispatch journals use the
 `umf-products-demo-layout02` prefix; existing layout 0.1 data stays untouched.
 Fresh Chromium checks cover the assembled page and a separate 1,024-row
 workload across 11 batches, replay and reopened readback. Observed bulk execution
-takes 6.338 seconds and the point UPDATE takes 326.27 milliseconds in the
+takes 5.299 seconds and the point UPDATE takes 295.08 milliseconds in the
 separate exploratory provider run. Private seal input 0.2 retains the model source
 once instead of repeating it in every key receipt, while preserving old seal recovery.
+Admission object/key reads are batched; immediate per-item effect verification
+retains the original failure order and rollback behavior.
 These observations do not establish a statistical speedup or meet a performance target: performance
 remains failed. The page has not been qualified on the public GitHub Pages origin.
 The retained [publication projection](../../04-build/evidence/bulk-update/website-publication-projection.json)
