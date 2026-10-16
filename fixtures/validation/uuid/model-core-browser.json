@@ -1,6 +1,6 @@
 {
   "scope": "Portable UUID/core0.9/carrier-codec qualification only; no native execution or full core acceptance",
-  "browser": "155.0.4283.45",
+  "browser": "153.0.8010.12",
   "result": {
     "vectors": 389,
     "codecChecks": 2334,
@@ -12,7 +12,7 @@
   "externalRequests": [],
   "negativeRejected": true,
   "layerRejected": true,
-  "bundleSha256": "1541e6ba27516fc3b0a2d31a9c554a2aa29fe2f66296169721d01fe5338ce1a0",
+  "bundleSha256": "1d741ec59bebc861f6604f06dad3541ff4c15ea2d3308d71c512d11945eda879",
   "sha256": {
     "src/model/types.ts": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9",
     "src/model/bit128-field.ts": "075943b6f23dc1bd5484d7dc60aeb73b1e386a2cdbb89c2561a076e56692ac27",
@@ -23,7 +23,7 @@
     "src/model/bit128.ts": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91",
     "src/model/uuid.ts": "f2abc6139f958decad18156b1ac3d8e6b62cc6083a8efd78a3a760f7883dc503",
     "src/model/bit128-transition.ts": "ce8a9b031dbc88db077b43c05a2d4afd097ce502d02a622a0bfcc7e2f79252a7",
-    "src/model/key-tuple.ts": "3b711a44c277e8ae2d2985356337b0a38efc3777fd47f2b0c41236b9d175826e",
+    "src/model/key-tuple.ts": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8",
     "src/model/schema-literals.ts": "f44cf08ed2b4b9e349ef534af79a58b6ea6c560f41e146fc680959c7accdf6a4",
     "src/validation/schema-properties.ts": "2cc0fd6a1e0d32a053027ac07450fb23af1d0d78053e3b1d18f3ea95d8a8119e",
     "src/extensions/binding/bit128.ts": "b65a0e09b9cba7ff98666c9326ac16c67f2fdf36bbefde363c367a450679e926",

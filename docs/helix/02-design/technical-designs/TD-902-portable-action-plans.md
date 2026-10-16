@@ -90,3 +90,7 @@ New profiles are opt-in; existing action/read/group behavior remains intact. Dis
 Incomplete upstream/native admission must block dependent execution without blocking independent pure work. Namespace/guard changes require new reviewed intent; they cannot migrate pending work silently. Architecture boundary check and concrete dependency closure must be current before public source readiness.
 
 US-902 owns Registry-preserving prepareActionPlanModel and the umf.actions.plan-model/1 schema/export. Trusted original declaration inspection is required for each arbitrary new model/action; the Rust compiler consumes only its installed original preparation. Exact producer/schema versions and full interpreted binding/obligation coverage are retained with source hashes.
+
+## Exact browser-local branch — 2026-10-15
+
+CONTRACT-905 defines a complete local actor/policy/invocation pairing, independently selected local bulk claims and conditional reuse of the original data carriers. The declaration analyzer recognizes only that exact bundle; preparation rejects mixed native/local intent, and assessment chooses its fixed companion table from original invocation. No unchecked override or native human substitution is introduced. Actual browser Truss storage/lowering/capability/seal/flush/recovery qualification remains required and is not provided by portable metadata support.

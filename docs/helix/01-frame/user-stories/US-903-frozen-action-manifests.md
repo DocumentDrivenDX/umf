@@ -43,6 +43,8 @@ This is a bounded part of the owner-selected portable-action proof. Existing act
 
 - [ ] **US-903-AC7** — Given exact original plan bytes, resolved-action and snapshot basis declarations, ordered selected entity/guard rows and their original core Key tuple receipts, construction verifies every receipt against the pinned model, derives all action inputs/frame versions and deterministic batches, and returns an unsealed Artifact or atomically refuses. Receipt source/identity/value/bytes substitution, unknown members, duplicate work, overflow and malformed input refuse; no native selection, ordering, authorization or seal is attested.
 
+- [ ] **US-903-AC8** — Given native or local-owner invocation intent, portable manifest construction retains the exact original profile/pins and assessment selects the corresponding exact bulk companion/claims; native delegated-human and local-owner claims cannot substitute and execution remains unverified.
+
 ## Edge Cases
 
 Relevant unknown meaning and mismatched pins refuse; missing native evidence cannot be replaced by shape validity. Uncertain commits require original reconciliation. Empty/no-op work never fabricates business changes.

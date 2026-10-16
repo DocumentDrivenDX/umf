@@ -1,0 +1,48 @@
+{
+  "protocol": "umf-local-profile-portable-evidence/1",
+  "baseCommit": "ed6766987cd403fb513a82d49102596f6e727235",
+  "scope": "Portable exact local action/actor/policy/invocation and companion declaration support only; no Weft local compilation, PGlite or Truss execution qualification",
+  "sourceSha256": {
+    "src/extensions/actions/local-profiles.ts": "01700c795ade6825c782712b1cf393759001f45581791892c8f65c120b6a9a08",
+    "src/extensions/actions/analysis.ts": "1a6a34106429d314642ba115e949a15e5956e1b06eecb1584bca533079a8e593",
+    "src/extensions/actions/plans.ts": "f597be5dee801ddca4778c5c1af3ef2814006e4fc81fb19abf6325d1c64768aa",
+    "src/extensions/actions/plan-identity.ts": "99138b72a70c24d091049830821d8989bf1a0c54b12e2eb268e5e5075277b972",
+    "docs/helix/03-test/fixtures/bulk-update/local-products-model.json": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+    "docs/helix/03-test/fixtures/bulk-update/local-products-input.json": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e",
+    "docs/helix/03-test/fixtures/bulk-update/local-products-seed.json": "2748deaf974f966601aced6aae63b2b8941b047344f86961bcaf113f5db05bf7",
+    "docs/helix/02-design/contracts/CONTRACT-905-browser-local-actions.md": "806537486449df3508d0d96925cb11eac2e46e3e084165fe925b480390184cce"
+  },
+  "tests": {
+    "regressionPassed": 346,
+    "regressionAssertions": 4016,
+    "originalActionsPassed": 56,
+    "originalActionsAssertions": 343,
+    "bothTypechecks": true
+  },
+  "astraReviewSha256": "d6d07d6542816cb365c60ee98c47184eafa4fae9c0c09c94b5e58349cec43767",
+  "astraVerdict": "No open implementation blocker in reviewed portable local-profile scope; both prior handoff findings closed.",
+  "browserReceipt": "../local-profile-browser.json",
+  "remaining": [
+    "Fresh original Weft local profile and pinned preparation producer admission",
+    "Actual Truss PGlite provider/schema and exact physical binding/lowering",
+    "Issued owner and independent selection-read grant",
+    "Selection/preflight/guard/seal/atomic effects/readback",
+    "IndexedDB flush, replay, uncertain acknowledgement, reload/multi-tab/quota/reset qualification",
+    "Native runtime66 mutation lowering and protected native completion"
+  ],
+  "evidenceSha256": {
+    "astra-review/correspondence.json": "d9dc4bfae8f5935445d47b87288c38b6a40b3522a3020ffd1a1ab80bc3a73114",
+    "astra-review/correspondence.log": "6be6e57a6c61bc02653e0b87bd83c3b394e6f443aed5655d3439818600352477",
+    "astra-review/correspondence.ts": "33ba1f33088a8486ae5d07d5f314601a00d07af294c53d9f2a93362c7511e774",
+    "astra-review/focused-tests.log": "321881a5d00510f92ca5f5e45322d88c16b71c25866e29affaea422e127c2f8c",
+    "astra-review/independent-controls.log": "546560df2fa01a9c9ab6d005fa5becdc5d5c61e5e20429eb47e853d694aaf635",
+    "astra-review/independent-controls.ts": "f44fd020d91b479dfab6b1535a43332b89a4c24fe02511e557b74ae5460953b9",
+    "astra-review/independent-results.json": "b37699377d3c17708490145b4e4f9a69f66c7e16bde08729efe4efee7ae44b84",
+    "astra-review/review.json": "d6d07d6542816cb365c60ee98c47184eafa4fae9c0c09c94b5e58349cec43767",
+    "build.log": "b198c04ad09ffe3279553b140eb864014f7dea2762616d4ef0a98f034bd39764",
+    "fixture-generation.log": "3f9777c13e938fdc3ee68f1eeaf10a38b2ecd5c96c6e26e85040af7f874d8bf3",
+    "original-actions.log": "6805ba242a2590909d4368bea38336c0513b7f1c9476936f657a0643cd0bcc0f",
+    "regressions.log": "3fc86c51c752ce917cbf0c4295fd1515c227877f76e67b762b6d790f2da7e95c",
+    "types.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+  }
+}
