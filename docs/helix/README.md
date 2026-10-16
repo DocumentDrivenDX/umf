@@ -1,5 +1,7 @@
 # UMF project documentation
 
+The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Lakebase service execution remains unverified.
+
 ## Proposed typed data access SDK
 
 [Design and build handoff](04-build/typed-persistence-design.md) indexes draft

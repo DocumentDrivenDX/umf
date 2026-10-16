@@ -10,6 +10,7 @@ const presentType=(f:ResolvedField,p:{missing:boolean;null:boolean},validate=tru
 export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDigest:string):{texts:{path:string;text:string}[];symbols:AccessSymbol[]} {
  const texts:{path:string;text:string}[]=[],symbols:AccessSymbol[]=[],base=request.package+'/';
  const projectionName=(p:AccessRequest['projections'][number])=>request.names.find(n=>n.sourceId===request.logical&&n.pointer==='/projections/'+request.projections.indexOf(p))?.python??cls(p.name);
+ const projectionField=(root:ResolvedRecord,ref:Ref):{owner:ResolvedRecord;field:ResolvedField}=>{const own=root.fields.find(f=>eq(f.ref,ref));if(own)return {owner:root,field:own};const candidates=ir.records.filter(r=>r.selected).flatMap(r=>r.fields.filter(f=>f.owned!==false&&eq(f.ref,ref)).map(field=>({owner:r,field})));if(candidates.length!==1)throw new Error('Ambiguous joined projection Field');return candidates[0]!;};
  const allFields=ir.records.flatMap(r=>r.fields);
  const carrier=(f:ResolvedField,mode:'row'|'create',validated:boolean,seen=new Set<string>()):string=>{
   if(!f.item)return scalar(f);
@@ -26,7 +27,7 @@ export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDi
  const models=[...pre,'from datetime import date, datetime','from decimal import Decimal','from typing import Annotated, ClassVar, TYPE_CHECKING, final','from pydantic import BeforeValidator, MISSING, TypeAdapter','from umf_access.dsl import FieldRef','from umf_access.types import StrictModel','from umf_access.values import validate_integer, validate_decimal, validate_string, validate_date, validate_instant, validate_local, validate_boolean, validate_binary, validate_length, validate_range, validate_allowed',
   'if TYPE_CHECKING:',...ir.records.filter(r=>r.selected).flatMap(r=>[`    from .fields import ${r.python}Columns, ${r.python}Query`]),''];
  const keys=[...pre,'from typing import Annotated, ClassVar, Mapping, TypeVar, final','from datetime import date, datetime','from decimal import Decimal','from types import MappingProxyType','from pydantic import BeforeValidator','from .models import *',...ir.records.flatMap(r=>r.fields.map(f=>'from .models import '+validator(f))),'from umf_access.types import StrictModel',`BUNDLE_INPUT_DIGEST = ${py(inputDigest)}`,'','_KeyModel = TypeVar("_KeyModel", bound=StrictModel)','def _unhashable_key(model: type[_KeyModel]) -> type[_KeyModel]:','    # Explicitly set the runtime special method without a generated checker suppression.','    type.__setattr__(model, "__hash__", None)','    return model',''];
- const fields=[...pre,'from datetime import date, datetime','from decimal import Decimal','from typing import TypedDict, Unpack, overload, ClassVar, Mapping','from types import MappingProxyType','from umf_access.dsl import Column, FieldRef, RecordRef, Query, Terminal, Related, Param','from .models import *','from .keys import *',''];
+ const fields=[...pre,'from datetime import date, datetime','from decimal import Decimal','from typing import TypedDict, Unpack, overload, ClassVar, Mapping, cast','from types import MappingProxyType','from pydantic import MISSING','from umf_access.dsl import Join, JoinProjection, Column, FieldRef, RecordRef, Query, Terminal, Related, Param','from .models import *','from .keys import *',''];
  const codecs=[...pre,'from datetime import datetime, timezone','from typing import cast','from pydantic import MISSING','from umf_access.values import validate_instant','from .models import *','from .keys import *','from umf_access.codec_support import revalidate_model, checked_row',''];
  const normalizer=(f:ResolvedField)=>'_normalize_'+validator(f);
  const normalized=new Set<string>();
@@ -38,6 +39,7 @@ export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDi
   }else{codecs.push(`def ${name}(value: object) -> object:`);if(f.scalarType==='timestamp'&&f.temporal==='instant')codecs.push('    if value is None or value is MISSING: return value','    return validate_instant(value).astimezone(timezone.utc)');else codecs.push('    return value');}
   codecs.push('');
  };
+ const validatorLines:string[]=[];const modelHeaderLength=models.length;
  const emittedValidators=new Set<string>();
  for(const r of ir.records){
   const renderValidator=(f:ResolvedField):void=>{
@@ -46,16 +48,16 @@ export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDi
    emittedValidators.add(validator(f));
    for(const mode of (f.item?['row','create']:['row']) as ('row'|'create')[]){
    const type=carrier(f,mode,true),adapter='_adapter'+validator(f,mode);
-   if(f.item)models.push(`${adapter}: TypeAdapter[${type}] = TypeAdapter(${type})`);
+   if(f.item)validatorLines.push(`${adapter}: TypeAdapter[${type}] = TypeAdapter(${type})`);
 
    const call=f.scalarType==='integer'?`validate_integer(value, bits=${py((f.facets.integerWidth as {bits?:number}|undefined)?.bits??null)}, signed=${py((f.facets.integerWidth as {signed?:boolean}|undefined)?.signed??true)})`:f.scalarType==='decimal'?`validate_decimal(value, precision=${py(f.facets.precision??null)}, scale=${py(f.facets.scale??null)})`:f.scalarType==='boolean'?'validate_boolean(value)':f.scalarType==='binary'?'validate_binary(value)':f.scalarType==='string'?'validate_string(value)':f.scalarType==='date'?'validate_date(value)':f.scalarType==='timestamp'?(f.temporal==='instant'?'validate_instant(value)':'validate_local(value)'):'value';
-   models.push(`def ${validator(f,mode)}(value: object) -> ${type}:`,`    checked = ${f.item?adapter+'.validate_python(value, strict=True)':call}`);
+   validatorLines.push(`def ${validator(f,mode)}(value: object) -> ${type}:`,`    checked = ${f.item?adapter+'.validate_python(value, strict=True)':call}`);
    const length=(f.facets.length??f.facets.collectionSize) as {min?:number;max?:number}|undefined;
-   if(length)models.push(`    checked = validate_length(checked, minimum=${py(length.min??null)}, maximum=${py(length.max??null)})`);
+   if(length)validatorLines.push(`    checked = validate_length(checked, minimum=${py(length.min??null)}, maximum=${py(length.max??null)})`);
    const range=f.facets.range as {min?:unknown;max?:unknown;minInclusive?:boolean;maxInclusive?:boolean}|undefined;
-   if(range)models.push(`    checked = validate_range(checked, minimum=${range.min===undefined?'None':coreLiteral(range.min)}, maximum=${range.max===undefined?'None':coreLiteral(range.max)}, min_inclusive=${py(range.minInclusive??true)}, max_inclusive=${py(range.maxInclusive??true)})`);
-   if(Array.isArray(f.properties.allowedValues))models.push(`    checked = validate_allowed(checked, (${f.properties.allowedValues.map(coreLiteral).join(', ')}${f.properties.allowedValues.length?',':''}))`);
-   models.push('    return checked','');
+   if(range)validatorLines.push(`    checked = validate_range(checked, minimum=${range.min===undefined?'None':coreLiteral(range.min)}, maximum=${range.max===undefined?'None':coreLiteral(range.max)}, min_inclusive=${py(range.minInclusive??true)}, max_inclusive=${py(range.maxInclusive??true)})`);
+   if(Array.isArray(f.properties.allowedValues))validatorLines.push(`    checked = validate_allowed(checked, (${f.properties.allowedValues.map(coreLiteral).join(', ')}${f.properties.allowedValues.length?',':''}))`);
+   validatorLines.push('    return checked','');
    }
   };
   for(const f of r.fields){renderValidator(f);if(r.selected)emitNormalizer(f,r);}
@@ -80,11 +82,11 @@ export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDi
    if(declaration>=0)fields.splice(declaration+1,0,'    '+py('UMF source '+ir.sourceId+'#'+f.pointer));
    symbols.push({sourceId:ir.sourceId,pointer:f.pointer,path:base+'fields.py',symbol:r.python+'.c.'+f.python,role:'fields'});
   }
-  for(const relation of ir.relations??[])if(eq(relation.owner,r.ref)){const target=ir.records.find(t=>eq(t.ref,relation.target))!;fields.push(`    ${relation.python}: Related[${r.python}, ${target.python}Key] = Related(FieldRef(module=${py(r.ref.module)}, element=${py(r.ref.element)}, field=${py(relation.id)}, field_module=${py(relation.module)}, logical_name=${py(relation.logicalName??null)}))`);}
+  for(const relation of ir.relations??[])if(eq(relation.owner,r.ref)){const target=ir.records.find(t=>eq(t.ref,relation.target))!;if(relation.toOne&&target.selected){const key=target.keys[0]!;fields.push(`    ${relation.python}: Join[${r.python}, ${target.python}, ${target.python}Key] = Join(FieldRef(module=${py(r.ref.module)}, element=${py(r.ref.element)}, field=${py(relation.id)}, field_module=${py(relation.module)}, logical_name=${py(relation.logicalName??null)}), RecordRef(module=${py(target.ref.module)}, element=${py(target.ref.element)}, logical_namespace=${py(target.namespace??null)}, logical_name=${py(target.logicalName??null)}, key=(${key.fields.map(f=>`FieldRef(module=${py(target.ref.module)}, element=${py(target.ref.element)}, field=${py(f.element)}, field_module=${py(f.module)}, logical_name=${py(target.fields.find(rf=>eq(rf.ref,f))?.logicalName??null)})`).join(', ')},)), optional=${py(relation.optional??false)})`);}else fields.push(`    ${relation.python}: Related[${r.python}, ${target.python}Key] = Related(FieldRef(module=${py(r.ref.module)}, element=${py(r.ref.element)}, field=${py(relation.id)}, field_module=${py(relation.module)}, logical_name=${py(relation.logicalName??null)}))`);fields.push('    '+py('UMF source '+ir.sourceId+'#'+relation.pointer));symbols.push({sourceId:ir.sourceId,pointer:relation.pointer,path:base+'fields.py',symbol:r.python+'.c.'+relation.python,role:'fields'});}
   if(!r.fields.length)fields.push('    pass');
   fields.push('',`class ${r.python}Update(TypedDict, total=False):`);
   const updates=r.fields.filter(f=>f.owned!==false&&f.mutable&&!f.generated);for(const f of updates){const type=presentType(f,{missing:false,null:f.create.null},false,'create');fields.push(`    ${f.python}: ${type} | Param[${type}]`);}if(!updates.length)fields.push('    pass');
-  fields.push('',`class ${r.python}Query(Query[${r.python}, ${r.python}, ${key?r.python+'Key':'object'}]):`,`    UMF_UPDATE_FIELDS: ClassVar[Mapping[str, FieldRef]] = MappingProxyType({${updates.map(f=>py(f.python)+': FieldRef(module='+py(r.ref.module)+', element='+py(r.ref.element)+', field='+py(f.ref.element)+', field_module='+py(f.ref.module)+', logical_name='+py(f.logicalName??null)+')').join(', ')}})`,`    def update(self, **values: Unpack[${r.python}Update]) -> Terminal[object]:`,`        return self._update(values)`);
+  fields.push('',`class ${r.python}Query(Query[${r.python}, ${r.python}, ${key?r.python+'Key':'object'}]):`,`    UMF_UPDATE_FIELDS: ClassVar[Mapping[str, FieldRef]] = MappingProxyType({${updates.map(f=>py(f.python)+': FieldRef(module='+py(r.ref.module)+', element='+py(r.ref.element)+', field='+py(f.ref.element)+', field_module='+py(f.ref.module)+', logical_name='+py(f.logicalName??null)+')').join(', ')}})`,`    def update(self${updates.length?', *, '+updates.map(f=>{const t=presentType(f,{missing:false,null:f.create.null},false,'create');return `${f.python}: ${t} | Param[${t}] = cast(${t} | Param[${t}], MISSING)`;}).join(', '):''}) -> Terminal[object]:`,'        values: dict[str, object] = {}',...updates.map(f=>`        if ${f.python} is not MISSING: values[${py(f.python)}] = ${f.python}`),`        return self._update(values)`);
   const projections=request.projections.filter(p=>eq(p.record,r.ref));
   if(projections.length===1)fields.push(`    def into(self, model: type[${projectionName(projections[0]!)}]) -> Query[${r.python}, ${projectionName(projections[0]!)}, ${key?r.python+'Key':'object'}]:`,`        return self._into(model)`);
   if(projections.length>1){for(const p of projections)fields.push('    @overload',`    def into(self, model: type[${projectionName(p)}]) -> Query[${r.python}, ${projectionName(p)}, ${key?r.python+'Key':'object'}]: ...`);fields.push(`    def into(self, model: ${projections.map(p=>'type['+projectionName(p)+']').join(' | ')}) -> object:`,`        return self._into(model)`);}
@@ -95,7 +97,7 @@ export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDi
    codecs.push('    return output','');symbol(r,'codecs.py',name,'codec');
   }
   codecs.push(`def decode_${r.python}(columns: list[str], row: list[object]) -> ${r.python}:`,`    values = checked_row(${py(r.fields.filter(f=>f.owned!==false).map(f=>f.ref.element))}, columns, row)`,`    checked = ${r.python}.model_validate({${r.fields.filter(f=>f.owned!==false).map(f=>`${py(f.python)}: values[${py(f.ref.element)}]`).join(', ')}})`,`    return ${r.python}.model_validate({${r.fields.filter(f=>f.owned!==false).map(f=>py(f.python)+': '+normalizer(f)+'(checked.'+f.python+')').join(', ')}})`,'');symbol(r,'codecs.py','decode_'+r.python,'codec');
-  for(const projection of projections){const name=projectionName(projection);models.push('@final',`class ${name}(StrictModel):`,`    UMF_PROJECTION_FIELDS: ClassVar[tuple[FieldRef, ...]] = (${projection.fields.map(f=>'FieldRef(module='+py(r.ref.module)+', element='+py(r.ref.element)+', field='+py(f.element)+', field_module='+py(f.module)+', logical_name='+py(r.fields.find(rf=>eq(rf.ref,f))?.logicalName??null)+')').join(', ')}${projection.fields.length?',':''})`);for(const ref of projection.fields){const f=r.fields.find(f=>eq(f.ref,ref))!;models.push(`    ${f.python}: ${presentType(f,f.row)}${f.row.missing?' = MISSING':''}`);symbols.push({sourceId:ir.sourceId,pointer:f.pointer,path:base+'models.py',symbol:name+'.'+f.python,role:'projection'});}models.push('    def __init_subclass__(cls, **kwargs: object) -> None:','        raise TypeError("generated model is final")','');symbol(r,'models.py',name,'projection');}
+  for(const projection of projections){const name=projectionName(projection);models.push('@final',`class ${name}(StrictModel):`,`    UMF_PROJECTION_FIELDS: ClassVar[tuple[FieldRef, ...]] = (${projection.fields.map(f=>{const x=projectionField(r,f);return 'FieldRef(module='+py(x.owner.ref.module)+', element='+py(x.owner.ref.element)+', field='+py(f.element)+', field_module='+py(f.module)+', logical_name='+py(x.field.logicalName??null)+')';}).join(', ')}${projection.fields.length?',':''})`);for(const ref of projection.fields){const x=projectionField(r,ref),f=x.field;models.push(`    ${f.python}: ${presentType(f,{...f.row,null:f.row.null||!eq(x.owner.ref,r.ref)})}${f.row.missing?' = MISSING':''}`);symbols.push({sourceId:ir.sourceId,pointer:f.pointer,path:base+'models.py',symbol:name+'.'+f.python,role:'projection'});}models.push('    def __init_subclass__(cls, **kwargs: object) -> None:','        raise TypeError("generated model is final")','');symbol(r,'models.py',name,'projection');fields.push(`${name}Projection: JoinProjection[${r.python}, ${name}] = JoinProjection(${name})`);}
  }
  if(ir.actions?.length){
   const actionLines=[...pre,'from datetime import date, datetime','from decimal import Decimal','from typing import Annotated, Literal, Never, final','from pydantic import BeforeValidator, MISSING, TypeAdapter','from umf_access.types import StrictModel, ActionRef','from .keys import *',...ir.records.flatMap(r=>r.fields.map(f=>'from .models import '+validator(f))),''];
@@ -115,9 +117,10 @@ export function emitPythonAccess(ir:ResolvedAccess,request:AccessRequest,inputDi
   emit('actions.py',actionLines);
  }
  keys.push(`__all__ = ${py([...ir.records.filter(r=>r.keys.length).map(r=>r.python+'Key'),'BUNDLE_INPUT_DIGEST'])}`);
+ for(const p of request.projections)models.push(`${projectionName(p)}.model_rebuild()`);
  models.push(`__all__ = ${py([...ir.records.filter(r=>r.selected).flatMap(r=>[r.python,r.python+'Create',r.python+'Patch']),...request.projections.map(projectionName)])}`);
- emit('models.py',models);emit('keys.py',keys);emit('fields.py',fields);emit('codecs.py',codecs);
- emit('__init__.py',[...pre,'from pydantic import MISSING','from .models import *','from .keys import *','from . import fields as _fields',...(ir.actions?.length?['from .actions import *']:[])]);emit('py.typed',[]);
+ emit('models.py',[...models.slice(0,modelHeaderLength),...validatorLines,...models.slice(modelHeaderLength)]);emit('keys.py',keys);emit('fields.py',fields);emit('codecs.py',codecs);
+ emit('__init__.py',[...pre,'from pydantic import MISSING','from .models import *','from .keys import *','from . import fields as _fields',...request.projections.map(p=>'from .fields import '+projectionName(p)+'Projection'),...(ir.actions?.length?['from .actions import *']:[])]);emit('py.typed',[]);
  symbols.push({sourceId:ir.sourceId,pointer:'',path:base+'keys.py',symbol:'BUNDLE_INPUT_DIGEST',role:'key'});
  return {texts,symbols};
 }
