@@ -20,7 +20,9 @@ ddx:
 **Feature:** [FEAT-005 IDEAL-09](../../01-frame/features/FEAT-005-core-ideals.md).
 **Authority:** owner direction, 2026-10-15; FR-3/8/20/21/28/39/41.
 **Shared interface:** [CONTRACT-076](../contracts/CONTRACT-076-128-bit-uuid.md).
-**Status:** implementable design; no runtime/native qualification claimed.
+**Status:** initial experimental implementation with scoped portable/native evidence.
+[Execution and remaining gates](../../04-build/evidence/uuid-implementation.md)
+separate working APIs from full ideal/binding acceptance.
 
 ## Scope
 

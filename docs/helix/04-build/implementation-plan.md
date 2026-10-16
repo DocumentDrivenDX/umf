@@ -12429,3 +12429,18 @@ Independent Astra Ultra review found no remaining component finding after two cl
 ### Current gate replay and P04 test budget — 2026-10-15
 
 The complete158-required-case replay executes45 implementations:43 pass, S12 fails its selected solver environment and P04 exceeds the60-second outer harness limit. A restored pinnedZ3 replay passes84 observations; the unchanged isolated P04 passes806 in65.1 seconds. Only P04's outer budget increases to120 seconds; assertions and native limits are unchanged. Astra Ultra review finds no actionable issue. The first failed run and qualified diagnostics are [retained](evidence/security/gate-refresh-20261015/README.md). A second full run is underway; no corrected full-gate result or case promotion is asserted at this commit. All113 missing implementations and full34-criterion completion remain required.
+
+### Experimental128-bit and UUID implementation — 2026-10-16
+
+CONTRACT-076 / SD-005 now have core0.9 value codecs, literals, copied Field/schema
+property authoring, inspection/selection, tuple-v2/operation-v4 encoding and
+collision-preserving migration. Binding3 adds explicit carrier codecs and bounded
+one-Field schema proposals. Native PG17.9, SQL Server2022, Avro/fastavro and
+PyArrow paths recover the exercised library-produced values; captured TableSpec
+model validation covers the string fallback. The [execution record](evidence/uuid-implementation.md)
+retains current source/test evidence, native warnings, failed attempts and corrections.
+
+Full ideal admission and five-binding delivery are not promoted. Native binding3
+indexes/relationships, general nullable-pair/write/atomicity qualification and
+consumer runtime adoption remain separate. Earlier global acceptance receipts
+are not refreshed by this scoped work; storage optimality is not benchmarked.

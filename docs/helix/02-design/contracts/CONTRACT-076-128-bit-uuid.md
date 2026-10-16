@@ -21,7 +21,9 @@ ddx:
 **Type:** schema/library and physical binding. **Version:** proposed core 0.9.0;
 `umf-128/1`, `umf-key-tuple-v2`, `umf.binding` 0.3.0 / `umf-binding-3`.
 **Status:** design complete for implementation; draft pending review and evidence.
-No implementation, native admission or downstream adoption is claimed.
+The initial experimental implementation has scoped Bun, browser and native carrier
+evidence; full ideal admission, five-system delivery and downstream adoption are
+not claimed. See the execution record below.
 
 ## Purpose
 
@@ -306,3 +308,130 @@ All-five priority delivery remains mandatory and separate. No performance,
 full native equivalence, generator or downstream execution claim follows from
 this contract. Unknown future UUID layout interpretation remains an explicit
 extension responsibility; opaque bit preservation is complete without it.
+
+## Initial public implementation profile
+
+The following bounded APIs refine the implementation interface without widening
+native execution claims. Evidence and remaining delivery gates are recorded in
+[the execution record](../../04-build/evidence/uuid-implementation.md).
+
+`SCALAR_TYPES` retains the earlier nine-family inventory; both versioned
+inventories are immutable at runtime as well as readonly in TypeScript. `SCALAR_TYPES_V09` and
+`scalarTypesForVersion(version)` expose version-qualified inventories; `ScalarType`
+includes the new families. No older source acquires meaning from that TypeScript
+union. `coreBit128DocumentSchema`, `coreBit128SelectionSchema`,
+`coreBit128TransitionSchema` and `coreBit128KeyTupleSchema` expose new independently
+identified schema resources. Earlier resources remain unchanged.
+
+`declareCoreBit128Field(source,identity,scalarType)` accepts core0.9.0, exact
+`identity:{module,element}` and `scalarType:'bits128'|'uuid'`. It returns a copied,
+validated Document directly, with no declaration receipt. The target must already
+be a singular Field; container item meaning is declared on the referenced Field.
+Unknown scalar meaning or relevant unknown qualifiers block replacement; incompatible
+existing facets/literals block the whole edit. This is explicit metadata authoring,
+not stored-value conversion. Historical kind/key/relationship/facet declaration
+helpers retain their earlier version restrictions; no historical receipt is reused
+as0.9 authoring authority. Authors may construct and validate ordinary0.9 metadata.
+
+The current read-only inspection result versions are kind8, nullability7,
+cardinality6, facets5, Key4, relationship3 and scalar/member/reference inspection0.3.
+Schema-property inspection/default resolution and Record value checking use result2
+for0.9. Relationship metadata selection uses result2 for0.9 while preserving
+its original0.7/result1 behavior and0.8 refusal. Their older source/result dispatch
+remains unchanged. Routine metadata
+selection remains a copied snapshot, not a persistent receipt.
+
+### Carrier inspection and values
+
+`inspectBit128Binding(binding,logical):Validation` validates the declared binding3
+shape, exact supplied logical source, known relevant qualifiers, explicit target
+relation/record assignments and all physical-slot collisions. `inspectBinding`
+dispatches to this checker for0.3.0 after safe input copying. Native capabilities,
+DDL execution and database atomicity are not certified by `complete:true` here.
+The initial carrier profile retains nonempty native index/relationship declarations
+with incomplete interpretation and refuses their generation/value operations;
+legacy generators reject binding3 rather than interpret split slots as one column.
+
+`encodeBit128CarrierValue(binding,logical,identity,literal)` returns a fresh
+`Record<string,string|null>` with exactly the selected physical column names.
+`decodeBit128CarrierValue(binding,logical,identity,slots)` returns a checked matching
+`CoreLiteral`. Both require complete interpretation of selected binding/Field
+meaning; both validate Field allowed values and availability. No partial pair or
+extra/missing slot is accepted. Null encodes both words together only for
+absent-allowed. Hex carriers use32-digit lowercase hex; native-uuid and uuid-text
+use canonical UUID text; word carriers use the exact selected decimal word strings.
+These are JSON-safe transport tokens. The consumer's selected driver converts
+hex to16 bytes or canonical text to a native UUID object as required. They are
+not SQL parameters or an assertion that every native driver accepts strings.
+
+These value-only bridges preserve bit identity. Original inputs remain unchanged;
+a caller requiring lexical source recovery must retain the original token or
+`UuidValue.originalText` alongside the native carrier. Decoding a canonical carrier
+cannot reconstruct an unretained original case spelling. No source-custody claim
+follows from carrier equality alone.
+
+### Native schema proposal and recovery
+
+`projectBit128CarrierSchema(binding,logical,identity,policy)` receives explicit
+`policy:{lossPolicy:'strict'|'report',obligations:Array<Bit128Obligation>}`. The
+nonempty unique obligations are bits, availability, equality, ordering and
+enforcement. Extra policy members and invalid identities refuse. The bounded
+native subset is exactly `target.subset:'uuid-carrier1'` with PostgreSQL17.x,
+SQL Server2022, Avro1.12.0, Parquet format2.11.0 or TableSpec model1.0. A binding's
+version/subset is explicit; a similarly named unsupported target is not substituted.
+
+The JSON-safe result is
+`{operation:'project-bit128-carrier-schema',version:'1.0.0',source,binding,identity,policy,outcomes,status,diagnostics,mapping,candidate?}`.
+`source` and `binding` are complete copies. Each outcome has obligation, outcome
+exact/unknown/not-expressible and reason. Diagnostics retain source validation
+limits and always disclose text-enforcement, nullable-pair and TableSpec-model
+limitations even when the caller requests only bit fidelity. A projected result
+therefore certifies only its selected obligations, never general completeness. `mapping` contains the exact idealPath, target, bindingVersion0.3.0 and
+all targetSlots. Slots use semantic coordinates
+`/tables/<escaped-name>/columns/<escaped-name>`; they are not pointers into SQL text.
+Unemitted Field facets, defaults and allowed values receive enforcement residuals
+even when bits alone was requested. Other source Fields and Record/graph assertions
+remain in the retained source; this is explicitly a one-Field carrier proposal,
+not complete-model lowering or automatic key/index enforcement.
+
+`status` is projected/reported/blocked. A candidate has format sql/avro/parquet/
+tablespec and text. Non-exact obligations block strict and remain explicit in
+report. Unsupported carrier/target combinations block under either policy.
+Invalid/unknown relevant meaning or unsafe native names throws BIT128_PROJECTION;
+there is no partial candidate or alternate layout. SQL identifiers reject NUL,
+unpaired surrogates and target length overflow before quoting; no SQL identifier
+fragment is executable. Avro names use its native name grammar, exclude primitive root-name collisions,
+and avoid collisions with generated fixed-type names. The initial SQL Server
+subset uses ASCII letter/underscore followed by letters/digits/underscores and
+rejects case-insensitive column-name collisions.
+Selected partition choices receive explicit residuals; they are not silently dropped.
+Result copying enforces the existing aggregate JSON/text bounds before publication.
+
+SQL candidates are standalone CREATE TABLE statements for the selected carrier.
+Avro candidates are standalone native record schemas. TableSpec candidates are
+native model documents. Parquet candidate JSON is a column layout for a selected
+native writer, not a Parquet file or Thrift FileMetaData. Its columns carry name,
+physicalType, length when fixed, logicalType, integer bitWidth/isSigned when relevant,
+and nullable; actual writer/reader qualification is separate.
+
+Signed words use native bigint/long in PostgreSQL, SQL Server and Avro. Unsigned
+words refuse there rather than narrow; Parquet supports the explicit unsigned64
+annotation. TableSpec only emits the explicitly chosen text fallback. Native
+ordering remains unknown in this profile; caller selection of ordering therefore
+blocks strict. Text grammar/enforcement and collation are not silently certified.
+Nullable independent Avro/Parquet pairs report missing all-or-none enforcement.
+Native fixed UUID annotations may be ignored by a runtime: retained warnings and
+byte recovery cannot certify native logical-type enforcement or UUID generation.
+
+`recoverBit128CarrierProjection(report,nativeText)` recomputes the full proposal,
+requires exact report and candidate-text agreement, and returns copied
+`{logical,binding}`. This is source/artifact consistency recovery, not authentication,
+independent native classification or tolerance of arbitrary native edits.
+
+`classifyBit128NativeType({system,version,definition})` returns copied source,
+optional scalarType uuid, and basis native-type-identity/unclassified. It requires
+explicit PostgreSQL pg_catalog/uuid/base-kind identity, SQL Server sys/
+uniqueidentifier/system-type36, Avro uuid annotation on string/fixed16, or Parquet
+UUID annotation on fixed16. Unknown native members remain in source. Unannotated
+bytes, strings, same-named domains and unrelated integer pairs remain unclassified.
+No descriptor-only result certifies native equality, coercion or write enforcement.

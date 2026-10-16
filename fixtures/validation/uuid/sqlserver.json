@@ -1,0 +1,68 @@
+{
+  "scope": "Actual owned SQL Server2022 generated required singular schemas and all-bit value recovery; no full binding, nullable pair, key or atomicity qualification",
+  "version": "16.0.4295.3",
+  "cases": [
+    {
+      "kind": "native-uuid",
+      "vectors": 389,
+      "catalog": [
+        {
+          "name": "id",
+          "type": "uniqueidentifier",
+          "is_nullable": false
+        }
+      ],
+      "sourceSha256": "8ffc9c01dbad4dbfedc01d0e5cc8981edbaf8a8f58b39c4f3f98aa26e749f96e",
+      "overflowRefused": null
+    },
+    {
+      "kind": "bytes16",
+      "vectors": 389,
+      "catalog": [
+        {
+          "name": "id",
+          "type": "varbinary",
+          "is_nullable": false
+        }
+      ],
+      "sourceSha256": "8f1a54a587a8dc68b575e528a913a9cf1306faa8a293c195a9eda308fb504333",
+      "overflowRefused": null
+    },
+    {
+      "kind": "uuid-text",
+      "vectors": 389,
+      "catalog": [
+        {
+          "name": "id",
+          "type": "varchar",
+          "is_nullable": false
+        }
+      ],
+      "sourceSha256": "58a96cea17d0b8801353b80000197b90e3889968b91978d7efedd55291baef29",
+      "overflowRefused": null
+    },
+    {
+      "kind": "words64",
+      "vectors": 389,
+      "catalog": [
+        {
+          "name": "hi",
+          "type": "bigint",
+          "is_nullable": false
+        },
+        {
+          "name": "lo",
+          "type": "bigint",
+          "is_nullable": false
+        }
+      ],
+      "sourceSha256": "36065e02698f2634625fb04d96533e1e34f15bc5de754c8212d36aa88a85ef93",
+      "overflowRefused": true
+    }
+  ],
+  "nativeOrderCounterexample": [
+    "01000000-0000-0000-0000-000000000000",
+    "00000000-0000-0000-0000-000000000001"
+  ],
+  "checks": 1556
+}

@@ -1,3 +1,5 @@
+import {inspectBit128Binding} from './bit128';
+export * from './bit128';
 import stableManifest from '../../../spec/extensions/binding-stable/package.json';
 import manifest from '../../../spec/extensions/binding/package.json';
 import {Registry} from '../../registry/registry';
@@ -120,6 +122,7 @@ export function inspectBinding(binding:Document,logical:Document):Validation{
     if(!(error instanceof UmfError))throw error;
     return {valid:false,complete:false,diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};
   }
+  if(binding.vocabularies?.['umf.binding']?.version==='0.3.0')return inspectBit128Binding(binding,logical);
   const base=validateDocument(binding,bindingRegistry());
   if(!base.valid)return base;
   const diagnostics=[...base.diagnostics];
@@ -156,14 +159,17 @@ export function readBindingDocument(text:string,logical:Document,format:'json'|'
 }
 
 export function writeBindingDocument(binding:Document,logical:Document,format:'json'|'yaml'='yaml'):string{
+  binding=copyJson(binding) as unknown as Document;logical=copyJson(logical) as unknown as Document;
   const checked=inspectBinding(binding,logical);
   if(!checked.valid)throw new UmfError('BINDING_DOCUMENT',JSON.stringify(checked.diagnostics));
   return writeDocument(binding,format);
 }
 
 export function getBinding(binding:Document,logical:Document):BindingPayload{
+  binding=copyJson(binding) as unknown as Document;logical=copyJson(logical) as unknown as Document;
   const checked=inspectBinding(binding,logical);
   if(!checked.valid)throw new UmfError('BINDING_DOCUMENT',JSON.stringify(checked.diagnostics));
+  if(binding.vocabularies[BINDING_EXTENSION]?.version==='0.3.0')throw new UmfError('BINDING_PROFILE','Legacy native generators do not admit scalar-carrier bindings');
   return copyJson(binding.extensions![BINDING_EXTENSION]) as unknown as BindingPayload;
 }
 

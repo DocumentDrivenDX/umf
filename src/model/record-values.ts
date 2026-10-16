@@ -7,7 +7,7 @@ import {validateCoreFieldValue} from './schema-properties';
 export interface CoreRecordValueIdentity {module:string;element:string;}
 export type CoreRecordFieldValue={field:CoreRecordValueIdentity;state:'absent'}|{field:CoreRecordValueIdentity;state:'present';value:CoreLiteral};
 export interface CoreRecordValueCheck {
- operation:'validate-core-record-values';version:'1.0.0';source:Document;identity:CoreRecordValueIdentity;
+ operation:'validate-core-record-values';version:'1.0.0'|'2.0.0';source:Document;identity:CoreRecordValueIdentity;
  values:CoreRecordFieldValue[];documentValidation:Validation;validation:Validation;
  fields:{field:CoreRecordValueIdentity;state:'absent'|'present';validation:Validation}[];
 }
@@ -16,7 +16,7 @@ export function validateCoreRecordValues(input:Document,identityInput:CoreRecord
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreRecordValueIdentity;
  const values=copyJson(valuesInput) as unknown as CoreRecordFieldValue[];
  const documentValidation=validateDocument(source);
- if(source.umf!=='0.8.0'||!documentValidation.valid)throw new UmfError('CORE_RECORD_VALUE_SOURCE','Valid core 0.8.0 source required');
+ if(!['0.8.0','0.9.0'].includes(source.umf)||!documentValidation.valid)throw new UmfError('CORE_RECORD_VALUE_SOURCE','Valid core 0.8.0 source required');
  const body=evaluateRecordBody(source,identity,values,documentValidation,(field,value)=>validateCoreFieldValue(source,field,value));
- return copyJson({operation:body.operation,version:body.version,source,identity,values,documentValidation,validation:body.validation,fields:body.fields}) as unknown as CoreRecordValueCheck;
+ return copyJson({operation:body.operation,version:source.umf==='0.9.0'?'2.0.0':body.version,source,identity,values,documentValidation,validation:body.validation,fields:body.fields}) as unknown as CoreRecordValueCheck;
 }

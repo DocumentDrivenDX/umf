@@ -51,7 +51,7 @@ export function inspectParquetCardinalityShape(source:Document,index:number):Par
     }
    }else if(Object.hasOwn(fragment,'type')){
     row.shape='one';row.role='scalar';
-    if(SCALAR_TYPES.includes(native.element.scalarType as ScalarType))row.scalarType=native.element.scalarType as ScalarType;
+    if((SCALAR_TYPES as readonly string[]).includes(native.element.scalarType as string))row.scalarType=native.element.scalarType as ScalarType;
    }else if(annotation)loss('Annotated group has no established record/container interpretation');
    else{row.shape='one';row.role='record';row.recordMembers=node.children.map(c=>c.index);}
    if(hasUnknown(fragment))loss('Unknown native schema content remains uninterpreted');

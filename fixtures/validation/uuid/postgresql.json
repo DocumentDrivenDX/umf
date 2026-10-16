@@ -1,0 +1,68 @@
+{
+  "scope": "Actual owned PostgreSQL17.9 required singular generated carrier DDL, catalog and full-bit value recovery; signed ordering is explicitly different; no full binding/key/relationship/atomicity qualification",
+  "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": [
+    {
+      "kind": "native-uuid",
+      "vectors": 389,
+      "sourceSha256": "edcc072ab1c2f251899a83d2689d66530567ea896a90884f9892b76bf7813f47",
+      "catalog": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "required": true
+        }
+      ],
+      "widthRefusal": null
+    },
+    {
+      "kind": "bytes16",
+      "vectors": 389,
+      "sourceSha256": "b1607f5bedc5eeef337deef3644a65d42297ae529cda4402401ffbe16acd9f4b",
+      "catalog": [
+        {
+          "name": "id",
+          "type": "bytea",
+          "required": true
+        }
+      ],
+      "widthRefusal": null
+    },
+    {
+      "kind": "uuid-text",
+      "vectors": 389,
+      "sourceSha256": "ef375736898637c93298b6c7268bf887158301c519b06c4178967181b5e02202",
+      "catalog": [
+        {
+          "name": "id",
+          "type": "varchar",
+          "required": true
+        }
+      ],
+      "widthRefusal": null
+    },
+    {
+      "kind": "words64",
+      "vectors": 389,
+      "sourceSha256": "78b7064cf57f2b39174dd45871b921c47c71f797b6552413dedc8f663a714d26",
+      "catalog": [
+        {
+          "name": "hi",
+          "type": "int8",
+          "required": true
+        },
+        {
+          "name": "lo",
+          "type": "int8",
+          "required": true
+        }
+      ],
+      "widthRefusal": true
+    }
+  ],
+  "signedOrderCounterexample": [
+    "-9223372036854775808",
+    "9223372036854775807"
+  ],
+  "checks": 1556
+}
