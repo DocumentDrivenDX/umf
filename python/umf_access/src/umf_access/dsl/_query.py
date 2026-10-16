@@ -12,7 +12,8 @@ from ..types import ActionRef
 
 from ._context import CaptureError, require_capture
 from ._expressions import Join, Column, Ordering, Param, Predicate, Related, operand
-from ._nodes import FieldRef, Node, ProjectionRef, RecordRef
+from ._nodes import FieldRef, Node, ProjectionRef, RecordRef, Terminal, JoinProjection
+from .search import RankedQuery, SearchLeg
 
 O = TypeVar("O")
 J = TypeVar("J")
@@ -66,14 +67,6 @@ class RelatedKeys(Generic[K]):
 class WithKeys(Generic[R, K]):
     row: R
     keys: RelatedKeys[K]
-
-
-@dataclass(frozen=True)
-class Terminal(Generic[R]):
-    node: Node
-
-    def __bool__(self) -> bool:
-        raise TypeError("catalog terminals have no runtime truth value")
 
 
 @dataclass(frozen=True)
@@ -195,6 +188,13 @@ class Query(Generic[O, R, K]):
             self._check_field(field)
         return Query(self.ref, self.steps + (Node("into", (ProjectionRef(model.__module__, model.__qualname__, fields, tuple(model.model_fields)),)),))
 
+    def search(self, leg: SearchLeg[O], *, allow_partial: bool = False) -> RankedQuery[O,R]:
+        require_capture()
+        if leg.record != self.ref or any(step.op not in ('filter','select','into') for step in self.steps):
+            raise CaptureError('SEARCH_DECLARATION','search requires matching Record and pre-search filters/projection')
+        if type(allow_partial) is not bool:raise TypeError('explicit partial-search opt-in required')
+        return RankedQuery(self.ref,self.steps,leg,allow_partial)
+
     def _update(self, values: Mapping[str, object]) -> Terminal[object]:
         require_capture()
         # Explicit generated mapping includes mutable authored fields only.
@@ -315,14 +315,6 @@ J1 = TypeVar("J1")
 J2 = TypeVar("J2")
 J3 = TypeVar("J3")
 
-
-@dataclass(frozen=True)
-class JoinProjection(Generic[O, ProjectionModel]):
-    model: type[ProjectionModel]
-
-    def __post_init__(self) -> None:
-        if not isinstance(self.model, type) or not issubclass(self.model, BaseModel):
-            raise TypeError("joined projection requires a model class")
 
 @dataclass(frozen=True)
 class _JoinedBase(Generic[O, R, K]):

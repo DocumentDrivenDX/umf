@@ -14,10 +14,15 @@ try{
  mutateSource(joined,d=>{for(const e of d.modules[0]!.elements)Object.assign(e,{name:e.id});Object.assign(d.modules[0]!,{relationships:[{id:'customer',name:'customer',source:[{module:'commerce',element:'Order'}],target:[{module:'commerce',element:'Customer',key:'Customer-key'}],sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:0,max:1},targetLifecycle:'independent',directed:true}]});});
  const unreachable=structuredClone(joined);mutateSource(unreachable,d=>Object.assign(d.modules[0]!,{relationships:[]}));
  const base=request();
- for(const req of [joined,unreachable,base]){
+ const search=request();search.package='search_docs';search.sources=[{id:'logical',format:'json',text:await Bun.file('fixtures/access/search/model.json').text()}];search.records=[{module:'search',element:'Doc'}];search.actions=[];search.projections=[];
+ const badSearch=structuredClone(search);mutateSource(badSearch,d=>{const payload=d.modules[0]!.extensions!['umf.access'] as any;payload.search[0].keyword.syntax='operators';});
+ const native=request();const nativeRequest=JSON.parse(await Bun.file('fixtures/access/native-actions/request.json').text());native.sources=[{id:'logical',format:'json',text:nativeRequest.binding.modelJson}];native.records=[{module:'sales',element:'order'}];native.projections=[];native.names=[];native.actions=[{module:'sales',action:'approve'},{module:'sales',action:'createOrder'}];
+ const cases=[joined,unreachable,base,search,badSearch,native];
+ for(const req of cases){
   const p=profile(),expected=generateAccessPackage(req,p);
+  if((req===search||req===native)&&expected.outcome!=='candidate')throw new Error(JSON.stringify(expected.diagnostics));
   const actual=await page.evaluate(({req,p})=>(window as any).api.generateAccessPackage(req,p),{req,p});
   if(JSON.stringify(actual)!==JSON.stringify(expected))throw new Error('browser generator differs from Bun');
  }
- console.log(JSON.stringify({browser:browser.version(),cases:3,byteEquivalentPackages:true}));
+ console.log(JSON.stringify({browser:browser.version(),cases:cases.length,byteEquivalentPackages:true}));
 }finally{await browser.close();server.stop(true);}

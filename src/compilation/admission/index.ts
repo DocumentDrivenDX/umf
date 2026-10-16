@@ -1,4 +1,5 @@
 import {copyJson,readDocument,validateDocument,inspectCoreRelationships,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,inspectCoreElementKind,validateCoreFieldValue,inspectActions,registerActions,Registry,UmfError,type InspectedAction,type Document} from '../../index';
+import {inspectSelectedSearch} from './search';
 import {inspectAccessViews,type SuppliedBinding} from './access/index';
 import type {AccessRequest,AccessProfile,AccessDiagnostic,Disposition,Obligation,ResolvedAccess,ResolvedActionParameter,Ref} from '../ir/index';
 export interface Admission {request:AccessRequest;profile:AccessProfile;ir:ResolvedAccess;diagnostics:AccessDiagnostic[];dispositions:Disposition[];obligations:Obligation[]}
@@ -37,6 +38,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  if(diagnostics.length)return finish();
  const inspection=inspectAccessViews(document,request.records,bindings,request.logical);diagnostics.push(...inspection.diagnostics);
  const ir:ResolvedAccess={documentId:document.id,sourceId:request.logical,records:inspection.records,relations:[],actions:[]};
+ ir.search=inspectSelectedSearch(document,ir.records,add);
  const dependencyKeys=new Map<string,string>();
  const selectedIds=new Set(request.records.map(identity));
  for(const [mi,authoredModule] of document.modules.entries()){
@@ -128,7 +130,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
     const walkColumns=(value:unknown,pointer:string)=>{if(object(value)||Array.isArray(value)){for(const [key,child] of Object.entries(value))walkColumns(child,pointer+'/'+esc(key));if(Object.keys(value).length)return;}const id='d'+dispositions.length;ids.push(id);dispositions.push({id,sourceId:request.logical,pointer,assertion:'umf.access',relevance:'selected',fidelity:'exact',checks:['informational'],reason:'Authored ColumnSet fact retained and declaration-checked; no native table observation or enforcement implied',obligationIds:[oid]});};
     walkColumns(entry,base+'/extensions/umf.access/columns/'+ci);obligations.push({id:oid,owner:'qualifier',description:'Pinned native schema, generation and transport require target verify/conformance evidence',dispositionIds:ids});
    }
-   if(Array.isArray(access.search))for(const index of access.search)if(object(index)&&ref(index.record)&&selectedKeys.has(identity(index.record)))add('LOSS',base+'/extensions/umf.access/search');
+   for(const search of ir.search??[])if(search.pointer.startsWith(base+'/')){selectedPaths.add(search.pointer);dispositions.push({id:'d'+dispositions.length,sourceId:request.logical,pointer:search.pointer,assertion:'umf.access',relevance:'selected',fidelity:'exact',checks:['informational'],reason:'Complete authored search declaration and bindings retained; native mechanisms and filtering require catalog qualification',obligationIds:[]});}
   }
   for(const [ei,element] of authoredModule.elements.entries()){
    const path=base+`/elements/${ei}`,isRelevant=relevant(path);
@@ -155,8 +157,9 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   for(const field of record.fields){
    field.python=resolveName(field.ref.element,'field',field.pointer);
    if(used.has(field.python)){add('NAME',field.pointer);}used.add(field.python);
-   if(field.scalarType==='float'||field.scalarType==='time'||field.cardinality==='unspecified'){add('LOSS',field.pointer);markNotExpressible(field.pointer);}
+   if(field.scalarType==='float'&&!field.vectorComponent||field.scalarType==='time'||field.cardinality==='unspecified'){add('LOSS',field.pointer);markNotExpressible(field.pointer);}
    if(field.item){
+    if(record.fields.some(f=>identity(f.ref)===identity(field.item!)&&f.scalarType==='float')&&!field.vectorDimensions)add('LOSS',field.pointer);
     const seen=new Set<string>();let current:typeof field|undefined=field;
     while(current?.item){const id=identity(current.ref);if(seen.has(id)){add('LOSS',field.pointer);markNotExpressible(field.pointer);break;}seen.add(id);current=record.fields.find(f=>identity(f.ref)===identity(current!.item!));}
     if(Array.isArray(field.properties.allowedValues)){add('LOSS',field.pointer+'/allowedValues');markNotExpressible(field.pointer);}
@@ -165,7 +168,9 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   }
  }
  if(profile.reservedNames.includes(request.package)||profile.importedNames.includes(request.package)||['datetime','decimal','typing','types','pydantic','umf_access'].includes(request.package)||pythonKeywords.has(request.package))add('NAME','/package');
- const classNames=new Set<string>();for(const record of ir.records)for(const suffix of (record.selected?['','Create','Patch','Key','Update','Columns','Query']:['Key'])){const name=record.python+suffix;if(classNames.has(name))add('NAME',record.pointer);classNames.add(name);}
+ for(const search of ir.search??[])search.python=resolveName(search.id,'field',search.pointer);
+ for(const record of ir.records){const names=(ir.search??[]).filter(s=>identity(s.record)===identity(record.ref)).map(s=>s.python);if(new Set(names).size!==names.length)add('NAME',record.pointer);}
+ const classNames=new Set<string>();for(const record of ir.records)for(const suffix of (record.selected?['','Create','Patch','Key','Update','Columns','Query',...((ir.search??[]).some(s=>identity(s.record)===identity(record.ref))?['Search']:[])]:['Key'])){const name=record.python+suffix;if(classNames.has(name))add('NAME',record.pointer);classNames.add(name);}
  for(const record of ir.records)for(const key of record.keys.slice(1)){
   const suffix=key.id.replace(/[^A-Za-z0-9]/g,'_').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z0-9])([A-Z])/g,'$1_$2').split('_').map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join('');
   const name=record.python+suffix+'Key';
@@ -178,8 +183,8 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  for(const n of request.names)if((!selectedPaths.has(n.pointer)&&!ir.relations?.some(r=>r.pointer===n.pointer)&&!request.projections.some((_p,i)=>n.pointer==='/projections/'+i)&&!selectedActionEntries.some(a=>n.pointer===a.path||n.pointer.startsWith(a.path+'/parameters/')||n.pointer.startsWith(a.path+'/outputs/')))||n.sourceId!==request.logical)add('NAME','/names');
  for(const entry of selectedActionEntries){
   const python=resolveName(entry.action.id,'class',entry.path);
-  if(['Actions','ReplayingActions','ActionSource','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor'].includes(python))add('NAME',entry.path);
-  for(const suffix of ['','Input','Output','Rejected']){const name=python+suffix;if(classNames.has(name))add('NAME',entry.path);classNames.add(name);}
+  if(['Actions','ReplayingActions','ActionSource','KeyTypeRef','RecordTypeRef','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor'].includes(python))add('NAME',entry.path);
+  for(const suffix of ['','Input','Output','Rejected','Committed']){const name=python+suffix;if(classNames.has(name))add('NAME',entry.path);classNames.add(name);}
   const parameters=(group:'parameters'|'outputs')=>entry.action[group].flatMap<ResolvedActionParameter>((parameter,i)=>{
    const pointer=entry.path+'/'+group+'/'+i,python=resolveName(parameter.id,'field',pointer);
    if(parameter.kind==='entity'){
@@ -191,7 +196,34 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
    if(!field){add('REFERENCE',pointer+'/field');return [];}
    return [{id:parameter.id,python,required:parameter.required,pointer,field:{...field,row:{...field.row,null:validateCoreFieldValue(document,field.ref,null).valid}}}];
   });
-  ir.actions!.push({module:entry.module,id:entry.action.id,python,pointer:entry.path,parameters:parameters('parameters'),outputs:parameters('outputs'),failures:entry.action.failures.map(f=>({code:f.code,retryable:f.retryable})),kind:entry.action.binding.kind});
+  const createdKeys:(Ref&{key:string})[]=[],changedKeys:(Ref&{key:string})[]=[];
+  const addKey=(list:(Ref&{key:string})[],key:Ref&{key:string},pointer:string)=>{if(!ir.records.some(r=>identity(r.ref)===identity(key)&&r.keys.some(k=>k.id===key.key))){add('REFERENCE',pointer);return;}if(!list.some(k=>identity(k)===identity(key)&&k.key===key.key))list.push({...key});};
+  const authored=entry.action as unknown as Record<string,unknown>;
+  const entityKey=(value:unknown):Ref&{key:string}|null=>{if(!object(value))return null;const parameter=typeof value.parameter==='string'?(authored.parameters as Record<string,unknown>[]).find(p=>p.id===value.parameter):undefined;return parameter?.kind==='entity'?parameter.target as Ref&{key:string}:null;};
+  if(entry.action.binding.kind==='recipe'){
+   const effects=(authored.binding as {effects:Record<string,unknown>[]}).effects;
+   for(const [index,effect] of effects.entries()){
+    const pointer=entry.path+'/binding/effects/'+index;
+    if(effect.kind==='create'&&ref(effect.record)&&typeof effect.key==='string')addKey(createdKeys,{...effect.record,key:effect.key},pointer);
+    if(effect.kind==='set'){const key=entityKey(effect.entity);if(key)addKey(changedKeys,key,pointer);}
+    if(effect.kind==='link'||effect.kind==='unlink')for(const endpoint of [effect.source,effect.target]){const key=entityKey(endpoint);if(key)addKey(changedKeys,key,pointer);}
+   }
+  }else{
+   for(const frame of authored.writes as Record<string,unknown>[]){
+    if(!ref(frame.record))continue;
+    const record=ir.records.find(r=>identity(r.ref)===identity(frame.record as unknown as Ref));
+    if(!record){add('REFERENCE',entry.path+'/writes');continue;}
+    let selected=record.keys;
+    const selector=frame.selector as Record<string,unknown>;
+    if(selector.language==='umf.actions.keys'&&selector.version==='1'&&typeof selector.expression==='string'){
+     let decoded:unknown;try{decoded=JSON.parse(selector.expression);}catch{}
+     if(object(decoded)&&typeof decoded.key==='string')selected=selected.filter(k=>k.id===decoded.key);
+     else if(object(decoded)&&typeof decoded.entity==='string'){const parameter=(authored.parameters as Record<string,unknown>[]).find(p=>p.id===decoded.entity);if(parameter?.kind==='entity'&&object(parameter.target)){const target=parameter.target;selected=selected.filter(k=>k.id===target.key);};}
+    }
+    for(const key of selected){const reference={...record.ref,key:key.id};if(frame.create===true)addKey(createdKeys,reference,entry.path+'/writes');if(Array.isArray(frame.fields)&&frame.fields.length||Array.isArray(frame.relationships)&&frame.relationships.length)addKey(changedKeys,reference,entry.path+'/writes');}
+   }
+  }
+  ir.actions!.push({module:entry.module,id:entry.action.id,python,pointer:entry.path,parameters:parameters('parameters'),outputs:parameters('outputs'),failures:entry.action.failures.map(f=>({code:f.code,retryable:f.retryable})),kind:entry.action.binding.kind,createdKeys,changedKeys});
   for(const obligation of entry.obligations){
    const id='d'+dispositions.length,oid='o'+obligations.length;
    dispositions.push({id,sourceId:request.logical,pointer:obligation.path,assertion:'actions',relevance:'selected',fidelity:'exact',checks:['informational'],reason:'inspectActions declaration result; external execution duties remain undischargeable by generation',obligationIds:[oid]});
@@ -216,7 +248,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   if(overrides.length>1){add('NAME',pointer);return '_invalid';}
   const words=id.replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z0-9])([A-Z])/g,'$1_$2').split('_');
   const name=overrides[0]?.python??(role==='field'?words.join('_').toLowerCase():words.map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join(''));
-  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Column','Join','JoinProjection','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','Actions','ReplayingActions','ActionSource','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor','ActionRejected','OriginalOutcome','ActionRef','Literal','Never','CodecField','encode_model','decode_model','UMF_BUNDLE_INPUT_DIGEST','UMF_RUNTIME_ABI','UMF_FINAL','UMF_KEY','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
+  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['Vector','KeywordIndex','VectorIndex','RankedQuery','SearchLeg','Score','Scored','SearchResult','StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Column','Join','JoinProjection','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','Actions','ReplayingActions','ActionSource','KeyTypeRef','RecordTypeRef','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor','ActionRejected','OriginalOutcome','OutcomeDetails','ExecutorT','ReplayingExecutorT','Generic','Committed','make_committed_view','ActionRef','Literal','Never','CodecField','encode_model','decode_model','UMF_FIELDS','UMF_BUNDLE_INPUT_DIGEST','UMF_RUNTIME_ABI','UMF_FINAL','UMF_KEY','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
   return name;
  }
 }
