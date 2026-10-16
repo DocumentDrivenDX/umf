@@ -4,7 +4,7 @@
   "scope": "Website/fixtures/evidence projection plus current-main action API guide documentation and generated guide assets; current main src/spec/package/lock unchanged; original UMF633/Weft/Truss artifacts remain independently pinned. Not a new main-library producer qualification. Publication-gate checker now verifies exact original released producer separately from current candidate; native handler test adds failure-result diagnostics only.",
   "matchingBrowserReceiptSha256": "440e1a6e68bec5ece25c80858473c6ce295cc7e7b3c7279911b00f46e82b3502",
   "matchingPins": 22,
-  "signatures": "12 stale pages: homepage, action-compiler and ten regenerated action guide pages; five valid pages; human 1Password authorization pending",
+  "signatures": "All17 page attestations VALID after12changed pages sealed with existingconfigured1Password issuer; no keyrotation.",
   "publicDeployment": "not yet deployed",
   "guideValidation": {
     "build": "passed including seven malformed-source/output negative controls",
@@ -21,6 +21,6 @@
       "environment": "Original browser-driver in pinned mcr.microsoft.com/playwright:v1.63.0-noble Linux arm64 image, with existing dependency cache additionally mounted read-only at its original absolute path to resolve managed-worktree node_modules symlink."
     }
   },
-  "releaseChecks": "Atc3140922 Ubuntu CI run38796126228 passed all implementation/build/browser/guide gates, including actual SQL-to-actions UPDATE. Only final page-signature verification failed:12stale/5valid. Astra independent checker reproduction and12refusal controls pass. Latest8b1b074f workflow and signing/deployed-origin verification remain open.",
+  "releaseChecks": "Prior Ubuntu CI passed all implementation/build/browser/guide gates; signed final CI pending. Astra finalreview and12refusal controls pass.",
   "ciEvidence": "https://github.com/DocumentDrivenDX/umf/actions/runs/38796126228"
 }
