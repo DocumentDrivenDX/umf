@@ -40,7 +40,10 @@ class ConfigurationTests(unittest.TestCase):
                 (root / "model.json").write_text(model + " ")
                 with self.assertRaises(CatalogBuildError):
                     resolve_configuration(config, root)
-            with (patch('importlib.metadata.version', return_value='different')), (self.assertRaises(CatalogBuildError)):
+            with (
+                patch("importlib.metadata.version", return_value="different"),
+                self.assertRaises(CatalogBuildError),
+            ):
                 resolve_configuration(config, root)
 
     def test_unsafe_sources_and_unexpected_configuration_refuse(self):

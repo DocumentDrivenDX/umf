@@ -72,7 +72,8 @@ class LogicalWeftRendering(unittest.TestCase):
             @query
             def declaration(minimum: Param[Decimal]):
                 return (
-                    objects.filter(build(amount, minimum))  # noqa: B023 - captured synchronously in this iteration
+                    # This refusal callback is invoked synchronously inside this iteration.
+                    objects.filter(build(amount, minimum))  # noqa: B023
                     .select(order_id)
                     .limit(10)
                     .all()
@@ -98,7 +99,8 @@ class LogicalWeftRendering(unittest.TestCase):
             def declaration():
                 # Test chooses a known method, never a column from a string.
                 return (
-                    objects.filter(getattr(memo, method)())  # noqa: B023 - captured synchronously in this iteration
+                    # This refusal callback is invoked synchronously inside this iteration.
+                    objects.filter(getattr(memo, method)())  # noqa: B023
                     .select(order_id)
                     .limit(10)
                     .all()
@@ -320,7 +322,8 @@ class LogicalFormCoverage(unittest.TestCase):
 
             @query
             def declaration():
-                return getattr(objects, terminal)()  # noqa: B023 - captured synchronously in this iteration
+                # This refusal callback is invoked synchronously inside this iteration.
+                return getattr(objects, terminal)()  # noqa: B023
 
             variant = capture(declaration).variants[0]
             self.assertEqual(variant.node.op, terminal)

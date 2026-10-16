@@ -376,7 +376,8 @@ class PostgresSearchTarget(PostgresTarget):
             if began:
                 try:
                     self.connection.rollback()
-                except BaseException:
+                # Retain native failure custody across cleanup, cancellation and audit boundaries.
+                except BaseException:  # noqa: BLE001
                     self.connection.close()
                     raise ReadObligationUnmet("search cleanup failed") from error
             if getattr(error, "sqlstate", None) == "57014" or isinstance(
@@ -497,7 +498,8 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
                 task = asyncio.create_task(cleanup())
                 try:
                     await asyncio.shield(task)
-                except BaseException:
+                # Retain native failure custody across cleanup, cancellation and audit boundaries.
+                except BaseException:  # noqa: BLE001
                     await self.connection.close()
                     raise ReadObligationUnmet("search cleanup failed") from error
             if getattr(error, "sqlstate", None) == "57014" or isinstance(

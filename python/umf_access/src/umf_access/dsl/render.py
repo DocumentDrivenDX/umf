@@ -302,7 +302,8 @@ def _render_logical(
                 "CAPTURE_UNSUPPORTED", "Key component count differs from declared Key"
             )
         predicates.extend(
-            f"{_column(field)} = {value}" for field, value in zip(record.key, values, strict=True)
+            f"{_column(field)} = {value}"
+            for field, value in zip(record.key, values, strict=True)
         )
     if node.op in ("first", "exists"):
         limit = 1

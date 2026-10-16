@@ -12,17 +12,17 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[3]
 generated = Path(os.environ["UMF_SEARCH_GENERATED_ROOT"])
 sys.path.insert(0, str(generated))
-import psycopg  # noqa: E402 - generated fixture path is configured first
-from umf_access.postgres_read import (  # noqa: E402 - generated fixture path is configured first
-    TimedOut,  # noqa: E402 - generated fixture path is configured first
+import psycopg
+from umf_access.postgres_read import (
+    TimedOut,
 )
-from umf_access.postgres_search import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.postgres_search import (
     AsyncPostgresSearchTarget,
     EmbedderMismatch,
     PostgresSearchTarget,
     SearchError,
 )
-from umf_access.targets import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.targets import (
     PostgresConfiguration,
     TargetMismatch,
     binding_digest,
@@ -36,7 +36,9 @@ cases = []
 
 
 def command(*args):
-    p = subprocess.run(list(map(str, args)), text=True, capture_output=True, check=False)
+    p = subprocess.run(
+        list(map(str, args)), text=True, capture_output=True, check=False
+    )
     if p.returncode:
         raise RuntimeError(p.stdout + p.stderr)
     return p.stdout
@@ -125,8 +127,8 @@ for extra in ([], ["--check"]):
         generated,
         *extra,
     )
-from search_docs import (  # noqa: E402 - generated fixture path is configured first
-    queries,  # noqa: E402 - generated fixture path is configured first
+from search_docs import (
+    queries,
 )
 
 control = Path(os.environ["UMF_PGVECTOR_CONTROL_ROOT"]).resolve()

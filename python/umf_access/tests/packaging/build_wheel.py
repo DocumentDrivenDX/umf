@@ -9,9 +9,9 @@ import platform
 import subprocess
 import sys
 import tempfile
+import tomllib
 from pathlib import Path
 
-import tomllib
 from replay_installed import inspect_wheel
 
 
@@ -81,8 +81,13 @@ def main() -> int:
         # Cwd outside checkout avoids accidental top-level module resolution.
         with tempfile.TemporaryDirectory(prefix="umf-access-wheel-build-") as temporary:
             result = subprocess.run(
-                command, cwd=temporary, env=env, text=True, capture_output=True
-            , check=False)
+                command,
+                cwd=temporary,
+                env=env,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
         report.update(
             command=command,
             exitCode=result.returncode,
@@ -131,7 +136,8 @@ def main() -> int:
                 for name, content in members.items()
             },
         )
-    except Exception as error:
+    # Retain native failure custody across cleanup, cancellation and audit boundaries.
+    except Exception as error:  # noqa: BLE001
         report.update(status="refused", reason=str(error))
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2) + "\n")

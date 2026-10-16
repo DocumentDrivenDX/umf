@@ -31,7 +31,8 @@ def cli(*args):
         ],
         capture_output=True,
         text=True,
-     check=False)
+        check=False,
+    )
 
 
 first = cli()
@@ -49,18 +50,18 @@ assert before == {
     if p.is_file() and "__pycache__" not in p.parts
 }
 sys.path.insert(0, str(root))
-from dataclasses import (  # noqa: E402 - generated fixture path is configured first
-    replace,  # noqa: E402 - generated fixture path is configured first
+from dataclasses import (
+    replace,
 )
 
-from commerce import queries  # noqa: E402 - generated fixture path is configured first
-from umf_access.catalog import (  # noqa: E402 - generated fixture path is configured first
-    NotCompiledForTarget,  # noqa: E402 - generated fixture path is configured first
+from commerce import queries
+from umf_access.catalog import (
+    NotCompiledForTarget,
 )
-from umf_access.postgres_read import (  # noqa: E402 - generated fixture path is configured first
-    TimedOut,  # noqa: E402 - generated fixture path is configured first
+from umf_access.postgres_read import (
+    TimedOut,
 )
-from umf_access.targets import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.targets import (
     AsyncPostgresTarget,
     PostgresConfiguration,
     PostgresTarget,

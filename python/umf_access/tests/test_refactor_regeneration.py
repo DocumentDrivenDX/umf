@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[3]
 EVIDENCE = ROOT / "docs/helix/04-build/evidence/typed-persistence"
 CHECKER_BIN = Path("/private/tmp/umf-tp001-compat-env/bin")
 sys.path.insert(0, str(Path(__file__).parent / "packaging"))
-from replay_installed import (  # noqa: E402 - generated fixture path is configured first
+from replay_installed import (
     inspect_wheel,
     verify_installed_files,
 )
@@ -108,8 +108,8 @@ class RefactorByRegeneration(unittest.TestCase):
             str(cls.generated),
         ]
         generated = subprocess.run(
-            command, cwd=ROOT, env=cls.env, capture_output=True, text=True
-        , check=False)
+            command, cwd=ROOT, env=cls.env, capture_output=True, text=True, check=False
+        )
         cls.report["generation"] = {
             "command": command,
             "exitCode": generated.returncode,
@@ -209,8 +209,13 @@ class RefactorByRegeneration(unittest.TestCase):
                     "PYTHONDONTWRITEBYTECODE": "1",
                 }
                 run = subprocess.run(
-                    command, cwd="/private/tmp", env=env, capture_output=True, text=True
-                , check=False)
+                    command,
+                    cwd="/private/tmp",
+                    env=env,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
                 if checker == "pyright":
                     diagnostics = json.loads(run.stdout)["generalDiagnostics"]
                     actual = [

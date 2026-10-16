@@ -38,14 +38,17 @@ class ValuePolicyTests(unittest.TestCase):
                 self.assertEqual(result.as_tuple(), value.as_tuple())
             for value in (
                 Decimal("1.234"),
-                Decimal("10000000000"),
+                Decimal(10000000000),
                 Decimal("NaN"),
                 Decimal("Infinity"),
                 1.2,
                 "1.20",
                 True,
             ):
-                with (self.subTest(value_type=type(value).__name__)), (self.assertRaises(ValueError)):
+                with (
+                    self.subTest(value_type=type(value).__name__),
+                    self.assertRaises(ValueError),
+                ):
                     validate_decimal(value, precision=12, scale=2)
 
     # @covers US-081-AC2

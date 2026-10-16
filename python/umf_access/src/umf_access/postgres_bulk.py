@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from datetime import timedelta
-from typing import Any, Mapping, cast
+from typing import Any, cast
 
 from pydantic import TypeAdapter
 
@@ -79,7 +80,7 @@ class _BulkState(_State):
             TypeAdapter(
                 cast(
                     Any,
-                    Annotated[tuple([field.annotation, *field.metadata])]
+                    Annotated[(field.annotation, *field.metadata)]
                     if field.metadata
                     else field.annotation,
                 )

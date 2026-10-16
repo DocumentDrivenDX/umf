@@ -29,7 +29,8 @@ class Cursor(Protocol):
     def execute(self, query: str, params: Sequence[object] | None = None) -> object: ...
     def fetchone(self) -> Any: ...
     def fetchmany(self, size: int = 1) -> list[Any]: ...
-    def __enter__(self) -> Cursor: ...
+    # A cursor context may return a compatible delegate.
+    def __enter__(self) -> Cursor: ...  # noqa: PYI034
     def __exit__(self, *args: object) -> object: ...
 
 
@@ -385,7 +386,10 @@ def _execute(
     )
     begin = next(program)  # All call/identity checks precede transaction entry.
     try:
-        with (nullcontext() if _snapshot else connection.transaction()), (connection.cursor()) as raw:
+        with (
+            nullcontext() if _snapshot else connection.transaction(),
+            connection.cursor() as raw,
+        ):
             if not _snapshot:
                 raw.execute("SET TRANSACTION READ ONLY")
             return _drive(program, _DeadlineCursor(raw, begin[1]), _verify_only)
@@ -467,7 +471,10 @@ async def _async_execute(
     )
     begin = next(program)
     try:
-        async with (nullcontext() if _snapshot else connection.transaction()), (connection.cursor()) as raw:
+        async with (
+            nullcontext() if _snapshot else connection.transaction(),
+            connection.cursor() as raw,
+        ):
             if not _snapshot:
                 await raw.execute("SET TRANSACTION READ ONLY")
             return await _async_drive(program, raw, begin[1], _verify_only)

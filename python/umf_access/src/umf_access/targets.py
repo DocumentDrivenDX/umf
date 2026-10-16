@@ -30,8 +30,12 @@ from .postgres_read import (
     verify_read,
     verify_read_async,
 )
-from .protocols import AsyncReadTarget as AsyncReadTarget
-from .protocols import ReadTarget as ReadTarget
+
+# Explicit public re-export is required by static consumers.
+from .protocols import AsyncReadTarget as AsyncReadTarget  # noqa: PLC0414
+
+# Explicit public re-export is required by static consumers.
+from .protocols import ReadTarget as ReadTarget  # noqa: PLC0414
 from .reviewed import CatalogRead
 
 P = TypeVar("P", bound=BaseModel)

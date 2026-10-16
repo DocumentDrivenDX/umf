@@ -4,18 +4,21 @@ from __future__ import annotations
 
 import inspect
 import json
+from collections.abc import Callable
 from dataclasses import dataclass, fields, is_dataclass
 from datetime import date, datetime
 from decimal import Decimal
 from itertools import combinations
 from types import UnionType
-from typing import Any, Callable, Union, cast, get_args, get_origin, get_type_hints
+from typing import Any, Union, cast, get_args, get_origin, get_type_hints
 
 from pydantic import MISSING, BaseModel
 
 from .dsl import Join, Param, Terminal
 from .dsl._context import CURRENT, CaptureContext
-from .dsl._context import CaptureError as CaptureError
+
+# Explicit public re-export is required by static consumers.
+from .dsl._context import CaptureError as CaptureError  # noqa: PLC0414
 from .dsl._nodes import (
     FieldRef,
     KeyLiteral,
@@ -24,9 +27,12 @@ from .dsl._nodes import (
     key_identity,
 )
 from .dsl._nodes import (
-    ProjectionRef as ProjectionRef,
+    # Explicit public re-export is required by static consumers.
+    ProjectionRef as ProjectionRef,  # noqa: PLC0414
 )
-from .dsl.render import render_logical as render_logical
+
+# Explicit public re-export is required by static consumers.
+from .dsl.render import render_logical as render_logical  # noqa: PLC0414
 from .dsl.search import SearchLeg
 from .types import ActionRef, Vector
 

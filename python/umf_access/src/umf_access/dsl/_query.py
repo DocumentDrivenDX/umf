@@ -31,7 +31,8 @@ OutputT = TypeVar("OutputT")
 J = TypeVar("J")
 ProjectionModel = TypeVar("ProjectionModel", bound=BaseModel)
 R = TypeVar("R")
-G_co = TypeVar("G_co")
+# Preserve the published generic parameter spelling and variance.
+G_co = TypeVar("G_co")  # noqa: PLC0105
 K = TypeVar("K")
 T = TypeVar("T")
 T1 = TypeVar("T1")

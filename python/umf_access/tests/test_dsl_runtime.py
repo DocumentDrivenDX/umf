@@ -46,7 +46,7 @@ class RuntimeGuards(unittest.TestCase):
     # @covers US-082-AC5
     def test_field_evaluation_outside_capture_refuses(self):
         with self.assertRaises(QueryOutsideCatalog):
-            assert amount > Decimal("1")
+            assert amount > Decimal(1)
 
     # @covers US-082-AC5
     def test_query_root_evaluation_outside_capture_refuses(self):
@@ -64,10 +64,11 @@ class RuntimeGuards(unittest.TestCase):
 
             @query
             def declaration(minimum: Param[Decimal]):
-                operation(amount > minimum)  # noqa: B023 - captured synchronously in this iteration
+                # This refusal callback is invoked synchronously inside this iteration.
+                operation(amount > minimum)  # noqa: B023
                 return objects.limit(1).all()
 
-            with (self.subTest(operation=operation)), (self.assertRaises(TypeError)):
+            with self.subTest(operation=operation), self.assertRaises(TypeError):
                 capture(declaration)
 
     # @covers US-082-AC5
@@ -98,9 +99,10 @@ class RuntimeGuards(unittest.TestCase):
 
             @query
             def declaration():
-                return operation()  # noqa: B023 - captured synchronously in this iteration
+                # This refusal callback is invoked synchronously inside this iteration.
+                return operation()  # noqa: B023
 
-            with (self.subTest(operation=operation)), (self.assertRaises(TypeError)):
+            with self.subTest(operation=operation), self.assertRaises(TypeError):
                 capture(declaration)
 
     # @covers US-082-AC1
@@ -333,7 +335,8 @@ class GeneratedDelegationHooks(unittest.TestCase):
 
             @query
             def declaration():
-                return change(objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023 - captured synchronously in this iteration
+                # This refusal callback is invoked synchronously inside this iteration.
+                return change(objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023
 
             with self.subTest(change=change), self.assertRaises(CaptureError) as caught:
                 capture(declaration)
@@ -350,7 +353,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
 
         @query
         def declaration():
-            return UnitRoot(RECORD)._update({"amount": Decimal("2")})
+            return UnitRoot(RECORD)._update({"amount": Decimal(2)})
 
         with self.assertRaises(CaptureError) as caught:
             capture(declaration)

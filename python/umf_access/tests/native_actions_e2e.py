@@ -8,13 +8,13 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, os.environ["UMF_NATIVE_GENERATED_ROOT"])
-from datetime import (  # noqa: E402 - generated fixture path is configured first
-    timedelta,  # noqa: E402 - generated fixture path is configured first
+from datetime import (
+    timedelta,
 )
 
-import psycopg  # noqa: E402 - generated fixture path is configured first
-import weft  # noqa: E402 - generated fixture path is configured first
-from native_sales.actions import (  # noqa: E402 - generated fixture path is configured first
+import psycopg
+import weft
+from native_sales.actions import (
     Actions,
     Approve,
     ApproveInput,
@@ -23,15 +23,15 @@ from native_sales.actions import (  # noqa: E402 - generated fixture path is con
     Guarded,
     PostFail,
 )
-from native_sales.keys import (  # noqa: E402 - generated fixture path is configured first
-    OrderKey,  # noqa: E402 - generated fixture path is configured first
+from native_sales.keys import (
+    OrderKey,
 )
-from umf_access.native_actions import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.native_actions import (
     NativeProgram,
     NativeScope,
     PostgresActionExecutor,
 )
-from umf_access.protocols import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.protocols import (
     ActionRefused,
     Committed,
     Denied,
@@ -46,7 +46,9 @@ cases = []
 
 
 def command(*args):
-    p = subprocess.run(list(map(str, args)), text=True, capture_output=True, check=False)
+    p = subprocess.run(
+        list(map(str, args)), text=True, capture_output=True, check=False
+    )
     if p.returncode:
         raise RuntimeError(p.stdout + p.stderr)
     return p.stdout
@@ -497,12 +499,16 @@ try:
                 return await c.rollback()
 
         repeated = AsyncPostgresActionExecutor(
-            HeldRollback(), tuple(programs), AsyncAdmission(),
+            HeldRollback(),
+            tuple(programs),
+            AsyncAdmission(),
             default_timeout=timedelta(seconds=5),
         )
         admin.execute("BEGIN")
         admin.execute("SELECT * FROM native_app.orders FOR UPDATE")
-        task = asyncio.create_task(repeated.invoke(Approve, {"order": OrderKey(id="o-1")}))
+        task = asyncio.create_task(
+            repeated.invoke(Approve, {"order": OrderKey(id="o-1")})
+        )
         await asyncio.sleep(0.05)
         task.cancel()
         await asyncio.wait_for(entered.wait(), timeout=2)
@@ -514,13 +520,17 @@ try:
         try:
             await task
         except ActionFailed as error:
-            assert error.code == "CANCELLED" and isinstance(error.cause, asyncio.CancelledError)
+            assert error.code == "CANCELLED" and isinstance(
+                error.cause, asyncio.CancelledError
+            )
             assert error.original is not None
         else:
             raise AssertionError("repeated cancellation lost original settlement")
         assert c.info.transaction_status == 0
         admin.execute("ROLLBACK")
-        cases.append("five caller cancellations retain original cause and await actual native rollback")
+        cases.append(
+            "five caller cancellations retain original cause and await actual native rollback"
+        )
         await c.close()
 
     asyncio.run(async_cases())

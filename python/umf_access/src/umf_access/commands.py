@@ -12,7 +12,8 @@ from .catalog import Argument, CatalogError, NotCompiledForTarget, TargetPin
 from .native_program import NativeProgram
 from .types import MISSING, ActionRef
 
-PlanT = TypeVar("PlanT", covariant=True)
+# Preserve the published generic parameter spelling and variance.
+PlanT = TypeVar("PlanT", covariant=True)  # noqa: PLC0105
 
 
 @dataclass(frozen=True)

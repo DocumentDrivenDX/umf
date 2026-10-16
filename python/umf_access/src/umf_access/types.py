@@ -4,7 +4,8 @@ import re
 from dataclasses import dataclass
 from typing import ClassVar, Generic, TypeAlias, TypeVar, final
 
-from pydantic import MISSING as MISSING
+# Explicit public re-export is required by static consumers.
+from pydantic import MISSING as MISSING  # noqa: PLC0414
 from pydantic import BaseModel, ConfigDict
 
 RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
@@ -50,8 +51,10 @@ class StrictModel(BaseModel):
     )
 
 
-InputT = TypeVar("InputT", bound=StrictModel, covariant=True)
-OutputT = TypeVar("OutputT", covariant=True)
+# Preserve the published generic parameter spelling and variance.
+InputT = TypeVar("InputT", bound=StrictModel, covariant=True)  # noqa: PLC0105
+# Preserve the published generic parameter spelling and variance.
+OutputT = TypeVar("OutputT", covariant=True)  # noqa: PLC0105
 
 
 def _is_model_type(value: object, *, allow_none: bool = False) -> bool:

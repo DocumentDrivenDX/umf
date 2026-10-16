@@ -574,10 +574,10 @@ class Native(unittest.TestCase):
             Compiler(), target="postgresql18", binding=binding()
         )
         a = execute_read(
-            self.a, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test"
+            self.a, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test"
         )
         b = execute_read(
-            self.b, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test"
+            self.b, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test"
         )
         self.assertEqual({r.total for r in a}, {Decimal("0.30"), Decimal("0.70")})
         self.assertEqual(b[0].total, Decimal("123.45"))
@@ -819,7 +819,8 @@ class Native(unittest.TestCase):
                 cwd=Path(__file__).resolve().parents[3],
                 capture_output=True,
                 text=True,
-             check=False)
+                check=False,
+            )
             self.assertEqual(
                 generated.returncode, 0, generated.stdout + generated.stderr
             )
@@ -864,7 +865,8 @@ class Native(unittest.TestCase):
                 env=env,
                 capture_output=True,
                 text=True,
-             check=False)
+                check=False,
+            )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("catalog native E2E: pass", result.stdout)
 

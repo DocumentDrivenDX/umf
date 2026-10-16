@@ -13,7 +13,7 @@ from umf_access.types import MISSING, StrictModel
 def check_amount(value):
     # Resolve the function from its owner on every call, just as generated
     # wrappers do. Patching the shared runtime changes an unchanged model.
-    import umf_access.values as values
+    from umf_access import values
 
     return values.validate_decimal(value, precision=12, scale=2)
 
@@ -57,7 +57,7 @@ class RuntimeCodecTests(unittest.TestCase):
             with patch("umf_access.codec_support._build_mapping") as mapping:
                 with self.assertRaises(ValueError):
                     decode_model(
-                        Patch, ["memo", "totalAmount"], [None, Decimal("1")], metadata
+                        Patch, ["memo", "totalAmount"], [None, Decimal(1)], metadata
                     )
                 mapping.assert_not_called()
         for columns, row in (

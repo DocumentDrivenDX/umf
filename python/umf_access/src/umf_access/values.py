@@ -4,7 +4,7 @@ No native transport is guessed here. temporal_token implements only the selected
 CONTRACT-075 oracle serialization, not a backend or permissive token parser.
 """
 
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime, timezone
 from decimal import Decimal
 from math import isfinite
 from struct import pack, unpack
@@ -111,7 +111,7 @@ def validate_instant(value: object) -> datetime:
     ):
         raise ValueRuleError("instant requires fixed-offset datetime with default fold")
     try:
-        value.astimezone(timezone.utc)
+        value.astimezone(UTC)
     except (OverflowError, ValueError):
         raise ValueRuleError(
             "instant UTC normalization outside supported years"
@@ -133,7 +133,7 @@ def temporal_token(kind: Literal["date", "instant", "local"], value: object) -> 
     if kind == "instant":
         instant = validate_instant(value)
         try:
-            stamp = instant.astimezone(timezone.utc)
+            stamp = instant.astimezone(UTC)
         except (OverflowError, ValueError):
             raise ValueRuleError(
                 "instant UTC normalization outside supported years"

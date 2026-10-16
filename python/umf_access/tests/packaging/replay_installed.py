@@ -71,10 +71,7 @@ def inspect_wheel(path: Path, pin: dict) -> dict[str, bytes]:
     ):
         raise ValueError("wheel distribution/version mismatch")
     dist_info = metadata[0].rsplit("/", 1)[0] + "/"
-    if any(
-        not (name.startswith("umf_access/") or name.startswith(dist_info))
-        for name in files
-    ):
+    if any(not (name.startswith(("umf_access/", dist_info))) for name in files):
         raise ValueError("unexpected wheel namespace")
     if "umf_access/__init__.py" not in files or "umf_access/py.typed" not in files:
         raise ValueError("wheel lacks runtime facade or typing marker")
@@ -259,7 +256,8 @@ def main() -> int:
             )
             print(json.dumps(result))
             return 0
-        except Exception as error:
+        # Retain native failure custody across cleanup, cancellation and audit boundaries.
+        except Exception as error:  # noqa: BLE001
             print(json.dumps({"status": "refused", "reason": str(error)}))
             return 1
     if not all(
@@ -289,8 +287,8 @@ def main() -> int:
 
     def execute(command: list[str], cwd: Path) -> subprocess.CompletedProcess:
         result = subprocess.run(
-            command, cwd=cwd, env=env, text=True, capture_output=True
-        , check=False)
+            command, cwd=cwd, env=env, text=True, capture_output=True, check=False
+        )
         report["commands"].append(
             {
                 "command": command,
@@ -444,7 +442,8 @@ def main() -> int:
             ):
                 raise ValueError("wheel or manifest changed during replay")
             report["status"] = "pass"
-    except Exception as error:
+    # Retain native failure custody across cleanup, cancellation and audit boundaries.
+    except Exception as error:  # noqa: BLE001
         report.update(status="refused", reason=str(error))
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2) + "\n")

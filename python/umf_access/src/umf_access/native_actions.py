@@ -313,7 +313,7 @@ class _State:
                     TypeAdapter(
                         cast(
                             Any,
-                            Annotated[tuple([field.annotation, *field.metadata])]
+                            Annotated[(field.annotation, *field.metadata)]
                             if field.metadata
                             else field.annotation,
                         )
@@ -658,7 +658,8 @@ class PostgresActionExecutor:
                             )
                     except ActionFailed:
                         raise
-                    except BaseException:
+                    # Retain native failure custody across cleanup, cancellation and audit boundaries. Preserve the original failure without automatically logging native private details.
+                    except BaseException:  # noqa: BLE001, S110
                         pass
                     finally:
                         if recovered is not None:
@@ -667,7 +668,8 @@ class PostgresActionExecutor:
             if began:
                 try:
                     self.connection.rollback()
-                except BaseException:
+                # Retain native failure custody across cleanup, cancellation and audit boundaries.
+                except BaseException:  # noqa: BLE001
                     return self._quarantine(state)
             details = state.details("rolled-back")
             code = getattr(error, "sqlstate", None)
@@ -767,7 +769,8 @@ class AsyncPostgresActionExecutor:
         try:
             async with asyncio.timeout(1):
                 await self.admission.quarantine(self.connection, state.scope)
-        except BaseException:
+        # Retain native failure custody across cleanup, cancellation and audit boundaries. Preserve the original failure without automatically logging native private details.
+        except BaseException:  # noqa: BLE001, S110
             pass
         return Indeterminate(state.details("indeterminate"))
 
@@ -834,7 +837,8 @@ class AsyncPostgresActionExecutor:
                         await self.connection.commit()
                         began = False
                         result = None
-        except BaseException as error:
+        # Retain native failure custody across cleanup, cancellation and audit boundaries.
+        except BaseException as error:  # noqa: BLE001
             # Settlement has its own finite bound and survives caller cancellation.
             async def settle(
                 original_error: BaseException = error,
@@ -869,7 +873,8 @@ class AsyncPostgresActionExecutor:
                                 )
                         except ActionFailed:
                             raise
-                        except BaseException:
+                        # Retain native failure custody across cleanup, cancellation and audit boundaries. Preserve the original failure without automatically logging native private details.
+                        except BaseException:  # noqa: BLE001, S110
                             pass
                         finally:
                             if recovered is not None:
@@ -878,7 +883,8 @@ class AsyncPostgresActionExecutor:
                 if began:
                     try:
                         await self.connection.rollback()
-                    except BaseException:
+                    # Retain native failure custody across cleanup, cancellation and audit boundaries.
+                    except BaseException:  # noqa: BLE001
                         return await self._quarantine(state)
                 details = state.details("rolled-back")
                 code = getattr(original_error, "sqlstate", None)

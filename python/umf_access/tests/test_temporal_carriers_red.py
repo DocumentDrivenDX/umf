@@ -6,7 +6,7 @@ Only admitted source tokens are parsed here to construct Python test inputs.
 
 import json
 import unittest
-from datetime import date, datetime, timedelta, timezone, tzinfo
+from datetime import UTC, date, datetime, timedelta, timezone, tzinfo
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -104,7 +104,7 @@ class TemporalCarrierTests(unittest.TestCase):
             value = datetime(2024, 1, 2, 12, 0, 0, 123456, tzinfo=timezone(offset))
             with self.subTest(offset=offset):
                 self.assertIs(validate_instant(value), value)
-                utc = value.astimezone(timezone.utc)
+                utc = value.astimezone(UTC)
                 expected = (
                     f"{utc.year:04d}-{utc.month:02d}-{utc.day:02d}T"
                     f"{utc.hour:02d}:{utc.minute:02d}:{utc.second:02d}."
@@ -121,7 +121,7 @@ class TemporalCarrierTests(unittest.TestCase):
         self.assertEqual(
             temporal_token(
                 "instant",
-                datetime(1969, 12, 31, 23, 59, 59, 500000, tzinfo=timezone.utc),
+                datetime(1969, 12, 31, 23, 59, 59, 500000, tzinfo=UTC),
             ),
             "1969-12-31T23:59:59.500000Z",
         )
@@ -138,21 +138,24 @@ class TemporalCarrierTests(unittest.TestCase):
     def test_fold_dynamic_zones_and_wrong_carriers_refuse_without_value_leak(self):
         invalid = [
             ("local", datetime(2024, 11, 3, 1, 30, fold=1)),
-            ("instant", datetime(2024, 11, 3, 1, 30, fold=1, tzinfo=timezone.utc)),
+            ("instant", datetime(2024, 11, 3, 1, 30, fold=1, tzinfo=UTC)),
             ("instant", datetime(2024, 1, 1, tzinfo=DynamicZone())),
             ("instant", datetime(2024, 1, 1, tzinfo=CustomFixedZone())),
-            ("instant", DatetimeSubclass(2024, 1, 1, tzinfo=timezone.utc)),
+            ("instant", DatetimeSubclass(2024, 1, 1, tzinfo=UTC)),
             ("local", DatetimeSubclass(2024, 1, 1)),
             ("date", DateSubclass(2024, 1, 1)),
             ("instant", datetime(2024, 1, 1, tzinfo=ZoneInfo("UTC"))),
             ("date", datetime(2024, 1, 1)),
-            ("local", datetime(2024, 1, 1, tzinfo=timezone.utc)),
+            ("local", datetime(2024, 1, 1, tzinfo=UTC)),
             ("instant", datetime(2024, 1, 1)),
         ]
         for kind, value in invalid:
-            with (self.subTest(kind=kind, type=type(value).__name__)), (self.assertRaises(ValueError)):
+            with (
+                self.subTest(kind=kind, type=type(value).__name__),
+                self.assertRaises(ValueError),
+            ):
                 temporal_token(kind, value)
-        for _kind, check in VALIDATORS.items():
+        for check in VALIDATORS.values():
             with self.assertRaises(ValueError) as caught:
                 check("private-unadmitted-token")
             self.assertNotIn("private-unadmitted-token", str(caught.exception))

@@ -10,7 +10,7 @@ import re
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from replay_installed import inspect_wheel, isolated_environment, sha
@@ -80,8 +80,13 @@ def main() -> int:
 
     def execute(label: str, command: list[str]) -> subprocess.CompletedProcess:
         result = subprocess.run(
-            command, cwd="/private/tmp", env=env, text=True, capture_output=True
-        , check=False)
+            command,
+            cwd="/private/tmp",
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
         commands.append(
             {
                 "label": label,
@@ -136,7 +141,7 @@ def main() -> int:
     )
     record = {
         "kind": "immutable-installed-runtime-snapshot",
-        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "createdAt": datetime.now(UTC).isoformat(),
         "wheel": str(wheel),
         "wheelSha256": digest,
         "python": str(python),

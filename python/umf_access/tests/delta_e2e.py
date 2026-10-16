@@ -13,15 +13,15 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[3]
 generated = Path(os.environ["UMF_DELTA_GENERATED_ROOT"])
 sys.path.insert(0, str(generated))
-from pyspark.sql import (  # noqa: E402 - generated fixture path is configured first
-    SparkSession,  # noqa: E402 - generated fixture path is configured first
+from pyspark.sql import (
+    SparkSession,
 )
-from umf_access.delta_read import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.delta_read import (
     DeltaSnapshot,
     SparkConfiguration,
     SparkDeltaTarget,
 )
-from umf_access.targets import (  # noqa: E402 - generated fixture path is configured first
+from umf_access.targets import (
     TargetMismatch,
     binding_digest,
 )
@@ -112,7 +112,8 @@ try:
             ],
             capture_output=True,
             text=True,
-         check=False)
+            check=False,
+        )
         assert result.returncode == 0, result.stdout + result.stderr
     from native_sales import queries
 

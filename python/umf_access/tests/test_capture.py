@@ -192,7 +192,8 @@ class PresenceBounds(unittest.TestCase):
             @query
             def declaration(a: Param[str | MISSING]):
                 return (
-                    objects.filter(combine(if_present(a, lambda p: memo == p)))  # noqa: B023 - captured synchronously in this iteration
+                    # This refusal callback is invoked synchronously inside this iteration.
+                    objects.filter(combine(if_present(a, lambda p: memo == p)))  # noqa: B023
                     .limit(10)
                     .all()
                 )

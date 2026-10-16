@@ -1,4 +1,4 @@
-"""Action execution ABI. Hosts supply executors; this module performs no InputT/OutputT.
+"""Action execution ABI. Hosts supply executors; this module performs no I/O.
 
 Original JSON and transport bytes are retained exactly. Recovery custody is an
 opaque host object and never becomes serializable authority in this carrier.
@@ -40,7 +40,8 @@ class OriginalOutcome:
             if type(text) is not str or len(text.encode("utf-8")) > 4_194_304:
                 raise ValueError("bounded original JSON required")
             if not isinstance(json.loads(text), dict):
-                raise ValueError("original object required")
+                # The protocol reports invalid JSON carrier values uniformly as ValueError.
+                raise ValueError("original object required")  # noqa: TRY004
         if self.transport is not None and type(self.transport) is not bytes:
             raise TypeError("immutable original transport required")
 
@@ -271,10 +272,12 @@ class AsyncReplayingActionExecutor(AsyncActionExecutor, Protocol):
     ) -> ActionOutcome: ...
 
 
-ExecutorT = TypeVar(
+# Preserve the published generic parameter spelling and variance.
+ExecutorT = TypeVar(  # noqa: PLC0105
     "ExecutorT", bound=ActionExecutor | AsyncActionExecutor, covariant=True
 )
-ReplayingExecutorT = TypeVar(
+# Preserve the published generic parameter spelling and variance.
+ReplayingExecutorT = TypeVar(  # noqa: PLC0105
     "ReplayingExecutorT",
     bound=ReplayingActionExecutor | AsyncReplayingActionExecutor,
     covariant=True,

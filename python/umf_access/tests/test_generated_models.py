@@ -6,7 +6,7 @@ This file never generates stand-in models or chooses an alternative runtime.
 
 import json
 import unittest
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 from unittest.mock import patch
@@ -26,7 +26,7 @@ class GeneratedModels(unittest.TestCase):
         for kwargs in (
             {"amount": None},
             {"revision": 1},
-            {"placed_at": datetime(2024, 1, 1, tzinfo=timezone.utc)},
+            {"placed_at": datetime(2024, 1, 1, tzinfo=UTC)},
         ):
             with self.assertRaises(ValueError):
                 OrderPatch(**kwargs)
@@ -34,7 +34,7 @@ class GeneratedModels(unittest.TestCase):
             OrderCreate(
                 order_id="o-1",
                 amount=Decimal("1.2"),
-                placed_at=datetime(2024, 1, 1, tzinfo=timezone.utc),
+                placed_at=datetime(2024, 1, 1, tzinfo=UTC),
                 revision=1,
             )
         value = OrderCreate(
@@ -45,7 +45,7 @@ class GeneratedModels(unittest.TestCase):
         encoded = encode_Order_create(value)
         self.assertEqual(encoded["orderId"], "o-1")
         self.assertEqual(encoded["amount"].as_tuple(), value.amount.as_tuple())
-        self.assertEqual(encoded["placedAt"].tzinfo, timezone.utc)
+        self.assertEqual(encoded["placedAt"].tzinfo, UTC)
         self.assertNotIn("memo", encoded)
         self.assertFalse(any(v is MISSING for v in encoded.values()))
         self.assertTrue(OrderCreate.model_fields["placed_at"].is_required())
@@ -100,7 +100,7 @@ class GeneratedModels(unittest.TestCase):
             ["revision", "placedAt", "memo", "amount", "orderId"],
             [
                 1,
-                datetime(2024, 1, 1, tzinfo=timezone.utc),
+                datetime(2024, 1, 1, tzinfo=UTC),
                 None,
                 Decimal("1.20"),
                 "o-1",
