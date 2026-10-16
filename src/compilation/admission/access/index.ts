@@ -23,7 +23,7 @@ export function checkAccessPresence(f:PresenceFacts,v:FieldView):boolean {
 import {inspectCoreElementKind,inspectCoreNullability,inspectCoreCardinality,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,validateCoreFieldValue,validateDocument,getBinding,inspectBinding,inspectRawTableBinding,RAW_TABLE_BINDING_SUBSET,type Document,type Element} from '../../../index';
 import type {AccessDiagnostic,Ref,ResolvedField,ResolvedRecord} from '../../ir/index';
 export interface SuppliedBinding {sourceId:string;document:Document}
-interface View {record:Ref;fields:(FieldView&{field:Ref})[]}
+interface View {record:Ref;selectedKey:Ref&{key:string};fields:(FieldView&{field:Ref})[]}
 interface NativeColumn {field:Ref;type:string;notNull:boolean;generation:null|'identity'|'stored-expression'|'default'}
 interface ColumnSet {binding:{sourceId:string;module:string};target:{platform:string;majorVersion:string};columns:NativeColumn[]}
 const identity=(r:Ref)=>JSON.stringify([r.module,r.element]);
@@ -98,7 +98,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   const candidates=allViews.filter(v=>identity(v.view.record)===identity(ref));
   if(candidates.length!==1){add('ACCESS_REFERENCE',located.path);continue;}
   const {view,path}=candidates[0]!;
-  for(const key of Object.keys(view))if(!['record','fields'].includes(key))unknown(path+'/'+key);
+  for(const key of Object.keys(view))if(!['record','selectedKey','fields'].includes(key))unknown(path+'/'+key);
   const members=Array.isArray(node.members)?node.members as Ref[]:[];
   const expected:{ref:Ref;nested:boolean}[]=[],seen=new Set<string>(),memberIds=new Set(members.map(identity));
   const collect=(r:Ref,nested:boolean,stack:Set<string>)=>{
@@ -116,6 +116,9 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   const keyMeaning=inspectCoreKeys(document,ref).meaning;
   if(keyMeaning.state==='partial'||keyMeaning.state==='legacy')unknown(located.path+'/keys');
   const keys=keyMeaning.state==='known'||keyMeaning.state==='partial'?keyMeaning.keys:[];
+  const selection=view.selectedKey;
+  if(!object(selection)||selection.module!==ref.module||selection.element!==ref.element||typeof selection.key!=='string'||!keys.some(k=>k.id===selection.key)||Object.keys(selection).some(k=>!['module','element','key'].includes(k)))add('ACCESS_REFERENCE',path+'/selectedKey');
+  const orderedKeys=[...keys].sort((a,b)=>Number(b.id===selection?.key)-Number(a.id===selection?.key));
   const resolved:ResolvedField[]=[];
   for(const [fi,fv] of view.fields.entries()){
    const fp=path+`/fields/${fi}`,field=locate(fv.field).element,expectedField=expected.find(e=>identity(e.ref)===identity(fv.field));
@@ -136,7 +139,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const card=inspectCoreCardinality(document,fv.field).meaning;
    resolved.push({ref:{...fv.field},pointer:locate(fv.field).path,owned:memberIds.has(identity(fv.field)),viewPointer:fp,python:'',logicalName:typeof field.name==='string'?field.name:null,scalarType:field.scalarType??null,cardinality:card.state==='known'?card.cardinality:'unspecified',row:{...fv.row},create:{...fv.create},mutable:fv.mutable,generated:fv.generated,...(fv.temporal?{temporal:fv.temporal}:{}),facets:{...interpreted},properties,...(card.state==='known'&&card.itemType?{item:card.itemType}:{} )});
   }
-  records.push({ref:{...ref},pointer:located.path,python:'',namespace:document.modules.find(m=>m.id===ref.module)!.namespace,logicalName:typeof node.name==='string'?node.name:null,fields:resolved,keys:keys.map(k=>({id:k.id,fields:k.fields.map(r=>({...r}))})),selected:true});
+  records.push({ref:{...ref},pointer:located.path,python:'',namespace:document.modules.find(m=>m.id===ref.module)!.namespace,logicalName:typeof node.name==='string'?node.name:null,fields:resolved,keys:orderedKeys.map(k=>({id:k.id,fields:k.fields.map(r=>({...r}))})),selected:true});
  }
  return {records,diagnostics};
 }

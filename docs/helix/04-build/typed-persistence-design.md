@@ -227,6 +227,10 @@ checker. Its feedback is reflected as follows:
 
 ## Owner Decisions Recorded
 
+- On 2026-10-15, the owner approved real-document tests for reachable presence rows and direct policy tests plus core counterexamples for the explicitly hypothetical absent-allowed/Null=no premise. Core semantics remain unchanged.
+
+- On 2026-10-15, the owner approved an exact-only initial SDK profile: strict and report both refuse unsupported selected meaning. Approximation remains a separately governed future profile; CONTRACT-067 and US/STP-080 AC3 carry this decision. Temporal qualification remains held by the current execution request.
+
 - On 2026-10-15, the owner selected a governed typed-access temporal validation
   profile using authored `umf.access` instant/local distinctions as the Python
   conformance oracle. Generic core temporal semantics remain undefined under

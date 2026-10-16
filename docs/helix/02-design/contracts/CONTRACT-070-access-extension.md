@@ -268,6 +268,6 @@ Removing the width facet from `revision` refuses its NativeColumn entry with
 - [ ] Extension schema and conflict-table tests implement this draft.
 - [ ] Multiple Keys require an explicit valid selectedKey; alternate action/relationship Keys never substitute it.
 - [ ] Nullable array items/map values admit explicit null without omitted positions; shared incompatible occurrence bindings refuse.
-- [ ] Every allow-table row has positive fixtures for each listed presence and negative fixtures for the unlisted ones, for both ColumnSet-bound and engine-only Records.
+- [ ] Every reachable allow-table row has real-document positive fixtures for each listed presence and negative fixtures for the unlisted ones, for both ColumnSet-bound and engine-only Records. Core 0.8 always admits null for absent-allowed Fields; rows assuming absent-allowed with Null=no are explicitly hypothetical and require direct fact-policy positive/negative tests plus real-document counterexamples to that premise. Those controls never claim an impossible authored witness or change core null semantics.
 - [ ] Temporal Key components and integer or decimal Fields without width or precision/scale facets refuse.
 - [ ] Native type compatibility rules are qualified per target platform version.

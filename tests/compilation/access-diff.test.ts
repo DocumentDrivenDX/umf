@@ -10,3 +10,12 @@ import {request,profile,mutateSource} from './access-fixtures';
  const renamed=request();mutateSource(renamed,d=>{const walk=(v:unknown)=>{if(v&&typeof v==='object')for(const [key,child] of Object.entries(v)){if((key==='id'||key==='element')&&child==='memo')(v as Record<string,unknown>)[key]='remark';else walk(child);}};walk(d);});expect(diffAccessPackages(before,generateAccessPackage(renamed,profile())).find(s=>s.symbol==='OrderCreate')?.classification).toBe('breaking');
  expect(diffAccessPackages(before,before).every(s=>s.classification==='source-compatible'&&s.change==='unchanged')).toBe(true);
  });
+
+// @covers US-080-AC6 -- alternate DTOs have their own ordered signature.
+test('alternate Key compatibility compares its actual fields',()=>{
+ const before=request();mutateSource(before,d=>{(d.modules[0]!.elements[5]! as unknown as {keys:unknown[]}).keys.push({id:'revision-key',name:'Revision',fields:[{module:'commerce',element:'revision'}],primary:false});});
+ const after=structuredClone(before);mutateSource(after,d=>{Object.assign(d.modules[0]!.elements[4]!,{facets:{integerWidth:{bits:32,signed:true}}});});
+ const changes=diffAccessPackages(generateAccessPackage(before,profile()),generateAccessPackage(after,profile()));
+ expect(changes.find(c=>c.symbol==='OrderRevisionKeyKey'&&c.role==='key')?.classification).toBe('breaking');
+ expect(changes.find(c=>c.symbol==='OrderKey'&&c.role==='key')?.classification).toBe('source-compatible');
+});

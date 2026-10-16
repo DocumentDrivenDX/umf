@@ -12,6 +12,6 @@ export interface AccessResult {contract:'umf-access-generate/0.1';abi:'umf-pytho
 export interface ResolvedField {ref:Ref;pointer:string;python:string;owned?:boolean;viewPointer?:string;logicalName?:string|null;scalarType:string|null;cardinality:string;row:{missing:boolean;null:boolean};create:{missing:boolean;null:boolean};mutable:boolean;generated:boolean;temporal?:'instant'|'local';facets:Record<string,unknown>;properties:Record<string,unknown>;item?:Ref}
 export interface ResolvedRecord {ref:Ref;pointer:string;python:string;namespace?:string;logicalName?:string|null;fields:ResolvedField[];keys:{id:string;fields:Ref[]}[];selected:boolean}
 export interface ResolvedRelation {owner:Ref;target:Ref;key:string;python:string;pointer:string;module:string;id:string;logicalName?:string|null}
-export interface ResolvedActionParameter {id:string;python:string;required:boolean;pointer:string;field?:ResolvedField;entity?:Ref}
+export interface ResolvedActionParameter {id:string;python:string;required:boolean;pointer:string;field?:ResolvedField;entity?:Ref;entityKey?:string}
 export interface ResolvedAction {module:string;id:string;python:string;pointer:string;parameters:ResolvedActionParameter[];outputs:ResolvedActionParameter[];failures:{code:string;retryable:boolean}[];kind:'handler'|'recipe'}
 export interface ResolvedAccess {documentId:string;sourceId:string;records:ResolvedRecord[];relations?:ResolvedRelation[];actions?:ResolvedAction[];extraFields?:ResolvedField[]}

@@ -38,7 +38,15 @@ function inspectPackage(result:AccessResult){
   let fields=r.fields.filter(f=>f.owned!==false);
   if(s.role==='create')fields=fields.filter(f=>!f.generated);
   if(s.role==='patch'||s.role==='update')fields=fields.filter(f=>!f.generated&&f.mutable);
-  if(s.role==='key')fields=(r.keys[0]?.fields??[]).flatMap(ref=>r.fields.filter(f=>f.ref.module===ref.module&&f.ref.element===ref.element));
+  const recordName=result.symbols.find(x=>x.sourceId===s.sourceId&&x.pointer===s.pointer&&x.role==='row')?.symbol;
+  const className=(id:string)=>id.replace(/[^A-Za-z0-9]/g,'_').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z0-9])([A-Z])/g,'$1_$2').split('_').map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join('');
+  const selectedKey=s.role==='key'?(recordName?r.keys.find((key,index)=>recordName+(index===0?'':className(key.id))+'Key'===s.symbol):r.keys.length===1?r.keys[0]:undefined):undefined;
+  if(s.role==='key')fields=(selectedKey?.fields??[]).flatMap(ref=>r.fields.filter(f=>f.ref.module===ref.module&&f.ref.element===ref.element));
+  if(s.role==='codec'&&s.symbol.startsWith('decode_')){
+   const projection=s.symbol.slice('decode_'.length);
+   const attrs=result.symbols.filter(a=>a.role==='projection'&&a.symbol.startsWith(projection+'.'));
+   if(attrs.length)fields=fields.filter(f=>attrs.some(a=>a.pointer===f.pointer));
+  }
   if(s.role==='projection'){
    const attrs=result.symbols.filter(a=>a.role==='projection'&&a.symbol.startsWith(s.symbol+'.'));
    if(!attrs.length)return undefined;fields=fields.filter(f=>attrs.some(a=>a.pointer===f.pointer));
@@ -46,7 +54,7 @@ function inspectPackage(result:AccessResult){
   if(!['row','create','patch','update','fields','key','projection','codec'].includes(s.role))return undefined;
   const fs:Signature['fields']={};
   for(const f of fields){const p=s.role==='key'?{missing:false,null:false}:mode==='row'?f.row:{missing:s.role==='patch'||s.role==='update'?true:f.create.missing,null:f.create.null};fs[publicName(r,f)]={type:shape(f,r.fields),...p};}
-  return {fields:fs,...(s.role==='key'?{identity:{document:location.document.id,core:location.document.umf,ref:r.ref,key:r.keys[0]}}:{}),...(s.role==='codec'?{identity:fields.map(f=>f.ref)}:{})};
+  return {fields:fs,...(s.role==='key'?{identity:{document:location.document.id,core:location.document.umf,ref:r.ref,key:selectedKey}}:{}),...(s.role==='codec'?{identity:fields.map(f=>f.ref)}:{})};
  };
  return {signature};
 }

@@ -1,6 +1,6 @@
 """Shared generated-model ABI. Imports perform no host operations."""
 from dataclasses import dataclass
-from typing import Generic, TypeAlias, TypeVar, final
+from typing import ClassVar, Generic, TypeAlias, TypeVar, final
 
 from pydantic import BaseModel, ConfigDict, MISSING as MISSING
 
@@ -21,6 +21,20 @@ class StrictModel(BaseModel):
     Literal defaults belong to the engine, never to this base. Codecs must
     revalidate raw attributes even though assignment is frozen.
     """
+
+    UMF_FINAL: ClassVar[bool] = False
+    UMF_KEY: ClassVar[bool] = False
+
+    def __init_subclass__(cls, **kwargs: object) -> None:
+        if any(base.__dict__.get("UMF_FINAL", False) for base in cls.__bases__):
+            raise TypeError("generated model is final")
+        super().__init_subclass__(**kwargs)
+
+    @classmethod
+    def __pydantic_init_subclass__(cls, **kwargs: object) -> None:
+        super().__pydantic_init_subclass__(**kwargs)
+        if cls.UMF_KEY:
+            type.__setattr__(cls, "__hash__", None)
 
     model_config = ConfigDict(
         strict=True, extra="forbid", frozen=True,

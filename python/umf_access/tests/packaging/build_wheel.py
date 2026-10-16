@@ -31,7 +31,7 @@ def main() -> int:
         pin=profile['runtimeAbi']
         if project['name']!=pin['distribution'] or project['version']!=pin['version']:
             raise ValueError('package metadata differs from runtime profile')
-        if project['requires-python']!='=='+profile['python'] or project['dependencies']!=['pydantic=='+profile['runtimeDependencies']['pydantic']]:
+        if project['requires-python']!=profile['requiresPython'] or project['dependencies']!=['pydantic=='+profile['runtimeDependencies']['pydantic']]:
             raise ValueError('Python/Pydantic metadata differs from local profile')
         def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
         source_paths=[package/'pyproject.toml',package/'compatibility-profile.json',*sorted((package/'src/umf_access').rglob('*'))]
