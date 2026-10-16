@@ -531,3 +531,99 @@ BIT128_AVRO_NAME/UNSIGNED/PARQUET_NAME/TABLESPEC_NAME/CARRIER as applicable.
 Failures publish no partial native candidate or row; they authorize no retry,
 implicit conversion or alternate layout. Versioned observations and qualification
 gate status live in the adapter completion execution record.
+
+## Composition extension — owner direction 2026-10-16
+
+The separately selected `uuid-model2` profile composes existing singular UUID/
+bits128 carriers with exact scalar column tokens. It MUST NOT widen `uuid-model1`.
+`storage:column` selects native SQL scalar storage and exact-text scalar storage
+for Avro, Parquet and TableSpec. This selection is explicit in the versioned
+profile; file arithmetic/type enforcement remains a residual. Supported scalar
+value domains are boolean, bounded integer (including integer128), decimal with
+explicit precision/scale up to38 digits, string and binary. Float/temporal arithmetic and validity
+semantics are not introduced; exact lexical-token storage is specified below. Existing scalar codecs validate all declared facets,
+allowed values and availability; unknown relevant meaning MUST refuse.
+
+Composition lowering MUST preserve complete source and binding, recursive array/
+map item identity, empty versus absent values, order and duplicates. Groups need
+explicit membership and ownership declarations; their meaning MUST NOT be guessed
+from labels or unrecognized extensions. Association layouts MUST enumerate every
+source/target Key mapping and retain association Record attributes. Native file
+schemas do not enforce dataset referential integrity or multiplicity; portable
+dataset validation and explicit residuals are required. SQL constraints MUST NOT
+invent ownership cascades. New composition support remains unqualified until its
+native and browser gates execute; earlier singular-profile receipts remain scoped
+to their original source cuts.
+
+### Composition layout and values
+
+For `uuid-model2`, optional `groups` is an array of
+`{module,element,members:ElementRef[]}`. Each identity MUST resolve to an explicit
+core Group; members MUST be distinct exact Field identities. A singular Field
+with exactly one `references:[{role:'record-type',module,element}]` selects that
+Group. No Group membership is inferred from display names. Array/map Fields
+select their item/value Field through existing `itemType`. Shape definitions
+MUST be finite and acyclic (depth64 and10,000 expanded nodes); value limits also
+apply. Every source Field/Group and selected binding MUST be reached. Reusable
+item/group definitions are by-value types, not shared stored instances.
+
+Each root composite Field uses `storage:column,column:string`; it selects SQL
+JSON storage (`jsonb` / checked `nvarchar(max)`), native nested Avro/Parquet
+storage, or TableSpec VARCHAR JSON text. Nested scalar leaves select ordinary
+column tokens; nested UUID/bits128 leaves select their existing explicit carrier.
+Native file word-pair children remain required together; optional value/group
+absence wraps the complete pair. Canonical typed values use existing scalar,
+`{array:ModelLiteral[]}`, `{map:Record<string,ModelLiteral>}` and new
+`{group:{field:ElementRef,value:ModelLiteral}[]}` wrappers. A group value MUST
+supply exactly its declared members once. Native group properties `m0`, `m1`,…
+follow declared member order. Map keys are exact strings; arrays preserve order
+and duplicate entries. Null is absence only where declared; empty containers
+and present groups with absent children remain distinct. JSON-text `null` MUST
+NOT be silently reinterpreted as SQL/CSV absence. Duplicate native JSON members,
+partial word pairs and extra/missing members MUST refuse.
+
+Projection `compositeMappings` enumerates Record, root Field, referenced Field,
+root column, storage (`json-column` or `native-nested`), paired terminal slots
+and tagged path segments (`member` with `name`, `array-item`, `map-value`). Tagged
+segments distinguish dynamic map values from a literal map key. Reports retain
+all logical and binding content, and recovery recomputes this complete surface.
+
+All eleven scalar families can coexist in this profile. Boolean, bounded integer,
+decimal, string and binary values use existing exact portable semantics. Float,
+date, time and timestamp use their exact typed lexical tokens; no new arithmetic,
+calendar, timezone or validity semantics are asserted. Such tokens use SQL/file
+text and carry an explicit semantic residual. Native SQL scalar types likewise
+retain unimplemented facet/equality/order obligations. File/model scalar columns
+use explicitly selected exact-text fallback; native string storage MUST NOT be
+reported as enforcement of numeric, temporal or boolean domains.
+
+### Association layout and snapshot validation
+
+A relationship may select
+`{module,id,storage:'junction',record:ElementRef,source:AssociationEnd[],target:AssociationEnd[]}`,
+where `AssociationEnd` is `{record:ElementRef,key:string,fields:ElementRef[]}`.
+The selected Record MUST be keyed and agree with `associationRecord` when one
+is declared. Source and target endpoint sets are alternatives, not a hyperedge.
+Each declared endpoint type MUST have exactly one mapping to an existing named
+Key; target key IDs MUST agree with the declaration. Every endpoint component
+belongs to the association Record, matches its referenced domain/carrier/facets,
+and participates in a complete ordered tuple. Endpoint component sets are
+disjoint. Multiple alternatives use nullable complete component groups, with
+exactly one present alternative on each side per association instance. Association
+identity, attributes, direction and inverse presentation remain in copied source.
+SQL emits FKs and exclusive-choice checks; file/model enforcement remains residual.
+No pair uniqueness or lifecycle cascade is invented.
+
+`validateBit128Dataset(binding,logical,populations)` accepts a complete finite
+snapshot: one `{record:ElementRef,rows:Bit128RecordValue[][]}` per bound Record,
+including empty populations. It returns copied normalized logical populations
+only after full-row validation, all named Keys/unique indexes, composite reference
+integrity, endpoint choice and declared multiplicity pass. Multiplicity counts
+distinct endpoint Record instances (including zero-degree Records), not association
+rows; repeated association instances connecting the same endpoints remain valid
+unless a declared Key/unique index prohibits them. Incomplete populations, orphans,
+partial references, duplicate Keys and violated bounds throw MODEL_DATASET.
+This API does not prove snapshot consistency under concurrent writes, execute
+mutations or establish lifecycle behavior. MODEL_SHAPE / MODEL_SHAPE_VALUE /
+MODEL_SCALAR / MODEL_SCALAR_VALUE identify unsupported layout/value failures;
+inputs remain unchanged. Strict projections block retained residuals.

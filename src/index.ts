@@ -507,3 +507,6 @@ export {projectBit128Model,recoverBit128ModelProjection,type Bit128ModelProjecti
 export * from './extensions/binding/bit128-record';
 export * from './projections/bit128-file-values';
 export {default as bit128ModelProjectionSchema} from '../spec/projections/bit128-model.schema.json';
+
+export {validateBit128Dataset,type Bit128DatasetRecord} from './extensions/binding/model-dataset';
+export type {ModelLiteral} from './extensions/binding/model-shape-values';

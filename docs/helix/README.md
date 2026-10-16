@@ -1318,3 +1318,14 @@ records complete singular Record/Key/index/FK SQL layouts, native constraints an
 transaction observations, Avro/Parquet grouped pairs and actual TableSpec/Spark
 string fallback. Native equivalence, wider composition and deployed consumer
 adoption are separate; unsupported meanings still refuse or remain residuals.
+
+
+The separately selected `uuid-model2` profile now qualifies mixed flat Records,
+finite nested arrays/maps and explicit groups, then association Records with
+polymorphic endpoint alternatives across all five priority targets.
+[Composition evidence and limits](04-build/evidence/uuid-composition.md) records
+native returned values, adapter recovery, complete-snapshot integrity checks,
+Chromium and source-bound gates. SQL/TableSpec JSON and file scalar text are
+explicit storage choices with residual enforcement obligations. Model1 retains
+its original interpretation; consumer execution and native equivalence remain
+separate.

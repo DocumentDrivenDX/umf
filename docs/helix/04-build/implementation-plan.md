@@ -12708,3 +12708,30 @@ file/Spark, source-recovery and browser checks pass. The conformance hash test
 needed an explicit30-second budget; refreshed qualification/conformance and
 verify-only pass after that test-only adjustment. See
 [evidence and retained retry](evidence/uuid-adapter-completion.md).
+
+### UUID composition execution — 2026-10-16
+
+Owner authorizes mixed flat Records, then recursive containers/groups, then
+associations across the five priority adapters with qualification gates.
+CONTRACT-076 governs an explicitly selected composition profile; historical
+uuid-model1 behavior remains fixed. First extend shared scalar/layout lowering
+and full-row codecs; next implement explicit recursive storage and dataset
+recovery; then association endpoint mappings and integrity checks. Each stage
+requires focused positive/refusal tests, independent native values and browser
+public API evidence before support promotion. No new support gate is admitted
+by this execution entry. Work is single-agent; token/spending metering is
+unavailable. Verification, retries and evidence review are included in scope.
+
+
+### UUID composition closeout — 2026-10-16
+
+Completed the authorized sequence under explicit uuid-model2: mixed flat scalar/
+UUID Records, finite arrays/maps and declared groups, then keyed association
+Records and polymorphic endpoint alternatives. New snapshot validation enforces
+Keys/unique indexes, references, endpoint choice and distinct-endpoint bounds.
+The final14-phase composition runner passes20 native target/stage cases,72
+returned rows,16 native-invalid refusals,116 source recoveries, real Chromium
+and both gate tests. The original17-phase model1 qualification also passes on
+the shared final source. [Evidence, retries and remaining boundaries](evidence/uuid-composition.md)
+qualify115 distinct scoped tests; no full-repository, native-equivalence or
+consumer-deployment claim is made. Governed IDs/frontmatter/traceability are retained.
