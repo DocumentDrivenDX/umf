@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B07",
   "backend": "pg-raw",
-  "runId": "29298485-d139-4631-8866-433a90129f7d",
+  "runId": "c6a2ffb8-90c3-4489-9a4a-12bb836fe6df",
   "command": [
     "python3",
     "tests/security/native/pg18-replay/membership.py"
@@ -273,7 +273,7 @@
     "src/extensions/security/registration.ts": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f",
     "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
     "src/extensions/security/write.ts": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0",
-    "src/index.ts": "d2b52424cf2c1e806d8999b441c5e54b62e73b2ba7035770b18bdab43a7e669e",
+    "src/index.ts": "1da81019e9aa692854ff313b999598f0c7b89cac3aaa4bf46263cdc755289cbb",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "14955a4e5fd41dc0a6ab5e13ceac37bf4264ff6e35e35af462da3ee918c8eb5c",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -3452,13 +3452,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "59fc0a4950e1e42e3bda6888aa8c73e4307f5d1b7dfa90c4d7d03d25cfbb1241",
+      "containerId": "348a352c90b21ccbc07adf6748e58fb498a7a468f5f25cf6dcb86f04e2d22d73",
       "ownedAnonymousVolumes": [
-        "43cbdaea8b07dc6db327fab12fd37488501af8e43365809db920ae342a83c3a4"
+        "2162f249e909f3bdd60f5cf8470ad22637d7f1e9af9c62f077a6be6a73ed3d57"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "88a2f3e81e1563a322f4e841dbef64d44215aa2475faeed3f4d81be55a4c61a1"
+    "digest": "6af30d961312d5e64a1bb89e4722186f1a4087f07e29217b2d18544953a762b4"
   },
   "scope": "PostgreSQL 18.6 disposable raw-table read membership, selected collection operators private-storage, definer/name-resolution and administrator-exclusion controls at a stable cut only. Native source inventory retained; complete profile, concurrent authority, compiler lowering and all other B/L cases remain unqualified."
 }

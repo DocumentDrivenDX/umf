@@ -1,11 +1,11 @@
 {
   "solver": "Z3",
   "solverVersion": "4.15.4",
-  "command": "/private/tmp/umf-write-comparison-proof-env-20261013/bin/python docs/helix/02-design/spikes/security/prove.py",
-  "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "command": "/private/tmp/umf-security-proof-current-20261015/bin/python docs/helix/02-design/spikes/security/prove.py",
+  "pythonVersion": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
   "sourceDigests": {
     "docs/helix/02-design/spikes/security/prove.py": "a4feae5d26023414b556b2009032ea0d8770b44b7cfcbfbf97d0dfb0170517d6",
-    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "6cb4c2d9a728eb076f655d1eea7969fe9b93647a3bdb80632e5f266ee8dc2386",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "9c6e894bbd1dcd78e3e7195ccc99e2a324a8d31a878bf91bbba407c65258b6ef",
     "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "a2ef9ce52ce65db723ae89a10b7c1d207a278b2ea6e9e3bb903713abb3e988b3"
   },
   "cases": [
@@ -383,7 +383,7 @@
       "populationQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun entry_operator () Int)\n(declare-fun entry_field () QualifiedRef)\n(declare-fun query_field () QualifiedRef)\n(declare-fun entry_target () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (>= entry_operator 0))\n(assert (<= entry_operator 4))\n(assert (and (= query_target entry_target)\n     (= query_field entry_field)\n     (= query_operator entry_operator)))\n",
       "weakenedControlQuery": "(declare-datatypes ((QualifiedRef 0)) (((QualifiedRef (project0 String) (project1 String) (project2 String)))))\n(declare-fun query_operator () Int)\n(declare-fun entry_operator () Int)\n(declare-fun entry_field () QualifiedRef)\n(declare-fun query_field () QualifiedRef)\n(declare-fun entry_target () QualifiedRef)\n(declare-fun query_target () QualifiedRef)\n(assert (>= query_operator 0))\n(assert (<= query_operator 4))\n(assert (>= entry_operator 0))\n(assert (<= entry_operator 4))\n(assert (and (= (project2 query_target) (project2 entry_target))\n     (= (project2 query_field) (project2 entry_field))\n     (or (distinct query_target entry_target)\n         (distinct query_field entry_field)\n         (distinct query_operator entry_operator))))\n",
       "weakenedControlResult": "sat",
-      "weakenedCounterexample": "[query_target = QualifiedRef(\"\", \"\", \"\"),\n entry_target = QualifiedRef(\"\", \"A\", \"\"),\n query_field = QualifiedRef(\"\", \"\", \"\"),\n entry_field = QualifiedRef(\"\", \"A\", \"\"),\n entry_operator = 1,\n query_operator = 0]",
+      "weakenedCounterexample": "[entry_operator = 1,\n entry_target = QualifiedRef(\"A\", \"\", \"A\"),\n query_field = QualifiedRef(\"A\", \"A\", \"A\"),\n entry_field = QualifiedRef(\"A\", \"\", \"A\"),\n query_target = QualifiedRef(\"A\", \"A\", \"A\"),\n query_operator = 0]",
       "status": "passed"
     },
     {

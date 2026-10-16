@@ -52,7 +52,7 @@ import {profile,request,mutateSource} from './access-fixtures';
   Object.assign(d.vocabularies,{'umf.actions':{version:'0.1.0'}});
   Object.assign(d.modules[0]!.extensions,{'umf.actions':{actions:[{id:'shipOrder',name:'Ship order',description:'Typed action fixture; no executor qualification',parameters:[{id:'order',kind:'entity',target:{module:'commerce',element:'Order',key:'order-key'},required:true},{id:'memo',kind:'value',field:{module:'commerce',element:'memo'},required:false}],outputs:[{id:'amount',kind:'value',field:{module:'commerce',element:'amount'},required:true}],preconditions:[],postconditions:[],reads:[],writes:[],binding:{kind:'handler',profile:{id:'test-handler-profile',version:'1'},handler:{id:'test-ship',version:'1'}},failures:[{code:'NOT_READY',message:'Not ready',retryable:false}],authorization:{kind:'roles',profile:{id:'umf.actions.roles',version:'1'},roles:['shipper']},attribution:{subject:'person-required'},atomicity:'single-store',idempotency:'caller-key-optional',result:{identities:'created-and-changed',version:'store-opaque',receipt:'read-at-least'}}]}});
  });
- const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('candidate');const actions=r.files.find(f=>f.path==='shop/actions.py')!.text;expect(actions).toContain('class ShipOrderInput');expect(actions).toContain('class ShipOrderOutput');expect(actions).toContain('class ShipOrderRejected');expect(actions).toContain('Literal["NOT_READY"]');expect(actions).toContain('order: OrderKey');expect(actions).toContain('memo:');expect(r.obligations.some(o=>o.owner==='engine')).toBe(true);
+ const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('candidate');const actions=r.files.find(f=>f.path==='shop/actions.py')!.text;expect(actions).toContain('document_sha256="'+new Bun.CryptoHasher('sha256').update(req.sources[0]!.text).digest('hex')+'"');expect(actions).toContain('invocation_id="umf.actions.tx"');expect(actions).toContain('class Actions:');expect(actions).toContain('ship_order: ActionEndpoint[ShipOrderInput, ShipOrderOutput]');expect(actions).toContain('class ShipOrderInput');expect(actions).toContain('class ShipOrderOutput');expect(actions).toContain('class ShipOrderRejected');expect(actions).toContain('Literal["NOT_READY", "ENTITY_MISSING"]');expect(actions).toContain('order: OrderKey');expect(actions).toContain('memo:');expect(r.obligations.some(o=>o.owner==='engine')).toBe(true);
  });
 // @covers US-080-AC1
  test('generated DSL metadata keeps IDs, authored names and Python names separate',()=>{
@@ -65,9 +65,9 @@ import {profile,request,mutateSource} from './access-fixtures';
  const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('candidate');const fields=r.files.find(f=>f.path==='shop/fields.py')!.text;expect(fields).toContain('logical_namespace="logical.ns"');expect(fields).toContain('logical_name="Order \\"Ledger\\""'.replace(/\\\\/g,'\\'));expect(fields).toContain('field="orderId"');expect(fields).toContain('python_identity: Column[PythonOrder, str]');
  });
 // @covers US-080-AC4
- test('keyless and ambiguous multiple Keys refuse without choosing an identity',()=>{
+ test('keyless Records refuse and multiple Keys retain explicit selected identity',()=>{
  const missing=request();mutateSource(missing,d=>{delete (d.modules[0]!.elements[5]! as {keys?:unknown}).keys;});const a=generateAccessPackage(missing,profile());expect(a.outcome).toBe('refused');expect(a.diagnostics.some(d=>d.code==='LOSS'&&d.pointer.endsWith('/keys'))).toBe(true);
- const multiple=request();mutateSource(multiple,d=>{const r=d.modules[0]!.elements[5]! as unknown as {keys:unknown[]};r.keys.push({id:'revision-key',name:'Revision identity',fields:[{module:'commerce',element:'revision'}],primary:false});});const b=generateAccessPackage(multiple,profile());expect(b.outcome).toBe('refused');expect(b.diagnostics.some(d=>d.code==='REFERENCE'&&d.pointer.endsWith('/keys'))).toBe(true);expect(b.files).toEqual([]);
+ const multiple=request();mutateSource(multiple,d=>{const r=d.modules[0]!.elements[5]! as unknown as {keys:unknown[]};r.keys.push({id:'revision-key',name:'Revision identity',fields:[{module:'commerce',element:'revision'}],primary:false});});const b=generateAccessPackage(multiple,profile());expect(b.outcome).toBe('candidate');expect(b.files.find(f=>f.path==='shop/keys.py')!.text).toContain('class OrderRevisionKeyKey');
  });
 // @covers US-080-AC3
  test('refused missing view retains selected census and unknown fidelity is explicit',()=>{
@@ -108,4 +108,44 @@ import {profile,request,mutateSource} from './access-fixtures';
  const req=request();req.records.push({module:'commerce',element:'OrderLine'});const r=generateAccessPackage(req,profile());expect(r.symbols[0]!.symbol).toBe('BUNDLE_INPUT_DIGEST');
  const pointers=[...new Set(r.symbols.map(s=>s.pointer))];expect(pointers.indexOf('/modules/0/elements/0')).toBeLessThan(pointers.indexOf('/modules/0/elements/1'));
  expect(r.files.find(f=>f.path==='shop/keys.py')!.text.indexOf('    line_order_id:')).toBeLessThan(r.files.find(f=>f.path==='shop/keys.py')!.text.indexOf('    line_number:'));
+ });
+
+// @covers US-081-AC8; shared codec calls and generated final metadata.
+test('generated codecs delegate to the runtime and update has explicit keywords',()=>{
+ const result=generateAccessPackage(request(),profile());
+ expect(result.outcome).toBe('candidate');
+ const codecs=result.files.find(f=>f.path==='shop/codecs.py')!.text;
+ expect(codecs).toContain('return encode_model(OrderPatch, value, _codec_OrderPatch)');
+ expect(codecs).toContain('return decode_model(Order, columns, row, _codec_Order)');
+ expect(codecs).not.toMatch(/\b(if|raise|for|while|try)\b/);
+ const models=result.files.find(f=>f.path==='shop/models.py')!.text;
+ expect(models).toContain('UMF_FINAL: ClassVar[bool] = True');
+ expect(models).not.toContain('def __init_subclass__');
+ const fields=result.files.find(f=>f.path==='shop/fields.py')!.text;
+ expect(fields).toContain('def update(self, *,');
+ expect(fields).not.toContain('**values');
+});
+// @covers US-080-AC3; owner-approved initial exact-only policy.
+test('both initial modes refuse unsupported selected carriers without partial code',()=>{
+ for(const mode of ['strict','report'] as const){
+  const input=request();input.mode=mode;
+  mutateSource(input,d=>{const f=d.modules[0]!.elements[1]!;Object.assign(f,{scalarType:'float'});delete (f as {facets?:unknown}).facets;});
+  const result=generateAccessPackage(input,profile());
+  expect(result.outcome).toBe('refused');expect(result.files).toEqual([]);
+  expect(result.diagnostics.some(d=>d.code==='LOSS')).toBe(true);
+ }
+});
+
+// @covers US-080-AC2 US-081-AC4
+ test('selectedKey is explicit, resolved and independent of declaration order',()=>{
+  for(const selection of [undefined,{module:'commerce',element:'Order',key:'not-declared'},{module:'other',element:'Order',key:'order-key'}]){
+   const q=request();mutateSource(q,d=>{const view=d.modules[0]!.extensions['umf.access'].views[0]! as {selectedKey?:unknown};if(selection===undefined)delete view.selectedKey;else view.selectedKey=selection;});
+   const result=generateAccessPackage(q,profile());expect(result.outcome).toBe('refused');expect(result.diagnostics.some(d=>d.pointer.endsWith('/selectedKey'))).toBe(true);
+  }
+  const q=request();mutateSource(q,d=>{
+   const record=d.modules[0]!.elements[5]! as unknown as {keys:unknown[]};record.keys.unshift({id:'alternate',name:'Alternate',fields:[{module:'commerce',element:'revision'}],primary:false});
+  });
+  const result=generateAccessPackage(q,profile());expect(result.outcome).toBe('candidate');
+  const keys=result.files.find(f=>f.path==='shop/keys.py')!.text;
+  expect(keys).toContain('class OrderAlternateKey');expect(keys).toContain('"key": "order-key"');
  });

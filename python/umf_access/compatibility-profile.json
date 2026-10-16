@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scope": "Local prerelease packaging and installed-wheel replay; no publication or native qualification",
   "python": "3.14.8",
-  "checkerPythonTarget": "3.12",
+  "checkerPythonTarget": "3.11",
   "runtimeAbi": {
     "distribution": "umf_access",
     "version": "0.1.0.dev0",
@@ -26,7 +26,8 @@
   },
   "checkers": {
     "mypy": "2.4.0",
-    "pyright": "1.1.414"
+    "pyright": "1.1.414",
+    "ty": "0.0.88"
   },
   "requiredExports": {
     "umf_access": [
@@ -51,7 +52,10 @@
     ],
     "umf_access.codec_support": [
       "revalidate_model",
-      "checked_row"
+      "checked_row",
+      "CodecField",
+      "encode_model",
+      "decode_model"
     ],
     "umf_access.dsl": [
       "Column",
@@ -78,5 +82,10 @@
     "databricks",
     "pyspark"
   ],
-  "nativeTargets": "UNTESTED; no driver extras or platform support selected"
+  "nativeTargets": "UNTESTED; no driver extras or platform support selected",
+  "requiresPython": ">=3.11,<3.15",
+  "compatibilityRuntimes": [
+    "3.11.17",
+    "3.14.8"
+  ]
 }

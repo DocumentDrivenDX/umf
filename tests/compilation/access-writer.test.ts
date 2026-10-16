@@ -59,7 +59,7 @@ async function snapshot(root:string):Promise<Record<string,string>>{const out:Re
  await writeFile(req,JSON.stringify(request()));await writeFile(prof,JSON.stringify(profile()));
  async function run(args:string[]){const child=Bun.spawn([process.execPath,join(import.meta.dir,'../../scripts/umf-access-generate.ts'),...args],{stdout:'pipe',stderr:'pipe'});const [exit,out,err]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);return {exit,out,err};}
  const args=['--request',req,'--profile',prof,'--output',output];
- expect((await run(['generate',...args])).exit).toBe(0);
+ const generated=await run(['generate',...args]);expect(generated.exit).toBe(0);expect(JSON.parse(generated.out).kind).toBe('access-public-diff');
  expect((await run(['check',...args])).exit).toBe(0);
  await writeFile(join(output,'shop/models.py'),'edited');const before=await snapshot(output);
  const drift=await run(['check',...args]);expect(drift.exit).not.toBe(0);expect(drift.out).toContain('shop/models.py');expect(await snapshot(output)).toEqual(before);
@@ -68,3 +68,14 @@ async function snapshot(root:string):Promise<Record<string,string>>{const out:Re
  expect((await run(['generate',...args,'--unknown','x'])).exit).not.toBe(0);
  await writeFile(req,JSON.stringify(request()));await writeFile(prof,JSON.stringify({...profile(),coreVersions:[]}));const refusedCandidate=await run(['generate',...args]);expect(refusedCandidate.exit).not.toBe(0);expect(refusedCandidate.err).toContain('GENERATION_REFUSED');expect(await snapshot(output)).toEqual(before);
  },60000);
+
+// @covers US-080-AC5; privileges are stage-two owned just like the catalog.
+test('stage-two privilege bytes survive regeneration and are excluded from drift',async()=>{
+ const {destination,r}=await setup();
+ const path=join(destination,'shop/_umf/privileges.json');
+ const bytes='{ "owner": "stage-two", "unknown": [1, 2] }\n';
+ await writeFile(path,bytes);
+ expect(await checkAccessPackage(destination,r)).toEqual([]);
+ await writeAccessPackage(destination,r);
+ expect(await readFile(path,'utf8')).toBe(bytes);
+});

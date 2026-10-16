@@ -511,6 +511,78 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   with an explicit fidelity report. Exclusions must remain visible and must not
   be reported as full-format conformance.
 
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
+
+Owner-directed design extension; release sequencing remains separately selected.
+This subsystem adds an **Application Developer** persona: a Python developer who
+reads, searches and changes data described by UMF without writing SQL. The
+Schema Integration Maintainer remains responsible for authored models, bindings
+and target qualification.
+
+- **FR-52 — Generated typed models.** A maintainer must be able to author
+  instance-view, native-column and search choices in the `umf.access` extension
+  and generate, deterministically and offline, statically inspectable Python
+  models, Key DTOs, typed column and index expressions and action types from
+  pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
+  rounded; unknown content and a complete assertion report are retained; output
+  is checked in and drift-checked. Generated code is a thin typed layer over the
+  `umf_access` runtime and type-checks cleanly on Python 3.11 under pyright, mypy
+  and ty. FEAT-028, US-080 and US-081 govern this.
+- **FR-53 — Precompiled typed queries and search.** An application developer
+  must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
+  commands in a schema-first, expression-first Python DSL with no string column
+  references, have a pinned type checker reject type, column, record and argument
+  errors, and have every declaration compiled at build time through Weft for each
+  selected target into a checked-in catalog. At runtime only catalog entries
+  execute, with validated values bound as parameters. The DSL also covers exact
+  aggregates and buckets, prefix and term filters, null-safe distinctness and
+  to-one joins; reads offer snapshot pages where the platform supports them,
+  bounded streams, per-call timeouts and async calls; catalogs can be
+  schema-neutral, and the build writes a least-privilege report per target.
+  FEAT-029 and US-082 to US-084 govern this.
+- **FR-54 — Typed actions and native execution targets.** An application developer
+  must be able to invoke UMF actions through generated typed clients with typed
+  outcomes, and run catalog entries on raw Postgres, Lakebase, Unity Catalog and
+  local Spark/Delta tables through the host's native SQL connection. The native
+  SQL action profile states which action guarantees hold per platform and refuses
+  the rest. Actions can be validated without effect, return the Keys they created
+  and changed, take per-call timeouts (a timeout before commit commits nothing),
+  run async on Postgres and Lakebase, and compose related changes as one
+  multi-effect action. FEAT-030, US-085 and US-086 govern this.
+- **FR-55 — Engine target adapters.** Truss and Ashlar must be able to adopt the
+  SDK by implementing its target protocols over their own protected paths: Truss
+  for reads, actions and bulk commands; Ashlar for publication-pinned reads.
+  Generated code never reaches engine storage directly. FEAT-031, US-087 and
+  US-088 govern this.
+
+Acceptance for FR-52 requires deterministic generation, static positive/negative
+corpora and exact-value/presence counterexamples. FR-53 requires static corpora
+on pinned pyright and mypy, catalog refusals for Weft-unsupported forms, and
+native read and search witnesses per target. FR-54 requires native action and
+bulk witnesses per target and the shared conformance suite. FR-55 requires
+engine-local adoption designs and engine witnesses. Specifications and
+local-only tests establish none of those native support claims.
+
+#### Praxis reporting amendment — 2026-10-15
+
+Owner direction (2026-10-15), following the [Praxis request](../00-discover/vision-input.md#praxis-request-typed-sdk-joins-and-aggregates-2026-10-15): replace the one-table/count-only restriction with bounded typed joins and read-only reporting. Deliver reviewed SQL aggregates before the native aggregate DSL; joins remain in the first PostgreSQL 18 / Lakebase target milestone.
+
+- **READ-JOIN — Typed joins:** Support inner and left joins across UMF-declared relationships, with typed projections spanning joined records, joined-column filtering and ordering, and deterministic keyset paging. Permit at most three relationship edges in a query, including repeated/self joins; reject excess joins at catalog build. Validate all resolved table bindings remain in the app's own schema. Retain the existing page-size cap.
+- **READ-AGG — Read-only aggregates:** Support count, sum, avg, min and max with grouping on one or more declared columns and typed results that preserve exact Decimal values. First provide fixed, reviewed SQL compiled through Weft into the checked-in catalog, with typed bound parameters and results. Admit only read-only shapes supported by the selected target at build time; do not defer unsupported-shape discovery to execution. Native aggregate DSL follows. Having-style filters remain optional pending cost assessment.
+- **READ-ROLE — Caller identity and execution bounds:** Execute joins, aggregates and reviewed SQL on the caller's own connection and role from per-user pools, preserving row-level security on every participating table. Require read-only transactions, per-call timeout, typed `TimedOut` and capped returned rows. Require no app-schema functions, views or triggers. Qualify PostgreSQL 18 and Lakebase separately; older PostgreSQL evidence does not qualify either target.
+- **READ-TYPE — Static typing:** Check the full generated package, including join and aggregate APIs, under ty. Extend the existing negative typing suite under ty, pyright and mypy to reject wrong columns, incompatible projections and invalid aggregate inputs, including left-join nullability and grouping misuse. Positive cases must pass all three checkers. A generated-package check alone does not satisfy misuse-rejection acceptance.
+
+Acceptance sketches:
+
+| Requirement | Input / scenario | Required outcome |
+| --- | --- | --- |
+| READ-JOIN | Orders/customers inner and left joins, joined filters/order, repeated sort values, unmatched customer, fan-out; three and four declared edges; cross-schema binding | Correct typed rows and nullable left side; no missing/duplicated rows across stable pages; three edges admitted, four and cross-schema binding refused at build |
+| READ-AGG | Grouped totals over exact decimal amounts, null inputs and empty sets; reviewed statement with bound inputs; unsupported target shape | Exact typed totals and declared null/empty behavior; catalog contains compiled statement; unsupported shape produces no executable catalog entry |
+| READ-ROLE | Two caller roles with different visible orders/customers; joins and grouped totals; query exceeding timeout or row cap | Each sees only role-visible data; same caller connection/role throughout; typed timeout; capped results; no required app-schema stored code |
+| READ-TYPE | Full generated package and positive/negative join/aggregate examples | ty accepts package; all three checkers accept valid uses and reject each intended misuse |
+
+Delivery references: WR-B7 (schema-neutral binding) and WR-A14 (relationship join lowering) are in the typed SDK's Weft requirements in checkout `20bc/umf`. US-081-AC9 checks the whole generated commerce package on Python 3.11 under ty, pyright and mypy; generated joins are included. The first implementation and its qualified limits are recorded in [reporting execution evidence](../04-build/evidence/typed-reporting/README.md). This is a refinement of FR-53, with FR-52 typing and FR-54 execution obligations. The owner-selected three-edge limit supersedes the earlier four-edge proposal for this slice.
+
 ## Acceptance Test Sketches
 
 These sketches establish observable outcomes for all 33 requirements. They

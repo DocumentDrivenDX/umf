@@ -293,7 +293,12 @@
                   "mutable": false,
                   "generated": true
                 }
-              ]
+              ],
+              "selectedKey": {
+                "module": "commerce",
+                "element": "Order",
+                "key": "order-key"
+              }
             },
             {
               "record": {
@@ -333,7 +338,12 @@
                   "mutable": true,
                   "generated": false
                 }
-              ]
+              ],
+              "selectedKey": {
+                "module": "commerce",
+                "element": "Customer",
+                "key": "Customer-key"
+              }
             },
             {
               "record": {
@@ -373,7 +383,12 @@
                   "mutable": false,
                   "generated": false
                 }
-              ]
+              ],
+              "selectedKey": {
+                "module": "commerce",
+                "element": "OrderLine",
+                "key": "OrderLine-key"
+              }
             }
           ],
           "columns": [],

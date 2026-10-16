@@ -185,7 +185,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
         projection = captured.variants[0].node.args[1][0].args[0]
         self.assertEqual(projection.name, UnitProjection.__qualname__)
         self.assertEqual(projection.module, UnitProjection.__module__)
-        self.assertEqual(render_logical(captured.variants[0]), 'SELECT "r"."Amount" FROM "sales"."Orders" AS "r" LIMIT 10')
+        self.assertEqual(render_logical(captured.variants[0]), 'SELECT "r"."Amount" AS "amount" FROM "sales"."Orders" AS "r" LIMIT 10')
 
     # @covers US-082-AC6
     def test_projection_without_explicit_metadata_refuses(self):

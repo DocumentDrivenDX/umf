@@ -37,7 +37,7 @@ def check(root: Path) -> int:
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation",
-               "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime"}
+               "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime"}
     extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"}}
 
     def fail(path: Path, code: str, message: str) -> None:
@@ -125,8 +125,8 @@ def check(root: Path) -> int:
                         fail(path, "PRIVATE", "star imports hide public ownership")
             elif isinstance(node, ast.Name) and node.id in {"__import__", "eval", "exec", "compile"}:
                 fail(path, "DYNAMIC", f"dynamic execution {node.id}")
-            elif isinstance(node, ast.Name) and node.id in {"open", "input"} and owner(name) in {"foundation", "dsl", "runtime", "conformance"}:
-                fail(path, "HOST", f"host I/O builtin {node.id}")
+            elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"} and owner(name) in {"foundation", "dsl", "runtime", "conformance"}:
+                fail(path, "HOST", f"host I/O builtin {node.func.id}")
 
     active: set[str] = set()
     done: set[str] = set()

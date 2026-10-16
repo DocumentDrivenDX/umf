@@ -2,10 +2,10 @@
   "status": "passed",
   "acceptanceReceipt": true,
   "casePromoted": "pg-raw.P07",
-  "runId": "4a17c736-ab61-4d82-b875-bea539d10c6e",
+  "runId": "e1fb02d7-59af-4196-a814-f806bdc39108",
   "sourceDigests": {
     "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
-    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "package.json": "1ae9f7bd1b5657d8f1a984dbca681edca0d55c11b6ab34fc791ccb1a88e0136b",
     "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
     "spec/core/extension-package.schema.json": "fe26a341e31ee0ef9433411122dbb43c5c809037bc96e277ec046b145221e794",
     "spec/core/facet-document.schema.json": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
@@ -15372,7 +15372,7 @@
     ],
     "digest": "31ad97f1c756f5b75296e4565ce651fc7607fddfc0e0d8c67ead9d6b5dfc7ad8"
   },
-  "elapsedSeconds": 15.229921667000001,
+  "elapsedSeconds": 18.519818375,
   "scope": "Complete opaque label archive on exact native Anonymizer3.2.3/PG18.6 fixture; no dynamic masking, native label interpretation, generic compiler, role/DDL lifecycle or backend admission.",
   "id": "pg-raw.P07",
   "backend": "pg-raw",

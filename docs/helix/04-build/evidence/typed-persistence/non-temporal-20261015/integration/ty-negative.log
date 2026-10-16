@@ -1,0 +1,50 @@
+error[invalid-argument-type]: Argument is incorrect
+ --> /private/tmp/umf-sdk-merged/corpus/negative.py:2:26
+  |
+2 | bad_decimal = OrderPatch(amount='private-invalid')
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^ Expected `Decimal | MISSING`, found `Literal["private-invalid"]`
+
+error[unknown-argument]: Argument `unknown` does not match any known parameter
+ --> /private/tmp/umf-sdk-merged/corpus/negative.py:3:24
+  |
+3 | bad_patch = OrderPatch(unknown=1)
+  |                        ^^^^^^^^^
+
+error[invalid-argument-type]: Argument is incorrect
+ --> /private/tmp/umf-sdk-merged/corpus/negative.py:4:20
+  |
+4 | bad_key = OrderKey(order_id=1)
+  |                    ^^^^^^^^^^ Expected `str`, found `Literal[1]`
+
+error[unknown-argument]: Argument `typo` does not match any known parameter of bound method `OrderQuery.update`
+ --> /private/tmp/umf-sdk-merged/corpus/negative.py:5:35
+  |
+5 | bad_update = Order.objects.update(typo=1)
+  |                                   ^^^^^^
+info: Method signature here
+  --> commerce/fields.py:52:9
+   |
+52 | … def update(self, *, amount: Decimal | Param[Decimal] | MISSING = MISSING, memo: str | None | Param[str | None] | MISSING = MISSING) -> Terminal[object]:
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[no-matching-overload]: No overload of bound method `OrderQuery.into` matches arguments
+ --> /private/tmp/umf-sdk-merged/corpus/negative.py:6:18
+  |
+6 | bad_projection = Order.objects.into(CustomerSummary)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+info: First overload defined here
+  --> commerce/fields.py:54:5
+   |
+54 | /     @overload
+55 | |     def into(self, model: type[OrderSummary]) -> Query[Order, OrderSummary, OrderKey]: ...
+   | |__________________________________________________________________________________________^ First overload defined here
+info: Possible overloads for bound method `into`:
+info:   (self, model: <class 'OrderSummary'>) -> Query[Order, OrderSummary, OrderKey]
+info:   (self, model: <class 'OrderIdentity'>) -> Query[Order, OrderIdentity, OrderKey]
+info: Overload implementation defined here
+  --> commerce/fields.py:58:9
+   |
+58 |     def into(self, model: type[OrderSummary] | type[OrderIdentity]) -> object:
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Found 5 diagnostics

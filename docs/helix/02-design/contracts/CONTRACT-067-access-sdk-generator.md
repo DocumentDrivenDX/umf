@@ -125,10 +125,7 @@ reason, obligationIds}` with `relevance` `selected`, `dependency` or
 `unselected`; `fidelity` `exact`, `approximated`, `not-expressible` or
 `unknown`; `checks` a unique subset of `client`, `database`, `engine`,
 `informational`. Every selected known assertion is enumerated, including ones
-that emit no code. `strict` refuses any non-exact selected or dependency
-disposition. `report` may emit a candidate for a known approximation that does
-not broaden accepted inputs or claimed enforcement; it refuses unknown relevant
-semantics in every mode.
+that emit no code. The initial 0.1 profile is exact-only: both `strict` and `report` refuse any non-exact selected or dependency disposition with `LOSS`, and unknown relevant semantics refuse in every mode. Unselected unknown content remains preserved. `report` still returns the complete diagnostic and obligation report; it does not authorize approximation. A future approximation profile needs its own governed narrowing rule, input-domain and non-enforcement evidence, explicit profile/version and acceptance gates. Retention and external engine obligations never count as approximations or discharged enforcement.
 
 ### Package layout
 

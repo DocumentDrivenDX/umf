@@ -12418,6 +12418,11 @@ runner; Delta B04/B10 have no native runner and ordinary identity/deployment
 qualification remains missing. This transport implements no diagnostic provider.
 See [versioned source and evidence](evidence/security/projection-query-child-v2-20261015/README.md).
 
+
+### Typed reporting reads — 2026-10-15
+
+Restored the typed SDK foundation from archived `39bf/umf` snapshot `8c9d0fb6`, then implemented the FR-53 Praxis reporting amendment: three-edge declared to-one joins, generated cross-record projections, reviewed SQL aggregates, native caller-role execution, joined keyset continuations and per-call typed timeouts. Weft core owns source/SQL admission; its PostgreSQL backend owns native lowering. WR-B7 and WR-A14 are the located interface work references from `20bc/umf`. [Execution evidence](evidence/typed-reporting/README.md) records source pins, actual installed-wheel tests and limits. [Usage](guides/typed-reporting.md) shows build and runtime calls. This scoped milestone does not close broader SDK targets, native aggregate DSL or Lakebase service qualification.
+
 ### Raw retirement-first ordering component — 2026-10-15
 
 For US-057-AC2/5/7, the existing PG17.9 publisher routine now has an independent retirement-first native schedule. Forty matching observations cover commit/refusal, rollback/refusal and an unsafe claim-omission control that returns rows after terminal retirement. Exact native lock barriers precede release; the original routine is restored and the owned fixture removed. This closes a component test gap, not L03 or backend acceptance. The psycopg harness does not qualify the public decoder, host issuer, complete writer closure or final transport. [Source, native receipt and review evidence](evidence/security/retirement-first-20261015/README.md) retain the scope and failed exploratory attempt.45/158 cases remain accepted; all158 remain required.
@@ -12444,3 +12449,26 @@ Full ideal admission and five-binding delivery are not promoted. Native binding3
 indexes/relationships, general nullable-pair/write/atomicity qualification and
 consumer runtime adoption remain separate. Earlier global acceptance receipts
 are not refreshed by this scoped work; storage optimality is not benchmarked.
+
+### Typed SDK public schema-load and non-temporal instance E2E — 2026-10-15
+
+The actual public schema loader and CLI now feed emitted packages imported against a source-verified installed runtime. Scalar, nested-container and alternate-Key cases pass83 creation/codec checks on each of Python3.11.17 and3.14.8; both installed runtime suites pass95tests. A red control exposed same-shaped foreign Key DTO acceptance during raw graph copying; nominal identity is now checked before reconstruction. Explicit selectedKey, distinct alternate DTOs, thin shared-runtime codecs/projection decode, value-free decode errors, final/unhashable metadata, explicit update keywords, stage-two privilege preservation and public compatibility reports are exercised.
+
+The932-test Bun replay/3170assertions, pinned mypy2.4.0/Pyright1.1.414/ty0.0.88 positive and exact-negative corpora, actual two-wheel scale-fix/drift proof and15-case Chromium153 parity pass. One concurrent CLI timeout and harness corrections remain retained. Owner-approved initial exact-only and explicitly hypothetical no-null policy qualifications do not alter core semantics. [Execution and continuation](evidence/typed-persistence/non-temporal-20261015/execution.json) distinguishes this scoped delivery from full B-TP-003/SDK acceptance. Full action/source, complete DSL/catalog and native/engine gates remain open; temporal qualification is HELD.
+
+
+### Typed SDK concurrent reporting integration and real E2E replay — 2026-10-15
+
+The combined source preserves typed to-one joins, nullable cross-record projections and reviewed PostgreSQL reads alongside explicit Key selection and shared-runtime codecs. Merge review added red/green guards for Join import and projection descriptor collisions. The final frozen SDK source b6e59db0 passes935Bun tests/3186assertions across15files; both installed Python3.11.17/3.14.8 suites pass95tests and83 public schema-load/creation/codec E2E checks each. All three pinned checkers pass positives and reject the19 selected reporting/query misuse cases; separate model negatives retain exact line/rule checks. General15-case and joined3-case Chromium parity pass.
+
+The exact frozen Weft raw-read wheel and fresh SDK wheel execute14 compiler/native read tests with no skips on an isolated PostgreSQL18.6 cluster, including generated capture/catalog/caller reads and nullable joined thin-codec controls; the owned server is stopped. [Final integration evidence](evidence/typed-persistence/non-temporal-20261015/integration/integration.json) records source/SDK/compiler hashes and supersedes pre-merge claims only for the tested subset. Full SDK/B-TP-003 acceptance remains OPEN; temporal qualification remains HELD. Unrelated dirty UUID work on local main is preserved; publication uses the verified integration branch to fast-forward repository main.
+
+### Typed action ABI, catalog freshness and PostgreSQL snapshot exports — 2026-10-16
+
+Source-bound ActionRef now carries the exact original document/core/action pointer/digest and initial tx/1 invocation identity. Generated synchronous Actions/ReplayingActions endpoints validate raw model graphs, omit MISSING inputs, distinguish replay capability and retain complete original authorized outcomes/request/transport and host recovery custody. Action protocol fixtures exercise invocation, validation, failures and replay without implicit retry; they do not qualify native/Truss writes. Endpoint keyword/case-fold collisions refuse before emission.
+
+Reviewed catalogs now bind to participating generated stage-one digest/runtime ABI and refuse stale/mixed generations before touching a connection. PostgreSQL18 bounded exports execute existing Weft keyset pages in one repeatable-read/read-only transaction; an independent concurrent writer, max_rows, early-close cleanup and host transaction refusal are exercised natively. [Exact execution and limits](evidence/typed-persistence/action-catalog-20261016/README.md) retain installed-wheel, public schema-to-instance, static, browser and native receipts. Full B-TP-003/SDK acceptance remains OPEN: complete stage-two catalog publication, native action/bulk/search lowering and engine/managed backend gates are not implemented or qualified by this packet. Temporal qualification stays HELD.
+
+### UUID implementation main integration — 2026-10-16
+
+Implementation commit `25a38767` integrates with the fourteen newer remote-main commits. The execution-log conflict retains both workstreams. On the combined source, both TypeScript configurations pass and the seven UUID/128-bit test files pass27 tests with6849 assertions; `git diff --check` is clean. This integration check does not refresh the earlier native or browser receipts or claim a full-repository replay.
