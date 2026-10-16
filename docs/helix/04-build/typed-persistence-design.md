@@ -167,6 +167,8 @@ Completed fixes preserve full source pins through action capture, reject ambiguo
 
 Next: close the remaining B-TP-001–005 acceptance criteria and qualify the existing first-consumer read subset against the full B-TP-008 contract. The narrow reviewed-SQL profile is executable progress, not completion of the planned general catalog/Target ABI. Truss browser/local-905 progress and the separate performance/publication hold remain owned by the SQL-to-actions/Truss workstream; this recovery review neither releases that hold nor promotes L0 into SDK adoption. New main source changes produce a new action-plan producer identity; preserve and separately qualify cohorts, never relabel frozen artifacts.
 
+The PR #21 merge reconciliation also incorporates main `0b2bf0c1`: source-bound action client/dispatch types, stage-one/runtime catalog generation guards and snapshot export components, plus independent UUID work. [Merge verification](evidence/typed-persistence/pr21-merge-20261016/verification.json) records fresh installed-wheel, native, typing and CI-gate results. These additions do not close native action/engine adoption gates or qualify a new frozen browser cohort.
+
 ## Execution Contract
 
 The owner authorizes implementation of the ordered slices, test-first, with

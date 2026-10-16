@@ -1,8 +1,7 @@
 """Capture's in-memory boundary: no catalog writer or Weft substitute."""
-from decimal import Decimal
 import unittest
-from pydantic import MISSING
 
+from pydantic import MISSING
 from umf_access.capture import CaptureError, capture
 from umf_access.dsl import Column, FieldRef, Param, Query, RecordRef, if_present, query
 
@@ -153,7 +152,7 @@ class PresenceBounds(unittest.TestCase):
         for combine in (lambda p: p | (memo == "x"), lambda p: p & (memo == "x"), lambda p: ~p):
             @query
             def declaration(a: Param[str | MISSING]):
-                return objects.filter(combine(if_present(a, lambda p: memo == p))).limit(10).all()
+                return objects.filter(combine(if_present(a, lambda p: memo == p))).limit(10).all()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
 
             with self.subTest(combine=combine):
                 with self.assertRaises(CaptureError) as caught:

@@ -3,13 +3,13 @@
 Base syntax: Weft SQL 0.2 EBNF at 94b2de5e. Extended predicates/order:
 UMF WR-A1..A8 grammar delta. Extended-form acceptance remains UNTESTED.
 """
-from decimal import Decimal
 import unittest
-from pydantic import BaseModel
-from typing import ClassVar
 from collections.abc import Mapping
+from decimal import Decimal
 from types import MappingProxyType
+from typing import ClassVar
 
+from pydantic import BaseModel
 from umf_access.capture import capture
 from umf_access.dsl import Column, FieldRef, Param, Query, RecordRef, query
 from umf_access.dsl.render import render_logical
@@ -55,7 +55,7 @@ class LogicalWeftRendering(unittest.TestCase):
         for bound in (0, -1, 1001, True):
             @query
             def bad_bound():
-                return objects.group_by(order_id).limit(bound).count()
+                return objects.group_by(order_id).limit(bound).count()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
             with self.assertRaises(ValueError):
                 capture(bad_bound)
 
@@ -69,7 +69,7 @@ class LogicalWeftRendering(unittest.TestCase):
         for build, operator in operations:
             @query
             def declaration(minimum: Param[Decimal]):
-                return objects.filter(build(amount, minimum)).select(order_id).limit(10).all()
+                return objects.filter(build(amount, minimum)).select(order_id).limit(10).all()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
 
             with self.subTest(operator=operator):
                 variant = capture(declaration).variants[0]
@@ -84,7 +84,7 @@ class LogicalWeftRendering(unittest.TestCase):
             @query
             def declaration():
                 # Test chooses a known method, never a column from a string.
-                return objects.filter(getattr(memo, method)()).select(order_id).limit(10).all()
+                return objects.filter(getattr(memo, method)()).select(order_id).limit(10).all()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
 
             with self.subTest(method=method):
                 self.assertEqual(render_logical(capture(declaration).variants[0]), PREFIX + f' WHERE "r"."memo" {expected} LIMIT 10')
@@ -217,7 +217,7 @@ class LogicalFormCoverage(unittest.TestCase):
         ):
             @query
             def declaration():
-                return getattr(objects, terminal)()
+                return getattr(objects, terminal)()  # noqa: B023 -- Declaration is captured synchronously inside this loop.
 
             variant = capture(declaration).variants[0]
             self.assertEqual(variant.node.op, terminal)

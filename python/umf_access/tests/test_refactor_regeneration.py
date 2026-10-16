@@ -4,7 +4,6 @@ Uses an exact installed runtime wheel; generated modules come only from the
 actual stage-one generator. Source compatibility is distinct from value/native
 and installed-target compatibility, which this test does not claim.
 """
-from pathlib import Path
 import ast
 import hashlib
 import json
@@ -14,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 EVIDENCE = ROOT / "docs/helix/04-build/evidence/typed-persistence"
@@ -45,7 +45,7 @@ class RefactorByRegeneration(unittest.TestCase):
         verify_installed_files(inspect_wheel(wheel, pin), site)
         cls.compiler_inputs = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for directory in (ROOT / "src", ROOT / "spec") for p in directory.rglob("*") if p.is_file() and p.suffix in (".ts", ".json")}
         command = ["bun", str(EVIDENCE / "b-tp-005-generate-corpus.ts"), str(cls.generated)]
-        generated = subprocess.run(command, cwd=ROOT, env=cls.env, capture_output=True, text=True)
+        generated = subprocess.run(command, check=False, cwd=ROOT, env=cls.env, capture_output=True, text=True)
         cls.report["generation"] = {"command": command, "exitCode": generated.returncode, "stdout": generated.stdout, "stderr": generated.stderr}
         if generated.returncode:
             raise AssertionError("real generator refused fixture; not a typing-negative pass")
@@ -81,7 +81,7 @@ class RefactorByRegeneration(unittest.TestCase):
             }
             for checker, command in commands.items():
                 env = {**self.env, "MYPYPATH": str(generated_root), "MYPY_CACHE_DIR": str(self.generated / ("cache-" + case["variant"])), "PYTHONDONTWRITEBYTECODE": "1"}
-                run = subprocess.run(command, cwd="/private/tmp", env=env, capture_output=True, text=True)
+                run = subprocess.run(command, check=False, cwd="/private/tmp", env=env, capture_output=True, text=True)
                 if checker == "pyright":
                     diagnostics = json.loads(run.stdout)["generalDiagnostics"]
                     actual = [{"line": d["range"]["start"]["line"] + 1, "rule": d.get("rule")} for d in diagnostics if d["severity"] == "error"]

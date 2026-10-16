@@ -9,7 +9,7 @@ from umf_access.postgres_read import _KEYS
 class NativeKeyAdmission(unittest.TestCase):
     def test_default_keys_pass_but_alternate_equality_refuses(self):
         import psycopg
-        with psycopg.connect(os.environ["UMF_PG_TEST_DSN"], autocommit=True) as connection:
+        with psycopg.connect(os.environ["UMF_PG_TEST_DSN"], autocommit=True) as connection:  # noqa: SIM117 -- Keep transaction/test failure scopes explicit.
             # All controls are transaction-local and roll back, including collations.
             with connection.transaction(force_rollback=True):
                 connection.execute("CREATE TEMP TABLE umf_key_default (id text PRIMARY KEY)")

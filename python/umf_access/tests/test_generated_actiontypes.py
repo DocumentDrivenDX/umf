@@ -2,12 +2,17 @@
 import unittest
 from dataclasses import FrozenInstanceError
 from decimal import Decimal
-from typing import Literal, get_type_hints, get_args
+from typing import Literal, get_args, get_type_hints
 
+from commerce.actions import (
+    ShipOrder,
+    ShipOrderInput,
+    ShipOrderOutput,
+    ShipOrderRejected,
+)
+from commerce.keys import OrderKey
 from pydantic import MISSING
 from umf_access.codec_support import revalidate_model
-from commerce.actions import ShipOrder, ShipOrderInput, ShipOrderOutput, ShipOrderRejected
-from commerce.keys import OrderKey
 
 
 class GeneratedActionTypes(unittest.TestCase):

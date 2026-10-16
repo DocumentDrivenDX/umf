@@ -4,9 +4,18 @@ from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal, localcontext
 
 from umf_access.values import (
-    validate_integer, validate_decimal, validate_string,
-    validate_date, validate_instant, validate_local, validate_boolean, validate_binary,
-    validate_length, validate_range, validate_allowed, validate_vector,
+    validate_allowed,
+    validate_binary,
+    validate_boolean,
+    validate_date,
+    validate_decimal,
+    validate_instant,
+    validate_integer,
+    validate_length,
+    validate_local,
+    validate_range,
+    validate_string,
+    validate_vector,
 )
 
 
@@ -19,9 +28,9 @@ class ValuePolicyTests(unittest.TestCase):
                 value = Decimal(spelling)
                 result = validate_decimal(value, precision=12, scale=2)
                 self.assertEqual(result.as_tuple(), value.as_tuple())
-            for value in (Decimal("1.234"), Decimal("10000000000"),
+            for value in (Decimal("1.234"), Decimal(10000000000),
                           Decimal("NaN"), Decimal("Infinity"), 1.2, "1.20", True):
-                with self.subTest(value_type=type(value).__name__):
+                with self.subTest(value_type=type(value).__name__):  # noqa: SIM117 -- Keep transaction/test failure scopes explicit.
                     with self.assertRaises(ValueError):
                         validate_decimal(value, precision=12, scale=2)
 

@@ -696,14 +696,15 @@ behavioral gates. B-TP-000 evidence qualifies enforcement, not SDK functionality
 
 [SD-005](solution-designs/SD-005-128-bit-uuid.md) and
 [CONTRACT-076](contracts/CONTRACT-076-128-bit-uuid.md) extend the portable core
-under FEAT-005 IDEAL-09. The proposed 0.9.0 profile adds bits128 and UUID meaning;
-integer width facets retain arithmetic meaning. This is a design boundary, not
-an implementation inventory update.
+under FEAT-005 IDEAL-09. The experimental0.9.0 profile implements bits128 and UUID
+meaning; integer width facets retain arithmetic meaning. Scoped implementation
+and native limitations are in [the execution record](../04-build/evidence/uuid-implementation.md).
 
 | Module | Owns | Dependencies and exclusions |
 | --- | --- | --- |
-| `src/model/bit128.ts` (new) | Immutable JSON-safe exact value codecs and comparisons | No document, adapter, registry, filesystem, network or host-runtime imports |
-| `src/model/uuid.ts` (new) | UUID text/byte view over exact bits | May import bit128 and portable error types; no generation or native layout assumptions |
+| `src/model/bit128.ts` | Immutable JSON-safe exact value codecs and comparisons | No document, adapter, registry, filesystem, network or host-runtime imports |
+| `src/model/bit128-field.ts` | Copied0.9 Field-domain authoring | Model/validation coordination only; no native storage imports or routine receipt |
+| `src/model/uuid.ts` | UUID text/byte view over exact bits | May import bit128 and portable error types; no generation or native layout assumptions |
 | `src/model/schema-literals.ts`, `src/validation/` | Field-context checks, literal and facet interpretation | Import portable value codecs; codecs must not import these coordinators |
 | `src/model/key-tuple.ts` | Versioned key framing over validated literal payloads | Reuse codecs; no native database comparison or storage imports |
 | `src/extensions/binding/` | Independently versioned physical carrier declarations | Resolve supplied logical identity; no database execution or core-to-binding back import |

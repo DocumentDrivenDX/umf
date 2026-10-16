@@ -12438,6 +12438,20 @@ Independent Astra Ultra review found no remaining component finding after two cl
 
 The complete158-required-case replay executes45 implementations:43 pass, S12 fails its selected solver environment and P04 exceeds the60-second outer harness limit. A restored pinnedZ3 replay passes84 observations; the unchanged isolated P04 passes806 in65.1 seconds. Only P04's outer budget increases to120 seconds; assertions and native limits are unchanged. Astra Ultra review finds no actionable issue. The first failed run and qualified diagnostics are [retained](evidence/security/gate-refresh-20261015/README.md). A second full run is underway; no corrected full-gate result or case promotion is asserted at this commit. All113 missing implementations and full34-criterion completion remain required.
 
+### Experimental128-bit and UUID implementation — 2026-10-16
+
+CONTRACT-076 / SD-005 now have core0.9 value codecs, literals, copied Field/schema
+property authoring, inspection/selection, tuple-v2/operation-v4 encoding and
+collision-preserving migration. Binding3 adds explicit carrier codecs and bounded
+one-Field schema proposals. Native PG17.9, SQL Server2022, Avro/fastavro and
+PyArrow paths recover the exercised library-produced values; captured TableSpec
+model validation covers the string fallback. The [execution record](evidence/uuid-implementation.md)
+retains current source/test evidence, native warnings, failed attempts and corrections.
+
+Full ideal admission and five-binding delivery are not promoted. Native binding3
+indexes/relationships, general nullable-pair/write/atomicity qualification and
+consumer runtime adoption remain separate. Earlier global acceptance receipts
+are not refreshed by this scoped work; storage optimality is not benchmarked.
 
 ### Typed SDK public schema-load and non-temporal instance E2E — 2026-10-15
 
@@ -12451,3 +12465,18 @@ The932-test Bun replay/3170assertions, pinned mypy2.4.0/Pyright1.1.414/ty0.0.88 
 The combined source preserves typed to-one joins, nullable cross-record projections and reviewed PostgreSQL reads alongside explicit Key selection and shared-runtime codecs. Merge review added red/green guards for Join import and projection descriptor collisions. The final frozen SDK source b6e59db0 passes935Bun tests/3186assertions across15files; both installed Python3.11.17/3.14.8 suites pass95tests and83 public schema-load/creation/codec E2E checks each. All three pinned checkers pass positives and reject the19 selected reporting/query misuse cases; separate model negatives retain exact line/rule checks. General15-case and joined3-case Chromium parity pass.
 
 The exact frozen Weft raw-read wheel and fresh SDK wheel execute14 compiler/native read tests with no skips on an isolated PostgreSQL18.6 cluster, including generated capture/catalog/caller reads and nullable joined thin-codec controls; the owned server is stopped. [Final integration evidence](evidence/typed-persistence/non-temporal-20261015/integration/integration.json) records source/SDK/compiler hashes and supersedes pre-merge claims only for the tested subset. Full SDK/B-TP-003 acceptance remains OPEN; temporal qualification remains HELD. Unrelated dirty UUID work on local main is preserved; publication uses the verified integration branch to fast-forward repository main.
+
+### Typed action ABI, catalog freshness and PostgreSQL snapshot exports — 2026-10-16
+
+Source-bound ActionRef now carries the exact original document/core/action pointer/digest and initial tx/1 invocation identity. Generated synchronous Actions/ReplayingActions endpoints validate raw model graphs, omit MISSING inputs, distinguish replay capability and retain complete original authorized outcomes/request/transport and host recovery custody. Action protocol fixtures exercise invocation, validation, failures and replay without implicit retry; they do not qualify native/Truss writes. Endpoint keyword/case-fold collisions refuse before emission.
+
+Reviewed catalogs now bind to participating generated stage-one digest/runtime ABI and refuse stale/mixed generations before touching a connection. PostgreSQL18 bounded exports execute existing Weft keyset pages in one repeatable-read/read-only transaction; an independent concurrent writer, max_rows, early-close cleanup and host transaction refusal are exercised natively. [Exact execution and limits](evidence/typed-persistence/action-catalog-20261016/README.md) retain installed-wheel, public schema-to-instance, static, browser and native receipts. Full B-TP-003/SDK acceptance remains OPEN: complete stage-two catalog publication, native action/bulk/search lowering and engine/managed backend gates are not implemented or qualified by this packet. Temporal qualification stays HELD.
+
+### UUID implementation main integration — 2026-10-16
+
+Implementation commit `25a38767` integrates with the fourteen newer remote-main commits. The execution-log conflict retains both workstreams. On the combined source, both TypeScript configurations pass and the seven UUID/128-bit test files pass27 tests with6849 assertions; `git diff --check` is clean. This integration check does not refresh the earlier native or browser receipts or claim a full-repository replay.
+
+
+### PR #21 merge reconciliation — 2026-10-16
+
+The reviewed SDK repairs are reconciled with main `0b2bf0c1`, preserving source-bound action clients, catalog generation guards, snapshot exports and independent UUID changes. [Fresh merge verification](evidence/typed-persistence/pr21-merge-20261016/verification.json) scopes the new local source/wheel checks separately from earlier receipts. Python lint and schema-browser reproducibility/integrity CI blockers are corrected; published release parity remains an explicit fail-closed qualification. The shared typed SDK slice matrix and frozen browser/performance holds remain governing.

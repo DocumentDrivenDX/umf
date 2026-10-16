@@ -1,4 +1,4 @@
-"""Check the full generated reporting package and 19 isolated misuse cases."""
+"""Check the full generated reporting package and query/action misuse cases."""
 from pathlib import Path
 import argparse
 import subprocess,os,json
@@ -8,7 +8,8 @@ subprocess.run(['bun',str(root/'scripts/generate-access-reporting-fixture.ts'),s
 base=root/'tests/compilation/python/static/queries/negative'
 names=['unknown_column','wrong_operand','wrong_param','foreign_column_filter','foreign_column_select','foreign_projection','wrong_eq_operand','wrong_ne_operand','null_optional_filter','update_unknown_field','update_wrong_type','ninth_select_column']
 negative=[base/(n+'.py') for n in names]+sorted((root/'tests/compilation/python/static/joins/negative').glob('*.py'))
-positive=[generated/'commerce',root/'tests/compilation/python/static/joins/positive.py',root/'tests/compilation/python/static/queries/positive/runtime_types.py',root/'tests/compilation/python/static/queries/positive/terminals.py']
+negative+=sorted((root/'tests/compilation/python/static/actions/negative').glob('*.py'))
+positive=[root/'tests/compilation/python/static/actions/positive.py',generated/'commerce',root/'tests/compilation/python/static/joins/positive.py',root/'tests/compilation/python/static/queries/positive/runtime_types.py',root/'tests/compilation/python/static/queries/positive/terminals.py']
 search=str(generated) if args.installed_runtime else f'{runtime}:{generated}'
 env=dict(os.environ,PYTHONPATH=search,MYPYPATH=search)
 for file in (generated/'commerce').glob('*.py'):

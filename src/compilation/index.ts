@@ -9,7 +9,7 @@ export function generateAccessPackage(request:AccessRequest,profile:AccessProfil
  const a=admitAccessRequest(request,profile);
  if(a.diagnostics.length)return packageAccessFiles(a.request,a.profile,[],[],a.dispositions,a.obligations,a.diagnostics);
  const inputDigest=hashCanonical({request:a.request,profile:a.profile});
- const emitted=emitPythonAccess(a.ir,a.request,inputDigest,sha256Text(a.request.sources.find(source=>source.id===a.request.logical)!.text));
+ const emitted=emitPythonAccess(a.ir,a.request,inputDigest,sha256Text(a.request.sources.find(s=>s.id===a.request.logical)!.text),a.profile.dependencies.find(d=>['umf_access','umf-access'].includes(d.distribution))!.version);
  return packageAccessFiles(a.request,a.profile,emitted.texts,emitted.symbols,a.dispositions,a.obligations,a.diagnostics);
  }catch(error){if(error instanceof Error&&error.message==='INPUT')throw new AccessInputError('INPUT','');throw error;}
 }

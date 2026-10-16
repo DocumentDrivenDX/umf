@@ -1,10 +1,13 @@
 """Shared generated-model ABI. Imports perform no host operations."""
+import re
 from dataclasses import dataclass
 from typing import ClassVar, Generic, TypeAlias, TypeVar, final
 
-from pydantic import BaseModel, ConfigDict, MISSING as MISSING
+from pydantic import MISSING as MISSING  # noqa: PLC0414 -- Explicit typed public re-export.
+from pydantic import BaseModel, ConfigDict
 
 RUNTIME_ABI = "umf-access-runtime/0.1"
+RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
 
 Vector: TypeAlias = tuple[float, ...]
 
@@ -44,8 +47,8 @@ class StrictModel(BaseModel):
     )
 
 
-InputT = TypeVar("InputT", bound=StrictModel, covariant=True)
-OutputT = TypeVar("OutputT", covariant=True)
+InputT_co = TypeVar("InputT_co", bound=StrictModel, covariant=True)
+OutputT_co = TypeVar("OutputT_co", covariant=True)
 
 
 def _is_model_type(value: object, *, allow_none: bool = False) -> bool:
@@ -63,36 +66,61 @@ class ActionProfile:
 @final
 @dataclass(frozen=True)
 class ActionSource:
-    """Original full-document identity; carries no issued revision or authority."""
-    documentId: str
-    coreVersion: str
+    """Exact original document/declaration identity, never an authority token."""
+    document_id: str
+    core_version: str
     module: str
     action: str
-    documentSha256: str
-    actionPointer: str
-    invocation: ActionProfile
+    document_sha256: str
+    action_pointer: str
+    invocation_id: str
+    invocation_version: str
 
     def __post_init__(self) -> None:
-        import re
         if any(type(value) is not str or not value for value in (
-            self.documentId, self.module, self.action, self.actionPointer
-        )) or self.coreVersion != "0.8.0":
-            raise ValueRuleError("invalid original action source identity")
-        if not re.fullmatch(r"[0-9a-f]{64}", self.documentSha256):
-            raise ValueRuleError("original document SHA256 required")
-        if not self.actionPointer.startswith("/modules/") or type(self.invocation) is not ActionProfile or self.invocation != ActionProfile("umf.actions.tx", "1"):
-            raise ValueRuleError("original action pointer/profile required")
+                self.document_id, self.core_version, self.module, self.action,
+                self.action_pointer, self.invocation_id, self.invocation_version)):
+            raise ValueRuleError("complete original action source required")
+        if not re.fullmatch(r"[0-9a-f]{64}", self.document_sha256):
+            raise ValueRuleError("original document SHA-256 required")
+        if self.core_version != "0.8.0" or (self.invocation_id, self.invocation_version) != ("umf.actions.tx", "1"):
+            raise ValueRuleError("unsupported original action source profile")
+        if not self.action_pointer.startswith("/modules/"):
+            raise ValueRuleError("original action pointer required")
+
+
+    # Read-only aliases retain the earlier source view while canonical dataclass
+    # fields follow the executor ABI and support dataclasses.replace.
+    @property
+    def documentId(self) -> str:
+        return self.document_id
+
+    @property
+    def coreVersion(self) -> str:
+        return self.core_version
+
+    @property
+    def documentSha256(self) -> str:
+        return self.document_sha256
+
+    @property
+    def actionPointer(self) -> str:
+        return self.action_pointer
+
+    @property
+    def invocation(self) -> ActionProfile:
+        return ActionProfile(self.invocation_id, self.invocation_version)
 
 
 @final
 @dataclass(frozen=True)
-class ActionRef(Generic[InputT, OutputT]):
+class ActionRef(Generic[InputT_co, OutputT_co]):
     """Immutable generated action identity and value types; never an executor."""
 
     module: str
     action: str
-    input_type: type[InputT]
-    output_type: type[OutputT]
+    input_type: type[InputT_co]
+    output_type: type[OutputT_co]
     source: ActionSource
 
     def __post_init__(self) -> None:

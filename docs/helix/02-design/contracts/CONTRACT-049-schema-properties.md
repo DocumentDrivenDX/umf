@@ -326,3 +326,9 @@ including exact allowed-value equality, examples, defaults and value checking.
 The original0.8.0 surfaces above do not adopt these domains. Existing JavaScript
 numeric APIs retain their contract; UUID/bit conversion uses the separate codecs,
 never implicit number admission or integer/UUID coercion.
+
+The shared numeric adapter's optional Field context now also accepts an explicitly
+validated0.9.0 integer/decimal Field through CONTRACT-076's version-dispatched
+value checker. Literal shapes and exact-number policy remain unchanged; UUID and
+bits128 do not become numeric domains. Signed/unsigned integer128 uses the existing
+width facet and lossless bigint bridge, with overflow and unsafe number refusal.

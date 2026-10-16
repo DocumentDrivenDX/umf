@@ -1,20 +1,36 @@
 """Real Weft compilation; native cases run only against an explicit test cluster."""
 from __future__ import annotations
-import copy
+
 import hashlib
 import json
 import os
-from pathlib import Path
 import subprocess
 import unittest
 from decimal import Decimal
+from pathlib import Path
 from typing import ClassVar
+
 from pydantic import BaseModel, ConfigDict, field_validator
-from umf_access.types import CodecError, StrictModel
-from umf_access.reviewed import ReviewedSQL, CatalogRead, ReadBuildError, build_query
-from umf_access.postgres_read import execute_read, execute_page, ReadObligationUnmet, TimedOut
 from umf_access.capture import capture
-from umf_access.dsl import Column, FieldRef, Join, JoinProjection, Query, RecordRef, query
+from umf_access.dsl import (
+    Column,
+    FieldRef,
+    Join,
+    JoinProjection,
+    Query,
+    RecordRef,
+    query,
+)
+from umf_access.postgres_read import (
+    ReadObligationUnmet,
+    TimedOut,
+    execute_page,
+    execute_read,
+    execute_stream,
+)
+from umf_access.reviewed import CatalogRead, ReadBuildError, ReviewedSQL, build_query
+from umf_access.types import CodecError, StrictModel
+
 
 class Compiler:
     def compile_raw_read_json(self, request: str) -> str:
@@ -100,7 +116,9 @@ def binding(schema: str | None = None) -> dict[str, object]:
 
 # Handwritten DSL stand-ins explicitly carry the same pinned source as the binding.
 from dataclasses import replace
+
 from umf_access.dsl import GeneratedSource
+
 _source_binding = binding()
 SOURCE = GeneratedSource("praxis-read-test", "0.8.0", str(_source_binding["modelSha256"]), "a" * 64, "umf-access-runtime/0.1")
 OID = replace(OID, source=SOURCE)
@@ -233,7 +251,7 @@ class Native(unittest.TestCase):
 
     def test_injected_parameter_extras_refuse_without_leaking_values(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(Compiler(), target="postgresql18", binding=binding())
-        params = Minimum(minimum=Decimal("0")).model_copy(update={"private-extra-key": "private-extra-value"})
+        params = Minimum(minimum=Decimal(0)).model_copy(update={"private-extra-key": "private-extra-value"})
         with self.assertRaises(CodecError) as caught:
             execute_read(self.a, entry, params, app_schema="praxis_test")
         self.assertNotIn("private-extra", str(caught.exception))
@@ -265,10 +283,38 @@ class Native(unittest.TestCase):
         with self.assertRaises(ReadObligationUnmet):
             execute_page(self.a, entry, Empty(), app_schema="praxis_test", after=invalid)
 
+    def test_stream_uses_one_snapshot_and_releases_connection(self):
+        entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(Compiler(), target="postgresql18", binding=binding())
+        stream = execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=1001)
+        try:
+            first = next(stream)
+            self.assertEqual(first.id, 1)
+            self.assertEqual(self.a.execute("SHOW transaction_isolation").fetchone()[0], "repeatable read")
+            self.assertEqual(self.a.execute("SHOW transaction_read_only").fetchone()[0], "on")
+            self.admin.execute("UPDATE praxis_test.orders SET owner_role='praxis_b' WHERE id=4")
+            self.assertEqual([first.id] + [row.id for row in stream], [1,2,4,5])
+            self.assertEqual(self.a.info.transaction_status, 0)
+        finally:
+            stream.close()
+            self.admin.execute("UPDATE praxis_test.orders SET owner_role='praxis_a' WHERE id=4")
+        early = execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3)
+        next(early)
+        self.assertEqual(self.a.info.transaction_status, 2)
+        early.close()
+        self.assertEqual(self.a.info.transaction_status, 0)
+        self.assertEqual(len(list(execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3))), 3)
+        for limit in (0, -1, True):
+            with self.assertRaises(ValueError):
+                execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=limit)
+        with self.a.transaction():
+            self.a.execute("SELECT 1")
+            with self.assertRaises(ReadObligationUnmet):
+                execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3)
+
     def test_two_roles_see_only_own_totals(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(Compiler(), target="postgresql18", binding=binding())
-        a = execute_read(self.a, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test")
-        b = execute_read(self.b, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test")
+        a = execute_read(self.a, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test")
+        b = execute_read(self.b, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test")
         self.assertEqual({r.total for r in a}, {Decimal("0.30"), Decimal("0.70")})
         self.assertEqual(b[0].total, Decimal("123.45"))
         self.assertEqual(self.a.info.transaction_status, 0)
@@ -308,6 +354,22 @@ class Native(unittest.TestCase):
         def declaration():
             return Order.objects.join(Order.c.customer).order_by(Order.c.order_id.asc()).into(OrderCustomerProjection).limit(10).all()
         entry = build_query(capture(declaration), Compiler(), parameters=Empty, result=OrderCustomer, target="postgresql18", binding=bound, row_cap=10)
+        pins = entry.artifact()["stageOne"]
+        self.assertEqual(pins["inputDigest"], OrderCustomer.UMF_BUNDLE_INPUT_DIGEST)
+        class NoConnection:
+            @property
+            def info(self):
+                raise AssertionError("stale catalog touched the connection")
+        old_digest, old_abi = OrderCustomer.UMF_BUNDLE_INPUT_DIGEST, OrderCustomer.UMF_RUNTIME_ABI
+        try:
+            for name, value in (("UMF_BUNDLE_INPUT_DIGEST", "0" * 64), ("UMF_RUNTIME_ABI", ("umf_access", "different", "umf-access-runtime/0.1"))):
+                setattr(OrderCustomer, name, value)
+                with self.assertRaisesRegex(ReadBuildError, "CATALOG_STALE"):
+                    execute_read(NoConnection(), entry, Empty(), app_schema=schema)
+                OrderCustomer.UMF_BUNDLE_INPUT_DIGEST, OrderCustomer.UMF_RUNTIME_ABI = old_digest, old_abi
+        finally:
+            OrderCustomer.UMF_BUNDLE_INPUT_DIGEST, OrderCustomer.UMF_RUNTIME_ABI = old_digest, old_abi
+
         rows = execute_read(self.a, entry, Empty(), app_schema=schema)
         self.assertEqual([(r.order_id, r.name) for r in rows], [("a1", "Alpha"), ("a2", None)])
         from umf_access.dsl import Param
@@ -315,7 +377,7 @@ class Native(unittest.TestCase):
         globals()["GeneratedOrderKey"] = OrderKey
         globals()["Param"] = Param
         @query
-        def paged(after: Param[GeneratedOrderKey | None]):
+        def paged(after: Param[GeneratedOrderKey | None]):  # noqa: F821 -- Generated Key type is injected into globals for get_type_hints.
             return Order.objects.join(Order.c.customer).order_by(Customer.c.name.asc()).into(OrderCustomerProjection).page(size=1, after=after)
         # Customer is another actual emitted Record, not a handwritten stand-in.
         globals()["Customer"] = commerce.Customer
@@ -344,9 +406,8 @@ class Native(unittest.TestCase):
             execute_read(self.admin, entry, Empty(), app_schema="praxis_test")
         with self.assertRaises(ReadObligationUnmet):
             execute_read(self.a, entry, Empty(), app_schema="praxis_other")
-        with self.a.transaction():
-            with self.assertRaises(ReadObligationUnmet):
-                execute_read(self.a, entry, Empty(), app_schema="praxis_test")
+        with self.a.transaction(), self.assertRaises(ReadObligationUnmet):
+            execute_read(self.a, entry, Empty(), app_schema="praxis_test")
 
     def test_timeout_is_typed_and_caller_connection_remains_usable(self):
         entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2).build(Compiler(), target="postgresql18", binding=binding())

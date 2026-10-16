@@ -1,14 +1,19 @@
 """Red helper tests against a proposed ABI; generator integration still pending."""
 import unittest
-from decimal import Decimal
 from dataclasses import FrozenInstanceError
+from decimal import Decimal
 from typing import Annotated, ClassVar, final
 from unittest.mock import patch
 
 from pydantic import AfterValidator
-from umf_access.types import ActionSource, ActionProfile, MISSING, StrictModel, ActionRef
+from umf_access.codec_support import checked_row, revalidate_model
+from umf_access.types import (
+    MISSING,
+    ActionRef,
+    ActionSource,
+    StrictModel,
+)
 from umf_access.values import validate_decimal
-from umf_access.codec_support import revalidate_model, checked_row
 
 Amount = Annotated[Decimal, AfterValidator(
     lambda value: validate_decimal(value, precision=12, scale=2))]
@@ -115,7 +120,7 @@ class CodecBoundaryTests(unittest.TestCase):
 
     # @covers US-081-AC4 -- immutable type-reference subset only; no executor.
     def test_action_reference_is_immutable_and_typed(self):
-        action = ActionRef(module="commerce", action="shipOrder", input_type=Patch, output_type=Nested, source=ActionSource("unit", "0.8.0", "commerce", "shipOrder", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", ActionProfile("umf.actions.tx", "1")))
+        action = ActionRef(module="commerce", action="shipOrder", input_type=Patch, output_type=Nested, source=ActionSource("unit", "0.8.0", "commerce", "shipOrder", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
         self.assertIs(action.input_type, Patch)
         self.assertIs(action.output_type, Nested)
         with self.assertRaises(FrozenInstanceError):
@@ -125,12 +130,12 @@ class CodecBoundaryTests(unittest.TestCase):
         for kwargs in ({"module":"", "action":"x", "input_type":Patch, "output_type":Nested},
                        {"module":"m", "action":"x", "input_type":dict, "output_type":Nested}):
             with self.assertRaises((ValueError, TypeError)):
-                ActionRef(**kwargs, source=ActionSource("unit", "0.8.0", kwargs["module"] or "m", "x", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", ActionProfile("umf.actions.tx", "1")))
+                ActionRef(**kwargs, source=ActionSource("unit", "0.8.0", kwargs["module"] or "m", "x", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
         with self.assertRaises(ValueError):
             ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None),
                       source=ActionSource("unit", "0.8.0", "other", "recipe", "a" * 64,
-                                          "/modules/0/extensions/umf.actions/actions/0", ActionProfile("umf.actions.tx", "1")))
-        self.assertIs(ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None), source=ActionSource("unit", "0.8.0", "m", "recipe", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", ActionProfile("umf.actions.tx", "1"))).output_type, type(None))
+                                          "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
+        self.assertIs(ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None), source=ActionSource("unit", "0.8.0", "m", "recipe", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1")).output_type, type(None))
 
     # @covers US-081-AC5
     def test_inventory_is_checked_before_mapping(self):
@@ -153,7 +158,7 @@ if __name__ == "__main__":
 class DecodeRedaction(unittest.TestCase):
     def test_nested_map_key_is_not_published_in_decode_failure(self):
         from umf_access.codec_support import decode_model
-        from umf_access.types import StrictModel, CodecError
+        from umf_access.types import CodecError, StrictModel
         class MapRow(StrictModel):
             data: dict[str, int]
         private = "private-customer@example.invalid"

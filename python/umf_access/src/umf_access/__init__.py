@@ -1,39 +1,88 @@
 """Typed access runtime; capability qualification is recorded per build profile."""
 
-from .types import MISSING as MISSING, RUNTIME_ABI as RUNTIME_ABI
-from .dsl import (
-    Column as Column,
-    Continuation as Continuation,
-    FieldRef as FieldRef,
-    Page as Page,
-    Param as Param,
-    Predicate as Predicate,
-    Query as Query,
-    QueryOutsideCatalog as QueryOutsideCatalog,
-    RecordRef as RecordRef,
-    Related as Related,
-    RelatedKeys as RelatedKeys,
-    Terminal as Terminal,
-    WithKeys as WithKeys,
-    and_ as and_,
-    command as command,
-    if_present as if_present,
-    not_ as not_,
-    or_ as or_,
-    query as query,
+from .capture import (
+    CapturedDeclaration as CapturedDeclaration,
+)
+from .capture import (
+    CapturedVariant as CapturedVariant,
 )
 from .capture import (
     CaptureError as CaptureError,
-    CapturedDeclaration as CapturedDeclaration,
-    CapturedVariant as CapturedVariant,
+)
+from .capture import (
     capture as capture,
 )
-
-
-from .dsl import Join as Join, Joined as Joined, JoinProjection as JoinProjection
+from .dsl import (
+    Column as Column,
+)
+from .dsl import (
+    Continuation as Continuation,
+)
+from .dsl import (
+    FieldRef as FieldRef,
+)
+from .dsl import Join as Join
+from .dsl import Joined as Joined
+from .dsl import JoinProjection as JoinProjection
+from .dsl import (
+    Page as Page,
+)
+from .dsl import (
+    Param as Param,
+)
+from .dsl import (
+    Predicate as Predicate,
+)
+from .dsl import (
+    Query as Query,
+)
+from .dsl import (
+    QueryOutsideCatalog as QueryOutsideCatalog,
+)
+from .dsl import (
+    RecordRef as RecordRef,
+)
+from .dsl import (
+    Related as Related,
+)
+from .dsl import (
+    RelatedKeys as RelatedKeys,
+)
+from .dsl import (
+    Terminal as Terminal,
+)
+from .dsl import (
+    WithKeys as WithKeys,
+)
+from .dsl import (
+    and_ as and_,
+)
+from .dsl import (
+    command as command,
+)
+from .dsl import (
+    if_present as if_present,
+)
+from .dsl import (
+    not_ as not_,
+)
+from .dsl import (
+    or_ as or_,
+)
+from .dsl import (
+    query as query,
+)
+from .reviewed import (
+    CatalogRead as CatalogRead,
+)
+from .reviewed import (
+    ReadBuildError as ReadBuildError,
+)
 from .reviewed import (
     ReviewedSQL as ReviewedSQL,
-    CatalogRead as CatalogRead,
-    ReadBuildError as ReadBuildError,
+)
+from .reviewed import (
     build_query as build_query,
 )
+from .types import MISSING as MISSING
+from .types import RUNTIME_ABI as RUNTIME_ABI

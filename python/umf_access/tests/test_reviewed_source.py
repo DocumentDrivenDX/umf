@@ -1,15 +1,24 @@
 """Generated query cohorts cannot silently rebind to different model bytes."""
+import unittest
 from dataclasses import replace
 from typing import ClassVar
-from umf_access.types import StrictModel
-from umf_access.dsl import Param, GeneratedSource
-import unittest
+
+from test_reviewed_reads import (
+    CUSTOMER_REL,
+    ORDER,
+    SOURCE,
+    Compiler,
+    Empty,
+    Projection,
+    binding,
+    objects,
+    projection,
+)
 from umf_access.capture import capture
+from umf_access.dsl import Column, GeneratedSource, Param, Query, query
 from umf_access.dsl._context import CaptureError
-from umf_access.dsl import Column, Join, Query, query
 from umf_access.reviewed import CatalogRead, ReadBuildError, build_query
-from test_reviewed_reads import (Compiler, Empty, Projection, projection, objects,
-    ORDER, CUSTOMER_REL, SOURCE, binding)
+from umf_access.types import StrictModel
 
 
 class StaleKey(StrictModel):

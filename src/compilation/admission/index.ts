@@ -180,6 +180,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  for(const n of request.names)if((!selectedPaths.has(n.pointer)&&!ir.relations?.some(r=>r.pointer===n.pointer)&&!request.projections.some((_p,i)=>n.pointer==='/projections/'+i)&&!selectedActionEntries.some(a=>n.pointer===a.path||n.pointer.startsWith(a.path+'/parameters/')||n.pointer.startsWith(a.path+'/outputs/')))||n.sourceId!==request.logical)add('NAME','/names');
  for(const entry of selectedActionEntries){
   const python=resolveName(entry.action.id,'class',entry.path);
+  if(['Actions','ReplayingActions','ActionSource','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor'].includes(python))add('NAME',entry.path);
   for(const suffix of ['','Input','Output','Rejected']){const name=python+suffix;if(classNames.has(name))add('NAME',entry.path);classNames.add(name);}
   const parameters=(group:'parameters'|'outputs')=>{const usedNames=new Set<string>();return entry.action[group].flatMap<ResolvedActionParameter>((parameter,i)=>{
    const pointer=entry.path+'/'+group+'/'+i,python=resolveName(parameter.id,'field',pointer);
@@ -208,6 +209,8 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   for(const d of matching){d.fidelity='unknown';d.checks=[];d.reason='Uninterpreted relevant assertion retained; generation refuses';}
   if(!matching.length)dispositions.push({id:'d'+dispositions.length,sourceId:diagnostic.sourceId,pointer:diagnostic.pointer,assertion:'unknown',relevance:'selected',fidelity:'unknown',checks:[],reason:'Uninterpreted relevant assertion retained; generation refuses',obligationIds:[]});
  }
+ const endpointNames=new Set<string>();
+ for(const action of ir.actions??[]){const endpoint=action.python.replace(/([a-z0-9])([A-Z])/g,'$1_$2').toLowerCase();if(pythonKeywords.has(endpoint)||endpointNames.has(endpoint))add('NAME',action.pointer);endpointNames.add(endpoint);}
  const unique=new Map(diagnostics.map(d=>[JSON.stringify([d.sourceId,d.pointer,d.code,d.accessCode]),d]));diagnostics.splice(0,diagnostics.length,...unique.values());
  return finish(ir);
  function markNotExpressible(path:string){for(const d of dispositions)if(d.pointer===path||d.pointer.startsWith(path+'/')){d.fidelity='not-expressible';d.checks=[];d.reason='Carrier is not qualified by this emitter';}}
@@ -216,7 +219,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   if(overrides.length>1){add('NAME',pointer);return '_invalid';}
   const words=id.replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z0-9])([A-Z])/g,'$1_$2').split('_');
   const name=overrides[0]?.python??(role==='field'?words.join('_').toLowerCase():words.map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join(''));
-  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Join','JoinProjection','Column','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','ActionRef','ActionSource','ActionProfile','FieldValidator','seal_model','unhashable_key','ValueNormalizer','encode_model','decode_model','initialize_rejection','GeneratedSource','UMF_GENERATED_SOURCE','UMF_SOURCE','CodecField','UMF_FINAL','UMF_KEY','Literal','Never','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
+  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Join','JoinProjection','Column','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','ActionRef','ActionSource','ActionProfile','FieldValidator','seal_model','unhashable_key','ValueNormalizer','encode_model','decode_model','initialize_rejection','GeneratedSource','UMF_GENERATED_SOURCE','UMF_SOURCE','CodecField','UMF_FINAL','UMF_KEY','Literal','Never','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS','Actions','ReplayingActions','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor','ActionRejected','OriginalOutcome','UMF_BUNDLE_INPUT_DIGEST','UMF_RUNTIME_ABI'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
   return name;
  }
 }

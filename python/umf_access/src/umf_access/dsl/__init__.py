@@ -1,18 +1,80 @@
 from __future__ import annotations
+
 """Public typed declaration ABI. No query execution or native SQL lowering."""
-from ._context import CaptureError as CaptureError, QueryOutsideCatalog as QueryOutsideCatalog
-from ._nodes import Node as Node, FieldRef as FieldRef, RecordRef as RecordRef
+from ._context import CaptureError as CaptureError
+from ._context import QueryOutsideCatalog as QueryOutsideCatalog
 from ._expressions import (
-    Join as Join, Column as Column, Param as Param, Predicate as Predicate, Related as Related,
-    Ordering as Ordering, InvalidOptionalFilter as InvalidOptionalFilter,
-    if_present as if_present, and_ as and_, or_ as or_, not_ as not_,
+    Column as Column,
+)
+from ._expressions import (
+    InvalidOptionalFilter as InvalidOptionalFilter,
+)
+from ._expressions import (
+    Join as Join,
+)
+from ._expressions import (
+    Ordering as Ordering,
+)
+from ._expressions import (
+    Param as Param,
+)
+from ._expressions import (
+    Predicate as Predicate,
+)
+from ._expressions import (
+    Related as Related,
+)
+from ._expressions import (
+    and_ as and_,
+)
+from ._expressions import (
+    if_present as if_present,
+)
+from ._expressions import (
+    not_ as not_,
+)
+from ._expressions import (
+    or_ as or_,
+)
+from ._nodes import FieldRef as FieldRef
+from ._nodes import GeneratedSource as GeneratedSource
+from ._nodes import KeyLiteral as KeyLiteral
+from ._nodes import Node as Node
+from ._nodes import RecordRef as RecordRef
+from ._query import (
+    Continuation as Continuation,
 )
 from ._query import (
-    Joined as Joined, Joined2 as Joined2, Joined3 as Joined3, JoinProjection as JoinProjection, Query as Query, Terminal as Terminal, Continuation as Continuation,
-    Page as Page, RelatedKeys as RelatedKeys, WithKeys as WithKeys,
-    query as query, command as command,
+    Joined as Joined,
 )
-
+from ._query import (
+    Joined2 as Joined2,
+)
+from ._query import (
+    Joined3 as Joined3,
+)
+from ._query import (
+    JoinProjection as JoinProjection,
+)
+from ._query import (
+    Page as Page,
+)
+from ._query import (
+    Query as Query,
+)
+from ._query import (
+    RelatedKeys as RelatedKeys,
+)
+from ._query import (
+    Terminal as Terminal,
+)
+from ._query import (
+    WithKeys as WithKeys,
+)
+from ._query import (
+    command as command,
+)
+from ._query import (
+    query as query,
+)
 from .render import render_logical as render_logical
-
-from ._nodes import GeneratedSource as GeneratedSource, KeyLiteral as KeyLiteral

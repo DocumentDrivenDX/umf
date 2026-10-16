@@ -5,7 +5,7 @@ from decimal import Decimal
 from pathlib import Path
 
 import commerce
-from commerce import OrderSummary, OrderIdentity, CustomerSummary
+from commerce import CustomerSummary, OrderIdentity, OrderSummary
 
 
 class GeneratedProjections(unittest.TestCase):

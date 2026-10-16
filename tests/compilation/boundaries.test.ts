@@ -89,10 +89,10 @@ describe("actual Python boundary checker", () => {
   });
   test("discovers src layout and rejects host I/O and dynamic import APIs", () => {
     const path = "python/umf_access/src/umf_access/dsl/__init__.py";
-    for (const source of ['open("data")', 'eval("1")', 'exec("x = 1")', 'import os\nx = os.environ', 'import socket', 'import importlib\nimportlib.import_module("psycopg")']) {
+    for (const source of ['open("data")', 'input("prompt")', 'eval("1")', 'exec("x = 1")', 'import os\nx = os.environ', 'import socket', 'import importlib\nimportlib.import_module("psycopg")']) {
       rejects("py", { [path]: source }, source.includes("importlib") || source.startsWith("eval") || source.startsWith("exec") ? "DYNAMIC" : "HOST");
     }
-    const result = check("py", { [path]: "from decimal import Decimal" });
+    const result = check("py", { [path]: "from decimal import Decimal\ndef invoke(input):\n    return input" });
     expect(result.exitCode).toBe(0);
     expect(result.stdout.toString()).toContain("1 modules");
   });
