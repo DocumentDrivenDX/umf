@@ -1,0 +1,88 @@
+{
+  "status": "completed",
+  "complete": false,
+  "authority": false,
+  "operations": [
+    {
+      "id": "rules",
+      "kind": "read-rules",
+      "outcome": {
+        "status": "evaluated",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          {
+            "resource": {
+              "type": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Resource"
+              },
+              "key": [
+                {
+                  "string": "r1"
+                }
+              ]
+            },
+            "decision": "permit",
+            "rules": [
+              {
+                "ruleIndex": 0,
+                "truth": "T"
+              },
+              {
+                "ruleIndex": 1,
+                "truth": "T"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cells",
+      "kind": "scan",
+      "outcome": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salary"
+              },
+              "disposition": "transformed",
+              "outputType": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salaryMaskLabel"
+              },
+              "value": {
+                "string": "[private]"
+              }
+            }
+          ]
+        ],
+        "valueProfiles": []
+      }
+    },
+    {
+      "id": "original",
+      "kind": "action",
+      "outcome": {
+        "status": "evaluated",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          {
+            "decision": "permit",
+            "dispositions": []
+          }
+        ]
+      }
+    }
+  ]
+}

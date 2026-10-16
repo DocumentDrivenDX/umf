@@ -1,0 +1,188 @@
+{
+  "sourceSha256": "68a5cb9d9e6a1b354c82c9a67d5f9f91e7ae288603794e8198b2764961951c88",
+  "scope": "Exact source AST guard blocks against captured actual final reports; synthetic tampering only, not new SQL/native execution.",
+  "controls": [
+    {
+      "name": "response-positive-inactive-assignment",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "producer-positive-inactive-assignment",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "response-positive-mixed",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "producer-positive-mixed",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "response-positive-self-join",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "producer-positive-self-join",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "response-positive-field-free-count",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "producer-positive-field-free-count",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "response-positive-false-predicate",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "producer-positive-false-predicate",
+      "accepted": true,
+      "expectedAcceptance": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "response-omit-batch",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-omit-routes",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-reorder-operations",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-duplicate-route",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-plaintext-instead-of-mask",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-wrong-resource",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-missing-cells",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "response-inactive-activated",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-omit-salary-projection",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-omit-route",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-duplicate-route",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-reorder-routes",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-omit-source",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-foreign-projection-revision",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-wrong-primary-action",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "producer-wrong-field-operand",
+      "accepted": false,
+      "expectedAcceptance": false,
+      "passed": true,
+      "error": "AssertionError()"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "bun"
+    ],
+    "noEmit": true
+  },
+  "include": [
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "src/**/*.ts",
+    "spec/**/*.json",
+    "docs/helix/05-deploy/microsite/explorer.ts",
+    "docs/helix/05-deploy/schema-browser/**/*.ts",
+    "tools/security/protection-*.ts",
+    "tools/security/current-query-child.ts",
+    "tools/security/current-query-child-main.ts",
+    "tools/security/build-current-query-child.ts"
+  ]
+}

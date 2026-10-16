@@ -1,0 +1,29 @@
+bad.py
+  bad.py:6:39 - error: Operator ">" not supported for types "Column[Order, Decimal]" and "Literal['10']" (reportOperatorIssue)
+  bad.py:7:39 - error: Argument of type "bool" cannot be assigned to parameter "preds" of type "Predicate[Order]" in function "filter"
+    "bool" is not assignable to "Predicate[Order]" (reportArgumentType)
+  bad.py:8:39 - error: Argument of type "Predicate[Customer]" cannot be assigned to parameter "preds" of type "Predicate[Order]" in function "filter"
+    "Predicate[Customer]" is not assignable to "Predicate[Order]"
+      Type parameter "O@Predicate" is invariant, but "Customer" is not the same as "Order" (reportArgumentType)
+  bad.py:9:47 - error: Cannot access attribute "ammount" for class "OrderColumns"
+    Attribute "ammount" is unknown (reportAttributeAccessIssue)
+  bad.py:10:46 - error: Argument of type "Literal['10']" cannot be assigned to parameter "amount" of type "Decimal | MISSING" in function "update"
+    Type "Literal['10']" is not assignable to type "Decimal | MISSING"
+      "Literal['10']" is not assignable to "Decimal"
+      "Literal['10']" is not assignable to "MISSING" (reportArgumentType)
+  bad.py:11:39 - error: No parameter named "placed_at" (reportCallIssue)
+  bad.py:12:52 - error: Operator ">=" not supported for types "Column[Order, datetime]" and "Param[str]" (reportOperatorIssue)
+  bad.py:13:39 - error: Argument of type "Column[Customer, str]" cannot be assigned to parameter "c1" of type "Column[Order, T1@select]" in function "select"
+    "Column[Customer, str]" is not assignable to "Column[Order, str]"
+      Type parameter "O@Column" is invariant, but "Customer" is not the same as "Order" (reportArgumentType)
+  bad.py:14:17 - error: No parameter named "ammount" (reportCallIssue)
+e9.py
+  e9.py:3:17 - error: No parameter named "ammount" (reportCallIssue)
+  e9.py:4:34 - error: Argument of type "float" cannot be assigned to parameter "amount" of type "Decimal" in function "__init__"
+    "float" is not assignable to "Decimal" (reportArgumentType)
+  e9.py:4:60 - error: Argument of type "None" cannot be assigned to parameter "placed_at" of type "datetime" in function "__init__"
+    "None" is not assignable to "datetime" (reportArgumentType)
+good.py
+  good.py:21:13 - information: Type of "ids_and_amounts()" is "Terminal[list[tuple[str, Decimal]]]"
+  good.py:22:13 - information: Type of "recent" is "(since: Param[datetime], memo: Param[str | None]) -> Terminal[list[Order]]"
+12 errors, 0 warnings, 2 informations

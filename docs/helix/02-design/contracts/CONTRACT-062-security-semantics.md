@@ -1627,3 +1627,96 @@ constant mask may produce its valid typed DTO without inventing a live input
 where the renderer is qualified to do so. Whole-query value admission must not
 confuse read-value availability with original-input presence. Existing permission
 helpers and current selected-optional compiler refusals keep their scoped meaning.
+
+### Operator-free conditional read-projection metadata — 2026-10-15
+
+A source-only projection inspector MUST accept the original issued policy
+program, validated owner and qualified Type/Field selection without inventing
+scan identifiers, query operators, paths or original-use actions. It MUST retain
+all applicable read conditions and every permit-source occurrence, including
+explicit disposition and original/default/missing/withheld distinctions. Output
+Field metadata retains original identity, revision and complete definition.
+Stored transformed values refer to their current live Field, never an implicit
+pre-storage clear value. Query-use prohibition does not prohibit read metadata.
+
+These alternatives do not select an active rule, prove scalar availability,
+compute a uniform output domain or grant permission. Empty-output typing requires
+a nonempty set of compatible output projections plus original descriptor
+correspondence; actual policy/disclosure folding, eligibility, native authority
+and guarded release remain independent. Unknown/conflicting/withheld/missing
+output cases cannot become guessed scalar domains. Metadata refusal is atomic.
+The initial private helper bounds serialized output including framing to4,000,000
+UTF-16 code units; that is not a UTF-8 frame limit or aggregate heap/work theorem.
+
+### Separately versioned private projection transport — 2026-10-15
+
+The optional `umf.security.private-query-child/0.2-candidate` transport carries
+operator-free qualified Type/Field projections alongside genuine query routes.
+Each closed request and response declares that exact protocol. One actual local
+program is compiled from original source input; imported handles refuse. The
+sequence initialize → inspect-inputs → evaluate binds the canonical owner, ordered
+routes and ordered projections and the full framed initialization receipt.
+That receipt correlates bytes; it is not source admission, runtime authority or
+a permit. Projection identifiers are distinct from all route identifiers.
+
+Both inspection and evaluation return unchanged original projection metadata.
+A completed batch remains separate from permission and a projection alternative
+remains separate from an active, uniform scalar domain. Query-use prohibition
+does not invent an operator for a plain projection. Missing/withheld/conflicting
+outputs and empty populations preserve original source semantics.
+
+The v2 transport has independent artifact/source/consumer custody. Frozen r3
+source579675bd and its bundle/registrations remain unchanged. Its protocol cannot
+be inferred from compatible framing. Native adoption requires an explicit new
+consumer/source cohort, including the changed full initializer bytes/receipt;
+no old registration migrates automatically. Requests are bounded to4MiB, replies
+to16MiB UTF-8, projections256, routes4096, operations256, scans16 and facts10000.
+These transport bounds do not prove aggregate heap/time or native noninterference.
+
+
+### Private atomic provenance-bearing disclosure batch (2026-10-16)
+
+`evaluateCandidateCatalogReadDisclosureBatch(handle,owner,cut,selection)` and its
+`WithinOperation` variant with a final original shared operation ledger MUST use
+the original issued program and canonical fold/render path. Selection is the
+existing exact `{type,fields}` scan selection. This catalog-only profile requires
+an actual protection catalog; existing action, scan, render and selection-only
+APIs MUST retain their previous results. No package-root export is added.
+
+The immutable result is `{version,status,complete:false,authority:false,sources,
+decisions,resources,batch}` with version
+`umf.security.logical-disclosure-batch/0.1-candidate`. Success status is `rendered`.
+`sources` and the full ordered `decisions` census retain the selection-only
+producer's original metadata, resource keys, rule truths and winning occurrences.
+`resources` names only permitted rows in exactly the same order as `batch.rows`.
+`batch` MUST be an original `umf.security.disclosure/0.2.0` envelope: canonical
+column storage declarations come from the selected owner/type, values come from
+the same render operation, and transformed Cells carry the actual first selected
+policy occurrence, exact transform/version and output Field/profile. Equal
+transform contributors remain in decisions; no caller-authored occurrence is
+accepted. Original null, absence, withholding and transformed null remain distinct.
+
+All original rendering preflight and shared work/text/retention charges apply.
+The0.2 transport's column/row/cell/literal and source-string limits additionally
+apply, including empty populations and withheld-only columns. Catalog recipes
+execute only through the original issued pure definition context. Effective
+legacy inline transforms cannot be represented by0.2 and MUST refuse atomically;
+legacy API behavior remains unchanged. No second policy interpreter or per-Cell
+public transformation evaluator may supply the result. Any unresolved row, late
+recipe/refinement failure, invalid metadata or exhaustion returns exactly
+`{version,status:"refused",complete:false,authority:false,sources:null,decisions:[],
+resources:[],batch:null}`, with no accepted prefix.
+
+This is a supplied-cut logical computation and transport producer. It MUST NOT
+claim native/caller/source/current-cut authentication, compiler .4 admission,
+query operator permission or guarded release. Existing conditional occurrence
+and carrier algebra remain separate from implementation refinement evidence.
+
+The full census, source correlations and rule truths are private host/owner
+composition material. They MUST NOT be exposed directly to ordinary query
+readers or public diagnostics. The separately qualified native release boundary
+owns any permitted result disclosure; this private result is not that boundary.
+Catalog parameter literals MUST consume the same per-operation literal budget
+as rendered values, including unused transforms and empty/withheld batches.
+A single original parameter-validation pass per atomic operation is permitted;
+per-Cell whole-source revalidation remains prohibited.

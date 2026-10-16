@@ -1,0 +1,380 @@
+{
+  "status": "pass",
+  "commands": [
+    {
+      "name": "installed-tests",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,zipfile,importlib.metadata as m\nfrom pathlib import Path\nassert sys.version.split()[0]=='3.14.8'\nassert m.version('pydantic')=='2.14.1'\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile('/private/tmp/umf-sdk-merged/wheel/umf_access-0.1.0.dev0-py3-none-any.whl') as archive:\n for name in archive.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):\n   assert (site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,'/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests')\nsys.path.insert(0,'/private/tmp/umf-sdk-merged/full')\nimport unittest\nsuite=unittest.TestSuite()\nfor name in ['test_values_red.py', 'test_codec_support_red.py', 'test_golden_vectors.py', 'test_generated_models.py', 'test_generated_actiontypes.py', 'test_generated_projections.py', 'test_codecs.py', 'test_runtime_driven_codecs.py', 'test_dsl_runtime.py', 'test_capture.py', 'test_dsl_render.py', 'test_wheel_contract.py']:\n suite.addTests(unittest.defaultTestLoader.discover('/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests',pattern=name))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "installed-tests.log"
+    },
+    {
+      "name": "installed-tests-python311",
+      "command": [
+        "/private/tmp/umf-sdk-merged/python311/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,zipfile,importlib.metadata as m\nfrom pathlib import Path\nassert sys.version.split()[0]=='3.11.17'\nassert m.version('pydantic')=='2.14.1'\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile('/private/tmp/umf-sdk-merged/wheel/umf_access-0.1.0.dev0-py3-none-any.whl') as archive:\n for name in archive.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):\n   assert (site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,'/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests')\nsys.path.insert(0,'/private/tmp/umf-sdk-merged/full')\nimport unittest\nsuite=unittest.TestSuite()\nfor name in ['test_values_red.py', 'test_codec_support_red.py', 'test_golden_vectors.py', 'test_generated_models.py', 'test_generated_actiontypes.py', 'test_generated_projections.py', 'test_codecs.py', 'test_runtime_driven_codecs.py', 'test_dsl_runtime.py', 'test_capture.py', 'test_dsl_render.py', 'test_wheel_contract.py']:\n suite.addTests(unittest.defaultTestLoader.discover('/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests',pattern=name))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "installed-tests-python311.log"
+    },
+    {
+      "name": "mypy-positive",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "mypy",
+        "--python-executable",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "--python-version",
+        "3.11",
+        "--check-untyped-defs",
+        "--show-error-codes",
+        "--cache-dir",
+        "/private/tmp/umf-sdk-merged/mypy-cache",
+        "/private/tmp/umf-sdk-merged/full/commerce/__init__.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/actions.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/codecs.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/fields.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/keys.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/models.py",
+        "/private/tmp/umf-sdk-merged/corpus/positive.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "mypy-positive.log"
+    },
+    {
+      "name": "pyright-positive",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "pyright",
+        "--pythonpath",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "--project",
+        "/private/tmp/umf-sdk-merged/pyright.json",
+        "--outputjson",
+        "/private/tmp/umf-sdk-merged/full/commerce/__init__.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/actions.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/codecs.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/fields.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/keys.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/models.py",
+        "/private/tmp/umf-sdk-merged/corpus/positive.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "pyright-positive.log"
+    },
+    {
+      "name": "ty-positive",
+      "command": [
+        "/opt/homebrew/bin/uvx",
+        "--offline",
+        "ty==0.0.88",
+        "check",
+        "--python",
+        "/private/tmp/umf-sdk-merged/venv",
+        "--python-version",
+        "3.11",
+        "--extra-search-path",
+        "/private/tmp/umf-sdk-merged/full",
+        "/private/tmp/umf-sdk-merged/full/commerce/__init__.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/actions.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/codecs.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/fields.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/keys.py",
+        "/private/tmp/umf-sdk-merged/full/commerce/models.py",
+        "/private/tmp/umf-sdk-merged/corpus/positive.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged/full",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "ty-positive.log"
+    },
+    {
+      "name": "mypy-negative",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "mypy",
+        "--python-executable",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "--python-version",
+        "3.11",
+        "--check-untyped-defs",
+        "--show-error-codes",
+        "--cache-dir",
+        "/private/tmp/umf-sdk-merged/mypy-cache",
+        "/private/tmp/umf-sdk-merged/corpus/negative.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "log": "mypy-negative.log"
+    },
+    {
+      "name": "pyright-negative",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "pyright",
+        "--pythonpath",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "--project",
+        "/private/tmp/umf-sdk-merged/pyright.json",
+        "--outputjson",
+        "/private/tmp/umf-sdk-merged/corpus/negative.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "log": "pyright-negative.log"
+    },
+    {
+      "name": "ty-negative",
+      "command": [
+        "/opt/homebrew/bin/uvx",
+        "--offline",
+        "ty==0.0.88",
+        "check",
+        "--python",
+        "/private/tmp/umf-sdk-merged/venv",
+        "--python-version",
+        "3.11",
+        "--extra-search-path",
+        "/private/tmp/umf-sdk-merged/full",
+        "/private/tmp/umf-sdk-merged/corpus/negative.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged/full",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "log": "ty-negative.log"
+    },
+    {
+      "name": "defective-wheel-build",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "/private/tmp/umf-sdk-merged/defective-wheel",
+        "/private/tmp/umf-sdk-merged/defective-source"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "defective-wheel-build.log"
+    },
+    {
+      "name": "defective-venv",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "venv",
+        "--without-pip",
+        "/private/tmp/umf-sdk-merged/defective-venv"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "defective-venv.log"
+    },
+    {
+      "name": "defective-install",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/private/tmp/umf-sdk-merged/defective-venv/bin/python",
+        "/private/tmp/umf-sdk-merged/defective-wheel/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "pydantic==2.14.1",
+        "pydantic-core==2.50.1",
+        "annotated-types==0.8.0",
+        "typing-extensions==4.16.0",
+        "typing-inspection==0.4.4"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "defective-install.log"
+    },
+    {
+      "name": "defective-runtime-accepts",
+      "command": [
+        "/private/tmp/umf-sdk-merged/defective-venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys\nsys.path.insert(0,'/private/tmp/umf-sdk-merged/full')\nfrom decimal import Decimal\nfrom commerce import OrderPatch\nfrom commerce.codecs import encode_Order_patch\nassert encode_Order_patch(OrderPatch(amount=Decimal('1.234')))['amount']==Decimal('1.234')\n"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "defective-runtime-accepts.log"
+    },
+    {
+      "name": "fixed-runtime-refuses",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys\nsys.path.insert(0,'/private/tmp/umf-sdk-merged/full')\nfrom decimal import Decimal\nfrom commerce import OrderPatch\nfrom commerce.codecs import encode_Order_patch\ntry: encode_Order_patch(OrderPatch(amount=Decimal('1.234')))\nexcept ValueError as error:\n assert 'amount' in str(error) and 'scale' in str(error)\nelse: raise AssertionError('defect survived runtime fix')\n"
+      ],
+      "cwd": "/private/tmp/umf-sdk-merged",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "fixed-runtime-refuses.log"
+    },
+    {
+      "name": "drift-defective",
+      "command": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/tmp/umf-sdk-merged/full/request.json",
+        "--profile",
+        "/private/tmp/umf-sdk-merged/full/profile.json",
+        "--output",
+        "/private/tmp/umf-sdk-merged/drift"
+      ],
+      "cwd": "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "drift-defective.log"
+    },
+    {
+      "name": "drift-fixed",
+      "command": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/tmp/umf-sdk-merged/full/request.json",
+        "--profile",
+        "/private/tmp/umf-sdk-merged/full/profile.json",
+        "--output",
+        "/private/tmp/umf-sdk-merged/drift"
+      ],
+      "cwd": "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "drift-fixed.log"
+    }
+  ],
+  "wheelSha256": "aa505ec6d726e6ff8a17be91375d9e0370502eb385908ffbc233dc6133a0c871",
+  "generatedSha256": {
+    "commerce/models.py": "39f8b105acc9712529a954ce485ed3abd85a96119347a9708d1a8a012c861356",
+    "commerce/fields.py": "3d349cc48355a8f56990dc8c9d05865531a56afccf7928172314ae91232603ee",
+    "commerce/codecs.py": "cd01181c4fc99e344ce2261b8d570a4c75089f84ddfdc3764621b9da260b7fc7",
+    "commerce/actions.py": "db73db234d14addf0b10fdff6efa741417e86954cb436565688afb6d3570b07d",
+    "commerce/__init__.py": "e7fb83b0ee1ff25a8bda467cf575be675d719d8d268cebb8937d57a08f26e581",
+    "commerce/keys.py": "38116d8eaa8539c834bb9b03396269205cbc342cfd7c347108b1604d514a9ccd",
+    "commerce/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "commerce/_umf/sources.json": "25f3ae78b4233f1739132090f382d14f94b33fbd4c5961f584912de578783753",
+    "commerce/_umf/manifest.json": "174b4f2dd9fb737818a35eb67fb3b071b238fe5f8d1fd241522e5dc9ecd74d9d"
+  },
+  "python": [
+    "3.14.8",
+    "3.11.17"
+  ],
+  "pydantic": "2.14.1",
+  "checkerTarget": "3.11",
+  "checkers": {
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "ty": "0.0.88"
+  },
+  "negativeDiagnostics": {
+    "mypy": [
+      [
+        "2",
+        "arg-type"
+      ],
+      [
+        "3",
+        "call-arg"
+      ],
+      [
+        "4",
+        "arg-type"
+      ],
+      [
+        "5",
+        "call-arg"
+      ],
+      [
+        "6",
+        "arg-type"
+      ]
+    ],
+    "pyright": [
+      [
+        2,
+        "reportArgumentType"
+      ],
+      [
+        3,
+        "reportCallIssue"
+      ],
+      [
+        4,
+        "reportArgumentType"
+      ],
+      [
+        5,
+        "reportUnknownVariableType"
+      ],
+      [
+        5,
+        "reportCallIssue"
+      ],
+      [
+        6,
+        "reportUnknownVariableType"
+      ],
+      [
+        6,
+        "reportCallIssue"
+      ],
+      [
+        6,
+        "reportArgumentType"
+      ]
+    ],
+    "ty": [
+      "invalid-argument-type",
+      "unknown-argument",
+      "invalid-argument-type",
+      "unknown-argument",
+      "no-matching-overload"
+    ]
+  },
+  "temporalQualification": "HELD; existing temporal carrier tests are regressions only",
+  "nativeTransport": "UNQUALIFIED; W-0 remains required"
+}

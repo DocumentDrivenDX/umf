@@ -1,0 +1,13 @@
+diff --git a/docs/helix/03-test/security/cases.json b/docs/helix/03-test/security/cases.json
+index 37738ca0..50f34793 100644
+--- a/docs/helix/03-test/security/cases.json
++++ b/docs/helix/03-test/security/cases.json
+@@ -3373,7 +3373,7 @@
+         "tests/security/native/pg18-mask-write-declarations.ts",
+         "tests/security/native/pg18-mask-write.sql"
+       ],
+-      "timeoutMs": 60000,
++      "timeoutMs": 120000,
+       "assertionIds": [
+         "pg-raw.P04"
+       ]

@@ -1,0 +1,46 @@
+{
+    "version": "1.1.414",
+    "time": "1792086734519",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/call_keyword.py",
+            "severity": "error",
+            "message": "Argument missing for parameter \"amount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/call_keyword.py",
+            "severity": "error",
+            "message": "No parameter named \"ammount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 7
+                },
+                "end": {
+                    "line": 6,
+                    "character": 14
+                }
+            },
+            "rule": "reportCallIssue"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 2,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.276
+    }
+}
+

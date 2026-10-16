@@ -734,3 +734,31 @@ For S08/S16/S20/S22 and P03/B08 prerequisites, compose original field-free rule 
 ### Exhaustive finite route composition — 2026-10-15
 
 Exhaust the finite eight-guard read/route composition with known absence, duplicate/conflicting transforms, withheld/original/missing dispositions and independent forbid/require. Compare original rule truths and selected branches in forward/reverse orders in Bun and real Chromium; retain semantic mutation controls. This adds logical coverage, not native acceptance. See [retained evidence](../../04-build/evidence/security/three-valued-route-exhaustion-20261015/README.md).
+
+### Operator-free read projection metadata — 2026-10-15
+
+US-079-AC3/AC7/AC10 gain component checks in
+`tests/security/read-projection-corpus.ts` and its Bun wrapper. Exercise qualified
+flat/graph Fields, protected missing versus withheld, stored live token identity,
+legacy scalar NULL transform, duplicate permit occurrences, no permit, complete
+owner/source refusal, closed/scoped selections and opaque handles, immutable
+snapshots, actual rendered output-domain correspondence and prohibited query use
+independent of read metadata. Check whole serialized-result limits at -1/exact/+1
+including framing, plus large invalid selection refusal without echo. Run the
+same portable corpus in Chromium. No native case or source permission is inferred;
+r3 transport is unchanged and no backend adoption is implied by helper tests.
+
+### Versioned projection child controls — 2026-10-15
+
+For US-079-AC3/AC7/AC10 prerequisites, test the actual v2 subprocess and exact
+built bundle through the original Truss generic pipe. Regenerate actual public
+Weft projection packets byte-exact, including plain salary, FALSE, LIMIT0 and live
+stored-token projections with no invented query operators. Retain original model
+and opaque source byte custody. Compare source metadata and batch results with
+original functions; test empty population, query-prohibited read independence,
+withheld/missing/conflicting active transforms, imported handles, changed source
+receipt/owner/projection order, duplicate IDs, foreign Fields, stale cuts, terminal
+refusal, invalid UTF-8, fragmented frames and exact response limits. FALSE/LIMIT
+are compiler inputs here, not executed SQL. Native enforcement requires its own
+qualified cohort and original integrated assertions. Frozen r3 compatibility is
+explicit refusal, not protocol downgrade or registration migration.

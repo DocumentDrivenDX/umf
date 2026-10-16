@@ -1,0 +1,85 @@
+{
+  "queries": [
+    {
+      "id": "admission-excludes-unknown-read",
+      "expected": "unsat",
+      "observed": "unsat",
+      "distinctContext": true
+    },
+    {
+      "id": "eligible-contributors-need-independent-permit-presence-domain",
+      "expected": "unsat",
+      "observed": "unsat",
+      "distinctContext": true
+    },
+    {
+      "id": "empty-is-null-not-zero-result",
+      "expected": "unsat",
+      "observed": "unsat",
+      "distinctContext": true
+    },
+    {
+      "id": "nonempty-zero-is-not-null",
+      "expected": "unsat",
+      "observed": "unsat",
+      "distinctContext": true
+    },
+    {
+      "id": "permutation-keeps-multiplicity-and-total",
+      "expected": "unsat",
+      "observed": "unsat",
+      "distinctContext": true
+    },
+    {
+      "id": "arbitrary-fold-step-preserves-count-and-unbounded-sum",
+      "expected": "unsat",
+      "observed": "unsat",
+      "distinctContext": true
+    },
+    {
+      "id": "mutant-skip-action-allows-eligible-denial",
+      "expected": "sat",
+      "observed": "sat",
+      "distinctContext": true
+    },
+    {
+      "id": "mutant-empty-zero-erases-null-distinction",
+      "expected": "sat",
+      "observed": "sat",
+      "distinctContext": true
+    },
+    {
+      "id": "mutant-int64-accumulator-overflows-valid-inputs",
+      "expected": "sat",
+      "observed": "sat",
+      "distinctContext": true
+    },
+    {
+      "id": "mutant-deduplicate-changes-bag-sum",
+      "expected": "sat",
+      "observed": "sat",
+      "distinctContext": true
+    }
+  ],
+  "sourceBefore": {
+    "tests/security/protection/live-original-integer-sum-source.json": "d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15",
+    "tests/security/live-original-integer-sum-corpus.ts": "fb67902c4436d5432315f534c73a0ca025238b660829d849bb7ea66d01137eb2",
+    "tests/security/live-original-integer-sum.test.ts": "6e51435ee6be299747f649f95967927791a95c3441cf2bd5ed4f02ba2bb50cbb",
+    "tools/security/live-original-integer-sum-browser.ts": "b8ca56dba55dfc58612fa8502153ce15b8bbd5addc7cb7571799297268ac1764",
+    "tools/security/prove-live-original-integer-sum.py": "1709fa7fe81248a38bbdf21951110c188104e104fdc8e5185ffe86dcb791c7eb",
+    "tests/security/protection/query-value-modes-source.json": "2f826621bd3187857f1b4fbab5d9c818891b0df96d55d6a1d379638906e2ebda",
+    "docs/helix/02-design/technical-designs/TD-056-security-bindings.md": "f2335eac03d2e4cf115989d2819f466a52e714ec62973f48017bad0f0e8147a2",
+    "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "a80863b77f32b09bbb5ce1875bff7c8cd040ec94e57dddd14554d70ae311b498"
+  },
+  "sourceAfter": {
+    "tests/security/protection/live-original-integer-sum-source.json": "d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15",
+    "tests/security/live-original-integer-sum-corpus.ts": "fb67902c4436d5432315f534c73a0ca025238b660829d849bb7ea66d01137eb2",
+    "tests/security/live-original-integer-sum.test.ts": "6e51435ee6be299747f649f95967927791a95c3441cf2bd5ed4f02ba2bb50cbb",
+    "tools/security/live-original-integer-sum-browser.ts": "b8ca56dba55dfc58612fa8502153ce15b8bbd5addc7cb7571799297268ac1764",
+    "tools/security/prove-live-original-integer-sum.py": "1709fa7fe81248a38bbdf21951110c188104e104fdc8e5185ffe86dcb791c7eb",
+    "tests/security/protection/query-value-modes-source.json": "2f826621bd3187857f1b4fbab5d9c818891b0df96d55d6a1d379638906e2ebda",
+    "docs/helix/02-design/technical-designs/TD-056-security-bindings.md": "f2335eac03d2e4cf115989d2819f466a52e714ec62973f48017bad0f0e8147a2",
+    "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "a80863b77f32b09bbb5ce1875bff7c8cd040ec94e57dddd14554d70ae311b498"
+  },
+  "sourceUnchanged": true
+}

@@ -1,0 +1,381 @@
+{
+  "kind": "B-TP-004 test-first scope and proposed runtime ABI",
+  "date": "2026-10-15",
+  "specRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "branch": "codex/typed-access-implementation",
+  "status": "Selected full commerce immutable snapshot passes27installedbehavioral tests, isolated import, pinned mypy and strict pyright; compiler source unchanged. B-TP-004 and prerequisite broader scope closure OPEN.",
+  "sliceAcceptance": "OPEN; no B-TP-004 closure claimed",
+  "ownership": {
+    "exclusiveRuntime": [
+      "python/umf_access/src/umf_access/types.py",
+      "python/umf_access/src/umf_access/values.py",
+      "python/umf_access/src/umf_access/codec_support.py"
+    ],
+    "exclusiveTests": [
+      "python/umf_access/tests/test_values_red.py",
+      "python/umf_access/tests/test_codec_support_red.py",
+      "tests/compilation/access-golden-vectors.test.ts",
+      "fixtures/access/golden-vectors/core-carriers.json",
+      "python/umf_access/tests/test_temporal_carriers_red.py",
+      "python/umf_access/tests/test_golden_vectors.py",
+      "python/umf_access/tests/test_generated_models.py",
+      "python/umf_access/tests/test_generated_actiontypes.py",
+      "python/umf_access/tests/test_generated_projections.py"
+    ],
+    "notOwned": [
+      "TypeScript emitters",
+      "profile/dependency pins",
+      "runtime package metadata",
+      "DSL modules"
+    ]
+  },
+  "prerequisites": {
+    "B-TP-000": "in-progress; no passing gate observed",
+    "B-TP-001": "in-progress; no qualified profile observed",
+    "B-TP-002/003": "in-progress; no generated commerce package or passing gate observed",
+    "implementationAuthorization": "Coordinator explicitly authorized foundational helper implementation before B-TP-003 closure; ordered slice closure unchanged."
+  },
+  "review": [
+    "TD-081 hardened base wording must allow direct generated subclasses of StrictModel; seal individual generated classes with their own __init_subclass__ and typing.final.",
+    "CONTRACT-072 carriers are selected by Weft entry, not guessed. Decimal and instant examples are not a full carrier ABI. No invented universal transport tags or SQL lowering will be added.",
+    "Core golden-vector acceptance and Python-only carrier refusals must be recorded separately: a numeric string is a valid wire representation in some core literals but is not a Python Decimal carrier.",
+    "Python datetime cannot retain submicrosecond text; finer precision must be refused before conversion at a text transport decoder, not after datetime truncates it.",
+    "Raw graph revalidation must recursively copy nested model attributes, lists and dicts; root-only model_validate or model_dump cannot establish the boundary.",
+    "EXECUTABLE CONFIRMATION: core 0.8.0 validateCoreFieldValue and validateCoreRecordValues both refuse valid date, instant timestamp and local timestamp literals. src/model/schema-literals.ts rejects refinements for float/date/time/timestamp as undefined. CONTRACT-068 temporal acceptance cannot currently satisfy unconditional golden agreement. Requires a governing/core disposition before strict temporal generation qualification, not a Python-only workaround.",
+    "Non-temporal extension only after coordinator steering: 72 core oracle tests pass. Temporal expected refusals remain counterexample evidence; no core temporal semantics changed or inferred.",
+    "Owner-selected CONTRACT-075 now supplies separately governed temporal oracle; earlier generic core refusal observations remain valid and unchanged. Temporal semantic blocker has a governed resolution, but Python implementation/qualification still pending B-TP-003 gate."
+  ],
+  "proposedAbi": {
+    "status": "Implemented selected separate-helper local ABI with ActionRef; installed behavioral/import subset qualified; complete generated/static/STP integration OPEN",
+    "types.StrictModel": "Pydantic BaseModel configuration from CONTRACT-068; generated classes seal themselves; no aliases; generated Keys set __hash__ = None",
+    "types.MISSING": "Re-export stable Pydantic sentinel only on qualified >=2.14 profile; no fallback",
+    "values.validate_integer": "(value: object, *, bits: int | None = None, signed: bool = True) -> int; strict carrier and authored width",
+    "values.validate_decimal": "(value: object, *, precision: int | None = None, scale: int | None = None) -> Decimal; finite, context independent, preserve tuple; omitted facets impose no invented bounds",
+    "values.validate_string": "(value: object) -> str; strict carrier, reject lone surrogates; authored length/range/allowedValues still require full resolved constraint plan",
+    "values.validate_date": "(value: object) -> date; excludes datetime",
+    "values.validate_instant": "(value: object) -> datetime; aware only; validation preserves value; selected codec normalizes UTC",
+    "values.validate_local": "(value: object) -> datetime; naive only",
+    "codec_support.revalidate_model": "(model_type: type[M], value: M) -> M; fresh recursive raw-attribute graph validation, no value-bearing messages",
+    "codec_support.checked_row": "(expected: Sequence[str], columns: Sequence[str], row: Sequence[object]) -> dict[str, object]; inventory and cardinality checks before private _build_mapping",
+    "codec_support._build_mapping": "Private construction seam used by negative inventory spy; no public generator dependency",
+    "deferred": "Vector schema; complete authored constraint validators; encode/decode signatures and recognized transport carrier inventory require generator/profile agreement",
+    "values.temporal_token": "(kind: Literal[\"date\", \"instant\", \"local\"], value: object) -> str; CONTRACT-075 carrier serialization, preserve checked input, fixed offsets including seconds/microseconds normalized before canonical UTC token; zero input text parsing; proposal, not implemented",
+    "types.ActionRef": "Implemented immutable final frozen dataclass ActionRef[InputT,OutputT](module,action,input_type,output_type); input StrictModel type, output StrictModel or type(None); no execution/client behavior."
+  },
+  "attempts": [
+    {
+      "command": "python3 -B -m unittest discover -s python/umf_access/tests -p '*_red.py'",
+      "exitCode": 1,
+      "python": "3.9 (system)",
+      "result": "2 import errors: pydantic absent and umf_access absent; zero behavioral assertions executed; not a qualified red behavioral run"
+    },
+    {
+      "command": "/opt/homebrew/bin/python3.14 -B -c 'import sys; print(sys.version); import pydantic; print(pydantic.__version__)'",
+      "exitCode": 0,
+      "python": "3.14.8",
+      "pydantic": "2.13.5",
+      "result": "Read-only inventory; installed Pydantic below required stable-MISSING profile; not used as substitute"
+    },
+    {
+      "command": "/private/tmp/umf-tp001-compat-env/bin/python -B -m unittest discover -s python/umf_access/tests -p '*_red.py'",
+      "exitCode": 1,
+      "python": "3.14.8",
+      "pydantic": "2.14.1",
+      "result": "2 import errors, both missing umf_access; zero behavioral assertions executed. Pinned environment provided by coordinator; compatibility qualification remains in progress."
+    },
+    {
+      "command": "bun test tests/compilation/access-golden-vectors.test.ts",
+      "exitCode": 0,
+      "bun": "1.4.2 (43848b5a7)",
+      "result": {
+        "tests": 42,
+        "passed": 42,
+        "failed": 0,
+        "assertions": 126
+      },
+      "scope": "Only core 0.8.0 field and record oracle verdicts; no Python/generated-model equivalence established."
+    },
+    {
+      "command": "Python ast.parse on both *_red.py files",
+      "exitCode": 0,
+      "result": "Syntax OK; no model configuration or behavior verified"
+    },
+    {
+      "command": "bun test tests/compilation/access-golden-vectors.test.ts",
+      "exitCode": 0,
+      "bun": "1.4.2 (43848b5a7)",
+      "result": {
+        "tests": 72,
+        "passed": 72,
+        "failed": 0,
+        "assertions": 216
+      },
+      "scope": "Expanded core oracle: 69 non-temporal vectors plus 3 held temporal counterexamples, field and record APIs."
+    },
+    {
+      "command": "/private/tmp/umf-tp001-compat-env/bin/python -B -m unittest discover -s python/umf_access/tests -p '*_red.py'",
+      "exitCode": 1,
+      "python": "3.14.8",
+      "pydantic": "2.14.1",
+      "result": "2 import errors: umf_access.types and umf_access.values absent. No behavioral assertions executed. Package skeleton concurrently added by its owner."
+    },
+    {
+      "command": "/private/tmp/umf-tp001-compat-env/bin/python -B -m unittest discover -s python/umf_access/tests -p 'test_temporal_carriers_red.py'",
+      "exitCode": 1,
+      "result": "Import error: umf_access.values absent. No runtime assertions executed."
+    },
+    {
+      "command": "Pinned Python ast.parse and stdlib-only carrier construction/canonical sanity check over accepted temporal fixture cases",
+      "exitCode": 0,
+      "result": "Syntax OK; all11 accepted source cases construct carriers with canonical results matching fixture. This is fixture sanity only, not runtime implementation acceptance."
+    },
+    {
+      "command": "Transient aggregate import probe in test_golden_vectors.py",
+      "exitCode": 1,
+      "result": "validate_constraints absent. Parent then clarified separate-helper ABI selected; transient test probe removed, no stub or unused aggregate added."
+    },
+    {
+      "command": "Explicit strict pyright check of installed owned modules",
+      "exitCode": 1,
+      "result": "14 defensive-typing diagnostics; fixed with object-typed checks and typed container casts in owned sources; latest explicit strict pyright source check0errors."
+    },
+    {
+      "command": "Latest strict mypy source check after ActionRef and typed-container fixes",
+      "exitCode": 1,
+      "result": "Only imported DSL _expressions.py187 redundant-cast; owned modules have no diagnostics."
+    },
+    {
+      "command": "Installed v2 byte-verified isolated behavioral suite",
+      "exitCode": 0,
+      "result": "25tests passed, including19 helper tests,69golden subcases,4actual generated model tests and1actual generated actiontype test; latest typed-container source changes require wheel v3 replay."
+    },
+    {
+      "command": "Initial offline uv installation using default cache",
+      "exitCode": 1,
+      "result": "Sandbox cache-lock refusal then required pinned packages absent from default cache. Resolved using documented UV_CACHE_DIR=/private/tmp/umf-tp001-uv-cache; exact pins unchanged; offline installation passed."
+    },
+    {
+      "command": "Strict checker probe targeting installed module paths",
+      "exitCode": 2,
+      "result": "Mypy installed-path probe refused typing_extensions shadowing. First pyright config used absolute includes and was interrupted exit130 after ignored-include warning; replaced with empty include and three explicit module paths."
+    },
+    {
+      "command": "Final isolated installed behavioral v3 replay",
+      "exitCode": 0,
+      "result": "25tests passed,69non-temporal golden subcases, exact owned source/wheel bytes match. Counts: helper19 + golden1 + generated4 + actiontypes1 =25."
+    }
+  ],
+  "testFingerprints": {
+    "python/umf_access/tests/test_values_red.py": "9b333cc2047b8b271eb2f20113705fe8ce0ab96daa81c1788d5663503c278e25",
+    "python/umf_access/tests/test_codec_support_red.py": "f9946d4ecc5201f2294cabbf62841ac0af72f265de10c8823d24d5592d88ca16",
+    "tests/compilation/access-golden-vectors.test.ts": "307db3da186c57a97511e5b7463cc1aa26975bfd6cce4e884ab80b849b218c2f",
+    "fixtures/access/golden-vectors/core-carriers.json": "fdad48d32f30da8a66f6d72e7124debbb78442192cb8e3107e224957bb768e8a",
+    "python/umf_access/tests/test_temporal_carriers_red.py": "bf1af190eb7d681c0c4e9913f6ce1dc01bd7eb3ea6896e336fb7a2b169c9ca91",
+    "python/umf_access/tests/test_golden_vectors.py": "8c27221a7550b1643e54349349e48f9cac82c84ed145035e1809e25babc4d1e1",
+    "python/umf_access/tests/test_generated_models.py": "37d2da8dfce2f8edc509c343e0e0e68c7cdea82e85f56f73949ad382a999e027",
+    "python/umf_access/tests/test_generated_actiontypes.py": "072b68e98e0ecf4219dc34f8c756234420deb4b9d7ec4d5ab0b4fee761d3230c",
+    "python/umf_access/tests/test_generated_projections.py": "04fde2d5adf3306fdb59f22cfdd70bebdd11545861493cdec139ac32c8ca7e49"
+  },
+  "coverage": {
+    "AC1": "Actual generated commerce Create/Patch source replay passes presence omission/null/extras and names; no authored default injected. Installed replay pending.",
+    "AC2": "69non-temporal core helper golden subcases and separately scoped CONTRACT075 Python canonical carrier agreement pass in exact full-commerce replay. Named Weft target transport conversion/interoperability is UNTESTED, W-0 dependent.",
+    "AC3": "Raw model_construct/model_copy/nested list/dict/cycle/error-location tests pass; actual generated bypass/sealing tests pass.",
+    "AC4": "Same coherent stable9189wheel/generated commerce snapshot passes ordered compositeKey, Key identity/digest/unhashable, ShipOrder requiredentity/optionalMISSING/outputDecimal/Literalfailure/retryable/immutableActionRef tests. No actionclient/executor/native claim.",
+    "AC5": "Generated Python-valued row decode validates inventories before mapping and revalidates models. Named Weft result-carrier conversion and actual target/native decode are UNTESTED, W-0 dependent.",
+    "AC6": "Same coherent selected output passes installed import audit, pinned mypy, strict pyright, c-column source-pointer docstrings and alias-free AST checks. Broader per-file positive/negative model/static/callsite corpora and full-story coverage remain separate gates."
+  },
+  "continuation": [
+    "Parent/packaging may reuse passing selected full-commerce composite snapshot7ed23acf with wheel9189, generatorDigest and inputDigest from b-tp-004-final/latest-replay.json. Preserve old snapshots and no runtime rebuild for TS changes. Integrate DSL/refactor/static negative corpora and verify all prerequisites/STP081 mappings before any B-TP-004 closure.",
+    "Packaging: use b-tp-004-full-commerce-request.ts with canonical package commerce and empty output root; full request/profiles/source/output hashes and passing25test preflight retained. Builder emits no stage-two commerce.queries; DSL owner must supply that governed scope. Keep e4/runtime helper bytes stable; no rebuild needed unless runtime files change.",
+    "Generator owner: resolve16strict pyright diagnostics in actual emitted actions/keys/codecs recorded in installed-abi-v3.json. Then regenerate and replay full installed harness. Runtime owners: implement no aggregate validate_constraints; selected ABI is existing separate helpers plus ActionRef. Full B-TP-004 closure still requires B-TP-003 closure and all STP081 ACs.",
+    "Coordinate proposed ABI with B-TP-001 and B-TP-003 owners through this evidence record; do not emit imports against an assumed implemented API.",
+    "Create shared golden fixture oracle with validateCoreFieldValue and validateCoreRecordValues, include width extremes, precision/scale, authored ranges/allowedValues/length, collections and timestamp counterexamples.",
+    "Integrate actual generated commerce package in STP-081 test_generated_models.py, test_codecs.py and test_golden_vectors.py; stand-in classes in red helper tests are not generator acceptance.",
+    "Run all STP-081 commands including both pinned checker corpora and isolated import; record exact source hashes and results before claiming closure."
+  ],
+  "limits": [
+    "No dependency installed",
+    "No commits or branch changes",
+    "No SQL lowering",
+    "Concurrent files left untouched",
+    "No native/browser/static/generated-Python golden acceptance claimed; core-only oracle result is separately scoped",
+    "Local source tests are not installed wheel acceptance. Packaging/build harness owned by compatibility session; no packaging metadata changed.",
+    "Fresh v3 wheel and generated package preserved separately in /private/tmp; build and generated input/profile/source/output identities retained in evidence. No emitter/root export/packaging metadata edits by this session.",
+    "27test full-commerce pass covers local Python model/value/codec behavior only; no Decimal-text or epoch-microsecond-text Weft/native transport agreement. Explicit W-0 gate remains open."
+  ],
+  "goldenOracle": {
+    "fixture": "fixtures/access/golden-vectors/core-carriers.json",
+    "test": "tests/compilation/access-golden-vectors.test.ts",
+    "coreVersion": "0.8.0",
+    "apiVersion": "1.0.0",
+    "vectors": 72,
+    "temporalCounterexamples": 3,
+    "fullCorpusComplete": false,
+    "recordedVerdicts": "expected property in each vector, confirmed by passing oracle test"
+  },
+  "temporalPreparation": {
+    "contract": "CONTRACT-075",
+    "profile": "umf-access-temporal/0.1.0",
+    "fixture": "fixtures/access/golden-vectors/temporal-profile.json",
+    "fixtureSha256": "33e246d47ead263e9b2467b57a46811cdd3628d703d91b5f4fa564b1d207f9c2",
+    "sample": "docs/helix/04-build/evidence/typed-persistence/temporal-profile/python-normalization-sample.json",
+    "sampleSha256": "2fea1bf81211600cd0bf664562ab6cbfb103d0c4d97d13d5ee98568fdbad6dd8",
+    "status": "Python red carrier corpus prepared; runtime agreement UNTESTED; implementation held for B-TP-003",
+    "coverage": [
+      "All accepted source tokens construct Python carriers; exact canonical result comparison",
+      "Recorded Python normalization sample including overflow refusals",
+      "Fixed offsets +/-30seconds and +/-1microsecond and offset just below24hours",
+      "Four-digit year0001 padding, preepoch fraction, microsecond UTC overflow both extremes",
+      "Nondefault fold, custom dynamic tzinfo and identity-bearing ZoneInfo refusal",
+      "Wrong carrier kinds and value-free diagnostic check"
+    ],
+    "scope": "Refused source tokens belong to public token oracle; this test does not use permissive Python parsing as admission or duplicate token semantics."
+  },
+  "selectedPythonCarrierSubset": {
+    "temporalProfile": "umf-access-temporal/0.1.0",
+    "date": "exact built-in datetime.date only; subclasses and datetime refuse",
+    "local": "exact built-in datetime.datetime, tzinfo None, fold0 only",
+    "instant": "exact built-in datetime.datetime with exact built-in datetime.timezone instance, fold0, UTC-normalizable years0001..9999",
+    "fixedOffsetDetail": "datetime.timezone offsets including seconds and microseconds accepted; custom tzinfo (even constant-offset) and ZoneInfo refuse. This is a concrete-class subset; no claim of all aware fixed-offset tzinfo classes.",
+    "scalarDetail": "exact built-in bool/int/bytes; Decimal finite; str with no lone surrogates",
+    "vectorDetail": "tuple of finite Python floats exactly representable at float32; no silent rounding, dimension supplied explicitly; generator/index integration UNTESTED",
+    "codecBounds": {
+      "maximumDepth": 128,
+      "maximumNodes": 10000,
+      "cycles": "explicit CodecError refusal"
+    },
+    "limits": "Generated package replay qualified only for source-tested subset; no native transport mapping guessed."
+  },
+  "proposedRootExports": {
+    "owner": "parent; root __init__.py untouched by B-TP-004",
+    "optional": [
+      "StrictModel",
+      "Vector",
+      "CodecError",
+      "ValueRuleError",
+      "ActionRef"
+    ],
+    "alreadyOwnedByParent": [
+      "MISSING"
+    ],
+    "note": "Generated imports use .types/.values/.codec_support directly; helper functions need no facade re-export."
+  },
+  "generatorIntegrationFindings": [
+    {
+      "severity": "blocking-static",
+      "source": "src/compilation/targets/python/index.ts",
+      "issue": "Generated encode Create checks required non-MISSING fields against MISSING. Pinned mypy strict reports comparison-overlap at codecs.py12,14,18,38,40 for this two-record fixture. Emit MISSING guard only when that view admits missing; generated/developer suppressions are forbidden.",
+      "status": "owner fix pending; emitter untouched"
+    },
+    {
+      "severity": "blocking-static",
+      "source": "python/umf_access/src/umf_access/dsl/_expressions.py:177",
+      "issue": "Pinned mypy strict reports redundant-cast on Predicate[Any].",
+      "status": "DSL owner fix pending; file untouched"
+    },
+    {
+      "severity": "tooling",
+      "source": "scripts/check-access-python-boundaries.py",
+      "issue": "System Python3.9 checker falsely rejects stdlib math; pinned Python3.14 checker passes. Parent notified boundary owner; no math workaround made."
+    },
+    {
+      "source": "python/umf_access/tests/packaging/compatibility-profile.json",
+      "issue": "Historical required validate_constraints export caused installed ABI refusal; parent selected existing separate helpers, profile now aligned; no unused aggregate implementation added.",
+      "status": "profile mismatch resolved; failed installed-abi.json retained"
+    },
+    {
+      "source": "src/compilation/targets/python/index.ts",
+      "issue": "Actual selected-action package installed audit/import and mypy profile pass, strict pyright fails16 diagnostics: cross-module private validator imports in actions/keys; unnecessary datetime/None comparison; unused checked variable in empty Patch encoder.",
+      "status": "emitter owner fix/replay pending; full diagnostics in installed-abi-v2.json"
+    },
+    {
+      "source": "python/umf_access/src/umf_access/dsl/_expressions.py:187",
+      "issue": "Latest strict mypy source check reports redundant-cast in imported sibling DSL only; no owned-module diagnostics.",
+      "status": "DSL owner fix pending; no suppression added"
+    },
+    {
+      "source": "src/compilation/targets/python/index.ts",
+      "issue": "Fresh v3 actual selected-action/two-record package full installed import/I/O audit and profile mypy pass; strict pyright16errors persist in emitted private imports and two redundant codec statements.",
+      "status": "emitter owner must fix without developer suppressions, then regenerate and replay; see installed-abi-v3.json"
+    }
+  ],
+  "latestReplay": "b-tp-004-local-runtime/replay.json",
+  "sourceFingerprints": {
+    "python/umf_access/src/umf_access/types.py": "8d150002bb4eaa3c82580912eaa7b01276db84e838ce7dbd20b0c7e661057ebd",
+    "python/umf_access/src/umf_access/values.py": "8deb1a50a085b9ff02717fdb32d4dfd341d005f10097f55d92062af7cdca4dcd",
+    "python/umf_access/src/umf_access/codec_support.py": "6a1e8e309969f4676fcb20ef759db6af2689dee18a63f6c022352de91f169748"
+  },
+  "latestInstalledBehavior": "b-tp-004-final/generated/7ed23acf3167cf8ea1d1720946482fd61a8e0680a85bae8091015b88644a9bc1/replay.json",
+  "latestInstalledAbi": "b-tp-004-final/generated/7ed23acf3167cf8ea1d1720946482fd61a8e0680a85bae8091015b88644a9bc1/replay.json",
+  "finalCommands": [
+    {
+      "name": "strict-owned-installed-pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--pythonpath",
+        "/private/tmp/umf-btp004-installed-env-v3/bin/python",
+        "--project",
+        "/private/tmp/umf-btp004-checks/pyrightconfig.json",
+        "/private/tmp/umf-btp004-installed-env-v3/lib/python3.14/site-packages/umf_access/types.py",
+        "/private/tmp/umf-btp004-installed-env-v3/lib/python3.14/site-packages/umf_access/values.py",
+        "/private/tmp/umf-btp004-installed-env-v3/lib/python3.14/site-packages/umf_access/codec_support.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/strict-owned-installed-pyright.log"
+    },
+    {
+      "name": "boundary-system-final",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/check-access-python-boundaries.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/boundary-system-final.log"
+    }
+  ],
+  "lastFreshBuild": "b-tp-004-local-runtime/wheel-build-v3.json",
+  "latestImmutableSnapshotReplay": "b-tp-004-snapshot-e4c780c7/replay.json",
+  "immutableSnapshotHelperMatch": {
+    "types.py": true,
+    "values.py": true,
+    "codec_support.py": true
+  },
+  "packagingFullCommerceHandoff": "b-tp-004-full-commerce-request.json",
+  "canonicalGeneratedPackage": "commerce",
+  "latestFullCommercePreflight": "b-tp-004-full-commerce-preflight/preflight.json",
+  "fullCommercePreflight": "PASS25tests with exact installede4wheel and one actual generated Customer/Order/OrderLine/ShipOrder+3projection request; parent final static/coherent-snapshot gate still pending.",
+  "stableRuntimeForNextGeneratedReplay": {
+    "checkpoint": "production-packaging/stable-runtime-checkpoint.json",
+    "wheelSha256": "9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c",
+    "python": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/bin/python",
+    "helperModulesMatchCurrentSource": [
+      "types.py",
+      "values.py",
+      "codec_support.py"
+    ],
+    "wheelHashIndependentlyVerified": true,
+    "sourceManifest": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/runtime/9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c/source-manifest.json",
+    "sourceManifestSha256": "b53817d33e51037ec036c613ecd27f4d0092706b19c587d29c819785c2227689",
+    "status": "Runtime bytes verified only; no new generated/test acceptance inferred. Await TS stability and final composite-identity full commerce generated snapshot.",
+    "generationIdentity": [
+      "wheelSha256",
+      "generatorSourceDigest",
+      "inputDigest"
+    ],
+    "rule": "Reuse stable runtime; do not rebuild solely for TS/request edits. Generated identity overwrite must refuse."
+  },
+  "latestFullCommerceReplay": "b-tp-004-final/latest-replay.json",
+  "latestResolvedStaticFindings": "Earlier emitter16and6diagnostic failures retained as history; current compiler checkpoint/selected full-commerce output passes both pinned checkers in the fresh composite snapshot.",
+  "transportCarrierBoundary": {
+    "status": "UNTESTED; dependent on W-0 recognized named Weft entry carriers",
+    "observed": "Current generated encode/decode methods preserve Python carriers (Decimal, bytes, date/datetime); instant encoding normalizes datetime UTC. They do not select or interpret a Weft carrier descriptor.",
+    "notProven": [
+      "exact decimal text parameter/result interchange",
+      "epoch-microsecond text instant parameter/result interchange",
+      "named carrier inventory admission/refusal at catalog build",
+      "native target parameter binding and decoder interoperability"
+    ],
+    "qualification": "Local model/helper/codec revalidation and Python value preservation only. CONTRACT-075 canonical tokens are an oracle comparison, not a selected Weft/native transport carrier. No full transport/native support claim.",
+    "continuation": "W-0/catalog owner must define released recognized carrier descriptors and conversion seam; implement/test exact conversion and unknown-carrier refusal before target carrier agreement. No guessed transport or interim SQL lowering."
+  }
+}

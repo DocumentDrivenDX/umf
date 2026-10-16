@@ -1,0 +1,121 @@
+error[unsupported-operator]: Unsupported `>` operation
+ --> bad.py:6:39
+  |
+6 | def b1(): return Order.objects.filter(Order.c.amount > "10")                 # E1 wrong operand type
+  |                                       --------------^^^----
+  |                                       |                |
+  |                                       |                Has type `Literal["10"]`
+  |                                       Has type `Column[Order, Decimal]`
+
+error[invalid-argument-type]: Argument to bound method `Query.filter` is incorrect
+ --> bad.py:7:39
+  |
+7 | def b2(): return Order.objects.filter(Order.c.amount == "10")                # E2 wrong operand type via ==
+  |                                       ^^^^^^^^^^^^^^^^^^^^^^ Expected `Predicate[Order]`, found `bool`
+info: Method defined here
+  --> dsl.py:51:9
+   |
+51 |     def filter(self, *preds: Predicate[O]) -> Self: return self._add("filter", preds)
+   |         ^^^^^^       -------------------- Parameter declared here
+
+error[invalid-argument-type]: Argument to bound method `Query.filter` is incorrect
+ --> bad.py:8:39
+  |
+8 | def b3(): return Order.objects.filter(Customer.c.name == "x")                # E3 column from another record
+  |                                       ^^^^^^^^^^^^^^^^^^^^^^ Expected `Predicate[Order]`, found `Predicate[Customer]`
+info: Method defined here
+  --> dsl.py:51:9
+   |
+51 |     def filter(self, *preds: Predicate[O]) -> Self: return self._add("filter", preds)
+   |         ^^^^^^       -------------------- Parameter declared here
+
+error[unresolved-attribute]: Object of type `OrderColumns` has no attribute `ammount`
+ --> bad.py:9:39
+  |
+9 | def b4(): return Order.objects.filter(Order.c.ammount > Decimal(1))          # E4 misspelled column
+  |                                       ^^^^^^^^^^^^^^^
+
+error[invalid-argument-type]: Argument to bound method `OrderQuery.update` is incorrect
+  --> bad.py:10:39
+   |
+10 | def b5(): return Order.objects.update(amount="10")                           # E5 wrong update type
+   |                                       ^^^^^^^^^^^ Expected `Decimal | MISSING`, found `Literal["10"]`
+info: Method defined here
+  --> shop/models.py:20:9
+   |
+20 |     def update(self, *, amount: Decimal | MISSING = MISSING,
+   |         ^^^^^^          ----------------------------------- Parameter declared here
+
+error[unknown-argument]: Argument `placed_at` does not match any known parameter of bound method `OrderQuery.update`
+  --> bad.py:11:39
+   |
+11 | def b6(): return Order.objects.update(placed_at=datetime.now())              # E6 immutable/unknown update field
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+info: Method signature here
+  --> shop/models.py:20:9
+   |
+20 |       def update(self, *, amount: Decimal | MISSING = MISSING,
+   |  _________^
+21 | |                memo: str | None | MISSING = MISSING) -> "Bulk":
+   | |______________________________________________________________^
+
+error[unsupported-operator]: Unsupported `>=` operation
+  --> bad.py:12:52
+   |
+12 | def b7(p: Param[str]): return Order.objects.filter(Order.c.placed_at >= p)   # E7 param type mismatch
+   |                                                    -----------------^^^^-
+   |                                                    |                    |
+   |                                                    |                    Has type `Param[str]`
+   |                                                    Has type `Column[Order, datetime]`
+
+error[invalid-argument-type]: Argument to bound method `Query.select` is incorrect
+  --> bad.py:13:39
+   |
+13 | def b8(): return Order.objects.select(Customer.c.name)                       # E8 select foreign column
+   |                                       ^^^^^^^^^^^^^^^ Expected `Column[Order, str]`, found `Column[Customer, str]`
+info: Matching overload defined here
+  --> dsl.py:56:9
+   |
+56 |     def select(self, c1: Column[O, T1], /) -> Query[O, tuple[T1]]: ...
+   |         ^^^^^^       ----------------- Parameter declared here
+info: Non-matching overloads for bound method `select`:
+info:   [T1, T2](self, c1: Column[O@Query, T1], c2: Column[O@Query, T2], /) -> Query[O@Query, tuple[T1, T2]]
+info:   [T1, T2, T3](self, c1: Column[O@Query, T1], c2: Column[O@Query, T2], c3: Column[O@Query, T3], /) -> Query[O@Query, tuple[T1, T2, T3]]
+
+error[unknown-argument]: Argument `ammount` does not match any known parameter
+  --> bad.py:14:17
+   |
+14 | b9 = OrderPatch(ammount=Decimal(1))                                          # E9 unknown patch field
+   |                 ^^^^^^^^^^^^^^^^^^
+
+error[unknown-argument]: Argument `ammount` does not match any known parameter
+ --> e9.py:3:17
+  |
+3 | b9 = OrderPatch(ammount=Decimal(1))
+  |                 ^^^^^^^^^^^^^^^^^^
+
+error[invalid-argument-type]: Argument is incorrect
+ --> e9.py:4:27
+  |
+4 | b10 = Order(order_id="x", amount=1.5, memo=None, placed_at=None)
+  |                           ^^^^^^^^^^ Expected `Decimal`, found `float*`
+
+error[invalid-argument-type]: Argument is incorrect
+ --> e9.py:4:50
+  |
+4 | b10 = Order(order_id="x", amount=1.5, memo=None, placed_at=None)
+  |                                                  ^^^^^^^^^^^^^^ Expected `datetime`, found `None`
+
+info[revealed-type]: Revealed type
+  --> good.py:21:13
+   |
+21 | reveal_type(ids_and_amounts())
+   |             ^^^^^^^^^^^^^^^^^ `Unknown`
+
+info[revealed-type]: Revealed type
+  --> good.py:22:13
+   |
+22 | reveal_type(recent)
+   |             ^^^^^^ `def recent(since: Param[datetime], memo: Param[str | None]) -> Unknown`
+
+Found 14 diagnostics

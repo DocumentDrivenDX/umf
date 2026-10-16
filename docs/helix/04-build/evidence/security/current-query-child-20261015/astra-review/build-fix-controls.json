@@ -1,0 +1,27 @@
+{
+  "builderSha256": "d5c20f42572fdcf93cbd474cf489b6fbb12cc1047aaf3db52158008cbbbbbb34",
+  "controls": [
+    {
+      "mode": "baseline",
+      "passed": true,
+      "exit": 0,
+      "manifest": true,
+      "expectedFailure": null
+    },
+    {
+      "mode": "post-build-change",
+      "passed": true,
+      "exit": 1,
+      "manifest": false,
+      "expectedFailure": "Build source changed"
+    },
+    {
+      "mode": "closure-change",
+      "passed": true,
+      "exit": 1,
+      "manifest": false,
+      "expectedFailure": "Build closure changed"
+    }
+  ],
+  "scope": "Private minimal copy of exact original builder; controlled mutations around actual build. Endpoint custody, not hermetic or ABA proof."
+}

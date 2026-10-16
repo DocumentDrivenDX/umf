@@ -1,0 +1,25 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/compilation/boundaries.test.ts:
+(pass) actual compilation boundary checker > allows public IR dependency [117.90ms]
+(pass) actual compilation boundary checker > rejects forbidden direction and private reach-through [247.35ms]
+(pass) actual compilation boundary checker > rejects host imports, globals, dynamic loading and unresolved imports [806.38ms]
+(pass) actual compilation boundary checker > rejects cycles including re-exports [153.12ms]
+(pass) actual compilation boundary checker > IR external dependencies are type-only, including relative imports [273.54ms]
+(pass) actual compilation boundary checker > rejects network and runtime code execution in portable modules [646.32ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3 [125.14ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3.14 [106.98ms]
+(pass) actual Python boundary checker > allows runtime to DSL public boundary [65.71ms]
+(pass) actual Python boundary checker > rejects drivers and Weft outside owned integrations [288.00ms]
+(pass) actual Python boundary checker > rejects private access and relative-import cycles [107.37ms]
+(pass) actual Python boundary checker > bulk exception is narrow; target cannot import generated packages or engines [252.85ms]
+(pass) actual Python boundary checker > rejects dynamic imports and malformed syntax [99.49ms]
+(pass) actual Python boundary checker > discovers src layout and rejects host I/O and dynamic import APIs [490.13ms]
+(pass) actual Python boundary checker > rejects empty scans and scans both source layouts [107.86ms]
+(pass) actual Python boundary checker > named runtime foundations have explicit ownership; arbitrary helpers refuse [196.35ms]
+(pass) local command and installed pre-commit hook reject real violations [2743.77ms]
+
+ 17 pass
+ 0 fail
+ 97 expect() calls
+Ran 17 tests across 1 file. [6.85s]

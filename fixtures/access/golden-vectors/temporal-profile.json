@@ -1,0 +1,297 @@
+{
+  "profile": "umf-access-temporal/0.1.0",
+  "oracle": "CONTRACT-075 explicit profile; generic core temporal validation remains refusing",
+  "cases": [
+    {
+      "id": "date-1",
+      "kind": "date",
+      "token": "2000-02-29",
+      "accept": true,
+      "expected": {
+        "canonicalText": "2000-02-29"
+      }
+    },
+    {
+      "id": "date-2",
+      "kind": "date",
+      "token": "0001-01-01",
+      "accept": true,
+      "expected": {
+        "canonicalText": "0001-01-01"
+      }
+    },
+    {
+      "id": "date-3",
+      "kind": "date",
+      "token": "9999-12-31",
+      "accept": true,
+      "expected": {
+        "canonicalText": "9999-12-31"
+      }
+    },
+    {
+      "id": "date-4",
+      "kind": "date",
+      "token": "1900-02-29",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "date-5",
+      "kind": "date",
+      "token": "0000-01-01",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "date-6",
+      "kind": "date",
+      "token": "2024-04-31",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "date-7",
+      "kind": "date",
+      "token": "2024-01-01T00:00:00Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "date-8",
+      "kind": "date",
+      "token": "2024-01-01\n",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "date-9",
+      "kind": "date",
+      "token": "\uff12\uff10\uff12\uff14-01-01",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-10",
+      "kind": "instant",
+      "token": "2024-01-01T01:30:00.123456+01:30",
+      "accept": true,
+      "expected": {
+        "utcSeconds": "1704067200",
+        "microsecond": 123456,
+        "canonicalText": "2024-01-01T00:00:00.123456Z"
+      }
+    },
+    {
+      "id": "instant-11",
+      "kind": "instant",
+      "token": "2023-12-31T19:00:00-05:00",
+      "accept": true,
+      "expected": {
+        "canonicalText": "2024-01-01T00:00:00.000000Z"
+      }
+    },
+    {
+      "id": "instant-12",
+      "kind": "instant",
+      "token": "0001-01-01T00:00:00Z",
+      "accept": true,
+      "expected": {
+        "canonicalText": "0001-01-01T00:00:00.000000Z"
+      }
+    },
+    {
+      "id": "instant-13",
+      "kind": "instant",
+      "token": "9999-12-31T23:59:59.999999Z",
+      "accept": true,
+      "expected": {
+        "canonicalText": "9999-12-31T23:59:59.999999Z"
+      }
+    },
+    {
+      "id": "instant-14",
+      "kind": "instant",
+      "token": "2024-02-29T12:00:00+23:59",
+      "accept": true,
+      "expected": {
+        "canonicalText": "2024-02-28T12:01:00.000000Z"
+      }
+    },
+    {
+      "id": "instant-15",
+      "kind": "instant",
+      "token": "0001-01-01T00:00:00+00:01",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-16",
+      "kind": "instant",
+      "token": "9999-12-31T23:59:59-00:01",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-17",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00-00:00",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-18",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-19",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00.1234567Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-20",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00.1234560Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-21",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:60Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-22",
+      "kind": "instant",
+      "token": "2024-01-01T24:00:00Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-23",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00+24:00",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-24",
+      "kind": "instant",
+      "token": "2024-01-01t00:00:00z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-25",
+      "kind": "instant",
+      "token": "2024-01-01 00:00:00Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-26",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00Z\n",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-27",
+      "kind": "instant",
+      "token": "2023-02-29T00:00:00Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "instant-28",
+      "kind": "instant",
+      "token": "2024-01-01T00:00:00+01:00:30",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-29",
+      "kind": "local",
+      "token": "2024-02-29T12:34:56.1",
+      "accept": true,
+      "expected": {
+        "canonicalText": "2024-02-29T12:34:56.100000",
+        "microsecond": 100000
+      }
+    },
+    {
+      "id": "local-30",
+      "kind": "local",
+      "token": "0001-01-01T00:00:00",
+      "accept": true,
+      "expected": {
+        "canonicalText": "0001-01-01T00:00:00.000000"
+      }
+    },
+    {
+      "id": "local-31",
+      "kind": "local",
+      "token": "9999-12-31T23:59:59.999999",
+      "accept": true,
+      "expected": {
+        "canonicalText": "9999-12-31T23:59:59.999999"
+      }
+    },
+    {
+      "id": "local-32",
+      "kind": "local",
+      "token": "2024-01-01T00:00:00+00:00",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-33",
+      "kind": "local",
+      "token": "2024-01-01T00:00:00Z",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-34",
+      "kind": "local",
+      "token": "2023-02-29T12:00:00",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-35",
+      "kind": "local",
+      "token": "2024-01-01T00:00:00.0000000",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-36",
+      "kind": "local",
+      "token": "2024-01-01T00:00:00.",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-37",
+      "kind": "local",
+      "token": "2024-01-01T00:00:00\n",
+      "accept": false,
+      "expected": {}
+    },
+    {
+      "id": "local-38",
+      "kind": "local",
+      "token": "2024-01-01T00:60:00",
+      "accept": false,
+      "expected": {}
+    }
+  ]
+}

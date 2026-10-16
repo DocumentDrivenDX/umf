@@ -1,9 +1,11 @@
+import {parseBits128} from './bit128';
+import {parseUuid} from './uuid';
 import {copyJson, LIMITS} from './json';
 import {UmfError, type Document, type Element, type Json} from './types';
 
 export type CoreLiteral = null | {boolean:boolean} | {integerToken:string} | {decimalToken:string} |
  {string:string} | {binaryHex:string} | {floatToken:string} | {date:string} | {time:string} |
- {timestamp:string} | {array:CoreLiteral[]} | {map:Record<string,CoreLiteral>};
+ {timestamp:string} | {bits128Hex:string} | {uuid:string} | {array:CoreLiteral[]} | {map:Record<string,CoreLiteral>};
 export const schemaPropertyNames=['title','aliases','examples','allowedValues','default'] as const;
 export const newFacetNames=['collectionSize','range'] as const;
 export const canonicalSchemaJson=(value:unknown):string=>Array.isArray(value)?'['+value.map(canonicalSchemaJson).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonicalSchemaJson((value as Record<string,unknown>)[k])).join(',')+'}':JSON.stringify(value);
@@ -34,9 +36,11 @@ function stringLength(value:string):number {
 export function literalIdentity(field:Element,value:CoreLiteral):string {
  if(value===null)schemaError('Null has no allowed-value equality');
  const v=object(value),keys=Object.keys(v),kind=field.scalarType;
- const wrapper=({boolean:'boolean',integer:'integerToken',decimal:'decimalToken',string:'string',binary:'binaryHex'} as Record<string,string>)[kind as string];
+ const wrapper=({boolean:'boolean',integer:'integerToken',decimal:'decimalToken',string:'string',binary:'binaryHex',bits128:'bits128Hex',uuid:'uuid'} as Record<string,string>)[kind as string];
  if(!wrapper||keys.length!==1||keys[0]!==wrapper)schemaError('No exact equality for this literal/domain');
  const facets=object(field.facets??{});
+ if(kind==='bits128')return 'bits128:'+parseBits128(v.bits128Hex).hex;
+ if(kind==='uuid')return 'uuid:'+parseUuid(v.uuid).hex;
  if(kind==='integer')return 'integer:'+schemaCoefficient(v[wrapper],0);
  if(kind==='decimal'){if(!Number.isSafeInteger(facets.scale)||!Number.isSafeInteger(facets.precision))schemaError('Decimal requires explicit precision/scale');return 'decimal:'+schemaCoefficient(v[wrapper],facets.scale,facets.precision);}
  if(kind==='string'){stringLength(v.string);return 'string:'+JSON.stringify(v.string);}
@@ -69,7 +73,9 @@ function evaluateSchemaLiteral(doc:Document,field:Element,value:CoreLiteral,refi
   for(const entry of values)evaluateSchemaLiteral(doc,item,entry,refinements,depth+1,charge);
  }else{
   if(field.cardinality!==undefined&&!['one','unspecified'].includes(field.cardinality as string))schemaError('Unknown cardinality');
-  const kind=field.scalarType,wrapper=({boolean:'boolean',integer:'integerToken',decimal:'decimalToken',string:'string',binary:'binaryHex',float:'floatToken',date:'date',time:'time',timestamp:'timestamp'} as Record<string,string>)[kind as string];
+  const kind=field.scalarType;
+  if(['bits128','uuid'].includes(kind??'')&&doc.umf!=='0.9.0')schemaError('128-bit domains require core 0.9.0');
+  const wrapper=({boolean:'boolean',integer:'integerToken',decimal:'decimalToken',string:'string',binary:'binaryHex',bits128:'bits128Hex',uuid:'uuid',float:'floatToken',date:'date',time:'time',timestamp:'timestamp'} as Record<string,string>)[kind as string];
   if(!wrapper||!Object.hasOwn(v,wrapper))schemaError('Literal does not match scalar family');
   if(['float','date','time','timestamp'].includes(kind!)){if(refinements)schemaError('Value/default semantics for float/temporal domain are not defined');if(typeof v[wrapper]!=='string')schemaError('Expected literal text');return;}
   literalIdentity(field,value);

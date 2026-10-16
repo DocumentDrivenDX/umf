@@ -1,0 +1,381 @@
+{
+  "scope": "production runtime source typing subset; not generated-package/STP-082 acceptance",
+  "profile": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/profile.json",
+  "configSha256": "674bc9c376818100a47d349f1105a6b453328a01cba6de0cc3f01563b110a7c9",
+  "results": [
+    {
+      "file": "tests/compilation/python/static/queries/positive/runtime_types.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/positive/runtime_types.py"
+      ],
+      "exitCode": 0,
+      "actual": [],
+      "expected": [],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089295494\",\n    \"generalDiagnostics\": [],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 0,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.393\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/positive/runtime_types.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/positive/runtime_types.py"
+      ],
+      "exitCode": 0,
+      "actual": [],
+      "expected": [],
+      "passed": true,
+      "stdout": "Success: no issues found in 1 source file\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_wrong_operand.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_operand.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "reportOperatorIssue"
+        },
+        {
+          "line": 12,
+          "rule": "reportUnknownArgumentType"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "reportOperatorIssue"
+        },
+        {
+          "line": 12,
+          "rule": "reportUnknownArgumentType"
+        }
+      ],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089296244\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_operand.py\",\n            \"severity\": \"error\",\n            \"message\": \"Operator \\\">\\\" not supported for types \\\"Column[Owner, Decimal]\\\" and \\\"Literal['1']\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 16\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 28\n                }\n            },\n            \"rule\": \"reportOperatorIssue\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_operand.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 16\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 28\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 2,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.277\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_wrong_operand.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_operand.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "operator"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "operator"
+        }
+      ],
+      "passed": true,
+      "stdout": "tests/compilation/python/static/queries/negative/runtime_wrong_operand.py:12: error: Unsupported operand types for > (\"Column[Owner, Decimal]\" and \"str\")  [operator]\nFound 1 error in 1 file (checked 1 source file)\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_wrong_eq.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_eq.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089296980\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_eq.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument of type \\\"bool\\\" cannot be assigned to parameter \\\"preds\\\" of type \\\"Predicate[Owner]\\\" in function \\\"filter\\\"\\n\u00a0\u00a0\\\"bool\\\" is not assignable to \\\"Predicate[Owner]\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 16\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 29\n                }\n            },\n            \"rule\": \"reportArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 1,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.283\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_wrong_eq.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_wrong_eq.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "passed": true,
+      "stdout": "tests/compilation/python/static/queries/negative/runtime_wrong_eq.py:12: error: Argument 1 to \"filter\" of \"Query\" has incompatible type \"bool\"; expected \"Predicate[Owner]\"  [arg-type]\nFound 1 error in 1 file (checked 1 source file)\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_foreign_filter.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_foreign_filter.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089297711\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_foreign_filter.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument of type \\\"Predicate[Other]\\\" cannot be assigned to parameter \\\"preds\\\" of type \\\"Predicate[Owner]\\\" in function \\\"filter\\\"\\n\u00a0\u00a0\\\"Predicate[Other]\\\" is not assignable to \\\"Predicate[Owner]\\\"\\n\u00a0\u00a0\u00a0\u00a0Type parameter \\\"O@Predicate\\\" is invariant, but \\\"Other\\\" is not the same as \\\"Owner\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 16\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 30\n                }\n            },\n            \"rule\": \"reportArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 1,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.294\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_foreign_filter.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_foreign_filter.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "passed": true,
+      "stdout": "tests/compilation/python/static/queries/negative/runtime_foreign_filter.py:12: error: Argument 1 to \"filter\" of \"Query\" has incompatible type \"Predicate[Other]\"; expected \"Predicate[Owner]\"  [arg-type]\nFound 1 error in 1 file (checked 1 source file)\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_foreign_select.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_foreign_select.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089298423\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_foreign_select.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument of type \\\"Column[Other, str]\\\" cannot be assigned to parameter \\\"c1\\\" of type \\\"Column[Owner, T1@select]\\\" in function \\\"select\\\"\\n\u00a0\u00a0\\\"Column[Other, str]\\\" is not assignable to \\\"Column[Owner, str]\\\"\\n\u00a0\u00a0\u00a0\u00a0Type parameter \\\"O@Column\\\" is invariant, but \\\"Other\\\" is not the same as \\\"Owner\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 16\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 23\n                }\n            },\n            \"rule\": \"reportArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 1,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.281\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_foreign_select.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_foreign_select.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "passed": true,
+      "stdout": "tests/compilation/python/static/queries/negative/runtime_foreign_select.py:12: error: Argument 1 to \"select\" of \"Query\" has incompatible type \"Column[Other, str]\"; expected \"Column[Owner, str]\"  [arg-type]\nFound 1 error in 1 file (checked 1 source file)\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_null_optional.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_null_optional.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089299139\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_null_optional.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument of type \\\"InvalidOptionalFilter\\\" cannot be assigned to parameter \\\"preds\\\" of type \\\"Predicate[Owner]\\\" in function \\\"filter\\\"\\n\u00a0\u00a0\\\"InvalidOptionalFilter\\\" is not assignable to \\\"Predicate[Owner]\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 16\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 50\n                }\n            },\n            \"rule\": \"reportArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 1,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.286\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_null_optional.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_null_optional.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "arg-type"
+        }
+      ],
+      "passed": true,
+      "stdout": "tests/compilation/python/static/queries/negative/runtime_null_optional.py:12: error: Argument 1 to \"filter\" of \"Query\" has incompatible type \"InvalidOptionalFilter\"; expected \"Predicate[Owner]\"  [arg-type]\nFound 1 error in 1 file (checked 1 source file)\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_ninth_select.py",
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--outputjson",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_ninth_select.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "reportCallIssue"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "reportCallIssue"
+        }
+      ],
+      "passed": true,
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792089299854\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_ninth_select.py\",\n            \"severity\": \"error\",\n            \"message\": \"No overloads for \\\"select\\\" match the provided arguments\\n\u00a0\u00a0Argument types: (Column[Owner, str], Column[Owner, str], Column[Owner, str], Column[Owner, str], Column[Owner, str], Column[Owner, str], Column[Owner, str], Column[Owner, str], Column[Owner, str])\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 11,\n                    \"character\": 4\n                },\n                \"end\": {\n                    \"line\": 11,\n                    \"character\": 87\n                }\n            },\n            \"rule\": \"reportCallIssue\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 1,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.284\n    }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "file": "tests/compilation/python/static/queries/negative/runtime_ninth_select.py",
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/tests/compilation/python/static/queries/negative/runtime_ninth_select.py"
+      ],
+      "exitCode": 1,
+      "actual": [
+        {
+          "line": 12,
+          "rule": "call-overload"
+        }
+      ],
+      "expected": [
+        {
+          "line": 12,
+          "rule": "call-overload"
+        }
+      ],
+      "passed": true,
+      "stdout": "tests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: error: No overload variant of \"select\" of \"Query\" matches argument types \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\", \"Column[Owner, str]\"  [call-overload]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note: Possible overload variants:\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1] select(self, Column[Owner, T1], /) -> Query[Owner, tuple[T1], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2] select(self, Column[Owner, T1], Column[Owner, T2], /) -> Query[Owner, tuple[T1, T2], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2, T3] select(self, Column[Owner, T1], Column[Owner, T2], Column[Owner, T3], /) -> Query[Owner, tuple[T1, T2, T3], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2, T3, T4] select(self, Column[Owner, T1], Column[Owner, T2], Column[Owner, T3], Column[Owner, T4], /) -> Query[Owner, tuple[T1, T2, T3, T4], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2, T3, T4, T5] select(self, Column[Owner, T1], Column[Owner, T2], Column[Owner, T3], Column[Owner, T4], Column[Owner, T5], /) -> Query[Owner, tuple[T1, T2, T3, T4, T5], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2, T3, T4, T5, T6] select(self, Column[Owner, T1], Column[Owner, T2], Column[Owner, T3], Column[Owner, T4], Column[Owner, T5], Column[Owner, T6], /) -> Query[Owner, tuple[T1, T2, T3, T4, T5, T6], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2, T3, T4, T5, T6, T7] select(self, Column[Owner, T1], Column[Owner, T2], Column[Owner, T3], Column[Owner, T4], Column[Owner, T5], Column[Owner, T6], Column[Owner, T7], /) -> Query[Owner, tuple[T1, T2, T3, T4, T5, T6, T7], str]\ntests/compilation/python/static/queries/negative/runtime_ninth_select.py:12: note:     def [T1, T2, T3, T4, T5, T6, T7, T8] select(self, Column[Owner, T1], Column[Owner, T2], Column[Owner, T3], Column[Owner, T4], Column[Owner, T5], Column[Owner, T6], Column[Owner, T7], Column[Owner, T8], /) -> Query[Owner, tuple[T1, T2, T3, T4, T5, T6, T7, T8], str]\nFound 1 error in 1 file (checked 1 source file)\n",
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}

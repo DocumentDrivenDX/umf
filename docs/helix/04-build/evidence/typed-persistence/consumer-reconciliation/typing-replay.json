@@ -1,0 +1,83 @@
+{
+  "kind": "fresh-scoped-typing-replay",
+  "date": "2026-10-15",
+  "sourceBaseline": "6950b663",
+  "pythonHost": "Python 3.14.8",
+  "pythonTarget": "3.11",
+  "pydantic": "2.14.1",
+  "pyright": "1.1.414",
+  "mypy": "2.4.0",
+  "ty": "0.0.88",
+  "sources": {
+    "bad.py": "fcca8ab614e94d6719d3bed2d773ce4734bbdcec8c499476ffbadf5129ea348f",
+    "dsl.py": "8d3198c770f0446c12421d8fe548574181e501c45ed80c57870f36d82aeae315",
+    "e9.py": "c7ed8b888f1efd3fed6e087885784541879354ee5a89ed234e158f9afa34589f",
+    "good.py": "9f87981a81185126b89ee56902b3317b1360c3ed9557694636bdb6d0b1b49e3b",
+    "shop/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "shop/models.py": "36ab46af3da89194bfd8b2b4c35b4ee551f196d8d308a47529de096637c43ca1"
+  },
+  "results": [
+    {
+      "checker": "pyright",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--pythonversion",
+        "3.11",
+        "dsl.py",
+        "good.py",
+        "bad.py",
+        "e9.py"
+      ],
+      "exitCode": 1,
+      "expectedNegativeErrors": 12,
+      "matchedExpected": true,
+      "log": "pyright.txt"
+    },
+    {
+      "checker": "mypy",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--python-version",
+        "3.11",
+        "--check-untyped-defs",
+        "--cache-dir",
+        "/private/tmp/umf-astra-mypy-cache",
+        "dsl.py",
+        "good.py",
+        "bad.py",
+        "e9.py"
+      ],
+      "exitCode": 1,
+      "expectedNegativeErrors": 12,
+      "matchedExpected": true,
+      "log": "mypy.txt"
+    },
+    {
+      "checker": "ty",
+      "command": [
+        "/opt/homebrew/bin/uvx",
+        "--offline",
+        "ty==0.0.88",
+        "check",
+        "--python",
+        "/private/tmp/umf-tp001-compat-env",
+        "--python-version",
+        "3.11",
+        "dsl.py",
+        "good.py",
+        "bad.py",
+        "e9.py"
+      ],
+      "exitCode": 1,
+      "expectedNegativeErrors": 12,
+      "matchedExpected": true,
+      "log": "ty.txt"
+    }
+  ],
+  "limitations": [
+    "Only existing enumerated spike cases; no new DSL, generated ABI, async, native target, timeout, validation or full Python3.11 interpreter qualification.",
+    "An exploratory ty0.0.85 run was not accepted for pinned evidence; this replay uses0.0.88."
+  ]
+}

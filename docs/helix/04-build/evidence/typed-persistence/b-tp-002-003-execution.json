@@ -1,0 +1,161 @@
+{
+  "kind": "B-TP-002/003 scoped implementation execution ledger",
+  "date": "2026-10-15",
+  "specRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba with coordinated live amendments CONTRACT075 and adopted module map",
+  "checkout": "/Users/erik/.codex/worktrees/39bf/umf",
+  "branch": "codex/typed-access-implementation",
+  "authorization": "Implementation authorized; owner spending-ceiling prerequisite waived in Execution Contract",
+  "status": "Implemented bounded profile; source/tests frozen; full slice acceptance OPEN",
+  "checkpoint": "b-tp-003-source-stable.json",
+  "sourceDigest": "73baba5d9086a9716bfa03a1b01350939c9d903f9d3bc0ece9f1b1ef5a4f2857",
+  "sourceSha256": {
+    "src/compilation/admission/access/index.ts": "972140ce876f083e9f6eff7e4044f052b8ca8d74d7feb5c0606fc15254fd4b2e",
+    "src/compilation/admission/diff.ts": "6a1dad4057f8a229f3013bada541a065882aeef3cd95e04c4700ac18194e7ffb",
+    "src/compilation/admission/index.ts": "e616b64e3d9ac230526b4716b5e5aefd7e26b3d08cc5bd2ac602769108b08d07",
+    "src/compilation/bundle/hash.ts": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8",
+    "src/compilation/bundle/index.ts": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8",
+    "src/compilation/index.ts": "886f082aed8329de1cd127b5b0bdfb5d18d5fde7b32a9a609fc532c732d1f75c",
+    "src/compilation/ir/index.ts": "a375d691f9d5bd653c11902c24348e0d8d9e80338efc8b42b8de624fd3d9755a",
+    "src/compilation/targets/python/index.ts": "747e8d188d8d45af99e86c5258529042b970a903ca5dc547df9d326e4cad112a"
+  },
+  "ownedFiles": [
+    "fixtures/access/commerce/actions.json",
+    "fixtures/access/commerce/containers.json",
+    "fixtures/access/commerce/engine-only.json",
+    "fixtures/access/commerce/named.json",
+    "fixtures/access/commerce/postgresql18-binding.json",
+    "fixtures/access/commerce/postgresql18.json",
+    "fixtures/access/commerce/relationships.json",
+    "scripts/access-generator-fixtures.ts",
+    "scripts/compilation-browser.ts",
+    "spec/compilation/access-manifest.schema.json",
+    "spec/compilation/access-request.schema.json",
+    "spec/compilation/access-result.schema.json",
+    "spec/extensions/access/package.json",
+    "spec/extensions/access/schema.json",
+    "src/compilation/admission/access/index.ts",
+    "src/compilation/admission/diff.ts",
+    "src/compilation/admission/index.ts",
+    "src/compilation/bundle/hash.ts",
+    "src/compilation/bundle/index.ts",
+    "src/compilation/index.ts",
+    "src/compilation/ir/index.ts",
+    "src/compilation/targets/python/index.ts",
+    "tests/compilation/access-context.test.ts",
+    "tests/compilation/access-diff.test.ts",
+    "tests/compilation/access-digest.test.ts",
+    "tests/compilation/access-extension.test.ts",
+    "tests/compilation/access-fixtures.ts",
+    "tests/compilation/access-generator.test.ts",
+    "tests/compilation/access-matrix.test.ts",
+    "tests/compilation/access-naming.test.ts",
+    "tests/compilation/access-schemas.test.ts"
+  ],
+  "transferredFiles": [
+    "scripts/umf-access-generate.ts",
+    "tests/compilation/access-writer.test.ts"
+  ],
+  "generatedSharedAuditArtifact": "fixtures/extension-package-audit.json refreshed by the existing audit command; no hand edit",
+  "tests": {
+    "command": "bun test tests/compilation/access-{extension,context,generator,naming,diff,digest,schemas,matrix,writer}.test.ts (explicit paths in recorded command)",
+    "exitCode": 0,
+    "files": 9,
+    "pass": 750,
+    "fail": 0,
+    "assertions": 2253,
+    "log": "b-tp-002-003/final-scoped-tests.log",
+    "matrixQualification": "352 document cases include32 counterexamples to the attempted no-null witness; hypothetical absent-allowed/Null=no remains not-real-document-qualified. Synthetic policy matrix separate."
+  },
+  "typechecks": [
+    {
+      "command": "bun node_modules/typescript/bin/tsc --noEmit --pretty false",
+      "exitCode": 0
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc -p tsconfig.tools.json --pretty false",
+      "exitCode": 0
+    }
+  ],
+  "boundary": {
+    "command": "bun scripts/check-compilation-boundaries.ts",
+    "exitCode": 0,
+    "files": 8,
+    "violations": 0
+  },
+  "extensionAudit": {
+    "command": "bun scripts/audit-extension-packages.ts",
+    "exitCode": 0,
+    "pass": 68,
+    "total": 68,
+    "scope": "Manifest, registry, standalone schema equality and declared evidence existence only; no native equivalence"
+  },
+  "browser": {
+    "command": "bun scripts/compilation-browser.ts --suite access-generator",
+    "exitCode": 0,
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "cases": 15,
+    "candidates": 10,
+    "refusals": 5,
+    "runsPerRuntime": 2,
+    "externalRequests": [],
+    "evidence": "b-tp-002-003/browser.json",
+    "inputsAndOutputs": "b-tp-002-003/browser-cases.json",
+    "bundleSha256": "59e616ac2a9ab9f42624fc8a75d17bd72aafb5294852d437345f8021a7d2a032"
+  },
+  "installedRuntime": {
+    "wheelSha256": "9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c",
+    "source": "production-packaging/stable-runtime-checkpoint.json",
+    "behavior": {
+      "cases": 7,
+      "checks": 26,
+      "status": "pass",
+      "evidence": "b-tp-002-003/installed-generated-behavior.json",
+      "scope": "Every runtime wheel package byte compared before actual generated imports; Python3.14.8/Pydantic2.14.1; not native execution"
+    },
+    "static": {
+      "status": "pass",
+      "commands": 14,
+      "checkers": [
+        "mypy2.4.0 with check_untyped_defs; language3.12",
+        "pyright1.1.414 strict; reportUnusedImport false per selected configuration; language3.12"
+      ],
+      "evidence": "b-tp-002-003/installed-generated-static.json",
+      "scope": "Seven actual generated packages, exact installed runtime, no source override and no generated ignores"
+    }
+  },
+  "sourceFence": {
+    "sourceDifferences": [],
+    "testDifferences": [],
+    "browserSourceMatchesCurrent": true,
+    "coreNullOracleIdenticalToSpecRef": true
+  },
+  "requiredGateLedger": {
+    "US-080-AC1": "PASS bounded corpus: repeated Bun/Chromium bytes/digests/reports, identity changes and independent native SHA vectors; exact original source retained",
+    "US-080-AC2": "PARTIAL: real source/schema/reference/coverage/conflict/native declaration tests pass; known unreachable no-null row not-real-document-qualified; wider target-native equivalence unqualified",
+    "US-080-AC3": "PARTIAL: selected unknowns refuse strict/report; exact unselected source and unknown fidelity retained; engine/qualifier obligations undischargeable. No governed concrete safe approximation exists; owner decision pending",
+    "US-080-AC4": "PASS bounded ASCII-symbol profile: names, collisions, standard ABI metadata protection, hostile-literal AST round-trip, source/action/element/file resource refusal; not every theoretical full-size limit native stress-tested",
+    "US-080-AC5": "PASS scoped host writer integration owned by writer chat: edit/add/remove, symlinks, fault states and exact stage-two preservation; see host-writer evidence",
+    "US-080-AC6": "Portable diff API and regression PASS: rename/retype breaking; optional Create addition source-compatible; no target/data compatibility inferred. Deliberate host regeneration must report public diff through transferred writer seam"
+  },
+  "readinessGaps": [
+    "b-tp-003-contract-gap.json: exact-only owner decision vs governed safe approximation hook/case; no approximation fabricated",
+    "b-tp-002-003/no-null-witness-gap.json and no-null-counterexamples.json: upstream null acceptance counterexamples, hypothetical row retained as not-real-document-qualified",
+    "Host CLI integrates available diffAccessPackages report; transferred file not edited by this session",
+    "Selected search/Vector namespace, recursive record-type carriers and wider raw native domains remain explicitly unsupported/refused, not silently omitted",
+    "Keyless and multiple-Key selected Records refuse bounded keyed-query profile; no inferred Key",
+    "Stage-two catalog callsites, SQL/native lowering, action executor clients and native/engine adoption are not qualified by these tests"
+  ],
+  "failedAttempts": [
+    "Initial missing-module red runs retained",
+    "Malformed profile refusal assembly fixed after null-entry crash",
+    "Strict pyright private validator imports and unnecessary None condition fixed without generated ignores",
+    "Strict pyright unused empty-Patch variable/dependency codec helper fixed",
+    "Checker attempt1 resolved venv executable symlink to base interpreter: import errors retained in installed-generated-static-attempt-1.json; corrected harness preserves venv spelling and admits exact pins",
+    "Checker attempt2 retained four genuine emitter diagnostics in installed-generated-static-attempt-2.json; current14command run passes",
+    "No-null matrix attempt1 retained344pass/8wrong fixture assumptions; fixed tests assert actual upstream fact rather than changing core",
+    "Extension audit initially refused missing declared evidence; actual structural/contextual test paths now declared"
+  ],
+  "continuation": "Ready for coordinator fresh generation/refactor/static replay against current frozen source/test hashes and unchanged9189 runtime wheel. Do not transfer older generated snapshot acceptance. Close slices only after remaining governed gates are resolved.",
+  "noCommitsOrBranchChanges": true
+}

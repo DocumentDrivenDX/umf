@@ -1,0 +1,134 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/access-temporal-profile.test.ts:
+(pass) explicit typed-access temporal profile > date-1 [0.19ms]
+(pass) explicit typed-access temporal profile > date-2
+(pass) explicit typed-access temporal profile > date-3
+(pass) explicit typed-access temporal profile > date-4 [0.04ms]
+(pass) explicit typed-access temporal profile > date-5
+(pass) explicit typed-access temporal profile > date-6
+(pass) explicit typed-access temporal profile > date-7
+(pass) explicit typed-access temporal profile > date-8
+(pass) explicit typed-access temporal profile > date-9
+(pass) explicit typed-access temporal profile > instant-10 [0.23ms]
+(pass) explicit typed-access temporal profile > instant-11 [0.01ms]
+(pass) explicit typed-access temporal profile > instant-12 [0.05ms]
+(pass) explicit typed-access temporal profile > instant-13 [0.01ms]
+(pass) explicit typed-access temporal profile > instant-14
+(pass) explicit typed-access temporal profile > instant-15
+(pass) explicit typed-access temporal profile > instant-16
+(pass) explicit typed-access temporal profile > instant-17
+(pass) explicit typed-access temporal profile > instant-18
+(pass) explicit typed-access temporal profile > instant-19
+(pass) explicit typed-access temporal profile > instant-20
+(pass) explicit typed-access temporal profile > instant-21
+(pass) explicit typed-access temporal profile > instant-22
+(pass) explicit typed-access temporal profile > instant-23
+(pass) explicit typed-access temporal profile > instant-24
+(pass) explicit typed-access temporal profile > instant-25
+(pass) explicit typed-access temporal profile > instant-26
+(pass) explicit typed-access temporal profile > instant-27
+(pass) explicit typed-access temporal profile > instant-28
+(pass) explicit typed-access temporal profile > local-29 [0.02ms]
+(pass) explicit typed-access temporal profile > local-30 [0.01ms]
+(pass) explicit typed-access temporal profile > local-31
+(pass) explicit typed-access temporal profile > local-32
+(pass) explicit typed-access temporal profile > local-33
+(pass) explicit typed-access temporal profile > local-34
+(pass) explicit typed-access temporal profile > local-35
+(pass) explicit typed-access temporal profile > local-36
+(pass) explicit typed-access temporal profile > local-37
+(pass) explicit typed-access temporal profile > local-38
+(pass) explicit typed-access temporal profile > wrong carriers, selectors and oversized tokens refuse [0.12ms]
+(pass) explicit typed-access temporal profile > pre-epoch offsets preserve microseconds and normalize identically [0.03ms]
+
+tests/adapters/gregorian-date.test.ts:
+(pass) explicit Gregorian civil-date profile retains exact components and frozen source [0.08ms]
+(pass) every named date truncation is exact and idempotent [0.13ms]
+(pass) strict date recipe refuses malformed and foreign temporal meaning [0.14ms]
+
+tests/adapters/rfc3339-exact-instant.test.ts:
+(pass) offset equivalents preserve source and exact fraction [0.11ms]
+(pass) unknown local offset does not erase the known instant [0.03ms]
+(pass) calendar arithmetic admits crossing authored year boundaries [0.02ms]
+(pass) invalid dates, leap seconds, offsets and syntax refuse [0.06ms]
+(pass) fractions remain exact at the shared token bound [1.50ms]
+
+tests/compilation/access-golden-vectors.test.ts:
+(pass) core 0.8 golden oracle: field and record APIs > decimal-short [8.87ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-scale1 [1.10ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-scale2 [1.02ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-scale3zero [0.67ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-zero [0.94ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-negative-zero [0.92ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-exponent [0.72ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-max [0.92ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-overflow [1.35ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-rounding [0.58ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-tiny [0.48ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-nan [0.31ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8--129 [1.38ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8--128 [2.36ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8--1 [0.55ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8-0 [0.48ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8-127 [0.49ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8-128 [0.98ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8--1 [0.86ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8-0 [0.84ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8-255 [1.28ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8-256 [1.25ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-empty [1.15ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-astral [1.12ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-combining [0.76ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-long [0.82ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-surrogate [0.71ms]
+(pass) core 0.8 golden oracle: field and record APIs > allowed-yes [1.46ms]
+(pass) core 0.8 golden oracle: field and record APIs > allowed-no [0.49ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-0 [1.16ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-1 [0.61ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-2 [0.72ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-3 [0.60ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-upper [0.89ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-empty [0.60ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-odd [0.45ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-long [0.80ms]
+(pass) core 0.8 golden oracle: field and record APIs > bool-true [0.61ms]
+(pass) core 0.8 golden oracle: field and record APIs > bool-integer [1.85ms]
+(pass) core 0.8 golden oracle: field and record APIs > temporal-gap-date [0.53ms]
+(pass) core 0.8 golden oracle: field and record APIs > temporal-gap-instant [0.43ms]
+(pass) core 0.8 golden oracle: field and record APIs > temporal-gap-local [0.39ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64--9223372036854775809 [0.76ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64--9223372036854775808 [0.60ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64-9223372036854775807 [0.57ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64-9223372036854775808 [0.56ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-1e1000000000 [0.59ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-0e1000000000 [0.53ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-1e-1000000000 [0.53ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-0e-1000000000 [0.48ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra--9999999999.99 [0.56ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-1.2300 [0.50ms]
+(pass) core 0.8 golden oracle: field and record APIs > null-required [0.49ms]
+(pass) core 0.8 golden oracle: field and record APIs > null-absent-allowed [0.41ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-empty [1.91ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-one [1.13ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-two [0.95ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-long [4.87ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-overflow [0.69ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-null [0.55ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-wrong [1.60ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-empty [1.00ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-one [1.05ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-two [1.01ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-long [2.32ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-overflow [1.18ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-null [0.72ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-wrong [0.64ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-valid [0.73ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-inner-empty [0.69ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-deep-overflow [0.66ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-wrong-shape [0.64ms]
+
+ 120 pass
+ 0 fail
+ 350 expect() calls
+Ran 120 tests across 4 files. [508.00ms]

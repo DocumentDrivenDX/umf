@@ -2469,12 +2469,10 @@ Reject whitespace/control/non-ASCII host text before URL parsing and retain only
 
 ### Private current-query computation driver proposal — 2026-10-15
 
-Status: proposed host integration contract, not an implemented issuer or new UMF
-semantic API. Truss requested this proposal after inspecting its source: its real
-current-0.2 issuer/capture/materialization ABI is still absent. Implementation of
-the driver waits for that concrete DB-derived capture packet and current-Subject
-ABI. Weft's compiling `current_scalar.rs` consumer is a changing candidate,
-not a frozen native binding. This proposal preserves all original backend cases.
+Status: private computation child implemented below; native issuer/capture and
+guarded release integration remain unfinished. This section records the host
+contract, with the final concrete framing and lifecycle specified in the child
+implementation section. All original backend cases remain required.
 
 The trusted native host owns one private, long-lived Bun child with inherited
 private pipes. There is no public HTTP endpoint, listening server, selectable
@@ -2492,7 +2490,7 @@ interface OriginalSources {
   closure: Json;
   ontology: Json;
   associationBindings: Json;
-  extensionSelection?: readonly [{id: 'umf.actions'; version: '0.1.0'}];
+  extensionSelection: null | readonly [{id: 'umf.actions'; version: '0.1.0'}];
 }
 interface Initialize {
   kind: 'initialize';
@@ -2505,27 +2503,28 @@ The private child calls
 `compileCandidateCatalogProgram(sources.policy, sources.catalog,
 sources.closure, sources.ontology, sources.associationBindings,
 locallyIssuedExtensionClosure)` and retains the genuine returned JS object
-privately. If `extensionSelection` is present, the child first calls the original
+privately. If `extensionSelection` is non-null, the child first calls the original
 `createCandidateCoreExtensionClosure(selection)` factory and supplies its actual
 in-process result as `locallyIssuedExtensionClosure`. The current closed factory
-admits exactly `[{id:'umf.actions',version:'0.1.0'}]`; omitted selection means an
+admits exactly `[{id:'umf.actions',version:'0.1.0'}]`; null selection means an
 omitted sixth argument. Empty/extra/unknown selections refuse. This is explicit
 selection of installed original semantics, not downloading or inferring a package.
 The sixth argument is a WeakSet-issued opaque handle: a JSON object, copied report
 or serialized closure is not transportable and must never be imported.
 `associationBindings` maps directly to the compiler's semantic `bindings`
-argument; it is not Weft's physical values binding. The source envelope retains the explicit extension selection and installed
-original package/implementation fingerprints. An omitted selection stays omitted;
-no synthetic null/catalog/ontology/source transformation is inserted. Wrapper records are closed; source JSON is forwarded intact to the
+argument; it is not Weft's physical values binding. The source envelope requires
+the explicit nullable extension selection. Installed source/package fingerprints
+and runtime version are retained separately in the bundle manifest. No source
+transformation is inserted. Wrapper records are closed; source JSON is forwarded intact to the
 existing validators, including unknown extension data. Unsupported meaning
 refuses through those validators. One process retains one exact compiled source
 set; a source replacement requires a fresh child under a new native-held
 initialization. Reinitialization/import into a live child and silent cache reuse
 are refused. Native source changes invalidate the current invocation. The private
 initialization reply is `{kind:'initialized', requestId, sourceReceipt}`;
-`sourceReceipt` reports exact captured source/implementation fingerprints and
-runtime version for correlation. Original source preimages and the original
-canonical JSON helper define correspondence; no new identity algorithm is added.
+`sourceReceipt` is SHA256 of the exact initialization frame, header included,
+solely for correlation. Original source preimages and implementation provenance
+remain separately retained; a frame hash is not a semantic identity algorithm.
 A digest match does not prove DB origin, loading integrity or authority.
 
 Proposed evaluation records contain the existing callable inputs verbatim:
@@ -2649,29 +2648,20 @@ release anything until the full expected response set is received and admitted.
 No raw cut, hidden fact key/count or diagnostic detail is sent to the ordinary
 caller. These private results are not a new public read interface.
 
-Resource accounting is an explicit unresolved composition requirement. The batch
-has one shared work/text/literal ledger. Existing standalone route calls each
-have their own ledger; using the same immutable cut does not make those ledgers
-shared. Each route helper itself first runs a source inspector with a separate
-ProtectionLiteralBudget and then a read-rule scan with an operation/literal
-ledger; retained plan/frame bounds are separate too. Reserve all actual internal
-stages/maxima, not a single literal allowance per route. The native profile must specify and test a conservative whole-query
-allocation or an actual shared accounting integration before claiming an
-aggregate bound. It must also bound source/request/response bytes, operation and
-route counts, in-flight calls, compiler work, process lifetime and native staging.
-Do not silently reset budgets per use, alter data/completeness declarations to
-fit a limit, or treat a deadline as a proof of memory/work bounds. Exact launch
-limits and accounting are pending the native capture ABI. Weft requests reserved
-per-call work/fact/text/output quotas whose sum fits the query budget. Copies may
-lower only operational bounds under that explicit reservation; all source,
-subject, facts, generations, coverage, values and original tokens remain exactly
-unchanged. The host must record and verify any such lower operational bounds,
-never silently modify the captured request. Existing fixed literal/text caps
-cannot be made caller-configurable by this protocol: conservatively reserve their
-actual maxima, reject an allocation that does not fit, or prove a stricter
-qualified composition. A post-hoc serialized-length check alone is not a work,
-transient-memory or retained-identity budget proof. This decision is open, not an
-implemented whole-query bound.
+The implemented private-child profile uses practical bounded input/output and a
+native-parent deadline; it makes no aggregate work or heap guarantee. Original
+batch work/text/literal accounting remains shared and unchanged. Each standalone
+route call retains its original independent inspector and runtime ledgers; those
+are not a whole-query ledger. The profile permits at most 256 operations, including
+16 scans and 16 read-rules operations separately (32 combined), 4096 selected
+Fields, 4096 routes with 16 distinct scan labels, and 10000 facts plus graphs.
+Request/response payload limits are 4/16 MiB. Original parser/helper limits may
+refuse earlier. The parent enforces one shared deadline and owns process cleanup,
+native staging and guarded release. A deadline is not a proof of aggregate work,
+allocation or memory bounds. No custom tracing, metrics or allocation meter is
+introduced; any future aggregate guarantee requires separate implementation and
+evidence. Source, Subject, coverage and value semantics cannot be changed to fit
+a bound. This practical profile does not narrow the original acceptance cases.
 
 Native-host sequence remains: hold authentic source/caller/Subject/current guard;
 capture original source and complete fact cut; compile/compute; verify every
@@ -2685,16 +2675,253 @@ native-host responsibilities. No component receipt substitutes for that sequence
 Open integration inputs: Truss's DB-derived original source and fact-capture
 records; actual authenticated current-Subject and guard ownership ABI; native
 per-use relation/OID/ACL/type/encoding/collation checks; actual source and result
-lineage; exact launch limits and aggregate accounting; final frozen Weft binding;
+lineage; native staging limits; final frozen Weft binding;
 private-pipe framing/cancellation and no-replay behavior. Proposed transport
 rules admit one in-flight evaluation, unique bounded request/route IDs, exact
 response correlation and original route order. Duplicate, unsolicited, late,
 truncated, reordered or wrong-source replies invalidate the child/invocation;
 there is no automatic re-execution or retry after uncertain native effects.
-The final frame/byte-limit representation remains pending the native ABI. These are not inferred
+The implemented frame/byte limits are specified below. These are not inferred
 from the candidate physical binding's JSON hashes. Raw tables and graph tables
 use the same semantic callable shapes, while their native capture and physical
 mapping remain separately qualified. Delta/Ashlar also retain separate native
 issuer/publication/current-authority obligations.
 
 Preimplementation callable witnesses are retained in [the proposal packet](../../04-build/evidence/security/native-computation-driver-proposal-20261015/README.md): supplied-cut alternate read-purpose admission and original local extension issuance/import refusal. They do not execute an actual Weft designation or native issuer and promote no acceptance case.
+
+### Independent current-source native scalar edges — 2026-10-15
+
+Independent conditional PG18.6 execution now passes17 UTF8/signed64/operator edge cases and4 exact pre-execution refusals through the actual retained current-query object. COUNT logical meaning stays separate from its native bounded text codec. Authored stage eligibility/modes/scopes remain assumptions; current source/caller/Subject capture, private result/contributor sidebands and guarded release are still absent. This does not qualify B08/P03 or a backend profile. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).
+
+### Private computation child implementation — 2026-10-15
+
+The private Bun child now implements original source compilation, route inspection
+and atomic batch plus route evaluation through the actual Truss Python pipe.
+The final ABI uses big-endian uint32 framing and nested `initialize.sources` with
+all six closed fields. `extensionSelection` is null or exactly the local actions
+0.1.0 selection; the original factory issues the opaque handle. `sourceReceipt`
+is SHA256 of the exact initialization header plus payload, solely correlation.
+Each child accepts exactly initialize, inspect-routes, evaluate, with unique
+bounded request IDs and identical owner/ordered routes. Failure is terminal;
+original semantic refusals remain untouched private results. No database
+credentials, public server, native issuer or guarded release is added.
+
+The builder discovers the original dependency closure, pins before the actual
+build, verifies the same closure and post-build pins, and retains original
+third-party license notices. Independent Astra controls and real pipe tests are
+retained in [the child packet](../../04-build/evidence/security/current-query-child-20261015/README.md).
+Native current-Subject/fact capture, primary-action correspondence, typed Weft
+contributor lineage and held-context release remain required integration work.
+No backend acceptance case is promoted.
+
+### Separate live-original integer SUM source profile — 2026-10-15
+
+The new original fixture `live-original-integer-sum-source.json` selects aggregate
+original-authorized mode in its ontology and read-mask catalog, under distinct
+policy/ontology/catalog/owner/cut revisions. Its required signed64 salary remains
+a live original Field; ordinary read rendering stays the String `[private]`.
+The exact separate `query-original-salary-sum` action has original-authorized
+purpose and Project-membership requirements. The old prohibited SUM source and
+unsupported compiler factory remain unchanged. Fixture metadata never issues a
+compiler designation or action grant.
+
+`required: ['nullity']` is only a necessary scalar presence/null-vs-absence
+dependency. It proves neither additive transform preservation nor scalar/native
+admission. The selected profile also requires exact live original domain/codec,
+current independent action and read eligibility for every contributing resource,
+actual typed compiler provenance/contributor identities, exact arbitrary-precision
+integer accumulation, nullable scalar NULL on empty input, and guarded release.
+Source route selection alone cannot discharge those obligations. Disclosed or
+transformed SUM, Decimal and other domains remain required future work; this
+first live-original capability does not narrow the full objective.
+
+Semantic tests must retain active permit and String mask, inactive deny, missing
+action permit, missing dependency coverage even for empty resources, absent-live
+input and unchanged old-source refusal controls. Native acceptance additionally
+requires overflow beyond signed64 accumulation, negative/cancelling values, empty
+and grouped-empty NULL distinction, exact contributor bags and concurrent
+revocation/source changes. No backend acceptance case is promoted by this source.
+
+The corpus also renders salary to verify the independent read mask. A SUM-only
+query does not select that public Cell and must not require unselected rendering;
+its hidden original operand still requires exact read/action/presence admission.
+
+## Native presence and disclosure-provenance boundary — 2026-10-16
+
+CONTRACT-062/063 and US-056-AC6 require original null, absence, withholding and transformed values to remain distinct. The original DisclosureV2 fixture additionally distinguishes original null from transformed null through original Field, selected policy indices, output domain and exact transform id/version. A single presence enum or nullable scalar cannot retain that meaning. The original Token Field's public logical API accepts null and preserves missing; this does not itself declare a native null codec.
+
+The next native oracle exercises the current issued Weft bounded String SQL/checker against actual PostgreSQL 18.6 values, then captures distinct raw-column presence and JSONB bag representations. Its separate original disclosed-cell population retains native column/source-revision metadata, disposition, explicit payload presence and transformation metadata before public data inspection. Those populations are deliberately separate: the required-only query context is not repurposed as admission for the original optional Token or for arbitrary per-row transforms. The current producer must continue refusing unsupported optional source before SQL.
+
+The abstract sum model proves left/right inverses and injectivity for an explicit discriminant, optional typed payload and optional transformation metadata with complete Field/revision identity. SAT weakened controls erase disposition, original document/revision, output domain, transform version or selection. Encoding well-formedness is not actual UMF Field/domain/policy validity. Payload wire encoding, real disclosure decisions, complete original data/caller/current cut, native operator permissions and guarded release remain premises or separate obligations. Real native observations test the fixture implementation; the solver does not prove PostgreSQL, the Python decoder or compiler code.
+
+This component supplements the full original P03 generalize/hash/token predicate/order/group/join/aggregate and weakened-barrier campaign. It cannot promote P03, any graph backend case or a complete acceptance criterion. Weft owns a separately versioned optional/presence-aware producer and checker; the existing required-only profile remains closed.
+
+## Operator-free logical disclosure selection producer — 2026-10-16
+
+US-056-AC6 requires actual policy selection provenance independently of physical representation. A private separately versioned logical-disclosure-selection/0.1-candidate scan must retain the canonical kernel's complete resource identities, read decisions, original scoped rule truth and exact winning disclosure source occurrences. It uses the same original issued program, explicit owner read action, pinned supplied cut, population census and shared operation ledger as existing scans. Existing action/render/rule-scan shapes and semantics remain unchanged.
+
+Withholding dominates and retains only withholding contributors; it reveals no original value or presence. Distinct active transform identities conflict; identical contributors retain all exact source positions, with the first transform occurrence in original policy order recorded as the selected occurrence matching the existing fold. Original is fallback and retains explicit original contributors plus implicit original contributors only where the ontology explicitly marks the property unprotected. Denied, indeterminate and conflict decisions expose no winning dispositions. Missing protected disclosures remain indeterminate. No caller-supplied truth, branch, source position or rendered Cell can grant selection.
+
+This producer returns selection evidence, not executed/certified rendered values or DisclosureV2 wire admission. Retained policy directives may include their original authored constants; those remain source metadata, not computed native Cells. Source identity/revision correlations, including owner and generation, remain unauthenticated supplied-cut metadata; complete and authority stay false. Actual recipe execution, value/output-domain validation, compiler .4 composition, caller/source/current-cut custody and guarded release remain separate mandatory obligations. Regression must preserve old APIs, exercise duplicate contributors/conflicts/dominance and enforce bounded source/result work under the shared ledger, including empty populations and malformed/stale inputs.
+
+
+## Atomic provenance-bearing rendering — 2026-10-16
+
+CONTRACT-062's private disclosure-batch profile closes the gap between canonical
+selection and rendered Cells for US-056-AC6. Extend the original kernel with a
+private composed mode that retains its actual fold provenance through rendering,
+then constructs the existing0.2 transport directly. Keep the full decision census
+and a separate permitted-resource row index. Use the existing issued pure recipe
+context, owner storage map, Field checks and operation ledger; do not re-evaluate
+policy or revalidate whole source per Cell. Guard the additional transport bounds
+and exact source strings before publishing, including empty inputs.
+
+The implementation belongs beside the original catalog runtime, without a new
+public export, ontology vocabulary, native service or backend dependency. Remove
+the new private entry points/mode to roll back; existing profiles require no
+migration. Component verification must combine actual fold/render controls with
+the independent existing public0.2 inspector and JSON/YAML codec, plus real
+Chromium correspondence and prior API regression. Conditional algebra is relevant
+to selection/carrier invariants but does not prove this code's refinement. The
+full backend plans, operators, authenticated custody and release remain required.
+
+## Separate atomic disclosure computation child — 2026-10-16
+
+The private `umf.security.private-disclosure-child/0.1-candidate` process adapter
+is a separate projection-only composition seam. Initialization retains one locally
+compiled catalog program, its original owner and one selected Record/Field list.
+One subsequent request supplies the logical cut and calls the existing atomic
+WithinOperation producer once, with a shared bounded ledger. The protocol cannot
+replace the owner/selection after initialization or invoke the legacy route/action
+batch. Complete private decisions/resources and the original V2 batch travel
+together; no scalar conversion reconstructs missing provenance. A generic framing
+refusal contains no logical result. Semantic refusal retains the producer's exact
+cleared result. The existing query child and ABI2 consumer selection are unchanged.
+
+The framed input is limited to4MiB, output to16MiB, selected columns to256 and
+supplied facts/graphs to10000; the underlying producer additionally bounds rows,
+cells, literals and work. The parent owns the process deadline and lifetime.
+Hashes correlate original protocol bytes; they authenticate neither the sources
+nor the caller/cut. This is private host-side tooling outside the browser library.
+Its bounded native consumer must validate the prepared projection-only program,
+exact selected source/model/header correspondence, complete eligible physical
+population, all returned cells and the whole V2 batch before guarded release.
+
+Read-only inspection of Truss main ea9c3f080cecd5da2d3be42258c26c3d0dcab7bc
+locates reusable ordinary-caller/source/authority locks and final rechecks in
+`_current_query_runtime`, optional scalar fact capture in `_current_query_facts`,
+and required String/signed64 staging in `_current_query_stage`. Truss must adopt
+an explicit separate consumer cohort, original source registration, packaged child
+and disclosure-aware result API. The old scalar ABI2 wheel/bundle is not repinned
+by this adapter. Actual Truss integration, graph fact capture, caller/current-cut
+authentication, revocation drain and final release remain unfinished.
+
+The strict JSON reader additionally caps decoded text at4000000 UTF-16 code
+units, structural depth at128 and parsed values at100000. The wire cap is an
+upper bound, not a promise that every smaller frame is admissible. EOF may cancel
+after initialization; the host must require its complete expected operation and
+own deadline, cancellation and confirmed process cleanup. The Truss native source
+registration receipt and the different fixed-owner/selection child initializer
+receipt must remain distinct.
+
+The separately built bundle captures/checks root TypeScript and Bun configuration
+before discovery and after build, explicitly selects root tsconfig and refuses
+any inherited TypeScript configuration. This repairs reviewed CHILD-001; it makes
+no external-runtime or held-file/ABA proof. Post-native whole V2 inspection is a
+separate unfinished entrypoint. Native publication must remain refused until that
+exact owner inspection and the remaining native/guard obligations are composed.
+
+## Held post-native disclosure inspection — 2026-10-16
+
+The separate `umf.security.private-disclosure-child/0.2-candidate` profile retains
+one original source program, owner and selected Fields through initialization,
+one actual atomic evaluation and one post-native inspection. Protocol0.1 remains
+unchanged. A rendered evaluation retains its original batch; a refused evaluation
+terminates. The native consumer must capture the exact complete private resource
+key bag, check actual native rows with the original typed compiler handle, and
+restore original owner order before sending `inspect-native-disclosure` with the
+reconstructed batch. The process invokes the existing public whole V2 inspector
+against the same held sources, then requires canonical equality to its held
+original batch. This additionally refuses domain-valid substituted values,
+changed presence, missing/extra rows and changed order. It does not re-evaluate
+policy or infer native authorization from a matched data carrier.
+
+The closed inspection reply retains `complete:false` and `authority:false`, exact
+source receipt and SHA256 of the complete length-prefixed evaluation/inspection
+frames. These correlate the three private exchanges, not authenticated sources
+or callers. The reply carries no original or transformed values. Failure clears
+held program/source/batch state and returns only a generic refusal where request
+correlation is available. Duplicate IDs, reordered/repeated operations and wrong
+protocol/source receipt refuse. EOF before successful inspection is an incomplete
+operation, not a clean completion; the host owns deadline/cancellation and
+confirmed process cleanup. Successful inspection still needs native closing
+caller/source/protection checks and the release barrier before public handoff.
+
+Initialization/evaluation retain4MiB wire caps and the original strict reader.
+Inspection permits16MiB and reuses the original `scanPlanJson` duplicate-key,
+Unicode and exact-number scanner before JSON.parse, with100016 nodes and depth64.
+Whole V2's original bounds and exact-domain checks remain mandatory. The existing
+Truss pipe's4MiB request bound cannot silently advertise this wider profile;
+Truss must select an explicit compatible transport. This private tooling adds no
+library/browser vocabulary, native permission or second policy interpreter.
+
+### Bounded nested ontology condition evaluation — 2026-10-16
+
+The actual private206951/d333 process initializes a valid six-Record ontology
+with14 objects,13 directed core relationship occurrences (parallel:Alice) and a correlated
+ownership/Staff/Project/active-assignment policy, but its eager nested truth
+evaluation exhausts the unchanged100000-unit literal ledger. This is a reproduced
+logical component limitation, not native admission evidence. Retain the exact
+old executable refusal and supplied cut before optimization.
+
+Keep complete dependency preflight before all truth work: Record and graph
+coverage, endpoint presence, Field coverage and original literal/type validation
+must remain independent of later branch selection. After that preflight, pure
+strong-Kleene AND may stop at F, OR at T, and EXISTS at its first T. U never
+absorbs these operations. No rule, disclosure selection, source validation or
+recipe admission is skipped. All work, population and byte limits remain
+unchanged; this improves evaluation within the existing bounds.
+
+Conditional SMT establishes fold identities, associativity and absorbing-prefix
+properties for arbitrary finite complete truth relations with satisfiable
+premises and explicit weakened-rule countermodels. It is not a TypeScript
+translation/refinement or native proof. The actual kernel/browser regression
+must additionally exercise correlated graph populations and prove hidden branch
+dependencies still refuse when incomplete. Original core relationships, including
+parallel occurrences, preserve their own opaque witness IDs and ordered typed
+endpoint identities. Record-backed edge attributes/Keys need their own native
+realization and cannot be silently treated as opaque witnesses.
+
+The separate Truss graph fact collector is being developed in isolation. It
+will return original JSON byte arrays for graph facts and complete graph coverage
+alongside the existing Record facts and private native row custody. Native
+relationship declarations/endpoint alternatives and the unfiltered edge census
+must correspond to the original accepted model under held cuts. Supplied catalog
+or cursor fixtures cannot prove that native source/current-authority boundary.
+No backend criterion is promoted by these component controls.
+
+## Nested ontology truth correspondence — 2026-10-16
+
+The formal model now expands the actual four-relationship ownership/membership
+join: StaffAssignment and AssignmentProject share one Assignment identity;
+OwnershipResource and OwnershipProject share one Ownership identity; both paths
+meet at the same Project. Identities are abstract complete qualified type/key
+identities, and logical endpoint kinds and selected Staff/Resource kinds are
+explicit premises. Activity has F/U/T truth. A path with T dominates U across
+other complete witnesses; no T and at least one U yields U; an empty path yieldsF.
+
+`tools/security/prove-nested-ontology-refinement.py` proves conditional equality
+of logical/native nested truth and negation under complete sound incidence,
+exact directed endpoint identity and total activity-truth correspondence.
+Nonvacuous true/unknown/false, empty and mixedT/U populations are checked. SAT
+controls expose split Ownership witnesses, unrelated active Assignments,
+unknown-as-true, early unknown dominance and missing correspondence. Eighteen
+queries replay with Z34.15.4:5UNSAT/13SAT.
+
+These are first-order conditional correspondence claims. An observed U inside
+complete admitted facts is distinct from missing coverage, which must refuse
+under the original preflight. No codec or key injectivity, implementation
+translation, runtime limits/termination, source/caller/current authority or
+guarded release is proved. The native graph collector must establish the
+premises through actual source binding and held host guards before backend
+admission; supplied metadata cannot establish them.

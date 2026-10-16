@@ -1,0 +1,32 @@
+{
+  "umf": "0.8.0",
+  "id": "raw-profile-model",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "sales",
+      "namespace": "sales",
+      "elements": [
+        {
+          "id": "orderId",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Order",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "orderId"
+            }
+          ],
+          "extensions": {}
+        }
+      ]
+    }
+  ]
+}

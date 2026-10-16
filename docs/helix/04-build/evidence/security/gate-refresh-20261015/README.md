@@ -1,0 +1,43 @@
+# Current security gate replay — 2026-10-15
+
+The first complete gate executed45 implemented cases from the unchanged158-required-case plan.43 passed. S12 failed with the runner's generic fresh-solver error; the selected historical interpreter currently reproduces a missing-Z3 import failure. The original runner masks child stderr, so the later import diagnostic supports the environment diagnosis and is not represented as original child output. P04 exceeded its60-second outer test limit. All113 unimplemented cases remain required failures. The failed gate and original plan are preserved byte-for-byte in first-failed-gate.zip. Its README distinguishes the separately recovered formal artifact from the failed S12 invocation.
+
+A separate S12 replay with pinned Z3 4.15.4 passes84 observations. The unchanged isolated P04 runner passes806 observations, with container and volume cleanup, in65.101 seconds end-to-end (62.074 seconds inside its component receipt). These standalone executions do not replace the failed gate outcomes. Selected solver/runtime pins are retained; they do not prove a hermetic system runtime.
+
+The sole plan change increases P04's outer harness budget from60000 to120000 milliseconds. No assertion, command, source binding, native permission, backend deadline, case identity, required flag or acceptance allocation changes. Independent Astra Ultra review finds no actionable issue; the original report, complete verification script and captured review inputs are retained unchanged. The reviewer did not repeat native or solver campaigns.
+
+A second complete gate is running at this commit with the restored solver and reviewed budget. No passing result is claimed here. All158 cases remain required across34 criteria; P03/L03 remain unimplemented. Complete backend qualification and broader stale-evidence repair remain open.
+
+Reproduction uses the existing gate interface, with an explicit isolated solver:
+
+```sh
+python3 -m venv /private/tmp/umf-security-proof-current-20261015
+/private/tmp/umf-security-proof-current-20261015/bin/python -m pip install z3-solver==4.15.4.0
+UMF_Z3_PYTHON=/private/tmp/umf-security-proof-current-20261015/bin/python bun docs/helix/02-design/spikes/security/acceptance.ts
+```
+
+The full gate is expected to remain failed while required implementations are missing. Its per-case execution receipts, not a standalone component total, determine accepted cases.
+
+## Completed gate replays
+
+The second full replay passed all 45 implemented cases and retained 113 required missing implementations. Concurrent main changes to CONTRACT-049 then made seven semantic case fingerprints stale; second-full-gate.zip preserves that tested source cohort and its original contract. It does not qualify the merged source.
+
+A third full replay ran against merged main e3f3e1c28f6f01236632f22b79b0b7c9dba2c669 with plan SHA256 0e56c5d63ed4b11053822ddf4211141ac4d125b35109d07ab96b56cb74b82b80. All 45 implemented cases passed with current source fingerprints; all 113 unimplemented cases remain required failures. The gate remains failed across 158 required cases and 34 acceptance criteria. The committed case receipts and third-run-witness.json bind the resulting evidence. The broader phase audit reports 221 checks, 87 failed, and 45 passing fresh cases. Older component/compiler evidence remains stale or otherwise unqualified; this replay does not repair it or establish P03/L03 acceptance. No support scope is expanded.
+
+## Replay after Typed SDK merge
+
+Main 84be0986769775f40cd1fd50d6bd8a8fbbfe7604 includes the concurrent Typed SDK merge, which changed fingerprinted public exports and package metadata. A fourth complete gate passed all 45 implemented cases against that source; all 113 missing required cases still fail. All recorded per-case source fingerprints match at collection. The broader audit remains 221 checks with 87 failures and 45 passing fresh cases. fourth-run-witness.json records the tested commit and evidence digests. This is a tested source cohort, not a promise about later main changes. third-tested-cohort.zip retains the previous case JSONs from commit 2b682101 before replacement by the fourth receipts; their original failure and scope qualifications remain unchanged.
+
+## Current core/UUID integration replay — 2026-10-16
+
+Main 0b2bf0c1dec886258df057c9f31c841c8780742a introduces core/UUID/schema/public-export changes after the fourth tested cohort. A read-only comparison found 30 of the 45 recorded case fingerprints stale. The fourth case receipts and original plan/witness are retained in `umf-fourth-tested-cohort-before-fifth-20261016.zip`; original prior component outputs also remain in main's Git history.
+
+The fifth complete gate passes 40 implementations and fails five before native execution: pg-raw.P02/P04/P05/P07/P08 reject their unchanged exact source-inventory assertion. All 113 missing required cases remain failures. `umf-fifth-failed-gate-20261016.zip` preserves that actual failed run, source plan, changed receipts and original command output. No old native result is credited to these failed invocations.
+
+Executing only the original five runner prefixes through independent import-closure enumeration identifies 16 missing source declarations: bit128/UUID model files, bit128 document schema, and key-tuple operation v4 where imported. No old source is removed. The sole amendment adds those 16 paths to the five case `implementationSources` arrays; all 158 IDs/required flags, assertions, commands, allocations, budgets, native roles and strict source-set checks remain unchanged. `umf-fifth-inventory-delta-20261016.json` and the frozen before/after/source packet retain the exact difference. Plan hash changes from `0e56c5d63ed4b11053822ddf4211141ac4d125b35109d07ab96b56cb74b82b80` to `6a42e29e7b41ceec23bd4d0fe77ba53c7faf575944fda955d043264800302f4b`.
+
+A sixth full gate and independent Astra Ultra inventory review are underway at this checkpoint. No corrected passing result is asserted yet. The full goal, all 34 criteria, original P03/L03/B10 and all graph backend cases remain required.
+
+Astra Ultra inventory review is terminal with no findings (`inventory-astra-review-20261016.json`, SHA-256 `88169761de3d2775432cb477a44e01499041cfb68a26cd3d61d251ef71ef0099`). It verifies all 127 frozen source bytes against main 0b2bf0c1, the exact 16 additions and unchanged case definitions. Thirty-one original-prefix controls cover old-plan failure, amended-plan success, every individual addition's omission and extraneous input, with subprocess/native execution prohibited. Independent Bun parsing confirms the transitive closure; 98 separate structural/assertion checks pass. This review does not rerun or accept the native gate. Scripts, pins and original failures are retained in the matching evidence archive.
+
+The sixth complete replay subsequently passed all 45 implemented cases, with no stale recorded case fingerprints at collection. All 113 unimplemented required cases still fail across the unchanged 158-case/34-criterion scope. `sixth-run-witness.json` pins source base 0b2bf0c1 plus the explicitly uncommitted reviewed 16-path plan amendment (hash 6a42e29e…), original command outcomes and final receipt digests. `sixth-replaced-receipt-preimages.zip` retains exact prior Git bytes for all replaced component/case receipts, including the earlier logic-browser output; the original failed fifth run remains separate. The broader audit reports 221 checks, 87 failures and 45 fresh passing cases. Existing older component/graph evidence remains unqualified. The complete gate is still failed; no P03/L03/B10 or missing backend case is promoted.

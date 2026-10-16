@@ -1,0 +1,46 @@
+{
+  "alternativeNativeApi": "truss.query_binding + truss.query_objects",
+  "ordinaryRows": [
+    [
+      3,
+      {
+        "9": {
+          "kind": "string",
+          "text": "r1"
+        },
+        "10": {
+          "kind": "integer",
+          "text": "9007199254740993"
+        },
+        "11": {
+          "kind": "string",
+          "text": "opaque-one"
+        }
+      }
+    ],
+    [
+      4,
+      {
+        "9": {
+          "kind": "string",
+          "text": "r2"
+        },
+        "10": {
+          "kind": "integer",
+          "text": "9007199254740993"
+        },
+        "11": {
+          "kind": "string",
+          "text": "opaque-two"
+        }
+      }
+    ]
+  ],
+  "sourceCommit": "9a495c2351776f6d06c2d02345139ec025213cb4",
+  "scope": "Frozen fixture public current query passes first, then same ordinary actor invokes granted native query facades. Does not claim globally active policy because current source registration may be intentionally opt-in.",
+  "originalNativeAssertionsPassed": true,
+  "runtimeStopped": true,
+  "leaseReleased": true,
+  "testDirectoryAbsent": true,
+  "probeSha256": "6cac80759190c4d3af3dcc54d0f8891815218ad7c18aebbede6dc8b2b9154a4a"
+}

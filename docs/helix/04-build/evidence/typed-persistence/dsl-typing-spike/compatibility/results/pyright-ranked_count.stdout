@@ -1,0 +1,46 @@
+{
+    "version": "1.1.414",
+    "time": "1792086744174",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/ranked_count.py",
+            "severity": "error",
+            "message": "Type of \"count\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportUnknownMemberType"
+        },
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/ranked_count.py",
+            "severity": "error",
+            "message": "Cannot access attribute \"count\" for class \"OrderRanked\"\n  Attribute \"count\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 23
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportAttributeAccessIssue"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 2,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.31
+    }
+}
+

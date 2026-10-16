@@ -1,0 +1,30 @@
+{
+    "version": "1.1.414",
+    "time": "1792086747884",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/update_immutable.py",
+            "severity": "error",
+            "message": "No parameter named \"placed_at\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 30
+                }
+            },
+            "rule": "reportCallIssue"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 1,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.323
+    }
+}
+

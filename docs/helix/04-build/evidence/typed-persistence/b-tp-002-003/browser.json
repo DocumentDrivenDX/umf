@@ -1,0 +1,41 @@
+{
+  "scope": "Experimental stage-one candidate bytes and refusal/report parity; Python runtime ABI/native execution not qualified",
+  "bun": "1.4.2",
+  "chromium": "153.0.8010.12",
+  "cases": [
+    "commerce-engine",
+    "all-commerce",
+    "unknown-selected",
+    "missing-view",
+    "coverage-gap",
+    "name-reserved",
+    "profile-changed",
+    "profile-invalid-digest",
+    "hostile-literal",
+    "report-mode",
+    "containers",
+    "actions",
+    "relationships",
+    "named",
+    "multiple-projections"
+  ],
+  "runsPerRuntime": 2,
+  "candidates": 10,
+  "refusals": 5,
+  "externalRequests": [],
+  "bundleSha256": "59e616ac2a9ab9f42624fc8a75d17bd72aafb5294852d437345f8021a7d2a032",
+  "inputsSha256": "969090ebf05f6f3928b273f41879b6f87309a1a976d878556e45ff82b0f8f53b",
+  "outputsSha256": "32bb380f6eba1040c7b9a30ebef347991ce63fce409563faf46a037b8441c729",
+  "sourceSha256": {
+    "src/compilation/index.ts": "886f082aed8329de1cd127b5b0bdfb5d18d5fde7b32a9a609fc532c732d1f75c",
+    "src/compilation/admission/index.ts": "e616b64e3d9ac230526b4716b5e5aefd7e26b3d08cc5bd2ac602769108b08d07",
+    "src/compilation/admission/diff.ts": "6a1dad4057f8a229f3013bada541a065882aeef3cd95e04c4700ac18194e7ffb",
+    "src/compilation/admission/access/index.ts": "972140ce876f083e9f6eff7e4044f052b8ca8d74d7feb5c0606fc15254fd4b2e",
+    "src/compilation/ir/index.ts": "a375d691f9d5bd653c11902c24348e0d8d9e80338efc8b42b8de624fd3d9755a",
+    "src/compilation/bundle/index.ts": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8",
+    "src/compilation/bundle/hash.ts": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8",
+    "src/compilation/targets/python/index.ts": "747e8d188d8d45af99e86c5258529042b970a903ca5dc547df9d326e4cad112a",
+    "scripts/compilation-browser.ts": "c8a39106887edf4862919de3413399645751f2afa28849e99c6e013f6687ae60",
+    "tests/compilation/access-fixtures.ts": "0cb82eb2ce651ebf9b32d7b6a110b1bbdbbf755846ae30058c4b70536b7dcd2c"
+  }
+}
