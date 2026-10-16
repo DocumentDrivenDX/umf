@@ -574,3 +574,56 @@ prove adversarial DDL fencing or live policy migration. Full backend acceptance
 still requires the other scenarios above, original source/current-authority
 custody, output lifetime and original acceptance runner evidence. No reproduction
 or source inspection alone promotes a case.
+
+
+### Complete native capture at closing
+
+This expands truss.B02/B11/B12/B15 and L11 under US-056-AC2/AC9/AC10 and
+US-057-AC7. It adds no case IDs or acceptance promotions. Qualify the selected
+closing mechanism over the complete original native fact, ordered Key and graph
+occurrence populations before public release, including selections unused by
+the projected query. A source/profile label or supplied completion flag cannot
+replace the original native capture or authenticated host custody.
+
+For a profile using closing recapture, execute these controls inside the same
+held native transaction and shared operation deadline:
+
+1. Capture original source bytes, typed facts, complete coverage, Key receipts
+   and native row identities/versions; retain every graph occurrence, including
+   parallel edges and complete endpoint roles.
+2. Reobserve the unchanged complete population and compare all retained source,
+   fact, coverage, Key, graph and native provenance components. Require a
+   successful comparison without issuing authority or releasing data.
+3. Mutate one own-transaction dependency at a time: delete an edge; change only
+   an edge version; retarget one endpoint to another valid Record of the same
+   type; change only an object version; change a non-key authorization value.
+   Require the intended closing comparison to refuse, not an unrelated SQL,
+   codec, startup or source-shape error. Preserve versions even when logical
+   projections otherwise compare equal.
+4. Restore each original savepoint and require a fresh successful comparison.
+   Repeat comparison after original semantic evaluation and whole-batch
+   inspection; no cached successful check may substitute for the current one.
+5. From an independent native writer, attempt changes to object, Key and edge
+   homes at the capture, inspection and closing boundaries. Retain actual lock
+   outcomes through outer settlement. Unsupported filtering, incomplete census,
+   source failure and opening/closing expiry refuse without partial output.
+
+A raw-only capture that rejects every core relationship may describe empty graph
+populations explicitly. It must not supply empty defaults for missing or
+unsupported graph capture. For the Python candidate's exact capture type, wrong profiles and replacement
+subclasses cannot attest this profile's original physical capture.
+
+Retain exact sources, commands, native/driver/runtime versions, original and
+changed row bytes/locators, expected semantic resources, refusal stages,
+restorations, original transaction outcome and verified cleanup. Supplied source
+wrappers remain diagnostic evidence; they do not qualify native source admission.
+Endpoint equality cannot prove absence of transient changes or mutation after
+the check. Continuous source/authority cuts, authenticated Subject, revocation
+ordering and final guarded release remain independent mandatory obligations.
+
+Privileged fixture mutation is fault injection into the selected closing check,
+not proof of containing a malicious database owner or superuser. CONTRACT-063's
+explicit installer/integrity exclusions and ordinary non-reachability remain
+binding. Admitted maintenance/host-extension and trigger paths still belong to
+the protected source closure and must preserve actual-effect/result conformance;
+privilege exclusion cannot justify omitting their effects or required checks.
