@@ -1,0 +1,153 @@
+{
+  "reviewVersion": "independent-component-review/1",
+  "reviewer": "Astra Ultra independent review",
+  "date": "2026-10-16",
+  "status": "complete",
+  "verdict": "No actionable defect found in the reviewed logical disclosure-selection component. No native/backend or full security acceptance is granted.",
+  "findings": [],
+  "scope": {
+    "component": "Private canonical logical-disclosure-selection/0.1-candidate producer and WithinOperation leaf; exact canonical fold provenance, legacy compatibility, bounded refusal, browser correspondence and supplied evidence custody.",
+    "repositoryBase": "80ca3635b892749b9b6280642adc0a8b36539aa1",
+    "sourcePacket": "/private/tmp/umf-canonical-disclosure-selection-review-20261016.zip",
+    "sourcePacketSha256": "4339d5803f9aef58a8c55a2dc28953cac0e7025b63f02226145ae8d2f3447f6d",
+    "changedSourceAndGovernanceSha256": {
+      "src/extensions/security/catalog-runtime-candidate.ts": "03b9bd3298443bfa4ac2306950e2e4b030c42e3708db0d7871724b248c74aab5",
+      "tests/security/catalog-disclosure-selection-corpus.ts": "84294d1a8c48978475521a8d9e7b93428f118e4c3c0a123ccc343aecbbd2695d",
+      "tests/security/catalog-disclosure-selection.test.ts": "e9300a71e8bd64992dbfffc3ec2116192a293846e1ec1e5393dbd9c9d05238a4",
+      "tools/security/catalog-disclosure-selection-browser.ts": "9289ece9b67e5c8c11c84e6ef1587fe498ed6afa9412c195631af30d72c1cb5a",
+      "tools/security/scalar-owner-cases.ts": "dd3ec63f3919ea4c934056fd0aa3ed0db2b78123d4c856d722bfc5f762ceb005",
+      "tools/security/reference-links-owner-cases.ts": "de8033af86e7cc02e30295aa136c9519646a579446509a897376c04e8be6f266",
+      "tools/security/record-members-owner-cases.ts": "dc9e90aed0e673ca209bd003c2c5e251ed7a0027c5db5e91b9d3bf8e47118189",
+      "docs/helix/02-design/technical-designs/TD-056-security-bindings.md": "5ee60379695c112ea2dbd3da848581410afab7a133bd1fdee07dd328318d09f9",
+      "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "8a911656a8e694644c77e534443f94a286e2bf8313e64e62bde4dd60859525b0"
+    },
+    "priorKernelSha256": "28f4fd603fbe47a82f878f0fceb042a2071daecf1db114005886dc2cb7e57dfd",
+    "patchSha256": "f657a2c37ea9f17d3ce4fdc16b4c6be91581f9494c34ddda11561b8d97696dcd",
+    "mutationPolicy": "No owner/repository/frozen source changed. Independent reconstruction and probes are confined to this review directory."
+  },
+  "sourceAssessment": [
+    "The issued original program is resolved from its private WeakMap; owner, cut and request are copied as bounded JSON without invoking accessors. The scan derives the complete target population from supplied typed facts and retains the existing source, owner, generation, coverage, read-purpose, storage and condition preflights.",
+    "Provenance is extracted within the original decision/disposition fold. Only scoped true permit rules contribute. Withholding retains only withholding positions; competing distinct transform identities conflict; equivalent transforms retain all positions and select the first in policy/disclosure order. The kind-only origin filter is used after the original transform-identity conflict check, so it does not merge conflicting transformations.",
+    "Original selection retains explicit original directives and implicit fallback positions only for ontology-declared unprotected fields. Protected missing disclosure remains indeterminate. Nonzero source positions, inactive permits, duplicate contributors, require/forbid behavior and unknown rule truth are preserved.",
+    "Denied, indeterminate and conflicting rows retain no winning dispositions. Failures return sources:null and rows:[] atomically. Withholding trace contains no original value or original presence. Authored inline constants remain directive metadata; original/transform selection is not rendered-value execution.",
+    "The same operation and literal ledgers meter input traversal, condition evaluation, trace traversal, encoded trace length and retained source metadata. Shared-operation exhaustion refuses without partial rows and remains exhausted for a following legacy leaf. Existing finite JSON, fact, field, policy and source limits remain intact; this is source analysis and sampled testing, not a proof against every adversarial host/runtime condition.",
+    "Legacy action, collection, scan, rule-scan and scan-batch signatures and output shapes are unchanged. Source comparison shows the new trace fields/branches are gated by the new private mode; independent differential testing confirms the reviewed combinations and limit cases."
+  ],
+  "independentlyExecuted": [
+    {
+      "name": "Reconstructed supplied corpus",
+      "runtime": "Bun 1.4.2",
+      "assertions": 42,
+      "result": "passed",
+      "receipt": "independent-bun.json"
+    },
+    {
+      "name": "Independent canonical fold / legacy differential matrix",
+      "runtime": "Bun 1.4.2",
+      "checks": 3082,
+      "policyCombinations": 432,
+      "result": "passed",
+      "receipt": "independent-bun.json",
+      "description": "Six choices across three ordered permit rules, protected/unprotected fields; independently expected decisions/origins/first transform, rule truth, all five legacy APIs against byte-exact prior kernel, multi-resource census, pin refusal, per-operation thresholds and shared ledger exhaustion."
+    },
+    {
+      "name": "Same independent matrix in actual browser",
+      "runtime": "Chromium 153.0.8010.12",
+      "playwright": "1.63.0",
+      "checks": 3082,
+      "result": "passed",
+      "receipt": "independent-browser.json",
+      "bundleSha256": "7d73fb77486f82de347d8377c7b5ed9072feb5ed8dc8ef3d1cc318b6fbb0f61f",
+      "description": "Exact observation equality with Bun; no Bun/process globals, external requests or page errors."
+    },
+    {
+      "name": "Additional edge controls",
+      "runtime": "Bun 1.4.2",
+      "checks": 16,
+      "result": "passed",
+      "receipt": "edge-controls.json",
+      "description": "Inline integer constants 1/1e0 and 0/-0 retain first exact authored directive and both sources; distinct values conflict. Unknown and forbid conditions, source snapshot after caller mutation, earlier-disposition suppression, later malformed population atomic refusal and withholding privacy."
+    },
+    {
+      "name": "Owner metadata helper baseline and repairs",
+      "runtime": "Bun 1.4.2",
+      "baselineFiles": 41,
+      "baselineExpectedFailures": 3,
+      "repairedTests": 3,
+      "repairedAssertions": 136,
+      "result": "passed",
+      "receipt": "owner-controls.json",
+      "description": "All 41 baseline source bytes independently matched Git. Original 0.9 refusal expectations fail with no changed kernel in this closure. Only the three frozen test helpers are then replaced; existing 0.7 controls and explicit 0.8/0.9 metadata positives / future 0.10 negatives pass."
+    }
+  ],
+  "custody": {
+    "packetSha256Verified": true,
+    "relativeSnapshotFiles": 104,
+    "allSnapshotPinsMatch": true,
+    "allOuterOverlapsMatch": true,
+    "baselineKernelMatchesGit": true,
+    "unchangedAfterIndependentRuns": true,
+    "parserAudit": {
+      "tool": "Bun.Transpiler.scan",
+      "runtimeRelativeFiles": 95,
+      "resolvedRelativeImportEdges": 281,
+      "additionalCapturedFiles": 9,
+      "receipt": "dependency-audit.json",
+      "qualification": "Nine additional captures include six type/regex-closure sources plus package.json, bun.lock and installed Ajv metadata. External packages/executables remain explicitly non-hermetic."
+    },
+    "suppliedBrowserBundleSha256": "40c8d2936df0c2a130da9b9886f1a4b41d1bd3a8c12a3e0d800c306677a437c8",
+    "ownerBrowserArchiveFiles": 1803,
+    "allOwnerRestorationPinsMatch": true,
+    "receipt": "custody.json",
+    "supplementalGate": {
+      "receipt": "supplemental-audit.json",
+      "witnessSha256": "df5c5233064e304bfb37dc772ef1e9147297ba200044a11461c63ad8d1d4be0c",
+      "distinctFingerprintFiles": 570,
+      "allMatchFrozenOrGitBase": true,
+      "replacedTrackedReceipts": 21,
+      "allOldAndCurrentArchivePinsMatch": true,
+      "oldAcceptanceMatchesOriginalFrozenPacket": true,
+      "requiredCases": 158,
+      "allocatedCriteria": 34,
+      "implementedAcceptedFresh": 45,
+      "missingRequiredImplementations": 113,
+      "overallStatus": "failed",
+      "exitCode": 1,
+      "broaderAuditChecks": 221,
+      "broaderAuditFailures": 87,
+      "planAndGateToolingUnchanged": true,
+      "policyOracleScenarios": 44,
+      "policyOracleControls": 188,
+      "policyOracleSnapshotFiles": 100,
+      "policyOraclePinsMatchCurrentKernel": true,
+      "qualification": "Receipt/source correspondence audit only. The full native gate and later 44-scenario oracle were executed by the parent, not independently rerun by this reviewer."
+    },
+    "committedCandidate": {
+      "status": "passed",
+      "commit": "3428d54503907f4a2b13fd9026fb188eb6471129",
+      "matchingSourceAndGovernanceFiles": 108,
+      "candidatePatchRestoredExactly": true,
+      "implementationPlanSha256": "286a2d3853fd93dca2affd06409d6fc5b28d535a92c61a3cabe7d6dbce577914",
+      "scope": "Read-only commit/source correspondence and lossless evidence-storage qualification. No additional native run or publication acceptance.",
+      "implementationPlanAssessment": "The added checkpoint accurately separates the 45 implemented fresh cases from the 113 missing cases and broader 87 failures; it does not promote native/operator/wire authority. Earlier historical review scopes remain separate."
+    }
+  },
+  "suppliedEvidenceNotIndependentlyReexecuted": [
+    "The owner logs report both TypeScript configurations, 17 initial legacy tests and the final 318-test / 4982-assertion broad security run. The retained initial broad run reports 315 pass / 3 fail; their baseline cause was independently reproduced. These broader logs are not counted as independent reviewer execution or a hermetic whole-suite source-captured cohort.",
+    "The three prior owner browser/type harnesses report 50 scalar, 44 reference and 39 membership controls. All 1803 archived files were hash-checked against the restoration map; the browser harnesses were not independently repeated. These controls concern the historical metadata subset, not exhaustive new UUID/128-bit semantics.",
+    "The original invalid empty fixture/failure and earlier 41-control focused log remain distinct from the final 42-control source snapshot. The supplemental witness preserves prior stale receipts and fresh results rather than retrospectively changing original source hashes."
+  ],
+  "limitationsAndOpenObligations": [
+    "complete=false and authority=false remain mandatory. Source IDs, revisions and generation are correlations supplied by the caller, not authenticated catalog/caller/current-cut custody.",
+    "No native database campaign was run for this review. No native credential, rendered value/domain execution, DisclosureV2 wire admission, compiler lineage .4 composition, operator permission or guarded release is established.",
+    "No backend case or acceptance criterion is promoted. All 158 required cases and 34 criteria remain; 113 implementations are missing, including the still-open native obligations.",
+    "Actual runtime/browser tests and static analysis are not a formal logical proof. External executable dependency closure is non-hermetic; copied dependencies and selected runtime binaries/metadata are separately pinned for replay attribution."
+  ],
+  "reviewerHarnessHistory": [
+    "Initial exec used a not-yet-created reconstruction cwd and did not start; directory was then created.",
+    "First independent corpus setup changed the aliased ontology pin before compilation, causing fixture compilation refusal before a result file; the original corpus/log are retained. Corrected controls issue the program before mutating the stale cut. The initial scan-batch occurrence s was also corrected to the accepted s0 form before the final matrix.",
+    "The first parser-audit hash call supplied ArrayBuffer to node:crypto; the original helper is retained and the corrected helper uses Uint8Array. No product source changed.",
+    "The initial browser run was blocked starting the loopback server in the sandbox. Its log is retained; the same review was rerun with approved process permissions and completed in real Chromium."
+  ],
+  "reviewEvidenceManifest": "evidence-manifest.json"
+}

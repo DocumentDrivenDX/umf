@@ -1301,3 +1301,10 @@ Security planning: [shared security feature](01-frame/features/FEAT-008-shared-s
 opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
 versioned keys and native/bytes/text/two64-bit physical carriers. This is an
 implementable design, not implemented core0.9.0 or qualified native support.
+
+
+The initial [128-bit/UUID implementation](04-build/evidence/uuid-implementation.md)
+now provides experimental core0.9 values, literals, keys, copied authoring,
+inspection/selection, retained migration and explicit carrier codecs/proposals.
+Native observations qualify specific schemas and datum paths; complete ideal,
+five-binding, relationship/index and consumer-execution gates remain separate.

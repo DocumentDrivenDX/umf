@@ -2025,3 +2025,24 @@ digests/sizes match local public wheel and checksums. This is artifact/consumer
 correspondence only: no database rerun, Linux/aggregate/native authority or
 release-readiness promotion. Earlier CI native receipt remains immutable.
 Acceptance45/158,113 unimplemented unchanged. See [exact evidence](../../04-build/evidence/security/published-weft-cohort-20261015/README.md).
+
+## Native presence/provenance prerequisite controls — 2026-10-16
+
+These exercising component controls map to US-056-AC6 and supplement, never replace, pg-raw.P03/B07/B08. Keep all original required cases and operator/actor/bypass expectations unchanged.
+
+| Control | Exercising source | Required observation |
+| --- | --- | --- |
+| CP01 issued SQL and real driver data | `tools/security/pg18-current-presence-oracle.py` | Four actual issued bounded PostgreSQL programs match the Rust checker over complete captured fixture rows; actual NULL refuses even when FALSE/LIMIT0 hides results. |
+| CP02 native presence | same | Explicit native column presence distinguishes null/absence; scalar-only current frame cannot express the distinction. JSONB key existence independently distinguishes missing key from explicit JSON null. Neither codec is automatically admitted. |
+| CP03 disclosure provenance | same | Native original five declared outcomes retain column/revision, disposition, payload presence, selection, output domain and exact transform; original null and transformed null stay distinct. |
+| CP04 negative controls | same | Wrong original document/revision, inconsistent payload flag, missing/unexpected transform and invalid public null/domain/transform metadata refuse. Plain nullable payload collapses four distinct outcomes. |
+| CP05 closed producer | same | Derived optional Token source refuses the current required-only lineage producer before application SQL; no fallback or fabricated native permission. |
+| CP06 algebra | `tools/security/prove-disclosure-carrier.py` | Conditional left/right inverse, injectivity and malformed-record refusal have UNSAT violations; all four variants have SAT inhabitants and erasure controls yield SAT counterexamples. |
+| CP07 custody and cleanup | native source above | Pin actual engine/image, original fixture/packet/wheel/native module/shim and source bytes; retain failures; verify owned label, removal and subsequent absence. Never publish success when cleanup is unverified. |
+| CP08 explicit policy-selected presence | `tools/security/query-presence-policy-oracle.ts` | On the explicit optional queryable model, a separate Token disclosure preserves String/null/absence under the original project-membership requirement; undisclosed, unreported, incomplete and stale states refuse, and inactive assignment, mismatched subject/project links and complete absent associations return no eligible rows. Supplied logical cuts never confer native authority. |
+
+Use the pinned disposable PostgreSQL 18.6 image from the original P-cases and isolated explicit output paths. Excluded-admin execution tests a physical/codec boundary, not ordinary-principal authorization, native transformation execution or actual source/caller/current-cut admission. Preserve exact artifact/codec/fixture identities so supplied declared cells cannot be relabeled as actual policy decisions. Browser portability is unaffected: these tools remain outside the browser library.
+
+### Canonical disclosure-selection provenance component — 2026-10-16
+
+The private logical-disclosure-selection0.1 producer must preserve exact qualified resource identities, actual scoped rule truth, all winning source occurrences and the first selected transform occurrence in canonical policy order. Exercise both flat and graph witnesses, nonzero disclosure indices, duplicate contributors, conflicting transforms, withholding dominance without original-value projection, explicit unprotected fallback, missing protected directives, denied/empty populations, hostile/stale input and shared-budget exhaustion. Original action/render/rule-scan shapes must remain unchanged. Real Chromium must match Bun without host globals. Source-selection evidence never grants native authority, executes transforms or substitutes for original P03/B08 cases.

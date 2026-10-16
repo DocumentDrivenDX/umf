@@ -1,0 +1,105 @@
+{
+  "scope": "Generated required singular carrier schemas and all-bit datum recovery; no whole-model/native-equivalence, key, nullable pair or execution qualification",
+  "versions": {
+    "python": "3.13.16 (main, Oct  3 2026, 00:54:36) [Clang 22.1.3 ]",
+    "avro": "1.12.0",
+    "fastavro": "1.12.2",
+    "pyarrow": "21.0.0"
+  },
+  "observations": [
+    {
+      "system": "avro",
+      "kind": "native-uuid",
+      "signed": true,
+      "vectors": 389,
+      "checks": 778,
+      "warnings": [
+        "Logical type uuid requires literal type string, not fixed."
+      ],
+      "nativeSchema": []
+    },
+    {
+      "system": "avro",
+      "kind": "bytes16",
+      "signed": true,
+      "vectors": 389,
+      "checks": 778,
+      "warnings": [],
+      "nativeSchema": []
+    },
+    {
+      "system": "avro",
+      "kind": "uuid-text",
+      "signed": true,
+      "vectors": 389,
+      "checks": 778,
+      "warnings": [],
+      "nativeSchema": []
+    },
+    {
+      "system": "avro",
+      "kind": "words64",
+      "signed": true,
+      "vectors": 389,
+      "checks": 780,
+      "warnings": [],
+      "nativeSchema": []
+    },
+    {
+      "system": "parquet",
+      "kind": "native-uuid",
+      "signed": true,
+      "vectors": 389,
+      "checks": 389,
+      "warnings": [],
+      "nativeSchema": [
+        "<pyarrow._parquet.ParquetSchema object at 0x10a646040>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id (UUID);\n}\n"
+      ]
+    },
+    {
+      "system": "parquet",
+      "kind": "bytes16",
+      "signed": true,
+      "vectors": 389,
+      "checks": 389,
+      "warnings": [],
+      "nativeSchema": [
+        "<pyarrow._parquet.ParquetSchema object at 0x10a6460c0>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n}\n"
+      ]
+    },
+    {
+      "system": "parquet",
+      "kind": "uuid-text",
+      "signed": true,
+      "vectors": 389,
+      "checks": 389,
+      "warnings": [],
+      "nativeSchema": [
+        "<pyarrow._parquet.ParquetSchema object at 0x1096f5a00>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n}\n"
+      ]
+    },
+    {
+      "system": "parquet",
+      "kind": "words64",
+      "signed": true,
+      "vectors": 389,
+      "checks": 389,
+      "warnings": [],
+      "nativeSchema": [
+        "<pyarrow._parquet.ParquetSchema object at 0x10a646bc0>\nrequired group field_id=-1 schema {\n  required int64 field_id=-1 hi;\n  required int64 field_id=-1 lo;\n}\n"
+      ]
+    },
+    {
+      "system": "parquet",
+      "kind": "words64",
+      "signed": false,
+      "vectors": 389,
+      "checks": 389,
+      "warnings": [],
+      "nativeSchema": [
+        "<pyarrow._parquet.ParquetSchema object at 0x10a6471c0>\nrequired group field_id=-1 schema {\n  required int64 field_id=-1 hi (Int(bitWidth=64, isSigned=false));\n  required int64 field_id=-1 lo (Int(bitWidth=64, isSigned=false));\n}\n"
+      ]
+    }
+  ],
+  "checks": 5059
+}
