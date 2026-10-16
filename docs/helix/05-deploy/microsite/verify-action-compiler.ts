@@ -32,7 +32,7 @@ try {
  // A cold module fetch must not expose a clickable store control without a handler.
  let releaseModule!:()=>void;
  const moduleReady=new Promise<void>(resolve=>{releaseModule=resolve;});
- const holdModule=async(route:any)=>{await moduleReady;await route.continue();};
+ const holdModule=async(route:any)=>{await moduleReady;await route.fallback();};
  await context.route('**/action-compiler.js',holdModule);
  const navigation=page.locator('a[href="action-compiler.html"]').click({noWaitAfter:true});
  await page.locator('#store-open').waitFor({state:'attached'});
