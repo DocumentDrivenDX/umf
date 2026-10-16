@@ -1,10 +1,10 @@
 {
-  "inputDigest": "10628f1776b8feaea0a2de81eac436fb99952975bf413d1c756d7e660f995a2b",
+  "inputDigest": "36dc34ceafc6eb02ef05217007bc55261d5e97064faf34bfb409f50c3b8f8d30",
   "inputs": [
     {
-      "bytes": 10779,
+      "bytes": 10816,
       "path": ".github/workflows/microsite.yml",
-      "sha256": "28a22180a91cbd0f0b67362f612ab88c962f38d1dbf5f8051d440a35c16654bf"
+      "sha256": "3532dd428c50eab9bfeae525334affee4591c70d05830a47cdd46cf5f6f15578"
     },
     {
       "bytes": 1130,
@@ -17,9 +17,9 @@
       "sha256": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04"
     },
     {
-      "bytes": 1414,
+      "bytes": 988,
       "path": "dist/protobuf/NOTICE.txt",
-      "sha256": "e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99"
+      "sha256": "c93a99f66efe8daf90459478eb7df8284bf8dd75c256d0fc1a0890ca5fcba5f2"
     },
     {
       "bytes": 13336348,
@@ -60,11 +60,6 @@
       "bytes": 1479,
       "path": "dist/protobuf/licenses/google.golang.org-protobuf-LICENSE",
       "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
-    },
-    {
-      "bytes": 2151,
-      "path": "dist/protobuf/licenses/gopkg.in-yaml.v3-LICENSE",
-      "sha256": "d18f6323b71b0b768bb5e9616e36da390fbd39369a81807cca352de4e4e6aa0b"
     },
     {
       "bytes": 16992,
@@ -42057,9 +42052,9 @@
       "sha256": "15827860f2ed377740bbcf124ffbbfdaad12f43320b75265e2d716278b78b10e"
     },
     {
-      "bytes": 2202,
+      "bytes": 3068,
       "path": "scripts/build-protobuf.ts",
-      "sha256": "6f5039ab29aa7c0442f7ebcae178c0d6475a1f95735b49b2f571b992108e2929"
+      "sha256": "57095bb6d5d32895913a0c673d42934f01ae17e9859ac131b6a365abf26bd1ba"
     },
     {
       "bytes": 558,
@@ -46540,6 +46535,11 @@
       "bytes": 1612,
       "path": "scripts/reference/io.ts",
       "sha256": "1cafd39e69a4d396ac787620216994964d3c77f0489aed15dfbdde6d1dcafa0a"
+    },
+    {
+      "bytes": 1337,
+      "path": "scripts/reference/protobuf-reproducibility.ts",
+      "sha256": "ff284fb2f790dbce4ad7c9c754310e0c33fc4b7dff800416ba7adec82e3eb51d"
     },
     {
       "bytes": 9073,
@@ -56344,9 +56344,9 @@
       "sha256": "2b9eae5a5eec6cafbf409c9bd5fdefa7d19ca626ff9da0553c2edf359ade556a"
     },
     {
-      "bytes": 1414,
+      "bytes": 988,
       "path": "assets/NOTICE.txt",
-      "sha256": "e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99"
+      "sha256": "c93a99f66efe8daf90459478eb7df8284bf8dd75c256d0fc1a0890ca5fcba5f2"
     },
     {
       "bytes": 13336348,
@@ -56392,11 +56392,6 @@
       "bytes": 1479,
       "path": "assets/licenses/google.golang.org-protobuf-LICENSE",
       "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
-    },
-    {
-      "bytes": 2151,
-      "path": "assets/licenses/gopkg.in-yaml.v3-LICENSE",
-      "sha256": "d18f6323b71b0b768bb5e9616e36da390fbd39369a81807cca352de4e4e6aa0b"
     },
     {
       "bytes": 7781,
@@ -68926,7 +68921,7 @@
     {
       "bytes": 1073630,
       "path": "index.json",
-      "sha256": "d09d63807d63d4f5b10ef6646c5da137d48a44e9f8222edaad377f7b57752653"
+      "sha256": "39e375692def7668ca7706f50544892d360ad9258fee32203416f5118eba5ce3"
     },
     {
       "bytes": 931,
@@ -72299,6 +72294,11 @@
       "sha256": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5"
     },
     {
+      "bytes": 988,
+      "path": "sources/c93a99f66efe8daf90459478eb7df8284bf8dd75c256d0fc1a0890ca5fcba5f2",
+      "sha256": "c93a99f66efe8daf90459478eb7df8284bf8dd75c256d0fc1a0890ca5fcba5f2"
+    },
+    {
       "bytes": 1226,
       "path": "sources/c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a",
       "sha256": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a"
@@ -72417,11 +72417,6 @@
       "bytes": 1037,
       "path": "sources/d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47",
       "sha256": "d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47"
-    },
-    {
-      "bytes": 2151,
-      "path": "sources/d18f6323b71b0b768bb5e9616e36da390fbd39369a81807cca352de4e4e6aa0b",
-      "sha256": "d18f6323b71b0b768bb5e9616e36da390fbd39369a81807cca352de4e4e6aa0b"
     },
     {
       "bytes": 8199,
@@ -72802,11 +72797,6 @@
       "bytes": 2195,
       "path": "sources/e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
       "sha256": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420"
-    },
-    {
-      "bytes": 1414,
-      "path": "sources/e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99",
-      "sha256": "e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99"
     },
     {
       "bytes": 726,

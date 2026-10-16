@@ -1,0 +1,11 @@
+12 | import {validateDocument,createUmfRegistry,Registry,dddRegistry,jsonSchemaRegistry,protobufRegistry} from '../../src/index';
+13 | import * as publicApi from '../../src/index';
+14 | import {thirdPartyNotices} from '../../docs/helix/05-deploy/schema-browser/notices';
+15 | const output=resolve(root,'docs/helix/05-deploy/microsite/dist/reference');
+16 | const args=process.argv.slice(2);if(args.some(a=>a!=='--check'))throw Error('REFERENCE_INPUT unknown flag');const check=args.includes('--check');
+17 | const expectedRuntime=(await Bun.file(resolve(root,'package.json')).json()).packageManager;if(expectedRuntime!=='bun@'+Bun.version)throw Error('REFERENCE_RUNTIME use the pinned '+expectedRuntime+' toolchain; observed bun@'+Bun.version);
+                                                                                                                                              ^
+error: REFERENCE_RUNTIME use the pinned bun@1.4.2 toolchain; observed bun@1.4.3
+      at /Users/erik/.codex/worktrees/9183/umf/scripts/reference/build.ts:17:138
+
+Bun v1.4.3 (macOS arm64)

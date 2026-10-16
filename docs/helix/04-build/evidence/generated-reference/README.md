@@ -24,7 +24,7 @@ inventory coverage, not support grades. Thirty Chromium 153.0.8010.12 checks pas
 with zero page errors and zero unexpected external requests from the reference.
 The report's tested manifest SHA-256 matches the final generated manifest.
 
-The full reference suite passes 11 tests / 9,883 assertions, including isolated
+The full reference suite passes 11 tests / 9,879 assertions, including isolated
 regeneration, deliberate drift refusal and boundary injections. Focused final
 record/runtime checks also pass. Both TypeScript configurations pass; action
 guide generation, malformed-source controls and runnable examples pass. The
@@ -70,16 +70,15 @@ request. Its test route cleanup now waits for the held handler before unroute;
 the earlier failed harness log remains in `browser-route-control-failed.log`.
 Malformed pointer routes explicitly refuse instead of selecting the root.
 
-Implementation, visual review and local qualification are complete for this
-scope. The final approved signing pass resealed 19 changed pages with the
-existing configured key and retained five up-to-date seals: zero failures
-and zero skipped pages. The
-public verifier reports `VALID all (24 claim(s))`; see `sealing.log` and
-`signatures.log`. Public keys and claims were copied into the local site's
-`.well-known/innsigle/` directory, and all 25 public artifacts match their
-staging originals byte for byte. The reference manifest still matches the
-Playwright-tested digest. Earlier key-access attempts timed out without
-releasing the key; no key material is retained in the repository.
+Implementation, visual review and local qualification pass for the repaired
+scope. The earlier main-integration snapshot had 24 valid signatures, but the
+CI metadata reproducibility repair changes the seven reference pages. Their
+new seals are pending: the configured 1Password CLI request timed out before
+releasing the key. `sealing.log` records that refusal; `signatures.log` records
+the present seven stale reference claims. Do not treat the prior snapshot's
+seals or copied claims as qualification of the repaired output. Final sealing,
+public-claim copy, integrity refresh, CI verification and merge remain pending.
+No signing key material is retained in the repository.
 
 Production deployment has not been requested. No comparable token-usage
 baseline or runtime per-turn usage meter is available; no measured token total
@@ -106,3 +105,24 @@ reusable installed browser package passes fourteen Chromium checks, and the
 strict-CSP embedding, public protocols and standalone example pass again.
 Both TypeScript configurations and browser-action types pass. Guide malformed
 source/output controls and executable examples also pass after the merge.
+
+## CI compiler-metadata reproducibility repair
+
+The first merged CI run passed functional and visual qualification but refused
+seven reference page signatures. Comparing the retained CI and local manifests
+isolated the input differences to the compiler NOTICE and license inventory:
+the notice contained local Go cache paths, and an unrelated cached yaml module
+had left a stale license in the local build output. The compiler and browser
+runtime payloads matched. The initial refusal is retained in
+`ci-initial-signature-failure.log`.
+
+The compiler build now emits a path-free pinned module graph and replaces its
+owned license directory with the modules actually compiled for js/wasm.
+`scripts/reference/protobuf-reproducibility.ts` runs the actual build twice,
+injecting a stale license and host-specific notice between builds; the complete
+output inventory and bytes must match. This gate runs in microsite CI before
+reference generation. `protobuf-reproducibility.log` records the passing local
+control. All final reference output, browser evidence and seals are regenerated
+after this repair. The runtime guard also correctly refused an unpinned Bun
+1.4.3 after the Homebrew 1.4.2 path disappeared; final generation uses a restored
+task-local Bun 1.4.2. That refusal is retained in `runtime-guard-refusal.log`.
