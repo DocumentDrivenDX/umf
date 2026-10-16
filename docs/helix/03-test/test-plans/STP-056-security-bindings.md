@@ -2108,3 +2108,43 @@ with the exact identity witness; it is not a new native campaign. The standalone
 Truss pipe replay does not qualify the installed Truss query API. Post-native
 whole V2 inspection, exact original batch/key/cell correspondence and closing
 native caller/source/protection checks remain required before publication.
+
+### Held post-native whole V2 boundary — 2026-10-16
+
+`current-native-disclosure-child.test.ts` supplements AC6/AC10. Require all72
+original producer vectors (including six mixed/empty populations) to retain their
+entire original evaluation result. Rendered cases must complete one whole V2
+inspection of the identical original batch; refused cases cannot inspect later.
+Retain original provenance999/999 as a source-invalid structural-match negative.
+Separately prove that domain-valid substituted values/presence, row count/order,
+extra denied rows and changed source/header/column/domain/transform metadata
+cannot replace the held original. Keep exact private key-bag/native capture and
+whole V2 validation as distinct host obligations.
+
+Exercise strict Unicode/duplicate and escaped-duplicate keys, unsafe numbers,
+negative zero, overflow/underflow, malformed UTF8, depth/node/wire limits,
+truncation, wrong receipt/version, fixed owner/selection, duplicate IDs and all
+ordering/replay failures. Verify exact16MiB inspection input, one-byte-over refusal
+and unchanged4MiB source limits. Run actual process fragmentation/coalescing,
+clean three-exchange completion and incomplete/corrupt/truncated EOF refusal;
+retain legacy0.1 and old query-child regression. Repeat independent build/config
+mutation controls for the separate builder.
+
+Compose the actual reviewed Python bridge with the held child over all52 retained
+native records:47 complete data matches, four corrupted-checker-frame refusals
+that never invoke inspection, and one source-invalid native selected occurrence
+that structurally matches and then refuses whole V2 inspection. Reconstruct from
+untouched captured driver cells, verify exact original key bag/order, keep the
+real Python parent/typed runtime handle through final inspection, correlate all
+source/header/frame bytes and confirm every child cleanup. This is fresh bridge/
+process execution over supplied recorded native data, not a new SQL campaign or
+installed Truss caller/source/current-authority/release qualification. Existing
+required backend cases and criteria remain unchanged.
+
+For reproducible replay custody, execute the captured and hashed pipe source bytes
+without loading adjacent bytecode. Pin the wheel-manifest bytes before loading
+and compare both inputs at completion. Retain the original post-import drift
+and poisoned-cache counterexamples, then require drift to refuse without a
+success receipt and poisoned-cache execution to be ignored. The reused old pipe
+remains capped at4MiB; exact16MiB inspection coverage comes from the direct child
+process controls, not from that old pipe.

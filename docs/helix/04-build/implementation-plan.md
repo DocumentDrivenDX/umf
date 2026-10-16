@@ -12545,3 +12545,46 @@ refuse publication until an exact UMF-owned inspector validates the reconstructe
 native batch. Weft owns the isolated Truss consumer/cohort patch; this workstream
 owns that inspector and native security fixtures. Supplied logical cuts and wire
 hashes cannot discharge that integration.
+
+### Held post-native inspection implementation — 2026-10-16
+
+A separate0.2 process retains the original actual atomic producer batch across
+native execution and performs the existing whole V2 inspection plus exact held
+batch comparison before returning a data-only receipt. Protocol0.1 remains
+unchanged. Eight exercising tests cover all72 original vectors, independent
+semantic/substitution barriers, strict larger-frame parsing and actual process
+lifecycle. Full security regression passes332 tests/5929 assertions and tooling
+TypeScript passes. The initial retained failure was a mixed-vector name typo,
+corrected without changing implementation or expected semantics.
+
+The actual reviewed local Python bridge also composes with the held process on
+all52 recorded native operations:47 data matches, four structural refusals and
+one whole V2 refusal after structural matching. Real Python parent/runtime handle
+custody and process cleanup are checked. This executes no new SQL and qualifies
+neither installed Truss admission nor native caller/current cut/guarded release.
+Astra Ultra independently reproduced the exact bundle and passed143 process
+controls,69 session/scanner/clear controls,19 held/legacy tests with812 assertions,
+10 builder/config negatives and eight CLI preflight negatives. Review found
+HELD-001: the replay CLI could execute adjacent cached bytecode or report changed
+pipe-source bytes after import. The repaired CLI executes captured source bytes
+directly, checks pipe and wheel-manifest bytes again at close, and reports their
+captured hashes. Independent poisoned-cache replay passes all52 while pipe and
+manifest drift each refuse without a receipt. Original failures and repair
+evidence are retained together; no actionable finding remains. Weft owns the
+isolated explicit Truss consumer/cohort patch; this workstream owns the
+inspector and native fixtures. Keep final publication refused until the exact
+reviewed profile, original key/cell correspondence and closing native guards are
+composed. The158-case plan stays45 implemented and113 missing, with no promotion.
+
+Retained evidence: `evidence/security/held-native-disclosure-child-20261016/`.
+The integration witness verifies all629 independently reviewed artifacts
+(123320098 bytes), both frozen source packets, the exact bundle and notices,
+original failures and root repaired52 replay. Review SHA256
+`c0322f50c3f632c77d69b4c054f6ec27b427ad96a4c4cc1f93c796629ed116cf`;
+manifest SHA256
+`b86a46595743ab0bafa2dabc77285cfc6db99f7c3675555cff4d0bc60fa8efd6`.
+The seven executable/test/config overlay files exactly match their reviewed
+R1/R2 snapshots. Accepted45 source correspondence remains570 exact pins and
+the158-case plan digest remains unchanged. Integrate this component directly
+to main; next complete the separately reviewed Truss consumer and actual
+ordinary-role/current-cut/closing-guard evidence.

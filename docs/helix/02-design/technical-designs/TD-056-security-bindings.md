@@ -2830,3 +2830,37 @@ any inherited TypeScript configuration. This repairs reviewed CHILD-001; it make
 no external-runtime or held-file/ABA proof. Post-native whole V2 inspection is a
 separate unfinished entrypoint. Native publication must remain refused until that
 exact owner inspection and the remaining native/guard obligations are composed.
+
+## Held post-native disclosure inspection — 2026-10-16
+
+The separate `umf.security.private-disclosure-child/0.2-candidate` profile retains
+one original source program, owner and selected Fields through initialization,
+one actual atomic evaluation and one post-native inspection. Protocol0.1 remains
+unchanged. A rendered evaluation retains its original batch; a refused evaluation
+terminates. The native consumer must capture the exact complete private resource
+key bag, check actual native rows with the original typed compiler handle, and
+restore original owner order before sending `inspect-native-disclosure` with the
+reconstructed batch. The process invokes the existing public whole V2 inspector
+against the same held sources, then requires canonical equality to its held
+original batch. This additionally refuses domain-valid substituted values,
+changed presence, missing/extra rows and changed order. It does not re-evaluate
+policy or infer native authorization from a matched data carrier.
+
+The closed inspection reply retains `complete:false` and `authority:false`, exact
+source receipt and SHA256 of the complete length-prefixed evaluation/inspection
+frames. These correlate the three private exchanges, not authenticated sources
+or callers. The reply carries no original or transformed values. Failure clears
+held program/source/batch state and returns only a generic refusal where request
+correlation is available. Duplicate IDs, reordered/repeated operations and wrong
+protocol/source receipt refuse. EOF before successful inspection is an incomplete
+operation, not a clean completion; the host owns deadline/cancellation and
+confirmed process cleanup. Successful inspection still needs native closing
+caller/source/protection checks and the release barrier before public handoff.
+
+Initialization/evaluation retain4MiB wire caps and the original strict reader.
+Inspection permits16MiB and reuses the original `scanPlanJson` duplicate-key,
+Unicode and exact-number scanner before JSON.parse, with100016 nodes and depth64.
+Whole V2's original bounds and exact-domain checks remain mandatory. The existing
+Truss pipe's4MiB request bound cannot silently advertise this wider profile;
+Truss must select an explicit compatible transport. This private tooling adds no
+library/browser vocabulary, native permission or second policy interpreter.
