@@ -1,22 +1,34 @@
-from __future__ import annotations
 """Pure in-memory capture of explicitly supplied declarations, never module scanning."""
+
+from __future__ import annotations
+
+import inspect
+import json
 from dataclasses import dataclass, fields, is_dataclass
 from datetime import date, datetime
 from decimal import Decimal
-import inspect
-import json
 from itertools import combinations
 from types import UnionType
 from typing import Any, Callable, Union, cast, get_args, get_origin, get_type_hints
-from pydantic import BaseModel, MISSING
+
+from pydantic import MISSING, BaseModel
 
 from .dsl import Join, Param, Terminal
-from .types import ActionRef, Vector
-from .dsl.search import SearchLeg
-from .dsl._context import CURRENT, CaptureContext, CaptureError as CaptureError
-from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, key_identity, ProjectionRef as ProjectionRef
-from .dsl._nodes import Node as ExpressionNode, KeyLiteral as CapturedKey
+from .dsl._context import CURRENT, CaptureContext
+from .dsl._context import CaptureError as CaptureError
+from .dsl._nodes import (
+    FieldRef,
+    KeyLiteral,
+    Node,
+    RecordRef,
+    key_identity,
+)
+from .dsl._nodes import (
+    ProjectionRef as ProjectionRef,
+)
 from .dsl.render import render_logical as render_logical
+from .dsl.search import SearchLeg
+from .types import ActionRef, Vector
 
 
 @dataclass(frozen=True)
@@ -45,14 +57,22 @@ class CapturedDeclaration:
 
 
 def _members(annotation: object) -> tuple[object, ...]:
-    return get_args(annotation) if get_origin(annotation) in (Union, UnionType) else (annotation,)
+    return (
+        get_args(annotation)
+        if get_origin(annotation) in (Union, UnionType)
+        else (annotation,)
+    )
 
 
 def _supported(annotation: object) -> bool:
-    if annotation == Vector:return True
+    if annotation == Vector:
+        return True
     if annotation is MISSING or annotation is type(None):
         return True
-    if any(annotation is carrier for carrier in (str, bool, int, Decimal, bytes, date, datetime)):
+    if any(
+        annotation is carrier
+        for carrier in (str, bool, int, Decimal, bytes, date, datetime)
+    ):
         return True
     origin = get_origin(annotation)
     args = get_args(annotation)
@@ -74,23 +94,43 @@ def _parameters(function: Callable[..., Any]) -> tuple[CapturedParameter, ...]:
         hints = get_type_hints(original)
         signature = inspect.signature(original)
     except (NameError, TypeError, ValueError) as error:
-        raise CaptureError("CAPTURE_SIGNATURE", "unresolved declaration annotations") from error
+        raise CaptureError(
+            "CAPTURE_SIGNATURE", "unresolved declaration annotations"
+        ) from error
     if len(signature.parameters) > 64:
         raise CaptureError("CAPTURE_SIGNATURE", "more than 64 declaration parameters")
     result: list[CapturedParameter] = []
     for name, parameter in signature.parameters.items():
         annotation = hints.get(name)
-        if parameter.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
-            raise CaptureError("CAPTURE_SIGNATURE", "variadic declarations are unsupported")
+        if parameter.kind in (
+            inspect.Parameter.VAR_POSITIONAL,
+            inspect.Parameter.VAR_KEYWORD,
+        ):
+            raise CaptureError(
+                "CAPTURE_SIGNATURE", "variadic declarations are unsupported"
+            )
         if get_origin(annotation) is not Param or len(get_args(annotation)) != 1:
-            raise CaptureError("CAPTURE_SIGNATURE", "every parameter must be Param with supported carrier")
+            raise CaptureError(
+                "CAPTURE_SIGNATURE",
+                "every parameter must be Param with supported carrier",
+            )
         carrier = get_args(annotation)[0]
         if not _supported(carrier):
             raise CaptureError("CAPTURE_SIGNATURE", "unsupported parameter carrier")
         members = _members(carrier)
-        key_models = [m for m in members if isinstance(m, type) and issubclass(m, BaseModel)]
+        key_models = [
+            m for m in members if isinstance(m, type) and issubclass(m, BaseModel)
+        ]
         components = tuple(key_models[0].model_fields) if len(key_models) == 1 else ()
-        result.append(CapturedParameter(name, carrier, any(m is MISSING for m in members), components, key_identity(key_models[0]) if key_models else ()))
+        result.append(
+            CapturedParameter(
+                name,
+                carrier,
+                any(m is MISSING for m in members),
+                components,
+                key_identity(key_models[0]) if key_models else (),
+            )
+        )
     names = {p.name for p in result}
     expanded = [f"{p.name}__{c}" for p in result for c in p.key_components]
     if len(set(expanded)) != len(expanded) or names.intersection(expanded):
@@ -104,14 +144,29 @@ def _canonical(value: object) -> object:
     if isinstance(value, tuple):
         return tuple(_canonical(item) for item in cast(tuple[object, ...], value))
     if is_dataclass(value) and not isinstance(value, type):
-        return (type(value).__module__, type(value).__qualname__, tuple((f.name, _canonical(getattr(value, f.name))) for f in fields(value)))
+        return (
+            type(value).__module__,
+            type(value).__qualname__,
+            tuple((f.name, _canonical(getattr(value, f.name))) for f in fields(value)),
+        )
     if isinstance(value, type):
         return (value.__module__, value.__qualname__)
     return value
 
 
 def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> None:
-    if node.op not in {"all", "first", "one", "count", "exists", "get", "page", "group_count", "update", "search_top"}:
+    if node.op not in {
+        "all",
+        "first",
+        "one",
+        "count",
+        "exists",
+        "get",
+        "page",
+        "group_count",
+        "update",
+        "search_top",
+    }:
         raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported terminal form")
     if not node.args or not isinstance(node.args[0], RecordRef):
         raise CaptureError("CAPTURE_UNSUPPORTED", "terminal has no record identity")
@@ -129,33 +184,58 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
 
     def has_omitted(value: object) -> bool:
         if isinstance(value, Node):
-            return value.op == "omitted" or any(has_omitted(child) for child in value.args)
-        return isinstance(value, tuple) and any(has_omitted(child) for child in cast(tuple[object, ...], value))
+            return value.op == "omitted" or any(
+                has_omitted(child) for child in value.args
+            )
+        return isinstance(value, tuple) and any(
+            has_omitted(child) for child in cast(tuple[object, ...], value)
+        )
 
     def visit(value: object) -> None:
         if isinstance(value, FieldRef):
             if (value.module, value.element) not in owners:
                 raise TypeError("expression column belongs to another Record")
         elif isinstance(value, SearchLeg):
-            if (value.record.module,value.record.element)!=(record.module,record.element):raise CaptureError('SEARCH_DECLARATION','foreign search Record')
+            if (value.record.module, value.record.element) != (
+                record.module,
+                record.element,
+            ):
+                raise CaptureError("SEARCH_DECLARATION", "foreign search Record")
             if value.value is not None:
-                if value.value.op!='param':raise CaptureError('SEARCH_DECLARATION','search requires bound parameters')
-                parameter=parameter_map.get(cast(str,value.value.args[0]))
-                wanted=Vector if value.kind=='vector' else str
-                if parameter is None or parameter.carrier!=wanted:raise CaptureError('CAPTURE_SIGNATURE','search parameter carrier differs from selected leg')
+                if value.value.op != "param":
+                    raise CaptureError(
+                        "SEARCH_DECLARATION", "search requires bound parameters"
+                    )
+                parameter = parameter_map.get(cast(str, value.value.args[0]))
+                wanted = Vector if value.kind == "vector" else str
+                if parameter is None or parameter.carrier != wanted:
+                    raise CaptureError(
+                        "CAPTURE_SIGNATURE",
+                        "search parameter carrier differs from selected leg",
+                    )
                 visit(value.value)
-            for leg in value.legs:visit(leg)
+            for leg in value.legs:
+                visit(leg)
         elif isinstance(value, Join):
             visit(value.ref)
         elif isinstance(value, Node):
             if value.op in ("param", "key_param"):
                 name = cast(str, value.args[0])
                 if name not in parameter_map:
-                    raise CaptureError("CAPTURE_SIGNATURE", "expression references an undeclared parameter")
+                    raise CaptureError(
+                        "CAPTURE_SIGNATURE",
+                        "expression references an undeclared parameter",
+                    )
                 components = value.args[1] if value.op == "key_param" else ()
                 identity = value.args[2] if value.op == "key_param" else ()
-                if components != parameter_map[name].key_components or identity != parameter_map[name].key_identity:
-                    raise CaptureError("CAPTURE_SIGNATURE", "Key component parameters differ from declared carrier")
+                if (
+                    components != parameter_map[name].key_components
+                    or identity != parameter_map[name].key_identity
+                ):
+                    raise CaptureError(
+                        "CAPTURE_SIGNATURE",
+                        "Key component parameters differ from declared carrier",
+                    )
             if value.op in ("=", "<>", "<", "<=", ">", ">=", "BETWEEN", "IN", "NOT IN"):
                 left = value.args[0]
                 if isinstance(left, Node) and left.op == "column":
@@ -164,43 +244,77 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
                         for right in value.args[1:]:
                             if isinstance(right, Node) and right.op == "param":
                                 name = cast(str, right.args[0])
-                                if name in temporal_parameters and temporal_parameters[name] != field.temporal:
-                                    raise CaptureError("CAPTURE_UNSUPPORTED", "parameter spans incompatible temporal profiles")
+                                if (
+                                    name in temporal_parameters
+                                    and temporal_parameters[name] != field.temporal
+                                ):
+                                    raise CaptureError(
+                                        "CAPTURE_UNSUPPORTED",
+                                        "parameter spans incompatible temporal profiles",
+                                    )
                                 temporal_parameters[name] = field.temporal
             if value.op in ("and", "or", "not") and has_omitted(value):
-                raise CaptureError("CAPTURE_UNSUPPORTED", "optional filters must be top-level filter arguments")
+                raise CaptureError(
+                    "CAPTURE_UNSUPPORTED",
+                    "optional filters must be top-level filter arguments",
+                )
             for child in value.args:
                 visit(child)
         elif isinstance(value, tuple):
             for child in cast(tuple[object, ...], value):
                 visit(child)
+
     if node.op == "get":
         key = cast(Node, node.args[2])
-        identity = dict(cast(tuple[tuple[str, str], ...], key.args[2])) if key.op == "key_param" else dict(cast(KeyLiteral, key.args[0]).identity) if key.op == "key" else {}
-        if identity and (identity["module"], identity["element"]) != (record.module, record.element):
+        identity = (
+            dict(cast(tuple[tuple[str, str], ...], key.args[2]))
+            if key.op == "key_param"
+            else dict(cast(KeyLiteral, key.args[0]).identity)
+            if key.op == "key"
+            else {}
+        )
+        if identity and (identity["module"], identity["element"]) != (
+            record.module,
+            record.element,
+        ):
             raise CaptureError("CAPTURE_SIGNATURE", "Key belongs to another Record")
     visit(node)
 
 
-def _invoke(function: Callable[..., Any], parameters: tuple[CapturedParameter, ...], presence: frozenset[str]) -> tuple[Node, frozenset[str]]:
-    context = CaptureContext(frozenset(p.name for p in parameters if p.optional), presence)
+def _invoke(
+    function: Callable[..., Any],
+    parameters: tuple[CapturedParameter, ...],
+    presence: frozenset[str],
+) -> tuple[Node, frozenset[str]]:
+    context = CaptureContext(
+        frozenset(p.name for p in parameters if p.optional), presence
+    )
     token = CURRENT.set(context)
     try:
         signature = inspect.signature(function)
         positional: list[Param[Any]] = []
         keywords: dict[str, Param[Any]] = {}
         for parameter in parameters:
-            symbolic = Param[Any](parameter.name, parameter.key_components, parameter.key_identity)
-            if signature.parameters[parameter.name].kind is inspect.Parameter.POSITIONAL_ONLY:
+            symbolic = Param[Any](
+                parameter.name, parameter.key_components, parameter.key_identity
+            )
+            if (
+                signature.parameters[parameter.name].kind
+                is inspect.Parameter.POSITIONAL_ONLY
+            ):
                 positional.append(symbolic)
             else:
                 keywords[parameter.name] = symbolic
         try:
             result = function(*positional, **keywords)
         except AttributeError as error:
-            raise CaptureError("CAPTURE_UNSUPPORTED", "declaration uses an unsupported form") from error
+            raise CaptureError(
+                "CAPTURE_UNSUPPORTED", "declaration uses an unsupported form"
+            ) from error
         if not isinstance(result, Terminal):
-            raise CaptureError("CAPTURE_UNSUPPORTED", "declaration must return a DSL terminal")
+            raise CaptureError(
+                "CAPTURE_UNSUPPORTED", "declaration must return a DSL terminal"
+            )
         _validate_node(result.node, parameters)
         return result.node, frozenset(context.used_optional)
     finally:
@@ -210,15 +324,27 @@ def _invoke(function: Callable[..., Any], parameters: tuple[CapturedParameter, .
 def capture(function: Callable[..., Any]) -> CapturedDeclaration:
     kind = getattr(function, "__umf_kind__", None)
     if kind not in ("query", "command"):
-        raise CaptureError("CAPTURE_UNSUPPORTED", "explicit query/command decorator required")
+        raise CaptureError(
+            "CAPTURE_UNSUPPORTED", "explicit query/command decorator required"
+        )
     parameters = _parameters(function)
     optional = frozenset(p.name for p in parameters if p.optional)
 
     def twice(presence: frozenset[str]) -> tuple[Node, frozenset[str]]:
         first = _invoke(function, parameters, presence)
         second = _invoke(function, parameters, presence)
-        first_text = json.dumps(_canonical(first), ensure_ascii=False, allow_nan=False, separators=(",", ":"))
-        second_text = json.dumps(_canonical(second), ensure_ascii=False, allow_nan=False, separators=(",", ":"))
+        first_text = json.dumps(
+            _canonical(first),
+            ensure_ascii=False,
+            allow_nan=False,
+            separators=(",", ":"),
+        )
+        second_text = json.dumps(
+            _canonical(second),
+            ensure_ascii=False,
+            allow_nan=False,
+            separators=(",", ":"),
+        )
         if first_text != second_text:
             raise CaptureError("CAPTURE_NONDETERMINISTIC", "two captures differ")
         return first
@@ -233,14 +359,28 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
         for selected in combinations(names, size):
             node, variant_used = twice(frozenset(selected))
             if variant_used != used:
-                raise CaptureError("CAPTURE_UNSUPPORTED", "optional-filter topology changes across variants")
+                raise CaptureError(
+                    "CAPTURE_UNSUPPORTED",
+                    "optional-filter topology changes across variants",
+                )
             if (node.op == "update") != (kind == "command"):
-                raise CaptureError("CAPTURE_UNSUPPORTED", "writes require command and reads require query")
+                raise CaptureError(
+                    "CAPTURE_UNSUPPORTED",
+                    "writes require command and reads require query",
+                )
             variants.append(CapturedVariant(selected, node, parameters))
     action = None
     if kind == "command":
         reference = getattr(function, "__umf_action__", None)
         if not isinstance(reference, ActionRef):
-            raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
+            raise CaptureError(
+                "CAPTURE_UNSUPPORTED", "command requires generated action identity"
+            )
         action = (reference.module, reference.action)
-    return CapturedDeclaration(cast(str, getattr(function, "__name__")), kind, parameters, tuple(variants), action)
+    return CapturedDeclaration(
+        cast(str, function.__name__),
+        kind,
+        parameters,
+        tuple(variants),
+        action,
+    )
