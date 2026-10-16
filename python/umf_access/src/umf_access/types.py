@@ -80,6 +80,21 @@ class ActionSource:
 
 @final
 @dataclass(frozen=True)
+class KeyTypeRef:
+    module: str
+    element: str
+    key: str
+    model: type[StrictModel]
+
+@final
+@dataclass(frozen=True)
+class RecordTypeRef:
+    module: str
+    element: str
+    model: type[StrictModel]
+
+@final
+@dataclass(frozen=True)
 class ActionRef(Generic[InputT, OutputT]):
     """Immutable generated action identity and value types; never an executor."""
 
@@ -88,12 +103,21 @@ class ActionRef(Generic[InputT, OutputT]):
     input_type: type[InputT]
     output_type: type[OutputT]
     source: ActionSource | None = None
+    input_fields: tuple[tuple[str,str], ...] = ()
+    key_types: tuple[KeyTypeRef, ...] = ()
+    record_types: tuple[RecordTypeRef, ...] = ()
 
     def __post_init__(self) -> None:
         if any(type(value) is not str or not value for value in (self.module, self.action)):
             raise ValueRuleError("action identity requires nonempty schema IDs")
         if self.source is not None and (self.source.module != self.module or self.source.action != self.action):
             raise ValueRuleError("action source identity differs")
+        if type(self.input_fields) is not tuple or len({field[0] for field in self.input_fields})!=len(self.input_fields) or len({field[1] for field in self.input_fields})!=len(self.input_fields):
+            raise ValueRuleError("distinct immutable action input metadata required")
+        if self.input_fields and {python for _,python in self.input_fields}!=set(self.input_type.model_fields):
+            raise ValueRuleError("complete source/Python input correspondence required")
+        if type(self.key_types) is not tuple or type(self.record_types) is not tuple:
+            raise ValueRuleError("immutable action model correspondence required")
         if not _is_model_type(self.input_type):
             raise TypeError("action input requires a strict generated model type")
         if not _is_model_type(self.output_type, allow_none=True):
