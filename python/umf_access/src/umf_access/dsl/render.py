@@ -114,7 +114,7 @@ def _predicate(node: Node, mutation: bool = False) -> str | None:
     raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported logical predicate")
 
 
-def _render_logical(variant: LogicalVariant, binding: Mapping[str, object] | None) -> str:
+def _render_logical(variant: LogicalVariant, binding: Mapping[str, object] | None, owner_bound: bool = False) -> str:
     """Render a captured build-time variant; runtime input is never accepted."""
     node = variant.node
     record = cast(RecordRef, node.args[0])
@@ -216,7 +216,7 @@ def _render_logical(variant: LogicalVariant, binding: Mapping[str, object] | Non
             order = [Ordering(field, "ASC") for field in record.key]
     if node.op == "exists":
         projection = ", ".join(_column(field) for field in record.key)
-    if node.op not in ("count", "group_count", "get") and limit is None:
+    if node.op not in ("count", "group_count", "get") and limit is None and not owner_bound:
         raise CaptureError("CAPTURE_UNSUPPORTED", "list reads require an explicit bound")
     sql = f'SELECT {projection} FROM {source} AS "r"'
     if joins:
@@ -234,7 +234,7 @@ def _render_logical(variant: LogicalVariant, binding: Mapping[str, object] | Non
     return sql
 
 
-def render_logical(variant: LogicalVariant, *, binding: Mapping[str, object] | None = None) -> str:
+def render_logical(variant: LogicalVariant, *, binding: Mapping[str, object] | None = None, owner_bound: bool = False) -> str:
     node = variant.node
     record = cast(RecordRef, node.args[0])
     aliases = {(record.module, record.element): "r"}
@@ -244,6 +244,6 @@ def render_logical(variant: LogicalVariant, *, binding: Mapping[str, object] | N
             aliases[(rel.target.module, rel.target.element)] = "j" + str(len(aliases))
     token = _ALIASES.set(aliases)
     try:
-        return _render_logical(variant, binding)
+        return _render_logical(variant, binding, owner_bound)
     finally:
         _ALIASES.reset(token)

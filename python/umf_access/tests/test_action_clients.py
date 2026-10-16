@@ -41,6 +41,14 @@ class ActionsTest(unittest.TestCase):
         view=self.original.result();view['unknown']['future']=0
         self.assertEqual(self.original.result()['unknown']['future'],17);self.assertIs(result.original.recovery,self.context)
         self.assertEqual(result.original.transport,b'original transport')
+    def test_named_view_is_immutable_and_keeps_original(self):
+        result=self.endpoint(self.input)
+        with self.assertRaises((AttributeError,FrozenInstanceError)):
+            result.created=()
+        self.assertEqual(replace(self.committed,output=self.committed.output).created,self.committed.created)
+        self.executor.answer=Committed(self.committed.output,self.committed.receipt,(OrderKey(order_id='unexpected'),),(),self.original)
+        with self.assertRaises(ActionIndeterminate) as error:self.endpoint(self.input)
+        self.assertIs(error.exception.original,self.original)
     def test_validate_no_invoke(self):
         self.assertTrue(self.endpoint.validate(self.input).valid);self.assertEqual(len(self.executor.calls),1)
     def test_model_construct_refuses_before_dispatch(self):
@@ -76,5 +84,29 @@ class ActionsTest(unittest.TestCase):
         class NonReplaying:
             invoke=Executor.invoke;validate=Executor.validate
         with self.assertRaises(TypeError):ReplayingActions(NonReplaying())
+
+
+class AsyncActionsTest(unittest.IsolatedAsyncioTestCase):
+    async def test_awaited_action_validation_and_replay_preserve_original(self):
+        base = ActionsTest(); base.setUp()
+        class AsyncExecutor:
+            async def invoke(self, action, input, *, timeout=None):
+                return base.executor.invoke(action, input, timeout=timeout)
+            async def validate(self, action, input, *, timeout=None):
+                return base.executor.validate(action, input, timeout=timeout)
+            async def invoke_keyed(self, action, input, *, idempotency_key, timeout=None):
+                return base.executor.invoke_keyed(action, input, idempotency_key=idempotency_key, timeout=timeout)
+        executor = AsyncExecutor()
+        result = await Actions(executor).ship_order(base.input)
+        self.assertIs(result.original, base.original)
+        self.assertTrue((await Actions(executor).ship_order.validate(base.input)).valid)
+        replay = await ReplayingActions(executor).ship_order(base.input, idempotency_key="original")
+        self.assertIs(replay.original, base.original)
+        self.assertEqual(len(base.executor.calls), 3)
+        base.executor.answer = Rejected("NOT_READY", True, base.original)
+        with self.assertRaises(ShipOrderRejected) as error:
+            await Actions(executor).ship_order(base.input)
+        self.assertIs(error.exception.original, base.original)
+        self.assertTrue(error.exception.retryable)
 
 if __name__=='__main__':unittest.main()

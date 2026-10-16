@@ -110,3 +110,43 @@ class SourcePins(unittest.TestCase):
         for declaration in (get_wrong, page_wrong):
             with self.assertRaisesRegex(CaptureError, "selected Record Key"):
                 capture(declaration)
+
+
+class CursorDispatch(unittest.TestCase):
+    def test_continuation_nullability_before_read_dispatch(self):
+        import hashlib
+        import json
+        from types import SimpleNamespace
+        from unittest.mock import patch
+
+        from test_reviewed_reads import JOIN_SQL, JoinedRow
+        from umf_access.pages import ReadContinuation, StaleContinuation
+        from umf_access.postgres_read import _program
+        from umf_access.reviewed import ReviewedSQL
+
+        entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(
+            Compiler(), target="postgresql18", binding=binding())
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=0, server_version=180006,
+                                                          dbname="test", host="local", port=5432))
+        identity = hashlib.sha256(json.dumps([entry.artifact_json, entry.context_json, "app", [],
+                                             "reader", "test", "local", 5432, []], separators=(",", ":")).encode()).hexdigest()
+        def admission(*args):
+            yield from ()
+            return ("reader",), []
+        for values, permitted in (((None, None), False), ((None, True), False),
+                                  ((None, 1), True), (("name", 1), True), (None, True)):
+            with self.subTest(values=values), patch("umf_access.postgres_read.native_read_admission", admission):
+                after = None if values is None else ReadContinuation(values, identity)
+                program = _program(connection, entry, Empty(), app_schema="app", after=after)
+                dispatched = False
+                try:
+                    while True:
+                        step = next(program)
+                        if step[:2] == ("execute", entry.artifact()["dbapiSql"]):
+                            dispatched = True
+                            break
+                except StaleContinuation:
+                    self.assertFalse(permitted)
+                finally:
+                    program.close()
+                self.assertEqual(dispatched, permitted)

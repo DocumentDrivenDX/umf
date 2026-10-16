@@ -1,0 +1,125 @@
+{
+  "review": "Independent Astra Ultra source/component review of Truss current-query refinement integration",
+  "date": "2026-10-16",
+  "verdict": "No actionable source finding in the exact one-file integration patch. Actual published-wheel helper controls pass; native pipeline qualification remains with Truss owner.",
+  "remainingFindings": [],
+  "scope": {
+    "baselineCommit": "42acbc143a1b234fe689fae8b8654209cd9b3e54",
+    "frozenPacketDirectory": "/private/tmp/truss-current-refinement-integration-20261016",
+    "patch": {
+      "path": "/private/tmp/truss-current-refinement-astra-20261016/current-query-refinement.patch",
+      "sha256": "2c68f94952929776e8164186f4e51547ac6cd01ee15e5ca6d82d6490febaa7f2"
+    },
+    "sourceBefore": {
+      "path": "/private/tmp/truss-current-refinement-astra-20261016/base/packages/python/src/truss/_current_query_stage.py",
+      "sha256": "fc199b5e34a71f26c516b0fd3eb5fc131b9d4d1c14e190c3c12487c5dd529dd4"
+    },
+    "sourceAfter": {
+      "path": "/private/tmp/truss-current-refinement-astra-20261016/source/packages/python/src/truss/_current_query_stage.py",
+      "sha256": "781416cbcd80b8875fb77ac847822e2614acd69b17a8c629211b5a5f7b5e9f22"
+    },
+    "handoff": {
+      "path": "/private/tmp/truss-current-refinement-astra-20261016/handoff-r3.json",
+      "sha256": "59541a74790c93ca6d8f7384a6bbe6e7a58b0832adebcb372beee4a5b62b8e9f"
+    },
+    "sourceVerification": {
+      "path": "/private/tmp/truss-current-refinement-astra-20261016/source-verification.json",
+      "sha256": "d1df8e2b9bc8c1e9fc68034d51a17740ce065fa1e7eaf489355e8c059267c867"
+    },
+    "reconstructedPatchMatchesFrozenSource": true,
+    "sourceFilesChanged": 1,
+    "repositoryEdits": false,
+    "databaseNativeExecution": false,
+    "newAgentUsed": false,
+    "profile": "Existing required-only facetless String and exact signed64, row-contributor PostgreSQL current-values0.2/refinement0.1. No bounded String/presence/aggregate/newer profile or SDK pin changes."
+  },
+  "findings": [],
+  "sourceConclusions": [
+    {
+      "area": "Exact source and artifact custody",
+      "evidence": "_current_query_stage.py:13-28,218-224,270-272",
+      "conclusion": "The binding is serialized once and those exact bytes are used both to obtain the artifact and construct the checker frame. Artifact bytes are retained directly from the original native lowerer before decoding. The helper hashes those bytes, passes the actual held CurrentQueryPreparation through its native class descriptor, and requires exact report key/value correspondence including source, designation, binding, artifact and refinement-input hashes. Unknown/missing fields and nonliteral status flags do not pass."
+    },
+    {
+      "area": "Independent eligible population",
+      "evidence": "_current_query_facts.py:116-195; _current_query_stage.py:85-99,204-214",
+      "conclusion": "The unchanged fact capture performs a complete type-based census and reads without an application predicate or LIMIT, under held source/object/key cuts. Complete original read decisions select the eligible population. Every eligible per-occurrence staged row is copied into refinement_scans before compiled application SQL is executed, with independently counted expectedRowCount. Native returned contributors never supply the checker input population. Separate scans in a self-join keep separate generated row identities and populations."
+    },
+    {
+      "area": "Relational refinement before release",
+      "evidence": "_current_query_stage.py:258-295",
+      "conclusion": "Actual result text rows are checked by Weft against the retained population before original carrier/public-cell verification and QueryRows construction. Consequently a correct per-row source carrier alone no longer suffices when the whole predicate/order/result bag is wrong. Existing exact descriptor, contributor membership and held public-cell equality checks remain in place."
+    },
+    {
+      "area": "Closing authenticated/current-cut checks retained",
+      "evidence": "_current_query_runtime.py:60-67,70-118,126-165",
+      "conclusion": "The runtime file is byte-identical to baseline. Actual ordinary caller Subject/module access, peer backend/virtual transaction and source/fact identity are checked before staging; caller/peer, source inventory and installed protection are checked after staging; an additional ordinary-host completion and pair state check precede release. The patch neither moves result release ahead of those checks nor grants authority from the checker report. This is static preservation evidence, not a new native race/closing-check campaign."
+    },
+    {
+      "area": "Refusal/profile closure",
+      "evidence": "_current_query_stage.py:31-55,219-254; _current_query_runtime.py:120-125,143-148",
+      "conclusion": "Required singular facetless String and exact signed64 restrictions remain unchanged. The new checker uses refinement0.1 and the existing row API; absent/null/withheld, bounded String, SUM and newer profiles are not imported. Actual checker ValueError refuses the inner query; no report confers native permission. The helper requires authority=false, securityReady=false and nativeAdmission=required."
+    },
+    {
+      "area": "Resource bounds",
+      "evidence": "_current_query_facts.py:124-136,190-193; _current_query_runtime.py:28-39; _current_query_stage.py:97-99,264-281",
+      "conclusion": "Existing complete fact/Key byte and row caps, admitted-scan cap, output row cap, public/private result byte caps, and deadline checks are retained. Weft applies its own unchanged framed-input/evaluation limits to the complete serialized refinement frame. JSON construction is an in-memory operation before the Rust frame check; this patch does not establish streaming allocation accounting or a hard preallocation bound. The governing current Truss direction requires practical limits and explicitly distinguishes them from strict optional transport accounting."
+    }
+  ],
+  "independentControls": {
+    "publishedWheelReplay": {
+      "controls": 45,
+      "receipt": {
+        "path": "/private/tmp/truss-current-refinement-astra-20261016/published-example-replay.json",
+        "sha256": "5a7aeed94554534e1939324a8c2e81e4b7578e2a9fbca93a0487814242153e69"
+      },
+      "execution": {
+        "path": "/private/tmp/truss-current-refinement-astra-20261016/published-example-execution.json",
+        "sha256": "656bd056e26da8eeceedd833388682669567fd6ed5dcc5699ece1ef110f5792f"
+      },
+      "script": {
+        "path": "/private/tmp/truss-current-refinement-astra-20261016/replay-published.py",
+        "sha256": "589d465b95a7bdcf5f9a04cdfd8979b65129e1d808ba737ab5c751bb262cc020"
+      },
+      "originalFunctionalScript": {
+        "path": "/private/tmp/truss-current-refinement-astra-20261016/refinement-functional-example-r3.py",
+        "sha256": "55cfbff4cc99a56adb9c426d256ae6bcb86933837e380aff9b43c74fbc52c337"
+      },
+      "sourceAndArtifactsUnchanged": true,
+      "importsPinned": {
+        "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+        "stage": "/private/tmp/truss-current-refinement-integration-20261016/packages/python/src/truss/_current_query_stage.py",
+        "helperModule": "truss._current_query_stage",
+        "native": "/private/tmp/weft036-public-installed-20261016/weft/weft.abi3.so",
+        "shim": "/private/tmp/weft036-public-installed-20261016/weft/__init__.py"
+      },
+      "scope": "Re-executed the supplied six scenarios and adverse populations/results against the exact frozen Truss helper and actual published ARM64 Weft0.4.36 extension. Declared fixture values only; not native database execution or full stage/closing-host pipeline testing."
+    },
+    "independentlyAuthoredReportControls": {
+      "controls": 51,
+      "receipt": {
+        "path": "/private/tmp/truss-current-refinement-astra-20261016/report-controls.json",
+        "sha256": "348bffac168146d08a35d1d5a10a3fd3112dbc5bcefd3de1ef7a0a82282d5345"
+      },
+      "script": {
+        "path": "/private/tmp/truss-current-refinement-astra-20261016/report-controls.py",
+        "sha256": "a2c3a34b5ea28ad5c4fce7b261633d16418e757172d73144d851969d59b73162"
+      },
+      "scope": "Exact AST-loaded helper and bounded owner-evidence decoder with a modeled checker output producer. Original byte forwarding and all report anchors, missing/extra fields, boolean-versus-number substitutions, duplicate/malformed JSON, malformed Unicode, checker refusal and order-insensitive report key comparison."
+    },
+    "countsQualification": "The45 supplied scenarios were independently replayed; the51 report controls were independently authored. These are component observations, not native acceptance cases or a formal proof."
+  },
+  "artifactPins": {
+    "wheelSha256": "ab14b73dcf94ea329514b5e9a54e6d37bbdca08e45319446f0e6d6181117deab",
+    "nativeModuleSha256": "fd9f6a76b1c584ee4c49fbdb452cf9c1349918d417e3a4f303691c2a8d33f853",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "python": "3.11.17",
+    "qualification": "Installed extension and shim bytes matched the supplied wheel archive. The functional receipt sourceCommit denotes the Weft fixture checkout HEAD, not independently established binary build provenance; wheel/native/shim hashes are the replayed artifact identity."
+  },
+  "limitsAndOwnerFollowup": [
+    "No native Truss/PostgreSQL query, full stage-and-execute flow, authenticated caller race, source-current cut or transaction-settlement regression was run by this review. Owner must run its serialized final native regression/integration suite against final source before qualifying those behaviors.",
+    "The checker conditionally verifies the supplied complete population; it cannot itself prove database completeness or authenticated source truth. Those remain the unchanged Truss capture/admission obligations.",
+    "No admission, release, B008 or broader security case is promoted. Required-only integration is separate from the later optional-presence fixture.",
+    "Original earlier handoffs and the supplied45-control receipt remain unchanged; this review retains a fresh replay and explicitly pins the imported Truss module, which the supplied functional receipt did not itself record."
+  ]
+}

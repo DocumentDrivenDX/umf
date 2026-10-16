@@ -1,0 +1,116 @@
+{
+  "status": "passed",
+  "solver": "4.15.4",
+  "sourceSha256": "82a6e9183314a5b203638a6248faf75ec87b0f7783f04bd993fedcfce1d4e6b0",
+  "checks": [
+    {
+      "id": "well-formed-cells-exist",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "bbe938821f4173fbbbaedb4af7431a8b10a38c55cdf00c7c293e4db4e42eceba",
+      "model": "[c = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2))]"
+    },
+    {
+      "id": "well-formed-original-exists",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "96e0d40760c7dc4526aca20dc302491d1c3b78a2d4a044e67db5fcc6656c1e9c",
+      "model": "[c = Original(field(\"A\", \"A\", \"A\", \"A\"), Integer(2)),\n outputDomain = [else -> field(\"A\", \"A\", \"A\", \"A\")],\n transformation = [else -> transform(\"A\", \"A\")]]"
+    },
+    {
+      "id": "well-formed-absent-exists",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "50dccf2703b83deef34061e11939be2ffd545f771449dec79f48f85c793dec5b",
+      "model": "[c = Absent(field(\"A\", \"A\", \"A\", \"A\")),\n transformation = [else -> transform(\"A\", \"A\")],\n outputDomain = [else -> field(\"A\", \"A\", \"A\", \"A\")]]"
+    },
+    {
+      "id": "well-formed-withheld-exists",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "18309cd6153826c3b46f0936dc80fdd98cb0da4e51cf71a4c70f075ad17f4840",
+      "model": "[c = Withheld(field(\"A\", \"A\", \"A\", \"A\")),\n transformation = [else -> transform(\"A\", \"A\")],\n outputDomain = [else -> field(\"A\", \"A\", \"A\", \"A\")]]"
+    },
+    {
+      "id": "semantic-left-inverse-violation",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smt2Sha256": "ad170fa50f6f4bc5d6afd6c8b5e33e13ccf48258f3e4b4b48146d527ed1fe74e"
+    },
+    {
+      "id": "canonical-native-right-inverse-violation",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smt2Sha256": "f1a38477caf81582fe8aa72be52d7e5c8c3e246f1977d311a785f0d5474f807d"
+    },
+    {
+      "id": "encoded-cell-collision",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smt2Sha256": "22591b62233126cd2edb485530cd6610817db14e0ab3b986fb441aa7fb7c96cf"
+    },
+    {
+      "id": "malformed-native-accepted",
+      "expected": "unsat",
+      "actual": "unsat",
+      "smt2Sha256": "992ab1ddf903c2c15eaa20c6926652602f4f33b2fc42f5eaa2c6195ef1545bfc"
+    },
+    {
+      "id": "erase-disposition-null-absence",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "08a870c8336262fdd11708226ad286e93d062f4ad0b900a4be4ecb9b882f0b52",
+      "model": "[]"
+    },
+    {
+      "id": "erase-disposition-absence-withheld",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "d34ba499e537abb159615bbb87b8181a79faa7afd8f1ef720e2c169098d4a483",
+      "model": "[]"
+    },
+    {
+      "id": "erase-disposition-original-transformed-null",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "f06e57f61dcbfb661ece0e67ebd817d064bb437eed05738bab4442ae82cdec34",
+      "model": "[]"
+    },
+    {
+      "id": "erase-original-document",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "e9edec695ec18c4abe2e2d2176183071a337b10ed0f76ce8b0422d71e33fae34",
+      "model": "[c = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2)),\n d = Transformed(field(\"B\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2))]"
+    },
+    {
+      "id": "erase-original-revision",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "713f235e50c90b225cab918990c7dbb63131ba71e9530afe11a8f982a8b5e376",
+      "model": "[c = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2)),\n d = Transformed(field(\"A\", \"B\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2))]"
+    },
+    {
+      "id": "erase-output-domain",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "a49dfdf21fe88073ef9851d29951fb75006ce1cb1d136d52161d56d8878d5b1e",
+      "model": "[c = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2)),\n d = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"B\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2))]"
+    },
+    {
+      "id": "erase-transform-version",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "eea75268e09146c4a7d961154a1ae0a9434bd4b000d1a750c0a1ad788ad78635",
+      "model": "[c = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2)),\n d = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(30612, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"B\"),\n                 Integer(2))]"
+    },
+    {
+      "id": "erase-selection",
+      "expected": "sat",
+      "actual": "sat",
+      "smt2Sha256": "47b64821cf4fddd054cb60db692281d04a0591cf8ddd4e7291fa0dc924f850f2",
+      "model": "[c = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(21238, 2437),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2)),\n d = Transformed(field(\"A\", \"A\", \"A\", \"A\"),\n                 selection(1142, 7719),\n                 field(\"A\", \"A\", \"A\", \"A\"),\n                 transform(\"A\", \"A\"),\n                 Integer(2))]"
+    }
+  ],
+  "scope": "Encoding well-formedness is not UMF Field/domain/policy validity. Null/Text/Integer abstract-value subset only. Conditional algebra of qualified Field/revision, disposition, explicit payload presence and transformation provenance over abstract typed values. No authentication/source completeness, Unicode/native JSON/SQL encoding theorem, concrete decoder correctness, operator semantics, policy decisions or native P03 admission. Native empirical execution and public inspector checks are separate evidence."
+}

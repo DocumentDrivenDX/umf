@@ -1,11 +1,11 @@
 """Value-graph and inventory boundaries for generated codecs, without I/O."""
 from collections.abc import Sequence
 from datetime import UTC
-from typing import TypedDict, TypeVar, cast, get_args
+from typing import Annotated, Any, TypedDict, TypeVar, cast, get_args
 
 from pydantic import BaseModel, ValidationError
 
-from .types import MISSING, CodecError
+from .types import MISSING, CodecError, StrictModel
 from .values import validate_instant
 
 M = TypeVar("M", bound=BaseModel)
@@ -201,3 +201,31 @@ def initialize_rejection(error: Exception, code: str, retryable: dict[str, bool]
     error.code = code  # type: ignore[attr-defined]
     error.retryable = retryable[code]  # type: ignore[attr-defined]
     Exception.__init__(error, "action rejected")
+
+
+def make_projection_model(name: str, fields: tuple[tuple[str, type[StrictModel], str], ...], *, nullable_fields: tuple[str,...] = ()) -> type[StrictModel]:
+    """Build-time and inert stage-two projection metadata, reusing Field validators."""
+    from copy import copy
+
+    from pydantic import create_model
+    if not fields or len({alias for alias, _, _ in fields}) != len(fields):
+        raise CodecError("distinct projection fields required")
+    pins = {(getattr(owner,"UMF_BUNDLE_INPUT_DIGEST",None),getattr(owner,"UMF_RUNTIME_ABI",None)) for _,owner,_ in fields}
+    if len(pins) != 1:
+        raise CodecError("mixed generated projection sources")
+    definitions: dict[str, Any] = {}
+    for alias,owner,source in fields:
+        field = copy(owner.model_fields[source])
+        field.alias = None
+        if alias in nullable_fields:
+            annotation: Any = field.annotation
+            if annotation is None: raise CodecError("projection field has no carrier")
+            field.annotation = cast(Any, (Annotated[(annotation,*field.metadata)] if field.metadata else annotation) | None)
+            field.metadata = []
+        definitions[alias] = (field.annotation, field)
+    model = create_model(name,__base__=StrictModel,**definitions)
+    digest, abi = next(iter(pins))
+    if digest is not None:
+        type.__setattr__(model,"UMF_BUNDLE_INPUT_DIGEST",digest)
+        type.__setattr__(model,"UMF_RUNTIME_ABI",abi)
+    return model

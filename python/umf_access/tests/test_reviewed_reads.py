@@ -311,6 +311,47 @@ class Native(unittest.TestCase):
             with self.assertRaises(ReadObligationUnmet):
                 execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3)
 
+    def test_async_reads_pages_snapshot_close_and_timeout_match_sync(self):
+        import asyncio
+
+        from psycopg import AsyncConnection
+        from umf_access.postgres_read import (
+            execute_page_async,
+            execute_read_async,
+            execute_stream_async,
+        )
+        entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(Compiler(), target="postgresql18", binding=binding())
+        async def scenario():
+            async with await AsyncConnection.connect(os.environ["UMF_PG_TEST_DSN"], user="praxis_a", autocommit=True) as connection:
+                first = await execute_page_async(connection, entry, Empty(), app_schema="praxis_test")
+                second = await execute_page_async(connection, entry, Empty(), app_schema="praxis_test", after=first.next_after)
+                self.assertEqual([r.id for r in (*first.items, *second.items)], [1,2,4,5])
+                self.assertEqual(await execute_read_async(connection, entry, Empty(), app_schema="praxis_test"), list(first.items))
+                stream = execute_stream_async(connection, entry, Empty(), app_schema="praxis_test", max_rows=1001)
+                try:
+                    first_row = await anext(stream)
+                    self.admin.execute("UPDATE praxis_test.orders SET owner_role='praxis_b' WHERE id=4")
+                    self.assertEqual([first_row.id] + [r.id async for r in stream], [1,2,4,5])
+                finally:
+                    await stream.aclose()
+                    self.admin.execute("UPDATE praxis_test.orders SET owner_role='praxis_a' WHERE id=4")
+                early = execute_stream_async(connection, entry, Empty(), app_schema="praxis_test", max_rows=1001)
+                await anext(early)
+                self.assertEqual(connection.info.transaction_status, 2)
+                await early.aclose()
+                self.assertEqual(connection.info.transaction_status, 0)
+                with self.admin.transaction():
+                    self.admin.execute("LOCK TABLE praxis_test.orders IN ACCESS EXCLUSIVE MODE")
+                    with self.assertRaises(TimedOut):
+                        await execute_read_async(connection, entry, Empty(), app_schema="praxis_test", timeout_ms=30)
+                self.assertEqual(connection.info.transaction_status, 0)
+                self.assertEqual((await execute_read_async(connection, entry, Empty(), app_schema="praxis_test"))[0].id, 1)
+                async with connection.transaction():
+                    await connection.execute("SELECT 1")
+                    with self.assertRaises(ReadObligationUnmet):
+                        await execute_read_async(connection, entry, Empty(), app_schema="praxis_test")
+        asyncio.run(scenario())
+
     def test_two_roles_see_only_own_totals(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(Compiler(), target="postgresql18", binding=binding())
         a = execute_read(self.a, entry, Minimum(minimum=Decimal(0)), app_schema="praxis_test")
@@ -330,11 +371,8 @@ class Native(unittest.TestCase):
         with self.assertRaises(ReadObligationUnmet):
             execute_page(self.a, entry, Empty(), app_schema="praxis_other", after=first.next_after)
 
-    @unittest.skipUnless(os.environ.get("UMF_GENERATED_REPORTING_PACKAGE"), "generated reporting fixture required")
-    def test_actual_generated_join_runs_through_weft_and_postgres(self):
+    def _generated_binding(self):
         import commerce
-        from commerce import Order, OrderCustomer, OrderCustomerProjection, OrderKey
-        schema = "praxis_test"
         if not self.admin.execute("SELECT pg_catalog.to_regclass('praxis_test.generated_orders')").fetchone()[0]:
             self.admin.execute("CREATE TABLE praxis_test.generated_orders (order_id text PRIMARY KEY, owner_role text NOT NULL)")
             self.admin.execute("CREATE TABLE praxis_test.generated_customers (customer_id text PRIMARY KEY, name text NOT NULL, owner_role text NOT NULL)")
@@ -350,6 +388,14 @@ class Native(unittest.TestCase):
                  "tables": [{"logical": ["commerce", "Order"], "native": "generated_orders", "key": ["orderId"], "columns": [{"logical": "orderId", "native": "order_id", "carrier": "string", "nullable": False}]},
                             {"logical": ["commerce", "Customer"], "native": "generated_customers", "key": ["customerId"], "columns": [{"logical": "customerId", "native": "customer_id", "carrier": "string", "nullable": False}, {"logical": "name", "native": "name", "carrier": "string", "nullable": False}]}],
                  "relationships": [{"id": "customer", "source": ["commerce", "Order"], "target": ["commerce", "Customer"], "pairs": [["orderId", "customerId"]], "toOne": True}]}
+        return bound
+
+    @unittest.skipUnless(os.environ.get("UMF_GENERATED_REPORTING_PACKAGE"), "generated reporting fixture required")
+    def test_actual_generated_join_runs_through_weft_and_postgres(self):
+        import commerce
+        from commerce import Order, OrderCustomer, OrderCustomerProjection, OrderKey
+        schema = "praxis_test"
+        bound = self._generated_binding()
         @query
         def declaration():
             return Order.objects.join(Order.c.customer).order_by(Order.c.order_id.asc()).into(OrderCustomerProjection).limit(10).all()
@@ -386,6 +432,30 @@ class Native(unittest.TestCase):
         second = execute_page(self.a, page_entry, Empty(), app_schema=schema, after=first.next_after)
         self.assertEqual([r.order_id for r in (*first.items, *second.items)], ["a1", "a2"])
 
+
+    @unittest.skipUnless(os.environ.get("UMF_GENERATED_REPORTING_PACKAGE"), "generated reporting fixture required")
+    def test_catalog_cli_public_functions_sync_async_and_drift(self):
+        import shutil
+        import sys
+        import tempfile
+
+        bound = self._generated_binding()
+        source = Path(__file__).parent / "catalog_e2e.py"
+        with tempfile.TemporaryDirectory(prefix="umf-catalog-native-") as temporary:
+            root=Path(temporary)
+            generated=subprocess.run(check=False, args=['bun',str(Path(__file__).resolve().parents[3]/'scripts/generate-access-reporting-fixture.ts'),str(root),'--reads-only'],cwd=Path(__file__).resolve().parents[3],capture_output=True,text=True)
+            self.assertEqual(generated.returncode,0,generated.stdout+generated.stderr)
+            # Previous stage-two artifacts, if present, belong to another explicit module selection.
+            for path in ("queries.py","_umf/catalog.json","_umf/catalog-manifest.json","_umf/privileges.json"):
+                (root/"commerce"/path).unlink(missing_ok=True)
+            config={'package':'commerce','modules':['declarations'],'targets':[{'id':'local','kind':'postgresql','backendId':'weft-postgresql','backendVersion':'raw-read/0.1','targetProfile':'weft.raw-read/0.1','binding':bound,'platform':[{'name':'postgresql','versions':[str(self.a.info.server_version)]}]}]}
+            (root/'config.json').write_text(json.dumps(config))
+            shutil.copyfile(Path(__file__).parent/'catalog_declarations.py',root/'declarations.py')
+            env=dict(os.environ)
+            for name in ('PYTHONPATH','PYTHONHOME','MYPYPATH'):env.pop(name,None)
+            result=subprocess.run(check=False, args=[sys.executable,'-I','-B',str(source),str(root)],env=env,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            self.assertIn('catalog native E2E: pass',result.stdout)
 
     def test_inner_join_and_bound_string_parameter(self):
         sql = JOIN_SQL.replace("LEFT JOIN", "INNER JOIN").replace("ORDER BY", "WHERE c.name = :name ORDER BY")

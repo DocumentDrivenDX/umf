@@ -1,0 +1,160 @@
+{
+  "version": "independent-pre-execution-review/1",
+  "reviewer": "Astra Ultra",
+  "status": "passed-with-scope-qualifications",
+  "nativeExecuted": false,
+  "remainingFindings": [],
+  "subject": "Root UMF owned PostgreSQL atomic presence runner R5 and held typed Rust probe, before any database campaign",
+  "whatChanged": "Private fixture runner stages actual atomic producer cells, holds an issued Rust preparation/binding through SQL capture/checking, compares independent eligible keys/cells and inspects the reconstructed V2 batch. R3 fixes cleanup qualification; R4 bounds complete pipe I/O; R5 retains untouched native driver rows separately from corrupted checker frames.",
+  "evidenceItWorks": "Independently replayed final R5 source-only preflight: 47 fresh actual producer operations / 94 producer and whole-V2 checks / 1285 source pins. Supplied and independently rebuilt held probes each pass 41 positive plus four negative logical protocols; final R5 I/O helpers pass those same 45 protocol controls. Thirty-four additional malformed/oversize protocol controls, 16 bounded-I/O controls and 11 final cleanup/failure models pass.",
+  "undo": "Do not execute this optional fixture runner, or revert its new tool/STP addition. Review created no database/container and changed no owner source.",
+  "pins": {
+    "finalPacket": "/private/tmp/umf-native-atomic-presence-runner-r5-review-20261016.zip",
+    "finalPacketSha256": "8d29de994ab2715e865adbba457f6b5dd8720d5ece42e582566aff1ceb7bb6b5",
+    "finalRunnerSha256": "b96f21ffc49d8bb44e5dcb47341c51eacbd0eab5b92aa300b3c8e2793eb13216",
+    "finalStpSha256": "126f8fd7963b1736a4973c0e24bd3e256f325f035ef06ce7ee8184eaaffdd8cf",
+    "initialR2PacketSha256": "f1db04ebdb5f889533d16a3fed2dea920c184853d6a36a4703db0ce009695652",
+    "probePacketSha256": "2cf495ed6059951608678d5390ee1d1d5595e9dce72d7b3331af2999f040159f",
+    "probeMainSha256": "1aa0f6c258b5f74ba674d83f3f338cba4d134d2c3a732c69fb3953ee84d8c86f",
+    "probeSourceManifestSha256": "6c438e0e03e6203134aa7fd3fbcbe01da438ef996467951e51a301cca54aed10",
+    "suppliedBinarySha256": "fa9874ec3a25ed3662eee49fc45320c653f31e4042fbe3536f8faa9d8652e6a4",
+    "rebuiltBinarySha256": "89341d67e173eb0ed52c8f97b3ba032e89b3d6a55b5b1b5a7d779d69505b31f7",
+    "reviewedLowererPacketSha256": "99488d9baba3b0b201f1efc270dcd29b3cbba9366e012510a433b8d4ad937dfb",
+    "initialReviewSha256": "561be55e261b834eb97df7c87c3829990de4de5ae8a8bdaf3902f429c63bc20e",
+    "sourceSnapshotSha256": "7b2fb951cf94ec0773c2acb5ac0aa0d946a918c571fc6fef5c6fc3c642b64bf4"
+  },
+  "resolvedFindings": [
+    {
+      "id": "NATIVE-ATOMIC-RUNNER-001",
+      "priority": 2,
+      "status": "resolved-in-R3-and-retained-in-R5",
+      "original": "An unexpected/unobserved storage layout could be followed by container-only removal reported as fully verified cleanup. Native work already failed; this was a cleanup qualification defect, not a false native campaign pass.",
+      "evidence": [
+        "initial-r2-review.json",
+        "failure-models/unexpected-volume/receipt.json",
+        "r5/failure-controls.json"
+      ],
+      "correction": "Exact single tmpfs mount and destination must be observed before full storage cleanup can be verified. Receipt separately records containerRemovalVerified, tmpfsOnlyLayoutVerified, storageCleanupVerified and scope. Unknown/unexpected storage remains unresolved without deleting unknown volumes. All 11 modeled paths pass."
+    },
+    {
+      "id": "NATIVE-ATOMIC-RUNNER-002",
+      "priority": 2,
+      "status": "resolved-in-R4-and-retained-in-R5",
+      "original": "First-byte select timeout was followed by unbounded blocking readline; a partial response stalled beyond 32 seconds and delayed finally cleanup. Blocking send/flush had the analogous stalled-consumer gap.",
+      "evidence": [
+        "partial-response-timeout.py",
+        "partial-response-timeout.json",
+        "r4/io-controls.json",
+        "r5/protocol-receipt.json"
+      ],
+      "correction": "Complete send/read loops use nonblocking os.write/os.read and fixed deadlines. Responses retain the 64MB bound, strict UTF8 and extra-byte refusal. Terminal process wait and pipe EOF checks are also bounded. Sixteen actual-pipe/modeled-inherited-pipe controls pass, and final real probe protocol replay passes."
+    }
+  ],
+  "independentExecutions": [
+    {
+      "name": "R5 exact source-only preflight",
+      "positiveOperations": 47,
+      "checks": 94,
+      "sourcePins": 1285,
+      "result": "passed",
+      "evidence": [
+        "replay-preflight-r5.py",
+        "r5/preflight-execution.json",
+        "r5/preflight-replay/preflight.json",
+        "r5/preflight-replay.stdout",
+        "r5/preflight-replay.stderr"
+      ],
+      "qualification": "Executes actual UMF producer and whole V2 inspector for each operation; neither Docker nor SQL nor the typed native checker is invoked by this preflight. Observations equal the original supplied 47-operation preflight."
+    },
+    {
+      "name": "Supplied and independently rebuilt probe protocols",
+      "positivePerBinary": 41,
+      "negativePerBinary": 4,
+      "result": "passed",
+      "evidence": [
+        "protocol-receipt.json",
+        "rebuilt-protocol-receipt.json",
+        "rebuild.log",
+        "probe-rebuild/src/main.rs",
+        "probe-rebuild/Cargo.toml"
+      ],
+      "qualification": "Original Rust main bytes unchanged. Independent Cargo build redirects only dependency paths to the prior exact reconstructed lowerer source; binary bytes differ and are separately pinned. Both execute actual issued preparations/checkers over supplied logical frames; no native SQL."
+    },
+    {
+      "name": "Malformed/oversize closed commands",
+      "controls": 34,
+      "result": "passed",
+      "evidence": [
+        "protocol-negative.py",
+        "protocol-negative.json"
+      ],
+      "qualification": "17 controls on each binary cover unknown/duplicate commands, invalid UTF8/JSON, absent LF, outer/inner byte bounds, phase order, imported reports and attempted late context/binding replacement. Refusal exit and generic output checked."
+    },
+    {
+      "name": "Final R5 actual held-probe communication",
+      "positive": 41,
+      "negative": 4,
+      "result": "passed",
+      "evidence": [
+        "r5-protocol-replay.py",
+        "r5/protocol-receipt.json",
+        "r5/protocol-replay.log"
+      ],
+      "qualification": "Uses exact final send/receive/finish functions extracted by AST with the supplied pinned binary and all original emitted records."
+    },
+    {
+      "name": "Complete communication deadlines and bounds",
+      "controls": 16,
+      "result": "passed",
+      "evidence": [
+        "r4-io-controls.py",
+        "r4/io-controls.json",
+        "r4/io-controls.log"
+      ],
+      "qualification": "R4 and R5 functions are AST-identical. Actual child pipes test no response, partial response, slow trickle, large valid writes, stalled writes, invalid UTF8, extra lines, EOF, 64MB overflow, terminal output and exit faults. Parent-owned open pipe writers model inherited descendant handles after process exit."
+    },
+    {
+      "name": "Final runner owned cleanup/failure flow",
+      "controls": 11,
+      "result": "passed",
+      "evidence": [
+        "failure-controls-r5.py",
+        "r5/failure-controls.json",
+        "r5/failure-controls.log"
+      ],
+      "qualification": "Exact final native try/finally and original cleanup helper with mocked command/SQL/probe behavior. Covers success, creation timeout, preexisting name, unexpected volume, wrong image/engine, operation failure, ownership mismatch, unknown inspect, removal failure and unknown post-remove state. No Docker commands executed."
+    },
+    {
+      "name": "Final source and frozen packet custody",
+      "controls": 1314,
+      "result": "passed",
+      "evidence": [
+        "final-custody.json",
+        "reviewed-source-inputs.zip"
+      ],
+      "qualification": "1285 final inputs agree at endpoint; final owner tool equals frozen R5; all frozen manifests and exact R4/R5 I/O correspondence checked. R2 full source snapshot retained, with subsequent exact runner/contract deltas separately frozen."
+    }
+  ],
+  "sourceAssessment": [
+    "The probe parses three closed commands with bounded UTF8 lines, retains the actual original ApplicationLineage and borrowed presence context, lowers the exact binding, and checks the final frame against that held context/binding. Imported report/context substitution does not construct an issued object.",
+    "Before database startup the runner verifies exact probe binary, lowerer review packet/overlays, selected Weft inventory, probe-source manifest members and current UMF producer input pins. Each operation re-executes the actual producer with an operation budget and validates its original V2 batch; source snapshots and endpoint checks remain explicit rather than authenticated-source or held-file/ABA proof.",
+    "Native setup is narrowly an excluded administrator fixture: unique random name/run label, pinned image, exact PostgreSQL version, tmpfs-only storage, no published port, fixed private relation, nonnull TEXT cells, BOOL eligibility and unique nonnull TEXT keys. SQL literals escape backslashes/quotes; lowerer SQL quotes identifiers and projects full cell text. These are source-reviewed statements, not observed engine behavior in this review.",
+    "The planned independent eligible SELECT and driver header checks are distinct from the actual compiled SELECT. The checker verifies the full expected/result bag and the reconstructed batch is mapped back to actual producer resources before whole-V2 inspection and equality checks.",
+    "R5 retains actualDriverRows before corrupting checker frames. Four negatives are post-capture checker-frame corruptions; invalid-selected-occurrence modifies staged native cell data and is expected to pass structural transport but fail whole V2 inspection. They must not be described as five naturally produced bad SQL results.",
+    "Ownership mismatch never removes a foreign container. Creation ambiguity and unexpected storage cannot claim complete cleanup. Failure diagnostics and source/operation receipts are retained; cleanup-unverified cannot become a fully passed component status."
+  ],
+  "limitations": [
+    "This is a clean pre-execution source/protocol review, not evidence of PostgreSQL execution. The planned 47 positives and five negatives have not run against a database in this review; native SQL/driver behavior, complete stage capture and actual resource cleanup need their separate campaign receipt.",
+    "All producer and checker results remain complete:false/authority:false or securityReady:false/nativeAdmission:required. Original source/caller/Subject/current-cut authentication, production mappings/roles, query operators, closing revalidation, guarded release and mandatory broader acceptance remain open.",
+    "All original 132 Weft acceptance cases and 158 UMF required cases remain in scope; this review promotes none. Unit/protocol/source-only/modeled-control counts are not native or acceptance case counts.",
+    "Exact executable bytes and repository snapshots are pinned, but external Bun/Cargo/toolchain/runtime dependency closure is non-hermetic. Source checks compare endpoints and do not prove held-file execution or prevent ABA changes.",
+    "The I/O and cleanup tests are finite adversarial controls and models, not proofs against arbitrary operating-system/process failures. Process/pipe deadlines are bounded per call/check; no production cancellation or release service was qualified."
+  ],
+  "retainedAttempts": [
+    "Original R1/R2/R3/R4 source packets and preflight receipts remain nested and separately retained; initial findings were not retroactively removed.",
+    "R4 first invalid-manifest archive is retained and hashed as an invalid historical packaging attempt, not treated as a valid source cohort.",
+    "The reviewer first I/O harness attempted process-group cleanup of an exited test child and encountered PermissionError; exact script/log retained under r4/first-io-controls*. Corrected harness uses directly owned processes and parent-owned pipes, and all 16 controls pass."
+  ],
+  "ownerCheckoutModified": false,
+  "evidenceManifest": "manifest.json"
+}

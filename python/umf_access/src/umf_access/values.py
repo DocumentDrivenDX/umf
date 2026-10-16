@@ -185,6 +185,7 @@ from pydantic import TypeAdapter
 @dataclass(frozen=True)
 class FieldValidator:
     kind: str
+    dimensions: int | None = None
     bits: int | None = None
     signed: bool = True
     precision: int | None = None
@@ -201,6 +202,12 @@ class FieldValidator:
     def __call__(self, value: object) -> object:
         if self.adapter is not None:
             checked = self.adapter.validate_python(value, strict=True)
+        elif self.kind == "vector":
+            if self.dimensions is None:
+                raise ValueRuleError("vector dimension metadata required")
+            checked = validate_vector(value, dimensions=self.dimensions)
+        elif self.kind == "float32":
+            checked = validate_float32(value)
         elif self.kind == "integer":
             checked = validate_integer(value, bits=self.bits, signed=self.signed)
         elif self.kind == "decimal":
@@ -221,3 +228,5 @@ class FieldValidator:
         if self.allowed is not None:
             checked = validate_allowed(checked, self.allowed)
         return checked
+def validate_float32(value: object) -> float:
+    return validate_vector((value,),dimensions=1)[0]

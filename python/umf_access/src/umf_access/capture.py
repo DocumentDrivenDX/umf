@@ -24,9 +24,12 @@ from .dsl._nodes import (
     RecordRef,
     key_identity,
 )
+from .dsl._nodes import KeyLiteral as CapturedKey  # noqa: F401 -- Retained public compatibility alias.
+from .dsl._nodes import Node as ExpressionNode  # noqa: F401 -- Retained public compatibility alias.
 from .dsl._nodes import ProjectionRef as ProjectionRef  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.render import render_logical as render_logical  # noqa: PLC0414 -- Explicit typed public re-export.
-from .types import ActionRef, ActionSource
+from .dsl.search import SearchLeg
+from .types import ActionRef, ActionSource, Vector
 
 
 @dataclass(frozen=True)
@@ -60,6 +63,7 @@ def _members(annotation: object) -> tuple[object, ...]:
 
 
 def _supported(annotation: object) -> bool:
+    if annotation == Vector:return True
     if annotation is MISSING or annotation is type(None):
         return True
     if any(annotation is carrier for carrier in (str, bool, int, Decimal, bytes, date, datetime)):
@@ -121,7 +125,7 @@ def _canonical(value: object) -> object:
 
 
 def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> None:
-    if node.op not in {"all", "first", "one", "count", "exists", "get", "page", "group_count", "update"}:
+    if node.op not in {"all", "first", "one", "count", "exists", "get", "page", "group_count", "update", "search_top"}:
         raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported terminal form")
     if not node.args or not isinstance(node.args[0], RecordRef):
         raise CaptureError("CAPTURE_UNSUPPORTED", "terminal has no record identity")
@@ -146,6 +150,15 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
         if isinstance(value, FieldRef):
             if (value.module, value.element) not in owners:
                 raise TypeError("expression column belongs to another Record")
+        elif isinstance(value, SearchLeg):
+            if (value.record.module,value.record.element)!=(record.module,record.element):raise CaptureError('SEARCH_DECLARATION','foreign search Record')
+            if value.value is not None:
+                if value.value.op!='param':raise CaptureError('SEARCH_DECLARATION','search requires bound parameters')
+                parameter=parameter_map.get(cast(str,value.value.args[0]))
+                wanted=Vector if value.kind=='vector' else str
+                if parameter is None or parameter.carrier!=wanted:raise CaptureError('CAPTURE_SIGNATURE','search parameter carrier differs from selected leg')
+                visit(value.value)
+            for leg in value.legs:visit(leg)
         elif isinstance(value, Join):
             visit(value.ref)
         elif isinstance(value, Node):

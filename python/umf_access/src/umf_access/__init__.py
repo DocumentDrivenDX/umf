@@ -48,6 +48,9 @@ from .dsl import (
 from .dsl import (
     RelatedKeys as RelatedKeys,
 )
+from .dsl import Score as Score
+from .dsl import Scored as Scored
+from .dsl import SearchResult as SearchResult
 from .dsl import (
     Terminal as Terminal,
 )
@@ -60,6 +63,7 @@ from .dsl import (
 from .dsl import (
     command as command,
 )
+from .dsl import hybrid as hybrid
 from .dsl import (
     if_present as if_present,
 )
@@ -72,6 +76,8 @@ from .dsl import (
 from .dsl import (
     query as query,
 )
+from .dsl import rrf as rrf
+from .dsl import target_defined as target_defined
 from .reviewed import (
     CatalogRead as CatalogRead,
 )
@@ -86,3 +92,4 @@ from .reviewed import (
 )
 from .types import MISSING as MISSING
 from .types import RUNTIME_ABI as RUNTIME_ABI
+from .types import Vector as Vector

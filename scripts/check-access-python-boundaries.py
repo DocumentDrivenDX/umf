@@ -37,7 +37,7 @@ def check(root: Path) -> int:
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation",
-               "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime"}
+               "delta_read": "targets", "postgres_search": "targets", "search_catalog": "runtime", "commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime"}
     extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"}}
 
     def fail(path: Path, code: str, message: str) -> None:
@@ -90,7 +90,7 @@ def check(root: Path) -> int:
             permitted.add("weft")
         if package not in permitted:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
-        if package in {"importlib", "runpy"}:
+        if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
             fail(path, "DYNAMIC", "dynamic loading module")
         if source_owner in {"foundation", "dsl", "runtime", "conformance"} and package in {"os", "socket", "urllib", "http", "ftplib", "subprocess", "pathlib", "io", "shutil"}:
             fail(path, "HOST", f"host I/O module {package} is outside pure SDK boundary")

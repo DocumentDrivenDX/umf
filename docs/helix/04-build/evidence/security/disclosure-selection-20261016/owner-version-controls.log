@@ -1,0 +1,15 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security-reference-links-owner.test.ts:
+(pass) original reference links preserve qualified ordered occurrences without type promotion [28.60ms]
+
+tests/security-scalar-owner.test.ts:
+(pass) original scalar owner preserves label role source context and refuses malformed inputs [17.37ms]
+
+tests/security-record-members-owner.test.ts:
+(pass) original Record membership distinguishes absence empty order and unknown qualifiers [18.55ms]
+
+ 3 pass
+ 0 fail
+ 136 expect() calls
+Ran 3 tests across 3 files. [317.00ms]

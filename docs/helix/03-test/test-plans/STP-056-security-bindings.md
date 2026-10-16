@@ -2025,3 +2025,146 @@ digests/sizes match local public wheel and checksums. This is artifact/consumer
 correspondence only: no database rerun, Linux/aggregate/native authority or
 release-readiness promotion. Earlier CI native receipt remains immutable.
 Acceptance45/158,113 unimplemented unchanged. See [exact evidence](../../04-build/evidence/security/published-weft-cohort-20261015/README.md).
+
+## Native presence/provenance prerequisite controls — 2026-10-16
+
+These exercising component controls map to US-056-AC6 and supplement, never replace, pg-raw.P03/B07/B08. Keep all original required cases and operator/actor/bypass expectations unchanged.
+
+| Control | Exercising source | Required observation |
+| --- | --- | --- |
+| CP01 issued SQL and real driver data | `tools/security/pg18-current-presence-oracle.py` | Four actual issued bounded PostgreSQL programs match the Rust checker over complete captured fixture rows; actual NULL refuses even when FALSE/LIMIT0 hides results. |
+| CP02 native presence | same | Explicit native column presence distinguishes null/absence; scalar-only current frame cannot express the distinction. JSONB key existence independently distinguishes missing key from explicit JSON null. Neither codec is automatically admitted. |
+| CP03 disclosure provenance | same | Native original five declared outcomes retain column/revision, disposition, payload presence, selection, output domain and exact transform; original null and transformed null stay distinct. |
+| CP04 negative controls | same | Wrong original document/revision, inconsistent payload flag, missing/unexpected transform and invalid public null/domain/transform metadata refuse. Plain nullable payload collapses four distinct outcomes. |
+| CP05 closed producer | same | Derived optional Token source refuses the current required-only lineage producer before application SQL; no fallback or fabricated native permission. |
+| CP06 algebra | `tools/security/prove-disclosure-carrier.py` | Conditional left/right inverse, injectivity and malformed-record refusal have UNSAT violations; all four variants have SAT inhabitants and erasure controls yield SAT counterexamples. |
+| CP07 custody and cleanup | native source above | Pin actual engine/image, original fixture/packet/wheel/native module/shim and source bytes; retain failures; verify owned label, removal and subsequent absence. Never publish success when cleanup is unverified. |
+| CP08 explicit policy-selected presence | `tools/security/query-presence-policy-oracle.ts` | On the explicit optional queryable model, a separate Token disclosure preserves String/null/absence under the original project-membership requirement; undisclosed, unreported, incomplete and stale states refuse, and inactive assignment, mismatched subject/project links and complete absent associations return no eligible rows. Supplied logical cuts never confer native authority. |
+
+Use the pinned disposable PostgreSQL 18.6 image from the original P-cases and isolated explicit output paths. Excluded-admin execution tests a physical/codec boundary, not ordinary-principal authorization, native transformation execution or actual source/caller/current-cut admission. Preserve exact artifact/codec/fixture identities so supplied declared cells cannot be relabeled as actual policy decisions. Browser portability is unaffected: these tools remain outside the browser library.
+
+### Canonical disclosure-selection provenance component — 2026-10-16
+
+The private logical-disclosure-selection0.1 producer must preserve exact qualified resource identities, actual scoped rule truth, all winning source occurrences and the first selected transform occurrence in canonical policy order. Exercise both flat and graph witnesses, nonzero disclosure indices, duplicate contributors, conflicting transforms, withholding dominance without original-value projection, explicit unprotected fallback, missing protected directives, denied/empty populations, hostile/stale input and shared-budget exhaustion. Original action/render/rule-scan shapes must remain unchanged. Real Chromium must match Bun without host globals. Source-selection evidence never grants native authority, executes transforms or substitutes for original P03/B08 cases.
+
+
+### Atomic canonical disclosure batch controls — 2026-10-16
+
+`tests/security/catalog-disclosure-batch-corpus.ts` and
+`catalog-disclosure-batch.test.ts` cite `@covers US-056-AC6` and
+`@covers US-056-AC10`. Exercise actual canonical execution, then independently
+inspect and JSON/YAML round-trip every successful0.2 batch: exact source/resource
+correspondence; original/null/absence/withholding/transformed-null; all six pure
+function classes and exact signed/decimal/date/Unicode values; nonzero and
+duplicate source positions; differing transform conflict; inactive directives;
+flat and graph witnesses; stored-token original/output identity; denied rows in
+complete census but absent from released batch; empty and field-free populations;
+unsupported inline refusal with old behavior preserved; later invalid output and
+shared-budget exhaustion clearing every result field; stale/malformed sources
+and hostile getters refusing without invocation. Test transport counts and
+literal boundaries and prove produced metadata survives the original public
+codec. Real Chromium must match Bun without host globals or external requests.
+These component checks supplement original P03/B08 and do not promote a backend
+case or prove native custody/operator/release behavior.
+
+### Actual atomic producer presence handoff — 2026-10-16
+
+Supplement AC6/AC10 component evidence with the actual private WithinOperation producer on the explicitly authored optional Resource source. Preserve the original salary-only policy as a negative; separate original Token, withheld Token and null-presentation policies retain distinct content revisions. Exercise String, original null, absence, withholding, actual pure transformed null and unreported presence under project-membership permit, inactive/foreign/missing relationship denial, incomplete coverage and stale generation. Assert exact census versus permitted resources/rows, stored Token carrier, public V2 inspection and both original codecs. Retain input/source snapshots, exact source UTF-8, actual batch JSON, full inspection verdict and refused atomic-cleared outputs for compiler/native transport composition.
+
+These are supplied-cut producer controls, not authenticated native facts, physical compiler execution, query-operator permissions or guarded release. No existing required backend case changes status; native transport must independently preserve exact header, occurrences, resource correspondence and all five states before any admitted profile may use it.
+
+### Owned PostgreSQL atomic presence transport — 2026-10-16
+
+Before native execution, independently review the exact separately feature-gated Weft typed transport, held-context probe and native runner. Pin the probe binary/project/lock, reviewed lowerer overlay and independent source inventory, original actual-producer packets and supplemental reviewed mixed/empty cuts. Re-execute the actual WithinOperation producer for every operation before materializing its cells. Require exact whole V2 validation and stored-carrier/source/header correspondence; do not derive expected completeness from query result rows.
+
+Use only an owned labelled PostgreSQL18.6 tmpfs fixture under the excluded administrator. Capture complete eligible keys and cell TEXT independently from the actual compiled SQL's driver rows, including explicit physical column order. Keep the original Rust parent/context/binding alive across those queries and the actual checker call. Exercise all 41 rendered original packets, the six reviewed mixed/empty producer populations, duplicate cell values under distinct keys, original null/absence/withheld/actual transformed null, and ineligible-row exclusion. Native unordered rows must retain the exact private resource-key bag before restoration to the original owner order. Retain untouched actual driver rows before deliberately corrupting checker frames with missing/extra rows, scalar-null collapse or a changed header; these are frame-corruption controls, not separately executed altered SQL statements. A self-consistent but source-invalid selected occurrence must demonstrate that a successful structural checker does not discharge required whole V2 source validation.
+
+Retain exact requests/bindings/preparations/artifacts/native captures/frames/reports/public inspection, source endpoint pins, engine/image/mount identity and verified owned cleanup. A source mismatch refuses before Docker creation. Cleanup uncertainty cannot receive a passing final status. This qualifies actual producer/SQL/driver/typed-checker/whole-inspector composition on supplied logical facts only; authenticated production source/caller/Subject/current cut, original operators, role/guard/release and all 158 required cases remain separate mandatory gates.
+
+### Separate atomic disclosure child controls — 2026-10-16
+
+`tests/security/current-disclosure-child.test.ts` supplements AC6/AC10 without
+promoting a required backend case. Exercise exact framed original String/null,
+absence, withholding and transformed-null provenance; complete private denied
+census with no output rows; unreported/stale atomic-cleared refusals; fixed owner
+and selection, exact receipt/version/closed shape, one evaluation and terminal
+failure; duplicate JSON keys, malformed UTF8, truncated/oversized frames,
+field/fact limits and required catalog. Exercise the actual process with fragmented
+and coalesced frames and no partial invalid response. Run unchanged legacy child
+tests alongside this separate profile. Replay all66 original handoff packets
+through the actual fresh bundle and compare entire results with retained original
+producer outputs; verify source pins before and after. Retain dependency notices,
+build/source manifest, original logs and failed test-setup attempts. These are
+supplied-cut process/producer checks, not native SQL, authenticated authority,
+guarded release or a Truss acceptance promotion.
+
+Build controls must reproduce the original unchanged-pins/changed-bundle config
+counterexample, then verify changed config changes recorded pins, all extends
+forms refuse, and missing/invalid config, pre/post-build config drift, executable
+source drift and discovered closure drift refuse without a final manifest.
+Preserve the R1 counterexample and separately frozen repaired source. A
+byte-identical repaired executable permits carrying the original process controls
+with the exact identity witness; it is not a new native campaign. The standalone
+Truss pipe replay does not qualify the installed Truss query API. Post-native
+whole V2 inspection, exact original batch/key/cell correspondence and closing
+native caller/source/protection checks remain required before publication.
+
+### Held post-native whole V2 boundary — 2026-10-16
+
+`current-native-disclosure-child.test.ts` supplements AC6/AC10. Require all72
+original producer vectors (including six mixed/empty populations) to retain their
+entire original evaluation result. Rendered cases must complete one whole V2
+inspection of the identical original batch; refused cases cannot inspect later.
+Retain original provenance999/999 as a source-invalid structural-match negative.
+Separately prove that domain-valid substituted values/presence, row count/order,
+extra denied rows and changed source/header/column/domain/transform metadata
+cannot replace the held original. Keep exact private key-bag/native capture and
+whole V2 validation as distinct host obligations.
+
+Exercise strict Unicode/duplicate and escaped-duplicate keys, unsafe numbers,
+negative zero, overflow/underflow, malformed UTF8, depth/node/wire limits,
+truncation, wrong receipt/version, fixed owner/selection, duplicate IDs and all
+ordering/replay failures. Verify exact16MiB inspection input, one-byte-over refusal
+and unchanged4MiB source limits. Run actual process fragmentation/coalescing,
+clean three-exchange completion and incomplete/corrupt/truncated EOF refusal;
+retain legacy0.1 and old query-child regression. Repeat independent build/config
+mutation controls for the separate builder.
+
+Compose the actual reviewed Python bridge with the held child over all52 retained
+native records:47 complete data matches, four corrupted-checker-frame refusals
+that never invoke inspection, and one source-invalid native selected occurrence
+that structurally matches and then refuses whole V2 inspection. Reconstruct from
+untouched captured driver cells, verify exact original key bag/order, keep the
+real Python parent/typed runtime handle through final inspection, correlate all
+source/header/frame bytes and confirm every child cleanup. This is fresh bridge/
+process execution over supplied recorded native data, not a new SQL campaign or
+installed Truss caller/source/current-authority/release qualification. Existing
+required backend cases and criteria remain unchanged.
+
+For reproducible replay custody, execute the captured and hashed pipe source bytes
+without loading adjacent bytecode. Pin the wheel-manifest bytes before loading
+and compare both inputs at completion. Retain the original post-import drift
+and poisoned-cache counterexamples, then require drift to refuse without a
+success receipt and poisoned-cache execution to be ignored. The reused old pipe
+remains capped at4MiB; exact16MiB inspection coverage comes from the direct child
+process controls, not from that old pipe.
+
+### Nested graph condition regression and proof obligations — 2026-10-16
+
+Retain the exact eager-kernel14-object/13-edge parallel:Alice budget refusal,
+and the original successful14-object/12-edge base:Alice control. Require the same
+independent incidence oracle to match the actual optimized kernel for three
+Staff identities across the original population, a parallel edge, no edges,
+inactive-only assignment and sibling ownership. Check exact Resource keys and
+original selected cells through the whole V2 inspector in Bun and Chromium.
+This is supplied graph semantics, not authenticated native execution.
+
+Delete otherwise hidden graph/role coverage, active Field coverage/projection
+and endpoint population while an outer Staff comparison is false. All must
+refuse before returning data. Retain original F/U/T truth tables and conditional
+SMT queries with SAT premises, absorbing-prefix UNSAT checks, early-U countermodels
+and a separately identified skipped-preflight premise control. No budget ceiling
+is raised. Re-run affected accepted cases against the changed kernel and qualify
+unchanged retained case/source correspondence separately. The existing158 required
+cases and34 criteria remain mandatory. Actual ordinary-role native graph identity
+and guarded-release cases require the composed Truss collector and consumer.

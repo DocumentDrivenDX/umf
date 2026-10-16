@@ -1,0 +1,5 @@
+# Truss refinement integration source review
+
+Astra Ultra found no actionable finding in the exact one-file patch against Truss 42acbc143a1b234fe689fae8b8654209cd9b3e54. The retained report pins original/changed source, patch and exact published Weft 0.4.36 wheel. Its independent replay passes the 45 supplied helper controls; 51 separately authored modeled report controls pass. Source review confirms complete eligible population capture before predicates/LIMIT and retained authenticated closing checks.
+
+These are conditional component controls and source preservation evidence. No native database/full stage pipeline, caller race or current-cut campaign was run by the reviewer. Truss owns serialized final native qualification and main integration. No backend case is promoted, and optional presence/aggregate profiles are not added by this patch. `review.zip` retains scripts, source snapshots, execution receipts and the exact review manifest. The report's sourceCommit is a fixture checkout identity, not binary build provenance; artifact hashes identify the actual replayed wheel.

@@ -9,6 +9,9 @@ description = "Local prerelease typed access runtime; target qualification pendi
 requires-python = ">=3.11,<3.15"
 dependencies = ["pydantic==2.14.1"]
 
+[project.scripts]
+umf-access = "umf_access.build.catalog:main"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/umf_access"]
 

@@ -1,0 +1,9 @@
+ownedServerStopped=true
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/20bc/umf/python/umf_access/tests/native_actions_e2e.py", line 65, in <module>
+    command(sys.executable,'-B','-m','umf_access.build.catalog','catalog','--config',generated/'native-catalog-config.json','--root',generated,*extra)
+  File "/Users/erik/.codex/worktrees/20bc/umf/python/umf_access/tests/native_actions_e2e.py", line 32, in command
+    if p.returncode:raise RuntimeError(p.stdout+p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: {"reason":"command action was not selected at stage one","status":"refused"}
+
