@@ -1,8 +1,13 @@
+"""Public typed declaration ABI. No query execution or native SQL lowering."""
+
 from __future__ import annotations
 
-"""Public typed declaration ABI. No query execution or native SQL lowering."""
-from ._context import CaptureError as CaptureError
-from ._context import QueryOutsideCatalog as QueryOutsideCatalog
+from ._context import (
+    CaptureError as CaptureError,
+)
+from ._context import (
+    QueryOutsideCatalog as QueryOutsideCatalog,
+)
 from ._expressions import (
     Column as Column,
 )
@@ -79,14 +84,36 @@ from ._query import (
     query as query,
 )
 from .render import render_logical as render_logical
-from .search import Fusion as Fusion
-from .search import KeywordIndex as KeywordIndex
-from .search import RankedQuery as RankedQuery
-from .search import Score as Score
-from .search import Scored as Scored
-from .search import SearchLeg as SearchLeg
-from .search import SearchResult as SearchResult
-from .search import VectorIndex as VectorIndex
-from .search import hybrid as hybrid
-from .search import rrf as rrf
-from .search import target_defined as target_defined
+from .search import (
+    Fusion as Fusion,
+)
+from .search import (
+    KeywordIndex as KeywordIndex,
+)
+from .search import (
+    RankedQuery as RankedQuery,
+)
+from .search import (
+    Score as Score,
+)
+from .search import (
+    Scored as Scored,
+)
+from .search import (
+    SearchLeg as SearchLeg,
+)
+from .search import (
+    SearchResult as SearchResult,
+)
+from .search import (
+    VectorIndex as VectorIndex,
+)
+from .search import (
+    hybrid as hybrid,
+)
+from .search import (
+    rrf as rrf,
+)
+from .search import (
+    target_defined as target_defined,
+)

@@ -1,6 +1,7 @@
+"""Capture-only evaluation, isolated from host I/O and execution."""
+
 from __future__ import annotations
 
-"""Capture-only evaluation, isolated from host I/O and execution."""
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 
@@ -22,7 +23,9 @@ class CaptureContext:
     used_optional: set[str] = field(default_factory=set[str])
 
 
-CURRENT: ContextVar[CaptureContext | None] = ContextVar("umf_access_capture", default=None)
+CURRENT: ContextVar[CaptureContext | None] = ContextVar(
+    "umf_access_capture", default=None
+)
 
 
 def require_capture() -> CaptureContext:

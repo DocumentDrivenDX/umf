@@ -1,4 +1,5 @@
 """Red helper tests against a proposed ABI; generator integration still pending."""
+
 import unittest
 from dataclasses import FrozenInstanceError
 from decimal import Decimal
@@ -10,8 +11,10 @@ from umf_access.codec_support import checked_row, revalidate_model
 from umf_access.types import MISSING, ActionRef, StrictModel
 from umf_access.values import validate_decimal
 
-Amount = Annotated[Decimal, AfterValidator(
-    lambda value: validate_decimal(value, precision=12, scale=2))]
+Amount = Annotated[
+    Decimal,
+    AfterValidator(lambda value: validate_decimal(value, precision=12, scale=2)),
+]
 
 
 @final
@@ -106,7 +109,9 @@ class CodecBoundaryTests(unittest.TestCase):
         value.patches.append(value)
         with self.assertRaises(ValueError):
             revalidate_model(Nested, value)
-        mapped = Mapped.model_construct(patches={"private-map-key": [Patch.model_construct(amount="private-value")]})
+        mapped = Mapped.model_construct(
+            patches={"private-map-key": [Patch.model_construct(amount="private-value")]}
+        )
         with self.assertRaises(ValueError) as caught:
             revalidate_model(Mapped, mapped)
         self.assertNotIn("private-map-key", str(caught.exception))
@@ -115,31 +120,47 @@ class CodecBoundaryTests(unittest.TestCase):
 
     # @covers US-081-AC4 -- immutable type-reference subset only; no executor.
     def test_action_reference_is_immutable_and_typed(self):
-        action = ActionRef(module="commerce", action="shipOrder", input_type=Patch, output_type=Nested)
+        action = ActionRef(
+            module="commerce", action="shipOrder", input_type=Patch, output_type=Nested
+        )
         self.assertIs(action.input_type, Patch)
         self.assertIs(action.output_type, Nested)
         with self.assertRaises(FrozenInstanceError):
             action.action = "changed"
         with self.assertRaises(TypeError):
             type("MutableAction", (ActionRef,), {})
-        for kwargs in ({"module":"", "action":"x", "input_type":Patch, "output_type":Nested},
-                       {"module":"m", "action":"x", "input_type":dict, "output_type":Nested}):
+        for kwargs in (
+            {"module": "", "action": "x", "input_type": Patch, "output_type": Nested},
+            {"module": "m", "action": "x", "input_type": dict, "output_type": Nested},
+        ):
             with self.assertRaises((ValueError, TypeError)):
                 ActionRef(**kwargs)
-        self.assertIs(ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None)).output_type, type(None))
+        self.assertIs(
+            ActionRef(
+                module="m", action="recipe", input_type=Patch, output_type=type(None)
+            ).output_type,
+            type(None),
+        )
 
     # @covers US-081-AC5
     def test_inventory_is_checked_before_mapping(self):
-        for columns, row in ((["amount", "amount"], [1, 2]),
-                             ([], []), (["unexpected"], [1]),
-                             (["amount"], []), (["amount"], [1, 2])):
+        for columns, row in (
+            (["amount", "amount"], [1, 2]),
+            ([], []),
+            (["unexpected"], [1]),
+            (["amount"], []),
+            (["amount"], [1, 2]),
+        ):
             with patch("umf_access.codec_support._build_mapping") as mapping:
                 with self.assertRaises(ValueError):
                     checked_row(["amount"], columns, row)
                 mapping.assert_not_called()
-        self.assertEqual(checked_row(["memo", "amount"], ["amount", "memo"],
-                                     [Decimal("1.20"), None]),
-                         {"amount": Decimal("1.20"), "memo": None})
+        self.assertEqual(
+            checked_row(
+                ["memo", "amount"], ["amount", "memo"], [Decimal("1.20"), None]
+            ),
+            {"amount": Decimal("1.20"), "memo": None},
+        )
 
 
 if __name__ == "__main__":

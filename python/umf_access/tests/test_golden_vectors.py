@@ -1,4 +1,5 @@
 """Runtime helper oracle agreement, separate from pending generated-model replay."""
+
 import json
 import unittest
 from decimal import Decimal
@@ -23,9 +24,13 @@ def primitive(literal):
     if literal is None:
         return None
     kind, value = next(iter(literal.items()))
-    return {"boolean": lambda: value, "integerToken": lambda: int(value),
-            "decimalToken": lambda: Decimal(value), "string": lambda: value,
-            "binaryHex": lambda: bytes.fromhex(value)}[kind]()
+    return {
+        "boolean": lambda: value,
+        "integerToken": lambda: int(value),
+        "decimalToken": lambda: Decimal(value),
+        "string": lambda: value,
+        "binaryHex": lambda: bytes.fromhex(value),
+    }[kind]()
 
 
 def check(vector, field, literal):
@@ -43,17 +48,29 @@ def check(vector, field, literal):
         if set(literal) != {cardinality}:
             raise ValueError("container kind mismatch")
         values = literal[cardinality]
-        if cardinality == "array" and type(values) is not list or cardinality == "map" and type(values) is not dict:
+        if (
+            cardinality == "array"
+            and type(values) is not list
+            or cardinality == "map"
+            and type(values) is not dict
+        ):
             raise ValueError("container carrier mismatch")
         bounds = facets.get("collectionSize", {})
         validate_length(values, minimum=bounds.get("min"), maximum=bounds.get("max"))
-        item = next(f for f in vector["extraFields"] if f["id"] == field["itemType"]["element"])
+        item = next(
+            f for f in vector["extraFields"] if f["id"] == field["itemType"]["element"]
+        )
         for value in values if cardinality == "array" else values.values():
             check(vector, item, value)
         return values
     family = field["scalarType"]
-    wrapper = {"boolean":"boolean", "integer":"integerToken", "decimal":"decimalToken",
-               "string":"string", "binary":"binaryHex"}[family]
+    wrapper = {
+        "boolean": "boolean",
+        "integer": "integerToken",
+        "decimal": "decimalToken",
+        "string": "string",
+        "binary": "binaryHex",
+    }[family]
     if set(literal) != {wrapper}:
         raise ValueError("literal kind mismatch")
     value = primitive(literal)
@@ -61,9 +78,13 @@ def check(vector, field, literal):
         validate_boolean(value)
     elif family == "integer":
         width = facets.get("integerWidth", {})
-        validate_integer(value, bits=width.get("bits"), signed=width.get("signed", True))
+        validate_integer(
+            value, bits=width.get("bits"), signed=width.get("signed", True)
+        )
     elif family == "decimal":
-        validate_decimal(value, precision=facets.get("precision"), scale=facets.get("scale"))
+        validate_decimal(
+            value, precision=facets.get("precision"), scale=facets.get("scale")
+        )
     elif family == "string":
         validate_string(value)
     elif family == "binary":
@@ -73,8 +94,13 @@ def check(vector, field, literal):
         validate_length(value, minimum=bounds.get("min"), maximum=bounds.get("max"))
     if "range" in facets:
         bounds = facets["range"]
-        validate_range(value, minimum=primitive(bounds.get("min")), maximum=primitive(bounds.get("max")),
-                       min_inclusive=bounds.get("minInclusive", True), max_inclusive=bounds.get("maxInclusive", True))
+        validate_range(
+            value,
+            minimum=primitive(bounds.get("min")),
+            maximum=primitive(bounds.get("max")),
+            min_inclusive=bounds.get("minInclusive", True),
+            max_inclusive=bounds.get("maxInclusive", True),
+        )
     if "allowedValues" in field:
         validate_allowed(value, tuple(primitive(v) for v in field["allowedValues"]))
     return value

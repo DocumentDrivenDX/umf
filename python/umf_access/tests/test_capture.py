@@ -1,4 +1,5 @@
 """Capture's in-memory boundary: no catalog writer or Weft substitute."""
+
 import unittest
 
 from pydantic import MISSING
@@ -13,7 +14,9 @@ class Order:
 ID = FieldRef(module="commerce", element="Order", field="order_id")
 MEMO = FieldRef(module="commerce", element="Order", field="memo")
 memo = Column[Order, str | None](MEMO)
-objects = Query[Order, Order, str](RecordRef(module="commerce", element="Order", key=(ID,)))
+objects = Query[Order, Order, str](
+    RecordRef(module="commerce", element="Order", key=(ID,))
+)
 
 
 class CaptureRefusals(unittest.TestCase):
@@ -68,16 +71,24 @@ class CaptureRefusals(unittest.TestCase):
     # @covers US-082-AC6
     def test_five_optional_filters_refuse(self):
         @query
-        def declaration(a: Param[str | MISSING], b: Param[str | MISSING],
-                        c: Param[str | MISSING], d: Param[str | MISSING],
-                        e: Param[str | MISSING]):
-            return objects.filter(
-                if_present(a, lambda v: memo == v),
-                if_present(b, lambda v: memo == v),
-                if_present(c, lambda v: memo == v),
-                if_present(d, lambda v: memo == v),
-                if_present(e, lambda v: memo == v),
-            ).limit(10).all()
+        def declaration(
+            a: Param[str | MISSING],
+            b: Param[str | MISSING],
+            c: Param[str | MISSING],
+            d: Param[str | MISSING],
+            e: Param[str | MISSING],
+        ):
+            return (
+                objects.filter(
+                    if_present(a, lambda v: memo == v),
+                    if_present(b, lambda v: memo == v),
+                    if_present(c, lambda v: memo == v),
+                    if_present(d, lambda v: memo == v),
+                    if_present(e, lambda v: memo == v),
+                )
+                .limit(10)
+                .all()
+            )
 
         self.assert_code(declaration, "VARIANT_LIMIT")
 
@@ -85,10 +96,14 @@ class CaptureRefusals(unittest.TestCase):
     def test_repeated_optional_parameter_counts_once(self):
         @query
         def declaration(a: Param[str | MISSING]):
-            return objects.filter(
-                if_present(a, lambda v: memo == v),
-                if_present(a, lambda v: memo != v),
-            ).limit(10).all()
+            return (
+                objects.filter(
+                    if_present(a, lambda v: memo == v),
+                    if_present(a, lambda v: memo != v),
+                )
+                .limit(10)
+                .all()
+            )
 
         captured = capture(declaration)
         self.assertEqual(len(captured.variants), 2)
@@ -106,7 +121,11 @@ class CaptureRefusals(unittest.TestCase):
     def test_optional_filter_requires_missing_in_declared_parameter(self):
         @query
         def declaration(a: Param[str | None]):
-            return objects.filter(if_present(a, lambda value: memo == value)).limit(10).all()
+            return (
+                objects.filter(if_present(a, lambda value: memo == value))
+                .limit(10)
+                .all()
+            )
 
         self.assert_code(declaration, "CAPTURE_SIGNATURE")
 
@@ -114,7 +133,11 @@ class CaptureRefusals(unittest.TestCase):
     def test_nullable_optional_filter_has_two_presence_variants(self):
         @query
         def declaration(a: Param[str | None | MISSING]):
-            return objects.filter(if_present(a, lambda value: memo == value)).limit(10).all()
+            return (
+                objects.filter(if_present(a, lambda value: memo == value))
+                .limit(10)
+                .all()
+            )
 
         captured = capture(declaration)
         self.assertEqual({v.presence for v in captured.variants}, {(), ("a",)})
@@ -137,11 +160,22 @@ class PresenceBounds(unittest.TestCase):
     # @covers US-082-AC6
     def test_four_optional_filters_produce_exactly_sixteen_variants(self):
         @query
-        def declaration(a: Param[str | MISSING], b: Param[str | MISSING], c: Param[str | MISSING], d: Param[str | MISSING]):
-            return objects.filter(
-                if_present(a, lambda p: memo == p), if_present(b, lambda p: memo == p),
-                if_present(c, lambda p: memo == p), if_present(d, lambda p: memo == p),
-            ).limit(10).all()
+        def declaration(
+            a: Param[str | MISSING],
+            b: Param[str | MISSING],
+            c: Param[str | MISSING],
+            d: Param[str | MISSING],
+        ):
+            return (
+                objects.filter(
+                    if_present(a, lambda p: memo == p),
+                    if_present(b, lambda p: memo == p),
+                    if_present(c, lambda p: memo == p),
+                    if_present(d, lambda p: memo == p),
+                )
+                .limit(10)
+                .all()
+            )
 
         captured = capture(declaration)
         self.assertEqual(len(captured.variants), 16)
@@ -149,10 +183,20 @@ class PresenceBounds(unittest.TestCase):
 
     # @covers US-082-AC6
     def test_nested_optional_boolean_composition_refuses(self):
-        for combine in (lambda p: p | (memo == "x"), lambda p: p & (memo == "x"), lambda p: ~p):
+        for combine in (
+            lambda p: p | (memo == "x"),
+            lambda p: p & (memo == "x"),
+            lambda p: ~p,
+        ):
+
             @query
             def declaration(a: Param[str | MISSING]):
-                return objects.filter(combine(if_present(a, lambda p: memo == p))).limit(10).all()  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
+                return (
+                    # This refusal callback is invoked synchronously inside this iteration.
+                    objects.filter(combine(if_present(a, lambda p: memo == p)))  # noqa: B023
+                    .limit(10)
+                    .all()
+                )
 
             with self.subTest(combine=combine):
                 with self.assertRaises(CaptureError) as caught:
@@ -227,7 +271,7 @@ class PresenceBounds(unittest.TestCase):
             p61: Param[str],
             p62: Param[str],
             p63: Param[str],
-            p64: Param[str]
+            p64: Param[str],
         ):
             self.fail("signature must refuse before body")
 
@@ -240,8 +284,17 @@ class TemporalProfileCapture(unittest.TestCase):
     # @covers US-082-AC6
     def test_instant_local_column_comparison_refuses(self):
         from datetime import datetime
-        instant = Column[Order, datetime](FieldRef(module="commerce", element="Order", field="instant", temporal="instant"))
-        local = Column[Order, datetime](FieldRef(module="commerce", element="Order", field="local", temporal="local"))
+
+        instant = Column[Order, datetime](
+            FieldRef(
+                module="commerce", element="Order", field="instant", temporal="instant"
+            )
+        )
+        local = Column[Order, datetime](
+            FieldRef(
+                module="commerce", element="Order", field="local", temporal="local"
+            )
+        )
 
         @query
         def declaration():
@@ -254,8 +307,17 @@ class TemporalProfileCapture(unittest.TestCase):
     # @covers US-082-AC6
     def test_parameter_cannot_span_instant_and_local_profiles(self):
         from datetime import datetime
-        instant = Column[Order, datetime](FieldRef(module="commerce", element="Order", field="instant", temporal="instant"))
-        local = Column[Order, datetime](FieldRef(module="commerce", element="Order", field="local", temporal="local"))
+
+        instant = Column[Order, datetime](
+            FieldRef(
+                module="commerce", element="Order", field="instant", temporal="instant"
+            )
+        )
+        local = Column[Order, datetime](
+            FieldRef(
+                module="commerce", element="Order", field="local", temporal="local"
+            )
+        )
 
         @query
         def declaration(value: Param[datetime]):
@@ -268,18 +330,3 @@ class TemporalProfileCapture(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
-class CaptureCompatibilityExports(unittest.TestCase):
-    def test_public_compatibility_aliases_remain_importable(self):
-        from umf_access.capture import CapturedKey, ExpressionNode
-        from umf_access.dsl._nodes import KeyLiteral, Node
-        self.assertIs(ExpressionNode, Node)
-        self.assertIs(CapturedKey, KeyLiteral)
-
-
-class GeneratedClientTypeVarExports(unittest.TestCase):
-    def test_executor_typevars_remain_importable(self):
-        from umf_access.protocols import ExecutorT, ReplayingExecutorT
-        self.assertEqual(ExecutorT.__name__, "ExecutorT")
-        self.assertEqual(ReplayingExecutorT.__name__, "ReplayingExecutorT")

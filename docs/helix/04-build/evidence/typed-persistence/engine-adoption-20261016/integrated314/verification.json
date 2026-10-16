@@ -1,0 +1,189 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "label": "installed-bytes",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import zipfile,sys\nfrom pathlib import Path\nimport umf_access,weft\nfor wheel,module,prefix in [(sys.argv[1],umf_access,'umf_access/'),(sys.argv[2],weft,'weft/')]:\n site=Path(module.__file__).parent.parent\n assert '/site-packages/' in str(module.__file__)\n with zipfile.ZipFile(wheel) as archive:\n  for name in archive.namelist():\n   if name.startswith(prefix) and not name.endswith('/'):assert (site/name).read_bytes()==archive.read(name),name\n",
+        "/private/tmp/sdk-native-subject-umf-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "/private/tmp/sdk-engine-039-wheels/weft_sql-0.4.39.dev0-cp39-abi3-macosx_11_0_arm64.whl"
+      ],
+      "exitCode": 0,
+      "log": "installed-bytes.log"
+    },
+    {
+      "label": "generate-actions",
+      "command": [
+        "bun",
+        "scripts/generate-access-native-action-fixture.ts",
+        "/private/tmp/sdk-engine-039-integrated314-r1/actions"
+      ],
+      "exitCode": 0,
+      "log": "generate-actions.log"
+    },
+    {
+      "label": "actions-bulk",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "python/umf_access/tests/native_actions_e2e.py"
+      ],
+      "exitCode": 0,
+      "log": "actions-bulk.log"
+    },
+    {
+      "label": "generate-search",
+      "command": [
+        "bun",
+        "scripts/generate-access-search-fixture.ts",
+        "/private/tmp/sdk-engine-039-integrated314-r1/search"
+      ],
+      "exitCode": 0,
+      "log": "generate-search.log"
+    },
+    {
+      "label": "search",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "python/umf_access/tests/search_e2e.py"
+      ],
+      "exitCode": 0,
+      "log": "search.log"
+    },
+    {
+      "label": "generate-models",
+      "command": [
+        "bun",
+        "scripts/generate-access-reporting-fixture.ts",
+        "/private/tmp/sdk-engine-039-integrated314-r1/models"
+      ],
+      "exitCode": 0,
+      "log": "generate-models.log"
+    },
+    {
+      "label": "runtime-units",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,unittest\nsys.path.insert(0,sys.argv[1])\nsuite=unittest.defaultTestLoader.discover(sys.argv[2],pattern='test_*.py')\ndef flatten(suite):\n for item in suite:\n  if isinstance(item,unittest.TestSuite):yield from flatten(item)\n  else:yield item\nselected=[t for t in flatten(suite) if t.__class__.__module__!='test_refactor_regeneration' and not(t.__class__.__module__=='test_reviewed_reads' and t.__class__.__name__=='Native')]\nresult=unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(selected))\nassert not result.skipped\nassert result.wasSuccessful()\n",
+        "/private/tmp/sdk-engine-039-integrated314-r1/models",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests"
+      ],
+      "exitCode": 0,
+      "log": "runtime-units.log"
+    },
+    {
+      "label": "public-schema-instance-codecs",
+      "command": [
+        "bun",
+        "scripts/access-e2e.ts",
+        "--python",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "--wheel",
+        "/private/tmp/sdk-native-subject-umf-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "--report",
+        "/private/tmp/sdk-engine-039-integrated314-r1/public-e2e.json"
+      ],
+      "exitCode": 0,
+      "log": "public-schema-instance-codecs.log"
+    },
+    {
+      "label": "read-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/initdb",
+        "-D",
+        "/private/tmp/umf-read-replay-b_dswoja/data",
+        "-A",
+        "trust",
+        "-U",
+        "sdk_test",
+        "--no-sync"
+      ],
+      "exitCode": 0,
+      "log": "read-init.log"
+    },
+    {
+      "label": "read-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/umf-read-replay-b_dswoja/data",
+        "-l",
+        "/private/tmp/umf-read-replay-b_dswoja/server.log",
+        "-o",
+        "-F -k /private/tmp/umf-read-replay-b_dswoja/socket -c listen_addresses='' -p 55492",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "log": "read-start.log"
+    },
+    {
+      "label": "generate-reads",
+      "command": [
+        "bun",
+        "scripts/generate-access-reporting-fixture.ts",
+        "/private/tmp/sdk-engine-039-integrated314-r1/reads",
+        "--reads-only"
+      ],
+      "exitCode": 0,
+      "log": "generate-reads.log"
+    },
+    {
+      "label": "native-reads",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,unittest\nsys.path.insert(0,sys.argv[1])\nsuite=unittest.defaultTestLoader.discover(sys.argv[2],pattern='test_reviewed_reads.py')\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nassert not result.skipped\nassert result.wasSuccessful()\n",
+        "/private/tmp/sdk-engine-039-integrated314-r1/reads",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests"
+      ],
+      "exitCode": 0,
+      "log": "native-reads.log"
+    },
+    {
+      "label": "read-stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/umf-read-replay-b_dswoja/data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "log": "read-stop.log"
+    },
+    {
+      "label": "installed-bytes-final",
+      "command": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import zipfile,sys\nfrom pathlib import Path\nimport umf_access,weft\nfor wheel,module,prefix in [(sys.argv[1],umf_access,'umf_access/'),(sys.argv[2],weft,'weft/')]:\n site=Path(module.__file__).parent.parent\n assert '/site-packages/' in str(module.__file__)\n with zipfile.ZipFile(wheel) as archive:\n  for name in archive.namelist():\n   if name.startswith(prefix) and not name.endswith('/'):assert (site/name).read_bytes()==archive.read(name),name\n",
+        "/private/tmp/sdk-native-subject-umf-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "/private/tmp/sdk-engine-039-wheels/weft_sql-0.4.39.dev0-cp39-abi3-macosx_11_0_arm64.whl"
+      ],
+      "exitCode": 0,
+      "log": "installed-bytes-final.log"
+    }
+  ],
+  "sdkWheelSha256": "39794aa3fa77718c83b49fefbed8808381aa4ec12ee1f0ef890c9c7b2526acee",
+  "weftWheelSha256": "328eee5294869defec097e03f2ee965927785d846d7e5783040f11425769d9c6",
+  "ownedReadServerStopped": true,
+  "temporal": "HELD",
+  "scope": "installed local native read/action/bulk/search and optional Delta snapshot replay; no managed service or complete engine adoption claim"
+}

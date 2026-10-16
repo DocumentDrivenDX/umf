@@ -1,4 +1,5 @@
 """Named projection and generated field-source checks on full commerce output."""
+
 import ast
 import unittest
 from decimal import Decimal
@@ -14,14 +15,27 @@ class GeneratedProjections(unittest.TestCase):
         for model, names, record, fields in (
             (OrderSummary, ["order_id", "amount"], "Order", ["orderId", "amount"]),
             (OrderIdentity, ["order_id"], "Order", ["orderId"]),
-            (CustomerSummary, ["customer_id", "name"], "Customer", ["customerId", "name"]),
+            (
+                CustomerSummary,
+                ["customer_id", "name"],
+                "Customer",
+                ["customerId", "name"],
+            ),
         ):
             self.assertEqual(list(model.model_fields), names)
             self.assertEqual([f.field for f in model.UMF_PROJECTION_FIELDS], fields)
-            self.assertTrue(all((f.module, f.element) == ("commerce", record) for f in model.UMF_PROJECTION_FIELDS))
+            self.assertTrue(
+                all(
+                    (f.module, f.element) == ("commerce", record)
+                    for f in model.UMF_PROJECTION_FIELDS
+                )
+            )
             with self.assertRaises(TypeError):
                 type("Subclass", (model,), {})
-        self.assertEqual(OrderSummary(order_id="o-1", amount=Decimal("1.200")).amount.as_tuple(), Decimal("1.200").as_tuple())
+        self.assertEqual(
+            OrderSummary(order_id="o-1", amount=Decimal("1.200")).amount.as_tuple(),
+            Decimal("1.200").as_tuple(),
+        )
         with self.assertRaises(ValueError):
             OrderSummary(order_id="o-1", amount="1.20")
 
@@ -33,11 +47,15 @@ class GeneratedProjections(unittest.TestCase):
             tree = ast.parse((package / file).read_text())
             for node in ast.walk(tree):
                 if isinstance(node, ast.keyword):
-                    self.assertNotIn(node.arg, {"alias", "validation_alias", "serialization_alias"})
+                    self.assertNotIn(
+                        node.arg, {"alias", "validation_alias", "serialization_alias"}
+                    )
             if file != "fields.py":
                 continue
             for cls in tree.body:
-                if not isinstance(cls, ast.ClassDef) or not cls.name.endswith("Columns"):
+                if not isinstance(cls, ast.ClassDef) or not cls.name.endswith(
+                    "Columns"
+                ):
                     continue
                 for index, node in enumerate(cls.body):
                     if not isinstance(node, ast.AnnAssign):
@@ -45,7 +63,14 @@ class GeneratedProjections(unittest.TestCase):
                     doc = cls.body[index + 1]
                     self.assertIsInstance(doc, ast.Expr)
                     self.assertIsInstance(doc.value, ast.Constant)
-                    self.assertTrue(doc.value.value.startswith(("UMF source logical#/modules/0/elements/", "UMF source logical#/modules/0/relationships/")))
+                    self.assertTrue(
+                        doc.value.value.startswith(
+                            (
+                                "UMF source logical#/modules/0/elements/",
+                                "UMF source logical#/modules/0/relationships/",
+                            )
+                        )
+                    )
                     count += 1
         self.assertEqual(count, 10)
 
