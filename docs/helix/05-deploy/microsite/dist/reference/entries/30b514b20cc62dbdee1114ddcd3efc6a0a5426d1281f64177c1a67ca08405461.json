@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10045,
+        "line": 55,
+        "path": "src/core-ideals/relationship-sqlserver.ts",
+        "sha256": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifySqlServerRelationshipClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: SqlServerRelationshipClassification, current: Document): SqlServerRelationshipClassification & { [x: string]: {}; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifySqlServerRelationshipClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10045,
+      "line": 55,
+      "path": "src/core-ideals/relationship-sqlserver.ts",
+      "sha256": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/relationship-sqlserver.ts",
+  "title": "verifySqlServerRelationshipClassification"
+}

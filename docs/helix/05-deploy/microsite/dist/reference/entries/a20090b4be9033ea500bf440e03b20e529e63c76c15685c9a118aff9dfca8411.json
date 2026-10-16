@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7167,
+        "line": 18,
+        "path": "src/adapters/postgresql/cardinality-catalog.ts",
+        "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectPostgresqlCardinalityCatalog",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string): { nativeSource: string; root: NativeJson; serverVersion: number; qualifiedVersion: boolean; columns: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }[]; types: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectPostgresqlCardinalityCatalog\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7167,
+      "line": 18,
+      "path": "src/adapters/postgresql/cardinality-catalog.ts",
+      "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+    }
+  ],
+  "summary": "Validate the bounded supplement without interpreting unknown native content.\nThe original text and exact-token tree remain authoritative, not the host view.\nThis does not establish correspondence with a separately captur",
+  "title": "inspectPostgresqlCardinalityCatalog"
+}

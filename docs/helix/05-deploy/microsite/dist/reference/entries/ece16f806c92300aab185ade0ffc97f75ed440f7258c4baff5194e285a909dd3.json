@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2854,
+        "line": 1,
+        "path": "src/model/types.ts",
+        "sha256": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Json",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Json\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2854,
+      "line": 1,
+      "path": "src/model/types.ts",
+      "sha256": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9"
+    }
+  ],
+  "summary": "Type declaration · src/model/types.ts",
+  "title": "Json"
+}

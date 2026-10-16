@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8199,
+        "line": 9,
+        "path": "src/projections/avro-json-schema.ts",
+        "sha256": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroDocumentProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroDocumentProjection {\n status:'blocked'|'projected';source:Document;policy:AvroDocumentBindings;issues:ProjectionIssue[];\n mappings:{name:string;sourcePath:string;targetPointer:string}[];target?:Document;nativeSchema?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroDocumentProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8199,
+      "line": 9,
+      "path": "src/projections/avro-json-schema.ts",
+      "sha256": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866"
+    }
+  ],
+  "summary": "Type declaration · src/projections/avro-json-schema.ts",
+  "title": "AvroDocumentProjection"
+}

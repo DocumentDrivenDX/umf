@@ -1,0 +1,168 @@
+{
+  "data": {
+    "extensionId": "umf.sqlserver.facets",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/facets-sqlserver.test.ts",
+          "fixtures/validation/facets-sqlserver-discovery-native.json",
+          "fixtures/validation/facets-sqlserver-constraints-evidence.json",
+          "spec/core/sqlserver-facet-classification.schema.json",
+          "fixtures/validation/facets-sqlserver-classification-browser.json",
+          "spec/core/facets-sqlserver-projection.schema.json",
+          "tests/core-ideals/facets-sqlserver-projection.test.ts",
+          "fixtures/validation/facets-sqlserver-projection-native.json",
+          "fixtures/validation/facets-sqlserver-projection-browser.json"
+        ],
+        "native": {
+          "subset": "Scalar catalog-column facets with explicit stored/ordinary-checked-write non-null value scope, bounded catalog CHECKs and retained native refinements; no native equivalence",
+          "system": "SQL Server",
+          "version": "2022 16.0.4295.3"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "SQL Server scoped facet classification and authored DDL projection with retained meaning",
+      "id": "umf.sqlserver.facets",
+      "schema": {
+        "$id": "urn:umf:sqlserver:facet-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.sqlserver.facets",
+              "version": "1.0.0"
+            }
+          },
+          "obligation": {
+            "enum": [
+              "value-domain",
+              "exact-input"
+            ]
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "concept": {
+                  "enum": [
+                    "length",
+                    "decimal",
+                    "integerWidth",
+                    "conversion",
+                    "native"
+                  ]
+                },
+                "idealPath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "interpretation": {
+                  "enum": [
+                    "declared",
+                    "inferred",
+                    "unknown",
+                    "unsupported"
+                  ]
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "outcome": {
+                  "enum": [
+                    "exact",
+                    "approximated",
+                    "not-expressible",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "concept",
+                "idealPath",
+                "nativePath",
+                "interpretation",
+                "outcome",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "physicalColumn": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "profile": {
+            "enum": [
+              "stored-value",
+              "ordinary-checked-write",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "obligation",
+          "outcome",
+          "observations",
+          "physicalColumn"
+        ],
+        "title": "Retained SQL Server facet interpretation profile",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-043; core 0.5.0 scoped classification, authored DDL projection and verified native/ideal recovery. Full binding acceptance remains gated by composition and compatibility qualification.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/sqlserver-facets/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.sqlserver.facets\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/sqlserver-facets/schema.json\",\"\"]",
+    "[\"integration\",\"umf.sqlserver.facets@1.0.0:import\"]",
+    "[\"integration\",\"umf.sqlserver.facets@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3861,
+      "path": "spec/extensions/sqlserver-facets/package.json",
+      "sha256": "0badb7960682eb374824b715d3b80de01cdb178ba911905d0f665acdf1893124"
+    }
+  ],
+  "summary": "SQL Server scoped facet classification and authored DDL projection with retained meaning",
+  "title": "umf.sqlserver.facets · 1.0.0"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3400,
+        "line": 27,
+        "path": "src/model/csv-boolean-lexical.ts",
+        "sha256": "78f43495a1caeda6518ac627f255c6c6b8a1663ac5ddf8e7ff0b01a901039207"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateCsvBooleanLexical",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(sourceInput: Document, requestInput: CsvBooleanLexicalRequest): CsvBooleanLexicalReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateCsvBooleanLexical\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3400,
+      "line": 27,
+      "path": "src/model/csv-boolean-lexical.ts",
+      "sha256": "78f43495a1caeda6518ac627f255c6c6b8a1663ac5ddf8e7ff0b01a901039207"
+    }
+  ],
+  "summary": "Explicit source-token conversion only; public Core Field validation owns validity.",
+  "title": "validateCsvBooleanLexical"
+}

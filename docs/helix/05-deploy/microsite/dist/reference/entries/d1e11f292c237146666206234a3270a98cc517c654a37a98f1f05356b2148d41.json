@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3522,
+        "line": 12,
+        "path": "src/adapters/openapi/extraction.ts",
+        "sha256": "643a30a1427927647da93d374fe09011451726c205727094dbd5dc92752dcaf4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "extractOpenapiSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, input: { pointer: string; resourceUri?: string; }): OpenapiSchemaExtraction"
+    ]
+  },
+  "id": "[\"api\",\".\",\"extractOpenapiSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3522,
+      "line": 12,
+      "path": "src/adapters/openapi/extraction.ts",
+      "sha256": "643a30a1427927647da93d374fe09011451726c205727094dbd5dc92752dcaf4"
+    }
+  ],
+  "summary": "Extract one declared Schema Object while retaining its entire owning context.",
+  "title": "extractOpenapiSchema"
+}

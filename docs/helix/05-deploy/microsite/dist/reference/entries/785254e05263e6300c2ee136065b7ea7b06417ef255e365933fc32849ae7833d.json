@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3400,
+        "line": 16,
+        "path": "src/model/csv-boolean-lexical.ts",
+        "sha256": "78f43495a1caeda6518ac627f255c6c6b8a1663ac5ddf8e7ff0b01a901039207"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CsvBooleanLexicalReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CsvBooleanLexicalReceipt {\n operation:'validate-csv-boolean-lexical';version:'1.0.0';source:Document;\n request:CsvBooleanLexicalRequest;value:{boolean:boolean};validation:Validation;provenance:'unverified';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CsvBooleanLexicalReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3400,
+      "line": 16,
+      "path": "src/model/csv-boolean-lexical.ts",
+      "sha256": "78f43495a1caeda6518ac627f255c6c6b8a1663ac5ddf8e7ff0b01a901039207"
+    }
+  ],
+  "summary": "Type declaration · src/model/csv-boolean-lexical.ts",
+  "title": "CsvBooleanLexicalReceipt"
+}

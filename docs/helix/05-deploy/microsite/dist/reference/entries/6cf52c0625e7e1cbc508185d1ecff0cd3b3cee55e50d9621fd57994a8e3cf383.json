@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2771,
+        "line": 6,
+        "path": "src/extensions/security/action-purposes.ts",
+        "sha256": "ea0165668ddd25b703303a8b6dd917d1c4143b21c68f77661b0fead5b87a9575"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityActionPurposeInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityActionPurposeInspection {\n status:'resolved-purposes'|'refused';ontology:Json;documents:Json;\n purposes:readonly SecurityActionPurposeDeclaration[];complete:false;authority:false;diagnostics:readonly Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityActionPurposeInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2771,
+      "line": 6,
+      "path": "src/extensions/security/action-purposes.ts",
+      "sha256": "ea0165668ddd25b703303a8b6dd917d1c4143b21c68f77661b0fead5b87a9575"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/action-purposes.ts",
+  "title": "SecurityActionPurposeInspection"
+}

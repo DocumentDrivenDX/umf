@@ -8,7 +8,7 @@ test('source-bound keyword/vector namespaces retain exact authored data and vect
  expect(result).toEqual(generateAccessPackage(req,profile()));
  const fields=result.files.find(f=>f.path==='search_docs/fields.py')!.text;
  expect(fields).toContain('text: KeywordIndex[Doc]');expect(fields).toContain('semantic: VectorIndex[Doc]');expect(fields).toContain('documentSha256');
- expect(result.files.find(f=>f.path==='search_docs/models.py')!.text).toContain('validate_vector(value, dimensions=3)');
+ expect(result.files.find(f=>f.path==='search_docs/models.py')!.text).toContain('FieldValidator(kind="vector", dimensions=3');
  expect(result.symbols.filter(s=>s.role==='search').map(s=>s.symbol)).toEqual(['Doc.s.text','Doc.s.semantic']);
  expect(JSON.parse(result.files.find(f=>f.path==='search_docs/_umf/sources.json')!.text)).toEqual(req.sources);
  expect(result.dispositions.filter(d=>d.pointer.includes('/search/')).every(d=>d.checks.includes('informational'))).toBe(true);

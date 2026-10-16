@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7336,
+        "line": 22,
+        "path": "src/core-ideals/field-parquet-projection.ts",
+        "sha256": "0f63e386f6fced5edce476badd85e40a4660497c0de3db75929ea27c90218b7f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFieldToParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreKindDeclaration, options: FieldParquetRequest): FieldParquetProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFieldToParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7336,
+      "line": 22,
+      "path": "src/core-ideals/field-parquet-projection.ts",
+      "sha256": "0f63e386f6fced5edce476badd85e40a4660497c0de3db75929ea27c90218b7f"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/field-parquet-projection.ts",
+  "title": "projectFieldToParquet"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8736,
+        "line": 14,
+        "path": "src/core-ideals/postgresql-record.ts",
+        "sha256": "8da66948774fd48793a394ae4783615f100a02869a541baa2e8e10d1443dae6a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRecordClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRecordClassification {\n operation:'classify-postgresql-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:PostgresqlRecordRequest;binding:typeof binding;mappings:Mapping[];\n residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRecordClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8736,
+      "line": 14,
+      "path": "src/core-ideals/postgresql-record.ts",
+      "sha256": "8da66948774fd48793a394ae4783615f100a02869a541baa2e8e10d1443dae6a"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/postgresql-record.ts",
+  "title": "PostgresqlRecordClassification"
+}

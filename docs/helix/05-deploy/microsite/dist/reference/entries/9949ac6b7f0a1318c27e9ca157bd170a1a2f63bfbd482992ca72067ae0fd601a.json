@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24171,
+        "line": 16,
+        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+        "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerLayoutEndpointComponent",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerLayoutEndpointComponent extends SqlServerLayoutType {keyField:CoreKeyFieldReference;endpointField:BindingFieldRef;endpointColumn:string;carrierField?:BindingFieldRef;carrierColumn:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerLayoutEndpointComponent\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24171,
+      "line": 16,
+      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+      "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/relationship-layout.ts",
+  "title": "SqlServerLayoutEndpointComponent"
+}

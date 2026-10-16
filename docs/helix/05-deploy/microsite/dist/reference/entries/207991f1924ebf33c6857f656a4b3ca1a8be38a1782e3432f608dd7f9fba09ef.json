@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9953,
+        "line": 42,
+        "path": "src/model/cardinality.ts",
+        "sha256": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreCardinality",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreCardinalityIdentity): CoreCardinalityInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreCardinality\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9953,
+      "line": 42,
+      "path": "src/model/cardinality.ts",
+      "sha256": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651"
+    }
+  ],
+  "summary": "Inspect ideal container/item meaning without inferring native shape or author provenance.",
+  "title": "inspectCoreCardinality"
+}

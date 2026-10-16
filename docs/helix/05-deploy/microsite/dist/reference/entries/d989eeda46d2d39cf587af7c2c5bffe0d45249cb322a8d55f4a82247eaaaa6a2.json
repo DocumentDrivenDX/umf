@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12625,
+        "line": 105,
+        "path": "src/core-ideals/nullability-postgresql.ts",
+        "sha256": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverPostgresqlNullabilitySource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlNullabilityClassification, current: Document): string"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverPostgresqlNullabilitySource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12625,
+      "line": 105,
+      "path": "src/core-ideals/nullability-postgresql.ts",
+      "sha256": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259"
+    }
+  ],
+  "summary": "Recover exact original capture text, including unclaimed native content.",
+  "title": "recoverPostgresqlNullabilitySource"
+}

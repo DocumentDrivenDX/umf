@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1226,
+        "line": 4,
+        "path": "src/adapters/parquet/metadata.ts",
+        "sha256": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetMetadataInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetMetadataInspection {source:Document;status:'mapped'|'blocked';complete:false;diagnostics:Diagnostic[];wire?:ParquetWireValue;metadata?:Json}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetMetadataInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1226,
+      "line": 4,
+      "path": "src/adapters/parquet/metadata.ts",
+      "sha256": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/metadata.ts",
+  "title": "ParquetMetadataInspection"
+}

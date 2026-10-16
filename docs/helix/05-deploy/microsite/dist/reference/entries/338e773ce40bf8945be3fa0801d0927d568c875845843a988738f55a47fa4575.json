@@ -1,0 +1,180 @@
+{
+  "data": {
+    "extensionId": "umf.delta",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/delta/upstream.test.ts",
+          "fixtures/delta/upstream/oracle-results.json",
+          "fixtures/delta/upstream/browser-results.json",
+          "tests/delta/schema.test.ts",
+          "fixtures/delta/capability-results.json",
+          "fixtures/delta/umf-oracle-results.json",
+          "fixtures/delta/browser-results.json"
+        ],
+        "native": {
+          "subset": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate.",
+          "system": "Delta schema JSON",
+          "version": "Protocol commit 3b1b99cd077ec9c84c8a94c250dea3730cc33392; deltalake 1.6.4 oracle"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Exact Delta schema JSON with explicit table/protocol interpretation limits",
+      "id": "umf.delta",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:delta:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "delta-schema-json"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-018. Source tokens and unknown content are authoritative; no table feature support, SQL evaluation or native normalization is implied.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"deltaRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/delta/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.delta\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"deltaRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/delta/schema.json\",\"\"]",
+    "[\"integration\",\"umf.delta@0.1.0:import\"]",
+    "[\"integration\",\"umf.delta@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3764,
+      "path": "spec/extensions/delta/package.json",
+      "sha256": "c74ce98ad28618c640b42836975c709528cc4165795660ec0c6d564dc914caaf"
+    }
+  ],
+  "summary": "Exact Delta schema JSON with explicit table/protocol interpretation limits",
+  "title": "umf.delta · 0.1.0"
+}

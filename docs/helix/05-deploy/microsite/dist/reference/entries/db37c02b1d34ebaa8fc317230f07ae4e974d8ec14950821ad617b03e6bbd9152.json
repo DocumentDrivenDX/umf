@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3628,
+        "line": 13,
+        "path": "src/adapters/access-temporal.ts",
+        "sha256": "45dac162a1502c90d2e2e0ecca5e01b790d126c84fcf3880edbf4dc92405a8c5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AccessLocal",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AccessLocal extends AccessTemporalBase {readonly kind:'local';readonly microsecond:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AccessLocal\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3628,
+      "line": 13,
+      "path": "src/adapters/access-temporal.ts",
+      "sha256": "45dac162a1502c90d2e2e0ecca5e01b790d126c84fcf3880edbf4dc92405a8c5"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/access-temporal.ts",
+  "title": "AccessLocal"
+}

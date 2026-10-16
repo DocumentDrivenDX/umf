@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5095,
+        "line": 10,
+        "path": "src/adapters/shacl/engine.ts",
+        "sha256": "92f774a95bc52fe5f68ec13c36c2cb22b69bb64ea7a47a063285b409728733fe"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ShaclEngineReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ShaclEngineReport {\n stringProfile:'umf-string-1';numericProfile:'umf-numeric-2';engine:'rdf-validate-shacl@0.6.5';blankNodePolicy:'disjoint-inputs'|'shared-scope';status:'evaluated'|'blocked';complete:false;\n shapes:Document;data:Document;engineConforms?:boolean;report?:Document;diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ShaclEngineReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5095,
+      "line": 10,
+      "path": "src/adapters/shacl/engine.ts",
+      "sha256": "92f774a95bc52fe5f68ec13c36c2cb22b69bb64ea7a47a063285b409728733fe"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/shacl/engine.ts",
+  "title": "ShaclEngineReport"
+}

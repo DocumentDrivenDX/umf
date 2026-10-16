@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3767,
+        "path": "spec/extensions/arrow/package.json",
+        "sha256": "13fc048868b027a4c6fe931808e62ca2ef78a0425426666d4256747287354865"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.arrow@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.arrow@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Arrow integration schema JSON · Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0",
+      "subset": "Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.",
+      "targetSystem": "UMF",
+      "title": "umf.arrow · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.arrow@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.arrow\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.",
+  "title": "umf.arrow · import"
+}

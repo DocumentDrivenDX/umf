@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3797,
+        "line": 7,
+        "path": "src/adapters/smithy/worker.ts",
+        "sha256": "370a60a87c8cbd97f2659307635339b200b393cc18b4c67d2eb1fb57debe9939"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "createSmithyWorkerBackend",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(options: { workerUrl: string | URL; timeoutMs?: number; }): SmithySelectionBackend"
+    ]
+  },
+  "id": "[\"api\",\".\",\"createSmithyWorkerBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3797,
+      "line": 7,
+      "path": "src/adapters/smithy/worker.ts",
+      "sha256": "370a60a87c8cbd97f2659307635339b200b393cc18b4c67d2eb1fb57debe9939"
+    }
+  ],
+  "summary": "One dedicated module worker per native operation; timeout/abort terminates the runtime.",
+  "title": "createSmithyWorkerBackend"
+}

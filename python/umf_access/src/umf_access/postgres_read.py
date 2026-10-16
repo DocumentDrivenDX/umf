@@ -15,12 +15,14 @@ from contextlib import nullcontext
 from decimal import Decimal
 from typing import Any, Protocol, cast
 
+from .codec_support import revalidate_model, validate_graph
 from .pages import ReadContinuation, ReadObligationUnmet, ReadPage, StaleContinuation
 from .reviewed import CatalogRead, P, R, ReadBuildError
 
 
 class TimedOut(TimeoutError):
     pass
+
 
 
 class Cursor(Protocol):
@@ -82,41 +84,51 @@ _COLUMNS = """SELECT a.attname, tn.nspname, t.typname, a.attnotnull
 FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
 WHERE a.attrelid = %s AND a.attnum > 0 AND NOT a.attisdropped"""
+# Equality and ordering must agree with the operators used by the compiled SQL.
+# Attribute-number coincidence alone does not prove a to-one/keyset Key.
 _KEYS = """SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
 WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
-FROM pg_catalog.pg_index i WHERE i.indrelid = %s AND i.indisunique AND i.indisvalid
-AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate"""
-_TYPES = {
-    "integer": {"int2", "int4", "int8"},
-    "decimal": {"numeric"},
-    "string": {"text", "varchar"},
-    "boolean": {"bool"},
-}
+FROM pg_catalog.pg_index i
+JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+WHERE i.indrelid = %s AND i.indisunique AND i.indisvalid AND i.indisready
+AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+AND NOT EXISTS (
+ SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+ JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+ JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+ JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+ LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+ LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+ LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+ WHERE k.pos <= i.indnkeyatts AND (
+  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+  AND op.opcmethod = ix.relam
+  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+  AND (a.attcollation = 0 OR co.collisdeterministic)
+ ) IS NOT TRUE
+)"""
+
+_TYPES = {"integer": {"int2", "int4", "int8"}, "decimal": {"numeric"},
+          "string": {"text", "varchar"}, "boolean": {"bool"}}
 
 
-def _checked_sort_values(
-    fields: list[dict[str, object]], values: Sequence[object]
-) -> tuple[object, ...]:
-    if len(fields) != len(values):
-        raise ReadObligationUnmet("cursor output inventory differs")
-    for field, value in zip(fields, values, strict=True):
-        expected = {
-            "integer": int,
-            "decimal": Decimal,
-            "string": str,
-            "boolean": bool,
-        }.get(str(field["carrier"]))
-        if (
-            expected is None
-            or value is None
-            and not field["nullable"]
-            or value is not None
-            and type(value) is not expected
-            or isinstance(value, Decimal)
-            and not value.is_finite()
-        ):
-            raise ReadObligationUnmet("cursor output carrier differs")
+
+
+def _check_cursor_value(field: dict[str,object], value: object) -> None:
+    expected={"integer":int,"decimal":Decimal,"string":str,"boolean":bool}.get(str(field["carrier"]))
+    if expected is None or value is None and not field['nullable'] or value is not None and type(value) is not expected or isinstance(value,Decimal) and not value.is_finite():
+        raise ReadObligationUnmet("cursor carrier differs from ordering")
+
+
+def _checked_sort_values(fields: list[dict[str,object]], values: Sequence[object]) -> tuple[object,...]:
+    if len(fields)!=len(values): raise ReadObligationUnmet("cursor output inventory differs")
+    for field,value in zip(fields,values,strict=True):
+        _check_cursor_value(field, value)
     return tuple(values)
 
 
@@ -215,23 +227,9 @@ def _program(
     if not _verify_only and type(params) is not entry.parameters:
         raise TypeError("parameters require the exact declared model")
     # Revalidate raw attributes: model_construct/model_copy never bypass codecs.
-    checked = (
-        None
-        if _verify_only
-        else entry.parameters.model_validate(
-            {name: getattr(params, name) for name in entry.parameters.model_fields},
-            strict=True,
-        )
-    )
-    values = (
-        {}
-        if checked is None
-        else {name: getattr(checked, name) for name in entry.parameters.model_fields}
-    )
-    if any(
-        isinstance(value, Decimal) and not value.is_finite()
-        for value in values.values()
-    ):
+    checked = None if _verify_only else revalidate_model(entry.parameters, params)
+    values = {} if checked is None else {name: getattr(checked, name) for name in entry.parameters.model_fields}
+    if any(isinstance(value, Decimal) and not value.is_finite() for value in values.values()):
         raise ValueError("nonfinite decimal parameter")
     order = cast(list[str], artifact["dbapiParameterOrder"])
     obligations = cast(dict[str, object], artifact["obligations"])
@@ -283,19 +281,11 @@ def _program(
         values["__umf_has_after"] = after is not None
         for i, field in enumerate(cursor_fields):
             value = after.values[i] if after is not None else None
-            carrier = field["carrier"]
-            expected_type = {
-                "integer": int,
-                "decimal": Decimal,
-                "string": str,
-                "boolean": bool,
-            }[cast(str, carrier)]
-            if value is not None and (
-                type(value) is not expected_type
-                or isinstance(value, Decimal)
-                and not value.is_finite()
-            ):
-                raise StaleContinuation("continuation carrier differs from ordering")
+            if after is not None:
+                try:
+                    _check_cursor_value(field, value)
+                except ReadObligationUnmet:
+                    raise StaleContinuation("continuation carrier differs from ordering") from None
             values[f"__umf_after_{i}"] = value
     elif after is not None:
         raise ReadObligationUnmet("catalog is not a keyset page")
@@ -311,12 +301,7 @@ def _program(
     rows = yield ("many", cap + 1)
     if len(rows) > cap:
         raise ReadObligationUnmet("target returned more than the catalog row cap")
-    result = [
-        entry.result.model_validate(
-            dict(zip(expected, row[: len(expected)], strict=True)), strict=True
-        )
-        for row in rows
-    ]
+    result = [validate_graph(entry.result, dict(zip(expected, row[:len(expected)], strict=True))) for row in rows]
     yield ("execute", _ROLE)
     if (yield ("one",)) != before:
         raise ReadObligationUnmet("caller role changed during read")

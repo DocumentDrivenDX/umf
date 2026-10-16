@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6957,
+        "line": 22,
+        "path": "src/core-ideals/tablespec-record.ts",
+        "sha256": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyTableSpecRecord",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: TableSpecRecordRequest): TableSpecRecordClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyTableSpecRecord\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6957,
+      "line": 22,
+      "path": "src/core-ideals/tablespec-record.ts",
+      "sha256": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3"
+    }
+  ],
+  "summary": "One record and its named members; atomic across every column. Physical/context groupings stay native.",
+  "title": "classifyTableSpecRecord"
+}

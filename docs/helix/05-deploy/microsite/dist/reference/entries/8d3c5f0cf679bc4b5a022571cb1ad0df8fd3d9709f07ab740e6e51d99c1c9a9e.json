@@ -1,0 +1,114 @@
+{
+  "data": {
+    "extensionId": "umf.tablespec.nullability",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/nullability-tablespec.test.ts",
+          "fixtures/validation/nullability-tablespec-profile-native.json"
+        ],
+        "native": {
+          "subset": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee",
+          "system": "TableSpec",
+          "version": "647e8e566ad78b864282ec65c0b0b2237aa63084"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Retained profile, context and absence-carrier scope for a TableSpec availability observation; not native execution or equivalence",
+      "id": "umf.tablespec.nullability",
+      "schema": {
+        "$id": "urn:umf:tablespec:nullability-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.tablespec.nullability",
+              "version": "1.0.0"
+            }
+          },
+          "carrier": {
+            "enum": [
+              "null-value",
+              "unresolved"
+            ]
+          },
+          "context": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "enum": [
+              "runtime-model",
+              "checked-schema",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "context",
+          "carrier",
+          "interpretation",
+          "nativePath"
+        ],
+        "title": "Retained TableSpec availability binding scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-041 TableSpec up-classification; core 0.3.0 ideal label is qualified by this retained scope. Unknown refinements must remain attached.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/tablespec-nullability/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.tablespec.nullability\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/tablespec-nullability/schema.json\",\"\"]",
+    "[\"integration\",\"umf.tablespec.nullability@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2195,
+      "path": "spec/extensions/tablespec-nullability/package.json",
+      "sha256": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420"
+    }
+  ],
+  "summary": "Retained profile, context and absence-carrier scope for a TableSpec availability observation; not native execution or equivalence",
+  "title": "umf.tablespec.nullability · 1.0.0"
+}

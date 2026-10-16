@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 9060,
+        "path": "spec/extensions/owl/package.json",
+        "sha256": "1af8a39f8596a66240b4ade9c482c18a8a5748a345aee936b2bf4addb66ae149"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.owl@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.owl@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "OWL · OWL 2 Second Edition 2012-12-11",
+      "subset": "Turtle RDF graph preservation; explicit headers/declarations, local expressions, axiom annotations, negative/n-ary assertions and chain/key/disjoint-union lists. No complete structural OWL mapping, validity, profile, import execution or entailment claim",
+      "targetSystem": "OWL · OWL 2 Second Edition 2012-12-11",
+      "title": "umf.owl · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.owl@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.owl\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Turtle RDF graph preservation; explicit headers/declarations, local expressions, axiom annotations, negative/n-ary assertions and chain/key/disjoint-union lists. No complete structural OWL mapping, validity, profile, import execution or entailment claim",
+  "title": "umf.owl · export"
+}

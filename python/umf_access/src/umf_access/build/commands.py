@@ -174,24 +174,12 @@ def emit_command(
 ) -> tuple[list[str], list[dict[str, Any]]]:
     from pydantic import MISSING
 
-    from ..types import StrictModel
-
-    reference = next(
-        (a for a in action_refs if (a.module, a.action) == declaration.action), None
-    )
-    if reference is None:
-        raise CommandBuildError("command action was not selected at stage one")
-    symbol = next(
-        s["symbol"]
-        for s in manifest["symbols"]
-        if s["role"] == "action-ref" and s["pointer"] == reference.source.action_pointer
-    )
-    signature = []
-    arguments = []
-    names = []
-    lines = []
-    entries = []
-    variants = []
+    from ..types import ActionSource, StrictModel
+    references=[a for a in action_refs if isinstance(declaration.action,ActionSource) and a.source==declaration.action]
+    if len(references)!=1:raise CommandBuildError('command action source was not uniquely selected at stage one')
+    reference=references[0]
+    symbol=next(s['symbol'] for s in manifest['symbols'] if s['role']=='action-ref' and s['pointer']==reference.source.action_pointer)
+    signature=[];arguments=[];names=[];lines=[];entries=[];variants=[]
     for parameter in declaration.parameters:
         names.append(parameter.name)
         signature.append(

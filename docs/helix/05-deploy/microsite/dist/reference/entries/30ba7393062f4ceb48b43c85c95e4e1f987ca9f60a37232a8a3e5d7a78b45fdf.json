@@ -1,0 +1,214 @@
+{
+  "data": {
+    "extensionId": "umf.sqlserver.keys",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/key-sqlserver.test.ts",
+          "fixtures/validation/key-sqlserver-discovery-native.json",
+          "fixtures/validation/key-sqlserver-browser.json",
+          "tests/core-ideals/key-sqlserver-projection.test.ts",
+          "fixtures/validation/key-sqlserver-projection-native.json",
+          "fixtures/validation/key-sqlserver-projection-browser.json"
+        ],
+        "native": {
+          "subset": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence",
+          "system": "SQL Server",
+          "version": "16.0.4295.3"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "SQL Server Key observations with retained native semantics",
+      "id": "umf.sqlserver.keys",
+      "schema": {
+        "$id": "urn:umf:sqlserver:key-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.sqlserver.keys",
+              "nativeVersion": "16.0.4295.3",
+              "subset": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence",
+              "version": "1.0.0"
+            }
+          },
+          "nativeSource": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "enforcement": {
+                  "enum": [
+                    "immediate-unique-nonnull",
+                    "conditional",
+                    "nullable",
+                    "not-unique",
+                    "unavailable",
+                    "unknown"
+                  ]
+                },
+                "equality": {
+                  "enum": [
+                    "exact-on-representable-values",
+                    "incompatible",
+                    "unknown"
+                  ]
+                },
+                "fields": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "element": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "module": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "identity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "indexId": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "name": {
+                      "anyOf": [
+                        {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "schema": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "table": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "schema",
+                    "table",
+                    "indexId",
+                    "name"
+                  ],
+                  "type": "object"
+                },
+                "ignoreDuplicateKey": {
+                  "type": "boolean"
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "primary": {
+                  "type": "boolean"
+                },
+                "provenance": {
+                  "const": "inferred"
+                },
+                "reasons": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "scope": {
+                  "const": "captured-table-stored-values"
+                }
+              },
+              "required": [
+                "identity",
+                "nativePath",
+                "fields",
+                "primary",
+                "enforcement",
+                "equality",
+                "ignoreDuplicateKey",
+                "authorIntent",
+                "provenance",
+                "scope",
+                "reasons"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "const": "captured-stored-values"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "nativeSource",
+          "observations"
+        ],
+        "title": "SQL Server observed key enforcement, never authored identity",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-040 and TD-044; Native classification retains observations. Separate core 0.6.0 authored projection uses key-sqlserver-projection.schema.json, explicit physical encoding and session preconditions. Qualified SQL Server binding evidence is recorded in docs/helix/04-build/evidence/sqlserver-key-acceptance.md; Key ideal admission and all-five delivery remain separate.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/sqlserver-keys/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.sqlserver.keys\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/sqlserver-keys/schema.json\",\"\"]",
+    "[\"integration\",\"umf.sqlserver.keys@1.0.0:import\"]",
+    "[\"integration\",\"umf.sqlserver.keys@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5520,
+      "path": "spec/extensions/sqlserver-keys/package.json",
+      "sha256": "3b7b5bf6e05924a6b8c381052b5b42438b10254fa6cd7994dfbf35ad99cfe17f"
+    }
+  ],
+  "summary": "SQL Server Key observations with retained native semantics",
+  "title": "umf.sqlserver.keys · 1.0.0"
+}

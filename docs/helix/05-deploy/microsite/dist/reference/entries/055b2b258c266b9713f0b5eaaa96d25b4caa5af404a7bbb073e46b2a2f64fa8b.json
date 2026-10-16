@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5752,
+        "line": 24,
+        "path": "src/adapters/openapi/references.ts",
+        "sha256": "b9d8d03868c53912d5c01a2031adce94ab363a6cfe9fbb45e84ac5d31ddce37f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "resolveOpenapiObjectReference",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, input: OpenapiReferenceRequest): OpenapiReferenceResolution"
+    ]
+  },
+  "id": "[\"api\",\".\",\"resolveOpenapiObjectReference\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5752,
+      "line": 24,
+      "path": "src/adapters/openapi/references.ts",
+      "sha256": "b9d8d03868c53912d5c01a2031adce94ab363a6cfe9fbb45e84ac5d31ddce37f"
+    }
+  ],
+  "summary": "Resolve a caller-declared Reference Object role, without inferring Schema Object scope.",
+  "title": "resolveOpenapiObjectReference"
+}

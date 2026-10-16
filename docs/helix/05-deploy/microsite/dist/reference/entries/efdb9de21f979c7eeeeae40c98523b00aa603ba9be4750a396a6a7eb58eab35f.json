@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4743,
+        "line": 5,
+        "path": "src/adapters/linkml/class-slots.ts",
+        "sha256": "2744745ece30a7e52bc1c312c7eee6800f6845aa78c15373ed3cb66dd465fd17"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LinkmlClassSlotsReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LinkmlClassSlotsReport {\n source:Document;className:string;scope:'document';status:'resolved'|'blocked';complete:false;\n ancestors:string[];slots:{name:string;declarations:{className:string;path:string;kind:'slot'|'attribute'}[]}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LinkmlClassSlotsReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4743,
+      "line": 5,
+      "path": "src/adapters/linkml/class-slots.ts",
+      "sha256": "2744745ece30a7e52bc1c312c7eee6800f6845aa78c15373ed3cb66dd465fd17"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/linkml/class-slots.ts",
+  "title": "LinkmlClassSlotsReport"
+}

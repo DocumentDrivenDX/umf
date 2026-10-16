@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4853,
+        "line": 5,
+        "path": "src/core-ideals/classification-report.ts",
+        "sha256": "f2181216f73568e9f51206ef6ff330efa97de529a59807de39c41e222418164a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NativeFieldClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type NativeFieldClassification=TableSpecFieldClassification|PostgresqlFieldClassification|SqlServerFieldClassification|AvroFieldClassification|ParquetFieldClassification;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NativeFieldClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4853,
+      "line": 5,
+      "path": "src/core-ideals/classification-report.ts",
+      "sha256": "f2181216f73568e9f51206ef6ff330efa97de529a59807de39c41e222418164a"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/classification-report.ts",
+  "title": "NativeFieldClassification"
+}

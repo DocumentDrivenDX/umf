@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4502,
+        "line": 20,
+        "path": "src/adapters/shacl/metadata.ts",
+        "sha256": "5c9d6818a6943c7c58d706fa2d6874ad771d7b705f153ba594116d6c24fb3c17"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getShaclShapeMetadata",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, shape: RdfNode): ShaclShapeMetadata"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getShaclShapeMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4502,
+      "line": 20,
+      "path": "src/adapters/shacl/metadata.ts",
+      "sha256": "5c9d6818a6943c7c58d706fa2d6874ad771d7b705f153ba594116d6c24fb3c17"
+    }
+  ],
+  "summary": "Declared metadata only. Constraint grouping does not assert validity, inference or enforcement.",
+  "title": "getShaclShapeMetadata"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7026,
+        "line": 7,
+        "path": "src/projections/postgresql-json-schema.ts",
+        "sha256": "43d1141cd6969d16e42164288069515cc6f63e422f3af890337085d98517cbca"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRowPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRowPolicy {\n id:string;schemaId:string;relation:{schema:string;name:string};\n columns:Record<string,'sql-text'|'json-boolean'|'json-int32'|'json-value'>;\n lossPolicy:'strict'|'allow-reported-loss';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRowPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7026,
+      "line": 7,
+      "path": "src/projections/postgresql-json-schema.ts",
+      "sha256": "43d1141cd6969d16e42164288069515cc6f63e422f3af890337085d98517cbca"
+    }
+  ],
+  "summary": "Type declaration · src/projections/postgresql-json-schema.ts",
+  "title": "PostgresqlRowPolicy"
+}

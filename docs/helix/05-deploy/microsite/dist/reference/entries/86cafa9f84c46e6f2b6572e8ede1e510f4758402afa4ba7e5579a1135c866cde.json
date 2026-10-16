@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2470,
+        "line": 24,
+        "path": "src/extensions/security/types.ts",
+        "sha256": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityField",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityField {\n  ref:SecurityRef;protection:'protected'|'unprotected';queryUse?:Partial<Record<SecurityQueryOperator,SecurityQueryUse>>;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2470,
+      "line": 24,
+      "path": "src/extensions/security/types.ts",
+      "sha256": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/types.ts",
+  "title": "SecurityField"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 20534,
+        "line": 23,
+        "path": "src/extensions/security/evaluate.ts",
+        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityEvaluationRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityEvaluationRequest {\n  action:string;resources:SecurityFact[];output:SecurityRef[];\n  targets?:SecurityRef[];\n  queryUses?:{field:SecurityRef;operator:SecurityQueryOperator;originalAction?:string}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityEvaluationRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 20534,
+      "line": 23,
+      "path": "src/extensions/security/evaluate.ts",
+      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/evaluate.ts",
+  "title": "SecurityEvaluationRequest"
+}

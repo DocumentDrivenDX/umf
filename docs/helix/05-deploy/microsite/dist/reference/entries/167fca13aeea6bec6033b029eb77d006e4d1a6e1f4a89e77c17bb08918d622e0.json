@@ -1,0 +1,469 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/model"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/action"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/key"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/field"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/actions/plan-model.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:actions:plan-model:1"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "action": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/action"
+                }
+              }
+            },
+            "assignments": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "field": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:actions:plan:1#/$defs/field"
+                            }
+                          }
+                        },
+                        "input": {
+                          "kind": "object",
+                          "members": {
+                            "maxLength": {
+                              "kind": "number",
+                              "value": "256"
+                            },
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "input"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "field"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "64"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "entityParameter": {
+              "kind": "object",
+              "members": {
+                "maxLength": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "frames": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "maxLength": {
+                      "kind": "number",
+                      "value": "256"
+                    },
+                    "minLength": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "model": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/model"
+                }
+              }
+            },
+            "obligations": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "id": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "checked"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "status"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "10000"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "producer": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "build": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "umf.actions.plan-model"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "build"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "protocol": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "umf.actions.plan-model/1"
+                }
+              }
+            },
+            "schema": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan-model:1"
+                        }
+                      }
+                    },
+                    "sha256": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[0-9a-f]{64}$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sha256"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "target": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/key"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "protocol"
+            },
+            {
+              "kind": "string",
+              "value": "model"
+            },
+            {
+              "kind": "string",
+              "value": "action"
+            },
+            {
+              "kind": "string",
+              "value": "entityParameter"
+            },
+            {
+              "kind": "string",
+              "value": "target"
+            },
+            {
+              "kind": "string",
+              "value": "assignments"
+            },
+            {
+              "kind": "string",
+              "value": "frames"
+            },
+            {
+              "kind": "string",
+              "value": "producer"
+            },
+            {
+              "kind": "string",
+              "value": "schema"
+            },
+            {
+              "kind": "string",
+              "value": "obligations"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/actions/plan-model.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2657,
+      "path": "spec/extensions/actions/plan-model.schema.json",
+      "sha256": "b99226c6188624ec240fb1db96a5fcdfcb15c6fe2b8f2c60276e13f7003b9998"
+    }
+  ],
+  "summary": "spec/extensions/actions/plan-model.schema.json",
+  "title": "plan-model.schema.json"
+}

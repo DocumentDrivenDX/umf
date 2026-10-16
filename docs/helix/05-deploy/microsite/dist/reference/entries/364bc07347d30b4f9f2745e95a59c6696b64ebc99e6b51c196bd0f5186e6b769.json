@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4490,
+        "line": 17,
+        "path": "src/projections/bit128-model.ts",
+        "sha256": "898ae9055c9c110b5a3724d5aebef55beb330cfd9bea05a8bf2b3c3dda21d2fe"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128ModelProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128ModelProjection {\n operation:'project-bit128-model';version:'1.0.0';source:Document;binding:Document;lossPolicy:'strict'|'report';\n status:'projected'|'reported'|'blocked';nativeRequirements:{scope:'connection';statements:string[]}[];residuals:Bit128ModelResidual[];\n mappings:{record:{module:string;element:string};table:string;fields:{identity:{module:string;element:string};slots:string[];paths:string[][]}[]}[];\n compositeMappings?:CompositeMapping[];\n candidate?:{format:'sql'|'avro'|'parquet'|'tablespec';text:string};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128ModelProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4490,
+      "line": 17,
+      "path": "src/projections/bit128-model.ts",
+      "sha256": "898ae9055c9c110b5a3724d5aebef55beb330cfd9bea05a8bf2b3c3dda21d2fe"
+    }
+  ],
+  "summary": "Type declaration · src/projections/bit128-model.ts",
+  "title": "Bit128ModelProjection"
+}

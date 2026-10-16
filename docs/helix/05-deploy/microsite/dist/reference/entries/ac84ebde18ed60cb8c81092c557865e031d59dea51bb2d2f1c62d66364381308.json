@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3936,
+        "line": 37,
+        "path": "src/adapters/owl/index.ts",
+        "sha256": "997e9f04685d5ea2ddc21cc19b5a53ae5f17b49dc714832f24662aabd3c86331"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlOntologyHeader",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OwlOntologyHeader {node:RdfNode;versionIRIs:(RdfNode|RdfLiteral)[];imports:(RdfNode|RdfLiteral)[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlOntologyHeader\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3936,
+      "line": 37,
+      "path": "src/adapters/owl/index.ts",
+      "sha256": "997e9f04685d5ea2ddc21cc19b5a53ae5f17b49dc714832f24662aabd3c86331"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/index.ts",
+  "title": "OwlOntologyHeader"
+}

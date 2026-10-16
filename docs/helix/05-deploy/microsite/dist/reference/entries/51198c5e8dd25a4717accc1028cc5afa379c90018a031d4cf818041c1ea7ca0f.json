@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4950,
+        "line": 11,
+        "path": "src/adapters/parquet/repair-offsets.ts",
+        "sha256": "70abbf8e005ce9029acdd8fce08046d791978f8e525a0eee34dc5464c966e842"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetOffsetRepair",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetOffsetRepair {source:Document;status:'transformed'|'blocked';complete:false;diagnostics:Diagnostic[];output?:Document;unchangedPrefixBytes?:number;repairs?:{rowGroup:number;column:number;oldDataOffset:number;dataOffset:number;dictionaryOffset:number}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetOffsetRepair\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4950,
+      "line": 11,
+      "path": "src/adapters/parquet/repair-offsets.ts",
+      "sha256": "70abbf8e005ce9029acdd8fce08046d791978f8e525a0eee34dc5464c966e842"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/repair-offsets.ts",
+  "title": "ParquetOffsetRepair"
+}

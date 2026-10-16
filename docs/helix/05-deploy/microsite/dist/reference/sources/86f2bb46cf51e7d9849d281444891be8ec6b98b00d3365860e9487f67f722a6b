@@ -1,0 +1,326 @@
+{
+  "type": "object",
+  "properties": {
+    "plan": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/profile"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "profile",
+        "claims"
+      ],
+      "additionalProperties": true
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/profile"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "profile",
+        "claims"
+      ],
+      "additionalProperties": true
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/profile"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "profile",
+        "claims"
+      ],
+      "additionalProperties": true
+    },
+    "bulk": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/profile"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "profile",
+        "claims"
+      ],
+      "additionalProperties": true
+    },
+    "guard": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/profile"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "profile",
+        "claims"
+      ],
+      "additionalProperties": true
+    },
+    "snapshot": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/profile"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1024
+                },
+                "minItems": 0,
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "profile",
+        "claims"
+      ],
+      "additionalProperties": true
+    },
+    "action": {
+      "$ref": "urn:umf:actions:executor-profile:0.1.0"
+    }
+  },
+  "required": [
+    "plan",
+    "selection",
+    "manifest",
+    "bulk",
+    "guard",
+    "snapshot",
+    "action"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:plan-capabilities:1"
+}

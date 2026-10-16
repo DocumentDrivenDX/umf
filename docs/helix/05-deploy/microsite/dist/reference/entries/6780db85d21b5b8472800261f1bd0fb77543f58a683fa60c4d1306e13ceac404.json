@@ -1,0 +1,158 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/artifact"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/diagnostic"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/actions/plan-inspection.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:actions:plan-inspection:1"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "urn:umf:actions:plan:1#/$defs/diagnostic"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "128"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "eligible": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "boolean"
+                }
+              }
+            },
+            "plan": {
+              "kind": "object",
+              "members": {
+                "anyOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan:1"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "null"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/artifact"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "plan"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "eligible"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/actions/plan-inspection.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 726,
+      "path": "spec/extensions/actions/plan-inspection.schema.json",
+      "sha256": "e71851bebf54e51f13d098e9afdbc2d4d9d17b8d93d43ad568c5b31b0036992b"
+    }
+  ],
+  "summary": "spec/extensions/actions/plan-inspection.schema.json",
+  "title": "plan-inspection.schema.json"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3090,
+        "line": 25,
+        "path": "src/extensions/actions/plan-types.ts",
+        "sha256": "3c73b0c0acf53c781331653470c9b821fb6d4beaa0059e50b37b4c55338b0025"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionPlanInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionPlanInspection {plan:PortableActionPlan|null;source:ActionPlanArtifact;eligible:boolean;diagnostics:ActionPlanDiagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionPlanInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3090,
+      "line": 25,
+      "path": "src/extensions/actions/plan-types.ts",
+      "sha256": "3c73b0c0acf53c781331653470c9b821fb6d4beaa0059e50b37b4c55338b0025"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/plan-types.ts",
+  "title": "ActionPlanInspection"
+}

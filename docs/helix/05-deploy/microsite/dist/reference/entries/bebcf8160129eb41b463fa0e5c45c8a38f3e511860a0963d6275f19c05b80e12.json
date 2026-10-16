@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11892,
+        "line": 17,
+        "path": "src/core-ideals/relationship-parquet-projection.ts",
+        "sha256": "acf9389b7c12672b1634c6047b9f9342e20d36358b55a920a318da665e51abcd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipParquetProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipParquetProjection {\n operation:'project-relationship-parquet';version:'1.0.0';status:'projected'|'blocked';outcome:'approximated'|'not-expressible'|'unknown';\n source:Document;author:CoreRelationshipDeclaration;request:RelationshipParquetRequest;binding:typeof binding;target?:Document;nativeArchive?:{hex:string};\n mappings:{idealPath:string;nativePath:string;outcome:'approximated';targetKey:string;componentPaths:string[]}[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipParquetProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11892,
+      "line": 17,
+      "path": "src/core-ideals/relationship-parquet-projection.ts",
+      "sha256": "acf9389b7c12672b1634c6047b9f9342e20d36358b55a920a318da665e51abcd"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-parquet-projection.ts",
+  "title": "RelationshipParquetProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4960,
+        "line": 6,
+        "path": "src/adapters/avro/metadata.ts",
+        "sha256": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroFieldMetadata",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroFieldMetadata {\n dependencyId?:string;path:string;record:string;element:Element;nativeField:NativeJson;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroFieldMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4960,
+      "line": 6,
+      "path": "src/adapters/avro/metadata.ts",
+      "sha256": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/avro/metadata.ts",
+  "title": "AvroFieldMetadata"
+}

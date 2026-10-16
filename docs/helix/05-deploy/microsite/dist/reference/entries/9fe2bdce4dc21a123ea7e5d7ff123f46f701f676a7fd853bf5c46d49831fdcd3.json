@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9306,
+        "line": 12,
+        "path": "src/adapters/delta/reconcile.ts",
+        "sha256": "9fc14f5863506aa14a6c3ca76ae54932bcaffd3e9b3598d105fbb3cf2d720dcc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "reconcileDeltaCheckpoint",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(checkpoint: DeltaCommit, commits: DeltaCommit[], spec?: \"v1\" | \"v2\"): DeltaReconciliation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"reconcileDeltaCheckpoint\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9306,
+      "line": 12,
+      "path": "src/adapters/delta/reconcile.ts",
+      "sha256": "9fc14f5863506aa14a6c3ca76ae54932bcaffd3e9b3598d105fbb3cf2d720dcc"
+    }
+  ],
+  "summary": "Explicit checkpoint action views; V2 is the default, unresolved sidecars block.",
+  "title": "reconcileDeltaCheckpoint"
+}

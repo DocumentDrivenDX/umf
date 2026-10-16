@@ -28,9 +28,7 @@ ddx:
 A schema-first Python data access SDK generated from UMF. Developers get typed
 models, a precompiled query and search catalog, typed action clients, and runtime
 targets for raw Postgres, Lakebase, Unity Catalog and Spark/Delta tables and for
-Truss ontologies and Ashlar publications. Everything here is a draft
-specification; no generator, runtime, native support or consumer adoption is
-delivered by these documents.
+Truss ontologies and Ashlar publications. Main now includes a recovered stage-one generator and local Python model/value/DSL runtime. Only the source-pinned component evidence below is complete; the full SDK surface, catalogs, native targets and engine adoption remain subject to their separate acceptance gates.
 
 This handoff replaces the first typed-persistence draft (commit 81d78af2) after an
 independent review and owner decisions recorded in
@@ -101,7 +99,7 @@ catalog slice is qualified per target as the matching Weft requirement lands.
 | T-1 | Truss | Public action admission, read and bulk APIs callable by an adapter; Truss-local adoption design; typed carriers for timestamp and binary fields and exact values (CONTRACT-069 current limits); attribution is decided by Truss admission from the host-supplied connection, not by the SDK | — | B-TP-013 |
 | A-1 | Ashlar | Resolver API for pinned execution by an adapter; Ashlar-local adoption design; core 0.8 document admission; byte equality between Ashlar's read-time recompilation and catalog entries; instant and numeric decoders beyond `published_at` and string scalars | — | B-TP-014 |
 | U-1 | UMF | CONTRACT-901 rule profile support for decimal values | — | Decimal action conditions |
-| U-2 | UMF | CONTRACT-042 binding profiles for `lakebase`, `unity-catalog` and `spark-delta` that `umf.access` ColumnSets can reference | — | B-TP-002, B-TP-008 |
+| U-2 | UMF | CONTRACT-042 raw binding profile definitions/inspectors are implemented and locally tested; native target binding/admission remains separately unqualified | — | B-TP-002, B-TP-008 |
 | U-3 | UMF | CONTRACT-902 null and wider value domains for bulk SET, matching WR-A9 | — | Bulk `SET NULL` and non-string/boolean SET |
 
 ## Coordinated SQL-to-actions implementation ledger
@@ -149,6 +147,28 @@ Slices B-TP-000 to B-TP-005 need no Weft change. Praxis makes Lakebase/Postgres 
 Each target and engine adapter is qualified separately; no local pass substitutes
 for managed Unity Catalog or engine witnesses.
 
+## Recovered implementation status — 2026-10-15
+
+Baseline main `5bcfaec09075bb02586f7e04f9aa349208582d35` recovered the original work through `bf0b9cc7`; this review integrates main `1ba3a2a5` (reporting implementation `93ba935b`) and the later `b19a997a` non-temporal codec/creation E2E cut. The [Astra implementation review](evidence/typed-persistence/implementation-review-20261015/astra-review.json) checks actual code against current specs; [fresh verification](evidence/typed-persistence/implementation-review-20261015/verification.json) records corrected-source replay. Historical recovery/packaging evidence remains immutable and does not qualify changed source. The [baseline rereview](evidence/typed-persistence/implementation-review-20261015/astra-baseline-rereview.json) covers `25382ec3`; the [reporting-cut Astra review](evidence/typed-persistence/implementation-review-20261015/integrated-main/astra-review.json) and [reporting-cut verification](evidence/typed-persistence/implementation-review-20261015/integrated-main/verification.json) cover `2aff369d`. The [latest-main review](evidence/typed-persistence/implementation-review-20261015/latest-main/astra-review.json) and [latest-main receipts](evidence/typed-persistence/implementation-review-20261015/latest-main/verification.json) qualify the later combined subset.
+
+| Scope | Complete component / current state | Still required for slice closure |
+| --- | --- | --- |
+| B-TP-000 | Local TS/Python boundary maps and violation controls implemented; current local commands replayed | Remote CI observation for the final integrated source; checker success is not SDK acceptance |
+| B-TP-001 | Exact local Python3.14.8/Pydantic2.14.1 wheel build and Python3.11.17 reporting replay; scoped pinned three-checker evidence | Complete corpora/settings and qualified release profile. Declared Python>=3.11,<3.15 is a compatibility range, not evidence that every interpreter/platform combination passes |
+| B-TP-002 | Access schema/context/matrix admission, explicit selected Key and distinct alternate Key DTOs, nested presence and safe refusals | Full per-story criteria and any additionally claimed schema/Key/profile breadth; same-shaped alternate Keys cannot substitute for the selected Key; native uniqueness remains a separate obligation |
+| B-TP-003 | Deterministic stage-one candidates, source census/hash, naming/refusal, host writer/drift checks; four stage-two paths preserved; Bun/Chromium parity | Full STP-080 closure for the final qualified profile and ordered prerequisite record; report/candidate is not native schema acceptance |
+| B-TP-004 | Generated model/Key/projection/action-input types and shared metadata-driven validators/codecs; thin CodecField metadata-driven row/projection codecs, shared final/Key guards and exact installed-wheel replay | Complete US-081 matrix and action client/result ABI, target transport/native proof. ActionRef now retains exact source, not issued engine authority |
+| B-TP-005 | In-memory capture/render for implemented forms, source-bound command identity, generated explicit update keywords, bounded grouped counts and guarded owner typing | Complete revised DSL (aggregates/buckets, prefix/terms, distinctness, four-edge/snapshot joins, ranked search), genuine stage-two generated callsite/refactor corpus and owner Weft interface/grammar qualification |
+| B-TP-008 partial | Narrow `ReviewedSQL`/`weft.raw-read/0.1` catalog, generated DSL bridge (up to three to-one edges), schema-neutral bounded reads and keyset pages, native role/RLS/key/timeout checks on disposable PostgreSQL18.6; Lakebase18 compile only | Full CONTRACT-071/072 catalog/Target ABI and exact profile acceptance; full DSL semantics; Lakebase endpoint/service-principal/native transport proof; async/streams; restore/incarnation and collation/session continuation identity; complete STP-083 closure |
+| B-TP-006–007,009–014 | No qualified Truss/Ashlar SDK adapter, native command/action, search, Spark/Unity Catalog SDK target delivered | Weft complete artifact boundary; qualified action/atomic-command/receipt/reconciliation protocols; original Truss registration/selection/sealing and Ashlar publication/ACK witnesses |
+| B-TP-015 | Component receipts identify exact generator/runtime/source inputs | Integrated unchanged-source replay and every claimed scope's prerequisites. No blanket completion or publication claim |
+
+Completed fixes preserve full source pins through action capture, reject ambiguous action Python names and unsupported Key reuse, replace unpacked keyword updates, constrain foreign-column operands, bound grouped results, share validation/conversion logic, sanitize persistence decode locations, and preserve `_umf/privileges.json`. Integrated read fixes preserve raw parameter extras for rejection, sanitize host model errors, validate cursor nullability/carriers on both input and output, exclude nested-only projection members, require matching qualified native Key equality/collation, and bind generated records/fields/models/Keys and restored catalogs to exact source/cohort/runtime pins. The later main integration preserves shared CodecField/projection codec metadata and nested exact-model identity checks. It also refuses duplicate unqualified wire Field IDs and compares complete selected-Key identity for get/page; the active nullable map-value fixture now satisfies both row/create F/T in unchanged CONTRACT-070. Latest wheel `5cd2c9090ce87e9ced925c1e6d256af3dac4f444d24f3b68f84ddd4f86ec1989` passes103 isolated component tests on each Python3.11.17/3.14.8, plus83 public schema-load/CLI/creation/codec checks on each;24 actual-Weft/native/provenance tests pass with zero skips. Bun944 tests/3271 assertions, TS/Python boundary checks, three pinned checkers (generated positives and19 misuse cases each), and Chromium15-case parity plus3 joined cases pass. Fresh exact-source receipts are linked above. These are named component gates, not whole-slice closure. The corrected wheel has its own SHA; it does not overwrite or inherit the older `9189...` wheel's acceptance. Nominal `0.1.0.dev0`/ABI0.1 remains an unreleased local pairing; only the exact byte-qualified wheel and regenerated package are observed here.
+
+Next: close the remaining B-TP-001–005 acceptance criteria and qualify the existing first-consumer read subset against the full B-TP-008 contract. The narrow reviewed-SQL profile is executable progress, not completion of the planned general catalog/Target ABI. Truss browser/local-905 progress and the separate performance/publication hold remain owned by the SQL-to-actions/Truss workstream; this recovery review neither releases that hold nor promotes L0 into SDK adoption. New main source changes produce a new action-plan producer identity; preserve and separately qualify cohorts, never relabel frozen artifacts.
+
+The PR #21 merge reconciliation also incorporates main `0b2bf0c1`: source-bound action client/dispatch types, stage-one/runtime catalog generation guards and snapshot export components, plus independent UUID work. [Merge verification](evidence/typed-persistence/pr21-merge-20261016/verification.json) records fresh installed-wheel, native, typing and CI-gate results. These additions do not close native action/engine adoption gates or qualify a new frozen browser cohort.
+
 ## Execution Contract
 
 The owner authorizes implementation of the ordered slices, test-first, with
@@ -175,8 +195,7 @@ inputs.
 
 At design time, run `check_structure.py` for unique IDs, required sections, link
 resolution and AC traceability across all artifacts added since the base branch.
-Actual tests remain UNTESTED until code and native observations exist. At build
-time, write failing tests first, then run each STP's gates and the replay.
+Only named source/version-pinned executable receipts establish the component results above. All other STP/native/consumer criteria remain UNTESTED; write regressions for repairs and close slices only through their complete gates.
 
 ## Risks and Rollbacks
 

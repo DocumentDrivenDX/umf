@@ -1,0 +1,179 @@
+{
+  "data": {
+    "extensionId": "umf.dbt.semantic",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/dbt/semantic.test.ts",
+          "fixtures/dbt/semantic/oracle-results.json",
+          "fixtures/dbt/semantic/browser-results.json",
+          "tests/dbt/semantic-metrics.test.ts",
+          "fixtures/dbt/semantic-metrics/oracle-results.json",
+          "fixtures/dbt/semantic-metrics/browser-results.json"
+        ],
+        "native": {
+          "subset": "Exact JSON preservation, copied candidate edits and derived nullable serialized shapes; no metric execution or semantic-validator equivalence",
+          "system": "dbt semantic manifest",
+          "version": "dbt-semantic-interfaces 0.8.5, dbt Core 1.10.0"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Exact dbt semantic manifest with DSI-version-scoped serialized shape checks",
+      "id": "umf.dbt.semantic",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:dbt:semantic:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "dbt-semantic-json"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-022 AC10–AC11; retain source independently of derived shape diagnostics; semantic validation and execution remain external",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"dbtSemanticManifestRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/dbt-semantic/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.dbt.semantic\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"dbtSemanticManifestRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/dbt-semantic/schema.json\",\"\"]",
+    "[\"integration\",\"umf.dbt.semantic@0.1.0:import\"]",
+    "[\"integration\",\"umf.dbt.semantic@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3702,
+      "path": "spec/extensions/dbt-semantic/package.json",
+      "sha256": "7b34d83a94104395c635b1e6a3268a33b7c1d2ecfa7604997bdbbd7132d69b88"
+    }
+  ],
+  "summary": "Exact dbt semantic manifest with DSI-version-scoped serialized shape checks",
+  "title": "umf.dbt.semantic · 0.1.0"
+}

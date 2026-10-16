@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 2026,
+        "path": "spec/extensions/avro-nullability/package.json",
+        "sha256": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.avro.nullability@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.avro.nullability@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Avro · 1.12.0",
+      "subset": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements",
+      "targetSystem": "UMF",
+      "title": "umf.avro.nullability · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.avro.nullability@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.avro.nullability\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements",
+  "title": "umf.avro.nullability · import"
+}

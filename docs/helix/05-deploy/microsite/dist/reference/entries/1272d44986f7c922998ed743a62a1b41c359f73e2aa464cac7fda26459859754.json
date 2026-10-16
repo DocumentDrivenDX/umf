@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5937,
+        "line": 34,
+        "path": "src/extensions/security/logic.ts",
+        "sha256": "a143cbc1090b7bc187f139e05cd0c181872f4da8a6ce2c510073c0a9d70b5300"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "securityOr",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(values: readonly SecurityTruth[]): SecurityTruth"
+    ]
+  },
+  "id": "[\"api\",\".\",\"securityOr\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5937,
+      "line": 34,
+      "path": "src/extensions/security/logic.ts",
+      "sha256": "a143cbc1090b7bc187f139e05cd0c181872f4da8a6ce2c510073c0a9d70b5300"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/logic.ts",
+  "title": "securityOr"
+}

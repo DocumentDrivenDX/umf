@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4212,
+        "path": "spec/extensions/avro-facets/package.json",
+        "sha256": "7d62ff05399c6daf1b7689a66bd5180cd3f11454bebbc31edce84b04a60c577d"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.avro.facets@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.avro.facets@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Avro · 1.12.0",
+      "subset": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.avro.facets · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.avro.facets@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.avro.facets\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence",
+  "title": "umf.avro.facets · import"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7977,
+        "line": 55,
+        "path": "src/adapters/openapi/scope.ts",
+        "sha256": "07a531c9e0f8ec3424fb8be367eb20fb45da3be1455acd144ced5acab1e03954"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "resolveOpenapiSchemaReference",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, input: { pointer: string; reference: string; resourceUri?: string; schemaResources?: string[]; }): { source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"resolveOpenapiSchemaReference\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7977,
+      "line": 55,
+      "path": "src/adapters/openapi/scope.ts",
+      "sha256": "07a531c9e0f8ec3424fb8be367eb20fb45da3be1455acd144ced5acab1e03954"
+    }
+  ],
+  "summary": "Public export · src/adapters/openapi/scope.ts",
+  "title": "resolveOpenapiSchemaReference"
+}

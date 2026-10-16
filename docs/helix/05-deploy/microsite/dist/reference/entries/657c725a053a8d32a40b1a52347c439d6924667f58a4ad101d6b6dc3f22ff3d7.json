@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4003,
+        "line": 5,
+        "path": "src/adapters/spark/rename.ts",
+        "sha256": "a0d1f0f36fb98ff8e287aec96fbe582fb880a6394677044127691bff106d5309"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "renameSparkField",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { fieldPointer: string; name: string; uninterpretedMetadata: \"preserve-and-report\"; }): { source: Document; document: Document; validation: Validation; complete: false; renamedCollationPaths: { from: string; to: string; }[]; diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"renameSparkField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4003,
+      "line": 5,
+      "path": "src/adapters/spark/rename.ts",
+      "sha256": "a0d1f0f36fb98ff8e287aec96fbe582fb880a6394677044127691bff106d5309"
+    }
+  ],
+  "summary": "Public export · src/adapters/spark/rename.ts",
+  "title": "renameSparkField"
+}

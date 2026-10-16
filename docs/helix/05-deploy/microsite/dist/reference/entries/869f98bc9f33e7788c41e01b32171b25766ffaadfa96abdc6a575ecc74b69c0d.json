@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10475,
+        "line": 16,
+        "path": "src/adapters/postgresql/key-correlation.ts",
+        "sha256": "1c59de75fd8b1a0845f63944d018a3ddcb800251e06b338867a39b5e6291e652"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "correlatePostgresqlKeyCatalog",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, text: string, backend: PostgresqlBackend): Promise<{ nativeSupplement: string; root: NativeJson; nativeCatalog: string; matches: { identity: { schema: string; table: string; index: string; }; relationPath: string; indexPath: string; componentPaths: (string | null)[]; }[]; sameSnapshotVerified: false; authenticated: false; idealEqualityVerified: false; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"correlatePostgresqlKeyCatalog\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10475,
+      "line": 16,
+      "path": "src/adapters/postgresql/key-correlation.ts",
+      "sha256": "1c59de75fd8b1a0845f63944d018a3ddcb800251e06b338867a39b5e6291e652"
+    }
+  ],
+  "summary": "Correlate complete overlapping native observations. This does not authenticate\neither source, prove a shared transaction snapshot, or establish ideal equality.",
+  "title": "correlatePostgresqlKeyCatalog"
+}

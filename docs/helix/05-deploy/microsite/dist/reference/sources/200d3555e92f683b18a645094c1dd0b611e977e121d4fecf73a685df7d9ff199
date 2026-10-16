@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:postgresql-key-catalog-inspection:1.0.0",
+  "title": "PostgreSQL Key observation inspection result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "root",
+    "nativeSource",
+    "serverVersion",
+    "encoding",
+    "query",
+    "indexes",
+    "provenance"
+  ],
+  "properties": {
+    "root": {
+      "$ref": "urn:umf:native-json:0.1.0"
+    },
+    "nativeSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "serverVersion": {
+      "const": 170004
+    },
+    "encoding": {
+      "const": "UTF8"
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1
+    },
+    "indexes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "schema",
+          "table",
+          "relationKind",
+          "index",
+          "accessMethod",
+          "unique",
+          "primary",
+          "valid",
+          "ready",
+          "live",
+          "immediate",
+          "nullsNotDistinct",
+          "keyCount",
+          "attributeCount",
+          "predicate",
+          "expressions",
+          "definition",
+          "constraint",
+          "parents",
+          "children",
+          "components"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "table": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationKind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "index": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accessMethod": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unique": {
+            "type": "boolean"
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "valid": {
+            "type": "boolean"
+          },
+          "ready": {
+            "type": "boolean"
+          },
+          "live": {
+            "type": "boolean"
+          },
+          "immediate": {
+            "type": "boolean"
+          },
+          "nullsNotDistinct": {
+            "type": "boolean"
+          },
+          "keyCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "attributeCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "predicate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "expressions": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "constraint": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "name",
+                  "kind",
+                  "validated",
+                  "deferrable",
+                  "deferred",
+                  "definition"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kind": {
+                    "enum": [
+                      "p",
+                      "u"
+                    ]
+                  },
+                  "validated": {
+                    "type": "boolean"
+                  },
+                  "deferrable": {
+                    "type": "boolean"
+                  },
+                  "deferred": {
+                    "type": "boolean"
+                  },
+                  "definition": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "components": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "position",
+                "attribute",
+                "name",
+                "notNull",
+                "type",
+                "typeSchema",
+                "typeName",
+                "typeKind",
+                "operatorClass",
+                "collation"
+              ],
+              "properties": {
+                "position": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "attribute": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "notNull": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "typeSchema": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "typeName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "typeKind": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "operatorClass": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "collation": {
+                  "anyOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "required": [
+                        "schema",
+                        "name",
+                        "provider",
+                        "deterministic",
+                        "locale",
+                        "version"
+                      ],
+                      "properties": {
+                        "schema": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "provider": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "deterministic": {
+                          "type": "boolean"
+                        },
+                        "locale": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "version": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "const": "unverified"
+    }
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "id": "umf.delta",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Exact Delta schema JSON with explicit table/protocol interpretation limits",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:delta:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "delta-schema-json"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "required": [
+      "profile",
+      "root"
+    ],
+    "additionalProperties": true,
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-018. Source tokens and unknown content are authoritative; no table feature support, SQL evaluation or native normalization is implied.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Delta schema JSON",
+      "version": "Protocol commit 3b1b99cd077ec9c84c8a94c250dea3730cc33392; deltalake 1.6.4 oracle",
+      "subset": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate."
+    },
+    "evidence": [
+      "tests/delta/upstream.test.ts",
+      "fixtures/delta/upstream/oracle-results.json",
+      "fixtures/delta/upstream/browser-results.json",
+      "tests/delta/schema.test.ts",
+      "fixtures/delta/capability-results.json",
+      "fixtures/delta/umf-oracle-results.json",
+      "fixtures/delta/browser-results.json"
+    ]
+  }
+}

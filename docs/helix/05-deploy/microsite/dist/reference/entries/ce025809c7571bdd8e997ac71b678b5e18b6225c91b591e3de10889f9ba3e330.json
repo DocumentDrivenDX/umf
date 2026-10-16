@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3628,
+        "line": 1,
+        "path": "spec/extensions/arrow-ipc/layout-result.schema.json",
+        "sha256": "425f4e34bcd5a9b98799a6e6fed085ca9630f644e984418cb6a60f5604204066"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "arrowIpcLayoutSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:arrow-ipc-layout:0.1.0\",\n  \"description\": \"IPC boundary inspection. Accounted bytes are not a native semantic validity assertion. Core document references resolve against spec/core/schema.json.\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"format\": {\n      \"enum\": [\n        \"stream\",\n        \"file\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"bytesAccountedFor\": {\n      \"type\": \"boolean\"\n    },\n    \"frames\": {\n      \"type\": \"array\",\n      \"maxItems\": 1024,\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"offset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 1000000\n          },\n          \"prefixLength\": {\n            \"enum\": [\n              4,\n              8\n            ]\n          },\n          \"metadataOffset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 1000000\n          },\n          \"metadataLength\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 1000000\n          },\n          \"bodyOffset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 1000000\n          },\n          \"bodyLength\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 1000000\n          },\n          \"kind\": {\n            \"enum\": [\n              \"NONE\",\n              \"Schema\",\n              \"DictionaryBatch\",\n              \"RecordBatch\",\n              \"Tensor\",\n              \"SparseTensor\"\n            ]\n          },\n          \"metadata\": {\n            \"$ref\": \"urn:umf:core:0.1.0\"\n          }\n        },\n        \"required\": [\n          \"offset\",\n          \"prefixLength\",\n          \"metadataOffset\",\n          \"metadataLength\",\n          \"bodyOffset\",\n          \"bodyLength\",\n          \"kind\",\n          \"metadata\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"footer\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"offset\": {\n          \"type\": \"integer\",\n          \"minimum\": 0,\n          \"maximum\": 1000000\n        },\n        \"length\": {\n          \"type\": \"integer\",\n          \"minimum\": 0,\n          \"maximum\": 1000000\n        },\n        \"metadata\": {\n          \"$ref\": \"urn:umf:core:0.1.0\"\n        }\n      },\n      \"required\": [\n        \"offset\",\n        \"length\",\n        \"metadata\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"eosOffset\": {\n      \"type\": \"integer\",\n      \"minimum\": 0,\n      \"maximum\": 1000000\n    },\n    \"consumed\": {\n      \"type\": \"integer\",\n      \"minimum\": 0,\n      \"maximum\": 1000000\n    },\n    \"trailingBytes\": {\n      \"type\": \"integer\",\n      \"minimum\": 0,\n      \"maximum\": 1000000\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\",\n              \"info\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"required\": [\n    \"source\",\n    \"format\",\n    \"complete\",\n    \"bytesAccountedFor\",\n    \"frames\",\n    \"consumed\",\n    \"trailingBytes\",\n    \"diagnostics\"\n  ],\n  \"additionalProperties\": false\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"arrowIpcLayoutSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3628,
+      "line": 1,
+      "path": "spec/extensions/arrow-ipc/layout-result.schema.json",
+      "sha256": "425f4e34bcd5a9b98799a6e6fed085ca9630f644e984418cb6a60f5604204066"
+    }
+  ],
+  "summary": "Public export · spec/extensions/arrow-ipc/layout-result.schema.json",
+  "title": "arrowIpcLayoutSchema"
+}

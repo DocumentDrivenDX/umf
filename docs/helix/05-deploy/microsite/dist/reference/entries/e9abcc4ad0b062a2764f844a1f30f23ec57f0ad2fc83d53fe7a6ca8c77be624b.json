@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 1994,
+        "path": "spec/extensions/delta-log/package.json",
+        "sha256": "412005b1bd886076b515aef4795b4cffbeb873fe728d484471cbd9998a2be3d9"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.delta.log@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.delta.log@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Delta JSON transaction log · Protocol 3b1b99cd077ec9c84c8a94c250dea3730cc33392; pinned delta-rs corpus",
+      "subset": "Bounded exact text capture and line/action envelope inspection. Native action semantics, commit validity and snapshot reconciliation remain unverified.",
+      "targetSystem": "Delta JSON transaction log · Protocol 3b1b99cd077ec9c84c8a94c250dea3730cc33392; pinned delta-rs corpus",
+      "title": "umf.delta.log · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.delta.log@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.delta.log\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Bounded exact text capture and line/action envelope inspection. Native action semantics, commit validity and snapshot reconciliation remain unverified.",
+  "title": "umf.delta.log · export"
+}

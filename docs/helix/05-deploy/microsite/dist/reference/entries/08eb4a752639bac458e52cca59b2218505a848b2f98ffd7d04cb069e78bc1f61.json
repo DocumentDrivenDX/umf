@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 25118,
+        "line": 40,
+        "path": "src/core-ideals/relationship-postgresql.ts",
+        "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyPostgresqlRelationships",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: PostgresqlRelationshipRequest, backend: PostgresqlBackend): Promise<PostgresqlRelationshipClassification>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyPostgresqlRelationships\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 25118,
+      "line": 40,
+      "path": "src/core-ideals/relationship-postgresql.ts",
+      "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+    }
+  ],
+  "summary": "Native declarations/observations remain distinct from authored association intent.",
+  "title": "classifyPostgresqlRelationships"
+}

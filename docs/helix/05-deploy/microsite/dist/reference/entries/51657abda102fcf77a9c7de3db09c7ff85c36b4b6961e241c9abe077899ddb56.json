@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2470,
+        "line": 4,
+        "path": "src/extensions/security/types.ts",
+        "sha256": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityRef",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityRef {documentId:string;moduleId:string;elementId:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityRef\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2470,
+      "line": 4,
+      "path": "src/extensions/security/types.ts",
+      "sha256": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/types.ts",
+  "title": "SecurityRef"
+}

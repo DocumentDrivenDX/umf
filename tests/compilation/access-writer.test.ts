@@ -28,9 +28,9 @@ async function snapshot(root:string):Promise<Record<string,string>>{const out:Re
 // @covers US-080-AC6
  test('stage-two files survive regeneration and are excluded exactly',async()=>{
  const {destination,r}=await setup();await mkdir(join(destination,'shop/_umf'),{recursive:true});
- for(const p of ['shop/queries.py','shop/_umf/catalog.json','shop/_umf/catalog-manifest.json'])await writeFile(join(destination,p),'stage-two owned\n');
+ for(const p of ['shop/queries.py','shop/_umf/catalog.json','shop/_umf/catalog-manifest.json','shop/_umf/privileges.json'])await writeFile(join(destination,p),'stage-two owned\n');
  expect(await checkAccessPackage(destination,r)).toEqual([]);await writeAccessPackage(destination,r);
- for(const p of ['shop/queries.py','shop/_umf/catalog.json','shop/_umf/catalog-manifest.json'])expect(await readFile(join(destination,p),'utf8')).toBe('stage-two owned\n');
+ for(const p of ['shop/queries.py','shop/_umf/catalog.json','shop/_umf/catalog-manifest.json','shop/_umf/privileges.json'])expect(await readFile(join(destination,p),'utf8')).toBe('stage-two owned\n');
  await writeFile(join(destination,'shop/_umf/catalog-extra.json'),'not reserved');expect(await checkAccessPackage(destination,r)).toContain('shop/_umf/catalog-extra.json');
  });
 // @covers US-080-AC6

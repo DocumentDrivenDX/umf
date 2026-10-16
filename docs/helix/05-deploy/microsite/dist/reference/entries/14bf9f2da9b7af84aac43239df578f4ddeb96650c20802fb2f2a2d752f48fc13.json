@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1889,
+        "line": 6,
+        "path": "src/model/document.ts",
+        "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "readDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, format?: \"json\" | \"yaml\"): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"readDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1889,
+      "line": 6,
+      "path": "src/model/document.ts",
+      "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+    }
+  ],
+  "summary": "Public export · src/model/document.ts",
+  "title": "readDocument"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1226,
+        "line": 6,
+        "path": "src/adapters/parquet/metadata.ts",
+        "sha256": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectParquetMetadata",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetMetadataInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectParquetMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1226,
+      "line": 6,
+      "path": "src/adapters/parquet/metadata.ts",
+      "sha256": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a"
+    }
+  ],
+  "summary": "Maps known IDL fields; opaque fields and authoritative bytes remain available.",
+  "title": "inspectParquetMetadata"
+}

@@ -1,0 +1,22 @@
+11 | const options=new Map<string,string>();for(let i=2;i<process.argv.length;i+=2)options.set(process.argv[i]!,process.argv[i+1]!);
+12 | const python=options.get('--python'),wheel=options.get('--wheel'),report=options.get('--report');
+13 | if(!python||!wheel||!report)throw Error('Required: --python <installed pinned environment> --wheel <source-verified wheel> --report <JSON>');
+14 | const root=resolve(import.meta.dir,'..'),work=await mkdtemp(join(await realpath(tmpdir()),'umf-access-e2e-'));
+15 | const commands:unknown[]=[],outcomes:unknown[]=[];
+16 | async function execute(label:string,args:string[],expected=0){const child=Bun.spawn(args,{cwd:root,stdout:'pipe',stderr:'pipe'});const [exit,stdout,stderr]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);commands.push({label,args,exit,expected,stdout,stderr});assert.equal(exit,expected,label+': '+stderr);return stdout;}
+                                                                                                                                                                                                                                                                                                                                      ^
+AssertionError: containers-generate: {"code":"GENERATION_REFUSED","diagnostics":[{"code":"ACCESS","accessCode":"ACCESS_CONFLICT","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/views/0/fields/7","message":"Authored access declaration violates ACCESS_CONFLICT"}]}
+
+
+1 !== 0
+
+ generatedMessage: false,
+     actual: 1,
+   expected: 0,
+   operator: "strictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at execute (/Users/erik/.codex/worktrees/20bc/umf/scripts/access-e2e.ts:16:322)
+
+Bun v1.4.2 (macOS arm64)

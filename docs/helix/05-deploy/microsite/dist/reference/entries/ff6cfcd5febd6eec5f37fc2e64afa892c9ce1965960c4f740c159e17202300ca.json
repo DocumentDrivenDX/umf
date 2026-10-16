@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10832,
+        "line": 20,
+        "path": "src/core-ideals/cardinality-postgresql.ts",
+        "sha256": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlCardinalityRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlCardinalityRequest {\n column:string;nativeSource:string;supplement:string;mode:'strict'|'report';profile:'stored-value'|'unresolved';author?:CoreCardinalityDeclaration;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlCardinalityRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10832,
+      "line": 20,
+      "path": "src/core-ideals/cardinality-postgresql.ts",
+      "sha256": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-postgresql.ts",
+  "title": "PostgresqlCardinalityRequest"
+}

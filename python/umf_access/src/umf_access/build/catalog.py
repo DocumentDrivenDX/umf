@@ -30,7 +30,7 @@ from ..codec_support import make_projection_model
 from ..dsl import FieldRef, Node, RecordRef, render_logical
 from ..engine_catalog import EngineRead
 from ..native_program import NativeProgram, program_json
-from ..reviewed import ReadCompiler, ReviewedSQL
+from ..reviewed import ReadBuildError, ReadCompiler, ReviewedSQL, captured_source
 from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
 from .commands import emit_command
 from .search import emit_search
@@ -289,6 +289,16 @@ def compile_catalog(
                     raise CatalogBuildError("duplicate public catalog name")
                 names.add(symbol)
                 declarations.append((symbol, capture(function)))
+    # Validate original capture before resolving aliases or manufacturing result
+    # classes: count/tuple projections otherwise erase their source provenance.
+    for _, declaration in declarations:
+        for variant in declaration.variants:
+            for target in targets:
+                source = captured_source(variant, binding=target['binding'])
+                root_ref = cast(RecordRef, variant.node.args[0])
+                record = records.get((root_ref.module, root_ref.element))
+                if source.input_digest != manifest['inputDigest'] or record is None or getattr(record, 'UMF_SOURCE', None) != source or record.objects.ref != root_ref:
+                    raise ReadBuildError('CATALOG_STALE: captured root differs from selected stage-one generation')
     if (not declarations and not any(t.get("nativeActions") for t in targets)) or len(
         declarations
     ) > 1000:
@@ -684,24 +694,13 @@ def compile_catalog(
                             f"    {flat}: {_type(key.model_fields[component].annotation, package)}"
                         )
                 else:
-                    parameters[parameter.name] = (carrier, ...)
-                    paths.append((parameter.name, parameter.name, None))
-                    parameter_lines.append(
-                        f"    {parameter.name}: {_type(carrier, package)}"
-                    )
-            params_name = f"_Q{number}P{vi}"
-            params = create_model(params_name, __base__=StrictModel, **parameters)
-            type.__setattr__(params, "UMF_BUNDLE_INPUT_DIGEST", manifest["inputDigest"])
-            type.__setattr__(params, "UMF_RUNTIME_ABI", RUNTIME_IDENTITY)
-            lines.extend(
-                [
-                    f"class {params_name}(StrictModel):",
-                    *(parameter_lines or ["    pass"]),
-                    f"    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = {manifest['inputDigest']!r}",
-                    f"    UMF_RUNTIME_ABI: ClassVar[tuple[str,str,str]] = {RUNTIME_IDENTITY!r}",
-                    "",
-                ]
-            )
+                    parameters[parameter.name]=(carrier,...);paths.append((parameter.name,parameter.name,None));parameter_lines.append(f'    {parameter.name}: {_type(carrier,package)}')
+            params_name=f'_Q{number}P{vi}'
+            params=create_model(params_name,__base__=StrictModel,**parameters)
+            type.__setattr__(params,'UMF_BUNDLE_INPUT_DIGEST',manifest['inputDigest'])
+            type.__setattr__(params,'UMF_RUNTIME_ABI',RUNTIME_IDENTITY)
+            type.__setattr__(params,'UMF_SOURCE',record.UMF_SOURCE)
+            lines.extend([f'class {params_name}(StrictModel):',*(parameter_lines or ['    pass']),f'    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = {manifest["inputDigest"]!r}',f'    UMF_RUNTIME_ABI: ClassVar[tuple[str,str,str]] = {RUNTIME_IDENTITY!r}',f'    UMF_SOURCE: ClassVar[object] = {record.__name__}.UMF_SOURCE',''])
             # Every variant carries identical projections; only explicit presence changes predicates.
             current = variant
             if projection is None and terminal != "count":
@@ -864,7 +863,7 @@ def compile_catalog(
                     platform,
                 )
                 variants.append(
-                    f"ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {result_expr}, {context!r}), {tuple(paths)!r})"
+                    f"ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {result_expr}, context_json={context!r}), {tuple(paths)!r})"
                 )
                 entries.append(
                     {

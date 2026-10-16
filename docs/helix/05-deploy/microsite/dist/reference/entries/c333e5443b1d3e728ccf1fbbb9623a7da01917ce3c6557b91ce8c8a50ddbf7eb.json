@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5891,
+        "line": 8,
+        "path": "src/adapters/iceberg/table-promotion.ts",
+        "sha256": "2b9ad5c9ffc34824fa13a7fbfdddd9b78a7fc331a4214df03e98b8463ab4d399"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "IcebergTablePromotionReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergTablePromotionReport {\n complete:false;previousSchemaId:number;nextSchemaId:number;fieldId:number;\n sourceType:string;targetType:string;appendedSchemaPath:string;\n checkedPartitionFields:string[];bindings:IcebergTableTransforms;limitations:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"IcebergTablePromotionReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5891,
+      "line": 8,
+      "path": "src/adapters/iceberg/table-promotion.ts",
+      "sha256": "2b9ad5c9ffc34824fa13a7fbfdddd9b78a7fc331a4214df03e98b8463ab4d399"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/iceberg/table-promotion.ts",
+  "title": "IcebergTablePromotionReport"
+}

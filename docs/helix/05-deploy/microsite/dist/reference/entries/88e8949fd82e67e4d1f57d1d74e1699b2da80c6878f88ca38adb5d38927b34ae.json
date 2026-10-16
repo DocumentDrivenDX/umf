@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 25118,
+        "line": 89,
+        "path": "src/core-ideals/relationship-postgresql.ts",
+        "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipPostgresqlRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipPostgresqlRequest {id:string;profile:'new-keyed-tables';mode:'strict'|'report';policy:PostgresqlRelationshipLayoutPolicy}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipPostgresqlRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 25118,
+      "line": 89,
+      "path": "src/core-ideals/relationship-postgresql.ts",
+      "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-postgresql.ts",
+  "title": "RelationshipPostgresqlRequest"
+}

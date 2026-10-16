@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8033,
+        "line": 9,
+        "path": "src/projections/binding-postgresql/indexes.ts",
+        "sha256": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlIndexProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlIndexProjection {\n  status:'blocked'|'reported'|'proposed';logical:Document;binding:Document;nativeArchive:Document;\n  target:BindingPayload['target'];residuals:PostgresqlBindingResidual[];\n  /** DDL proposal verified by the pinned parser/deparser/codec; execution is a separate oracle. */\n  candidate?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlIndexProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8033,
+      "line": 9,
+      "path": "src/projections/binding-postgresql/indexes.ts",
+      "sha256": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-postgresql/indexes.ts",
+  "title": "PostgresqlIndexProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4716,
+        "line": 15,
+        "path": "src/adapters/owl/expressions.ts",
+        "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlExpressionView",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OwlExpressionView {profile:'owl-expression-1';complete:false;source:Document;blankNodeScope:string;expression:OwlExpressionDescription;quadIndexes:number[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlExpressionView\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4716,
+      "line": 15,
+      "path": "src/adapters/owl/expressions.ts",
+      "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/expressions.ts",
+  "title": "OwlExpressionView"
+}

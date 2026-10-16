@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4018,
+        "line": 5,
+        "path": "src/adapters/odcs/references.ts",
+        "sha256": "ba7b29fa12c26572a82f9e4c4771ed40c8fff4fec5529ce56c05845dc451ad20"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OdcsReferenceResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OdcsReferenceResult {\n source:Document;reference:string;usage:'element'|'foreignKey';status:'resolved'|'blocked';complete:false;\n target?:{path:string;notation:'id'|'name';node:NativeJson};diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OdcsReferenceResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4018,
+      "line": 5,
+      "path": "src/adapters/odcs/references.ts",
+      "sha256": "ba7b29fa12c26572a82f9e4c4771ed40c8fff4fec5529ce56c05845dc451ad20"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/odcs/references.ts",
+  "title": "OdcsReferenceResult"
+}

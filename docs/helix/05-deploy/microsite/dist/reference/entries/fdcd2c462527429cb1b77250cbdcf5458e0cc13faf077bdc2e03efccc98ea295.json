@@ -1,0 +1,182 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql.catalog",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/postgresql/catalog.test.ts",
+          "scripts/postgresql-catalog-oracle.ts"
+        ],
+        "native": {
+          "subset": "The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation",
+          "system": "UMF PostgreSQL catalog capture profile",
+          "version": "0.1.0 / PostgreSQL 17"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Versioned observed PostgreSQL catalog captures with reconstruction archives",
+      "id": "umf.postgresql.catalog",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:postgresql-catalog:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "postgresql-catalog-capture"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          },
+          "state": {
+            "enum": [
+              "captured",
+              "modified"
+            ]
+          }
+        },
+        "required": [
+          "profile",
+          "state",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-015. Captured catalog observations and original schema-only dump are retained together. Candidate edits mark the capture modified; no synchronization, execution or universal catalog coverage is implied.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"postgresqlCatalogRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql-catalog/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql.catalog\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"postgresqlCatalogRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql-catalog/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql.catalog@0.1.0:import\"]",
+    "[\"integration\",\"umf.postgresql.catalog@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3704,
+      "path": "spec/extensions/postgresql-catalog/package.json",
+      "sha256": "cebb03eede287e67c62b1ea0355376e6983805c36ee6299390ea92aff3593ad5"
+    }
+  ],
+  "summary": "Versioned observed PostgreSQL catalog captures with reconstruction archives",
+  "title": "umf.postgresql.catalog · 0.1.0"
+}

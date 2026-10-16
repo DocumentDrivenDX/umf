@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 280,
+        "line": 5,
+        "path": "src/registry/builtins.ts",
+        "sha256": "880fd7a68db114c2588edb1c1a4dd1755a98bf228096669b6d09fa8d6e5d84c4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "createUmfRegistry",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(): Registry"
+    ]
+  },
+  "id": "[\"api\",\".\",\"createUmfRegistry\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 280,
+      "line": 5,
+      "path": "src/registry/builtins.ts",
+      "sha256": "880fd7a68db114c2588edb1c1a4dd1755a98bf228096669b6d09fa8d6e5d84c4"
+    }
+  ],
+  "summary": "Normal SDK registry. Action declarations are built in; execution and authority are not.",
+  "title": "createUmfRegistry"
+}

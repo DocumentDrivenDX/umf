@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 8988,
+        "path": "spec/extensions/rdf/package.json",
+        "sha256": "a4abc86725376b553cf18b026003f5de06690f02f06deb552e9b4c821bcfdb15"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.rdf@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.rdf@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "RDF · RDF 1.1 N-Quads/Turtle/TriG; N3.js 2.7.12",
+      "subset": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes, RDF 1.2, entailment or canonicalization",
+      "targetSystem": "RDF · RDF 1.1 N-Quads/Turtle/TriG; N3.js 2.7.12",
+      "title": "umf.rdf · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.rdf@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.rdf\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes, RDF 1.2, entailment or canonicalization",
+  "title": "umf.rdf · export"
+}

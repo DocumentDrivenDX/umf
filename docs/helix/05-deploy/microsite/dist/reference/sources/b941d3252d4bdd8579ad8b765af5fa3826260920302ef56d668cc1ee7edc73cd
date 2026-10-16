@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:smithy:assembly-result:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "compiler",
+    "source",
+    "inputs",
+    "events",
+    "issues",
+    "complete",
+    "limitations"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "assembled",
+        "blocked"
+      ]
+    },
+    "compiler": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "model": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "nativeModel": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "file"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "dependencyId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "SUPPRESSED",
+              "NOTE",
+              "WARNING",
+              "DANGER",
+              "ERROR"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "shapeId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "filename",
+              "line",
+              "column"
+            ],
+            "properties": {
+              "filename": {
+                "type": "string"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "column": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "complete": {
+      "const": false
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "assembled"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "model",
+          "nativeModel"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "model"
+              ]
+            },
+            {
+              "required": [
+                "nativeModel"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

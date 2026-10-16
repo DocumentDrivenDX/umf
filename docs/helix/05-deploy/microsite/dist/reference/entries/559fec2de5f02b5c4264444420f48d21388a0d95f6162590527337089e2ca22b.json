@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1761,
+        "line": 10,
+        "path": "src/registry/registry.ts",
+        "sha256": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Registry",
+    "runtime": "unassessed",
+    "signatureText": [
+      "export class Registry {\n  #entries = new Map<string, Map<string, Registration>>();\n  register(input: ExtensionPackage, semantics?: SemanticValidator): this {\n    const manifest = copyJson(input) as unknown as ExtensionPackage;\n    if (!checkPackage(manifest)) throw new UmfError('PACKAGE_STRUCTURE', JSON.stringify(checkPackage.errors));\n    if (this.get(manifest.id, manifest.version)) throw new UmfError('DUPLICATE_VERSION', 'Extension version is already registered');\n    let structure: ValidateFunction;\n    try { structure = createValidator().compile(manifest.schema); }\n    catch (error) { throw new UmfError('PACKAGE_SCHEMA', String(error)); }\n    freeze(manifest);\n    const entry: Registration = {manifest, structure, ...(semantics ? {semantics} : {})};\n    Object.freeze(entry);\n    if (!this.#entries.has(manifest.id)) this.#entries.set(manifest.id, new Map());\n    this.#entries.get(manifest.id)!.set(manifest.version, entry);\n    return this;\n  }\n  get(id: string, version: string): Registration | undefined { return this.#entries.get(id)?.get(version); }\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Registry\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1761,
+      "line": 10,
+      "path": "src/registry/registry.ts",
+      "sha256": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6"
+    }
+  ],
+  "summary": "Public export · src/registry/registry.ts",
+  "title": "Registry"
+}

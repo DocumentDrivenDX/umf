@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9569,
+        "line": 29,
+        "path": "src/model/nullability.ts",
+        "sha256": "7ca45e5d918be351578a41c5bea68f9b0e1777b328258cdf584cecb1eab40442"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreNullabilityMeaning",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreNullabilityMeaning={state:'known';nullability:Nullability}|{state:'missing'}|{state:'inapplicable'}|{state:'legacy';value:Json}|{state:'unknown';value:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreNullabilityMeaning\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9569,
+      "line": 29,
+      "path": "src/model/nullability.ts",
+      "sha256": "7ca45e5d918be351578a41c5bea68f9b0e1777b328258cdf584cecb1eab40442"
+    }
+  ],
+  "summary": "Type declaration · src/model/nullability.ts",
+  "title": "CoreNullabilityMeaning"
+}

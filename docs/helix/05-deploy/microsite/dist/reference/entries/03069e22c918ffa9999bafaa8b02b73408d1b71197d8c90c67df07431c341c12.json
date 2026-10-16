@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11892,
+        "line": 89,
+        "path": "src/core-ideals/relationship-parquet-projection.ts",
+        "sha256": "acf9389b7c12672b1634c6047b9f9342e20d36358b55a920a318da665e51abcd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverRelationshipParquetNative",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RelationshipParquetProjection, current: Document): { hex: string; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverRelationshipParquetNative\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11892,
+      "line": 89,
+      "path": "src/core-ideals/relationship-parquet-projection.ts",
+      "sha256": "acf9389b7c12672b1634c6047b9f9342e20d36358b55a920a318da665e51abcd"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/relationship-parquet-projection.ts",
+  "title": "recoverRelationshipParquetNative"
+}

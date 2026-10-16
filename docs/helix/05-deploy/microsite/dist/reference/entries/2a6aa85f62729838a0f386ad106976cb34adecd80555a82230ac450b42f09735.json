@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6391,
+        "line": 21,
+        "path": "src/core-ideals/tablespec-field.ts",
+        "sha256": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyTableSpecField",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: TableSpecFieldRequest): TableSpecFieldClassification & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyTableSpecField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6391,
+      "line": 21,
+      "path": "src/core-ideals/tablespec-field.ts",
+      "sha256": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0"
+    }
+  ],
+  "summary": "Classify one checked native member. Does not infer scalar family, cardinality, requiredness or author intent.",
+  "title": "classifyTableSpecField"
+}

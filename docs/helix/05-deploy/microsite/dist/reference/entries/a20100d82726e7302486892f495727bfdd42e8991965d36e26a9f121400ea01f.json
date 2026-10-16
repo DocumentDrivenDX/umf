@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3616,
+        "line": 45,
+        "path": "src/model/nullability-transition.ts",
+        "sha256": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "rollbackNullabilityEnvelope",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: NullabilityUpgradeReceipt, current: Document): NullabilityRollbackReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"rollbackNullabilityEnvelope\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3616,
+      "line": 45,
+      "path": "src/model/nullability-transition.ts",
+      "sha256": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef"
+    }
+  ],
+  "summary": "Restore original model; retain the entire current model separately, including later assertions/edits.",
+  "title": "rollbackNullabilityEnvelope"
+}

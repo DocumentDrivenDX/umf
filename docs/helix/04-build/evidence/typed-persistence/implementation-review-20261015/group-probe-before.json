@@ -1,0 +1,1 @@
+{"sql": "SELECT \"r\".\"id\", COUNT(*) FROM \"ns\".\"Rows\" AS \"r\" GROUP BY \"r\".\"id\""}

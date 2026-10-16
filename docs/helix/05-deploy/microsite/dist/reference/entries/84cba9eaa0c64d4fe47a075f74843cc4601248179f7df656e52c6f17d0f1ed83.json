@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11368,
+        "line": 19,
+        "path": "src/model/keys.ts",
+        "sha256": "3e66238372065d9f3caca88fba5188ba7668405582c7a0fcda8782b81460c40c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKeyDeclaration",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreKeyDeclaration extends Declaration {operation:'declare-core-key';request:CoreKeyRequest}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKeyDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11368,
+      "line": 19,
+      "path": "src/model/keys.ts",
+      "sha256": "3e66238372065d9f3caca88fba5188ba7668405582c7a0fcda8782b81460c40c"
+    }
+  ],
+  "summary": "Type declaration · src/model/keys.ts",
+  "title": "CoreKeyDeclaration"
+}

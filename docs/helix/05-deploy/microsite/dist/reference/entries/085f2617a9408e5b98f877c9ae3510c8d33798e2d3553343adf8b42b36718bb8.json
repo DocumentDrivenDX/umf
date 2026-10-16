@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2052,
+        "line": 19,
+        "path": "src/adapters/owl/declarations.ts",
+        "sha256": "8ffa93b3defcc0c3a664328d09661475b66902f10746a06dedd921f14ec4cf4c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getOwlDeclarations",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): OwlDeclarationView"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getOwlDeclarations\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2052,
+      "line": 19,
+      "path": "src/adapters/owl/declarations.ts",
+      "sha256": "8ffa93b3defcc0c3a664328d09661475b66902f10746a06dedd921f14ec4cf4c"
+    }
+  ],
+  "summary": "Explicit graph declarations only; multiple roles remain separate and unvalidated.",
+  "title": "getOwlDeclarations"
+}

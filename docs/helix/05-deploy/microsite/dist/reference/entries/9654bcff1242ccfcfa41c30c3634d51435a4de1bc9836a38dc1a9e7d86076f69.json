@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 19620,
+        "line": 100,
+        "path": "src/adapters/rdf/index.ts",
+        "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RdfMergeReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RdfMergeReport {\n sources:Document[];id:string;graphPolicy:'union-by-name';blankNodePolicy:'disjoint-inputs';\n status:'candidate'|'blocked';complete:false;candidate?:Document;\n blankNodes:{input:number;before:string;after:string}[];\n quadOrigins:{input:number;sourceIndex:number;targetIndex:number}[];\n diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RdfMergeReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 19620,
+      "line": 100,
+      "path": "src/adapters/rdf/index.ts",
+      "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/rdf/index.ts",
+  "title": "RdfMergeReport"
+}

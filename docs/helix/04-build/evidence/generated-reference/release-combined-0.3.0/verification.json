@@ -1,0 +1,16 @@
+{
+  "status": "local functional gates pass;7reference seals and hostedCI/main deployment/publication pending",
+  "version": "0.3.0",
+  "sdkArchiveSha256": "c5326a8bb085145f00f2d6ebaf05b8c1d14ce5903aeedd595a349e98f2f354d0",
+  "pythonWheelSha256": "c2c3794d89277d644ca1198ff63fd076faec059046b6412823dfafda7070b392",
+  "referenceManifestSha256": "925f918554ce7a5036d860f65153b05db262bb12fa962fdfb0e24646ca20bcb6",
+  "referenceInputDigest": "ba9ea1d3a8d3bf54bd82378e6bfe6588e76a7d9865b9fa34c9fa965ccd9f06e0",
+  "browserChecks": 30,
+  "sourceParents": {
+    "SDKcurrentMain": "d40988e72406e35e2e9af75c47e77968d94b1957",
+    "PR27": "8328a56233bd522f419daaee8a112254a1c84537",
+    "PR29": "1fd88761efeb91e22e8df490de7c256b50eec13d",
+    "referenceReproRepair": "f6671969c28afdd3731ef44c72799c97fc537176"
+  },
+  "qualification": "SDKd409 execution receipts retain exact original pins. Final reference/browser/archive gates are separate; no frozen native/browser cohort is repinned or promoted."
+}

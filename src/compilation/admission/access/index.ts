@@ -6,7 +6,7 @@ export function checkAccessPresence(f:PresenceFacts,v:FieldView):boolean {
  if(f.generated!==v.generated||f.availability==='unspecified'||!['required','absent-allowed'].includes(f.availability))return false;
  if(f.key&&(f.availability!=='required'||f.admitsNull||v.mutable))return false;
  if(f.availability==='required'&&f.admitsNull)return false;
- if(f.nested)return !f.key&&!v.generated&&!v.mutable&&!v.row.missing&&!v.create.missing&&(!v.row.null||f.admitsNull)&&(!v.create.null||f.admitsNull);
+ if(f.nested)return !v.generated&&!v.mutable&&!v.row.missing&&!v.create.missing&&v.row.null===f.admitsNull&&v.create.null===f.admitsNull;
  if(f.bound&&(!f.notNull.length||f.notNull.some(n=>n!==!v.row.null)||v.row.missing))return false;
  if(v.generated){
   return v.create.missing&&!v.create.null&&!v.row.missing&&(!v.row.null||(f.bound&&f.admitsNull));
@@ -105,7 +105,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    if(!reference(r)){add('ACCESS_REFERENCE',path+'/fields');return;}
    const id=identity(r);if(stack.has(id))return;
    const field=locate(r).element;if(!field||inspectCoreElementKind(document,r).meaning.state!=='known'||field.kind!=='field'){add('ACCESS_REFERENCE',path+'/fields');return;}
-   if(!seen.has(id)){expected.push({ref:r,nested});seen.add(id);}
+   if(!seen.has(id)){expected.push({ref:r,nested});seen.add(id);}else if(nested){expected.find(e=>identity(e.ref)===id)!.nested=true;}
    const card=inspectCoreCardinality(document,r).meaning;
    if(card.state==='known'&&card.itemType){const next=new Set(stack);next.add(id);collect(card.itemType,true,next);}
   };
@@ -132,7 +132,8 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const columns=allColumns.flatMap(c=>c.set.columns.filter(n=>identity(n.field)===identity(fv.field)).map(column=>({column,set:c.set,path:c.path})));
    const key=keys.some(k=>k.fields.some(r=>identity(r)===identity(fv.field)));
    const defaultOn=object(properties.default)?String(properties.default.on):'none';
-   const valid=checkAccessPresence({key,availability:availability.state==='known'?availability.nullability:'unspecified',admitsNull:validateCoreFieldValue(document,fv.field,null).valid,defaultOn,generated:fv.generated,bound:columns.length>0,notNull:columns.map(c=>c.column.notNull),nested:expectedField.nested&&!memberIds.has(identity(fv.field))},fv);
+   const facts={key,availability:availability.state==='known'?availability.nullability:'unspecified',admitsNull:validateCoreFieldValue(document,fv.field,null).valid,defaultOn,generated:fv.generated,bound:columns.length>0,notNull:columns.map(c=>c.column.notNull)};
+   const valid=(!memberIds.has(identity(fv.field))||checkAccessPresence(facts,fv))&&(!expectedField.nested||checkAccessPresence({...facts,key:false,nested:true},fv));
    if(!valid||key&&['date','timestamp'].includes(field.scalarType??'')||(field.scalarType==='timestamp')!==(fv.temporal!==undefined)||fv.generated&&columns.some(c=>c.column.generation===null))add('ACCESS_CONFLICT',fp);
    const interpreted=facets.state==='known'||facets.state==='partial'?facets.interpreted:{};
    for(const c of columns)if(!nativeDeclarationCompatible(field,fv,c.column,c.set,{...interpreted}))add('ACCESS_NATIVE',c.path+'/columns');

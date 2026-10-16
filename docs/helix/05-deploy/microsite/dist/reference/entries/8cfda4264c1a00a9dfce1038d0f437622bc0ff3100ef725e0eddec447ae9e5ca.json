@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5074,
+        "line": 8,
+        "path": "src/adapters/smithy/assembly.ts",
+        "sha256": "e6aed852e88f125202a9ff5ffb1694d5da3ef636db50667b71807ce66f4ac05d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SmithyAssemblyBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SmithyAssemblyBackend {identity:string;assemble(files:Record<string,string>,control?:{signal?:AbortSignal}):string|Promise<string>;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SmithyAssemblyBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5074,
+      "line": 8,
+      "path": "src/adapters/smithy/assembly.ts",
+      "sha256": "e6aed852e88f125202a9ff5ffb1694d5da3ef636db50667b71807ce66f4ac05d"
+    }
+  ],
+  "summary": "Trusted installed runtime. It must consume only the explicitly supplied files.",
+  "title": "SmithyAssemblyBackend"
+}

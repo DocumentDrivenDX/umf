@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8291,
+        "line": 8,
+        "path": "src/projections/smithy-json-schema.ts",
+        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SmithyJsonSchemaProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SmithyJsonSchemaProjection {status:'blocked'|'projected';source:Document;converter:string;assembly:SmithyAssemblyResult;policy:SmithyJsonSchemaPolicy;complete:false;issues:ProjectionIssue[];nativeSchema?:string;adaptedSchema?:string;target?:Document;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SmithyJsonSchemaProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8291,
+      "line": 8,
+      "path": "src/projections/smithy-json-schema.ts",
+      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+    }
+  ],
+  "summary": "Type declaration · src/projections/smithy-json-schema.ts",
+  "title": "SmithyJsonSchemaProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2022,
+        "line": 1,
+        "path": "spec/extensions/smithy/selection-result.schema.json",
+        "sha256": "0507ce0583c463be8eb01230ef4f3217f7d15da79cb953b84e6a74eabac1789e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "smithySelectionResultSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:smithy:selection-result:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"status\",\n    \"selector\",\n    \"assembly\",\n    \"issues\",\n    \"complete\"\n  ],\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"selected\",\n        \"blocked\"\n      ]\n    },\n    \"selector\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"assembly\": {\n      \"$ref\": \"urn:umf:smithy:assembly-result:0.1.0\"\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          }\n        }\n      }\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"shapeIds\": {\n      \"type\": \"array\",\n      \"uniqueItems\": true,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1,\n        \"pattern\": \"^[A-Za-z_][A-Za-z_0-9]*(\\\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\\\$[A-Za-z_][A-Za-z_0-9]*)?$\"\n      }\n    }\n  },\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"selected\"\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"shapeIds\"\n        ],\n        \"properties\": {\n          \"assembly\": {\n            \"properties\": {\n              \"status\": {\n                \"const\": \"assembled\"\n              }\n            }\n          },\n          \"issues\": {\n            \"maxItems\": 0\n          }\n        }\n      },\n      \"else\": {\n        \"not\": {\n          \"required\": [\n            \"shapeIds\"\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"smithySelectionResultSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2022,
+      "line": 1,
+      "path": "spec/extensions/smithy/selection-result.schema.json",
+      "sha256": "0507ce0583c463be8eb01230ef4f3217f7d15da79cb953b84e6a74eabac1789e"
+    }
+  ],
+  "summary": "Public export · spec/extensions/smithy/selection-result.schema.json",
+  "title": "smithySelectionResultSchema"
+}

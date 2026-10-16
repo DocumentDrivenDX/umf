@@ -1,0 +1,36 @@
+{
+  "data": {
+    "apiIds": [],
+    "expected": {
+      "bytes": 103,
+      "path": "docs/helix/05-deploy/reference/examples/expected.json",
+      "sha256": "7ea4708756f2ab539e0acf22175e625e65cd5ccd25c8fdbc1579b79472d1d821"
+    },
+    "guideIds": [
+      "[\"guide\",\"concepts\"]"
+    ],
+    "inputs": [
+      {
+        "bytes": 3877,
+        "path": "docs/helix/05-deploy/reference/examples/orders.json",
+        "sha256": "6167aa09f8de98ed33c2a870f91db213c231d2803f0a622b33b799ba743de76b"
+      }
+    ],
+    "operationId": "core-select"
+  },
+  "id": "[\"example\",\"metadata-selection\"]",
+  "kind": "example",
+  "links": [
+    "[\"guide\",\"concepts\"]",
+    "[\"integration\",\"core-select\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3877,
+      "path": "docs/helix/05-deploy/reference/examples/orders.json",
+      "sha256": "6167aa09f8de98ed33c2a870f91db213c231d2803f0a622b33b799ba743de76b"
+    }
+  ],
+  "summary": "Select copied metadata",
+  "title": "metadata selection"
+}

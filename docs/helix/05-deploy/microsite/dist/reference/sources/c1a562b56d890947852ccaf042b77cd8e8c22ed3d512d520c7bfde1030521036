@@ -1,0 +1,339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:field-parquet-projection:1.0.0",
+  "title": "Authored Field to explicit Parquet schema file",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-field-parquet"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "recordName",
+        "fieldName",
+        "nativeType",
+        "repetition",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeType": {
+          "enum": [
+            "boolean",
+            "int32",
+            "int64",
+            "float32",
+            "float64",
+            "binary",
+            "string",
+            "date",
+            "time-millis",
+            "time-micros",
+            "timestamp-millis-utc",
+            "timestamp-micros-utc"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "recordName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fieldName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repetition": {
+          "enum": [
+            "required",
+            "optional",
+            "repeated"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.field.parquet",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Single authored Field, explicit carrier and repetition in an empty schema file; no row writing or value-domain equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "outcome"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string"
+        },
+        "nativePath": {
+          "const": "/schema/1"
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    },
+    {
+      "$comment": "UMF projection policy",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "warning"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              },
+              "diagnostics": {
+                "type": "array",
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "error"
+                    }
+                  },
+                  "required": [
+                    "severity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "request": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "const": "strict"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "const": "exact"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "unknown",
+                      "approximated",
+                      "not-expressible"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

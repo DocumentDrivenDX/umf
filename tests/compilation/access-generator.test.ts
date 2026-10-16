@@ -1,6 +1,14 @@
 import {expect,test} from 'bun:test';
 import {generateAccessPackage} from '../../src/compilation/index';
 import {profile,request,mutateSource} from './access-fixtures';
+// @covers US-082-AC1
+test('generated updates have explicit keyword parameters checked by every checker',()=>{
+ const result=generateAccessPackage(request(),profile());
+ const fields=result.files.find(f=>f.path==='shop/fields.py')!.text;
+ expect(fields).not.toContain('**values: Unpack[');
+ expect(fields).toContain('def update(self, *, amount:');
+ expect(fields).toContain(' = MISSING');
+});
 // @covers US-080-AC1
  test('generation_is_deterministic; exact source and profile identity affect digest',()=>{
  const req=request(),p=profile(),before=JSON.stringify({req,p});const a=generateAccessPackage(req,p),b=generateAccessPackage(req,p);
@@ -65,7 +73,7 @@ import {profile,request,mutateSource} from './access-fixtures';
  const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('candidate');const fields=r.files.find(f=>f.path==='shop/fields.py')!.text;expect(fields).toContain('logical_namespace="logical.ns"');expect(fields).toContain('logical_name="Order \\"Ledger\\""'.replace(/\\\\/g,'\\'));expect(fields).toContain('field="orderId"');expect(fields).toContain('python_identity: Column[PythonOrder, str]');
  });
 // @covers US-080-AC4
- test('keyless Records refuse and multiple Keys retain explicit selected identity',()=>{
+ test('keyless Records refuse and explicit selection preserves alternate Key identities',()=>{
  const missing=request();mutateSource(missing,d=>{delete (d.modules[0]!.elements[5]! as {keys?:unknown}).keys;});const a=generateAccessPackage(missing,profile());expect(a.outcome).toBe('refused');expect(a.diagnostics.some(d=>d.code==='LOSS'&&d.pointer.endsWith('/keys'))).toBe(true);
  const multiple=request();mutateSource(multiple,d=>{const r=d.modules[0]!.elements[5]! as unknown as {keys:unknown[]};r.keys.push({id:'revision-key',name:'Revision identity',fields:[{module:'commerce',element:'revision'}],primary:false});});const b=generateAccessPackage(multiple,profile());expect(b.outcome).toBe('candidate');expect(b.files.find(f=>f.path==='shop/keys.py')!.text).toContain('class OrderRevisionKeyKey');
  });
@@ -110,6 +118,60 @@ import {profile,request,mutateSource} from './access-fixtures';
  expect(r.files.find(f=>f.path==='shop/keys.py')!.text.indexOf('    line_order_id:')).toBeLessThan(r.files.find(f=>f.path==='shop/keys.py')!.text.indexOf('    line_number:'));
  });
 
+// @covers US-080-AC2
+ test('selectedKey is explicit and must identify this Records declared Key',()=>{
+ expect(generateAccessPackage(request(),profile()).outcome).toBe('candidate');
+ for(const invalid of [undefined,null,{module:'commerce',element:'Customer',key:'order-key'},{module:'foreign',element:'Order',key:'order-key'},{module:'commerce',element:'Order',key:'unknown'},{module:'commerce',element:'Order',key:'order-key',unknown:true}]){
+  const req=request();mutateSource(req,d=>{const view=d.modules[0]!.extensions['umf.access'].views[0]! as unknown as Record<string,unknown>;if(invalid===undefined)delete view.selectedKey;else view.selectedKey=invalid;});
+  const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.files).toEqual([]);
+  expect(result.diagnostics.some(d=>d.accessCode==='ACCESS_REFERENCE'&&d.pointer.endsWith('/selectedKey'))).toBe(true);
+ }
+ });
+
+// @covers US-081-AC8
+test('generated validators and codecs delegate to shared runtime algorithms',()=>{
+ const result=generateAccessPackage(request(),profile());
+ const models=result.files.find(f=>f.path==='shop/models.py')!.text;
+ const codecs=result.files.find(f=>f.path==='shop/codecs.py')!.text;
+ expect(models).toContain('FieldValidator(');
+ expect(models).not.toContain('def validate_field_');
+ expect(models).not.toContain('raise ');
+ expect(models).not.toContain('def __init_subclass__');
+ expect(codecs).not.toContain('if ');
+ expect(codecs).not.toContain('astimezone(');
+ expect(codecs).toContain('return encode_model(');
+ expect(codecs).toContain('return decode_model(');
+});
+
+// @covers US-080-AC2
+ test('Field reused as an item must satisfy owned and nested occurrence rules',()=>{
+ for(const field of ['memo','amount']){
+  const req=request();mutateSource(req,d=>{
+   const m=d.modules[0]!;
+   m.elements.push({id:'values',kind:'field',cardinality:'array',itemType:{module:'commerce',element:field},nullability:'required',extensions:{}} as never);
+   (m.elements[5]! as unknown as {members:unknown[]}).members.push({module:'commerce',element:'values'});
+   const fields=m.extensions['umf.access'].views[0]!.fields;
+   fields.push({field:{module:'commerce',element:'values'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:true,generated:false} as never);
+   if(field==='amount')fields.find(f=>f.field.element==='amount')!.mutable=false;
+  });
+  const result=generateAccessPackage(req,profile());
+  expect(result.outcome).toBe(field==='amount'?'candidate':'refused');
+  if(field==='memo')expect(result.diagnostics.some(d=>d.accessCode==='ACCESS_CONFLICT')).toBe(true);
+ }
+ });
+
+// @covers US-080-AC4
+test('nested-only item Fields cannot be selected as row projection columns',()=>{
+ const req=request();req.projections=[{name:'itemProjection',record:req.records[0]!,fields:[{module:'commerce',element:'tagItem'}]}];
+ mutateSource(req,d=>{
+  const m=d.modules[0]!;
+  m.elements.push({id:'tags',kind:'field',cardinality:'array',itemType:{module:'commerce',element:'tagItem'},nullability:'required',extensions:{}} as never,{id:'tagItem',kind:'field',cardinality:'one',scalarType:'string',nullability:'required',extensions:{}} as never);
+  (m.elements.find(e=>e.id==='Order')! as unknown as {members:unknown[]}).members.push({module:'commerce',element:'tags'});
+  m.extensions['umf.access'].views[0]!.fields.push({field:{module:'commerce',element:'tags'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:true,generated:false} as never,{field:{module:'commerce',element:'tagItem'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:false,generated:false} as never);
+ });
+ const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.files).toEqual([]);expect(result.diagnostics.some(d=>d.code==='REFERENCE'&&d.pointer==='/projections')).toBe(true);
+});
+
 // @covers US-081-AC8; shared codec calls and generated final metadata.
 test('generated codecs delegate to the runtime and update has explicit keywords',()=>{
  const result=generateAccessPackage(request(),profile());
@@ -149,3 +211,22 @@ test('both initial modes refuse unsupported selected carriers without partial co
   const keys=result.files.find(f=>f.path==='shop/keys.py')!.text;
   expect(keys).toContain('class OrderAlternateKey');expect(keys).toContain('"key": "order-key"');
  });
+
+// @covers US-080-AC4 -- local codec keys are unqualified Field IDs.
+test('cross-module duplicate wire Field IDs refuse instead of overwriting codecs',()=>{
+ const q=request();q.projections=[{name:'bothAmounts',record:q.records[0]!,fields:[{module:'commerce',element:'amount'},{module:'other',element:'amount'}]}];q.names=[{sourceId:'logical',pointer:'/modules/1/elements/0',python:'other_amount'}];
+ mutateSource(q,d=>{
+  d.modules.push({id:'other',namespace:'other',elements:[{id:'amount',kind:'field',cardinality:'one',scalarType:'decimal',nullability:'required',facets:{precision:12,scale:2},extensions:{}}],extensions:{}} as never);
+  (d.modules[0]!.elements.find(e=>e.id==='Order')! as unknown as {members:unknown[]}).members.push({module:'other',element:'amount'});
+  d.modules[0]!.extensions['umf.access'].views[0]!.fields.push({field:{module:'other',element:'amount'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:true,generated:false} as never);
+ });
+ const r=generateAccessPackage(q,profile());expect(r.outcome).toBe('refused');expect(r.files).toEqual([]);expect(r.diagnostics.some(d=>d.code==='REFERENCE'&&d.pointer.endsWith('/members'))).toBe(true);expect(r.diagnostics.some(d=>d.code==='REFERENCE'&&d.pointer==='/projections')).toBe(true);
+});
+
+// @covers US-080-AC2 -- CONTRACT-070 complete nested null alternatives.
+test('nullable item view cannot narrow create null independently of row null',async()=>{
+ const q=request();q.sources[0]!.text=await Bun.file(new URL('../../fixtures/access/commerce/containers.json',import.meta.url)).text();
+ expect(generateAccessPackage(q,profile()).outcome).toBe('candidate');
+ mutateSource(q,d=>{d.modules[0]!.extensions['umf.access'].views[0]!.fields.find(f=>f.field.element==='labelItem')!.create.null=false;});
+ const r=generateAccessPackage(q,profile());expect(r.outcome).toBe('refused');expect(r.files).toEqual([]);expect(r.diagnostics.some(d=>d.accessCode==='ACCESS_CONFLICT')).toBe(true);
+});

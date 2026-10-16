@@ -1,6 +1,6 @@
 {
   "name": "@umf/core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "packageManager": "bun@1.4.2",
@@ -42,7 +42,11 @@
     "test:actions": "bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference",
     "build:sdk": "bun run build && bun run build:postgresql && bun scripts/package-sdk.ts",
     "test:sdk": "bun run build:sdk && bun scripts/test-sdk-install.ts",
-    "test:access-e2e": "bun scripts/access-e2e.ts"
+    "test:access-e2e": "bun scripts/access-e2e.ts",
+    "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
+    "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
+    "test:reference:browser": "bun scripts/reference/browser.ts",
+    "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

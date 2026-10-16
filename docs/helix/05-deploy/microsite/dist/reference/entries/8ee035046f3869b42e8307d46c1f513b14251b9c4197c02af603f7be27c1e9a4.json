@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7873,
+        "line": 9,
+        "path": "src/projections/openapi-json-schema.ts",
+        "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OpenapiJsonSchemaProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OpenapiJsonSchemaProjection {status:'blocked'|'projected';source:Document;policy:OpenapiJsonSchemaPolicy;issues:ProjectionIssue[];mappings:{retrievalUri:string;sourcePointer:string;targetPointer:string}[];target?:Document;nativeSchema?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OpenapiJsonSchemaProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7873,
+      "line": 9,
+      "path": "src/projections/openapi-json-schema.ts",
+      "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+    }
+  ],
+  "summary": "Type declaration · src/projections/openapi-json-schema.ts",
+  "title": "OpenapiJsonSchemaProjection"
+}

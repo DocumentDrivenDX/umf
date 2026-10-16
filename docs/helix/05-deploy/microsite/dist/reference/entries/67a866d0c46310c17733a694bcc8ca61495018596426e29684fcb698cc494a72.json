@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3962,
+        "line": 19,
+        "path": "src/model/record-members.ts",
+        "sha256": "6b80acfc01ac70d3c01479b86a5a421a6eb82f071e208e153a14b5163b3e9a0d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreRecordMembers",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identityInput: CoreRecordMembersIdentity): CoreRecordMembersInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreRecordMembers\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3962,
+      "line": 19,
+      "path": "src/model/record-members.ts",
+      "sha256": "6b80acfc01ac70d3c01479b86a5a421a6eb82f071e208e153a14b5163b3e9a0d"
+    }
+  ],
+  "summary": "Explicit empty membership differs from an absent declaration. Qualifiers stay opaque.",
+  "title": "inspectCoreRecordMembers"
+}

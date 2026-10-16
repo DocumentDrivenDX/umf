@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9911,
+        "line": 17,
+        "path": "src/core-ideals/cardinality-sqlserver.ts",
+        "sha256": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerCardinalityRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerCardinalityRequest {column:string;nativeSource:string;mode:'strict'|'report';profile:'native-scalar'|'json-array'|'json-object'|'unresolved';identity:{module:string;element:string};constraint:string|null;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerCardinalityRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9911,
+      "line": 17,
+      "path": "src/core-ideals/cardinality-sqlserver.ts",
+      "sha256": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-sqlserver.ts",
+  "title": "SqlServerCardinalityRequest"
+}

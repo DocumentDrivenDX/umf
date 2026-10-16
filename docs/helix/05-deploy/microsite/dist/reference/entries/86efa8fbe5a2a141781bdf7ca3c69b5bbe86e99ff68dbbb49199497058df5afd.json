@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11434,
+        "line": 79,
+        "path": "src/core-ideals/relationship-avro-projection.ts",
+        "sha256": "4e7e9773271f3e460e3a105ff802b9e9b89f50ca123bd956e2d71dc337456e7a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyRelationshipAvroProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RelationshipAvroProjection, current: Document): RelationshipAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyRelationshipAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11434,
+      "line": 79,
+      "path": "src/core-ideals/relationship-avro-projection.ts",
+      "sha256": "4e7e9773271f3e460e3a105ff802b9e9b89f50ca123bd956e2d71dc337456e7a"
+    }
+  ],
+  "summary": "Verify retained consistency against a current or freshly imported native document.",
+  "title": "verifyRelationshipAvroProjection"
+}

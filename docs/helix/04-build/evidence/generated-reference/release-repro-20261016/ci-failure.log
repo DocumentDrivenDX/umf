@@ -1,0 +1,30 @@
+build	Verify page signatures	﻿2026-10-16T21:19:22.3843204Z ##[group]Run node .tools/innsigle/src/cli.mjs verify --all
+build	Verify page signatures	2026-10-16T21:19:22.3843710Z ^[[36;1mnode .tools/innsigle/src/cli.mjs verify --all^[[0m
+build	Verify page signatures	2026-10-16T21:19:22.3907191Z shell: /usr/bin/bash -e {0}
+build	Verify page signatures	2026-10-16T21:19:22.3907506Z ##[endgroup]
+build	Verify page signatures	2026-10-16T21:19:28.6428096Z VALID docs/helix/05-deploy/microsite/dist/action-compiler.html (action-compiler-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6433841Z VALID docs/helix/05-deploy/microsite/dist/actions/api-reference.html (actions-api-reference-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6438412Z VALID docs/helix/05-deploy/microsite/dist/actions/concepts.html (actions-concepts-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6442872Z VALID docs/helix/05-deploy/microsite/dist/actions/declarations.html (actions-declarations-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6447571Z VALID docs/helix/05-deploy/microsite/dist/actions/execution.html (actions-execution-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6452843Z VALID docs/helix/05-deploy/microsite/dist/actions/formal-analysis.html (actions-formal-analysis-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6457897Z VALID docs/helix/05-deploy/microsite/dist/actions/getting-started.html (actions-getting-started-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6463234Z VALID docs/helix/05-deploy/microsite/dist/actions/glossary.html (actions-glossary-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6470365Z VALID docs/helix/05-deploy/microsite/dist/actions/index.html (actions-index-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6476693Z VALID docs/helix/05-deploy/microsite/dist/actions/receipts-and-queries.html (actions-receipts-and-queries-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6480532Z VALID docs/helix/05-deploy/microsite/dist/actions/support-and-evidence.html (actions-support-and-evidence-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6483974Z VALID docs/helix/05-deploy/microsite/dist/demo.html (demo-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6487341Z VALID docs/helix/05-deploy/microsite/dist/docs.html (docs-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6491392Z VALID docs/helix/05-deploy/microsite/dist/ecosystem.html (ecosystem-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6495074Z VALID docs/helix/05-deploy/microsite/dist/explorer.html (explorer-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6498628Z VALID docs/helix/05-deploy/microsite/dist/index.html (index-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6500015Z STALE docs/helix/05-deploy/microsite/dist/reference/api.html (reference-api-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6501753Z STALE docs/helix/05-deploy/microsite/dist/reference/core.html (reference-core-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6503320Z STALE docs/helix/05-deploy/microsite/dist/reference/examples.html (reference-examples-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6504992Z STALE docs/helix/05-deploy/microsite/dist/reference/extensions.html (reference-extensions-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6506581Z STALE docs/helix/05-deploy/microsite/dist/reference/index.html (reference-index-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6507494Z STALE docs/helix/05-deploy/microsite/dist/reference/integrations.html (reference-integrations-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6508689Z STALE docs/helix/05-deploy/microsite/dist/reference/workbench.html (reference-workbench-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6509936Z INVALID: 7 claim(s)/file(s) not VALID
+build	Verify page signatures	2026-10-16T21:19:28.6511074Z VALID docs/helix/05-deploy/microsite/dist/schema-browser.html (schema-browser-html.attestation.json)
+build	Verify page signatures	2026-10-16T21:19:28.6642829Z ##[error]Process completed with exit code 1.

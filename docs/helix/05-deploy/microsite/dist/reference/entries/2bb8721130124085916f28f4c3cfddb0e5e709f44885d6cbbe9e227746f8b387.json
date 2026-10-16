@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4150,
+        "line": 10,
+        "path": "src/adapters/owl/annotations.ts",
+        "sha256": "c5d1ed9e38070760711aad3b067ee19ba8a114fd3436209a21b12d29108138ab"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlAxiomAnnotations",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OwlAxiomAnnotations {profile:'owl-annotations-1';complete:false;source:Document;blankNodeScope:string;quadIndex:number;roots:RdfNode[];records:OwlAnnotationRecord[];malformed:RdfNode[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlAxiomAnnotations\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4150,
+      "line": 10,
+      "path": "src/adapters/owl/annotations.ts",
+      "sha256": "c5d1ed9e38070760711aad3b067ee19ba8a114fd3436209a21b12d29108138ab"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/annotations.ts",
+  "title": "OwlAxiomAnnotations"
+}

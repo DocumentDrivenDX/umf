@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8199,
+        "line": 14,
+        "path": "src/projections/avro-json-schema.ts",
+        "sha256": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectAvroToJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, input: AvroDocumentBindings): AvroDocumentProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectAvroToJsonSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8199,
+      "line": 14,
+      "path": "src/projections/avro-json-schema.ts",
+      "sha256": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866"
+    }
+  ],
+  "summary": "Projects schema shapes; instance encoding is an explicit caller responsibility.",
+  "title": "projectAvroToJsonSchema"
+}

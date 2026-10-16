@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3777,
+        "line": 5,
+        "path": "src/adapters/parquet/levels.ts",
+        "sha256": "cadcc0d5b9af042d4a5e93ed18120072caea95e206c461486be1201578c8542c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetPageLevels",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetPageLevels {rowGroup:number;column:number;offset:number;repetition:number[];definition:number[];repetitionPadding:number[];definitionPadding:number[];valuesOffset:number;nonNullValues:number;rowStarts:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetPageLevels\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3777,
+      "line": 5,
+      "path": "src/adapters/parquet/levels.ts",
+      "sha256": "cadcc0d5b9af042d4a5e93ed18120072caea95e206c461486be1201578c8542c"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/levels.ts",
+  "title": "ParquetPageLevels"
+}

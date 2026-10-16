@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8228,
+        "line": 19,
+        "path": "src/core-ideals/postgresql-ddl-kinds.ts",
+        "sha256": "15aca057292465dd9fc29cd68951f074ba0ce918c089536814b282380b6f7e66"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyPostgresqlDdlRecord",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: PostgresqlDdlKindRequest, backend: PostgresqlBackend): Promise<PostgresqlDdlKinds>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyPostgresqlDdlRecord\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8228,
+      "line": 19,
+      "path": "src/core-ideals/postgresql-ddl-kinds.ts",
+      "sha256": "15aca057292465dd9fc29cd68951f074ba0ce918c089536814b282380b6f7e66"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/postgresql-ddl-kinds.ts",
+  "title": "classifyPostgresqlDdlRecord"
+}

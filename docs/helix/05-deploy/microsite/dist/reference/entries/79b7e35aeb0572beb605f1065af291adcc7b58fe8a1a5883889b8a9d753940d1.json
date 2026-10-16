@@ -1,0 +1,200 @@
+{
+  "data": {
+    "extensionId": "umf.avro",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/avro/native.test.ts",
+          "tests/avro/corpus.test.ts",
+          "fixtures/avro/corpus-oracle-results.json",
+          "tests/avro/bundle.test.ts",
+          "fixtures/avro/dependency-oracle-results.json",
+          "tests/avro/native-schema.test.ts",
+          "fixtures/avro/native-schema-oracle.json",
+          "fixtures/avro/native-schema-browser.json"
+        ],
+        "native": {
+          "subset": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation.",
+          "system": "Apache Avro JSON schema",
+          "version": "1.12.0; avsc 5.7.9 validation profile"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Avro JSON schema preservation and typed tree access",
+      "id": "umf.avro",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:avro:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "dependencies": {
+            "items": {
+              "properties": {
+                "id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "root": {
+                  "$ref": "#/$defs/node"
+                }
+              },
+              "required": [
+                "id",
+                "root"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          },
+          "version": {
+            "const": "1.12.0"
+          }
+        },
+        "required": [
+          "version",
+          "root"
+        ],
+        "title": "UMF Avro native schema tree",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-007. Native JSON tokens preserve exact numbers, order, defaults, aliases, logical types and unknown metadata. Pinned JavaScript validator limitations remain explicit; no parsing-canonical-form reduction is used for retention.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"avroRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/avro/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.avro\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"avroRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/avro/schema.json\",\"\"]",
+    "[\"integration\",\"umf.avro@0.1.0:import\"]",
+    "[\"integration\",\"umf.avro@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4292,
+      "path": "spec/extensions/avro/package.json",
+      "sha256": "6c539c9cd8e5665b3165caca77954c1cd2e04167b731af895cbdae4b23964b06"
+    }
+  ],
+  "summary": "Avro JSON schema preservation and typed tree access",
+  "title": "umf.avro · 0.1.0"
+}

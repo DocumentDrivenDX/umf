@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6224,
+        "line": 19,
+        "path": "src/extensions/security/protection/domains.ts",
+        "sha256": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityProtectionDomainResolution",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityProtectionDomainResolution {\n status:'resolved-domains'|'refused';complete:false;authority:false;\n policy:Json;catalog:Json;closure:Json;domains:readonly ProtectionDomainOccurrence[];\n diagnostics:readonly Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityProtectionDomainResolution\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6224,
+      "line": 19,
+      "path": "src/extensions/security/protection/domains.ts",
+      "sha256": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/domains.ts",
+  "title": "SecurityProtectionDomainResolution"
+}

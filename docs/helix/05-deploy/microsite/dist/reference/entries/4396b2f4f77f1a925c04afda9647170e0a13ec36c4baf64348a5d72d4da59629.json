@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3992,
+        "line": 1,
+        "path": "spec/projections/postgresql-row-json-schema.schema.json",
+        "sha256": "3671a7c5c2d82310f1d2d84d10970f28cd825f439a7af98db25178a1a5f7d4f1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "postgresqlRowProjectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:projection:postgresql-row-json-schema:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"status\",\n    \"source\",\n    \"policy\",\n    \"issues\",\n    \"mappings\",\n    \"complete\"\n  ],\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"blocked\",\n        \"projected\"\n      ]\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"nativeSchema\": {\n      \"type\": \"string\"\n    },\n    \"policy\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"id\",\n        \"schemaId\",\n        \"relation\",\n        \"columns\",\n        \"lossPolicy\"\n      ],\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"schemaId\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"relation\": {\n          \"type\": \"object\",\n          \"required\": [\n            \"schema\",\n            \"name\"\n          ],\n          \"properties\": {\n            \"schema\": {\n              \"type\": \"string\",\n              \"minLength\": 1\n            },\n            \"name\": {\n              \"type\": \"string\",\n              \"minLength\": 1\n            }\n          },\n          \"additionalProperties\": false\n        },\n        \"columns\": {\n          \"type\": \"object\",\n          \"minProperties\": 1,\n          \"additionalProperties\": {\n            \"enum\": [\n              \"sql-text\",\n              \"json-boolean\",\n              \"json-int32\",\n              \"json-value\"\n            ]\n          }\n        },\n        \"lossPolicy\": {\n          \"enum\": [\n            \"strict\",\n            \"allow-reported-loss\"\n          ]\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"path\",\n          \"code\",\n          \"classification\",\n          \"detail\",\n          \"retainedInSource\"\n        ],\n        \"properties\": {\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"classification\": {\n            \"enum\": [\n              \"representation-change\",\n              \"not-enforced\",\n              \"unsupported\",\n              \"annotation-only\"\n            ]\n          },\n          \"detail\": {\n            \"type\": \"string\"\n          },\n          \"retainedInSource\": {\n            \"const\": true\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"mappings\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"column\",\n          \"nativeType\",\n          \"encoding\",\n          \"targetPointer\"\n        ],\n        \"properties\": {\n          \"column\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          },\n          \"nativeType\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          },\n          \"encoding\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          },\n          \"targetPointer\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"sql\": {\n      \"type\": \"string\"\n    }\n  },\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"target\",\n          \"nativeSchema\",\n          \"sql\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"anyOf\": [\n            {\n              \"required\": [\n                \"target\"\n              ]\n            },\n            {\n              \"required\": [\n                \"nativeSchema\"\n              ]\n            },\n            {\n              \"required\": [\n                \"sql\"\n              ]\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"postgresqlRowProjectionSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3992,
+      "line": 1,
+      "path": "spec/projections/postgresql-row-json-schema.schema.json",
+      "sha256": "3671a7c5c2d82310f1d2d84d10970f28cd825f439a7af98db25178a1a5f7d4f1"
+    }
+  ],
+  "summary": "Public export · spec/projections/postgresql-row-json-schema.schema.json",
+  "title": "postgresqlRowProjectionSchema"
+}

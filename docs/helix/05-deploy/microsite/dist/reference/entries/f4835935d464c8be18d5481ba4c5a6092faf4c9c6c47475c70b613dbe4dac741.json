@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7403,
+        "line": 10,
+        "path": "src/model/selection.ts",
+        "sha256": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "selectCoreElements",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, queryInput: CoreElementQuery, registry?: Registry): CoreElementSelection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"selectCoreElements\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7403,
+      "line": 10,
+      "path": "src/model/selection.ts",
+      "sha256": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077"
+    }
+  ],
+  "summary": "Select core metadata with full source context and explicitly scoped reference traversal.",
+  "title": "selectCoreElements"
+}

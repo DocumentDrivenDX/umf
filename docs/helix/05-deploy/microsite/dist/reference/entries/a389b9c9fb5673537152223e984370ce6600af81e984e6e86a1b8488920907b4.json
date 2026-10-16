@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 6974,
+        "path": "spec/extensions/parquet-cardinality/package.json",
+        "sha256": "f45dc53137a550f17c93a2afa0f9b92f978cb17d8de9d05b73e2e1919dc33c1c"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.parquet.cardinality@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.parquet.cardinality@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Parquet · parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+      "subset": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native",
+      "targetSystem": "UMF",
+      "title": "umf.parquet.cardinality · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.parquet.cardinality@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.parquet.cardinality\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native",
+  "title": "umf.parquet.cardinality · import"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7820,
+        "line": 11,
+        "path": "src/core-ideals/field-sqlserver-projection.ts",
+        "sha256": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldSqlServerRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldSqlServerRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof carriers;mode:'strict'|'report'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldSqlServerRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7820,
+      "line": 11,
+      "path": "src/core-ideals/field-sqlserver-projection.ts",
+      "sha256": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-sqlserver-projection.ts",
+  "title": "FieldSqlServerRequest"
+}

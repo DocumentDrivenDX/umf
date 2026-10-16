@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3711,
+        "line": 21,
+        "path": "src/projections/bit128-file-values.ts",
+        "sha256": "f04323715303474eb78c9aa1730692c95b85a57c74a925f96f7a33acfe75c8ac"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "decodeBit128FileRecord",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, input: Record<string, Json>): Bit128RecordValue[]"
+    ]
+  },
+  "id": "[\"api\",\".\",\"decodeBit128FileRecord\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3711,
+      "line": 21,
+      "path": "src/projections/bit128-file-values.ts",
+      "sha256": "f04323715303474eb78c9aa1730692c95b85a57c74a925f96f7a33acfe75c8ac"
+    }
+  ],
+  "summary": "Public export · src/projections/bit128-file-values.ts",
+  "title": "decodeBit128FileRecord"
+}

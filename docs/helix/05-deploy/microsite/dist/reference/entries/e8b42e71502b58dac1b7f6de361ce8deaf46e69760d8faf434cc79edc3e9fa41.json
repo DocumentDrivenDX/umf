@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 19620,
+        "line": 108,
+        "path": "src/adapters/rdf/index.ts",
+        "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeRdfDatasetMerge",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(documents: Document[], options: { id: string; graphPolicy: \"union-by-name\"; blankNodePolicy: \"disjoint-inputs\"; }): RdfMergeReport"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeRdfDatasetMerge\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 19620,
+      "line": 108,
+      "path": "src/adapters/rdf/index.ts",
+      "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+    }
+  ],
+  "summary": "Explicit dataset composition policy; equal blankNodeScope strings never establish shared identity.",
+  "title": "proposeRdfDatasetMerge"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12539,
+        "line": 11,
+        "path": "src/extensions/actions/selector.ts",
+        "sha256": "0bd7f164ceceaca5a397237ed654de3fc62f6a7e98ad14ba10d6f94d0b8fbd6d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionEntityInput",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionEntityInput {key:ActionKeyReference;components:CoreLiteral[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionEntityInput\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12539,
+      "line": 11,
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "0bd7f164ceceaca5a397237ed654de3fc62f6a7e98ad14ba10d6f94d0b8fbd6d"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/selector.ts",
+  "title": "ActionEntityInput"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10468,
+        "line": 71,
+        "path": "src/adapters/delta/ddl.ts",
+        "sha256": "2491fc7a336d88744dbe981861c5e0a2a38e93ff1171299ac5db9fa6cf08da44"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "defineDeltaTable",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(schemaText: string, definition: DeltaDefinition, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"defineDeltaTable\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10468,
+      "line": 71,
+      "path": "src/adapters/delta/ddl.ts",
+      "sha256": "2491fc7a336d88744dbe981861c5e0a2a38e93ff1171299ac5db9fa6cf08da44"
+    }
+  ],
+  "summary": "Author a definition using the existing exact Delta schema profile. No native UUID is invented.",
+  "title": "defineDeltaTable"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6107,
+        "line": 8,
+        "path": "src/adapters/arrow/flatbuffer-decode.ts",
+        "sha256": "a3132fef7075616b426856723f0879314f880f1a4ed1e526f094765b137a647c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "decodeArrowFlatbuffer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bytes: Uint8Array<ArrayBufferLike>, options: { id: string; rootType: ArrowFlatbufferRoot; }): { source: Document; model?: Document; complete: false; status: \"decoded\" | \"uninterpreted\"; diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"decodeArrowFlatbuffer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6107,
+      "line": 8,
+      "path": "src/adapters/arrow/flatbuffer-decode.ts",
+      "sha256": "a3132fef7075616b426856723f0879314f880f1a4ed1e526f094765b137a647c"
+    }
+  ],
+  "summary": "Decodes a raw, non-size-prefixed FlatBuffer metadata root, not an IPC container.",
+  "title": "decodeArrowFlatbuffer"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8033,
+        "line": 24,
+        "path": "src/projections/binding-postgresql/indexes.ts",
+        "sha256": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectBindingIndexesToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logical: Document, binding: Document, nativeArchive: Document, backend: PostgresqlBackend, lossPolicy: \"strict\" | \"report\"): Promise<PostgresqlIndexProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectBindingIndexesToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8033,
+      "line": 24,
+      "path": "src/projections/binding-postgresql/indexes.ts",
+      "sha256": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9"
+    }
+  ],
+  "summary": "Emit PostgreSQL 17 index DDL only against exact columns in a retained CREATE TABLE source.",
+  "title": "projectBindingIndexesToPostgresql"
+}

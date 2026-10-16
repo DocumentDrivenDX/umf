@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "plan": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:plan:1"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:actions:plan:1#/$defs/artifact"
+    },
+    "eligible": {
+      "type": "boolean"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:umf:actions:plan:1#/$defs/diagnostic"
+      },
+      "minItems": 0,
+      "maxItems": 128
+    }
+  },
+  "required": [
+    "plan",
+    "source",
+    "eligible",
+    "diagnostics"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:plan-inspection:1"
+}

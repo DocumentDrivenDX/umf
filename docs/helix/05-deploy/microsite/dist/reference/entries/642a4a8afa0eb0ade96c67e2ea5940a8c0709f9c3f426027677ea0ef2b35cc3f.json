@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12680,
+        "line": 73,
+        "path": "src/extensions/actions/index.ts",
+        "sha256": "b310149d6fa5048691e52abf05f2f73d3b4bfe9b2923472a9d880d1041bf74bb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "declareAction",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(sourceInput: Document, moduleId: string, actionInput: Action, registry: Registry): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"declareAction\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12680,
+      "line": 73,
+      "path": "src/extensions/actions/index.ts",
+      "sha256": "b310149d6fa5048691e52abf05f2f73d3b4bfe9b2923472a9d880d1041bf74bb"
+    }
+  ],
+  "summary": "Public export · src/extensions/actions/index.ts",
+  "title": "declareAction"
+}

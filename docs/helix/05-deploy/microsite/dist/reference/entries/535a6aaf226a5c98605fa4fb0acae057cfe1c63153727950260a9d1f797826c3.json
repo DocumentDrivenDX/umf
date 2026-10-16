@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10576,
+        "line": 67,
+        "path": "src/core-ideals/cardinality-postgresql-projection.ts",
+        "sha256": "c43489c035df2532a85544d7f2e174165108d33b72e9770dc24d91b9af70a526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverCardinalityFromPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CardinalityPostgresqlProjection, nativeText: string, backend: PostgresqlBackend): Promise<Document>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverCardinalityFromPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10576,
+      "line": 67,
+      "path": "src/core-ideals/cardinality-postgresql-projection.ts",
+      "sha256": "c43489c035df2532a85544d7f2e174165108d33b72e9770dc24d91b9af70a526"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverCardinalityFromPostgresql"
+}

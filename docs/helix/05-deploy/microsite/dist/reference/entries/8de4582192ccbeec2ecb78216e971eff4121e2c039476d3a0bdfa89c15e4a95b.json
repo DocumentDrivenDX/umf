@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1889,
+        "line": 18,
+        "path": "src/model/document.ts",
+        "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "editExtension",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, registry: Registry, moduleId: string, elementId: string, extensionId: string, update: (payload: Json) => Json): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"editExtension\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1889,
+      "line": 18,
+      "path": "src/model/document.ts",
+      "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+    }
+  ],
+  "summary": "Atomic update; unknown dependencies conservatively block edits until interpreted.",
+  "title": "editExtension"
+}

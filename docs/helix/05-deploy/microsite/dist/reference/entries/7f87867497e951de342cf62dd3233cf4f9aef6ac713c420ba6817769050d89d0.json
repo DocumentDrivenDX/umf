@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18270,
+        "line": 13,
+        "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+        "sha256": "6868df2c75c9d018d069852e3509bd517e1098565f3080270eec29dfc47ad4cf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipKey",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipKey {keyId:string;constraintName:string;columns:{field:RelationshipEndpoint;name:string;nativeType:'bit'|'tinyint'|'smallint'|'int'|'bigint'}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipKey\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18270,
+      "line": 13,
+      "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+      "sha256": "6868df2c75c9d018d069852e3509bd517e1098565f3080270eec29dfc47ad4cf"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-sqlserver-projection.ts",
+  "title": "SqlServerRelationshipKey"
+}

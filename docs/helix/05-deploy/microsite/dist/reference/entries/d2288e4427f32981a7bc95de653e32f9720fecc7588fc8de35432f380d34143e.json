@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6181,
+        "line": 54,
+        "path": "src/model/native-json.ts",
+        "sha256": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "parseNativeYaml",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options?: { version?: \"1.1\" | \"1.2\"; dateOnly?: \"string\"; booleanLexicon?: \"pyyaml\"; }): NativeJson"
+    ]
+  },
+  "id": "[\"api\",\".\",\"parseNativeYaml\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6181,
+      "line": 54,
+      "path": "src/model/native-json.ts",
+      "sha256": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882"
+    }
+  ],
+  "summary": "JSON-compatible YAML with explicit scalar profile and exact numeric tokens; aliases/tags are rejected.",
+  "title": "parseNativeYaml"
+}

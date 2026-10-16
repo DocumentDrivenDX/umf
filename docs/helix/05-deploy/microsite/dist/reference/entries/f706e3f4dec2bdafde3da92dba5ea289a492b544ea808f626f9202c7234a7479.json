@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18250,
+        "line": 61,
+        "path": "src/extensions/actions/plans.ts",
+        "sha256": "f597be5dee801ddca4778c5c1af3ef2814006e4fc81fb19abf6325d1c64768aa"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectActionPlan",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ActionPlanArtifact, context: ActionPlanInspectionContext): ActionPlanInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectActionPlan\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18250,
+      "line": 61,
+      "path": "src/extensions/actions/plans.ts",
+      "sha256": "f597be5dee801ddca4778c5c1af3ef2814006e4fc81fb19abf6325d1c64768aa"
+    }
+  ],
+  "summary": "Public export · src/extensions/actions/plans.ts",
+  "title": "inspectActionPlan"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4041,
+        "line": 1,
+        "path": "spec/extensions/delta-log/inspection.schema.json",
+        "sha256": "8860a03aea2857569286486429b20657cd19f058c38d611f4824332aed50b06b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "deltaLogInspectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:delta-log-inspection:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"source\",\n    \"complete\",\n    \"parsedAll\",\n    \"lines\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"parsedAll\": {\n      \"type\": \"boolean\"\n    },\n    \"lines\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"line\",\n          \"start\",\n          \"end\",\n          \"terminator\",\n          \"status\"\n        ],\n        \"properties\": {\n          \"line\": {\n            \"type\": \"integer\",\n            \"minimum\": 1\n          },\n          \"start\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"end\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"terminator\": {\n            \"enum\": [\n              \"\",\n              \"\\n\",\n              \"\\r\\n\"\n            ]\n          },\n          \"status\": {\n            \"enum\": [\n              \"parsed\",\n              \"blank\",\n              \"invalid\"\n            ]\n          },\n          \"action\": {\n            \"type\": \"string\"\n          },\n          \"node\": {\n            \"$ref\": \"#/$defs/node\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"deltaLogInspectionSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4041,
+      "line": 1,
+      "path": "spec/extensions/delta-log/inspection.schema.json",
+      "sha256": "8860a03aea2857569286486429b20657cd19f058c38d611f4824332aed50b06b"
+    }
+  ],
+  "summary": "Public export · spec/extensions/delta-log/inspection.schema.json",
+  "title": "deltaLogInspectionSchema"
+}

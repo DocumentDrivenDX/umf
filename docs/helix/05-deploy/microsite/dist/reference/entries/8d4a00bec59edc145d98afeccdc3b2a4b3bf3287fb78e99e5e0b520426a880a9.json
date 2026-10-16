@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7167,
+        "line": 7,
+        "path": "src/adapters/postgresql/cardinality-catalog.ts",
+        "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlTypeIdentity",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlTypeIdentity {schema:string;name:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlTypeIdentity\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7167,
+      "line": 7,
+      "path": "src/adapters/postgresql/cardinality-catalog.ts",
+      "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/postgresql/cardinality-catalog.ts",
+  "title": "PostgresqlTypeIdentity"
+}

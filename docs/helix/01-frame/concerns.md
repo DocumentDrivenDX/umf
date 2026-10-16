@@ -104,3 +104,16 @@ Select `modularity-and-encapsulation` for `src/compilation/` and
 CONTRACT-074 own public boundaries. Semantic review checks include relevant-
 assertion closure, codec invariants, absence of runtime SQL assembly and absence
 of engine storage access.
+
+## Generated reference application
+
+FEAT-032 reuses the selected fidelity, identity, reproducibility, bounded
+processing, conformance and consumer-runtime concerns. ADR-002's strict
+TypeScript/Bun and real-browser constraints remain applicable with the existing
+project overrides. No new frontend framework, authentication, datastore or
+environment/configuration service is introduced for this static consumer.
+Apply `modularity-and-encapsulation` to the proposed reference model, build,
+browser and runtime modules mapped in Architecture. CONTRACT-077 owns shared
+surfaces; TD-089 requires boundary-checker adoption and negative controls before
+dependent implementation. This selection does not claim an existing checker
+already enforces those new paths.

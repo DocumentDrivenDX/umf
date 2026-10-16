@@ -1,0 +1,5240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:delta-log:parquet-checkpoint:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "reconciled"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "spec": {
+      "enum": [
+        "v1",
+        "v2"
+      ]
+    },
+    "checkpoint": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.1.0"
+        }
+      },
+      "required": [
+        "version",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "source": {
+            "$ref": "urn:umf:core:0.1.0"
+          }
+        },
+        "required": [
+          "version",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sidecars": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "source": {
+            "$ref": "urn:umf:core:0.1.0"
+          }
+        },
+        "required": [
+          "path",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "projection": {
+      "$ref": "#/$defs/projection"
+    },
+    "recovery": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/recovery"
+        },
+        {
+          "$ref": "#/$defs/sidecar"
+        }
+      ]
+    }
+  },
+  "required": [
+    "status",
+    "complete",
+    "spec",
+    "checkpoint",
+    "sources",
+    "sidecars",
+    "diagnostics"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "reconciled"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "projection",
+          "recovery"
+        ],
+        "properties": {
+          "projection": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              }
+            }
+          },
+          "recovery": {
+            "properties": {
+              "status": {
+                "const": "reconciled"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "recovery": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "dependentRequired": {
+    "recovery": [
+      "projection"
+    ]
+  },
+  "$defs": {
+    "projection": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        "status": {
+          "enum": [
+            "projected",
+            "blocked"
+          ]
+        },
+        "complete": {
+          "const": false
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "severity",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "log": {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "action": {
+                "type": "string"
+              },
+              "value": {
+                "$ref": "#/$defs/projection/$defs/node"
+              }
+            },
+            "required": [
+              "row",
+              "action",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "omittedNullFields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "row",
+              "path"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "scalarConversions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "input": {
+                "$ref": "#/$defs/projection/$defs/typedValue"
+              },
+              "output": {
+                "$ref": "#/$defs/projection/$defs/node"
+              }
+            },
+            "required": [
+              "row",
+              "path",
+              "input",
+              "output"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "source",
+        "status",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "log",
+              "actions",
+              "omittedNullFields",
+              "scalarConversions"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "log"
+                  ]
+                },
+                {
+                  "required": [
+                    "actions"
+                  ]
+                },
+                {
+                  "required": [
+                    "omittedNullFields"
+                  ]
+                },
+                {
+                  "required": [
+                    "scalarConversions"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "$defs": {
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "null"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                },
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "number"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "array"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/projection/$defs/node"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "members"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "object"
+                },
+                "members": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/projection/$defs/node"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "typedValue": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "fields"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "struct"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/projection/$defs/typedValue"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "list"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/projection/$defs/typedValue"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "duplicateKeys",
+                "entries"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "map"
+                },
+                "duplicateKeys": {
+                  "const": "last-value"
+                },
+                "entries": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "key",
+                      "value"
+                    ],
+                    "properties": {
+                      "key": {
+                        "$ref": "#/$defs/projection/$defs/typedValue"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/projection/$defs/typedValue"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "annotation",
+                "parameters",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "opaque"
+                },
+                "annotation": {
+                  "type": "string"
+                },
+                "parameters": {},
+                "physical": {
+                  "$ref": "#/$defs/projection/$defs/physicalRow"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "bool"
+                },
+                "value": {
+                  "type": "boolean"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "bits",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "int",
+                    "uint"
+                  ]
+                },
+                "bits": {
+                  "enum": [
+                    8,
+                    16,
+                    32,
+                    64
+                  ]
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                  "maxLength": 20
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "bits",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "float"
+                },
+                "bits": {
+                  "enum": [
+                    16,
+                    32,
+                    64
+                  ]
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(?:NaN|-?Infinity|-?[0-9]+(?:\\.[0-9]+)?(?:e[+-]?[0-9]+)?)$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "decimal"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$",
+                  "maxLength": 10002
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "string",
+                    "enum",
+                    "json"
+                  ]
+                },
+                "value": {
+                  "type": "string"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "bytes"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(?:[0-9a-f]{2})*$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "int96"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{24}$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "uuid"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "date"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                  "maxLength": 20
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "unit",
+                "isAdjustedToUTC",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "time",
+                    "timestamp"
+                  ]
+                },
+                "unit": {
+                  "enum": [
+                    "MILLIS",
+                    "MICROS",
+                    "NANOS"
+                  ]
+                },
+                "isAdjustedToUTC": {
+                  "type": "boolean"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                  "maxLength": 20
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "physicalRow": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "physical"
+                },
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "fields"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "record"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/projection/$defs/physicalRow"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "repeated"
+                },
+                "items": {
+                  "type": "array",
+                  "maxItems": 100000,
+                  "items": {
+                    "$ref": "#/$defs/projection/$defs/physicalRow"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      }
+    },
+    "recovery": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "blocked",
+            "reconciled"
+          ]
+        },
+        "complete": {
+          "const": false
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "urn:umf:core:0.1.0"
+              }
+            },
+            "required": [
+              "version",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "checkpoint": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "source": {
+              "$ref": "urn:umf:core:0.1.0"
+            }
+          },
+          "required": [
+            "version",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "severity",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "state": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$"
+            },
+            "protocol": {
+              "$ref": "#/$defs/recovery/$defs/node"
+            },
+            "metaData": {
+              "$ref": "#/$defs/recovery/$defs/node"
+            },
+            "adds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/recovery/$defs/node"
+              }
+            },
+            "removes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/recovery/$defs/node"
+              }
+            },
+            "transactions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/recovery/$defs/node"
+              }
+            },
+            "domains": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/recovery/$defs/node"
+              }
+            },
+            "commitInfo": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/recovery/$defs/node"
+              }
+            },
+            "deferred": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$"
+                  },
+                  "line": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "action": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/recovery/$defs/node"
+                  }
+                },
+                "required": [
+                  "version",
+                  "line",
+                  "action",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "version",
+            "protocol",
+            "metaData",
+            "adds",
+            "removes",
+            "transactions",
+            "domains",
+            "commitInfo",
+            "deferred"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "complete",
+        "sources",
+        "diagnostics"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "reconciled"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "state"
+              ]
+            }
+          }
+        }
+      ],
+      "$defs": {
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "null"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                },
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "number"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "array"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/recovery/$defs/node"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "members"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "object"
+                },
+                "members": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/recovery/$defs/node"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sidecar": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "blocked",
+            "reconciled"
+          ]
+        },
+        "complete": {
+          "const": false
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "urn:umf:core:0.1.0"
+              }
+            },
+            "required": [
+              "version",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "checkpoint": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "source": {
+              "$ref": "urn:umf:core:0.1.0"
+            }
+          },
+          "required": [
+            "version",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "severity",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "state": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$"
+            },
+            "protocol": {
+              "$ref": "#/$defs/sidecar/$defs/node"
+            },
+            "metaData": {
+              "$ref": "#/$defs/sidecar/$defs/node"
+            },
+            "adds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sidecar/$defs/node"
+              }
+            },
+            "removes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sidecar/$defs/node"
+              }
+            },
+            "transactions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sidecar/$defs/node"
+              }
+            },
+            "domains": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sidecar/$defs/node"
+              }
+            },
+            "commitInfo": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sidecar/$defs/node"
+              }
+            },
+            "deferred": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$"
+                  },
+                  "line": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "action": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/sidecar/$defs/node"
+                  }
+                },
+                "required": [
+                  "version",
+                  "line",
+                  "action",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "version",
+            "protocol",
+            "metaData",
+            "adds",
+            "removes",
+            "transactions",
+            "domains",
+            "commitInfo",
+            "deferred"
+          ],
+          "additionalProperties": false
+        },
+        "sidecars": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "urn:umf:core:0.1.0"
+              }
+            },
+            "required": [
+              "path",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "derivedCheckpoint": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "source": {
+              "$ref": "urn:umf:core:0.1.0"
+            }
+          },
+          "required": [
+            "version",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "origins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "checkpointLine": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "sidecar": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "row": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "line",
+              "checkpointLine"
+            ],
+            "additionalProperties": false,
+            "dependentRequired": {
+              "sidecar": [
+                "row"
+              ],
+              "row": [
+                "sidecar"
+              ]
+            }
+          }
+        },
+        "omittedNullFields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sidecar": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "row": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sidecar",
+              "row",
+              "path"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "scalarConversions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "input": {
+                "$ref": "#/$defs/sidecar/$defs/typedValue"
+              },
+              "output": {
+                "$ref": "#/$defs/sidecar/$defs/node"
+              },
+              "sidecar": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "row",
+              "path",
+              "input",
+              "output",
+              "sidecar"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "status",
+        "complete",
+        "sources",
+        "diagnostics",
+        "checkpoint",
+        "sidecars"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "reconciled"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "state"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "reconciled"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "derivedCheckpoint",
+              "origins",
+              "omittedNullFields",
+              "scalarConversions"
+            ]
+          }
+        }
+      ],
+      "$defs": {
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "null"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                },
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "number"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "array"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/sidecar/$defs/node"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "members"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "object"
+                },
+                "members": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/sidecar/$defs/node"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "typedValue": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "fields"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "struct"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/sidecar/$defs/typedValue"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "list"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/sidecar/$defs/typedValue"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "duplicateKeys",
+                "entries"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "map"
+                },
+                "duplicateKeys": {
+                  "const": "last-value"
+                },
+                "entries": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "key",
+                      "value"
+                    ],
+                    "properties": {
+                      "key": {
+                        "$ref": "#/$defs/sidecar/$defs/typedValue"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/sidecar/$defs/typedValue"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "annotation",
+                "parameters",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "opaque"
+                },
+                "annotation": {
+                  "type": "string"
+                },
+                "parameters": {},
+                "physical": {
+                  "$ref": "#/$defs/sidecar/$defs/physicalRow"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "bool"
+                },
+                "value": {
+                  "type": "boolean"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "bits",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "int",
+                    "uint"
+                  ]
+                },
+                "bits": {
+                  "enum": [
+                    8,
+                    16,
+                    32,
+                    64
+                  ]
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                  "maxLength": 20
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "bits",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "float"
+                },
+                "bits": {
+                  "enum": [
+                    16,
+                    32,
+                    64
+                  ]
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(?:NaN|-?Infinity|-?[0-9]+(?:\\.[0-9]+)?(?:e[+-]?[0-9]+)?)$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "decimal"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$",
+                  "maxLength": 10002
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "string",
+                    "enum",
+                    "json"
+                  ]
+                },
+                "value": {
+                  "type": "string"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "bytes"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(?:[0-9a-f]{2})*$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "int96"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{24}$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "uuid"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "date"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                  "maxLength": 20
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "unit",
+                "isAdjustedToUTC",
+                "value",
+                "physical"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "time",
+                    "timestamp"
+                  ]
+                },
+                "unit": {
+                  "enum": [
+                    "MILLIS",
+                    "MICROS",
+                    "NANOS"
+                  ]
+                },
+                "isAdjustedToUTC": {
+                  "type": "boolean"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                  "maxLength": 20
+                },
+                "physical": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "physicalRow": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "physical"
+                },
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BOOLEAN"
+                        },
+                        "value": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT32"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 11
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "value"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT64"
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                          "maxLength": 20
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FLOAT"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{8}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "DOUBLE"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{16}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "INT96"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{24}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 0,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "hex"
+                      ],
+                      "properties": {
+                        "type": {
+                          "const": "FIXED_LEN_BYTE_ARRAY"
+                        },
+                        "hex": {
+                          "type": "string",
+                          "pattern": "^(?:[0-9a-f]{2})*$",
+                          "minLength": 2,
+                          "maxLength": 16777216
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "fields"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "record"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/sidecar/$defs/physicalRow"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "items"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "repeated"
+                },
+                "items": {
+                  "type": "array",
+                  "maxItems": 100000,
+                  "items": {
+                    "$ref": "#/$defs/sidecar/$defs/physicalRow"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "dependentRequired": {
+        "scalarConversions": [
+          "derivedCheckpoint",
+          "origins",
+          "omittedNullFields"
+        ],
+        "derivedCheckpoint": [
+          "origins",
+          "omittedNullFields",
+          "scalarConversions"
+        ],
+        "origins": [
+          "derivedCheckpoint",
+          "omittedNullFields",
+          "scalarConversions"
+        ],
+        "omittedNullFields": [
+          "derivedCheckpoint",
+          "origins",
+          "scalarConversions"
+        ]
+      }
+    }
+  }
+}

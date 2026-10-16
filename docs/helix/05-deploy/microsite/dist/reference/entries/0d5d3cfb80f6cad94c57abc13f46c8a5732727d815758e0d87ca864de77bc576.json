@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1861,
+        "line": 1,
+        "path": "spec/extensions/smithy/native-assembly.schema.json",
+        "sha256": "b04f35c422ddf572deaba541cce701c179c5c68ea9e52e4aa23a3ba7b2f3c8b3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "smithyNativeAssemblySchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:smithy:native-assembly:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"valid\",\n    \"events\"\n  ],\n  \"properties\": {\n    \"valid\": {\n      \"type\": \"boolean\"\n    },\n    \"events\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"id\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"id\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"SUPPRESSED\",\n              \"NOTE\",\n              \"WARNING\",\n              \"DANGER\",\n              \"ERROR\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"shapeId\": {\n            \"type\": \"string\"\n          },\n          \"source\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\n              \"filename\",\n              \"line\",\n              \"column\"\n            ],\n            \"properties\": {\n              \"filename\": {\n                \"type\": \"string\"\n              },\n              \"line\": {\n                \"type\": \"integer\",\n                \"minimum\": 0\n              },\n              \"column\": {\n                \"type\": \"integer\",\n                \"minimum\": 0\n              }\n            }\n          }\n        }\n      }\n    },\n    \"modelJson\": {\n      \"type\": \"string\"\n    }\n  },\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"valid\": {\n            \"const\": true\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"modelJson\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"required\": [\n            \"modelJson\"\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"smithyNativeAssemblySchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1861,
+      "line": 1,
+      "path": "spec/extensions/smithy/native-assembly.schema.json",
+      "sha256": "b04f35c422ddf572deaba541cce701c179c5c68ea9e52e4aa23a3ba7b2f3c8b3"
+    }
+  ],
+  "summary": "Public export · spec/extensions/smithy/native-assembly.schema.json",
+  "title": "smithyNativeAssemblySchema"
+}

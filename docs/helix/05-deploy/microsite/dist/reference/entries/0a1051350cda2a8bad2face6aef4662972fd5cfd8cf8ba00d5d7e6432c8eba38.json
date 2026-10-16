@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4626,
+        "line": 39,
+        "path": "src/model/relationship-transition.ts",
+        "sha256": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyRelationshipTransition",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RelationshipUpgradeReceipt | RelationshipRollbackReceipt): RelationshipUpgradeReceipt | RelationshipRollbackReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyRelationshipTransition\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4626,
+      "line": 39,
+      "path": "src/model/relationship-transition.ts",
+      "sha256": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36"
+    }
+  ],
+  "summary": "Public export · src/model/relationship-transition.ts",
+  "title": "verifyRelationshipTransition"
+}

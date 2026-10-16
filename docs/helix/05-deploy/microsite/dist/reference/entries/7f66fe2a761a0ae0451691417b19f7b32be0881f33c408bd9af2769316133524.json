@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 19620,
+        "line": 10,
+        "path": "src/adapters/rdf/index.ts",
+        "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RdfNode",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type RdfNode={kind:'iri'|'blank';value:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RdfNode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 19620,
+      "line": 10,
+      "path": "src/adapters/rdf/index.ts",
+      "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/rdf/index.ts",
+  "title": "RdfNode"
+}

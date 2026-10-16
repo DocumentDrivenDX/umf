@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8852,
+        "line": 9,
+        "path": "src/projections/postgresql-avro.ts",
+        "sha256": "b40356065df7a6a09111a70b78433622d33d526ed8e8dc501152c8145df80842"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlAvroProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlAvroProjection {status:'blocked'|'projected';source:Document;policy:PostgresqlAvroPolicy;issues:ProjectionIssue[];mappings:{sourcePath:string;column:string;field:string;representation:PostgresqlAvroRepresentation}[];target?:Document;nativeSchema?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8852,
+      "line": 9,
+      "path": "src/projections/postgresql-avro.ts",
+      "sha256": "b40356065df7a6a09111a70b78433622d33d526ed8e8dc501152c8145df80842"
+    }
+  ],
+  "summary": "Type declaration · src/projections/postgresql-avro.ts",
+  "title": "PostgresqlAvroProjection"
+}

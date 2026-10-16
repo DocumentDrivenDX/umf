@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22644,
+        "line": 24,
+        "path": "src/core-ideals/relationship-extras.ts",
+        "sha256": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipExtraObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipExtraObservation {nativePath:string;kind:'graphql-field'|'rdf-domain'|'rdf-range'|'rdf-union'|'rdf-list'|'linkml-class'|'linkml-slot';provenance:'inferred';authorIntent:'unknown'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipExtraObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22644,
+      "line": 24,
+      "path": "src/core-ideals/relationship-extras.ts",
+      "sha256": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-extras.ts",
+  "title": "RelationshipExtraObservation"
+}

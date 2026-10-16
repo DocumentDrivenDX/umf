@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15962,
+        "line": 97,
+        "path": "src/model/key-tuple.ts",
+        "sha256": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "encodeCoreKeyTuple",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown, identityInput: CoreKeyIdentity, valuesInput: CoreKeyTupleValue[], options?: { profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; } | undefined): CoreKeyTupleReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"encodeCoreKeyTuple\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15962,
+      "line": 97,
+      "path": "src/model/key-tuple.ts",
+      "sha256": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8"
+    }
+  ],
+  "summary": "Exact current-core encoding; no native uniqueness or author provenance is inferred.",
+  "title": "encodeCoreKeyTuple"
+}

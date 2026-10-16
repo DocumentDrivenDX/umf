@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7983,
+        "line": 20,
+        "path": "src/extensions/security/protection/queries.ts",
+        "sha256": "8a6ef6229120d68b55f003496a86f13a1d757eae88acc7ee6e553e90b1481b59"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectProtectionQueryProperties",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policy: unknown, catalog: unknown, closure: unknown, useInput: unknown): ProtectionQueryPropertyInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectProtectionQueryProperties\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7983,
+      "line": 20,
+      "path": "src/extensions/security/protection/queries.ts",
+      "sha256": "8a6ef6229120d68b55f003496a86f13a1d757eae88acc7ee6e553e90b1481b59"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/protection/queries.ts",
+  "title": "inspectProtectionQueryProperties"
+}

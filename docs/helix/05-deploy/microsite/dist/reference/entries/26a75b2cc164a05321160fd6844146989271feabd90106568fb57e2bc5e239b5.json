@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13154,
+        "line": 12,
+        "path": "src/projections/binding-sqlserver/tables.ts",
+        "sha256": "f5cb9ba1064cf5b17df1f7cdeda086746a819e949f8002d83bfaa53474aca94c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerTableProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerTableProjection {\n  status:'blocked'|'reported'|'proposed';logical:Document;binding:Document;target:BindingPayload['target'];\n  policy:SqlServerTablePolicy;residuals:SqlServerTableResidual[];mappings:SqlServerTableMapping[];candidate?:string;\n  nativeArchive?:Document;nativeSource?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerTableProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13154,
+      "line": 12,
+      "path": "src/projections/binding-sqlserver/tables.ts",
+      "sha256": "f5cb9ba1064cf5b17df1f7cdeda086746a819e949f8002d83bfaa53474aca94c"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/tables.ts",
+  "title": "SqlServerTableProjection"
+}

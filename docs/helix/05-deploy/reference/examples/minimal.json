@@ -1,0 +1,15 @@
+{
+  "umf": "0.1.0",
+  "id": "example:core",
+  "vocabularies": {},
+  "modules": [
+    {"id": "sales", "namespace": "sales", "elements": [
+      {"id": "Customer", "name": "Customer", "extensions": {}}
+    ]},
+    {"id": "support", "namespace": "support", "elements": [
+      {"id": "Customer", "name": "Customer", "extensions": {}, "references": [
+        {"role": "candidate-correspondence", "module": "sales", "element": "Customer"}
+      ]}
+    ]}
+  ]
+}

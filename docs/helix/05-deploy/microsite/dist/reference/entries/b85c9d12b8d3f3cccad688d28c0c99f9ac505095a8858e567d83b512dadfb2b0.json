@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3681,
+        "line": 37,
+        "path": "src/adapters/arrow/capture.ts",
+        "sha256": "7350fe9b1379169ef2a5b0db28da86450cfdea76a0abb5d11becf72f657a3a08"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "observeArrowIpcCapture",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, backend: ArrowIpcObservationBackend): { source: Document; backend: string; complete: false; status: \"observed\" | \"uninterpreted\"; schema?: Json; message?: string; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"observeArrowIpcCapture\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3681,
+      "line": 37,
+      "path": "src/adapters/arrow/capture.ts",
+      "sha256": "7350fe9b1379169ef2a5b0db28da86450cfdea76a0abb5d11becf72f657a3a08"
+    }
+  ],
+  "summary": "A pinned native schema observation; does not assert complete byte consumption.",
+  "title": "observeArrowIpcCapture"
+}

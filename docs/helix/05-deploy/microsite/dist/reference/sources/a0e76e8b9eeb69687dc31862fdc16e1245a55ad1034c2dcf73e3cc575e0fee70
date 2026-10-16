@@ -1,0 +1,124 @@
+{
+  "scope": "Qualified Nullability ideal admission and five-system delivery; retained evidence consistency checks are not native reruns",
+  "idealAdmission": {
+    "outcome": "passed",
+    "requiredBindings": 2,
+    "usefulBindings": 5,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "meaning": "CONTRACT-040 / Element.nullability",
+    "nativeEquivalence": false
+  },
+  "delivery": {
+    "outcome": "passed",
+    "requiredBindings": 5,
+    "qualifiedBindings": 5,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "scope": "Explicit binding profiles only, with retained native meanings and qualified refusals"
+  },
+  "evidence": {
+    "records": [
+      {
+        "path": "fixtures/validation/nullability-core-acceptance-evidence.json",
+        "sha256": "6c645b5caa8d6c59f13eeadb2ab1bc6a68ce20da9fa2628895ac6e4c1b5f0800"
+      },
+      {
+        "path": "fixtures/validation/tablespec-nullability-acceptance-evidence.json",
+        "sha256": "a3cf036d569098b46432375e3ed61bd8743334a6f754051700fadba75d47ae00"
+      },
+      {
+        "path": "fixtures/validation/postgresql-nullability-acceptance-evidence.json",
+        "sha256": "2386e9416ad67fd897f6ae2ac34974e839407c4a90d0c84badd9d2f0d1de0478"
+      },
+      {
+        "path": "fixtures/validation/sqlserver-nullability-acceptance-evidence.json",
+        "sha256": "e4bd07e3f69a5a1981e427bc101c831f8802d4975d01a55c881a8500cefed06a"
+      },
+      {
+        "path": "fixtures/validation/avro-nullability-acceptance-evidence.json",
+        "sha256": "71a909939112526bbe5c4ae014f39ad3da710e1949e8a7880b04aebe71ab900a"
+      },
+      {
+        "path": "fixtures/validation/parquet-nullability-acceptance-evidence.json",
+        "sha256": "904527e6038cb12b8df59e12dabbfdfc28d48db97627a164a5ae6e37d69a45c6"
+      }
+    ],
+    "fingerprints": 8688,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "refreshSha256": "3f6f6378c27f5c565f8b7719e25717a0b4205c2176988e6489300aea0c86d9ab"
+  },
+  "roundTrips": {
+    "tablespec": {
+      "authoredCases": 12,
+      "strictBlocks": 3,
+      "reportResiduals": 3,
+      "idealRecoveries": 18,
+      "nativeCases": 8,
+      "nativeBlocks": 2,
+      "nativeRecoveries": 12
+    },
+    "postgresql": {
+      "authoredCases": 12,
+      "strictBlocks": 3,
+      "reportResiduals": 3,
+      "idealRecoveries": 18,
+      "nativeCases": 8,
+      "nativeBlocks": 2,
+      "nativeRecoveries": 12
+    },
+    "sqlserver": {
+      "authoredCases": 12,
+      "strictBlocks": 3,
+      "reportResiduals": 3,
+      "idealRecoveries": 18,
+      "nativeCases": 8,
+      "nativeBlocks": 2,
+      "nativeRecoveries": 12
+    },
+    "avro": {
+      "authoredCases": 12,
+      "strictBlocks": 3,
+      "reportResiduals": 3,
+      "idealRecoveries": 18,
+      "nativeCases": 8,
+      "nativeBlocks": 2,
+      "nativeRecoveries": 12
+    },
+    "parquet": {
+      "authoredCases": 12,
+      "strictBlocks": 3,
+      "reportResiduals": 3,
+      "idealRecoveries": 18,
+      "nativeCases": 8,
+      "nativeBlocks": 2,
+      "nativeRecoveries": 12
+    }
+  },
+  "fingerprints": {
+    "scripts/core-ideals/nullability-conformance.ts": "d192c2c7b9e73652467a974047166fd7f04d5a043762f504fa506f8eff5e5be3",
+    "tests/core-ideals/nullability-conformance.test.ts": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2"
+  },
+  "testOnlyQualification": {
+    "ledger": "fixtures/validation/relationship-gate-test-only-qualification.json",
+    "baselinePath": "fixtures/validation/relationship-gate-test-baseline-1790899698673443188/fixtures/validation/nullability-conformance.json",
+    "baselineSha256": "ad4bc687e54ef02bc0119da4e025c65c93787f2a3d734949d31be8bd41ddb274",
+    "scope": "Evidence hash closure only; semantic results and original execution logs retained"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "protobuf-emission-behavior-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "passed",
+        "readerId": "protobuf-corpus",
+        "scope": "Authored proto2, proto3, Edition 2023 descriptors; native runtime behavior, not source parser conformance",
+        "selector": "",
+        "source": {
+          "bytes": 2093,
+          "path": "fixtures/protobuf/emission-behavior-results.json",
+          "sha256": "98344bcd8a9646658bf0916b094f81a28deec0e4ed3657f32cee6639265489ab"
+        },
+        "supersedes": [],
+        "versions": {
+          "oracle": "Python protobuf 7.36.2"
+        }
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "protobuf-emission-behavior",
+      "kind": "round-trip",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "protobuf-emission-behavior",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Protobuf",
+      "subset": "Original bounded compiler/behavior record.",
+      "targetSystem": "Protobuf",
+      "title": "Protobuf · emission behavior"
+    }
+  },
+  "id": "[\"integration\",\"protobuf-emission-behavior\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Original bounded compiler/behavior record.",
+  "title": "Protobuf · emission behavior"
+}

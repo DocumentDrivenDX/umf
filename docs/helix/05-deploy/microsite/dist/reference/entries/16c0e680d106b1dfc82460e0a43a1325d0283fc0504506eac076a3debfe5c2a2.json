@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1757,
+        "line": 2,
+        "path": "src/adapters/gregorian-date.ts",
+        "sha256": "bb589bf938b33c36e8decc5d09fe3a760f3104bcfd13cf1a23aee074993a2ff1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "GREGORIAN_DATE_PROFILE",
+    "runtime": "unassessed",
+    "signatureText": [
+      "GREGORIAN_DATE_PROFILE='umf-gregorian-date/1.0.0' as const"
+    ]
+  },
+  "id": "[\"api\",\".\",\"GREGORIAN_DATE_PROFILE\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1757,
+      "line": 2,
+      "path": "src/adapters/gregorian-date.ts",
+      "sha256": "bb589bf938b33c36e8decc5d09fe3a760f3104bcfd13cf1a23aee074993a2ff1"
+    }
+  ],
+  "summary": "Explicit civil-date recipe; does not select semantics for a bare core date.",
+  "title": "GREGORIAN_DATE_PROFILE"
+}

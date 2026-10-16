@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7180,
+        "line": 21,
+        "path": "src/core-ideals/field-avro-projection.ts",
+        "sha256": "58343a9b56c27ce4e9cc6b432eb370b90fcba481c3e5ab71c7bcef7e6f3314c5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFieldToAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreKindDeclaration, options: FieldAvroRequest): FieldAvroProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFieldToAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7180,
+      "line": 21,
+      "path": "src/core-ideals/field-avro-projection.ts",
+      "sha256": "58343a9b56c27ce4e9cc6b432eb370b90fcba481c3e5ab71c7bcef7e6f3314c5"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/field-avro-projection.ts",
+  "title": "projectFieldToAvro"
+}

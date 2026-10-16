@@ -1,0 +1,389 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/postgresql-facets/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:postgresql:facet-binding:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.postgresql.facets"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "datumFormat": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "little-endian-datum64"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unresolved"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "nativeSupplement": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "obligation": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "value-domain"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "exact-input"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "observations": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "basis": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "concept": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "length"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "decimal"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "integerWidth"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "conversion"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "native"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "idealPath": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "interpretation": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "declared"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "inferred"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unsupported"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "nativePath": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "outcome": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "exact"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "approximated"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "not-expressible"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "concept"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "idealPath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "nativePath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "interpretation"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "outcome"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "basis"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "origin": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "classified"
+                }
+              }
+            },
+            "outcome": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "exact"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "approximated"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "not-expressible"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "stored-value"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "new-value"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unresolved"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "origin"
+            },
+            {
+              "kind": "string",
+              "value": "nativeSupplement"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "datumFormat"
+            },
+            {
+              "kind": "string",
+              "value": "obligation"
+            },
+            {
+              "kind": "string",
+              "value": "outcome"
+            },
+            {
+              "kind": "string",
+              "value": "observations"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Retained PostgreSQL facet interpretation profile"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/postgresql-facets/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2300,
+      "path": "spec/extensions/postgresql-facets/schema.json",
+      "sha256": "23bf499e72827654fee175502a1c9eeb87cfca9a3b74cd5f55390cf755eb4122"
+    }
+  ],
+  "summary": "spec/extensions/postgresql-facets/schema.json",
+  "title": "Retained PostgreSQL facet interpretation profile"
+}

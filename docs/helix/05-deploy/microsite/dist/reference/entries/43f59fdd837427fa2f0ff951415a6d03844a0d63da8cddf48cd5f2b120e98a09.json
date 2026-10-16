@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11368,
+        "line": 22,
+        "path": "src/model/keys.ts",
+        "sha256": "3e66238372065d9f3caca88fba5188ba7668405582c7a0fcda8782b81460c40c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKeyInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreKeyInspection {operation:'inspect-core-keys';version:'4.0.0'|'1.0.0'|'2.0.0'|'3.0.0';source:Document;identity:CoreRecordIdentity;path:string;meaning:CoreKeyMeaning;provenance:'unverified'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKeyInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11368,
+      "line": 22,
+      "path": "src/model/keys.ts",
+      "sha256": "3e66238372065d9f3caca88fba5188ba7668405582c7a0fcda8782b81460c40c"
+    }
+  ],
+  "summary": "Type declaration · src/model/keys.ts",
+  "title": "CoreKeyInspection"
+}

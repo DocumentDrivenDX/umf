@@ -20,4 +20,4 @@ def runtime_types(root: Query[Owner, Owner, str], amount: Column[Owner, Decimal]
     root.filter(if_present(optional, lambda p: memo == p))
     root.filter(if_present(nullable_optional, lambda p: memo == p))
 
-    assert_type(root.group_by(key, amount).count(), Terminal[list[tuple[str, Decimal, int]]])
+    assert_type(root.group_by(key, amount).limit(10).count(), Terminal[list[tuple[str, Decimal, int]]])

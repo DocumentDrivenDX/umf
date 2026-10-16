@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10059,
+        "line": 8,
+        "path": "src/projections/sqlserver-avro.ts",
+        "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerAvroProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerAvroProjection {status:'blocked'|'projected';source:Document;policy:SqlServerAvroPolicy;issues:ProjectionIssue[];mappings:{sourcePath:string;column:string;field:string;representation:'value'|'sql-text'}[];target?:Document;nativeSchema?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10059,
+      "line": 8,
+      "path": "src/projections/sqlserver-avro.ts",
+      "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+    }
+  ],
+  "summary": "Type declaration · src/projections/sqlserver-avro.ts",
+  "title": "SqlServerAvroProjection"
+}

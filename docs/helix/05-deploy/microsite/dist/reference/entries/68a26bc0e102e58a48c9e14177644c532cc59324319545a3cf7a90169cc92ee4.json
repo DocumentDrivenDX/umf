@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8903,
+        "line": 31,
+        "path": "src/model/field-kind.ts",
+        "sha256": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKindMeaning",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreKindMeaning={state:'known';kind:ElementKind}|{state:'unspecified'}|{state:'legacy';value:Json}|{state:'unknown';value:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKindMeaning\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8903,
+      "line": 31,
+      "path": "src/model/field-kind.ts",
+      "sha256": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292"
+    }
+  ],
+  "summary": "Type declaration · src/model/field-kind.ts",
+  "title": "CoreKindMeaning"
+}

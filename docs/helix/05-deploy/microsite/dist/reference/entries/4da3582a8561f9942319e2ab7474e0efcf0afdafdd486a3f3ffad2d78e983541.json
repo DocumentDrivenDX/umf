@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7089,
+        "line": 16,
+        "path": "src/core-ideals/relationship-parquet.ts",
+        "sha256": "0702feb1c9300c019909c1bfedf254c2983eecac8f0fe87f2820e6be83beb151"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRelationshipClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetRelationshipClassification {operation:'classify-parquet-relationships';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetRelationshipRequest;binding:typeof binding;observations:ParquetRelationshipObservation[];residuals:{path:string;value:Json;outcome:'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRelationshipClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7089,
+      "line": 16,
+      "path": "src/core-ideals/relationship-parquet.ts",
+      "sha256": "0702feb1c9300c019909c1bfedf254c2983eecac8f0fe87f2820e6be83beb151"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-parquet.ts",
+  "title": "ParquetRelationshipClassification"
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "umf.reference.overlay/1"
+    },
+    "entryId": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "relatedIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "entryId"
+  ],
+  "additionalProperties": false
+}

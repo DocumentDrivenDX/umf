@@ -8,6 +8,7 @@ from typing import ClassVar, Generic, TypeAlias, TypeVar, final
 from pydantic import MISSING as MISSING  # noqa: PLC0414
 from pydantic import BaseModel, ConfigDict
 
+RUNTIME_ABI = "umf-access-runtime/0.1"
 RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
 
 Vector: TypeAlias = tuple[float, ...]
@@ -65,6 +66,13 @@ def _is_model_type(value: object, *, allow_none: bool = False) -> bool:
 
 @final
 @dataclass(frozen=True)
+class ActionProfile:
+    id: str
+    version: str
+
+
+@final
+@dataclass(frozen=True)
 class ActionSource:
     """Exact original document/declaration identity, never an authority token."""
 
@@ -93,8 +101,33 @@ class ActionSource:
             raise ValueRuleError("complete original action source required")
         if not re.fullmatch(r"[0-9a-f]{64}", self.document_sha256):
             raise ValueRuleError("original document SHA-256 required")
+        if self.core_version != "0.8.0" or (self.invocation_id, self.invocation_version) != ("umf.actions.tx", "1"):
+            raise ValueRuleError("unsupported original action source profile")
         if not self.action_pointer.startswith("/modules/"):
             raise ValueRuleError("original action pointer required")
+
+
+    # Read-only aliases retain the earlier source view while canonical dataclass
+    # fields follow the executor ABI and support dataclasses.replace.
+    @property
+    def documentId(self) -> str:
+        return self.document_id
+
+    @property
+    def coreVersion(self) -> str:
+        return self.core_version
+
+    @property
+    def documentSha256(self) -> str:
+        return self.document_sha256
+
+    @property
+    def actionPointer(self) -> str:
+        return self.action_pointer
+
+    @property
+    def invocation(self) -> ActionProfile:
+        return ActionProfile(self.invocation_id, self.invocation_version)
 
 
 @final
@@ -123,7 +156,7 @@ class ActionRef(Generic[InputT, OutputT]):
     action: str
     input_type: type[InputT]
     output_type: type[OutputT]
-    source: ActionSource | None = None
+    source: ActionSource
     input_fields: tuple[tuple[str, str], ...] = ()
     key_types: tuple[KeyTypeRef, ...] = ()
     record_types: tuple[RecordTypeRef, ...] = ()
@@ -133,15 +166,9 @@ class ActionRef(Generic[InputT, OutputT]):
             type(value) is not str or not value for value in (self.module, self.action)
         ):
             raise ValueRuleError("action identity requires nonempty schema IDs")
-        if self.source is not None and (
-            self.source.module != self.module or self.source.action != self.action
-        ):
-            raise ValueRuleError("action source identity differs")
-        if (
-            type(self.input_fields) is not tuple
-            or len({field[0] for field in self.input_fields}) != len(self.input_fields)
-            or len({field[1] for field in self.input_fields}) != len(self.input_fields)
-        ):
+        if type(self.source) is not ActionSource or (self.module, self.action) != (self.source.module, self.source.action):
+            raise ValueRuleError("action reference/source identity mismatch")
+        if type(self.input_fields) is not tuple or len({field[0] for field in self.input_fields})!=len(self.input_fields) or len({field[1] for field in self.input_fields})!=len(self.input_fields):
             raise ValueRuleError("distinct immutable action input metadata required")
         if self.input_fields and {python for _, python in self.input_fields} != set(
             self.input_type.model_fields

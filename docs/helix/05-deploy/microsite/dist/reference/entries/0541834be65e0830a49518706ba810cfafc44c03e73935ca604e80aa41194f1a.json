@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5323,
+        "line": 59,
+        "path": "src/adapters/javascript-numeric.ts",
+        "sha256": "3d38e52cc878910509e8e277f671ff304707db37633f4f7c39082eb943618fdc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "exactDecimal",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(token: string, context?: JavascriptNumericContext | undefined): { decimalToken: string; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"exactDecimal\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5323,
+      "line": 59,
+      "path": "src/adapters/javascript-numeric.ts",
+      "sha256": "3d38e52cc878910509e8e277f671ff304707db37633f4f7c39082eb943618fdc"
+    }
+  ],
+  "summary": "Exact text constructor. Spelling is retained; optional Field constraints are checked.",
+  "title": "exactDecimal"
+}

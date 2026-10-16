@@ -1,0 +1,1135 @@
+{
+  "data": {
+    "extensionId": "umf.graphql",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/graphql/native.test.ts",
+          "tests/graphql/corpus.test.ts",
+          "fixtures/graphql/corpus-oracle-results.json"
+        ],
+        "native": {
+          "subset": "Schema definitions/extensions and constant values; executable operations are outside this schema adapter",
+          "system": "GraphQL SDL",
+          "version": "GraphQL.js 17.0.2; September 2025 specification plus explicitly reported runtime grammar additions"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "GraphQL SDL native AST and source preservation",
+      "id": "umf.graphql",
+      "schema": {
+        "$defs": {
+          "BooleanValueNode": {
+            "properties": {
+              "kind": {
+                "const": "BooleanValue"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "type": "object"
+          },
+          "ConstArgumentNode": {
+            "properties": {
+              "kind": {
+                "const": "Argument"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StringValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/IntValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/FloatValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/BooleanValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/NullValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/EnumValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ConstListValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ConstObjectValueNode"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "name",
+              "value"
+            ],
+            "type": "object"
+          },
+          "ConstDirectiveNode": {
+            "properties": {
+              "arguments": {
+                "items": {
+                  "$ref": "#/$defs/ConstArgumentNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "Directive"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "ConstListValueNode": {
+            "properties": {
+              "kind": {
+                "const": "ListValue"
+              },
+              "values": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/StringValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/IntValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/FloatValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/BooleanValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/NullValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/EnumValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/ConstListValueNode"
+                    },
+                    {
+                      "$ref": "#/$defs/ConstObjectValueNode"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "values"
+            ],
+            "type": "object"
+          },
+          "ConstObjectFieldNode": {
+            "properties": {
+              "kind": {
+                "const": "ObjectField"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StringValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/IntValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/FloatValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/BooleanValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/NullValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/EnumValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ConstListValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ConstObjectValueNode"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "name",
+              "value"
+            ],
+            "type": "object"
+          },
+          "ConstObjectValueNode": {
+            "properties": {
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/ConstObjectFieldNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "ObjectValue"
+              }
+            },
+            "required": [
+              "kind",
+              "fields"
+            ],
+            "type": "object"
+          },
+          "DirectiveDefinitionNode": {
+            "properties": {
+              "arguments": {
+                "items": {
+                  "$ref": "#/$defs/InputValueDefinitionNode"
+                },
+                "type": "array"
+              },
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "DirectiveDefinition"
+              },
+              "locations": {
+                "items": {
+                  "$ref": "#/$defs/NameNode"
+                },
+                "type": "array"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "repeatable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "name",
+              "repeatable",
+              "locations"
+            ],
+            "type": "object"
+          },
+          "DirectiveExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "DirectiveExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "DocumentNode": {
+            "properties": {
+              "definitions": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/TypeSystemDefinitionNode"
+                    },
+                    {
+                      "$ref": "#/$defs/TypeSystemExtensionNode"
+                    }
+                  ]
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "kind": {
+                "const": "Document"
+              }
+            },
+            "required": [
+              "kind",
+              "definitions"
+            ],
+            "type": "object"
+          },
+          "EnumTypeDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "EnumTypeDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "values": {
+                "items": {
+                  "$ref": "#/$defs/EnumValueDefinitionNode"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "EnumTypeExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "EnumTypeExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "values": {
+                "items": {
+                  "$ref": "#/$defs/EnumValueDefinitionNode"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "EnumValueDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "EnumValueDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "EnumValueNode": {
+            "properties": {
+              "kind": {
+                "const": "EnumValue"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "type": "object"
+          },
+          "FieldDefinitionNode": {
+            "properties": {
+              "arguments": {
+                "items": {
+                  "$ref": "#/$defs/InputValueDefinitionNode"
+                },
+                "type": "array"
+              },
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "FieldDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/NamedTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ListTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/NonNullTypeNode"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "FloatValueNode": {
+            "properties": {
+              "kind": {
+                "const": "FloatValue"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "type": "object"
+          },
+          "InputObjectTypeDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/InputValueDefinitionNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "InputObjectTypeDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "InputObjectTypeExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/InputValueDefinitionNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "InputObjectTypeExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "InputValueDefinitionNode": {
+            "properties": {
+              "defaultValue": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StringValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/IntValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/FloatValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/BooleanValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/NullValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/EnumValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ConstListValueNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ConstObjectValueNode"
+                  }
+                ]
+              },
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "InputValueDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/NamedTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ListTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/NonNullTypeNode"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "IntValueNode": {
+            "properties": {
+              "kind": {
+                "const": "IntValue"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "type": "object"
+          },
+          "InterfaceTypeDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/FieldDefinitionNode"
+                },
+                "type": "array"
+              },
+              "interfaces": {
+                "items": {
+                  "$ref": "#/$defs/NamedTypeNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "InterfaceTypeDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "InterfaceTypeExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/FieldDefinitionNode"
+                },
+                "type": "array"
+              },
+              "interfaces": {
+                "items": {
+                  "$ref": "#/$defs/NamedTypeNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "InterfaceTypeExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "ListTypeNode": {
+            "properties": {
+              "kind": {
+                "const": "ListType"
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/NamedTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ListTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/NonNullTypeNode"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "type"
+            ],
+            "type": "object"
+          },
+          "NameNode": {
+            "properties": {
+              "kind": {
+                "const": "Name"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "type": "object"
+          },
+          "NamedTypeNode": {
+            "properties": {
+              "kind": {
+                "const": "NamedType"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "NonNullTypeNode": {
+            "properties": {
+              "kind": {
+                "const": "NonNullType"
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/NamedTypeNode"
+                  },
+                  {
+                    "$ref": "#/$defs/ListTypeNode"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "type"
+            ],
+            "type": "object"
+          },
+          "NullValueNode": {
+            "properties": {
+              "kind": {
+                "const": "NullValue"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "type": "object"
+          },
+          "ObjectTypeDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/FieldDefinitionNode"
+                },
+                "type": "array"
+              },
+              "interfaces": {
+                "items": {
+                  "$ref": "#/$defs/NamedTypeNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "ObjectTypeDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "ObjectTypeExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/FieldDefinitionNode"
+                },
+                "type": "array"
+              },
+              "interfaces": {
+                "items": {
+                  "$ref": "#/$defs/NamedTypeNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "ObjectTypeExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "OperationTypeDefinitionNode": {
+            "properties": {
+              "kind": {
+                "const": "OperationTypeDefinition"
+              },
+              "operation": {
+                "anyOf": [
+                  {
+                    "const": "query"
+                  },
+                  {
+                    "const": "mutation"
+                  },
+                  {
+                    "const": "subscription"
+                  }
+                ]
+              },
+              "type": {
+                "$ref": "#/$defs/NamedTypeNode"
+              }
+            },
+            "required": [
+              "kind",
+              "operation",
+              "type"
+            ],
+            "type": "object"
+          },
+          "ScalarTypeDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "ScalarTypeDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "ScalarTypeExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "ScalarTypeExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "SchemaDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "SchemaDefinition"
+              },
+              "operationTypes": {
+                "items": {
+                  "$ref": "#/$defs/OperationTypeDefinitionNode"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "operationTypes"
+            ],
+            "type": "object"
+          },
+          "SchemaExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "SchemaExtension"
+              },
+              "operationTypes": {
+                "items": {
+                  "$ref": "#/$defs/OperationTypeDefinitionNode"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "type": "object"
+          },
+          "StringValueNode": {
+            "properties": {
+              "block": {
+                "type": "boolean"
+              },
+              "kind": {
+                "const": "StringValue"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "type": "object"
+          },
+          "TypeSystemDefinitionNode": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SchemaDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/ScalarTypeDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/ObjectTypeDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/InterfaceTypeDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/UnionTypeDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/EnumTypeDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/InputObjectTypeDefinitionNode"
+              },
+              {
+                "$ref": "#/$defs/DirectiveDefinitionNode"
+              }
+            ]
+          },
+          "TypeSystemExtensionNode": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SchemaExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/ScalarTypeExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/ObjectTypeExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/InterfaceTypeExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/UnionTypeExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/EnumTypeExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/InputObjectTypeExtensionNode"
+              },
+              {
+                "$ref": "#/$defs/DirectiveExtensionNode"
+              }
+            ]
+          },
+          "UnionTypeDefinitionNode": {
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/StringValueNode"
+              },
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "UnionTypeDefinition"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "types": {
+                "items": {
+                  "$ref": "#/$defs/NamedTypeNode"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          },
+          "UnionTypeExtensionNode": {
+            "properties": {
+              "directives": {
+                "items": {
+                  "$ref": "#/$defs/ConstDirectiveNode"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "UnionTypeExtension"
+              },
+              "name": {
+                "$ref": "#/$defs/NameNode"
+              },
+              "types": {
+                "items": {
+                  "$ref": "#/$defs/NamedTypeNode"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "name"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:graphql:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "ast": {
+            "$ref": "#/$defs/DocumentNode"
+          },
+          "mode": {
+            "enum": [
+              "schema",
+              "fragment"
+            ]
+          },
+          "originalSource": {
+            "type": "string"
+          },
+          "profile": {
+            "const": "graphql-js-17.0.2-sdl"
+          }
+        },
+        "required": [
+          "profile",
+          "ast",
+          "originalSource"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-009. SDL AST preserves native type/directive/default declarations; original source retains comments. Runtime scalar/directive behavior remains external.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"graphqlRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/graphql/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.graphql\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"graphqlRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/graphql/schema.json\",\"\"]",
+    "[\"integration\",\"umf.graphql@0.1.0:import\"]",
+    "[\"integration\",\"umf.graphql@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 25785,
+      "path": "spec/extensions/graphql/package.json",
+      "sha256": "34835cada16110ef3c259d470fb98fe5229abf5849872456f7d896fa623465d4"
+    }
+  ],
+  "summary": "GraphQL SDL native AST and source preservation",
+  "title": "umf.graphql · 0.1.0"
+}

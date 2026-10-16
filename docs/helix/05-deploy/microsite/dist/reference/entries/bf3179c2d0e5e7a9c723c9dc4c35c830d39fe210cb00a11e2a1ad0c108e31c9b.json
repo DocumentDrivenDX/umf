@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 19324,
+        "line": 18,
+        "path": "src/core-ideals/relationship-tablespec-projection.ts",
+        "sha256": "22eb2a8b12704f87ebb5e37f947a82725b5c22e4f849bfd080749ced2035d243"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipTableSpecProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipTableSpecProjection {\n operation:'project-relationship-tablespec';version:'1.0.0';status:'projected'|'blocked';outcome:'approximated'|'not-expressible'|'unknown';\n source:Document;author:CoreRelationshipDeclaration;nativeSource:Document;nativeTarget:Document;request:RelationshipTableSpecRequest;binding:typeof binding;target?:Document;\n mappings:{idealPath:string;nativePath:string;outcome:'approximated';sourceColumns:string[];targetColumns:string[];targetKey:string}[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipTableSpecProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 19324,
+      "line": 18,
+      "path": "src/core-ideals/relationship-tablespec-projection.ts",
+      "sha256": "22eb2a8b12704f87ebb5e37f947a82725b5c22e4f849bfd080749ced2035d243"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-tablespec-projection.ts",
+  "title": "RelationshipTableSpecProjection"
+}

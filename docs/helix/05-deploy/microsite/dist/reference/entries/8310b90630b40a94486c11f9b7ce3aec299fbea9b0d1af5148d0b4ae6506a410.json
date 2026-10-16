@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8291,
+        "line": 9,
+        "path": "src/projections/smithy-json-schema.ts",
+        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "createSmithyJavaScriptJsonSchemaBackend",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(module: { assemble(sourcesJson: string): string; jsonSchema(modelJson: string, rootShape: string): string; jsonSchemaWithRootDefinition?(modelJson: string, rootShape: string): string; jsonSchemaForService?(modelJson: string, rootShape: string, serviceContext: string, addRootDefinition: boolean): string; }): SmithyJsonSchemaBackend"
+    ]
+  },
+  "id": "[\"api\",\".\",\"createSmithyJavaScriptJsonSchemaBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8291,
+      "line": 9,
+      "path": "src/projections/smithy-json-schema.ts",
+      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+    }
+  ],
+  "summary": "Public export · src/projections/smithy-json-schema.ts",
+  "title": "createSmithyJavaScriptJsonSchemaBackend"
+}

@@ -1,0 +1,1474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:protobuf:0.1.0",
+  "title": "UMF Protobuf descriptor representation",
+  "type": "object",
+  "required": [
+    "descriptorProfile",
+    "descriptorSet"
+  ],
+  "properties": {
+    "descriptorProfile": {
+      "const": "protobuf-es-2.15.0"
+    },
+    "descriptorSet": {
+      "$ref": "#/$defs/google.protobuf.FileDescriptorSet"
+    },
+    "sourceArchive": {
+      "type": "object",
+      "required": [
+        "role",
+        "compiler",
+        "files",
+        "roots"
+      ],
+      "properties": {
+        "role": {
+          "const": "original"
+        },
+        "compiler": {
+          "type": "string",
+          "minLength": 1
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "roots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "google.protobuf.FileDescriptorSet": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FileDescriptorSet"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.FileDescriptorProto"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FileDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FileDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "package": {
+              "type": "string"
+            },
+            "dependency": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "public_dependency": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              }
+            },
+            "weak_dependency": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              }
+            },
+            "option_dependency": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "message_type": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.DescriptorProto"
+              }
+            },
+            "enum_type": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.EnumDescriptorProto"
+              }
+            },
+            "service": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.ServiceDescriptorProto"
+              }
+            },
+            "extension": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.FieldDescriptorProto"
+              }
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.FileOptions"
+            },
+            "source_code_info": {
+              "$ref": "#/$defs/google.protobuf.SourceCodeInfo"
+            },
+            "syntax": {
+              "type": "string"
+            },
+            "edition": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.DescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.DescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "field": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.FieldDescriptorProto"
+              }
+            },
+            "extension": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.FieldDescriptorProto"
+              }
+            },
+            "nested_type": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.DescriptorProto"
+              }
+            },
+            "enum_type": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.EnumDescriptorProto"
+              }
+            },
+            "extension_range": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.DescriptorProto.ExtensionRange"
+              }
+            },
+            "oneof_decl": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.OneofDescriptorProto"
+              }
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.MessageOptions"
+            },
+            "reserved_range": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.DescriptorProto.ReservedRange"
+              }
+            },
+            "reserved_name": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "visibility": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FieldDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FieldDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "number": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "label": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "type": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "type_name": {
+              "type": "string"
+            },
+            "extendee": {
+              "type": "string"
+            },
+            "default_value": {
+              "type": "string"
+            },
+            "oneof_index": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "json_name": {
+              "type": "string"
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.FieldOptions"
+            },
+            "proto3_optional": {
+              "type": "boolean"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FieldOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FieldOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "ctype": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "packed": {
+              "type": "boolean"
+            },
+            "jstype": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "lazy": {
+              "type": "boolean"
+            },
+            "unverified_lazy": {
+              "type": "boolean"
+            },
+            "deprecated": {
+              "type": "boolean"
+            },
+            "weak": {
+              "type": "boolean"
+            },
+            "debug_redact": {
+              "type": "boolean"
+            },
+            "retention": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              }
+            },
+            "edition_defaults": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.FieldOptions.EditionDefault"
+              }
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "feature_support": {
+              "$ref": "#/$defs/google.protobuf.FieldOptions.FeatureSupport"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FieldOptions.EditionDefault": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FieldOptions.EditionDefault"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "edition": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FeatureSet": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FeatureSet"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "field_presence": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "enum_type": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "repeated_field_encoding": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "utf8_validation": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "message_encoding": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "json_format": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "enforce_naming_style": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "default_symbol_visibility": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FieldOptions.FeatureSupport": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FieldOptions.FeatureSupport"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "edition_introduced": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "edition_deprecated": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "deprecation_warning": {
+              "type": "string"
+            },
+            "edition_removed": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "removal_error": {
+              "type": "string"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.UninterpretedOption": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.UninterpretedOption"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption.NamePart"
+              }
+            },
+            "identifier_value": {
+              "type": "string"
+            },
+            "positive_int_value": {
+              "type": "string",
+              "pattern": "^(?:0|-?[1-9][0-9]*)$"
+            },
+            "negative_int_value": {
+              "type": "string",
+              "pattern": "^(?:0|-?[1-9][0-9]*)$"
+            },
+            "double_value": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "enum": [
+                    "NaN",
+                    "Infinity",
+                    "-Infinity",
+                    "-0"
+                  ]
+                }
+              ]
+            },
+            "string_value": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            },
+            "aggregate_value": {
+              "type": "string"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.UninterpretedOption.NamePart": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.UninterpretedOption.NamePart"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name_part": {
+              "type": "string"
+            },
+            "is_extension": {
+              "type": "boolean"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.EnumDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.EnumDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.EnumValueDescriptorProto"
+              }
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.EnumOptions"
+            },
+            "reserved_range": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.EnumDescriptorProto.EnumReservedRange"
+              }
+            },
+            "reserved_name": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "visibility": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.EnumValueDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.EnumValueDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "number": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.EnumValueOptions"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.EnumValueOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.EnumValueOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "deprecated": {
+              "type": "boolean"
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "debug_redact": {
+              "type": "boolean"
+            },
+            "feature_support": {
+              "$ref": "#/$defs/google.protobuf.FieldOptions.FeatureSupport"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.EnumOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.EnumOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "allow_alias": {
+              "type": "boolean"
+            },
+            "deprecated": {
+              "type": "boolean"
+            },
+            "deprecated_legacy_json_field_conflicts": {
+              "type": "boolean"
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.EnumDescriptorProto.EnumReservedRange": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.EnumDescriptorProto.EnumReservedRange"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "end": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.DescriptorProto.ExtensionRange": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.DescriptorProto.ExtensionRange"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "end": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.ExtensionRangeOptions"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.ExtensionRangeOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.ExtensionRangeOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            },
+            "declaration": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.ExtensionRangeOptions.Declaration"
+              }
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "verification": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.ExtensionRangeOptions.Declaration": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.ExtensionRangeOptions.Declaration"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "number": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "full_name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "reserved": {
+              "type": "boolean"
+            },
+            "repeated": {
+              "type": "boolean"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.OneofDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.OneofDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.OneofOptions"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.OneofOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.OneofOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.MessageOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.MessageOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "message_set_wire_format": {
+              "type": "boolean"
+            },
+            "no_standard_descriptor_accessor": {
+              "type": "boolean"
+            },
+            "deprecated": {
+              "type": "boolean"
+            },
+            "map_entry": {
+              "type": "boolean"
+            },
+            "deprecated_legacy_json_field_conflicts": {
+              "type": "boolean"
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.DescriptorProto.ReservedRange": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.DescriptorProto.ReservedRange"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "end": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.ServiceDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.ServiceDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "method": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.MethodDescriptorProto"
+              }
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.ServiceOptions"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.MethodDescriptorProto": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.MethodDescriptorProto"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "input_type": {
+              "type": "string"
+            },
+            "output_type": {
+              "type": "string"
+            },
+            "options": {
+              "$ref": "#/$defs/google.protobuf.MethodOptions"
+            },
+            "client_streaming": {
+              "type": "boolean"
+            },
+            "server_streaming": {
+              "type": "boolean"
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.MethodOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.MethodOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "deprecated": {
+              "type": "boolean"
+            },
+            "idempotency_level": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.ServiceOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.ServiceOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "deprecated": {
+              "type": "boolean"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.FileOptions": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.FileOptions"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "java_package": {
+              "type": "string"
+            },
+            "java_outer_classname": {
+              "type": "string"
+            },
+            "java_multiple_files": {
+              "type": "boolean"
+            },
+            "java_generate_equals_and_hash": {
+              "type": "boolean"
+            },
+            "java_string_check_utf8": {
+              "type": "boolean"
+            },
+            "optimize_for": {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            "go_package": {
+              "type": "string"
+            },
+            "cc_generic_services": {
+              "type": "boolean"
+            },
+            "java_generic_services": {
+              "type": "boolean"
+            },
+            "py_generic_services": {
+              "type": "boolean"
+            },
+            "deprecated": {
+              "type": "boolean"
+            },
+            "cc_enable_arenas": {
+              "type": "boolean"
+            },
+            "objc_class_prefix": {
+              "type": "string"
+            },
+            "csharp_namespace": {
+              "type": "string"
+            },
+            "swift_prefix": {
+              "type": "string"
+            },
+            "php_class_prefix": {
+              "type": "string"
+            },
+            "php_namespace": {
+              "type": "string"
+            },
+            "php_metadata_namespace": {
+              "type": "string"
+            },
+            "ruby_package": {
+              "type": "string"
+            },
+            "features": {
+              "$ref": "#/$defs/google.protobuf.FeatureSet"
+            },
+            "uninterpreted_option": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.UninterpretedOption"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.SourceCodeInfo": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.SourceCodeInfo"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/google.protobuf.SourceCodeInfo.Location"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "google.protobuf.SourceCodeInfo.Location": {
+      "type": "object",
+      "required": [
+        "type",
+        "fields",
+        "unknown"
+      ],
+      "properties": {
+        "type": {
+          "const": "google.protobuf.SourceCodeInfo.Location"
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              }
+            },
+            "span": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              }
+            },
+            "leading_comments": {
+              "type": "string"
+            },
+            "trailing_comments": {
+              "type": "string"
+            },
+            "leading_detached_comments": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "unknown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "required": [
+        "number",
+        "wireType",
+        "data"
+      ],
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 536870911
+        },
+        "wireType": {
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            5
+          ]
+        },
+        "data": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{2})*$"
+        }
+      }
+    }
+  }
+}

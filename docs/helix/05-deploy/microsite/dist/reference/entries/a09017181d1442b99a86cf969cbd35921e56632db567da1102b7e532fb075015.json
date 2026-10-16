@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4478,
+        "line": 14,
+        "path": "src/model/reference-links.ts",
+        "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreReferenceLink",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreReferenceLink {index:number;path:string;reference:NonNullable<Element['references']>[number];target:{identity:CoreReferenceLinkIdentity;path:string;kind?:string};uninterpretedPaths:string[];typeAssertion:'unverified'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreReferenceLink\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4478,
+      "line": 14,
+      "path": "src/model/reference-links.ts",
+      "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+    }
+  ],
+  "summary": "Type declaration · src/model/reference-links.ts",
+  "title": "CoreReferenceLink"
+}

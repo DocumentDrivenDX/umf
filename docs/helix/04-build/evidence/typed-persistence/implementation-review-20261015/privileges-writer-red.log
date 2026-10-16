@@ -1,0 +1,37 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/compilation/access-writer.test.ts:
+(pass) writer_refuses_changed_output: edited, added and removed inventory [45.83ms]
+(pass) writer refuses symlinks without reading outside output [11.20ms]
+(pass) writer fault injection preserves pre-swap tree and reports post-swap state [22.08ms]
+27 | // @covers US-080-AC5
+28 | // @covers US-080-AC6
+29 |  test('stage-two files survive regeneration and are excluded exactly',async()=>{
+30 |  const {destination,r}=await setup();await mkdir(join(destination,'shop/_umf'),{recursive:true});
+31 |  for(const p of ['shop/queries.py','shop/_umf/catalog.json','shop/_umf/catalog-manifest.json','shop/_umf/privileges.json'])await writeFile(join(destination,p),'stage-two owned\n');
+32 |  expect(await checkAccessPackage(destination,r)).toEqual([]);await writeAccessPackage(destination,r);
+                                                      ^
+error: expect(received).toEqual(expected)
+
+- []
++ [
++   "shop/_umf/privileges.json",
++ ]
+
+- Expected  - 1
++ Received  + 3
+
+      at <anonymous> (/Users/erik/.codex/worktrees/20bc/umf/tests/compilation/access-writer.test.ts:32:50)
+(fail) stage-two files survive regeneration and are excluded exactly [186.95ms]
+(pass) ci_drift_check names each differing path [15.22ms]
+(pass) unsafe candidate paths and digests refuse before writing [12.13ms]
+(pass) check reports missing and extra bytes without modifying output [13.90ms]
+(pass) rename boundary failures restore the original package [30.02ms]
+(pass) reserved symlinks and destination symlinks refuse [10.40ms]
+(pass) empty existing output refuses after complete inventory removal [8.91ms]
+(pass) explicit CLI uses real generator, checks byte drift and refuses without writes [36968.01ms]
+
+ 10 pass
+ 1 fail
+ 54 expect() calls
+Ran 11 tests across 1 file. [42.18s]

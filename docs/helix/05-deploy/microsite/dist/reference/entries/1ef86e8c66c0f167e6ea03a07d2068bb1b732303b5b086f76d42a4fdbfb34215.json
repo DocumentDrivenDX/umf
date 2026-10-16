@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4136,
+        "line": 6,
+        "path": "src/adapters/openapi/dynamic.ts",
+        "sha256": "21899e7c2626cbed8751afffdc9c7ea4b2c4fa64ba87294bb446f15695051171"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "resolveOpenapiDynamicReference",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, input: { pointer: string; resourceUri?: string; schemaResources?: string[]; evaluationScope: string[]; }): { source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: \"static\" | \"dynamic\"; complete: false; limitations: string[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"resolveOpenapiDynamicReference\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4136,
+      "line": 6,
+      "path": "src/adapters/openapi/dynamic.ts",
+      "sha256": "21899e7c2626cbed8751afffdc9c7ea4b2c4fa64ba87294bb446f15695051171"
+    }
+  ],
+  "summary": "Resolve one $dynamicRef against an explicit outermost-to-innermost resource stack.",
+  "title": "resolveOpenapiDynamicReference"
+}

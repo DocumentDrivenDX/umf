@@ -1,0 +1,478 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:relationship-sqlserver-projection:1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "const": "project-relationship-sqlserver"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.7.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:relationship-operation:1.0.0#/$defs/declaration"
+    },
+    "bindingSource": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "module",
+            "id"
+          ]
+        },
+        "profile": {
+          "const": "new-key-tables"
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceKey": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "keyId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "constraintName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "field": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "element": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ]
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nativeType": {
+                    "enum": [
+                      "bit",
+                      "tinyint",
+                      "smallint",
+                      "int",
+                      "bigint"
+                    ]
+                  }
+                },
+                "required": [
+                  "field",
+                  "name",
+                  "nativeType"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "keyId",
+            "constraintName",
+            "columns"
+          ]
+        },
+        "targetKey": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "keyId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "constraintName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "field": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "element": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ]
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nativeType": {
+                    "enum": [
+                      "bit",
+                      "tinyint",
+                      "smallint",
+                      "int",
+                      "bigint"
+                    ]
+                  }
+                },
+                "required": [
+                  "field",
+                  "name",
+                  "nativeType"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "keyId",
+            "constraintName",
+            "columns"
+          ]
+        },
+        "referenceColumns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "constraintName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deleteAction": {
+          "enum": [
+            "NO_ACTION",
+            "CASCADE",
+            "SET_NULL"
+          ]
+        },
+        "updateAction": {
+          "enum": [
+            "NO_ACTION",
+            "CASCADE",
+            "SET_NULL"
+          ]
+        },
+        "junction": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "tableName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sourceColumns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "sourceConstraintName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pairConstraintName": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "tableName",
+            "sourceColumns",
+            "sourceConstraintName",
+            "pairConstraintName"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "relationship",
+        "profile",
+        "mode",
+        "namespace",
+        "sourceKey",
+        "targetKey",
+        "referenceColumns",
+        "constraintName",
+        "deleteAction",
+        "updateAction"
+      ]
+    },
+    "binding": {
+      "const": {
+        "id": "umf.sqlserver.relationships",
+        "version": "1.0.0",
+        "nativeVersion": "16.0.4295.3",
+        "subset": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference"
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "sqlserver-ddl"
+        },
+        "sql": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "sql"
+      ]
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idealPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "storage": {
+            "enum": [
+              "foreign_key",
+              "junction"
+            ]
+          },
+          "targetKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "enforcement": {
+            "const": "enabled-trusted-stored-values"
+          },
+          "outcome": {
+            "const": "approximated"
+          }
+        },
+        "required": [
+          "idealPath",
+          "nativePath",
+          "storage",
+          "targetKey",
+          "sourceKey",
+          "enforcement",
+          "outcome"
+        ]
+      },
+      "minItems": 0
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "recovery": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ]
+      },
+      "minItems": 1
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "bindingSource",
+    "request",
+    "binding",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "request": {
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    }
+  ]
+}

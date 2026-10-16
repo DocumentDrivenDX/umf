@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10653,
+        "line": 96,
+        "path": "src/core-ideals/nullability-tablespec.ts",
+        "sha256": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverTableSpecNullabilitySource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecNullabilityClassification, current: Document): string | Record<string, string>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverTableSpecNullabilitySource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10653,
+      "line": 96,
+      "path": "src/core-ideals/nullability-tablespec.ts",
+      "sha256": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b"
+    }
+  ],
+  "summary": "Recover exact original text or split files, including unclaimed native content.",
+  "title": "recoverTableSpecNullabilitySource"
+}

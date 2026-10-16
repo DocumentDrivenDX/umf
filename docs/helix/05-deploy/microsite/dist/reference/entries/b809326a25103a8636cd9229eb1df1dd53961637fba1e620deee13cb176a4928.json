@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12268,
+        "line": 107,
+        "path": "src/adapters/json-schema/index.ts",
+        "sha256": "9edeef2611cd226e2b2d986a7e13867a60684e925e4898421ba6f8150374fb64"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; baseUri: string; resources?: Record<string, string>; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importJsonSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12268,
+      "line": 107,
+      "path": "src/adapters/json-schema/index.ts",
+      "sha256": "9edeef2611cd226e2b2d986a7e13867a60684e925e4898421ba6f8150374fb64"
+    }
+  ],
+  "summary": "Public export · src/adapters/json-schema/index.ts",
+  "title": "importJsonSchema"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7766,
+        "line": 72,
+        "path": "src/core-ideals/cardinality-parquet.ts",
+        "sha256": "23cda37ec621cc6f67e456ceff1b57a7f7b0201f5a1dd74a9be7638a74b09b8f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyParquetCardinalityClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ParquetCardinalityClassification, current: Document): ParquetCardinalityClassification & { [x: string]: {}; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyParquetCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7766,
+      "line": 72,
+      "path": "src/core-ideals/cardinality-parquet.ts",
+      "sha256": "23cda37ec621cc6f67e456ceff1b57a7f7b0201f5a1dd74a9be7638a74b09b8f"
+    }
+  ],
+  "summary": "Recompute consistency; this is not receipt authentication.",
+  "title": "verifyParquetCardinalityClassification"
+}

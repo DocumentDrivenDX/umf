@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16945,
+        "line": 33,
+        "path": "src/core-ideals/facets-avro.ts",
+        "sha256": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyAvroFacets",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: AvroFacetRequest): AvroFacetClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyAvroFacets\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16945,
+      "line": 33,
+      "path": "src/core-ideals/facets-avro.ts",
+      "sha256": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7"
+    }
+  ],
+  "summary": "Add scoped facet observations to an explicit logical Field, preserving the\nnative bundle and source texts. Profiles never authenticate a writer or source.",
+  "title": "classifyAvroFacets"
+}

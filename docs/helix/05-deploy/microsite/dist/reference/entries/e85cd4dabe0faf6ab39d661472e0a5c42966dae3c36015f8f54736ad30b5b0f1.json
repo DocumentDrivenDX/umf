@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2492,
+        "line": 5,
+        "path": "src/extensions/security/protection/references.ts",
+        "sha256": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityProtectionSourceResolution",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityProtectionSourceResolution {\n status:'resolved-source'|'refused';complete:false;authority:false;policy:Json;catalog:Json;\n references:readonly {ruleIndex:number;disclosureIndex:number;transformIndex:number}[];\n diagnostics:readonly Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityProtectionSourceResolution\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2492,
+      "line": 5,
+      "path": "src/extensions/security/protection/references.ts",
+      "sha256": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/references.ts",
+  "title": "SecurityProtectionSourceResolution"
+}

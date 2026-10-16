@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3801,
+        "line": 1,
+        "path": "spec/extensions/openapi/reference-result.schema.json",
+        "sha256": "ac158e1067c967987c5a6d83f7f893a825c6aae8c9395d9b5b0b7ef543f91dd5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "openapiReferenceResultSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:openapi-reference-result:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"kind\",\n    \"target\",\n    \"chain\",\n    \"effectiveAnnotations\",\n    \"complete\",\n    \"limitations\"\n  ],\n  \"properties\": {\n    \"kind\": {\n      \"enum\": [\n        \"parameter\",\n        \"header\",\n        \"response\",\n        \"request-body\",\n        \"example\",\n        \"link\",\n        \"security-scheme\"\n      ]\n    },\n    \"target\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"uri\",\n        \"pointer\",\n        \"node\"\n      ],\n      \"properties\": {\n        \"uri\": {\n          \"type\": \"string\"\n        },\n        \"pointer\": {\n          \"type\": \"string\"\n        },\n        \"node\": {\n          \"$ref\": \"#/$defs/node\"\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"chain\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"uri\",\n          \"pointer\",\n          \"reference\"\n        ],\n        \"properties\": {\n          \"uri\": {\n            \"type\": \"string\"\n          },\n          \"pointer\": {\n            \"type\": \"string\"\n          },\n          \"reference\": {\n            \"$ref\": \"#/$defs/node\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"effectiveAnnotations\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"description\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"limitations\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"openapiReferenceResultSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3801,
+      "line": 1,
+      "path": "spec/extensions/openapi/reference-result.schema.json",
+      "sha256": "ac158e1067c967987c5a6d83f7f893a825c6aae8c9395d9b5b0b7ef543f91dd5"
+    }
+  ],
+  "summary": "Public export · spec/extensions/openapi/reference-result.schema.json",
+  "title": "openapiReferenceResultSchema"
+}

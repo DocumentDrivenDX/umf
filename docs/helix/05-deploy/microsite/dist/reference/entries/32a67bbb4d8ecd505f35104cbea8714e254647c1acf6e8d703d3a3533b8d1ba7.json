@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7634,
+        "line": 15,
+        "path": "src/core-ideals/avro-record.ts",
+        "sha256": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroRecordClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroRecordClassification {\n operation:'classify-avro-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroRecordRequest;binding:typeof binding;mappings:Mapping[];\n residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroRecordClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7634,
+      "line": 15,
+      "path": "src/core-ideals/avro-record.ts",
+      "sha256": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/avro-record.ts",
+  "title": "AvroRecordClassification"
+}

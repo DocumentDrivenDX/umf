@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5752,
+        "line": 12,
+        "path": "src/adapters/openapi/references.ts",
+        "sha256": "b9d8d03868c53912d5c01a2031adce94ab363a6cfe9fbb45e84ac5d31ddce37f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OpenapiReferenceRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OpenapiReferenceRequest {pointer:string;kind:OpenapiReferenceKind;resourceUri?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OpenapiReferenceRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5752,
+      "line": 12,
+      "path": "src/adapters/openapi/references.ts",
+      "sha256": "b9d8d03868c53912d5c01a2031adce94ab363a6cfe9fbb45e84ac5d31ddce37f"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/openapi/references.ts",
+  "title": "OpenapiReferenceRequest"
+}

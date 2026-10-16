@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10368,
+        "line": 22,
+        "path": "src/core-ideals/cardinality-sqlserver-projection.ts",
+        "sha256": "e1028f9fc9f7219709c369e0005b095d9f7d8b6dd97055cdc88b77393364a71d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectCardinalityToSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreCardinalityDeclaration, options: CardinalitySqlServerRequest): CardinalitySqlServerProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectCardinalityToSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10368,
+      "line": 22,
+      "path": "src/core-ideals/cardinality-sqlserver-projection.ts",
+      "sha256": "e1028f9fc9f7219709c369e0005b095d9f7d8b6dd97055cdc88b77393364a71d"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/cardinality-sqlserver-projection.ts",
+  "title": "projectCardinalityToSqlServer"
+}

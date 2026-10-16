@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5891,
+        "line": 14,
+        "path": "src/adapters/iceberg/table-promotion.ts",
+        "sha256": "2b9ad5c9ffc34824fa13a7fbfdddd9b78a7fc331a4214df03e98b8463ab4d399"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeIcebergTablePromotion",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { fieldId: number; targetType: string; nextSchemaId: number; }): { document: Document; report: IcebergTablePromotionReport; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeIcebergTablePromotion\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5891,
+      "line": 14,
+      "path": "src/adapters/iceberg/table-promotion.ts",
+      "sha256": "2b9ad5c9ffc34824fa13a7fbfdddd9b78a7fc331a4214df03e98b8463ab4d399"
+    }
+  ],
+  "summary": "Metadata candidate for the v1/v2 primitive widening rules, carried in v2/v3 tables.",
+  "title": "proposeIcebergTablePromotion"
+}
