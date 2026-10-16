@@ -266,8 +266,12 @@ UMF and Weft share one corpus, kept in Weft (proposed path:
 - a small fixed dataset;
 - the expected ordered rows, or the expected refusal.
 
-The same expected rows apply to every backend that accepts the case. UMF will
-contribute the first cases with tranche A. Minimum coverage:
+The same expected rows apply to every backend that accepts the case. UMF's portable contribution is prepared in
+[`fixtures/umf-typed-access/`](../../../fixtures/umf-typed-access/README.md), with
+[scoped local evidence](evidence/typed-persistence/shared-acceptance.json).
+It retains proposed logical syntax and unresolved cases explicitly. Local
+semantic checks do not establish Weft compilation or backend execution; those
+remain UNTESTED until Weft adopts and executes the corpus. Minimum coverage:
 
 - Every S2 truth-table cell for `AND`, `OR` and `NOT` with null and missing
   operands.

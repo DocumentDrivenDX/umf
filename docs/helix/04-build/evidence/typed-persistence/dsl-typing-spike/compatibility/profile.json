@@ -1,0 +1,37 @@
+{
+  "checkerPythonTarget": "3.12",
+  "configurationSha256": {
+    "mypy.ini": "bcd33df56ddfec8fcd556436f1713490ab0165cabfa36983496ca24b30ef88b8",
+    "pyrightconfig.json": "6d29a76bbfdca3a3215e1cc7287bf815606598047cab92c26ca7036faa5f17bf"
+  },
+  "dependencies": {
+    "annotated-types": "0.8.0",
+    "ast_serialize": "0.13.0",
+    "librt": "0.16.0",
+    "mypy": "2.4.0",
+    "mypy_extensions": "1.1.0",
+    "nodeenv": "1.11.0",
+    "pathspec": "1.1.1",
+    "pydantic": "2.14.1",
+    "pydantic_core": "2.50.1",
+    "pyright": "1.1.414",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0"
+  },
+  "driversAndPlatforms": {
+    "selected": [],
+    "status": "UNTESTED; no native support claim"
+  },
+  "id": "umf-access-compatibility-fixture",
+  "isolatedEnvironment": "/private/tmp/umf-tp001-compat-env/bin/python",
+  "python": "3.14.8",
+  "runtimeAbi": {
+    "abi": "umf-access-runtime/0.1",
+    "distribution": "umf-access",
+    "scope": "minimal installed spike wheel only; production ABI UNTESTED",
+    "version": "0.0.0+tp001.spike"
+  },
+  "runtimeWheelSha256": "bafd7e28b4006a7d4c1fbfe49955de2cad15580a6fbe8818009aa2c986e4b5d2",
+  "scope": "bounded spike-emitted compatibility fixture with trusted fixed scaffolding; not production ABI qualification",
+  "version": "0.1.0"
+}

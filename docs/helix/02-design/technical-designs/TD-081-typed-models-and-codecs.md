@@ -79,7 +79,7 @@ codecs, golden vectors or nested mutation; those remain UNTESTED.
 
 Planned new paths:
 
-- `src/access/generate/emit-python.ts` — models, keys, codecs and action type emission (shared with TD-080).
+- `src/compilation/targets/python/index.ts` — models, keys, codecs and action type emission (shared with TD-080).
 - `python/umf_access/src/umf_access/types.py` — `StrictModel`, `MISSING` re-export, `Vector`, error types.
 - `python/umf_access/src/umf_access/values.py` — carrier validators and transport conversions.
 - `python/umf_access/src/umf_access/codec_support.py` — inventory checks and revalidation helpers used by generated codecs.
@@ -93,6 +93,12 @@ Planned new paths:
 | View presence and temporal kind | CONTRACT-070 | Annotation and default selection |
 | Transport carriers | CONTRACT-072 | Encoded and decoded representations |
 | `CoreKeyIdentity`, value validators | CONTRACT-040/049 | Key identity and golden-vector oracle |
+
+The temporal golden-vector oracle is CONTRACT-075's typed-access profile,
+selected from authored CONTRACT-070 date/instant/local meaning. Generic core
+validators remain the oracle for their defined non-temporal value domains.
+Python instant carriers normalize to UTC before lossless token comparison; no
+truncation, offset inference or temporal Key support is introduced.
 
 ## Data Model Changes
 

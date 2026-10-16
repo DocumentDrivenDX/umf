@@ -141,7 +141,7 @@ records both checkers rejecting every row below:
 | Wrong query arguments at call sites | Generated catalog functions have exact keyword signatures and return types |
 | Wrong result use | Generated catalog functions declare exact return types: `.all()` gives `list[R]`, `.first()` gives `R | None`, `.select(a, b)` gives `tuple[A, B]` rows, `.page()` gives `Page[R, K]`. Inside declaration modules pyright infers these; mypy infers `Any` for unannotated declarations, so call sites, not declarations, carry this guarantee |
 | Projection of another Record | `.into()` on each Record's query root is a set of generated overloads accepting only that Record's declared projection models |
-| `None` passed as "absent" to an optional filter | `if_present` accepts only `Param[T | MISSING]`; a `Param[T | None]` has no matching overload |
+| `None` passed as "absent" to an optional filter | `if_present` accepts only `Param[T | MISSING]`; a no-`MISSING` parameter selects an invalid-filter marker that the enclosing `filter` rejects |
 
 `Param` is covariant, so a `Param[str]` is accepted where a nullable string column
 is compared. `.select` overloads cover up to eight columns; wider projections use
@@ -158,8 +158,12 @@ Result and helper types:
   `items: tuple[K, ...]` and `truncated: bool` (true when more than `n` related
   keys exist). Like `.select` and `.into`, it returns a new query type rather than
   `Self`.
-- `if_present(p, f)` accepts only `Param[T | MISSING]`. `None` is a value, meaning
-  `IS NULL` where the column admits null; it never means "absent".
+- `if_present(p, f)` accepts only parameters whose declared union includes
+  `MISSING`. Ordered overloads give a parameter without `MISSING` an
+  `InvalidOptionalFilter` result, rejected by the enclosing `filter`; the runtime
+  keeps any required overlap diagnostic suppression internal. Capture also
+  rejects a parameter whose declaration excludes `MISSING`. `None` is a value,
+  meaning `IS NULL` where the column admits null; it never means "absent".
 - `Column` overrides `__eq__`, which makes it unhashable. The narrower `__eq__`
   signature is an intentional override; the `umf_access` runtime package
   suppresses the checker's override diagnostic internally, so developer code sees
@@ -180,7 +184,7 @@ column attributes carry docstrings citing their UMF source pointer, so editor
 go-to-definition reaches the authored meaning.
 
 The remaining gates, in order, are the catalog build (forms Weft cannot compile
-for every selected target, unbounded reads, non-key ordering), target `verify()`
+for every selected target, unbounded reads, invalid ordering), target `verify()`
 before first use (CONTRACT-072) and codec validation of every bound value.
 
 ### DSL surface in 0.1
@@ -240,7 +244,12 @@ targets, weft:{distribution,version}, umf:{documents}}`:
   connections for this target authenticate as (per-user connections or a service
   account); it governs CONTRACT-073 attribution. None of these is inferred, and the
   SDK never creates or inspects connections to check them.
-- Compilation renders each captured query to canonical Weft SQL text, submits it
+- Compilation renders each captured query to canonical Weft SQL text using the
+  authored module `namespace`, Record `name` and member Field `name`, as required
+  by Weft's logical name resolver. Generated metadata retains those names
+  separately from exact module/element/Field identities and Python `names`
+  overrides. Missing or ambiguous logical names refuse; IDs and Python names
+  MUST NOT be substituted. Compilation submits that text
   with the pinned UMF documents, the target binding and the target's `security`
   source to the pinned Weft version, and records Weft's response. A blocked response for any variant on any target
   fails the build with Weft's diagnostics retained.
@@ -314,7 +323,8 @@ def deactivate_stale(target: BulkTarget[P], *, cutoff: int) -> P: ...
 
 A `Param[K | None]` page cursor in a declaration becomes a `Continuation[K] |
 None` argument of the generated function; the runtime checks the continuation's
-identity digest and binds its Key. Bulk functions return the plan type of their
+identity digest and binds its complete ordered continuation values, including
+the Key, under shared semantics S7. Bulk functions return the plan type of their
 target (CONTRACT-072 `AtomicBulkPlan` or `ManifestBulkPlan`).
 
 ### Runtime rules

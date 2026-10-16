@@ -171,6 +171,15 @@ generation:null|"identity"|"stored-expression"|"default"}`.
   view requires a non-null `generation`; `default` alone does not make a field
   generated.
 
+### Temporal value qualification
+
+Date Fields and timestamp Fields use the explicitly selected
+[CONTRACT-075 typed-access temporal profile](CONTRACT-075-access-temporal-profile.md)
+for typed-access value qualification. Timestamp validation uses the authored
+FieldView `temporal` choice; it never infers instant versus local from a value or
+native type. This selection leaves CONTRACT-049 generic temporal value evaluation
+undefined and retains the temporal Key refusal in this contract.
+
 ### Search indexes
 
 SearchIndex and SearchBinding shapes, and their validation rules, are defined in

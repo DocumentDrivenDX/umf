@@ -63,18 +63,25 @@ and drift check ignore exactly those paths; stage two verifies them against its
 own manifest and reports `CATALOG_STALE` when the stage-one digest changes. AC5
 and AC6 tests include a package that already has catalog files.
 
+The host script accepts explicit caller paths:
+`bun scripts/umf-access-generate.ts generate|check --request <JSON> --profile <JSON> --output <directory>`.
+The profile file contains inert metadata supplied by the trusted host; document
+content cannot select it. The script never evaluates or dynamically imports its
+contents. Distribution of the installed `umf-access` wrapper remains separate
+from this host-script interface.
+
 ## Component Changes
 
 Planned new paths (none exist yet):
 
-- `src/access/generate/admission.ts` — request and profile admission.
-- `src/access/extension/` — `umf.access` 0.1.0 schema, coverage, conflict-table and native-type checks (CONTRACT-070).
-- `src/access/generate/closure.ts` and `src/access/generate/ir.ts` — reference closure and private IR.
-- `src/access/generate/census.ts` — disposition and obligation assembly.
-- `src/access/generate/emit-python.ts` — literal-only renderer; TD-081 owns its per-module content.
-- `src/access/generate/naming.ts` — identifier validation, overrides, reserved names and collision checks.
-- `src/access/generate/index.ts` — the public `generateAccessPackage` facade.
-- `scripts/umf-access.ts` — host tool with `generate` and `check` subcommands; the only module that touches the filesystem.
+- `src/compilation/admission/index.ts` — request and profile admission.
+- `src/compilation/admission/access/` — `umf.access` 0.1.0 schema, coverage, conflict-table and native-type checks (CONTRACT-070).
+- `src/compilation/admission/closure.ts` and `src/compilation/ir/index.ts` — reference closure and private IR.
+- `src/compilation/admission/census.ts` — disposition and obligation assembly.
+- `src/compilation/targets/python/index.ts` — literal-only renderer; TD-081 owns its per-module content.
+- `src/compilation/admission/naming.ts` — identifier validation, overrides, reserved names and collision checks.
+- `src/compilation/index.ts` — the public `generateAccessPackage` facade.
+- `scripts/umf-access-generate.ts` — host tool with `generate` and `check` subcommands; the only module that touches the filesystem.
 
 Portable modules import only public UMF barrels and use no host globals, so the
 same code runs in Bun and Chromium (ADR-002).

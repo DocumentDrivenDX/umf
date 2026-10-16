@@ -141,8 +141,8 @@ parameter, page and `k` limits. No UI or telemetry slot applies.
 Cross-repository Weft dependencies, not specified here: raw-table backends for
 Postgres, Lakebase and Spark/Unity Catalog; search lowering; and plan templates.
 Until plan templates exist, bulk commands call the pinned Weft compiler at runtime
-and compare structural digests. Only Key ordering and bounded reads are admitted
-in 0.1. Search mechanisms in CONTRACT-074 are candidates per platform version.
+and compare structural digests. The 0.1 DSL exposes tranche-A ordering with complete-Key tiebreaks; each target
+compiles it or refuses with `WEFT_BLOCKED`. Reads remain bounded. Search mechanisms in CONTRACT-074 are candidates per platform version.
 
 ## Risks
 

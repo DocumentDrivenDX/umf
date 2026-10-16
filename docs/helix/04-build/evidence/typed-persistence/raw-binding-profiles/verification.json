@@ -1,0 +1,95 @@
+{
+  "dependency": "U-2",
+  "date": "2026-10-15",
+  "status": "PASS: partial declarative profiles only",
+  "nativeQualification": {
+    "lakebase": "UNTESTED",
+    "unity-catalog": "UNTESTED",
+    "spark-delta": "UNTESTED"
+  },
+  "governance": [
+    "CONTRACT-042",
+    "CONTRACT-067",
+    "CONTRACT-070",
+    "CONTRACT-072",
+    "typed-persistence-design.md U-2"
+  ],
+  "profile": {
+    "binding": "umf-binding-2",
+    "vocabulary": "umf.binding 0.2.0",
+    "logicalCore": "0.8.0",
+    "subset": "typed-access-columns/0.1",
+    "identity": "Exact system/platform and opaque version/majorVersion equality; no parsing or platform aliases"
+  },
+  "commands": [
+    {
+      "command": "bun test tests/binding/raw-profiles.test.ts tests/binding/package.test.ts tests/binding/stable-ids.test.ts",
+      "exitCode": 0,
+      "tests": 18,
+      "assertions": 136,
+      "log": "tests.txt"
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc --noEmit",
+      "exitCode": 0,
+      "log": "typecheck.txt"
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
+      "exitCode": 0,
+      "log": "typecheck-tools.txt"
+    },
+    {
+      "command": "bun scripts/binding/raw-profiles-browser.ts",
+      "exitCode": 0,
+      "log": "browser-output.txt",
+      "record": "browser.json",
+      "cases": 12
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    },
+    {
+      "command": "bun test tests/binding",
+      "exitCode": 0,
+      "tests": 65,
+      "files": 14,
+      "assertions": 4832,
+      "log": "binding-regression.txt",
+      "qualification": "Local regression only; existing tests may read historical native fixtures, this is not a fresh native replay."
+    }
+  ],
+  "review": {
+    "partialCoverage": "Explicitly admitted: fields may be empty. CONTRACT067/070 selected ColumnSet coverage is a separate consumer gate; passed this requirement to generator owner.",
+    "semantics": "Existing generic schema already admits target strings; added explicit named subset metadata/inspector only. Existing profile interpretation unchanged.",
+    "preservation": "Unknown binding payload/target/field content refuses profile use, remains recoverable by generic JSON/YAML read/write.",
+    "boundary": "Portable source uses existing binding and versioned Record membership APIs, no host API; Chromium has no Bun/process/Buffer globals and no external requests."
+  },
+  "attempts": [
+    {
+      "result": "expected red",
+      "detail": "Missing raw-profiles module before implementation; red.txt"
+    },
+    {
+      "result": "corrected",
+      "detail": "Initial direct members traversal failed strict typecheck. Replaced with versioned Record membership inspector; first argument included extra table member and caused 4 test failures. Corrected to exact module/element identity."
+    },
+    {
+      "result": "corrected",
+      "detail": "First browser attempt passed parity then host strict deep-equality rejected null-prototype recovered objects. Switched to JSON value equality; replay passes."
+    },
+    {
+      "result": "corrected",
+      "detail": "Browser harness implicit cases array failed tooling strictness; added explicit case type, replay passes."
+    }
+  ],
+  "limits": [
+    "Declarative structural interpretation only; no native type equivalence, data enforcement, DDL, SQL lowering, runtime adapters or native acceptance.",
+    "Partial physical declaration is not complete selected ColumnSet coverage.",
+    "Synthetic target version labels are not platform observations.",
+    "No live endpoints, native writes, migrations, sibling changes, commits or branch changes."
+  ],
+  "sources": "source-fingerprints.json",
+  "browser": "browser.json"
+}

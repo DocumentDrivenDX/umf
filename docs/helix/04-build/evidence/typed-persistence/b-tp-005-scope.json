@@ -1,0 +1,254 @@
+{
+  "date": "2026-10-15",
+  "slice": "B-TP-005",
+  "specRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "worktree": "/Users/erik/.codex/worktrees/39bf/umf",
+  "branch": "codex/typed-access-implementation",
+  "status": "pinned snapshot implementation/installed/generated scoped gates PASS; current compiler replay REQUIRED after subsequent changes; ordered B005/STP OPEN",
+  "governing": [
+    "CONTRACT-068",
+    "CONTRACT-071",
+    "US-082",
+    "TD-082",
+    "STP-082",
+    "umf.typed-persistence-design",
+    "umf.weft-requirements-typed-access"
+  ],
+  "catalog": "installed HELIX 0.17.0 workflows/graph.yml; runtime-handoff mode; owner implementation authorization and spending prerequisite waiver in Execution Contract",
+  "ownership": [
+    "python/umf_access/src/umf_access/dsl/**",
+    "python/umf_access/src/umf_access/capture.py",
+    "python/umf_access/tests/test_dsl_runtime.py",
+    "python/umf_access/tests/test_capture.py",
+    "python/umf_access/tests/test_dsl_render.py",
+    "tests/compilation/python/static/queries/**",
+    "docs/helix/04-build/evidence/typed-persistence/b-tp-005*",
+    "python/umf_access/tests/test_refactor_regeneration.py"
+  ],
+  "notEdited": [
+    "TypeScript emitters",
+    "checker configurations or shared runner",
+    "models/codecs",
+    "distribution metadata",
+    "boundary checker",
+    "shared acceptance corpus"
+  ],
+  "runtimeAbiProposal": {
+    "status": "implemented against recorded pre-release ABI; installed/current-source and real generated integration qualification separate",
+    "module": "umf_access.dsl",
+    "types": {
+      "Column": "Column[Owner, Value]",
+      "Predicate": "Predicate[Owner] (owner invariant)",
+      "Param": "Param[Value] (covariant)",
+      "Query": "Query[Owner, Row, Key]",
+      "Related": "Related[Owner, RelatedKey]",
+      "Terminal": "Terminal[Value]",
+      "Page": "Page[Row, Key]",
+      "Continuation": "Continuation[Key]",
+      "WithKeys": "WithKeys[Row, RelatedKey]",
+      "RelatedKeys": "RelatedKeys[RelatedKey]"
+    },
+    "constructors": {
+      "FieldRef": "FieldRef(module=record_module,element=record_id,field=field_id,field_module=exact_source_module,logical_name=authored_Field.name|None,temporal=explicit_profile|None). No inferred logical names.",
+      "RecordRef": "RecordRef(module=record_id_module,element=record_id,key=tuple exact FieldRefs,logical_namespace=authored_Module.namespace|None,logical_name=authored_Record.name|None). Missing logical names refuse rendering, not model import.",
+      "Column": "Column[Owner,Value](FieldRef(...)); construction allowed during generated import, evaluation capture-only",
+      "Query": "Query[Owner,Row,Key](RecordRef(...)); root construction allowed during generated import; operations capture-only"
+    },
+    "generatedDelegation": {
+      "update": "Record-specific Unpack[RecordUpdate] signature delegates to protected _update hook; base root exposes no unconstrained public update",
+      "into": "Record-specific declared projection signature delegates to protected _into hook; base root exposes no unrestricted public into"
+    },
+    "capture": "capture(decorated) -> immutable declaration/variants; canonical JSON tree replay; variant node preserves terminal kind, projection identity, Key identity/component ordering and cursor metadata. Context reset in finally.",
+    "continuation": "CONTRACT-072: immutable typed Continuation[K] retains last Key, last-row full ordered sort-value tuple including Key tiebreak, explicit null/missing states, and target identity digest; no new wire format or scalar-state carrier selected here. Key-only compatibility fixture is not production acceptance.",
+    "publicBuildBoundary": "umf_access.capture exports render_logical, ExpressionNode, ProjectionRef, CapturedKey; root facade has no renderer export",
+    "keyMetadata": "Literal Key and Param Key carriers retain exact KEY_IDENTITY. Foreign Record identity and temporal Key carriers refuse. Full document/key-ID comparison against pinned target source is a catalog-build obligation; no key-byte encoder or inferred identity."
+  },
+  "fixtureCoordination": {
+    "package": "commerce; must be real US-080 generated output, never a handwritten replacement",
+    "Order": [
+      "order_id (immutable)",
+      "amount (Decimal, mutable)",
+      "memo (str|None, mutable)",
+      "placed_at (datetime)",
+      "created_at (generated)"
+    ],
+    "Customer": [
+      "name"
+    ],
+    "relationship": "Order.c.customer: Related[Order,CustomerKey]",
+    "projections": [
+      "OrderSummary",
+      "CustomerSummary (foreign projection negative)"
+    ],
+    "stageTwoSignatures": [
+      "orders_above(target, *, minimum: Decimal)",
+      "first_order(target) -> Order | None",
+      "order_page(target) -> Page[Order,OrderKey]",
+      "count_orders(target) -> int"
+    ],
+    "note": "Fixture and stage-two signature assumptions require coordination; source does not provide substitutes."
+  },
+  "observations": {
+    "python": "3.14.8",
+    "pydantic": "2.14.1",
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "pytest": "absent from observed environment at probe time",
+    "environment": "/private/tmp/umf-tp001-compat-env/bin/python",
+    "syntax": "27 Python files parsed",
+    "red": "Historical initial import red retained in b-tp-005-red-run.json; newer passing results are separate and source-qualified",
+    "record": "b-tp-005-red-run.json"
+  },
+  "acceptance": {
+    "US-082-AC1": "UNTESTED",
+    "US-082-AC2": "UNTESTED",
+    "US-082-AC3": "UNTESTED",
+    "US-082-AC4": "UNTESTED",
+    "US-082-AC5": "UNTESTED",
+    "US-082-AC6": "UNTESTED",
+    "tranche-A logical Weft rendering": "UNTESTED"
+  },
+  "reviewFindings": [
+    {
+      "issue": "SD-029 retains old key-order-only wording; CONTRACT-071 and current handoff explicitly choose tranche A",
+      "disposition": "Resolved by parent in current FEAT-029/US-083/SD-029/TD-083/STP-083/CONTRACT-071 text against owner tranche-A decision. Current SD-029 read; no scope reduction."
+    },
+    {
+      "issue": "TD-082 and SD-029 allocate capture differently between 082 and 083",
+      "disposition": "Explicit owner delegation assigns in-memory capture to this session; catalog writing/compilation remain 083"
+    },
+    {
+      "issue": "Current Weft requirements include only predicate/order grammar delta, not full logical statement syntax",
+      "disposition": "Wait for shared corpus accepted forms before freezing whole-statement goldens; do not invent native SQL lowering"
+    }
+  ],
+  "blockers": [
+    "Current TypeScript admission/index.ts and bundle/index.ts differ from retained successful generator snapshot; fresh generated/refactor/static replay needed after source settles",
+    "Ordered B002/003/004 acceptance and integrated replay remain open; local evidence does not close prerequisite slices",
+    "Six genuine stage-two generated call-site negative fixtures remain UNTESTED: queries.py/catalog generation belongs to subsequent catalog scope; no substitute authored",
+    "related() semantics still await owner selection through parent; no invented traversal or join lowering",
+    "CLI no-catalog-output-on-capture-refusal integration is UNTESTED because the genuine catalog tool/writer is not implemented in this scope"
+  ],
+  "continuation": [
+    "Await latest TypeScript source-stable checkpoint, then regenerate/replay real commerce/refactor corpora exactly once on those unchanged inputs",
+    "Retain exact stable9189 runtime wheel and generated composite snapshots; do not rebuild runtime solely for generator/input changes",
+    "Resolve related() owner decision or explicitly retain the unqualified refusal subset",
+    "Integrate genuine stage-two generated signatures and catalog CLI refusal/output atomicity proof when the catalog owner implements them; do not create stand-ins",
+    "Complete ordered prerequisite and full STP082 acceptance replay before B005 closure; native Weft/target support remains UNTESTED"
+  ],
+  "limits": {
+    "tokenEstimate": "unknown",
+    "aggregateDollarMetering": "unavailable",
+    "spendingCeilingPrerequisite": "owner-waived",
+    "nativeExecution": "UNTESTED; outside this slice",
+    "browserGeneratorParity": "UNTESTED; generator owner"
+  },
+  "logicalRendering": {
+    "status": "proposed canonical spelling, UNTESTED",
+    "weftRevision": "94b2de5e303fe53f0c9432458119b6fe1eef187c",
+    "baseGrammar": "/Users/erik/Projects/weft/docs/helix/02-design/contracts/weft-sql-v0.2.ebnf",
+    "nativeAcceptance": "UNTESTED",
+    "extendedForms": "UMF requirements WR-A1..A8; not claimed accepted by Weft 0.2",
+    "remainingGoldens": [
+      "OR/NOT grouping",
+      "NOT IN",
+      "counts/existence",
+      "temporal carriers",
+      "related navigation",
+      "include_keys",
+      "bulk action mutation form",
+      "page continuation remains outside SQL grammar"
+    ]
+  },
+  "ifPresentCompatibility": {
+    "status": "source reviewed; full replay pending; production implementation UNTESTED",
+    "source": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/runtime_fixture.py",
+    "sha256": "fffcbfa114ed30362b92258a699f873af0360be62df4441c78382d7f02b99f65",
+    "approach": "Ordered negative overload bounded to supported non-MISSING carriers returns InvalidOptionalFilter rejected by enclosing filter; sentinel-admitting overload returns Predicate. One internal overload-overlap suppression only. Capture also checks declared parameter includes MISSING.",
+    "positiveForms": [
+      "Param[str | MISSING]",
+      "Param[str | None | MISSING]"
+    ],
+    "contractUpdate": "CONTRACT-071 and TD-082 parent edits reviewed; no user syntax change",
+    "testsAdded": [
+      "nullable_optional static positive",
+      "capture rejects optional filter without declared MISSING",
+      "nullable optional capture has two presence variants"
+    ]
+  },
+  "continuationContractReview": {
+    "source": "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+    "sha256": "5a2a0d87fac46aa0d799662208925aee4b44d87e9a19e7547de72ef8f669a6a4",
+    "section": "Continuations",
+    "implementation": "UNTESTED",
+    "noNewWireFormat": true
+  },
+  "localImplementation": {
+    "tests": 56,
+    "unitStatus": "PASS current source",
+    "runtimeStaticChecks": "14/14 exact checker invocations PASS",
+    "sourceTypecheck": "7 files PASS pinned strict pyright and mypy profile",
+    "boundary": "PASS; see b-tp-005-local-run.json",
+    "sourceStable": true,
+    "installedFrozenSnapshot": "56 tests PASS exact9189ac065cbe51b4 wheel; current runtime source manifest matches; older e4c50-test history retained separately",
+    "freshEvidence": "b-tp-005-local-run.json",
+    "refactorIntegration": "3 tests PASS,48 checks:10 exact typing outcomes,34 source-pointer docstrings,4 source-diff classifications; installed9189wheel; compiler drift0",
+    "generatedStatic": "36/36 exact checks PASS using byte-verified real generated snapshot and installed9189wheel: positive corpus + full generated package +16 declaration negatives, both pinned checkers",
+    "stableInstalledEvidence": "b-tp-005-stable-installed-replay.json",
+    "refactorEvidence": "b-tp-005-refactor-integration.json",
+    "generatedEvidence": "b-tp-005-generated-checks.json"
+  },
+  "unsupportedSubset": [
+    "Nested optional filters under AND/OR/NOT refuse CAPTURE_UNSUPPORTED; top-level optional filter arguments supported",
+    "related() is absent/refused pending selected semantics and exact target metadata",
+    "Literal temporal/binary SQL forms and empty literal IN list refuse rather than invent grammar; typed parameters retained",
+    "Projection after include_keys and repeated include_keys refuse unspecified result shape",
+    "All native Weft compilation/execution, drivers and backend support UNTESTED"
+  ],
+  "sourceCompatibilityQualification": "Public diffAccessPackages assertions establish conservative source classification only. No value/native/installed-target compatibility equivalence is inferred.",
+  "runnerQualification": "Actual behavioral gates used stdlib unittest; checkers invoked directly with pinned configs. Planned pytest commands as written were not executed.",
+  "generatedSnapshots": [
+    {
+      "variant": "base",
+      "inputDigest": "4964eba4ef2baa50ab13ea3aa25c6da58dbc4aca827e399218a0e23f765fbf08",
+      "snapshotIdentity": "ff1dd423ce1bce3e1657f1c0cdb3dbe30c6242514670e225ad2e88fdb8d5a88a",
+      "snapshotPath": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-generated-snapshots/ff1dd423ce1bce3e1657f1c0cdb3dbe30c6242514670e225ad2e88fdb8d5a88a.json"
+    },
+    {
+      "variant": "memo-rename",
+      "inputDigest": "548ab943f5ec25b72d3b4f05a56e2880ad1df463ffb78ddb8a4dfb33abc9a5b6",
+      "snapshotIdentity": "31086b31572f4dfbdb41ed1f2884ef7b14aa2b3a69dba4c6cc682e75b969d9b3",
+      "snapshotPath": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-generated-snapshots/31086b31572f4dfbdb41ed1f2884ef7b14aa2b3a69dba4c6cc682e75b969d9b3.json"
+    },
+    {
+      "variant": "amount-retype",
+      "inputDigest": "44abe28d449f1fd7c5630e69698c0e1eb067171ac4edb2a43f9283a5b0bebebd",
+      "snapshotIdentity": "6c0e077f3de8a22e1e06e349013e83e0b97acb84a955034e9a3094cbe2f90198",
+      "snapshotPath": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-generated-snapshots/6c0e077f3de8a22e1e06e349013e83e0b97acb84a955034e9a3094cbe2f90198.json"
+    },
+    {
+      "variant": "memo-remove",
+      "inputDigest": "256e1a7945b134655b9bdcc762f7831a0d14bcb0b6b7b6994f97e13af091aaf9",
+      "snapshotIdentity": "92e6a34f47e7209099a6ed53ae8eb3cda5ecf6ce3bb7257c272d76e7985afc00",
+      "snapshotPath": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-generated-snapshots/92e6a34f47e7209099a6ed53ae8eb3cda5ecf6ce3bb7257c272d76e7985afc00.json"
+    },
+    {
+      "variant": "memo-rename-with-names-override",
+      "inputDigest": "8e24e627a2f688ffce887377862270713559243a5539e9dbd4cd2f68a6a5f8ca",
+      "snapshotIdentity": "504f1111cfb7cb0375e5c2beb3b61ff75c91d8ec7b3325dbc6a4bef1b40ad2b2",
+      "snapshotPath": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-generated-snapshots/504f1111cfb7cb0375e5c2beb3b61ff75c91d8ec7b3325dbc6a4bef1b40ad2b2.json"
+    }
+  ],
+  "compilerSourceDigest": "490f51caeffa093217ea29aab260241fe3db07214972314646999bf013297c1b",
+  "compilerInputDriftAtFinalReview": [
+    "src/compilation/admission/index.ts",
+    "src/compilation/bundle/index.ts"
+  ],
+  "reviewedUpstream": [
+    "CONTRACT-001..011",
+    "implementation-plan current scope/prior evidence and typed SDK index",
+    "schema-properties-core scoped execution evidence",
+    "CONTRACT-067..075 as relevant to DSL/capture/identity",
+    "US/TD/STP-082 and current Weft naming/grammar/contracts"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "kind": "immutable-installed-runtime-snapshot",
+  "createdAt": "2026-10-15T18:33:13.866145+00:00",
+  "wheel": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/runtime/9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c/umf_access-0.1.0.dev0-py3-none-any.whl",
+  "wheelSha256": "9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c",
+  "python": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/bin/python",
+  "runtimeAbi": {
+    "distribution": "umf_access",
+    "version": "0.1.0.dev0",
+    "abi": "umf-access-runtime/0.1"
+  },
+  "sourceManifest": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/runtime/9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c/source-manifest.json",
+  "profile": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/runtime/9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c/profile.json",
+  "buildReport": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/runtime/9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c/build.json",
+  "commands": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/runtime/9189ac065cbe51b42340eaf5539f56661d49ba3af01675e9005bc858b6693d4c/commands.json",
+  "importProbe": {
+    "status": "pass",
+    "installedRuntime": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/umf_access/__init__.py",
+    "generatedPackage": null,
+    "scope": "installed runtime only; generated replay UNTESTED",
+    "moduleReads": 136,
+    "moduleLoaderMetadataReads": [
+      {
+        "path": "/System/Library/CoreServices/SystemVersion.plist",
+        "classification": "stdlib-loader-platform-metadata"
+      },
+      {
+        "path": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/pydantic_core-2.50.1.dist-info/entry_points.txt",
+        "classification": "installed-distribution-loader-metadata"
+      },
+      {
+        "path": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/umf_access-0.1.0.dev0.dist-info/entry_points.txt",
+        "classification": "installed-distribution-loader-metadata"
+      },
+      {
+        "path": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/annotated_types-0.8.0.dist-info/entry_points.txt",
+        "classification": "installed-distribution-loader-metadata"
+      },
+      {
+        "path": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/typing_inspection-0.4.4.dist-info/entry_points.txt",
+        "classification": "installed-distribution-loader-metadata"
+      },
+      {
+        "path": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/typing_extensions-4.16.0.dist-info/entry_points.txt",
+        "classification": "installed-distribution-loader-metadata"
+      },
+      {
+        "path": "/private/tmp/umf-access-runtime-9189ac065cbe51b4/lib/python3.14/site-packages/pydantic-2.14.1.dist-info/entry_points.txt",
+        "classification": "installed-distribution-loader-metadata"
+      }
+    ],
+    "ioScope": "Module reads plus explicitly recorded CPython platform-loader metadata only; not blanket cold-process zero-I/O acceptance",
+    "runtimeAbi": {
+      "distribution": "umf_access",
+      "version": "0.1.0.dev0",
+      "abi": "umf-access-runtime/0.1"
+    }
+  },
+  "generatedReplay": "UNTESTED; no generated package is coupled to this runtime snapshot",
+  "generatedIdentityPolicy": "Generated snapshots use SHA256 of exact wheelSha256 + generatorSourceDigest + inputDigest; refuse replacement of existing snapshot directory",
+  "helperSha256": "cc92d95645b03bb02db2b493f637523ffab5e80ec038d0b017c617785b7246a9",
+  "importVerifierSha256": "6ea285be31f9a51b6c0847533ccffc742c1442e022068db13e6a3cc40904e4b8",
+  "nativeTargets": "UNTESTED; no native drivers installed"
+}

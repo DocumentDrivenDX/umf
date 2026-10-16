@@ -1,0 +1,86 @@
+{
+  "kind": "local-production-installed-wheel-replay",
+  "status": "refused",
+  "commands": [
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "venv",
+        "--without-pip",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-agg12cef/venv"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-agg12cef/venv/bin/python",
+        "/private/tmp/umf-access-production-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "pydantic==2.14.1",
+        "pydantic-core==2.50.1",
+        "annotated-types==0.8.0",
+        "typing-extensions==4.16.0",
+        "typing-inspection==0.4.4"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Using Python 3.14.8 environment at: venv\nResolved 6 packages in 43ms\nPrepared 1 package in 368ms\nInstalled 6 packages in 266ms\n + annotated-types==0.8.0\n + pydantic==2.14.1\n + pydantic-core==2.50.1\n + typing-extensions==4.16.0\n + typing-inspection==0.4.4\n + umf-access==0.1.0.dev0 (from file:///private/tmp/umf-access-production-wheels/umf_access-0.1.0.dev0-py3-none-any.whl)\n"
+    },
+    {
+      "command": [
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-agg12cef/venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/tests/packaging/replay_installed.py",
+        "--child",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-agg12cef/replay.json"
+      ],
+      "exitCode": 1,
+      "stdout": "{\"status\": \"refused\", \"reason\": \"import attempted non-module file I/O\"}\n",
+      "stderr": ""
+    }
+  ],
+  "nativeTargets": "UNTESTED; no selected driver/platform",
+  "storyAcceptance": "Not B-TP-004 closure",
+  "profileSha256": "1ac1e1c8cfbd972ef07b1b71eeb31f83ed1dd1737c180331ac1c4569d7d29263",
+  "wheelSha256": "6d06c54aadf8281e9adb83622603ac3f37b2a913d6ef628396d4cc8855925db9",
+  "manifestSha256": "8a418b70b74c95dbc5da7549c41f11a4311e83d2f7b1942bbe39f727c7f6310e",
+  "generatedInventory": [
+    {
+      "path": "shop/__init__.py",
+      "sha256": "a2cc7cbecb6708d4926cebfd6eba26fcf727a915ab2977a7d28d023efd42dd4a"
+    },
+    {
+      "path": "shop/_umf/sources.json",
+      "sha256": "56e90148f9c226d413d1dacd96ac46db10ba3fc47ce3c740d4c7fa6b7305f44d"
+    },
+    {
+      "path": "shop/codecs.py",
+      "sha256": "77d051ae787cb9b7b2d1a1dd41044080fdf7a34970d1624441b8906d4b4de39c"
+    },
+    {
+      "path": "shop/fields.py",
+      "sha256": "65117d190cc680edd19f665481bf85a46e62f5bc16485dbab03fff54639f1f6b"
+    },
+    {
+      "path": "shop/keys.py",
+      "sha256": "17726b446c92fc2108b8c75dd3f05676c59d9cab806fc1e0af6d828a42319996"
+    },
+    {
+      "path": "shop/models.py",
+      "sha256": "c52f2eaf949390a7971951e4df957f12442c2d2453b6aec407df1ba5c3f2e1c9"
+    },
+    {
+      "path": "shop/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ],
+  "reason": "replay command failed; see retained command outcome"
+}

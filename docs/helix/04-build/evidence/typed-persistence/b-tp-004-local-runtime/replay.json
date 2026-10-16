@@ -1,0 +1,193 @@
+{
+  "kind": "B-TP-004 local source replay; not installed release/slice acceptance",
+  "date": "2026-10-15",
+  "versions": {
+    "python": "3.14.8",
+    "pydantic": "2.14.1",
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "bun": "1.4.2 (43848b5a7)"
+  },
+  "environment": {
+    "python": "/private/tmp/umf-tp001-compat-env/bin/python",
+    "PYTHONPATH": "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src:/private/tmp/umf-btp004-generated",
+    "MYPYPATH": "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src",
+    "isolatedInstalledRuntime": false
+  },
+  "commands": [
+    {
+      "name": "generation",
+      "command": [
+        "/opt/homebrew/bin/bun",
+        "-e",
+        "import {generateAccessPackage} from \"./src/compilation/index.ts\"; import {request,profile} from \"./tests/compilation/access-fixtures.ts\"; const q=request(); q.records.push({module:\"commerce\",element:\"OrderLine\"}); q.names=[{sourceId:\"logical\",pointer:\"/modules/0/elements/0\",python:\"order_id\"},{sourceId:\"logical\",pointer:\"/modules/0/elements/3\",python:\"placed_at\"}]; const p=profile();p.codeSha256=process.env.UMF_BTP004_GENERATOR_DIGEST;p.python.version=\"3.14.8\";const result=generateAccessPackage(q,p); if(result.outcome!==\"candidate\")throw new Error(JSON.stringify(result.diagnostics));for(const f of result.files)await Bun.write(\"/private/tmp/umf-btp004-generated/\"+f.path,f.text);await Bun.write(\"/private/tmp/umf-btp004-generated/result.json\",JSON.stringify(result));console.log(JSON.stringify({outcome:result.outcome,files:result.files.length,inputDigest:result.inputDigest}));"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/generation.log"
+    },
+    {
+      "name": "helpers",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "python/umf_access/tests",
+        "-p",
+        "*_red.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/helpers.log"
+    },
+    {
+      "name": "golden",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "python/umf_access/tests",
+        "-p",
+        "test_golden_vectors.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/golden.log"
+    },
+    {
+      "name": "generated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "python/umf_access/tests",
+        "-p",
+        "test_generated_models.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/generated.log"
+    },
+    {
+      "name": "mypy-owned",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--strict",
+        "--no-incremental",
+        "--cache-dir",
+        "/private/tmp/umf-btp004-mypy-cache",
+        "--python-version",
+        "3.12",
+        "python/umf_access/src/umf_access/types.py",
+        "python/umf_access/src/umf_access/values.py",
+        "python/umf_access/src/umf_access/codec_support.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/mypy-owned.log"
+    },
+    {
+      "name": "pyright-owned",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--pythonversion",
+        "3.12",
+        "python/umf_access/src/umf_access/types.py",
+        "python/umf_access/src/umf_access/values.py",
+        "python/umf_access/src/umf_access/codec_support.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/pyright-owned.log"
+    },
+    {
+      "name": "mypy-generated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--strict",
+        "--no-incremental",
+        "--cache-dir",
+        "/private/tmp/umf-btp004-generated-mypy-cache",
+        "--python-version",
+        "3.12",
+        "/private/tmp/umf-btp004-generated/shop"
+      ],
+      "exitCode": 1,
+      "log": "b-tp-004-local-runtime/mypy-generated.log"
+    },
+    {
+      "name": "pyright-generated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--pythonversion",
+        "3.12",
+        "/private/tmp/umf-btp004-generated/shop"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/pyright-generated.log"
+    },
+    {
+      "name": "boundary-pinned",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "scripts/check-access-python-boundaries.py"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/boundary-pinned.log"
+    },
+    {
+      "name": "core-oracle",
+      "command": [
+        "/opt/homebrew/bin/bun",
+        "test",
+        "tests/compilation/access-golden-vectors.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "b-tp-004-local-runtime/core-oracle.log"
+    }
+  ],
+  "sourceSha256": {
+    "python/umf_access/src/umf_access/types.py": "5f4fd979da93497e62e72adc0aea3efe98172eef601c15939ffe2a79b9b72961",
+    "python/umf_access/src/umf_access/values.py": "1ba42f18409d93526335cb266edfc65e7ec2e27c82b972cf4704bb89d14dd36a",
+    "python/umf_access/src/umf_access/codec_support.py": "bc656bb0b94c5e4da9733c7edb8d471525a3632e52c638a4522801f976c17681",
+    "python/umf_access/tests/test_values_red.py": "9b333cc2047b8b271eb2f20113705fe8ce0ab96daa81c1788d5663503c278e25",
+    "python/umf_access/tests/test_codec_support_red.py": "277b320b4525556bf2ef0257287f236cbef92f2c316262e85f2ce2ad52ee0897",
+    "python/umf_access/tests/test_temporal_carriers_red.py": "bf1af190eb7d681c0c4e9913f6ce1dc01bd7eb3ea6896e336fb7a2b169c9ca91",
+    "python/umf_access/tests/test_golden_vectors.py": "8c27221a7550b1643e54349349e48f9cac82c84ed145035e1809e25babc4d1e1",
+    "python/umf_access/tests/test_generated_models.py": "3ac87514e83b61ae283477811fb53c16753312bf273b8abba2e69da70fb36a2d",
+    "src/compilation/admission/access/index.ts": "60c0de0640269cce9aff1fcc3a430307b4f96905a43bce041411b6f52be8fac5",
+    "src/compilation/admission/index.ts": "644cde54ef9a5305d6fd8bd5eefb305d2af2f7370b7c22fe6c6d2e373a71558f",
+    "src/compilation/bundle/hash.ts": "d045c70bc6a0370ec42c24d440db2b0932a363c4aa38913eaa9ea76119200866",
+    "src/compilation/bundle/index.ts": "8efbf4e2e1a679dacd16a9e9b2cec5677d8435a973ee2718144f0d277ca93ecd",
+    "src/compilation/index.ts": "f594bf59b636a7a6c1fb23aa26ad1ec6d50db0ff1ed3a703cc272a4140f2d0b2",
+    "src/compilation/ir/index.ts": "6f35f7f60a3bfc05928f67b84ca61cda594a0c25bc0d9b07b846603e7366aecd",
+    "src/compilation/targets/python/index.ts": "83d276b3485dd5dd3760101588a1a81f5e870911e396ddeb9ae796ea1a24406a"
+  },
+  "unchangedDuringReplay": true,
+  "generated": {
+    "outcome": "candidate",
+    "inputDigest": "fc87e994450bcf4d923ad0d57c99f4899605a0504beadef3b62233e13e6241c1",
+    "profileStatus": "test fixture; unqualified",
+    "profileCodeSha256": "6c6d0730d4d5d10e7fa7f21ddd22537f8f655edd5d152b770be2e19785a5e3ae",
+    "codeDigestAlgorithm": "sha256 of sorted compact JSON map of compilation source path to sha256",
+    "files": {
+      "shop/__init__.py": "a2cc7cbecb6708d4926cebfd6eba26fcf727a915ab2977a7d28d023efd42dd4a",
+      "shop/_umf/manifest.json": "2c5e353141074a4e75681f4e99c81f328f603d605e2751682e7094ec84cf4ad6",
+      "shop/_umf/sources.json": "56e90148f9c226d413d1dacd96ac46db10ba3fc47ce3c740d4c7fa6b7305f44d",
+      "shop/codecs.py": "471f8f26c367eaad526b2069c46db272e110df2cfcca3b81331c2dbae9e53d2c",
+      "shop/fields.py": "dd5ca930e19f6c05e0f59fd534c424d94947b47350f2532c16fd532bd6fb4bd0",
+      "shop/keys.py": "5afdeff30827aaf807ea222dc3c13b455120c82b0200c9017c3dab7f52e16613",
+      "shop/models.py": "1d3ba83fe2fc4fbc5b47269dc2ce7a700f5338d45a69f8f4762c302fc8b1159a",
+      "shop/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  },
+  "acceptance": "OPEN; B-TP-003 closure, installed wheel replay and every STP081 AC still required"
+}

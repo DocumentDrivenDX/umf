@@ -86,7 +86,10 @@ whose index needs a host embedder and has none raises `ObligationUnmet`.
 
 `Page[R, K]` carries `items: tuple[R, ...]` and `next_after: Continuation[K] |
 None`. A `Continuation[K]` is an immutable runtime value holding the last Key of
-the page and the `TargetIdentity.digest()` of the target that read it. Passing it
+the page, the last row's complete ordered sort-value tuple (including the Key
+tiebreak), and the `TargetIdentity.digest()` of the target that read it. Sort
+values retain explicit null/missing states under CONTRACT-071 shared semantics
+S5–S7; the Key alone is insufficient for non-Key ordering. Passing it
 back as `after` resumes the keyset only on a target whose current identity digest
 is equal; otherwise the call raises `StaleContinuation` before any statement is
 sent. Passing `None` starts a new read. Continuations are not persisted by the

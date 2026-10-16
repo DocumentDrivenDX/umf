@@ -1,0 +1,62 @@
+{
+  "kind": "Full commerce generator request handoff to packaging",
+  "status": "request builder published; emitted output/checker acceptance pending fresh run",
+  "script": "docs/helix/04-build/evidence/typed-persistence/b-tp-004-full-commerce-request.ts",
+  "scriptSha256": "529ca39d090696ba255ea41cd41c94b32215bb8d2f22b7bc5743b4ac7cd99bb3",
+  "command": "bun docs/helix/04-build/evidence/typed-persistence/b-tp-004-full-commerce-request.ts <explicit-empty-output-directory>",
+  "sourceFixture": "fixtures/access/commerce/engine-only.json",
+  "records": [
+    "commerce.Customer",
+    "commerce.Order",
+    "commerce.OrderLine"
+  ],
+  "action": "commerce.shipOrder: required OrderKey entity, optional memo, exact Decimal amount output, NOT_READY failure",
+  "projections": {
+    "OrderSummary": [
+      "orderId",
+      "amount"
+    ],
+    "OrderIdentity": [
+      "orderId"
+    ],
+    "CustomerSummary": [
+      "customerId",
+      "name"
+    ]
+  },
+  "outputs": [
+    "commerce/* actual generator output including manifest",
+    "probe-input.json exact request, profile and generator source hash inventory",
+    "probe-result.json exact generated result and output hashes"
+  ],
+  "runtimePins": "Reads python/umf_access/compatibility-profile.json; no invented runtime ABI/dependencies. test.access fixture profile remains explicitly unqualified.",
+  "safety": "Explicit empty directory; no deletion or overwrite of existing content; output traversal checked; generator source before/after hash match required.",
+  "reuseTests": [
+    "python/umf_access/tests/test_values_red.py",
+    "python/umf_access/tests/test_codec_support_red.py",
+    "python/umf_access/tests/test_temporal_carriers_red.py",
+    "python/umf_access/tests/test_golden_vectors.py",
+    "python/umf_access/tests/test_generated_models.py",
+    "python/umf_access/tests/test_generated_actiontypes.py",
+    "python/umf_access/tests/test_generated_projections.py"
+  ],
+  "closure": "Selected27test full-commerce immutable replay passes all4commands; no broader slice/native/callsite qualification inferred.",
+  "canonicalPackage": "commerce",
+  "packageDecision": "Existing DSL/static corpus imports commerce; model/action type tests now import the same actual generated package. Historical shop snapshot results remain tied to their frozen older test bytes; no runtime alias shim.",
+  "generatedModelTestSha256": {
+    "test_generated_models.py": "37d2da8dfce2f8edc509c343e0e0e68c7cdea82e85f56f73949ad382a999e027",
+    "test_generated_actiontypes.py": "072b68e98e0ecf4219dc34f8c756234420deb4b9d7ec4d5ab0b4fee761d3230c"
+  },
+  "addressedTo": [
+    "coordinating parent",
+    "production packaging owner",
+    "DSL/static corpus owner"
+  ],
+  "packagingInstructions": "Run the published builder into an empty output directory; --package commerce and --manifest <root>/commerce/_umf/manifest.json for installed harness. Freeze all request/profile/result/module bytes and25model helper tests alongside runtime. No helper source rebuild required for currente4snapshot matches unless any runtime source changes.",
+  "preflight": "b-tp-004-full-commerce-preflight/preflight.json",
+  "preflightStatus": "pass",
+  "generationInputDigest": "7c14165f26833140b2a07a2dcff429e174fd3f895738dd444645542d6960200a",
+  "stageTwo": "Builder emits stage-one only; commerce.queries wrappers used by DSL static fixtures remain DSL/stage-two owner scope. Do not invent SQL or fallback stubs in this builder.",
+  "latestStableWheelReplay": "b-tp-004-final/latest-replay.json",
+  "latestStableWheelReplayStatus": "pass"
+}

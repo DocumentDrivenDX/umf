@@ -3,13 +3,19 @@
 ## Proposed typed data access SDK
 
 [Design and build handoff](04-build/typed-persistence-design.md) indexes draft
-FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-074 and nine
+FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-075 and nine
 story/design/test slices (080 to 088). A TypeScript generator emits typed Python
 models and action clients from UMF; a build step compiles typed query, search and
 bulk declarations through Weft into a checked-in catalog; the `umf_access`
 runtime executes catalog entries on raw tables or through Truss and Ashlar
 adapters. These specs do not claim implementation, native acceptance or consumer
-adoption.
+adoption. Current work is recorded in the
+[coordination evidence](04-build/evidence/typed-persistence/implementation-coordination.json).
+Scoped passing evidence exists for
+[boundary checker adoption](04-build/evidence/typed-persistence/b-tp-000/verification.json),
+the [bounded compatibility spike](04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/README.md)
+and the [typed-access temporal profile](04-build/evidence/typed-persistence/temporal-profile/verification.json).
+Production generator/runtime, backend and engine acceptance remain separate gates.
 
 **Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
 

@@ -41,6 +41,12 @@ acceptance evidence for any AC.
 | US-081-AC5 | `decode_checks_columns` | `decode_Order` refuses duplicate, missing and unexpected columns before building a mapping (asserted with a spy on mapping construction) and returns a validated `Order` for a valid row whose values equal the carriers' meaning. | `@covers US-081-AC5` |
 | US-081-AC6 | `static_and_isolated_import` | pyright and mypy at the pinned versions and configuration report no errors on `static/models/positive/` and exactly the expected rule and line for each file in `static/models/negative/`; a control file proves imports resolved. Generated source contains no `alias`, `validation_alias` or `serialization_alias`; with the `placedAt` to `placed_at` override, `OrderCreate(placed_at=...)` type-checks and encodes the key `placedAt`; every attribute docstring contains its source pointer. In a clean virtual environment with only the profile's pins, importing the package opens no file or socket beyond module loading and `sys.modules` contains none of the forbidden packages. | `@covers US-081-AC6` |
 
+The temporal golden-vector oracle is CONTRACT-075's typed-access profile,
+selected from authored CONTRACT-070 date/instant/local meaning. Generic core
+validators remain the oracle for their defined non-temporal value domains.
+Python instant carriers normalize to UTC before lossless token comparison; no
+truncation, offset inference or temporal Key support is introduced.
+
 ## Executable Proof
 
 Planned commands (not implemented), run inside the isolated profile environment:

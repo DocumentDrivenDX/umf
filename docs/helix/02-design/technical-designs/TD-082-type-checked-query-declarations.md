@@ -80,13 +80,19 @@ source pointer, so go-to-definition reaches the authored meaning. The test for
 the refactoring flow regenerates a package from edited fixtures and reruns both
 checkers on an unchanged corpus.
 
+`if_present` uses ordered overloads: a parameter without `MISSING` returns an
+invalid-filter marker rejected by the enclosing `filter`, while a declared
+`T | MISSING` (including nullable `T`) returns a predicate. The runtime confines
+any deliberate overload-overlap suppression to its own declaration; generated
+and developer code require none. Capture checks the declaration independently.
+
 ## Component Changes
 
 Planned new paths:
 
 - `python/umf_access/src/umf_access/dsl/` — `Column`, `Predicate`, `Param`, `Related`, `Query`, terminals, `if_present`, decorators.
 - `python/umf_access/src/umf_access/capture.py` — capture context, signature checks, determinism check, variant expansion.
-- `src/access/generate/emit-python.ts` — `fields.py` emission (columns classes, query roots, Update TypedDicts, docstrings).
+- `src/compilation/targets/python/index.ts` — `fields.py` emission (columns classes, query roots, Update TypedDicts, docstrings).
 - `tests/compilation/python/static/queries/{positive,negative,refactor}/` with `expected.json`.
 - `tests/compilation/python/static/checker-config/` — pinned `pyrightconfig.json` and `mypy.ini`.
 

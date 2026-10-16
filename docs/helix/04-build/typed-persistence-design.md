@@ -45,7 +45,7 @@ priorities or the TableSpec-first goal.
 | Direction | PRD FR-52 to FR-55 |
 | Features | [FEAT-028](../01-frame/features/FEAT-028-typed-model-generation.md) typed models, [FEAT-029](../01-frame/features/FEAT-029-precompiled-queries-and-search.md) queries and search, [FEAT-030](../01-frame/features/FEAT-030-typed-actions-and-native-targets.md) actions and native targets, [FEAT-031](../01-frame/features/FEAT-031-engine-target-adapters.md) engine adapters |
 | Decision | [ADR-004](../02-design/adr/ADR-004-typed-data-access-sdk.md) |
-| Contracts | [CONTRACT-067](../02-design/contracts/CONTRACT-067-access-sdk-generator.md) generator, [068](../02-design/contracts/CONTRACT-068-generated-python-types.md) Python types, [069](../02-design/contracts/CONTRACT-069-engine-target-adapters.md) engine adapters, [070](../02-design/contracts/CONTRACT-070-access-extension.md) `umf.access` extension, [071](../02-design/contracts/CONTRACT-071-query-command-catalog.md) query DSL and catalog, [072](../02-design/contracts/CONTRACT-072-runtime-targets.md) runtime and targets, [073](../02-design/contracts/CONTRACT-073-native-sql-action-profile.md) native SQL action profile, [074](../02-design/contracts/CONTRACT-074-search.md) search |
+| Contracts | [CONTRACT-067](../02-design/contracts/CONTRACT-067-access-sdk-generator.md) generator, [068](../02-design/contracts/CONTRACT-068-generated-python-types.md) Python types, [069](../02-design/contracts/CONTRACT-069-engine-target-adapters.md) engine adapters, [070](../02-design/contracts/CONTRACT-070-access-extension.md) `umf.access` extension, [071](../02-design/contracts/CONTRACT-071-query-command-catalog.md) query DSL and catalog, [072](../02-design/contracts/CONTRACT-072-runtime-targets.md) runtime and targets, [073](../02-design/contracts/CONTRACT-073-native-sql-action-profile.md) native SQL action profile, [074](../02-design/contracts/CONTRACT-074-search.md) search; [075](../02-design/contracts/CONTRACT-075-access-temporal-profile.md) typed-access temporal validation |
 | Solution designs | SD-028 to SD-031 |
 | Stories, designs, tests | US/TD/STP-080 package generation, 081 models and codecs, 082 type-checked queries, 083 precompiled reads, 084 search, 085 actions on raw tables, 086 bulk commands, 087 Truss adapter, 088 Ashlar adapter |
 | Evidence | [DSL typing spike](evidence/typed-persistence/dsl-typing-spike/README.md) |
@@ -136,11 +136,18 @@ for managed Unity Catalog or engine witnesses.
 
 ## Execution Contract
 
-The current request authorizes specifications and design spikes. It does not
-authorize implementation, dependencies in the repository, migrations or
-production operations. Implementation token estimate and spending ceiling are
-**unknown/not selected**; record a ceiling before B-TP-000. No tracker is
-selected.
+The owner authorizes implementation of the ordered slices, test-first, with
+closure only through their STP gates and fresh executable evidence. On
+2026-10-15 the owner explicitly waived the spending-ceiling prerequisite:
+“Right now I don't care just get it done.” No numeric ceiling is selected;
+this is an owner-directed waiver, not a measured budget or a claim of unlimited
+resources. Token estimate and aggregate dollar metering are unavailable. Include
+implementation, verification and review in execution records. No tracker is selected.
+
+The coordinating chat owns integration. Separate subproject chats prepare and
+implement independent work in parallel while preserving slice dependencies;
+dependent slices close only after their prerequisite gates pass. This authorization
+does not extend to production operations or migrations.
 
 ## Continuation Evidence
 
@@ -175,6 +182,11 @@ completion requires every claimed native and engine gate.
 
 ## Owner Decisions Recorded
 
+- On 2026-10-15, the owner selected a governed typed-access temporal validation
+  profile using authored `umf.access` instant/local distinctions as the Python
+  conformance oracle. Generic core temporal semantics remain undefined under
+  CONTRACT-049; temporal Key components still refuse under CONTRACT-070.
+
 - Weft is the only SQL lowering. UMF writes Weft requirements early and does not
   block its own work on them; no interim UMF lowering is built.
 - The 0.1 DSL surface is Weft tranche A. Generated types expose it; targets whose
@@ -194,7 +206,23 @@ completion requires every claimed native and engine gate.
    and binary values as well as decimal spelling: Truss currently refuses entity
    projections with timestamp or binary fields and returns exact tokens as text.
 2. Where `umf_access` is published from and its release cadence.
-3. Implementation spending ceiling.
+3. Implementation spending ceiling: owner waived the prerequisite on 2026-10-15; see Execution Contract.
+
+## B-TP-000 boundary adoption evidence
+
+The [current checker replay](evidence/typed-persistence/b-tp-000/stdlib-refresh/verification.json)
+records 17 passing tests/97 assertions, 7 TS files and 11 Python modules, strict
+focused TypeScript checking and actual local/pre-commit failure controls.
+Architecture now owns the populated module map and concrete check commands.
+CI is wired to the same commands; remote execution remains UNTESTED. The replay
+fixes Python 3.9 standard-library extension discovery and passes both Python
+3.9.6 and 3.14.8 math/struct positive and third-party negative controls.
+The [earlier scaffold replay](evidence/typed-persistence/b-tp-000/verification.json)
+is retained as historical evidence. This evidence qualifies
+the captured checker source, not SDK functionality or subsequent changed inputs.
+The full integration typecheck encountered concurrently authored red generator
+imports; diagnostics remain recorded rather than suppressed. Dependent slices
+still need their own compatibility, browser, native and STP acceptance gates.
 
 ## Review and Independent Opinion
 

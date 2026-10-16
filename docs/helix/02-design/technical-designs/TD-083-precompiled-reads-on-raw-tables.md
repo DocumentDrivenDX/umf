@@ -34,7 +34,8 @@ pinned Weft Python binding with that text, the pinned UMF documents and the
 target's binding source. The tool records Weft's response verbatim: statement
 text, parameter carriers, ordered output descriptors, host obligations and the
 structural digest. It adds the build-side checks Weft does not own: every read is
-bounded, ordering is the complete unique Key ascending, and page and limit sizes
+bounded, ordering has explicit direction/null placement and a complete-Key
+tiebreak under CONTRACT-071 S5–S7, and page and limit sizes
 are at most 1,000. Any blocked response or failed check stops the build before
 anything is written. Output goes through the same staging, swap and drift-check
 writer as TD-080, limited to the stage-two reserved paths and their catalog manifest.
@@ -64,10 +65,11 @@ metadata and table UUID) and compares them with the binding and CONTRACT-070
 ColumnSets. Lakebase targets carry a major version plus an explicit set of
 qualified minors.
 
-**Pages.** `.page(size, after)` is Weft's `entity-page` profile: a keyset page on
-the complete unique Key. The adapter streams at most `size` rows; the runtime
-builds `Page[R, K]` whose `next_after` is a `Continuation[K]` holding the last Key
-and the target identity digest (CONTRACT-072). A continuation from a target with
+**Pages.** `.page(size, after)` uses the target's admitted Weft page profile
+for the complete declared ordering, including its Key tiebreak. Forms not yet
+available from Weft refuse with `WEFT_BLOCKED` (WR-A6). The adapter streams at most `size` rows; the runtime
+builds `Page[R, K]` whose `next_after` is a `Continuation[K]` holding the last Key, every ordered sort value
+from the last row, and the target identity digest (CONTRACT-072). A continuation from a target with
 another identity raises `StaleContinuation` before any statement.
 
 ## Component Changes

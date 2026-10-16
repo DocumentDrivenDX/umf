@@ -12171,7 +12171,11 @@ which replaces the first typed-persistence draft. That scoped plan allocates
 B-TP-000 to B-TP-015 to US/TD/STP-080 to 088 and lists cross-repository
 dependencies on Weft, Truss and Ashlar.
 
-The owner requested specifications, review and design spikes. This does not
-authorize implementation or reorder TableSpec-first integration. Exact dependency
-pins, owner decisions and an implementation spending ceiling remain readiness
-gates in the focused plan.
+The owner now authorizes implementation under the focused plan's Execution
+Contract and explicitly waived the spending-ceiling prerequisite on 2026-10-15.
+The coordinating chat integrates parallel subprojects while retaining ordered
+STP closure, exact dependency pins and fresh version/subset-qualified evidence.
+[Current coordination evidence](evidence/typed-persistence/implementation-coordination.json)
+separates passing checkpoints from open slice and native/consumer gates. This
+scope does not reorder TableSpec-first integration or authorize production
+operations or migrations.

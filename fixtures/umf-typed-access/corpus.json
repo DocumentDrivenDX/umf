@@ -1,0 +1,1786 @@
+{
+  "format": "umf-typed-access-contribution/0.1",
+  "canonicalOwner": "Weft",
+  "backendExecution": "UNTESTED",
+  "datasets": {
+    "rows": [
+      {
+        "id": "r1",
+        "a": true,
+        "b": true,
+        "n": "1",
+        "amount": "1.2",
+        "label": "A",
+        "day": "2024-02-29",
+        "instant": "2024-01-01T00:00:00.000001Z",
+        "local": "2024-01-01T00:00:00.000001",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r2",
+        "a": true,
+        "b": false,
+        "n": "2",
+        "amount": "1.20",
+        "label": "a",
+        "day": "2024-03-01",
+        "instant": "2023-12-31T19:00:00.000001-05:00",
+        "local": "2024-01-01T00:00:00.000002",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r3",
+        "a": false,
+        "b": true,
+        "n": "2",
+        "amount": "1.200",
+        "label": "é",
+        "day": "2024-03-02",
+        "instant": "2024-01-01T01:00:00.000001+01:00",
+        "local": "2024-01-02T00:00:00",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r4",
+        "a": false,
+        "b": false,
+        "n": "-1",
+        "amount": "1.21",
+        "label": "é",
+        "day": "2024-02-28",
+        "instant": "2024-01-01T00:00:00.000002Z",
+        "local": "2023-12-31T23:59:59.999999",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r5",
+        "a": null,
+        "b": null,
+        "n": null,
+        "amount": null,
+        "label": null,
+        "day": null,
+        "instant": null,
+        "local": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r6",
+        "a": true,
+        "b": null,
+        "n": "2",
+        "amount": "0.10",
+        "label": "雪",
+        "day": "2024-03-03",
+        "instant": "2023-12-31T23:59:59.999999Z",
+        "local": "2024-01-03T00:00:00",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r7",
+        "a": null,
+        "b": false,
+        "n": "2",
+        "amount": "9999999999.99",
+        "label": "",
+        "day": "2024-03-04",
+        "instant": "2024-01-02T00:00:00Z",
+        "local": "2024-01-04T00:00:00",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r8",
+        "a": false,
+        "b": null,
+        "n": null,
+        "amount": "-0.10",
+        "label": "😀",
+        "day": "2024-03-05",
+        "instant": "2024-01-03T00:00:00Z",
+        "local": "2024-01-05T00:00:00",
+        "requiredValue": "fixed"
+      }
+    ],
+    "present": [
+      {
+        "id": "r1",
+        "a": true,
+        "b": true,
+        "n": "1",
+        "amount": "1.2",
+        "label": "A",
+        "day": "2024-02-29",
+        "instant": "2024-01-01T00:00:00.000001Z",
+        "local": "2024-01-01T00:00:00.000001",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r2",
+        "a": true,
+        "b": false,
+        "n": "2",
+        "amount": "1.20",
+        "label": "a",
+        "day": "2024-03-01",
+        "instant": "2023-12-31T19:00:00.000001-05:00",
+        "local": "2024-01-01T00:00:00.000002",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r3",
+        "a": false,
+        "b": true,
+        "n": "2",
+        "amount": "1.200",
+        "label": "é",
+        "day": "2024-03-02",
+        "instant": "2024-01-01T01:00:00.000001+01:00",
+        "local": "2024-01-02T00:00:00",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r4",
+        "a": false,
+        "b": false,
+        "n": "-1",
+        "amount": "1.21",
+        "label": "é",
+        "day": "2024-02-28",
+        "instant": "2024-01-01T00:00:00.000002Z",
+        "local": "2023-12-31T23:59:59.999999",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r6",
+        "a": true,
+        "b": null,
+        "n": "2",
+        "amount": "0.10",
+        "label": "雪",
+        "day": "2024-03-03",
+        "instant": "2023-12-31T23:59:59.999999Z",
+        "local": "2024-01-03T00:00:00",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "r7",
+        "a": null,
+        "b": false,
+        "n": "2",
+        "amount": "9999999999.99",
+        "label": "",
+        "day": "2024-03-04",
+        "instant": "2024-01-02T00:00:00Z",
+        "local": "2024-01-04T00:00:00",
+        "requiredValue": "fixed"
+      }
+    ],
+    "truth": [
+      {
+        "id": "TT",
+        "a": true,
+        "b": true,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "TF",
+        "a": true,
+        "b": false,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "TN",
+        "a": true,
+        "b": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "TM",
+        "a": true,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "FT",
+        "a": false,
+        "b": true,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "FF",
+        "a": false,
+        "b": false,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "FN",
+        "a": false,
+        "b": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "FM",
+        "a": false,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "NT",
+        "a": null,
+        "b": true,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "NF",
+        "a": null,
+        "b": false,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "NN",
+        "a": null,
+        "b": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "NM",
+        "a": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "MT",
+        "b": true,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "MF",
+        "b": false,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "MN",
+        "b": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "MM",
+        "requiredValue": "fixed"
+      }
+    ],
+    "missing": [
+      {
+        "id": "missing",
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "null",
+        "n": null,
+        "requiredValue": "fixed"
+      },
+      {
+        "id": "value",
+        "n": "2",
+        "requiredValue": "fixed"
+      }
+    ]
+  },
+  "ambiguities": [
+    {
+      "id": "EMPTY_NULL_PRECEDENCE",
+      "detail": "S8 says null/missing gives UNKNOWN and empty list gives FALSE; resolve intersection before expected values are assigned. Present empty IN/NOT IN are covered."
+    },
+    {
+      "id": "EMPTY_LIST_SYNTAX",
+      "detail": "Proposed grammar cannot spell IN (); empty list parameter is used. Compiler spelling awaits Weft."
+    },
+    {
+      "id": "CANONICAL_DECIMAL",
+      "detail": "WR-I4 canonical carrier form is unspecified; source 1.2/1.20/1.200 equality is fixed but no parameter canonical spelling is invented."
+    },
+    {
+      "id": "PAGE_PROFILE",
+      "detail": "Entity page API and related-entity page grammar/profile and binding are not supplied; mixed-keyset is logical request plus external continuation, not claimed compile input."
+    },
+    {
+      "id": "TRUSS_INSTANT",
+      "detail": "Offset equality is required if accepted; refuse specifically if exact lowering unavailable. Current Truss support is UNTESTED."
+    },
+    {
+      "id": "BULK_NULL_DOMAIN",
+      "detail": "CONTRACT-902 wider/null SET is pending U-3; bulk expected refusals are requirements, not observed backend behavior."
+    },
+    {
+      "id": "CORE_TEMPORAL_ADMISSION",
+      "detail": "Existing validateCoreFieldValue/validateCoreDatasetValues refuse present non-null date/timestamp value semantics (CORE_SCHEMA_PROPERTIES). Shapes admit but datasets do not fully admit; retain refusal and separately check finite semantic witnesses."
+    }
+  ],
+  "cases": [
+    {
+      "id": "truth-and",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "truth",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE (i.a = TRUE) AND (i.b = TRUE) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "truth",
+        "operator": "AND"
+      },
+      "expected": {
+        "truthById": {
+          "TT": "T",
+          "TF": "F",
+          "TN": "U",
+          "TM": "U",
+          "FT": "F",
+          "FF": "F",
+          "FN": "F",
+          "FM": "F",
+          "NT": "U",
+          "NF": "F",
+          "NN": "U",
+          "NM": "U",
+          "MT": "U",
+          "MF": "F",
+          "MN": "U",
+          "MM": "U"
+        },
+        "orderedIds": [
+          "TT"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "WR-A3"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "truth-or",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "truth",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE (i.a = TRUE) OR (i.b = TRUE) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "truth",
+        "operator": "OR"
+      },
+      "expected": {
+        "truthById": {
+          "TT": "T",
+          "TF": "T",
+          "TN": "T",
+          "TM": "T",
+          "FT": "T",
+          "FF": "F",
+          "FN": "U",
+          "FM": "U",
+          "NT": "T",
+          "NF": "U",
+          "NN": "U",
+          "NM": "U",
+          "MT": "T",
+          "MF": "U",
+          "MN": "U",
+          "MM": "U"
+        },
+        "orderedIds": [
+          "FT",
+          "MT",
+          "NT",
+          "TF",
+          "TM",
+          "TN",
+          "TT"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "WR-A3"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "truth-not",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "truth",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE NOT (i.a = TRUE) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "truth",
+        "operator": "NOT"
+      },
+      "expected": {
+        "truthById": {
+          "TT": "F",
+          "TF": "F",
+          "TN": "F",
+          "TM": "F",
+          "FT": "T",
+          "FF": "T",
+          "FN": "T",
+          "FM": "T",
+          "NT": "U",
+          "NF": "U",
+          "NN": "U",
+          "NM": "U",
+          "MT": "U",
+          "MF": "U",
+          "MN": "U",
+          "MM": "U"
+        },
+        "orderedIds": [
+          "FF",
+          "FM",
+          "FN",
+          "FT"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "WR-A3"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "not-equal",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n <> 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n <> 2"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r4"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "S9",
+        "WR-A1"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "not-in",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n NOT IN (:values) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n NOT IN (:values)"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r4"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "S8",
+        "WR-A4"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "values": {
+          "carrier": "list[integer]",
+          "value": [
+            "2",
+            "2"
+          ]
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "not-between",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n NOT BETWEEN 1 AND 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n NOT BETWEEN 1 AND 2"
+      },
+      "expected": {
+        "orderedIds": [
+          "r4"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "S9",
+        "WR-A1"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "empty-in",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "present",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IN (:values) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IN (:values)"
+      },
+      "expected": {
+        "orderedIds": []
+      },
+      "coverage": [
+        "S2",
+        "S8",
+        "WR-A4"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "values": {
+          "carrier": "list[integer]",
+          "value": []
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed. Empty list is bound; IN () is not in proposed grammar."
+      }
+    },
+    {
+      "id": "empty-not-in",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "present",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n NOT IN (:values) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n NOT IN (:values)"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3",
+          "r4",
+          "r6",
+          "r7"
+        ]
+      },
+      "coverage": [
+        "S2",
+        "S8",
+        "WR-A4"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "values": {
+          "carrier": "list[integer]",
+          "value": []
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed. Empty list is bound; IN () is not in proposed grammar."
+      }
+    },
+    {
+      "id": "comparison-8",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS NULL ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IS NULL"
+      },
+      "expected": {
+        "orderedIds": [
+          "r5",
+          "r8"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-9",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS NOT NULL ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IS NOT NULL"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3",
+          "r4",
+          "r6",
+          "r7"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-10",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n < 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n < 2"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r4"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-11",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n <= 1 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n <= 1"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r4"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-12",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n >= 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n >= 2"
+      },
+      "expected": {
+        "orderedIds": [
+          "r2",
+          "r3",
+          "r6",
+          "r7"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-13",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n BETWEEN 1 AND 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n BETWEEN 1 AND 2"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3",
+          "r6",
+          "r7"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-14",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.amount = 1.20 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "amount = 1.20"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-15",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.label < 'é' ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "label < 'é'"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-date",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.day >= :cutoff ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "day >= :cutoff"
+      },
+      "expected": {
+        "orderedIds": [
+          "r2",
+          "r3",
+          "r6",
+          "r7",
+          "r8"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "WR-A8"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "cutoff": {
+          "carrier": "date",
+          "value": "2024-03-01"
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-instant-offset",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.instant = :cutoff ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "instant = :cutoff"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "WR-A8"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "cutoff": {
+          "carrier": "instant",
+          "value": "1704067200000001"
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "comparison-local-time",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.local > :cutoff ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "local > :cutoff"
+      },
+      "expected": {
+        "orderedIds": [
+          "r2",
+          "r3",
+          "r6",
+          "r7",
+          "r8"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "WR-A8"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "cutoff": {
+          "carrier": "local-timestamp",
+          "value": "2024-01-01T00:00:00.000001"
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "states-19",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS NULL ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IS NULL"
+      },
+      "expected": {
+        "orderedIds": [
+          "missing",
+          "null"
+        ]
+      },
+      "coverage": [
+        "S1",
+        "S2",
+        "S3",
+        "WR-A2"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "states-20",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS NOT NULL ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IS NOT NULL"
+      },
+      "expected": {
+        "orderedIds": [
+          "value"
+        ]
+      },
+      "coverage": [
+        "S1",
+        "S2",
+        "S3",
+        "WR-A2"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "states-21",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS MISSING ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IS MISSING"
+      },
+      "expected": {
+        "orderedIds": [
+          "missing"
+        ]
+      },
+      "coverage": [
+        "S1",
+        "S2",
+        "S3",
+        "WR-A2"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "states-22",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS NOT MISSING ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n IS NOT MISSING"
+      },
+      "expected": {
+        "orderedIds": [
+          "null",
+          "value"
+        ]
+      },
+      "coverage": [
+        "S1",
+        "S2",
+        "S3",
+        "WR-A2"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "states-23",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE NOT (i.n = 2) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "NOT (n = 2)"
+      },
+      "expected": {
+        "orderedIds": []
+      },
+      "coverage": [
+        "S1",
+        "S2",
+        "S3",
+        "WR-A2"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "desc-nulls-last",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i ORDER BY i.n DESC NULLS LAST, i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "order",
+        "keys": [
+          {
+            "field": "n",
+            "direction": "DESC",
+            "nulls": "LAST"
+          },
+          {
+            "field": "id",
+            "direction": "ASC",
+            "nulls": "LAST"
+          }
+        ]
+      },
+      "expected": {
+        "orderedIds": [
+          "r2",
+          "r3",
+          "r6",
+          "r7",
+          "r1",
+          "r4",
+          "r5",
+          "r8"
+        ]
+      },
+      "coverage": [
+        "S5",
+        "S6",
+        "WR-A5"
+      ],
+      "backendExecution": "UNTESTED",
+      "requiredTargets": [
+        "postgresql",
+        "spark-delta"
+      ],
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "desc-nulls-first",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i ORDER BY i.n DESC NULLS FIRST, i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "order",
+        "keys": [
+          {
+            "field": "n",
+            "direction": "DESC",
+            "nulls": "FIRST"
+          },
+          {
+            "field": "id",
+            "direction": "ASC",
+            "nulls": "LAST"
+          }
+        ]
+      },
+      "expected": {
+        "orderedIds": [
+          "r5",
+          "r8",
+          "r2",
+          "r3",
+          "r6",
+          "r7",
+          "r1",
+          "r4"
+        ]
+      },
+      "coverage": [
+        "S5",
+        "S6",
+        "WR-A5"
+      ],
+      "backendExecution": "UNTESTED",
+      "requiredTargets": [
+        "postgresql",
+        "spark-delta"
+      ],
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "unicode-order",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i ORDER BY i.label ASC NULLS LAST, i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "order",
+        "keys": [
+          {
+            "field": "label",
+            "direction": "ASC",
+            "nulls": "LAST"
+          },
+          {
+            "field": "id",
+            "direction": "ASC",
+            "nulls": "LAST"
+          }
+        ]
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3",
+          "r4",
+          "r6",
+          "r7",
+          "r8",
+          "r5"
+        ]
+      },
+      "coverage": [
+        "S4",
+        "S5",
+        "WR-A5"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "mixed-keyset",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i ORDER BY i.n DESC NULLS LAST, i.label ASC NULLS FIRST, i.id ASC NULLS LAST LIMIT 2",
+      "semantics": {
+        "kind": "page",
+        "size": 2,
+        "keys": [
+          {
+            "field": "n",
+            "direction": "DESC",
+            "nulls": "LAST"
+          },
+          {
+            "field": "label",
+            "direction": "ASC",
+            "nulls": "FIRST"
+          },
+          {
+            "field": "id",
+            "direction": "ASC",
+            "nulls": "LAST"
+          }
+        ]
+      },
+      "expected": {
+        "orderedIds": [
+          "r2",
+          "r3",
+          "r6",
+          "r7",
+          "r1",
+          "r4",
+          "r5",
+          "r8"
+        ],
+        "pages": [
+          [
+            "r2",
+            "r3"
+          ],
+          [
+            "r6",
+            "r7"
+          ],
+          [
+            "r1",
+            "r4"
+          ],
+          [
+            "r5",
+            "r8"
+          ]
+        ],
+        "continuations": [
+          [
+            "2",
+            "é",
+            "r3"
+          ],
+          [
+            "2",
+            "",
+            "r7"
+          ],
+          [
+            "-1",
+            "é",
+            "r4"
+          ],
+          [
+            null,
+            "😀",
+            "r8"
+          ]
+        ]
+      },
+      "coverage": [
+        "S5",
+        "S6",
+        "S7",
+        "WR-A6"
+      ],
+      "backendExecution": "UNTESTED",
+      "continuationTransport": "typed tuple outside SQL; final tuple is last-row witness, not assertion of hasMore",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "missing-relational",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n IS MISSING ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "refusal"
+      },
+      "expected": {
+        "refusal": {
+          "reason": "IS MISSING is property-store only",
+          "code": null
+        }
+      },
+      "coverage": [
+        "S3"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "instant-local",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.instant = i.local ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "refusal"
+      },
+      "expected": {
+        "refusal": {
+          "reason": "instant/local comparison refuses",
+          "code": null
+        }
+      },
+      "coverage": [
+        "S4"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "set-null-required",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "UPDATE fixture.Item AS i SET i.requiredValue = NULL WHERE i.n >= 1",
+      "semantics": {
+        "kind": "refusal"
+      },
+      "expected": {
+        "refusal": {
+          "reason": "non-nullable mutable Field refuses null",
+          "code": null
+        },
+        "unchangedDataset": true
+      },
+      "coverage": [
+        "WR-A9"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "bulk-over-bound",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "UPDATE fixture.Item AS i SET i.label = NULL WHERE i.n >= 1",
+      "semantics": {
+        "kind": "refusal"
+      },
+      "expected": {
+        "refusal": {
+          "reason": "selection of five exceeds maxItems=2; no effect",
+          "code": null
+        },
+        "unchangedDataset": true
+      },
+      "coverage": [
+        "WR-A9"
+      ],
+      "backendExecution": "UNTESTED",
+      "maxItems": 2,
+      "expectedSelectedIds": [
+        "r1",
+        "r2",
+        "r3",
+        "r6",
+        "r7"
+      ],
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "truss-instant-offset",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.instant = :cutoff ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "instant = :cutoff"
+      },
+      "expected": {
+        "orderedIds": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "coverage": [
+        "WR-A1",
+        "WR-A8"
+      ],
+      "backendExecution": "UNTESTED",
+      "parameters": {
+        "cutoff": {
+          "carrier": "instant",
+          "value": "1704067200000001"
+        }
+      },
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      },
+      "requiredTargets": [
+        "truss.postgresql.runtime"
+      ],
+      "conditionalRefusal": {
+        "reason": "exact UTC comparison over author-offset text unavailable",
+        "code": null
+      }
+    },
+    {
+      "id": "missing-not-equal",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n <> 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n <> 2"
+      },
+      "expected": {
+        "orderedIds": []
+      },
+      "coverage": [
+        "S2",
+        "S8",
+        "S9"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "missing-not-in",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n NOT IN (:values) ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n NOT IN (:values)"
+      },
+      "expected": {
+        "orderedIds": []
+      },
+      "coverage": [
+        "S2",
+        "S8",
+        "S9"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      },
+      "parameters": {
+        "values": {
+          "carrier": "list[integer]",
+          "value": [
+            "2",
+            "2"
+          ]
+        }
+      }
+    },
+    {
+      "id": "missing-not-between",
+      "model": "propertyStore",
+      "binding": null,
+      "dataset": "missing",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n NOT BETWEEN 1 AND 2 ORDER BY i.id ASC NULLS LAST LIMIT 1000",
+      "semantics": {
+        "kind": "filter",
+        "predicate": "n NOT BETWEEN 1 AND 2"
+      },
+      "expected": {
+        "orderedIds": []
+      },
+      "coverage": [
+        "S2",
+        "S8",
+        "S9"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "count",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT COUNT(*) AS total FROM fixture.Item AS i WHERE i.n >= 2",
+      "semantics": {
+        "kind": "count",
+        "predicate": "n >= 2"
+      },
+      "expected": {
+        "count": 4
+      },
+      "coverage": [
+        "WR-A7"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    },
+    {
+      "id": "exists",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i WHERE i.n >= 2 LIMIT 1",
+      "semantics": {
+        "kind": "exists",
+        "predicate": "n >= 2"
+      },
+      "expected": {
+        "exists": true
+      },
+      "coverage": [
+        "WR-A7"
+      ],
+      "backendExecution": "UNTESTED",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      },
+      "resultAdaptation": "LIMIT 1 probe maps nonempty result to true, no row identity asserted"
+    },
+    {
+      "id": "mixed-keyset-null-continuation",
+      "model": "relational",
+      "binding": "binding",
+      "dataset": "rows",
+      "logicalSql": "SELECT i.id FROM fixture.Item AS i ORDER BY i.n DESC NULLS LAST, i.label ASC NULLS FIRST, i.id ASC NULLS LAST LIMIT 1",
+      "semantics": {
+        "kind": "page",
+        "size": 1,
+        "keys": [
+          {
+            "field": "n",
+            "direction": "DESC",
+            "nulls": "LAST"
+          },
+          {
+            "field": "label",
+            "direction": "ASC",
+            "nulls": "FIRST"
+          },
+          {
+            "field": "id",
+            "direction": "ASC",
+            "nulls": "LAST"
+          }
+        ]
+      },
+      "expected": {
+        "orderedIds": [
+          "r2",
+          "r3",
+          "r6",
+          "r7",
+          "r1",
+          "r4",
+          "r5",
+          "r8"
+        ],
+        "pages": [
+          [
+            "r2"
+          ],
+          [
+            "r3"
+          ],
+          [
+            "r6"
+          ],
+          [
+            "r7"
+          ],
+          [
+            "r1"
+          ],
+          [
+            "r4"
+          ],
+          [
+            "r5"
+          ],
+          [
+            "r8"
+          ]
+        ],
+        "continuations": [
+          [
+            "2",
+            "a",
+            "r2"
+          ],
+          [
+            "2",
+            "é",
+            "r3"
+          ],
+          [
+            "2",
+            "雪",
+            "r6"
+          ],
+          [
+            "2",
+            "",
+            "r7"
+          ],
+          [
+            "1",
+            "A",
+            "r1"
+          ],
+          [
+            "-1",
+            "é",
+            "r4"
+          ],
+          [
+            null,
+            null,
+            "r5"
+          ],
+          [
+            null,
+            "😀",
+            "r8"
+          ]
+        ]
+      },
+      "coverage": [
+        "S5",
+        "S6",
+        "S7",
+        "WR-A6"
+      ],
+      "backendExecution": "UNTESTED",
+      "continuationTransport": "typed tuple outside SQL; final tuple is last-row witness, not assertion of hasMore",
+      "syntax": {
+        "status": "PROPOSED_NOT_ACCEPTED",
+        "baseline": "weft-sql/0.2.0",
+        "proposal": "UMF weft-requirements-typed-access.md proposed 0.3 delta",
+        "note": "Qualified alias columns follow baseline naming. Tranche A forms, optional/temporal fields and NULLS placement exceed baseline; no parser acceptance claimed."
+      }
+    }
+  ],
+  "syntaxProvenance": {
+    "repository": "/Users/erik/Projects/weft",
+    "head": "94b2de5e303fe53f0c9432458119b6fe1eef187c",
+    "files": [
+      {
+        "path": "docs/helix/02-design/contracts/weft-sql-v0.2.ebnf",
+        "sha256": "20a33eda431e7cc7c1f0be610ce05e0f54610b67d4d9412e888db6de0acb53df"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md",
+        "sha256": "3dc1708a414f6693442d413380f3a2b67f63e7c368fb1828481577d6b7d47015"
+      }
+    ],
+    "acceptedBaseline": "source namespace.record [AS alias]; column alias.field; parameter :name; = and > joined AND; ORDER BY qualified columns ASC; LIMIT 1..1000; no bare columns. Syntax alone is not profile acceptance.",
+    "pending": "OR, NOT, extra comparisons, null/missing, membership, temporal, mixed direction, NULLS placement and UPDATE forms in this contribution are proposed, not accepted baseline."
+  }
+}

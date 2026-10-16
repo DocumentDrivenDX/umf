@@ -86,7 +86,7 @@ are passed to the target at construction as a mapping from index ID
 
 Planned new paths:
 
-- `src/access/generate/emit-python.ts` — `s` namespaces and `Vector` typing (shared emitter).
+- `src/compilation/targets/python/index.ts` — `s` namespaces and `Vector` typing (shared emitter).
 - `python/umf_access/src/umf_access/dsl/search.py` — `VectorIndex`, `KeywordIndex`, `RankedQuery`, `hybrid`, `rrf`, `target_defined`, `Scored`, `Score`.
 - `python/umf_access/src/umf_access/build/search_capabilities.py` — fixed per-target capability table and checks.
 - `python/umf_access/src/umf_access/runtime/search.py` — embedder check, fusion, hydration, stale counting.

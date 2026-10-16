@@ -99,8 +99,15 @@ is an engine obligation recorded in the manifest.
 | Other floating point | not supported in 0.1; selecting such a Field refuses with `LOSS` |
 
 Generated validators MUST agree with UMF's `validateCoreFieldValue` and
-`validateCoreRecordValues` on a shared golden-vector corpus. Where they cannot,
-the disposition is not `exact` and strict generation refuses.
+`validateCoreRecordValues` on a shared golden-vector corpus for the value domains
+those APIs define. Dates and timestamps instead use the explicitly selected
+[CONTRACT-075 typed-access temporal profile](CONTRACT-075-access-temporal-profile.md):
+date Fields select `date`, and timestamp Fields select the authored CONTRACT-070
+`instant` or `local` kind. Python carriers are serialized losslessly to the
+profile's tokens for oracle comparison; instant carriers normalize to UTC before
+serialization. This profile does not change generic core temporal evaluation or
+permit temporal Key components. Where validators cannot agree with the selected
+oracle, the disposition is not `exact` and strict generation refuses.
 
 ### Keys
 

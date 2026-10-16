@@ -625,7 +625,7 @@ Unknown third-party redistribution rights block full source export.
 
 [SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.
 
-## Proposed typed data access SDK and Module Boundaries
+## Proposed typed data access SDK
 
 FR-52 to FR-55 and FEAT-028 to FEAT-031 add a schema-first Python data access SDK.
 [ADR-004](adr/ADR-004-typed-data-access-sdk.md) records the decision. Stage one is
@@ -634,22 +634,60 @@ runtime are a new Python distribution, `umf_access`, in this repository. Weft ow
 all SQL lowering; Truss and Ashlar own their adapters.
 [Design entry point](../04-build/typed-persistence-design.md).
 
-| Planned module | Owned responsibility | Allowed dependencies | Forbidden dependencies |
-| --- | --- | --- | --- |
-| `src/compilation/admission/` | Request admission, `umf.access` validation, closure, assertion census | Public core, validation, registry and actions APIs | Emitters, host I/O |
-| `src/compilation/ir/` | Immutable resolved nodes, provenance, obligations | Core value types | Python renderers, host globals |
-| `src/compilation/targets/python/` | Models, keys, `c`/`s` namespaces, codecs, action clients | IR public boundary, literal renderer | SQL text, execution code |
-| `src/compilation/bundle/` | Manifest, source archive, hashing | IR and target results, portable SHA-256 | Filesystem |
-| `src/compilation/index.ts` | Public facade and trusted profile composition | Public boundaries above | Artifact-selected loading |
-| `scripts/umf-access-generate.ts` | Host write, hand-edit refusal, drift check | Public facade, host APIs | Semantic reimplementation |
-| `python/umf_access/dsl/` | Column, Param, Predicate, Query, RankedQuery, capture | Standard library, Pydantic | Drivers, Weft |
-| `python/umf_access/build/` | Catalog build through Weft | `dsl`, pinned Weft binding | Drivers, network |
-| `python/umf_access/runtime/` | Protocols, outcomes, carriers, catalog execution | `dsl` types | Weft (except bulk plan instantiation), SQL assembly |
-| `python/umf_access/targets/` | Raw-table adapters (`postgresql`, `lakebase`, `unity-catalog`, `spark-delta`) | `runtime`, optional driver extras | Generated packages by name, Truss or Ashlar internals |
-| `python/umf_access/conformance/` | Shared adapter conformance suite | `runtime` | Engine internals |
+## Module Boundaries
 
-The planned boundary commands are `bun scripts/check-compilation-boundaries.ts`
-and an equivalent import check for `python/umf_access/`. Both reject forbidden
-imports, cycles, private reach-through and host globals, and run locally and in
-CI. Semantic invariants (no runtime SQL assembly, no table handles in generated
-code) need review and behavioral tests as well.
+**Source Applicability**: source; the stage-one compiler and Python access SDK
+contain handwritten source. This is the bounded adoption scope selected in
+Concerns; it does not baseline unrelated legacy modules.
+
+Python paths below are relative to `python/umf_access/src/umf_access/`.
+The checker also admits the earlier direct `python/umf_access/` layout, rejects
+duplicate module identities across layouts and refuses empty scans. Only the
+distribution's tests, caches, virtual environment and output directories are
+excluded; unknown source-module owners refuse.
+
+| Module | Responsibility / Owned Types | Public API | Allowed Dependencies | Forbidden Dependencies |
+| --- | --- | --- | --- | --- |
+| `src/compilation/admission/` | Admission, access validation, closure, census | `admission/index.ts`; CONTRACT-067/070 | Own internals, IR public barrel, `src/index.ts` semantic APIs | Emitters, bundle, host I/O |
+| `src/compilation/ir/` | Immutable resolved nodes, provenance, obligations | `ir/index.ts`; private compiler representation | Own internals; type-only imports from `src/index.ts` | External values, renderers, host globals |
+| `src/compilation/targets/python/` | Python source emission | `targets/python/index.ts`; CONTRACT-068 output | Own literal renderer, IR public barrel | SQL lowering, execution, host I/O |
+| `src/compilation/bundle/` | Manifest, source archive, portable hashing | `bundle/index.ts`; CONTRACT-067 results | Own internals, IR and Python target public barrels | Filesystem, external host dependencies |
+| `src/compilation/index.ts` | Generator facade and trusted composition | `generateAccessPackage`; CONTRACT-067 | Public compilation barrels, public UMF APIs | Artifact-selected loading, host I/O |
+| `scripts/umf-access-generate.ts` | Host writer and drift check | `generate`/`check`; CONTRACT-067 | Generator facade and host APIs | Semantic reimplementation; reviewed host boundary |
+| `types.py`, `values.py`, `codec_support.py` | Shared carriers, strict values, codec revalidation; foundation owner | Named top-level modules; CONTRACT-068/072 | Other foundation modules, standard library, Pydantic | DSL, capture, drivers, Weft, host I/O |
+| `dsl/`, `capture.py` | Typed expressions and in-memory declaration capture; DSL owner | `dsl/__init__.py`, `capture.py`; CONTRACT-071 | DSL internals, foundation, pure standard library, Pydantic | Drivers, Weft, network/filesystem, dynamic loading |
+| `build/` | Catalog compilation | `build/__init__.py`; CONTRACT-071 | DSL, runtime, foundation public APIs; pinned Weft; standard-library file writing | Drivers, network |
+| `runtime/`, `protocols.py`, `pages.py`, `adoption.py` | Protocols, outcomes, catalog execution and continuations; runtime owner | `runtime/__init__.py`, named helpers; CONTRACT-072 | Own internals, DSL and foundation public APIs | Host I/O, SQL assembly; Weft except exact `runtime/bulk.py` |
+| `runtime/bulk.py` | Instantiate and verify bulk plans | Runtime-owned bulk boundary; CONTRACT-071/072 | Runtime dependencies plus pinned Weft only here | Read/action Weft use; competing SQL lowering |
+| `targets/` | Raw-table integration and native execution | `targets/__init__.py`; CONTRACT-072/073 | Runtime, DSL, foundation public APIs; standard library, optional psycopg/Databricks/PySpark drivers | Generated packages by name; engine internals |
+| `conformance/` | Shared adapter conformance | `conformance/__init__.py`; CONTRACT-069/072 | Runtime/foundation public APIs, pure standard library, Pydantic | Engine internals and host I/O |
+| `__init__.py` | SDK public re-exports | CONTRACT-068/071/072 exports when implemented | DSL, runtime and foundation public APIs | Build/compiler dependencies, drivers |
+
+**Integration Owners**: Weft -> Python `build/` and the exact `runtime/bulk.py`
+exception; raw-table drivers -> `targets/`; Truss/Ashlar -> their own repositories'
+adapters over CONTRACT-072. Engine storage is never a binding target.
+
+**Construction Policy**: `src/compilation/index.ts` composes the pure generator;
+the host writer owns filesystem operations. Hosts supply runtime targets and
+connections explicitly. No generated package holds connections or table handles.
+Cross-module imports use `index.ts` or Python package/top-level public boundaries;
+all cycles refuse, including type-only cycles.
+
+**Boundary Check**: `bun run check:access-boundaries` runs
+`bun scripts/check-compilation-boundaries.ts` and
+`python3 scripts/check-access-python-boundaries.py`. The same command is wired
+in `.githooks/pre-commit` and `.github/workflows/access-boundaries.yml`.
+`bun run test:access-boundaries` executes the actual checkers, including a
+temporary Git repository with the installed hook and injected TS/Python failures.
+Hook installation is local: `git config core.hooksPath .githooks`; it is not
+silently installed into the integration checkout's shared Git configuration.
+
+The TypeScript checker uses the pinned compiler API for import/re-export/type
+imports and aliases. The Python checker uses `ast` without importing SDK modules.
+Both check graph cycles and cross-module private imports. Portable TypeScript
+host/network/code-execution identifiers and Python pure-layer host I/O and
+dynamic-loading APIs refuse. These static checks are dependency enforcement,
+not a sandbox: reflective/deliberately obscured calls, arbitrary object private
+access, transitive behavior of existing public APIs, runtime SQL assembly,
+generated table handles, and engine-storage access require semantic review and
+behavioral gates. B-TP-000 evidence qualifies enforcement, not SDK functionality.
