@@ -705,8 +705,10 @@ obligations remain independently required; a metadata join cannot promote them.
 For a composed context/population profile, start from the committed registered
 original sources and issue the compiler parent/current once. Match the complete
 Record/member/Key and graph definition joins to every native/logical occurrence,
-including parallel edges and empty complete coverage. Retain that same actual
-parent/current through semantic evaluation, SQL staging and whole-batch
+including parallel edges and empty complete coverage. Treat coverage fields as
+unique full-identity membership regardless of ontology field order; preserve
+authored Key component order separately and test permutations of each. Retain
+that same actual parent/current through semantic evaluation, SQL staging and whole-batch
 inspection. Changing SQL or the retained source request must refuse before a
 replacement parent or semantic child is constructed. Equal report bytes do not
 supply object continuity.
