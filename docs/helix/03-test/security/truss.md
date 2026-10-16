@@ -667,3 +667,36 @@ query-operator equivalence, timestamps, collections, continuous authority or
 final guarded-release obligations. Diagnostic source substitution cannot
 qualify native source admission, and endpoint source hashes cannot establish
 continuous source custody.
+
+
+### Issued compiler association and native definition correspondence
+
+For truss.B02/B09/B12/B15, require the backend to obtain association requirements
+from the actual retained compiler preparation, alongside that same preparation's
+Record/member/ordered-Key requirements. Caller-supplied report JSON, equal bytes
+from another parent, a reconstructed parent, source labels or a completion flag
+cannot supply issuance or a held operation.
+
+Compare complete source/preparation/model hashes and model pins. Account for
+every original association occurrence in order, including ones unused by the SQL
+projection. Keep Record and Relationship namespaces distinct. Join selected and
+authored endpoint Keys without inventing a source Key or default target Key;
+compare full ordered components and native property/Key identities. Compare
+native relationship identities, typed endpoint alternatives, multiplicities,
+lifecycle, direction, composition, inverse and physical edge columns. Record
+member endpoints also require original owner/member/target correspondence.
+Unsupported realizations must refuse explicitly without collapsing authored
+branches, duplicate occurrences or record-backed witnesses.
+
+Exercise actual native column/definition drift, missing/duplicate/foreign native
+identities, wrong Key order, endpoint-type changes and equal-data parent
+substitution. Require the intended correspondence refusal, preserve caller prior
+work and verify restored metadata after rollback. Retain original issued data,
+actual accepted sources, fresh native observation, original context/parent
+custody and independent native expectations. Historical assessment profiles or
+synthetic unit carriers cannot qualify a newer native observation profile.
+
+Definition correspondence does not prove complete graph occurrence populations,
+codec/domain equivalence, whole-source semantics, authenticated Subject/current
+authority, source registration or final guarded release. Those original
+obligations remain independently required; a metadata join cannot promote them.
