@@ -1,0 +1,104 @@
+{
+  "mypy": {
+    "positive": {
+      "passed": true,
+      "exitCode": 0,
+      "covered": [],
+      "count": 0
+    },
+    "negative": {
+      "passed": true,
+      "exitCode": 1,
+      "covered": [
+        "unknown_column.py",
+        "wrong_operand.py",
+        "wrong_param.py",
+        "foreign_column_filter.py",
+        "foreign_column_select.py",
+        "foreign_projection.py",
+        "wrong_eq_operand.py",
+        "wrong_ne_operand.py",
+        "null_optional_filter.py",
+        "update_unknown_field.py",
+        "update_wrong_type.py",
+        "ninth_select_column.py",
+        "aggregate_decimal_result.py",
+        "aggregate_float_parameter.py",
+        "foreign_column.py",
+        "foreign_projection.py",
+        "foreign_relationship.py",
+        "null_result.py",
+        "unknown_join_column.py"
+      ],
+      "count": 19
+    }
+  },
+  "pyright": {
+    "positive": {
+      "passed": true,
+      "exitCode": 0,
+      "covered": [],
+      "count": 0
+    },
+    "negative": {
+      "passed": true,
+      "exitCode": 1,
+      "covered": [
+        "unknown_column.py",
+        "wrong_operand.py",
+        "wrong_param.py",
+        "foreign_column_filter.py",
+        "foreign_column_select.py",
+        "foreign_projection.py",
+        "wrong_eq_operand.py",
+        "wrong_ne_operand.py",
+        "null_optional_filter.py",
+        "update_unknown_field.py",
+        "update_wrong_type.py",
+        "ninth_select_column.py",
+        "aggregate_decimal_result.py",
+        "aggregate_float_parameter.py",
+        "foreign_column.py",
+        "foreign_projection.py",
+        "foreign_relationship.py",
+        "null_result.py",
+        "unknown_join_column.py"
+      ],
+      "count": 19
+    }
+  },
+  "ty": {
+    "positive": {
+      "passed": true,
+      "exitCode": 0,
+      "covered": [],
+      "count": 0
+    },
+    "negative": {
+      "passed": true,
+      "exitCode": 1,
+      "covered": [
+        "unknown_column.py",
+        "wrong_operand.py",
+        "wrong_param.py",
+        "foreign_column_filter.py",
+        "foreign_column_select.py",
+        "foreign_projection.py",
+        "wrong_eq_operand.py",
+        "wrong_ne_operand.py",
+        "null_optional_filter.py",
+        "update_unknown_field.py",
+        "update_wrong_type.py",
+        "ninth_select_column.py",
+        "aggregate_decimal_result.py",
+        "aggregate_float_parameter.py",
+        "foreign_column.py",
+        "foreign_projection.py",
+        "foreign_relationship.py",
+        "null_result.py",
+        "unknown_join_column.py"
+      ],
+      "count": 19
+    }
+  }
+}

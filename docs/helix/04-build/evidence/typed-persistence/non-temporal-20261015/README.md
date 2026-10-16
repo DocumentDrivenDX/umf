@@ -13,3 +13,5 @@ bun run test:access-e2e --python /path/to/pinned/environment/bin/python --wheel 
 The wheel is retained in the `runtime-<sha256>/` directory. `build.json` contains the exact source inventory and dependency pins. `replay-installed.py` and `generate-full-replay.ts` retain the local replay recipe and recorded workspace paths. Static corpus source and expected diagnostics live under `tests/compilation/python/static/models/`.
 
 Temporal qualification is **HELD**. Basic creation and codecs are not database writes. Native transport, action execution, complete DSL/catalog coverage and backend adoption remain unqualified. Full B-TP-003 and SDK completion are not claimed; remaining gates are explicit in `execution.json`.
+
+The final merged source and fresh PostgreSQL read replay are recorded in [integration/integration.json](integration/integration.json). This supersedes the pre-merge checkpoint only for the scopes explicitly retested there; it preserves the original receipts.
