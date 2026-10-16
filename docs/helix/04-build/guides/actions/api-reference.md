@@ -26,6 +26,18 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - actionExpressionLimits — constants depth 32, nodes 512, text 65536; limits are profile bounds, not a throughput guarantee.
 - actionsPackage — the exact extension registration package; it is not a general executor feature manifest.
 
+## Portable plans and frozen manifests
+
+These operations implement the bounded portable surfaces in CONTRACT-902/903/904. Hosts supply the original artifacts, registry and qualified selection context. Inspection and construction do not issue native authority or execute business writes.
+
+- prepareActionPlanModel(model: ActionPlanModelPin, action: PortableActionPin, context: ActionPlanInspectionContext): ActionPlanArtifact — resolves the original model/action and produces the bounded source-bound preparation artifact with exact producer/schema identity. Unsupported action/model meaning refuses.
+- inspectActionPlan(input: ActionPlanArtifact, context: ActionPlanInspectionContext): ActionPlanInspection — checks original artifact bytes, exact model/action/profile bindings and the supported invocation template, retaining diagnostics and eligibility. It does not execute the selection or action.
+- assessActionPlan(inspection: ActionPlanInspection, capabilities: ActionPlanCapabilities, context: ActionPlanInspectionContext): ActionPlanAssessment — reinspects the original source and compares exact supplied capabilities and obligations. executionVerified remains false; capability claims do not authenticate native behavior.
+- constructActionManifest(input: ActionManifestConstruction, context: ActionPlanInspectionContext): ConstructedActionManifest — copies explicitly supplied selected rows into a source-bound candidate and returns Key receipts. sealed, complete and authority are false; the consumer still owns frozen selection, guards, sealing and admission.
+- inspectActionManifest(input: ActionPlanArtifact, context: ActionPlanInspectionContext): ActionManifestInspection — checks manifest framing, the original plan, resolved action and retained item/batch consistency. It issues no guard, snapshot, seal or revision.
+- assessActionManifest(inspection: ActionManifestInspection, capabilities: ActionPlanCapabilities, context: ActionPlanInspectionContext): ActionPlanAssessment — freshly checks the original manifest and exact guard/snapshot and action capability correspondence. It does not establish native execution or authorize submission.
+- validateBulkOutcome(input: ActionPlanArtifact): BulkOutcomeValidation — validates bounded original bulk-result framing and known result semantics, retaining source and diagnostics. It does not submit, retry, reconcile or disclose a job.
+
 ## Public types
 
 <!-- generated:public-types:start -->
@@ -48,9 +60,21 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - ActionInputs
 - ActionInspection
 - ActionKeyReference
+- ActionManifest
+- ActionManifestConstruction
+- ActionManifestInspection
 - ActionObligation
 - ActionObligationKind
 - ActionParameter
+- ActionPlanArtifact
+- ActionPlanAssessment
+- ActionPlanCapabilities
+- ActionPlanCapability
+- ActionPlanDiagnostic
+- ActionPlanInspection
+- ActionPlanInspectionContext
+- ActionPlanModelPin
+- ActionPlanSelectionInspector
 - ActionReference
 - ActionRelationshipReference
 - ActionRule
@@ -58,13 +82,19 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - ActionRuleReference
 - ActionRuleState
 - ActionValueBinding
+- BulkOutcomeValidation
 - CompiledActionRule
 - CompiledActionSelector
+- ConstructedActionManifest
 - InspectedAction
+- PortableActionPin
+- PortableActionPlan
+- PreparedActionPlanModel
 - SelectedActionIdentity
+- SelectedActionRow
 <!-- generated:public-types:end -->
 
-The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-900/901 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
+The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts, evaluation.ts, plan-types.ts and manifest-types.ts for exact members; CONTRACT-900 through CONTRACT-904 own their respective semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
 
 ## Errors and diagnostics
 
