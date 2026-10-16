@@ -1,7 +1,7 @@
 import {generateAccessPackage} from '../src/compilation/index';
 import {profile,request} from '../tests/compilation/access-fixtures';
 const out=process.argv[2];if(!out)throw new Error('explicit output directory required');
-const req=request();req.sources=[{id:'logical',format:'json',text:await Bun.file('fixtures/access/search/model.json').text()}];req.records=[{module:'search',element:'Doc'}];req.actions=[];req.projections=[{name:'docSummary',record:req.records[0]!,fields:[{module:'search',element:'id'},{module:'search',element:'body'}]}];req.package='search_docs';
+const req=request();req.sources=[{id:'logical',format:'json',text:await Bun.file(process.argv.includes('--lakebase')?'fixtures/access/search/lakebase-model.json':'fixtures/access/search/model.json').text()}];req.records=[{module:'search',element:'Doc'}];req.actions=[];req.projections=[{name:'docSummary',record:req.records[0]!,fields:[{module:'search',element:'id'},{module:'search',element:'body'}]}];req.package='search_docs';
 const pinned=profile();pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);
 pinned.python.version='3.11.17';pinned.compilerVersion='local-search-0.1';
 pinned.checkers=[{name:'mypy',version:'2.4.0',configuration:{check_untyped_defs:true,python_version:'3.11'}},{name:'pyright',version:'1.1.414',configuration:{typeCheckingMode:'basic',pythonVersion:'3.11',environment:'explicit-native-fixture'}},{name:'ty',version:'0.0.88',configuration:{pythonVersion:'3.11'}}];

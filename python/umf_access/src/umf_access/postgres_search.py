@@ -84,7 +84,8 @@ def _decode(value: object, output: Mapping[str, Any]) -> object:
     if carrier == "vector":
         decoder = output["decoder"]
         if (
-            decoder.get("profile") != "pgvector-text-float32/0.8.7"
+            decoder.get("profile")
+            not in ("pgvector-text-float32/0.8.6", "pgvector-text-float32/0.8.7")
             or type(value) is not str
             or len(value) > 500_000
         ):
@@ -200,12 +201,13 @@ def _program(
     deadline: float,
     *,
     verify_only: bool = False,
+    target_profile: str,
 ):
     prepared = []
     for entry in variant.entries:
         program = entry.artifact()
         if (
-            program["target"] not in ("postgresql18", "lakebase18")
+            program["target"] != target_profile
             or binding_digest(program["binding"]) != configuration.binding_sha256
         ):
             raise TargetMismatch("native search binding differs from configured target")
@@ -320,7 +322,8 @@ class PostgresSearchTarget(PostgresTarget):
         deadline = time.monotonic() + duration
         if self.connection.info.transaction_status != 0:
             raise ReadObligationUnmet("idle search connection required")
-        self.identity()
+        if not variant.pin.matches(self.identity()):
+            raise TargetMismatch("search target identity differs")
         program = _program(
             variant,
             parameters,
@@ -328,6 +331,7 @@ class PostgresSearchTarget(PostgresTarget):
             self.embedders,
             deadline,
             verify_only=verify,
+            target_profile=self.profile,
         )
         result: Any = None
         began = False
@@ -430,7 +434,8 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
         deadline = time.monotonic() + duration
         if self.connection.info.transaction_status != 0:
             raise ReadObligationUnmet("idle search connection required")
-        self.identity()
+        if not variant.pin.matches(self.identity()):
+            raise TargetMismatch("search target identity differs")
         program = _program(
             variant,
             parameters,
@@ -438,6 +443,7 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
             self.embedders,
             deadline,
             verify_only=verify,
+            target_profile=self.profile,
         )
         result: Any = None
         began = False
