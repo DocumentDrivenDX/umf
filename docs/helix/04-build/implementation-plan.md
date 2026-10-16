@@ -12425,3 +12425,7 @@ For US-057-AC2/5/7, the existing PG17.9 publisher routine now has an independent
 The accompanying broader evidence audit fails101/221 checks on existing source/cross-repository drift;31 of the45 retained accepted cases are source-current. The failing current report is preserved, not represented as full qualification. Resolving that drift remains required by the original goal.
 
 Independent Astra Ultra review found no remaining component finding after two cleanup corrections. Its ten fault-injection controls and original reports are retained verbatim in the packet. This is source/receipt inspection and modeled cleanup testing, not an independent replay of the native concurrency campaign.
+
+### Current gate replay and P04 test budget — 2026-10-15
+
+The complete158-required-case replay executes45 implementations:43 pass, S12 fails its selected solver environment and P04 exceeds the60-second outer harness limit. A restored pinnedZ3 replay passes84 observations; the unchanged isolated P04 passes806 in65.1 seconds. Only P04's outer budget increases to120 seconds; assertions and native limits are unchanged. Astra Ultra review finds no actionable issue. The first failed run and qualified diagnostics are [retained](evidence/security/gate-refresh-20261015/README.md). A second full run is underway; no corrected full-gate result or case promotion is asserted at this commit. All113 missing implementations and full34-criterion completion remain required.

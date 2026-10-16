@@ -3373,7 +3373,7 @@
         "tests/security/native/pg18-mask-write-declarations.ts",
         "tests/security/native/pg18-mask-write.sql"
       ],
-      "timeoutMs": 60000,
+      "timeoutMs": 120000,
       "assertionIds": [
         "pg-raw.P04"
       ]

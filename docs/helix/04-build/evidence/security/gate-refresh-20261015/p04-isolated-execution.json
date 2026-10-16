@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "tests/security/native/pg18-mask-write.py",
+    "--output",
+    "/private/tmp/umf-security-current-gate-20261015/p04-isolated-component.json"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "elapsedSeconds": 65.10146912501659,
+  "scope": "Isolated unchanged P04 runner diagnosis; not a governed acceptance receipt."
+}
