@@ -1,5 +1,31 @@
 # UMF microsite schema explorer
 
+## Browser SQL-to-actions compiler
+
+`bun docs/helix/05-deploy/microsite/build-action-compiler.ts` builds the reviewed local-profile
+Weft WASM compiler and its exact pinned UMF preparation cohort into static assets.
+It needs no compiler service or mutable Weft checkout. The retained compressed
+WASM and wrapper are verified against their original SHA256 before publication.
+The page is `action-compiler.html`; verify it with
+`bun docs/helix/05-deploy/microsite/verify-action-compiler.ts`, which starts an
+ephemeral static server and checks actual Chromium with external/write requests
+blocked. Example rows are explicitly unchanged by this compiler-only stage.
+
+The browser-local Truss path uses the separate [CONTRACT-905 source cohort](https://github.com/DocumentDrivenDX/umf/blob/40f011402bf8f0c9512225975b62a034f1da325c/docs/helix/02-design/contracts/CONTRACT-905-browser-local-actions.md),
+an issued local-store owner and independent selection-read grant. The reviewed
+required-String, rootless Products proof covers public loading, preparation,
+frozen materialization/sealing, keyed queueing/claiming, atomic batches, recovery,
+committed row history and cancellation. Exact component evidence is retained
+below; broader native person/session and full bulk protocols remain independent.
+GitHub Pages remains the publishing target.
+
+This website candidate embeds the reviewed UMF ESM from `c1e316c4` (producer
+`6b331c0b`, bundle `86fd188e`) inside the canonical Truss bundle. Publishing these assets against current
+main leaves its library `src/`, `spec/`, package and lock files unchanged; it does
+not qualify that different library build as the original producer. Replacing the
+frozen artifact requires a separately constructed and qualified source cohort,
+as tracked in the [shared implementation ledger](https://github.com/DocumentDrivenDX/umf/blob/e05e67365e03a374af0e56008263acce47307edd/docs/helix/04-build/typed-persistence-design.md#coordinated-sql-to-actions-implementation-ledger).
+
 Owner direction (2026-10-08): build a browsable schema explorer for domain
 packs in the existing microsite. This delivers a read-only metadata consumer
 under PRD FR-39/FR-41. Domain-pack ownership and definitions remain with the
@@ -184,3 +210,81 @@ wrapped graph labels; structured metadata uses full-width disclosures. Export
 panels remain inside the viewport. Browser entry-point typechecking is part of
 `bun run typecheck`. Visual evidence and limitations:
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
+
+The SQL page also opens a worker-owned Truss browser catalog using the reviewed
+canonical provider described by `assets/truss-browser/provenance.json`, built from
+Truss commit `64b8f813ca82f240e8030bf2970955939f80b725`. The manifest
+captures every actual source hash. This website candidate is not published. Build it with
+`bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
+build. The retained archive binds the original manifest and every original asset;
+the build needs no sibling checkout or network download. The worker keeps its
+owner capability private and accepts open/register/preview/seal/recover/submit/recover-submit/claim/recover-claim/execute/recover-execute/rows/cancel/recover-cancel/history/review/close commands against the
+fixed local Products model. Prepare UPDATE registers the actual generic Truss
+catalog, then asks Truss to admit the original local action and separately issue
+its selection-read grant. The original owner, action and grant capabilities stay
+inside the worker and are issued afresh after reopen. Preview invokes the original compiler/lowerer against real Truss rows and
+constructs the original UMF frozen manifest; seal and recovery use Truss custody.
+Prepare UPDATE loads the four original samples through public `loadObjects`, reads the actual generic Truss rows through `readObjects`, and commits the exact original load input/control to a strict IndexedDB admission transaction before its first dispatch. Every later prepare/reopen calls `recoverLoad`; missing recovery stops preparation and never redispatches a load. It replays the creation receipt without resetting current values. All unsuccessful load outcomes remain visible and detach the worker. Actual frozen batches execute through the owned Truss API. The local public committed-row reader and cancellation/recovery are available. Controls, manifests, admissions and outcomes remain retained for the store incarnation with no automatic purge. Feed ACKs, shorter retention and broader full local-bulk/native904 qualification remain outside this proof.
+The browser verifier checks registration, unchanged retry, second-tab exclusion
+and catalog/incarnation retention after reload under a `/umf/` base path.
+
+The local compiler is pinned to Weft compatibility source `ab94595f`, WASM
+`4434aad3`, original local model `b8ce3cfe` and preparation `7ee1afaa`.
+The new layout 0.2 store and its dispatch journals use the
+`umf-products-demo-layout02` prefix; existing layout 0.1 data stays untouched.
+Fresh Chromium checks cover the assembled page and a separate 1,024-row
+workload across 11 batches, replay and reopened readback. Observed bulk execution
+takes 5.299 seconds and the point UPDATE takes 295.08 milliseconds in the
+separate exploratory provider run. Private seal input 0.2 retains the model source
+once instead of repeating it in every key receipt, while preserving old seal recovery.
+Admission object/key reads are batched; immediate per-item effect verification
+retains the original failure order and rollback behavior.
+These observations do not establish a statistical speedup or meet a performance target: performance
+remains failed. The page has not been qualified on the public GitHub Pages origin.
+The retained [publication projection](../../04-build/evidence/bulk-update/website-publication-projection.json)
+is historical evidence for the earlier UMF `633f8ad6` cohort. It does not
+qualify the current candidate; the current assembled-page results are in
+[website compiler results](../../04-build/evidence/bulk-update/website-compiler-results.json). Historical native compiler assets remain retained
+separately and are not relabelled. The compiler and catalog now use the same
+local model; the examples and actual Truss rows are displayed separately.
+
+Before seal dispatch, the page saves the original request key, attempt, source
+intent and inert seal reference in an atomic, strict-durability IndexedDB transaction.
+Transaction completion precedes dispatch; a failed reservation sends no seal RPC.
+Fresh journal reads and cross-tab notifications prevent stale-tab intent replacement.
+A pending intent blocks a fresh seal; reload requires reopening and freshly
+preparing capabilities before recovering the original reference. All returned
+control outcomes and receipt/manifest bytes are retained, including unresolved
+absence and uncertain storage outcomes. These metadata are not authority.
+The Chromium test deliberately drops an actual sealed acknowledgement, closes the owner tab
+and recovers the same bytes from an already-open second tab. It also refuses an injected pre-dispatch storage
+quota failure. The website test publicly loads four rows, verifies exact load receipt/data after a dropped actual preparation acknowledgement and reload, then selects three rows into batches [2,1]. No administrative seeding is used.
+
+
+The browser can queue the sealed manifest, claim its first batch and review the
+job using original Truss APIs. Before either first dispatch, a strict atomic
+IndexedDB reservation retains the complete input, distinct submission key and
+control request/attempt, bound to the original seal reference. A pending record
+blocks fresh dispatch even from a stale tab; recovery reuses the exact input with
+fresh private engine capabilities. All returned result variants are retained.
+Unknown and unresolved outcomes detach the worker without a new request or
+attempt. The first-claim control is retained even after recovery: neither lease
+expiry nor observing a recovered claim grants execution eligibility. Execution uses a separate strict `execute:n` intent for each batch; once it exists only `recoverBatch` is called. Fresh authoritative job progress chooses the next batch. A recovered claim correlates the first execution input; actual current authorization, active fence, PostgreSQL lease and engine admission decide whether it may execute. Indeterminate execution detaches without redispatch. The browser verifier drops the actual
+initial submission and claim acknowledgements, reopens and recovers the original
+job, fence and lease, and verifies the original manifest. Execution tests drop the actual first committed batch response, recover the exact full item results and receipt after reopen, finish batches [2,1], and verify actual row values/versions, unchanged fourth object and duplicate replay.
+
+
+`readFeed` exposes original committed journal events and origin artifacts with
+bounded row pages (five rows in the UI); pages may split a committed batch. The
+page retains the exact scoped cursor in memory without acknowledging events or
+advancing a projection checkpoint. Reload may read history again. Tests verify
+four create/three property events, original UTF-8 artifact digests, a batch split
+across pages and an unchanged empty tail after reopening the same store.
+
+Cancellation reserves the complete original input/control in a strict host
+transaction before dispatch. Later attempts only call `recoverCancel`. A queued
+job cancelled before effect admission produces no business effects; an admitted
+uncertain batch is never declared rolled back by cancellation. The original
+cancelled response survives lost acknowledgement/reopen unchanged. Work and
+outcomes remain retained for the lifetime of the store incarnation. Browser
+storage eviction/clearing is outside this recovery claim; no purge API is used.

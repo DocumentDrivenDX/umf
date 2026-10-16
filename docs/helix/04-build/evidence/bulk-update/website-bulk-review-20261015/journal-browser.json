@@ -1,0 +1,84 @@
+{
+  "scope": "Independent actual Chromium IndexedDB journal controls on original transpiled bulk-intent module; no engine effect execution",
+  "browser": "153.0.8010.12",
+  "sourceSha256": "d5d954cf225c57496d681e07a5f62ab44a8ae91341e47a7e43c4d6f23a806bee",
+  "passed": 19,
+  "cases": [
+    {
+      "name": "Competing tabs atomically retain exactly one original submission input",
+      "passed": true
+    },
+    {
+      "name": "Changed context settlement refuses without replacing original",
+      "passed": true
+    },
+    {
+      "name": "Changed input settlement refuses without replacing original",
+      "passed": true
+    },
+    {
+      "name": "Complete submitted carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete claimed carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete idle carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete conflict carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete unsupported carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-unknown/submit carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-failure/submit carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete unresolved/submit carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-unknown/claim carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-failure/claim carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete unresolved/claim carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Separate claim reservation leaves original submit control intact",
+      "passed": true
+    },
+    {
+      "name": "Native ordered transaction boundary",
+      "passed": true
+    },
+    {
+      "name": "Native abort transaction boundary",
+      "passed": true
+    },
+    {
+      "name": "Native relaxed transaction boundary",
+      "passed": true
+    },
+    {
+      "name": "Native quota transaction boundary",
+      "passed": true
+    }
+  ]
+}

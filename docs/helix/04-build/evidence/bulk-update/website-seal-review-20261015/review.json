@@ -1,0 +1,134 @@
+{
+  "reviewer": "Astra Ultra",
+  "date": "2026-10-15",
+  "verdict": "No open implementation blockers within the materialization/seal-recovery website component scope.",
+  "findings": [],
+  "resolved": [
+    {
+      "id": "SEAL-WEB-01",
+      "prior": "A previously opened tab could use stale in-memory intent and overwrite another pending seal reference after takeover.",
+      "resolution": "Strict IndexedDB readwrite reservation atomically adds the single current record only when absent and resolves only on transaction completion. Page re-reads durable intent before commands and after open/prepare. Same-reference settlement prevents stale overwrite. Notifications are supplemental.",
+      "independentRegression": "Actual Chromium page-controls show existing second-tab admission refuses with BroadcastChannel disabled, including forced stale button events; actual IndexedDB concurrent reservations yield exactly one success."
+    }
+  ],
+  "repository": "/Users/erik/.codex/worktrees/security-action-source-custody/umf",
+  "baseCommit": "a3852847af5bc52ee9a804d52adcc383342f06e4",
+  "originalTrussCommit": "f8495ec612683eb7b13f62728120b6fef7b1f11b",
+  "originalTrussManifestSha256": "f7008e85bb14bda4be714f2049be7e2811db06fed6d5f88680fc341a8b874168",
+  "originalTrussProviderSha256": "0a621cc39375402e40f7c0774958858a8e063c203057dd2ce0ed8dc8cfff9081",
+  "sources": [
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-compiler.ts",
+      "sha256": "575014cf187d0b19462b1723486724fb0fa6663151ff8c5b274d0d2d81fc8682"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/seal-intent.ts",
+      "sha256": "3c00f3a26a6b96eb9732ba4a52a285dc3f7e60e4e26f3310f8b65ae8077c23eb"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/truss-catalog-worker.ts",
+      "sha256": "dc5570fc9780a082f6a3ab1eea1ce54313f5de0653c0616c75c407a4abc559a6"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-runtime-assets.d.ts",
+      "sha256": "dafd6a499a988614ed3568a01b948db8602c5f36455057113c023d18ed6a04f2"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-compiler.html",
+      "sha256": "cc41a406f7d7582b1e77b3aacaed3f55658bc723988a796586b50dfe35349a69"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/build-action-compiler.ts",
+      "sha256": "9bb7a28f25a270e4dfff8aad982569414a4706248b9a0a286eef92d826dd09d3"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/build-truss-browser.ts",
+      "sha256": "df29820743d3bb00918406252fc367459bafb54a826dec735b541f6da16df2bb"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/verify-action-compiler.ts",
+      "sha256": "dba9e38929be629924d80eb0ac894c741c50aafafaec9c926c32d5b78527eef2"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/README.md",
+      "sha256": "2c1524069071d74415fc3cac33d264422545420bf3ef577173f4f49e0a5f3b6f"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/assets/truss-browser/provenance.json",
+      "sha256": "e56f76dde7b225b26b2a5867552105a2ec195ce7e087ccf32334c82bee202fd3"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/dist/action-compiler.js",
+      "sha256": "882d981c168a6a7117c1a68f3ecc08f3a1a5a28c351869729c72dcf53d3f9fb7"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/dist/truss-catalog-worker.js",
+      "sha256": "57be48ce096cff3f13cb5baad5564ddcdd7ef223e1711e08d99c591e52fcf1f3"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/tsconfig.actions.json",
+      "sha256": "3f206295f77545fcdce33b86cd557b65a7d75906aa10edeee022f89624bcbf69"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/04-build/evidence/bulk-update/website-compiler-results.json",
+      "sha256": "dcb98ee40361577ecfc0c26c3ff4a9ed4f4d277c22388d8b1604f352b453ceac"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/.innsigle/public/claims/action-compiler-html.attestation.json",
+      "sha256": "39f0450789adccf023004067c878e212a9282ca8fea5ac6f0da028d55c1d31a4"
+    }
+  ],
+  "independentChecks": {
+    "actualChromiumVersion": "153.0.8010.12",
+    "actualIndexedDbJournalControls": 8,
+    "actualBrowserPageControlsWithSyntheticWorkerCompiler": 6,
+    "exactWorkerFlowControlsWithSyntheticProvider": 13,
+    "exactOriginalAssets": 372,
+    "exactCommittedOwnerSourcePins": 76,
+    "currentWebsiteBrowserReceiptHashes": 19,
+    "isolatedTrussBuilderOutputs": 375,
+    "isolatedTrussPackagingControls": 8,
+    "isolatedCompilerAndPageBuilderOutputs": 6,
+    "strictSiteTypes": "passed",
+    "pinnedInnsigleSignatures": "17 valid including current HTML"
+  },
+  "evidenceInterpretation": {
+    "journal": "Reviewer executed unchanged seal-intent module, transpiled for actual Chromium IndexedDB in isolated temporary contexts. Tested simultaneous tabs, transaction completion order, abort after add success, relaxed-durability refusal, injected quota refusal, malformed retained record, stale settlement and retained exact receipt strings.",
+    "page": "Reviewer executed original page control flow with actual Chromium DOM/IndexedDB, explicit synthetic compiler/Worker and deliberately disabled BroadcastChannel. This is host admission/UI evidence, not original Truss execution evidence.",
+    "originalProvider": "Exact pinned Truss source and bundled assets match original owner receipt. Parent current Chromium test uses actual Truss/PGlite for empty materialization, seal commit with acknowledgement suppressed, takeover from an already-open second tab and recovery of byte-identical original receipt/manifest/reference. All 19 retained source/served hashes match.",
+    "worker": "Independent Bun adapter preserves full original SealOutcome variants and exact work capability custody; fixed parameters/batch/maxItems are passed to original materializer.",
+    "signature": "Read-only pinned Innsigle4185eb56 verification; no key access or signing performed by reviewer.",
+    "sandbox": "Default Chromium launch was blocked by macOS sandbox bootstrap. Approved escalation launched isolated reviewer Chromium successfully.",
+    "powerLoss": "No physical power-loss, quota exhaustion of the real provider, generic browser durability or full crash-recovery qualification is inferred."
+  },
+  "boundaryConclusions": [
+    "Strict atomic intent reservation completes before seal RPC dispatch; failed/aborted reservation dispatches nothing.",
+    "Existing retained intent, unavailable journal and malformed records fail closed with no deletion or fresh-attempt fallback.",
+    "Original model/action/read/work capabilities remain worker-local. SQL is compiled/lowered by original owners with fixed host policy; arbitrary backend SQL or model input is not exposed.",
+    "Full original sealed/conflict/unknown/unresolved/refused/failure result branches pass through; original UTF8 receipt/manifest bytes and source reference are retained. Unknown detaches the worker, and unresolved absence does not become known rollback.",
+    "Reopen obtains fresh action/read capabilities before original-reference recovery. Edited SQL clears preview; a delayed preview for different SQL cannot enable sealing.",
+    "Current public store is unpopulated: zero selected items/zero batches are real empty-store observations. Sample arrays are explanatory only and are not injected through an administrative path.",
+    "Original native cohort and local model/preparation semantics are unchanged by this component."
+  ],
+  "remainingGates": [
+    "Public sample-data loading, keyed bulk submission, job claiming, batch effects, replay/uncertain commit reconciliation and final mutating website E2E remain outside this checkpoint.",
+    "Newer Truss18d124fd/62b3e302 providers were not consumed or reviewed in this verdict.",
+    "No deployment, full US/stories completion, native tx1 equivalence, general browser support or complete durable execution qualification follows."
+  ],
+  "evidenceFiles": [
+    "journal-browser.ts",
+    "journal-browser.json",
+    "page-browser.ts",
+    "page-browser.json",
+    "worker-controls.ts",
+    "worker-controls.json",
+    "packaging-controls.py",
+    "packaging-controls.json",
+    "compiler-build.json",
+    "correspondence.json",
+    "signature-check.log",
+    "typecheck.log",
+    "review-before-fix.json",
+    "page-controls-before-fix.json"
+  ]
+}
