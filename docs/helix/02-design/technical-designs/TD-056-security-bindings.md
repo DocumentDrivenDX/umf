@@ -2864,3 +2864,64 @@ Whole V2's original bounds and exact-domain checks remain mandatory. The existin
 Truss pipe's4MiB request bound cannot silently advertise this wider profile;
 Truss must select an explicit compatible transport. This private tooling adds no
 library/browser vocabulary, native permission or second policy interpreter.
+
+### Bounded nested ontology condition evaluation — 2026-10-16
+
+The actual private206951/d333 process initializes a valid six-Record ontology
+with14 objects,13 directed core relationship occurrences (parallel:Alice) and a correlated
+ownership/Staff/Project/active-assignment policy, but its eager nested truth
+evaluation exhausts the unchanged100000-unit literal ledger. This is a reproduced
+logical component limitation, not native admission evidence. Retain the exact
+old executable refusal and supplied cut before optimization.
+
+Keep complete dependency preflight before all truth work: Record and graph
+coverage, endpoint presence, Field coverage and original literal/type validation
+must remain independent of later branch selection. After that preflight, pure
+strong-Kleene AND may stop at F, OR at T, and EXISTS at its first T. U never
+absorbs these operations. No rule, disclosure selection, source validation or
+recipe admission is skipped. All work, population and byte limits remain
+unchanged; this improves evaluation within the existing bounds.
+
+Conditional SMT establishes fold identities, associativity and absorbing-prefix
+properties for arbitrary finite complete truth relations with satisfiable
+premises and explicit weakened-rule countermodels. It is not a TypeScript
+translation/refinement or native proof. The actual kernel/browser regression
+must additionally exercise correlated graph populations and prove hidden branch
+dependencies still refuse when incomplete. Original core relationships, including
+parallel occurrences, preserve their own opaque witness IDs and ordered typed
+endpoint identities. Record-backed edge attributes/Keys need their own native
+realization and cannot be silently treated as opaque witnesses.
+
+The separate Truss graph fact collector is being developed in isolation. It
+will return original JSON byte arrays for graph facts and complete graph coverage
+alongside the existing Record facts and private native row custody. Native
+relationship declarations/endpoint alternatives and the unfiltered edge census
+must correspond to the original accepted model under held cuts. Supplied catalog
+or cursor fixtures cannot prove that native source/current-authority boundary.
+No backend criterion is promoted by these component controls.
+
+## Nested ontology truth correspondence — 2026-10-16
+
+The formal model now expands the actual four-relationship ownership/membership
+join: StaffAssignment and AssignmentProject share one Assignment identity;
+OwnershipResource and OwnershipProject share one Ownership identity; both paths
+meet at the same Project. Identities are abstract complete qualified type/key
+identities, and logical endpoint kinds and selected Staff/Resource kinds are
+explicit premises. Activity has F/U/T truth. A path with T dominates U across
+other complete witnesses; no T and at least one U yields U; an empty path yieldsF.
+
+`tools/security/prove-nested-ontology-refinement.py` proves conditional equality
+of logical/native nested truth and negation under complete sound incidence,
+exact directed endpoint identity and total activity-truth correspondence.
+Nonvacuous true/unknown/false, empty and mixedT/U populations are checked. SAT
+controls expose split Ownership witnesses, unrelated active Assignments,
+unknown-as-true, early unknown dominance and missing correspondence. Eighteen
+queries replay with Z34.15.4:5UNSAT/13SAT.
+
+These are first-order conditional correspondence claims. An observed U inside
+complete admitted facts is distinct from missing coverage, which must refuse
+under the original preflight. No codec or key injectivity, implementation
+translation, runtime limits/termination, source/caller/current authority or
+guarded release is proved. The native graph collector must establish the
+premises through actual source binding and held host guards before backend
+admission; supplied metadata cannot establish them.

@@ -2148,3 +2148,35 @@ and poisoned-cache counterexamples, then require drift to refuse without a
 success receipt and poisoned-cache execution to be ignored. The reused old pipe
 remains capped at4MiB; exact16MiB inspection coverage comes from the direct child
 process controls, not from that old pipe.
+
+### Nested graph condition regression and proof obligations — 2026-10-16
+
+Retain the exact eager-kernel14-object/13-edge parallel:Alice budget refusal,
+and the original successful14-object/12-edge base:Alice control. Require the same
+independent incidence oracle to match the actual optimized kernel for three
+Staff identities across the original population, a parallel edge, no edges,
+inactive-only assignment and sibling ownership. Check exact Resource keys and
+original selected cells through the whole V2 inspector in Bun and Chromium.
+This is supplied graph semantics, not authenticated native execution.
+
+Delete otherwise hidden graph/role coverage, active Field coverage/projection
+and endpoint population while an outer Staff comparison is false. All must
+refuse before returning data. Retain original F/U/T truth tables and conditional
+SMT queries with SAT premises, absorbing-prefix UNSAT checks, early-U countermodels
+and a separately identified skipped-preflight premise control. No budget ceiling
+is raised. Re-run affected accepted cases against the changed kernel and qualify
+unchanged retained case/source correspondence separately. The existing158 required
+cases and34 criteria remain mandatory. Actual ordinary-role native graph identity
+and guarded-release cases require the composed Truss collector and consumer.
+
+### Nested ownership/membership F/U/T proof controls — 2026-10-16
+
+Run `python tools/security/prove-nested-ontology-refinement.py --output <receipt>`
+with the pinned Z3 environment. Require18 replayed queries: conditional nested
+truth/negation equality, nonvacuous F/U/T and empty/mixed populations, and SAT
+controls for split owner/assignment witnesses, treating U as permission, early-U
+dominance and missing incidence/endpoint/attribute correspondence. Retain exact
+source, pre-solve SMT, results and SAT models. The qualified first-order slice
+supports US-056-AC2; it does not replace required actual backend native cases or
+qualify a compiler/runtime translation. Missing coverage must still refuse and
+is not modeled as U.

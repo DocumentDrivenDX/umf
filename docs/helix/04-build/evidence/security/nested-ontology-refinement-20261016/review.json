@@ -1,0 +1,65 @@
+{
+  "review": "Conditional nested ontology truth correspondence R3",
+  "reviewer": "Independent retained Astra Ultra reviewer",
+  "status": "passed-with-conditional-formal-scope",
+  "remainingFindings": [],
+  "packet": {
+    "path": "review.zip",
+    "sha256": "0d9ae1726bc9be7dacf5c190204f5c6b3bdf37b5207b23380761802b7d5ad399",
+    "bytes": 36128
+  },
+  "source": {
+    "path": "frozen/prove-nested-ontology-refinement.py",
+    "sha256": "d06b5b43ea10607c22f5a6b0fcbd8a3818a9c4e542f244d90760f0e5b8e7f0be",
+    "bytes": 6347
+  },
+  "suppliedReceipt": {
+    "path": "frozen/umf-nested-ontology-refinement-r3-20261016.json",
+    "sha256": "bc53d85c98914b4fcd8c6a0dd50229458967b7824e3d124054733cd5180ecd22",
+    "bytes": 349003
+  },
+  "conclusion": "The five UNSAT claims are valid conditional statements of the encoded unbounded first-order model. All theorem premise sets are independently satisfiable. No actionable source or appended-document scope defect found.",
+  "executions": [
+    {
+      "command": "/private/tmp/umf-security-proof-current-20261015/bin/python frozen/prove-nested-ontology-refinement.py --output replay.json",
+      "result": "18 queries passed: 5 UNSAT and 13 SAT; Z3 4.15.4; exact supplied SMT/result pairs reproduced",
+      "receipt": "replay.json",
+      "log": "replay.log"
+    },
+    {
+      "command": "/private/tmp/umf-security-proof-current-20261015/bin/python independent-controls.py",
+      "result": "56 checks passed, including 22 additional solver queries and 2304 exhaustive finite nested-versus-flat truth cases",
+      "receipt": "independent-controls.json",
+      "log": "independent-controls.log"
+    }
+  ],
+  "independentAdversaries": [
+    "SAT-check each of the five theorem premise sets independently, including empty, U and F cases.",
+    "Retain native endpoint typing in omitted incidence, endpoint and activity correspondence counterexamples; all remain SAT.",
+    "Separate soundness from completeness: missing completeness permits a false negated result; missing soundness permits an extra positive result.",
+    "Remove selected subject, same Assignment, same Project, same Ownership, and selected Resource anchors individually; each admits a false-permit countermodel while complete typed populations remain assumed.",
+    "Require an actual joined path with all assignment activity F or all U; populated premises are SAT and permit violations UNSAT. Unknown stays U under strong negation.",
+    "Independently confirm split-owner and unrelated-active-assignment countermodels with typed native endpoints.",
+    "Separately enumerate 2304 finite two-Assignment/two-Ownership populations with all F/U/T activity combinations; nested existential/AND composition equals the flat path truth expression."
+  ],
+  "semanticAssessment": [
+    "The model preserves same-Assignment, same-Ownership and same-Project correlations and selected Staff/Resource identity. T dominates U across witnesses; U dominates F; empty membership is F. Strong negation preserves U.",
+    "Complete sound incidence and exact projected endpoint/activity equality are assumptions, not established native properties. Complete qualified identity is an abstract sort; codecs, key injectivity and physical identity projection are not proved.",
+    "The unknown-as-true SAT control is an altered permit predicate. The early-U SAT control demonstrates wrong U priority, not an ordered traversal or concrete implementation mutation. The false-result theorem covers F generally; the reviewer additionally checked inhabited all-inactive populations.",
+    "Observed U within complete admitted facts is distinct from missing coverage. The latter must be refused by implementation preflight and is outside this proof."
+  ],
+  "governance": {
+    "report": "docs-review/report.json",
+    "result": "Exact appended TD-056/STP-056 sections accurately state typed identity/incidence premises, 18-query partition and conditional scope. Final exact source/doc pins are in closing-source-pins.json."
+  },
+  "scopeLimits": [
+    "No Python/TypeScript/SQL translation refinement, collector correctness, codec equivalence, native binding, source/caller/current authority, limits/termination, occurrence multiplicity or guarded release is proved.",
+    "No native SQL executed. No backend case promotion; original required acceptance allocations remain open.",
+    "Z3 and Python are external pinned-version runtime dependencies, not a hermetic proof chain. Source hashes establish reviewed bytes and endpoint correspondence, not continuously held files or ABA exclusion.",
+    "R1/R2 development source/receipts/logs remain unchanged in the original frozen packet; R3 alone is the reviewed final model."
+  ],
+  "artifactManifest": {
+    "path": "manifest.json",
+    "format": "relative path -> {sha256, bytes}; includes every retained file except this top-level manifest"
+  }
+}

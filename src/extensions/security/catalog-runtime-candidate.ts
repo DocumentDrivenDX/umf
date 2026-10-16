@@ -219,7 +219,28 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   if(d.kind==='record-identity')return factKey(row);if(d.kind==='entity-identity')return tuple(d.type,d.fields.map((r:any)=>value(row,r)));
   const v=value(row,d.field);return v===undefined?undefined:literal(d.field,v);
  };
- const evaluate=(expr:any,resource:any,vars:Map<number,{checks:any;row:any}>):SecurityTruth=>{step();switch(expr.op){case'literal':return expr.value?'T':'F';case'eq':{const a=readTerm(expr.left,resource,vars),b=readTerm(expr.right,resource,vars);if(a===undefined||b===undefined)return 'U';budget.step(a.length+b.length);return a===b?'T':'F';}case'not':return securityNot(evaluate(expr.arg,resource,vars));case'and':return securityAnd(expr.args.map((x:any)=>evaluate(x,resource,vars)));case'or':return securityOr(expr.args.map((x:any)=>evaluate(x,resource,vars)));case'exists':{const checks=associations[expr.association];let found=false,unknown=false;for(const row of sourceRows(checks)){step();const nested=new Map(vars);nested.set(expr.occurrence,{checks,row});const t=evaluate(expr.where,resource,nested);found ||= t==='T';unknown ||= t==='U';}return found?'T':unknown?'U':'F';}default:return fail('Unknown compiled operation');}};
+ // Dependencies are preflighted above over the complete typed populations,
+ // including branches whose truth will not be needed. Only pure truth work may
+ // stop early: F absorbs AND, T absorbs OR/exists in strong Kleene logic.
+ const evaluate=(expr:any,resource:any,vars:Map<number,{checks:any;row:any}>):SecurityTruth=>{
+  step();switch(expr.op){
+   case'literal':return expr.value?'T':'F';
+   case'eq':{const a=readTerm(expr.left,resource,vars),b=readTerm(expr.right,resource,vars);if(a===undefined||b===undefined)return 'U';budget.step(a.length+b.length);return a===b?'T':'F';}
+   case'not':return securityNot(evaluate(expr.arg,resource,vars));
+   case'and':{
+    let truth:SecurityTruth='T';for(const arg of expr.args){truth=securityAnd([truth,evaluate(arg,resource,vars)]);if(truth==='F')return 'F';}return truth;
+   }
+   case'or':{
+    let truth:SecurityTruth='F';for(const arg of expr.args){truth=securityOr([truth,evaluate(arg,resource,vars)]);if(truth==='T')return 'T';}return truth;
+   }
+   case'exists':{
+    const checks=associations[expr.association];let unknown=false;
+    for(const row of sourceRows(checks)){step();const nested=new Map(vars);nested.set(expr.occurrence,{checks,row});const truth=evaluate(expr.where,resource,nested);if(truth==='T')return 'T';unknown ||= truth==='U';}
+    return unknown?'U':'F';
+   }
+   default:return fail('Unknown compiled operation');
+  }
+ };
  const traces:any[]=[];const rows:any[]=[];for(const resource of resources){const evaluated=scoped(resource.type).map((c:any)=>({ruleIndex:c.ruleIndex,rule:program.policy.rules[c.ruleIndex],truth:evaluate(c.condition.expression,resource,new Map())}));let decision:SecurityDecision=evaluated.some((r:any)=>r.truth==='U')?'indeterminate':!evaluated.some((r:any)=>r.rule.effect==='permit'&&r.truth==='T')||evaluated.some((r:any)=>r.rule.effect==='require'&&r.truth!=='T')||evaluated.some((r:any)=>r.rule.effect==='forbid'&&r.truth==='T')?'deny':'permit';const dispositions:any[]=[];
   if(decision==='permit')for(const r of request.fields){step();const ds:any[]=[],origins:any[]=[];for(const x of evaluated){step();if(x.rule.effect==='permit'&&x.truth==='T'){
    let matched=false;for(const [disclosureIndex,d]of (x.rule.disclosure??[]).entries()){step();if(id(d.field)===id(r)){matched=true;ds.push(d.disposition);if(disclosureTrace)origins.push({ruleIndex:x.ruleIndex,disclosureIndex,disposition:d.disposition});}}

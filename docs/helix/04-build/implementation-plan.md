@@ -12612,3 +12612,70 @@ passes48tests/296assertions, UUID/128-bit checks pass6tests/6663assertions, both
 strict TypeScript configurations pass, and86public ESM cases agree in Chromium.
 The merged producer is distinct from the frozen c1/6b browser integration cohort;
 these source checks do not qualify a replacement compiler or native executor.
+
+### Nested graph condition budget repair candidate — 2026-10-16
+
+The previous turn integrated the reviewed held inspector and all629 review
+artifacts directly to remote main206951ff. The current candidate addresses a
+separate reproduced limitation: the original d333 process accepts a valid
+14-object/13-core-edge parallel:Alice ontology but refuses its eager correlated condition fold
+at the unchanged100000-unit literal-work bound. Full dependency preflight is
+preserved; only pure AND/OR/EXISTS truth work now stops at an absorbing value.
+
+All15 independent incidence cases pass through the actual candidate held
+producer/inspector: three Staff identities across baseline, parallel-edge, empty,
+inactive-only and sibling-owner populations. Full security regression passes
+333 tests/6027 assertions; complete TypeScript checking passes. Chromium153.0.8010.12
+passes98 shared controls, including hidden dependency refusal. Conditional SMT
+passes30 replayed queries (12 UNSAT,18 SAT with separate nonvacuous premises);
+these algebraic claims do not prove TypeScript refinement or native authority.
+
+The only previously accepted cases fingerprinting the changed runtime are S24,
+S25 and pg-raw.P04. Original S24/S25 runners freshly pass296/124 observations
+with108 pins each. A bounded isolated PostgreSQL18.6 P04 campaign freshly passes
+807 observations/106 pins and confirms original fixture cleanup. No Truss shared
+worker or table was used. The42 other retained accepted case outputs have exact
+current source correspondence, yielding570 distinct current pins across all45.
+This is explicitly scoped revalidation, not a new full158-case canonical gate;
+the unchanged canonical acceptance receipt is historical for the changed kernel.
+No case is promoted and113 required cases remain unimplemented.
+
+The new browser harness initially failed its TypeScript regex capture annotation,
+then passed after correction; the first focused acceptance attempt lacked local
+listener permission and produced no receipt, then passed in the authorized
+local-browser execution context. Original failures remain retained. The separate
+Truss graph collector and its six simulated-cursor mapping tests remain an
+isolated draft, with opaque witnesses only and explicit Record-backed-witness
+refusal. They establish no native source/caller/current-cut/release qualification.
+Astra Ultra completed independent review with no open product findings. The retained [review and source evidence](evidence/security/condition-short-circuit-20261016/README.md) includes the separate labeling correction and scoped acceptance revalidation. Direct-main integration retains the candidate scope.
+The Truss consumer has a separate preliminary review and native qualification
+stream; no implicit cohort repin or activation is authorized by these results.
+
+## Nested ontology F/U/T formal extension — 2026-10-16
+
+The [retained conditional proof](evidence/security/nested-ontology-refinement-20261016/README.md)
+models the four-relationship same-Assignment/same-Ownership join with typed
+logical endpoints and F/U/T activity. Root18SMT queries pass5UNSAT/13SAT. Astra
+Ultra replays18, adds22 solver queries and2304 abstract truth cases, and reports
+no actionable finding. Exact source, SMT/models, development iterations and
+qualified TD056/STP056 records are retained. This does not prove implementation
+translation, codec correspondence, native authority or release; missing coverage
+is not U. No acceptance case is promoted and the shared158/34 scope remains
+45implemented/113missing. The canonical gate remains historical for the changed
+semantic kernel; the prior scoped revalidation is not a fresh158-case gate.
+
+The native graph collector prerequisite is separately reviewed and on Trussmain
+5f676884, with custody-only documentation correction59360445. Its native tests
+qualify the original9e328d91 engine/source cohort and explicitly substitute the
+accepted-source provider. Actual native binding and original host guard/release
+composition remain required before graph read admission. Existing206951/d333
+consumer assets are not implicitly repinned by either formal or native evidence.
+
+
+### Reviewed native source prerequisites on Truss main — 2026-10-16
+
+Truss31ce4449 adds the strict supplied-source descriptor0.1 and CONTRACT-013;984d6a65 adds the unexported stock-cursor observer0.2 with all four retained R1 findings resolved in a separate Astra R2 review. [Tracked component evidence](evidence/security/native-source-correspondence-20261016/README.md) checks every retention-manifest member at the immutable merged Truss commit. No old consumer, registration, ABI/default cohort or source assessor is repinned. Descriptor0.1 deliberately rejects observer0.2.
+
+Source/installed tests pass15 for descriptor and7 for observer; wheel correspondence is499/500 members at their separately retained epochs. Actual native observer4passes/8.156s apply only to the captured PostgreSQL18.6/native0.71 overlay; original59360445 differs at six paths. Later main source checks pass22 with4 native tests skipped and1485 boundary imports; no current-main native claim follows.
+
+The next correspondence boundary must use the actual borrowed Weft preparation and existing UMF resolution APIs. Its operation-specific report/hash cannot be embedded into the same persistent native descriptor that the preparation already contains: that would create a self-hash cycle. Persistent descriptors retain original model pins and explicit mappings; fresh witnesses join context-specific requirements after selection. No placeholder preparation, reconstructed context or Python policy/key interpreter establishes admission. Actual Field/ordered-Key/edge/codec mapping, native registration, authenticated source/Subject continuity and final guarded release remain open. No acceptance promotion; shared158/34 scope remains45implemented/113missing.
