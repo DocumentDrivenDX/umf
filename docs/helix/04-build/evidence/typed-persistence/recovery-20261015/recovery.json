@@ -75,12 +75,14 @@
     "cleanMainWorktree": "/Users/erik/.codex/worktrees/7b14/umf"
   },
   "remotePublication": {
-    "status": "blocked; no recovered code or preservation refs pushed",
+    "status": "authorized for publication; remote Git refs are the publication authority",
     "destination": "https://github.com/DocumentDrivenDX/umf.git",
     "repositoryId": "1382276802",
     "visibility": "public",
     "destinationVerifiedBy": "connected GitHub get_repo; clone URL matches origin and committed project URL; authenticated account has admin/push permission",
     "automaticReview": "Two push attempts rejected: initial remote unverified, then explicit specific public-export authorization required even after repository verification. No workaround attempted.",
-    "requiredUserApproval": "Explicit permission to publish local main, recovery branch and three preservation tags to public DocumentDrivenDX/umf."
-  }
+    "userAuthorization": "Yes, push main, the recovery branch, and all three preservation tags to the public DocumentDrivenDX/umf repository.",
+    "authorizationDate": "2026-10-15"
+  },
+  "additionalMainIntegration": "e3f3e1c2: newer security gate evidence and harness budget correction merged without conflicts before publication"
 }
