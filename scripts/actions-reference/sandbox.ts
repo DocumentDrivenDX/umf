@@ -101,16 +101,24 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
    // EOF can precede Docker's terminal-state publication. Preserve the protocol
    // failure while allowing native OOM state to settle; reserve half the existing
    // cleanup budget for removal and ownership release.
-   if(naturalEof&&!invalidState&&state?.Running){
-    const settleUntil=Math.min(performance.now()+500,cleanupDeadline-1000);
-    while(state?.Running&&performance.now()<settleUntil){
+   // Docker may publish the killed exit before its OOM flag. Exit 137 alone
+   // never proves OOM: retain the original failure unless native OOM is observed.
+   const pendingNativeState=()=>state?.Running||(failed&&state?.ExitCode===137&&!state.OOMKilled);
+   if(naturalEof&&!invalidState&&pendingNativeState()){
+    const settleUntil=cleanupDeadline-1000;
+    while(pendingNativeState()&&performance.now()<settleUntil){
      await new Promise(resolve=>setTimeout(resolve,Math.min(10,Math.max(0,settleUntil-performance.now()))));
      const remaining=settleUntil-performance.now();if(remaining<=0)break;
      try{const inspected=await docker(['inspect','--format','{{json .State}}',containerId!],remaining);
       const next=inspected.exit===0?JSON.parse(inspected.stdout):undefined;
       if(!next||typeof next.ExitCode!=='number'||typeof next.OOMKilled!=='boolean'||typeof next.Running!=='boolean'){invalidState=true;break;}
       state=next;
-     }catch{invalidState=true;break;}
+     }catch(error){
+      // An optional final poll may exhaust its own settlement window. Keep the
+      // last validated state; other inspection failures still fail closed.
+      if(error instanceof UmfError&&error.code==='LIMIT'&&error.message==='Owned handler cleanup command timed out'&&performance.now()>=settleUntil)break;
+      invalidState=true;break;
+     }
     }
    }
    guard();await docker(['rm','-f',containerId!]);
