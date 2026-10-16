@@ -15,4 +15,4 @@ from ._query import (
 
 from .render import render_logical as render_logical
 
-from ._nodes import GeneratedSource as GeneratedSource
+from ._nodes import GeneratedSource as GeneratedSource, KeyLiteral as KeyLiteral

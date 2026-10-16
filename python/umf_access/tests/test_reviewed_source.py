@@ -5,6 +5,7 @@ from umf_access.types import StrictModel
 from umf_access.dsl import Param, GeneratedSource
 import unittest
 from umf_access.capture import capture
+from umf_access.dsl._context import CaptureError
 from umf_access.dsl import Column, Join, Query, query
 from umf_access.reviewed import CatalogRead, ReadBuildError, build_query
 from test_reviewed_reads import (Compiler, Empty, Projection, projection, objects,
@@ -54,13 +55,17 @@ class SourcePins(unittest.TestCase):
                 raise AssertionError("source mismatch reached Weft")
         other = Column(replace(ORDER.key[0], source=replace(SOURCE, input_digest="b" * 64)))
         unpinned = Query(replace(ORDER, source=None))
+        no_key = Query(replace(ORDER, key_id=None))
         @query
         def mixed_field():
             return objects.filter(other == 1).limit(10).all()
         @query
         def no_source():
             return unpinned.limit(10).all()
-        for declaration in (mixed_field, no_source):
+        @query
+        def no_selected_key():
+            return no_key.limit(10).all()
+        for declaration in (mixed_field, no_source, no_selected_key):
             with self.subTest(declaration=declaration), self.assertRaisesRegex(ReadBuildError, "CATALOG_STALE"):
                 build_query(capture(declaration), NeverCompile(), parameters=Empty, result=Projection,
                             target="postgresql18", binding=binding(), row_cap=10)
@@ -81,3 +86,18 @@ class SourcePins(unittest.TestCase):
             with self.assertRaisesRegex(ReadBuildError, "CATALOG_STALE"):
                 build_query(declaration, NeverCompile(), parameters=Empty, result=Projection,
                             target="postgresql18", binding=binding())
+
+    def test_same_generation_alternate_key_cannot_replace_selected_key(self):
+        class Alternate(StrictModel):
+            KEY_IDENTITY: ClassVar[dict[str, str]] = {**StaleKey.KEY_IDENTITY, "key": "alternate"}
+            UMF_SOURCE: ClassVar[GeneratedSource] = SOURCE
+            id: int
+        @query
+        def get_wrong():
+            return objects.get(Alternate(id=1))
+        @query
+        def page_wrong(after: Param[Alternate | None]):
+            return objects.page(size=2, after=after)
+        for declaration in (get_wrong, page_wrong):
+            with self.assertRaisesRegex(CaptureError, "selected Record Key"):
+                capture(declaration)

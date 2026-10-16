@@ -1,7 +1,8 @@
 /** Host-only filesystem boundary. Paths in result.files include the package prefix;
  * destination is the fixed output parent containing that package. */
 import {createHash} from 'node:crypto';
-import {generateAccessPackage} from '../src/compilation/index';
+import {generateAccessPackage,diffAccessPackages} from '../src/compilation/index';
+import type {AccessResult} from '../src/compilation/ir/index';
 import {lstat,readdir,readFile,mkdir,mkdtemp,writeFile,rename,rm} from 'node:fs/promises';
 import {resolve,dirname,join,parse} from 'node:path';
 export interface AccessPackageData {outcome:'candidate'|'refused';files:readonly {path:string;text:string;sha256:string}[]}
@@ -63,7 +64,21 @@ export async function runAccessCli(args:readonly string[]):Promise<number>{
  const result=generateAccessPackage(request,profile);
  if(result.outcome!=='candidate'){console.error(JSON.stringify({code:'GENERATION_REFUSED',diagnostics:result.diagnostics}));return 1;}
  if(command==='check'){const paths=await checkAccessPackage(flags.get('--output')!,result);for(const path of paths)console.log(path);return paths.length?1:0;}
- await writeAccessPackage(flags.get('--output')!,result);return 0;
+ const destination=flags.get('--output')!;
+ await ancestors(destination);
+ const old=await tree(destination),c=candidate(result);
+ let changes:ReturnType<typeof diffAccessPackages>=[];
+ if(old.size){
+  const inventory=readInventory(old.get(c.manifest),c.manifest,c.reserved);
+  const files=[...old].filter(([path])=>!c.reserved.has(path)).map(([path,bytes])=>({path,text:bytes.toString('utf8'),sha256:hash(bytes)}));
+  if(files.length!==inventory.size+1||files.some(f=>f.path!==c.manifest&&inventory.get(f.path)!==f.sha256))throw failure('OUTPUT_CHANGED','Existing output differs from inventory');
+  const manifest=JSON.parse(old.get(c.manifest)!.toString('utf8')) as Omit<AccessResult,'outcome'|'files'|'diagnostics'>;
+  if(!Array.isArray(manifest.symbols)||!Array.isArray(manifest.dispositions)||!Array.isArray(manifest.obligations))throw failure('OUTPUT_CHANGED','Invalid previous manifest');
+  const previous:AccessResult={...manifest,outcome:'candidate',files,diagnostics:[]};
+  changes=diffAccessPackages(previous,result);
+ }
+ await writeAccessPackage(destination,result);
+ console.log(JSON.stringify({kind:'access-public-diff',scope:'source compatibility only; target and data compatibility unqualified',changes}));return 0;
  }catch(e){const error=e as {code?:string;message?:string;written?:boolean};console.error(JSON.stringify({code:error.code??'CLI_FAILED',message:error.message??String(e),...(error.written===undefined?{}:{written:error.written})}));return 1;}
 }
 if(import.meta.main)process.exitCode=await runAccessCli(process.argv.slice(2));

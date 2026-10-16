@@ -56,8 +56,11 @@ class RecordRef:
     logical_namespace: str | None = None
     logical_name: str | None = None
     source: GeneratedSource | None = None
+    key_id: str | None = None
 
     def __post_init__(self) -> None:
+        if self.key_id is not None and (type(self.key_id) is not str or not self.key_id):
+            raise TypeError("selected Key identity requires a nonempty schema ID")
         if type(self.module) is not str or not self.module or type(self.element) is not str or not self.element:
             raise TypeError("record identity requires nonempty schema IDs")
         if type(self.key) is not tuple or not self.key or any(not isinstance(cast(object, f), FieldRef) for f in self.key):

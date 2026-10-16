@@ -1,0 +1,8 @@
+corpus/negative.py:2: error: Argument "amount" to "OrderPatch" has incompatible type "Literal['private-invalid']"; expected "Decimal | MISSING"  [arg-type]
+corpus/negative.py:3: error: Unexpected keyword argument "unknown" for "OrderPatch"  [call-arg]
+corpus/negative.py:3: note: "OrderPatch" defined in "commerce.models"
+corpus/negative.py:4: error: Argument "order_id" to "OrderKey" has incompatible type "int"; expected "str"  [arg-type]
+corpus/negative.py:5: error: Unexpected keyword argument "typo" for "update" of "OrderQuery"  [call-arg]
+corpus/negative.py:5: note: "update" defined in "commerce.fields"
+corpus/negative.py:6: error: Argument 1 to "into" of "OrderQuery" has incompatible type "type[CustomerSummary]"; expected "type[OrderSummary]"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)

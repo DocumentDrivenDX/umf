@@ -39,9 +39,8 @@ The generator runs in four pure steps:
    view presence, carriers, native column facts, provenance and obligations. The
    IR never discards source content and is never exported.
 3. **Census.** Enumerate every selected and dependency assertion through the
-   public UMF inspectors and assign a disposition. Apply the mode rule: `strict`
-   refuses any non-exact relevant disposition; `report` admits only known
-   approximations that do not broaden inputs or claimed enforcement; unknown
+   public UMF inspectors and assign a disposition. Apply the mode rule: the initial exact-only `strict`
+   and `report` modes both refuse any non-exact relevant disposition; unknown
    relevant meaning refuses in both modes.
 4. **Emit.** Render Python source from the IR with a literal-only renderer:
    every authored string reaches output through one escaping function, and no
@@ -137,7 +136,7 @@ The `umf-access` host tool is distributed with the `umf_access` Python package
 | --- | --- | --- | --- |
 | US-080-AC1 | `generation_is_deterministic` | Byte, digest, source-map and diagnostic equality across two runs in Bun and in Chromium; one-byte changes to a source, a profile field and `codeSha256` each change `inputDigest` | `tests/compilation/access-generator.test.ts`, `scripts/compilation-browser.ts` |
 | US-080-AC2 | `access_views_validated` | One fixture per CONTRACT-070 conflict-table row (refusing and allowed), plus reference, coverage and native-type cases; each refusal carries its retained code and pointer and returns empty `files` and `symbols` | `tests/compilation/access-extension.test.ts` |
-| US-080-AC3 | `census_unknown_and_modes` | Unknown selected member refuses in both modes; unselected unknown content appears verbatim in `sources.json` with an `unselected` disposition; census includes no-code assertions; strict refuses `LOSS`; report admits a safe approximation and refuses a broadening one; obligations carry an owner and no discharge claim | `tests/compilation/access-generator.test.ts` |
+| US-080-AC3 | `census_unknown_and_modes` | Unknown selected member refuses in both modes; unselected unknown content appears verbatim in `sources.json` with an `unselected` disposition; census includes no-code assertions; strict refuses `LOSS`; the initial exact-only report mode also refuses non-exact relevant meaning; obligations carry an owner and no discharge claim | `tests/compilation/access-generator.test.ts` |
 | US-080-AC4 | `unsafe_names_and_limits_refuse` | Each `NAME` and `LIMIT` case refuses without partial output; hostile-literal corpus compiles to inert Python (checked by parsing the output with Python `ast`) | `tests/compilation/access-naming.test.ts` |
 | US-080-AC5 | `writer_refuses_changed_output` | Edited, added and removed files refuse with nothing written; injected pre-swap failure leaves the old tree byte-identical; post-swap failure is reported as written | `tests/compilation/access-writer.test.ts` |
 | US-080-AC6 | `ci_drift_check` | `check` exit codes and named paths; compatibility classification per public symbol for rename, retype and additive changes | `tests/compilation/access-writer.test.ts` |

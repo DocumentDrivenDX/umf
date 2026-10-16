@@ -1,0 +1,182 @@
+{
+  "kind": "Non-temporal Typed SDK implementation and public schema-load/instance-creation E2E",
+  "date": "2026-10-15",
+  "gitBase": "5bcfaec09075bb02586f7e04f9aa349208582d35",
+  "governingPlan": "docs/helix/04-build/typed-persistence-design.md",
+  "status": "Verified bounded implementation; full SDK and full B-TP slice acceptance remain OPEN",
+  "ownerDecisions": [
+    "Initial profile exact-only: strict and report both refuse unsupported selected meaning; future approximation profile separately governed.",
+    "Reachable presence rows use real-document witnesses. Absent-allowed/Null=no remains explicitly hypothetical under core0.8 and has direct-policy tests plus real core counterexamples.",
+    "Temporal qualification HELD. Existing temporal regression tests do not release the hold.",
+    "User prioritized basic schema-load and instance-creation E2E; no managed-target qualification or selection inferred."
+  ],
+  "B-TP-003": {
+    "initialStatus": "OPEN in b-tp-002-003-execution.json at fetched main5bcfaec0; no separate closure found",
+    "completedHere": [
+      "Exact-only policy and hypothesis qualifications",
+      "Explicit selectedKey source/schema validation and distinct Key DTOs; no first-Key inference",
+      "CLI public source-diff reporting",
+      "Preserve stage-two privileges.json",
+      "Fresh Bun/Chromium generation parity",
+      "Real public CLI load/generate/import/create/encode/decode E2E"
+    ],
+    "status": "Scoped evidence passes; full slice not declared closed independently of B-TP-001 and expanded action/type acceptance"
+  },
+  "implemented": [
+    "Metadata-driven shared encode_model/decode_model; generated wrappers are one runtime call; projection decoders added.",
+    "Sanitized decode ingress and recursive graph revalidation; nominal model/Key identity checked before raw dictionary reconstruction.",
+    "Generated final-model and Key unhashability enforcement in shared StrictModel.",
+    "Explicit generated update keyword parameters; MISSING omitted only after field-name admission; empty updates refuse.",
+    "Explicit selectedKey required; foreign/missing/unresolved selections refuse; alternate Key DTOs retain their exact field/order/identity.",
+    "Compatibility reports compare actual alternate Key signatures and projection codec columns.",
+    "Python installation eligibility >=3.11,<3.15; only3.11.17 and3.14.8 runtime behavior qualified here; all three checker pins retained."
+  ],
+  "verification": {
+    "Bun": {
+      "tests": 932,
+      "assertions": 3170,
+      "files": 14,
+      "failed": 0,
+      "log": "final-bun.log"
+    },
+    "installedPython": {
+      "testsPerRuntime": 95,
+      "runtimes": [
+        "3.11.17",
+        "3.14.8"
+      ],
+      "pydantic": "2.14.1",
+      "report": "replay.json"
+    },
+    "publicE2E": {
+      "e2e-314.json": {
+        "scenarios": [
+          [
+            "engine-only",
+            25
+          ],
+          [
+            "containers",
+            30
+          ],
+          [
+            "alternate-key",
+            28
+          ]
+        ],
+        "totalChecks": 83
+      },
+      "e2e-311.json": {
+        "scenarios": [
+          [
+            "engine-only",
+            25
+          ],
+          [
+            "containers",
+            30
+          ],
+          [
+            "alternate-key",
+            28
+          ]
+        ],
+        "totalChecks": 83
+      }
+    },
+    "checkers": {
+      "mypy": "2.4.0",
+      "pyright": "1.1.414 strict",
+      "ty": "0.0.88",
+      "languageTarget": "3.11",
+      "positive": "all pass",
+      "negative": "Exact expected line/rule diagnostics; five cases with Pyright follow-on diagnostics retained"
+    },
+    "runtimeFixProof": "Same generated package under defective/fixed installed wheels; scale verdict changes and both drift checks pass.",
+    "Chromium": {
+      "version": "153.0.8010.12",
+      "cases": 15,
+      "externalRequests": [],
+      "report": "browser.json"
+    },
+    "typecheck": "pass",
+    "boundaries": "8 TS/11 Python modules; zero violations",
+    "extensionAudit": "68/68 pass",
+    "structure": "pass",
+    "isolatedImport": "pass; installed runtime bytes verified against wheel"
+  },
+  "wheelSha256": "9efcee0885be5bc26d0af3f1729727bf9cfd3bffcff5ee241536631bb178e614",
+  "failedAttempts": [
+    "nominal-key-red.log reproduces actual same-shaped wrong-model acceptance before the fix.",
+    "final-bun-attempt-1.log retains CLI test60second timeout during concurrent verification; unchanged assertion/timeout suite rerun passes.",
+    "static-harness-attempt-1 retains expected-diagnostic mismatch; Pyright secondary diagnostics added explicitly, not suppressed.",
+    "e2e-attempt1: symlinked macOS temporary ancestor refused correctly; harness now uses realpath.",
+    "e2e-attempt2: report SHA helper received ArrayBuffer after behavioral checks; fixed to Uint8Array.",
+    "e2e-attempt3: JSON-null-prototype vs ordinary fixture object comparison; harness now compares JSON meaning.",
+    "Python3.11 initial --ignore-requires-python flag was unavailable; no behavioral acceptance from that failed install. Source probe passed, installation metadata corrected, actual installed wheel replay then passed."
+  ],
+  "remaining": [
+    {
+      "slices": "B-TP-001/003/004/005",
+      "status": "OPEN beyond the verified non-temporal subset",
+      "work": "Full current source-bound ActionRef/action surface and complete static/DSL acceptance, including all planned error cases. Do not transfer typing-spike or scoped generator evidence into full slice closure."
+    },
+    {
+      "slices": "B-TP-006 onward",
+      "status": "WEFT_BLOCKED / unqualified",
+      "work": "Select and qualify released W-0 WR-I3/I4/I6 catalog/carrier/security interface, then native raw/Truss catalog integration. No local SQL lowering or digest invention.",
+      "ownerSourceObserved": "Weft origin/main d50ca2f; current compile API and retained SDK requirements inspected read-only."
+    },
+    {
+      "slices": "B-TP-007/009/010/011/012/013/014/015",
+      "status": "OPEN",
+      "work": "Qualified mutation/action/search/native/engine adoption and unchanged-source integrated replay. No fake executors or managed/native support claim."
+    },
+    {
+      "scope": "temporal",
+      "status": "HELD",
+      "work": "No temporal qualification or temporal Key support promoted."
+    }
+  ],
+  "sourceSha256": {
+    "docs/helix/01-frame/user-stories/US-080-generate-typed-package.md": "a802042f84c8fb4a38f6f28e7cf1dfa5b9500d83594303737a423fcc14146994",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "e63639dfaed05ff62c4edab551a83147d121d2f6ef63b4bae6ffa760db70a894",
+    "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md": "9536f808e761bd74f75323aa316dd12e6220a2e592c06a106c0d45cce788a828",
+    "docs/helix/02-design/technical-designs/TD-080-generate-typed-package.md": "a83ea081587419294bf14c2744d48cf5610bb06227fb71c2fb9da21c04ba0b8e",
+    "docs/helix/03-test/test-plans/STP-080-generate-typed-package.md": "ea7f4f7370147445ea5ac5eccaedc68fa288c0a776601e07a54caa8a82335f2a",
+    "docs/helix/04-build/typed-persistence-design.md": "47eed1945c005cd58980bc3db0eeac980f75497310bc41772136a2727bac1f19",
+    "fixtures/access/commerce/actions.json": "0e6b0ece13fe5ef18ca1655ab4829bee4e8ea68b2e90d11d13dd26ac3b5b41bc",
+    "fixtures/access/commerce/containers.json": "d1de20ab896b3795f210e8afa17af31be55e545d02117c039c11c8b8b2e34852",
+    "fixtures/access/commerce/engine-only.json": "e16b17bfa07a5b10d2dfbc9a8d17473dfe1bdeb47fdf47d3608b5b0ee149809c",
+    "fixtures/access/commerce/named.json": "9c35ea6c7669958a67c963040f5467214a2b094635af32b68bd9f68bf324fd0a",
+    "fixtures/access/commerce/postgresql18.json": "a2b54818ab2a125431d7f0eb4afc18e1430c6283200ed464a4355873c561368a",
+    "fixtures/access/commerce/relationships.json": "83d4faec71f93ccf7efb023bb3b23277451182e9cb6dbaea23bdc27ebe7c2bba",
+    "package.json": "5f74e6af9e94b546a71ca88fe87a5f6bb02cb906902ca902d53ec697bb4b12a1",
+    "python/umf_access/compatibility-profile.json": "4c5cebf86fcf6b65f5cde32a0ef1995cdd72ecc31c9977d4c78c250ffeec236d",
+    "python/umf_access/pyproject.toml": "65f183359a3f3bc4b0089059bcc797db2564a75e11d163f477626653da76034a",
+    "python/umf_access/src/umf_access/codec_support.py": "77b9fbd6e57e37ad7bc0cb7fd3e531e2455fbbe81d79b1390d42bdd0fcdb7a10",
+    "python/umf_access/src/umf_access/dsl/_query.py": "bae0dc0fe33a42a94bd23d2405cadfa9beed122991a0221d8c47bc999221fa46",
+    "python/umf_access/src/umf_access/types.py": "9a356f596d21cdf2e9e08a30f883de55fed8f7cea0b5f3e37a34606ddf7907e5",
+    "python/umf_access/tests/packaging/build_wheel.py": "01b0b0001374a6d527e2582c762b5967e7d5e6b01d206d6668e28354f8887722",
+    "python/umf_access/tests/test_codecs.py": "653ca3e94f8894a875a34893150cf1d62f4f0d37c76ed98affa0f19e8626782f",
+    "python/umf_access/tests/test_runtime_driven_codecs.py": "7ff1c7be28092344ddfce7c7d26542f25a4cc3775fd6af098e56798d4e6c662a",
+    "scripts/access-e2e.ts": "aea6888842b37a4943bd337c2b188374e8821c7f8569bbaa94c5527461c7e520",
+    "scripts/umf-access-generate.ts": "4c4106ccacab55b6eaf4443a004ebff99fc4344347bd34f543f10be515a1b8a3",
+    "spec/extensions/access/package.json": "910735460e6bfb4366137aaf6b0839ca845d50baa002556867eb76a8c89ec90b",
+    "spec/extensions/access/schema.json": "2491be8c2441e3ac6ee1ca4c0b41113f8181828d33676ceb5907a5bb90eb9d34",
+    "src/compilation/admission/access/index.ts": "cc2b01c4f248fcf2edb818523cef4d0f39885f48aa7d49102d52189538a29ad3",
+    "src/compilation/admission/diff.ts": "07a614d99f56759138f0fd16e2df236fef670203f89582fee717dc13692e8166",
+    "src/compilation/admission/index.ts": "b48a0d18552f40e88d163ee837809a7a1065dcd373cffd2274131659183d3f38",
+    "src/compilation/ir/index.ts": "761042ef9a5c0ddba8b288e1f74e2dd5fcb5891252a1562921ba6a4a414a6c17",
+    "src/compilation/targets/python/index.ts": "4e80bf160b3a7050f79f1fe8a8c5264472429608cafbe454092ea4273b5a14e1",
+    "tests/compilation/access-diff.test.ts": "5f5438b7045012492094014542ae66788de00cb3adf8bd6da3d90296a16aa104",
+    "tests/compilation/access-generator.test.ts": "a1f386d3ea79cca45ae1dbd429f1b0c46189b5c460fda41f418d6e122a428c37",
+    "tests/compilation/access-matrix.test.ts": "bcf03c89477c43dca1f2fd1b8aaefddd8ed2ec431f1dab8db0e3e6d173ca650c",
+    "tests/compilation/access-writer.test.ts": "121ffb3a8fb39f364cadfb9839dfaa1c42e9d19ebb08dd0fef016e05d4cbaa21",
+    "tests/compilation/python/static/models/expected.json": "8b3ec735774d02eae1c5e423ed569cb38afeaf9e0b67d772e12e5c57eda5c7de",
+    "tests/compilation/python/static/models/negative/negative.py": "d78e59d906d4b691f6ca5628d375c0e73abff6bf141d8ff498cdb1451ce5c3f8",
+    "tests/compilation/python/static/models/positive/positive.py": "bf8b7a380348cb64246c0b32456c396fca7675f12bb4825f717886b8b643154b",
+    "docs/helix/04-build/implementation-plan.md": "9ac5b22a7c3c82e1f5c4c9885b2171103e671cbc302735fe49c831c00cef1e1b"
+  },
+  "review": "Self-review of source/ownership/nominal identity/metadata/name and compatibility invariants; actual regression controls retained. No independent review claimed."
+}

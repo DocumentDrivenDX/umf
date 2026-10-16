@@ -1,0 +1,646 @@
+{
+  "kind": "typed-sdk-latest-main-focused-review",
+  "date": "2026-10-16",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "task": "/root/astra_design_review"
+  },
+  "baseline": {
+    "reviewedCheckpoint": "2aff369d698c98f854804bbe5b90f1409fc411ce",
+    "incomingMain": "b19a997a5de8f1973f4928fc1db3d4895481ecea",
+    "scope": "Uncommitted reconciled merge plus exact repairs recorded in final reviewedFiles. Prior receipts remain scoped to their own bytes.",
+    "priorReview": "../integrated-main/astra-review.json"
+  },
+  "status": "complete for exact reconciled b19a997a source manifest; bounded component acceptance only",
+  "preservedFindings": {
+    "AI01-AI10": "Baseline repairs retained within their stated implemented subset. Explicit alternate-Key support now extends the original single-Key admission subset.",
+    "IR01-IR05": "Sanitized BaseModel validation, cursor carrier checks, owned projections, narrow native Key equality and exact generated source/cohort closure retained."
+  },
+  "findings": [
+    {
+      "id": "IR06",
+      "severity": "P1",
+      "title": "Multiple Key support exposed incomplete selected-Key identity checks",
+      "path": "python/umf_access/src/umf_access/capture.py",
+      "section": "_validate_node get/page; reviewed.build_query; generated RecordRef metadata",
+      "counterexample": "Two same-generation, same-shaped Key DTOs for the same Record have distinct Key IDs. The old module/element-only comparison admitted an alternate DTO where get/page required the selected Key, allowing components to be interpreted under the wrong Key semantics.",
+      "repair": "Generate selected/exact relationship key_id on root/join RecordRefs and compare document, core version, module, Record and Key identity in captured get/page and reviewed page compilation. Reviewed compilation also refuses any root/join RecordRef missing selected Key identity before calling the compiler.",
+      "regression": "python/umf_access/tests/test_reviewed_source.py::test_same_generation_alternate_key_cannot_replace_selected_key",
+      "disposition": "resolved; current source inspected and exact rebuilt-wheel/regression receipts verified"
+    },
+    {
+      "id": "IR07",
+      "severity": "P2",
+      "title": "Cross-module Field IDs collided in local codec wire inventories",
+      "path": "src/compilation/admission/index.ts",
+      "section": "record wireIds and request.projections inventory admission",
+      "counterexample": "A Record owns commerce/amount and other/amount with distinct Python names. The generator emitted two CodecField entries with field=\"amount\"; the local inventory boundary then refused every codec call (or an unchecked mapping could overwrite meaning).",
+      "repair": "Fail closed before emission for duplicate unqualified Field IDs in owned Record or projection inventory. Qualified local wire identities require a separately specified extension.",
+      "regression": "tests/compilation/access-generator.test.ts: cross-module duplicate wire Field IDs refuse instead of overwriting codecs",
+      "disposition": "resolved; current source inspected and exact rebuilt-wheel/regression receipts verified"
+    },
+    {
+      "id": "IR08",
+      "severity": "P2",
+      "title": "Source-provenance bridge violated Python package import boundaries",
+      "path": "python/umf_access/src/umf_access/reviewed.py",
+      "section": "module imports and _check_source",
+      "counterexample": "reviewed imported private dsl._nodes and loaded RUNTIME_ABI from the package facade, violating the package ownership graph and creating a facade back-edge; the mandatory boundary gate failed.",
+      "repair": "Define RUNTIME_ABI in types, preserve its public facade re-export, and import reference classes through the public dsl API; explicitly re-export KeyLiteral without changing its class identity.",
+      "regression": "scripts/check-access-python-boundaries.py and installed-wheel import/runtime replay",
+      "disposition": "resolved; current source inspected and exact rebuilt-wheel/regression receipts verified"
+    }
+  ],
+  "fixtureReconciliation": {
+    "path": "fixtures/access/commerce/containers.json",
+    "field": "labelItem",
+    "change": "create.null changed to true, matching existing row.null=true",
+    "basis": "Unchanged CONTRACT-070 complete nested alternatives require F/T in both row/create for nullable item/value Fields, with missing=false. This repairs an incompatible positive fixture; it does not weaken admission or change null semantics.",
+    "regression": "tests/compilation/access-generator.test.ts: nullable item view cannot narrow create null independently of row null"
+  },
+  "mergeReconciliation": {
+    "ownedFiles": [
+      "python/umf_access/src/umf_access/codec_support.py",
+      "src/compilation/targets/python/index.ts"
+    ],
+    "preserved": [
+      "Main CodecField dict ABI and projection codecs",
+      "Main explicit selected/alternate Key DTOs and action entityKey",
+      "Main runtime final/unhashable Key guards and nested exact-model identity",
+      "Review metadata FieldValidator algorithms, explicit update keywords and owned projections",
+      "Review raw-graph sanitization and exact generated/action source pins"
+    ],
+    "abiQualification": "Nominal prerelease version/ABI label does not transfer evidence between wheels. Only the exact rebuilt wheel paired with regenerated packages is qualified by current receipts."
+  },
+  "qualificationLimits": [
+    "Experimental scalar/to-one raw read profile only; trusted authored ReviewedSQL artifacts are not signed authority or complete CONTRACT-071 catalogs.",
+    "Native Key equality refusal is a narrow profile; it does not establish all type typmods, source-presence or native schema semantics.",
+    "Restore/incarnation and complete session/collation continuation identity remain open; host/port/database name/table OIDs alone are not restore detection.",
+    "Full native action execution, engine adoption, async/streaming/snapshot/search and Lakebase service qualification remain open.",
+    "Historical original and repaired-baseline receipts qualify only their own bytes.",
+    "Full revised DSL, general CONTRACT-071/072 catalog/Target ABI and full US/STP slice acceptance remain open; this review accepts no blanket SDK completion.",
+    "Lakebase remains compile-only; native service-principal proof, Spark/Unity Catalog and Truss/Ashlar SDK adoption remain open.",
+    "Temporal qualification remains HELD under the owner scope. Existing regression tests do not lift that hold.",
+    "Python >=3.11,<3.15 is a declared compatibility range; observed interpreter/platform combinations and checker settings are recorded separately.",
+    "Frozen browser SQL-to-actions cohorts and Truss performance/publication gates are unaffected."
+  ],
+  "reviewerChecks": [
+    {
+      "check": "Focused merged source review",
+      "result": "Checked complete selected-Key comparisons, nested presence contract/fixture, record/projection wire-ID refusals, CodecField metadata, exact nested model and sanitized validation, final guards, source pins, package boundary exports and current plan scope."
+    },
+    {
+      "check": "Direct focused executable checks during reconciliation",
+      "result": "TypeScript typecheck and codec-support mypy passed; runtime-driven codecs 5, sanitized codec tests 9, fresh generated codecs 2 and provenance tests 5 passed. Full final gates are parent-produced and independently hash-checked below."
+    },
+    {
+      "check": "Conflict resolution",
+      "result": "No conflict markers in owned files; git diff --check passed; only the two assigned resolved files staged, no commit."
+    }
+  ],
+  "finalReview": {
+    "verdict": "IR06, IR07 and IR08 are resolved; AI01\u2013AI10 and IR01\u2013IR05 repairs remain present in the merged implementation. No remaining blocker identified in the reviewed experimental implemented subset. This is not full SDK, STP slice, release or downstream adoption acceptance.",
+    "scopeBoundary": "Exact merged working files below reconcile checkpoint2aff369d with mainb19a997a plus focused repairs. Earlier baseline/integrated receipts are historical and are not used to qualify changed bytes. Subsequent code changes require new qualification.",
+    "plans": "Canonical and scoped plans accurately distinguish implemented components and partial B-TP-008 raw-read progress from full CONTRACT-071/072, complete DSL, native/engine adoption and release gates. Temporal qualification remains HELD; frozen SQL-to-actions and Truss publication/performance gates remain independent.",
+    "receiptValidation": {
+      "sourceHashEntries": 72,
+      "evidenceHashEntries": 31,
+      "generatedHashEntries": 10,
+      "mismatches": 0,
+      "wheelPythonSourceFilesMatched": 13,
+      "verificationSha256": "db93fd2673e6de5172861dbcbba68db0ae7a6e7edf5b58b45750b16c26e6ccad",
+      "generatedVerificationRoot": "/private/tmp/typed-sdk-latest-typing-final/generated",
+      "namedGates": {
+        "bun": {
+          "version": "1.4.2",
+          "tests": 944,
+          "assertions": 3271,
+          "files": 15
+        },
+        "runtime": {
+          "python": [
+            "3.11.17",
+            "3.14.8"
+          ],
+          "pydantic": "2.14.1",
+          "isolatedInstalledTestsPerRuntime": 103,
+          "wheelSha256": "5cd2c9090ce87e9ced925c1e6d256af3dac4f444d24f3b68f84ddd4f86ec1989",
+          "buildPython": "3.14.8",
+          "wheelSourceInventory": "wheel-build.json"
+        },
+        "publicCreationE2E": {
+          "e2e311.json": {
+            "status": "pass",
+            "wheelSha256": "5cd2c9090ce87e9ced925c1e6d256af3dac4f444d24f3b68f84ddd4f86ec1989",
+            "checks": 83,
+            "fixtures": [
+              "engine-only",
+              "containers",
+              "alternate-key"
+            ]
+          },
+          "e2e314.json": {
+            "status": "pass",
+            "wheelSha256": "5cd2c9090ce87e9ced925c1e6d256af3dac4f444d24f3b68f84ddd4f86ec1989",
+            "checks": 83,
+            "fixtures": [
+              "engine-only",
+              "containers",
+              "alternate-key"
+            ]
+          }
+        },
+        "native": {
+          "tests": 24,
+          "skips": 0,
+          "postgres": "18.6 Homebrew",
+          "cluster": "owned disposable UTF8 Unixsocket-only",
+          "compiler": "actual Weft raw-read wheel",
+          "weftWheelSha256": "23399ac55ca886587aa4762f5674adf24d40a1429d54cda8c10276846603aabf",
+          "cleanup": "owned server stopped; pg_ctl status3 reports no server running",
+          "lakebase": "compile-only"
+        },
+        "typing": {
+          "target": "3.11",
+          "mypy": "2.4.0 check_untyped_defs",
+          "pyright": "1.1.414 basic",
+          "ty": "0.0.88",
+          "positive": "generated reporting package +positive corpus clean on all three",
+          "negative": "19 misuse cases rejected by each checker; separate paths may share basenames"
+        },
+        "browser": {
+          "chromium": "153.0.8010.12",
+          "generatorCases": 15,
+          "runsPerRuntime": 2,
+          "reportingCases": 3,
+          "externalRequests": 0
+        },
+        "architecture": "TypeScript typecheck and TS/Python dependency-boundary checks pass; ABI constant no longer imported through facade"
+      },
+      "attribution": "Reviewer directly inspected merged source, ran the focused checks listed above, and verified final source/evidence/generated hashes and wheel/source equality. Parent produced the full final executable gates; this report does not claim an independent rerun of every gate.",
+      "checkerQualification": "Pyright uses basic, not strict. Exact named corpus/settings and interpreter versions are bounded evidence; they do not establish all declared platforms or full acceptance."
+    }
+  },
+  "reviewedFiles": {
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": {
+      "sha256": "e63639dfaed05ff62c4edab551a83147d121d2f6ef63b4bae6ffa760db70a894",
+      "bytes": 14655
+    },
+    "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md": {
+      "sha256": "16fcbe9f6e8a473b4b937bd0cf1880400af2d4f6678a7509784f76b49a92576f",
+      "bytes": 16087
+    },
+    "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md": {
+      "sha256": "a866b179a72259e155cce2fe4e326300fb99ab40e3166ca75e95cdd3b1bda4a3",
+      "bytes": 10483
+    },
+    "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md": {
+      "sha256": "9536f808e761bd74f75323aa316dd12e6220a2e592c06a106c0d45cce788a828",
+      "bytes": 16735
+    },
+    "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md": {
+      "sha256": "5734c795c272e4326aa2d1228e78e154b7baa4c15f6e87c6e772ec06af365fad",
+      "bytes": 33684
+    },
+    "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md": {
+      "sha256": "e546acdc49118edbca49b21dd8dfbb7ff7ff4e915b2fdbc07b164373f3b040e3",
+      "bytes": 30283
+    },
+    "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md": {
+      "sha256": "6b54852cb499e3bf6fe393152287878411d9153bc4b2b9ab449c92283c920c53",
+      "bytes": 21399
+    },
+    "docs/helix/02-design/contracts/CONTRACT-074-search.md": {
+      "sha256": "a1b631b2aa4c1ad5007a0e70f0ba9add14ec024071b3ad011bc0b879ebd2b439",
+      "bytes": 13547
+    },
+    "docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md": {
+      "sha256": "f5fd731cba3d7bf985c489c6e561e1ce58b79621d486724ca7329057bc7a7615",
+      "bytes": 8422
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/README.md": {
+      "sha256": "e3bdf9b6cc48ab86d305b40c388c33828c4358bb35e6cdbb41ba5e7a41b12af4",
+      "bytes": 2326
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/boundaries.log": {
+      "sha256": "7214b131697a03dcce246e68aa0ebd2a72e5cb6a89411c7c0cdd633715681da6",
+      "bytes": 260
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/browser-replay.ts": {
+      "sha256": "c4db8ac68a5d117583300c16a984152d7abe386cd05623f86c228d7e7f93584c",
+      "bytes": 5270
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/browser-reporting.log": {
+      "sha256": "a5af5259f1d7794a3fc1b52378dfb1f0db02ddbbbbf7b653cc955116fd9c3f60",
+      "bytes": 68
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/browser.json": {
+      "sha256": "581181863ab06a55cef2358a7bc9c498e242719313e77afa07008b3b048a0f9a",
+      "bytes": 2048
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/bun-tests.log": {
+      "sha256": "53a824fb62f6e49719b7a31617b7d9f7fa34b3efd818a424bac713deabcf3475",
+      "bytes": 82146
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/e2e311.json": {
+      "sha256": "d87b61b22652e1358b0cf4ac1de84a113e7a709b6ff711426a072713bcdc0ae5",
+      "bytes": 31941
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/e2e311.log": {
+      "sha256": "15df3914e7de73f04081ed7a7f95a72f36a16ff0771291ced358dc8002df2fe5",
+      "bytes": 141
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/e2e314.json": {
+      "sha256": "1ff13526540eb0fcf2cce516e83ec50ed99c8bf6aa016941f79729078b3e358a",
+      "bytes": 31947
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/e2e314.log": {
+      "sha256": "ecf1792aa9f6532b5d3c02403accf4b6e13b203595439dad5c07cb77f419e120",
+      "bytes": 141
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/generated-manifest.json": {
+      "sha256": "29043906e3bdd58a9b5b0122d3303c508481d2960ec515fbb8495a046e68cabd",
+      "bytes": 84095
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/generated-request.json": {
+      "sha256": "86216e436248b5caf61ca8472a01b436a532784bf08a71289c51509dfd259c5e",
+      "bytes": 8832
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/initial-concurrent-bun.log": {
+      "sha256": "778a83dc538461b62d2aaed02f6167a12bb5e616cb1a463461cd1bc5870a9de9",
+      "bytes": 83501
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/initial-e2e-nested-refusal.log": {
+      "sha256": "fbb807b2993e9e39d23ebc7c4538a9083bd44239476151e3009cdcac56cc8afa",
+      "bytes": 1806
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/installed311.log": {
+      "sha256": "c23101a4a8c4f2ed9e07f9abbb10ce9d98ef814ec3557c866ddd838589825f98",
+      "bytes": 14812
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/installed314.log": {
+      "sha256": "db3d541e8147f1c7097d88ec8e60cb81497104e980a557f7c987543881ebf921",
+      "bytes": 14816
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/mypy-negative.log": {
+      "sha256": "c2f984507049e19260ccd5fb0d52ff487ce4b849b903767f7c41cb6eb1f2b0a4",
+      "bytes": 6111
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/mypy-positive.log": {
+      "sha256": "46984ca20bf69f7b14ec1fd9bd82101d56a4e109e68f016fd2a04f22481b09b3",
+      "bytes": 43
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/native-tests.log": {
+      "sha256": "5f93d1a3c0040848e6b8f843542d22d9156aea9c82fff83f1d7fe49b0459f354",
+      "bytes": 3762
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/pyright-negative.log": {
+      "sha256": "a48091f87d00e3994cd07c92d1835a4d592199e6d1b0d829f505bbf881e7ebc7",
+      "bytes": 9333
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/pyright-positive.log": {
+      "sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+      "bytes": 37
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/replay-installed.py": {
+      "sha256": "f9095e56040aca0d6de28a85c92cb0f83ad731e0f659464124b5fd0533b7aa37",
+      "bytes": 1854
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/replay-native.py": {
+      "sha256": "c1c3452c1ddde85bca3deb3b682a975af8882178669c248cfae5ab2c55864b92",
+      "bytes": 1496
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/structure-check.json": {
+      "sha256": "3d6cf410304cebaa855dc1df461f9b8eb1381985e503c9593b1ba8bd9a6e1c7b",
+      "bytes": 751
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/ty-negative.log": {
+      "sha256": "f08e71fbbdd9897def0c3d0b9cded3e242c1e2b054378cc3913e5ead0db308c5",
+      "bytes": 3838
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/ty-positive.log": {
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/typecheck.log": {
+      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+      "bytes": 109
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/typing-results.json": {
+      "sha256": "0940231892cc2a9fc2f72c44687a5a0e40cc38ea0af3855ac79a1b6bb6ad0923",
+      "bytes": 2574
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/typing.log": {
+      "sha256": "ba12a143b9bada82ec32da985e084e83941daf8fd8d999bf29bfc7b2f92f8f06",
+      "bytes": 131
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/verification.json": {
+      "sha256": "db93fd2673e6de5172861dbcbba68db0ae7a6e7edf5b58b45750b16c26e6ccad",
+      "bytes": 15537
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/wheel-build.json": {
+      "sha256": "1cd6bad9aff4ab534a750571dd1870538b736bbf34da835c434b3ec4c9947dde",
+      "bytes": 6400
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/latest-main/wheel/umf_access-0.1.0.dev0-py3-none-any.whl": {
+      "sha256": "5cd2c9090ce87e9ced925c1e6d256af3dac4f444d24f3b68f84ddd4f86ec1989",
+      "bytes": 34872
+    },
+    "docs/helix/04-build/implementation-plan.md": {
+      "sha256": "4c90126f61e894f7bdd45d97e65592121b38b64e410ca2f89f0db25a57f55bfd",
+      "bytes": 1162789
+    },
+    "docs/helix/04-build/typed-persistence-design.md": {
+      "sha256": "894dc5a31653730c1517a17591cf5f9ec86a1e9ddbc20f67167ea74f332c8278",
+      "bytes": 32222
+    },
+    "fixtures/access/commerce/actions.json": {
+      "sha256": "0e6b0ece13fe5ef18ca1655ab4829bee4e8ea68b2e90d11d13dd26ac3b5b41bc",
+      "bytes": 13081
+    },
+    "fixtures/access/commerce/containers.json": {
+      "sha256": "3b12e28f5e3154379976261b48092086e9323bd38bd965e6dab9e07cbfef1f1f",
+      "bytes": 13888
+    },
+    "fixtures/access/commerce/engine-only.json": {
+      "sha256": "e16b17bfa07a5b10d2dfbc9a8d17473dfe1bdeb47fdf47d3608b5b0ee149809c",
+      "bytes": 10528
+    },
+    "fixtures/access/commerce/named.json": {
+      "sha256": "9c35ea6c7669958a67c963040f5467214a2b094635af32b68bd9f68bf324fd0a",
+      "bytes": 10909
+    },
+    "fixtures/access/commerce/postgresql18-binding.json": {
+      "sha256": "a8d523d74def9a8e9c795071a3297c2cfb775ecda914b5eaf2ce3d7bd872dc04",
+      "bytes": 1403
+    },
+    "fixtures/access/commerce/postgresql18.json": {
+      "sha256": "a2b54818ab2a125431d7f0eb4afc18e1430c6283200ed464a4355873c561368a",
+      "bytes": 12262
+    },
+    "fixtures/access/commerce/relationships.json": {
+      "sha256": "83d4faec71f93ccf7efb023bb3b23277451182e9cb6dbaea23bdc27ebe7c2bba",
+      "bytes": 11206
+    },
+    "python/umf_access/compatibility-profile.json": {
+      "sha256": "4c5cebf86fcf6b65f5cde32a0ef1995cdd72ecc31c9977d4c78c250ffeec236d",
+      "bytes": 2015
+    },
+    "python/umf_access/pyproject.toml": {
+      "sha256": "65f183359a3f3bc4b0089059bcc797db2564a75e11d163f477626653da76034a",
+      "bytes": 436
+    },
+    "python/umf_access/src/umf_access/__init__.py": {
+      "sha256": "2840c55dbc6ad699ec7d0e34c54fb3bf2c554cce9b6ce85484759cc9e853c5a2",
+      "bytes": 1065
+    },
+    "python/umf_access/src/umf_access/capture.py": {
+      "sha256": "c69c3ffa551772d321abf6dfe3d312f66875c932385030e5f77daba65a0e7380",
+      "bytes": 12604
+    },
+    "python/umf_access/src/umf_access/codec_support.py": {
+      "sha256": "c731b3ca9caca817ac27afcd25a5ea16736aa51694d5b50547d5425862a11f7d",
+      "bytes": 9254
+    },
+    "python/umf_access/src/umf_access/dsl/__init__.py": {
+      "sha256": "cd7384a4397d4159d140be9e4fcff50aeddedb686ede975438be9701911426a3",
+      "bytes": 990
+    },
+    "python/umf_access/src/umf_access/dsl/_context.py": {
+      "sha256": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+      "bytes": 896
+    },
+    "python/umf_access/src/umf_access/dsl/_expressions.py": {
+      "sha256": "b646088937f38a33dff1f4524922de579489b35bd7e9348748c100cd3bc4f423",
+      "bytes": 8296
+    },
+    "python/umf_access/src/umf_access/dsl/_nodes.py": {
+      "sha256": "8dcb629ba8d93cbb7b3a683de2af88fffb3d227e1b6aa07814a60a2fc21147f6",
+      "bytes": 6364
+    },
+    "python/umf_access/src/umf_access/dsl/_query.py": {
+      "sha256": "d91cda1d7f754c3c9b34f85edb7ef84ad04da6c7241fd37f5ae32a9b0a3c3c5f",
+      "bytes": 24017
+    },
+    "python/umf_access/src/umf_access/dsl/render.py": {
+      "sha256": "7b822dcbf2f723ea67a23ef9f1df82d7aacf48f8d5e8d99c66922074b16416b4",
+      "bytes": 12910
+    },
+    "python/umf_access/src/umf_access/postgres_read.py": {
+      "sha256": "862b41c1a80b71af7c113d48f294b02e259adce5c47efc4af19ca081e91673b3",
+      "bytes": 14101
+    },
+    "python/umf_access/src/umf_access/reviewed.py": {
+      "sha256": "92695788072f46d70051aeb3be8bd0e5dc1d1cc8637e732e23eca32c3c53421b",
+      "bytes": 13505
+    },
+    "python/umf_access/src/umf_access/types.py": {
+      "sha256": "8b8415d8b02f27592dbea001e9795253195453eca8d523915a5424d84642856a",
+      "bytes": 3935
+    },
+    "python/umf_access/src/umf_access/values.py": {
+      "sha256": "58fe19b0162989f8b9495cc3fe9b068a76f8e0ec4a8328c38652facc34039cfe",
+      "bytes": 9581
+    },
+    "python/umf_access/tests/packaging/build_wheel.py": {
+      "sha256": "b337a925de9bedbe9a42a2daa8734396b92c5eade677f3c29f49a268b0c15b37",
+      "bytes": 4749
+    },
+    "python/umf_access/tests/packaging/replay_installed.py": {
+      "sha256": "6ea285be31f9a51b6c0847533ccffc742c1442e022068db13e6a3cc40904e4b8",
+      "bytes": 15448
+    },
+    "python/umf_access/tests/packaging/snapshot_runtime.py": {
+      "sha256": "cc92d95645b03bb02db2b493f637523ffab5e80ec038d0b017c617785b7246a9",
+      "bytes": 5369
+    },
+    "python/umf_access/tests/test_capture.py": {
+      "sha256": "6dec4c3168c0fd6566b05661c4415fabdf590a698a8a350fe662a98515389d55",
+      "bytes": 9550
+    },
+    "python/umf_access/tests/test_codec_support_red.py": {
+      "sha256": "11e583a25ee3c4a630ed2dc81251b9947eb228cb57dcffe2f30ee644745ff044",
+      "bytes": 7978
+    },
+    "python/umf_access/tests/test_codecs.py": {
+      "sha256": "653ca3e94f8894a875a34893150cf1d62f4f0d37c76ed98affa0f19e8626782f",
+      "bytes": 2159
+    },
+    "python/umf_access/tests/test_dsl_render.py": {
+      "sha256": "b2bfef3ca8f6432ed2b53bc766dcf076095b709f5d0e2d447ab788a0e4e43bd6",
+      "bytes": 15613
+    },
+    "python/umf_access/tests/test_dsl_runtime.py": {
+      "sha256": "4494ef3a92e0ffc403327905ab92c8133fd65e03be4e4f1bacfbf02defecf447",
+      "bytes": 12274
+    },
+    "python/umf_access/tests/test_generated_actiontypes.py": {
+      "sha256": "39da2b7c72366c99eb931cb0fb5789c30161afd4c963790406ed53f2eaa00d04",
+      "bytes": 1915
+    },
+    "python/umf_access/tests/test_generated_models.py": {
+      "sha256": "37d2da8dfce2f8edc509c343e0e0e68c7cdea82e85f56f73949ad382a999e027",
+      "bytes": 3884
+    },
+    "python/umf_access/tests/test_generated_projections.py": {
+      "sha256": "f8eccb5031a5263a13886dd1a598f2eff6c5871ddf9e858bc993963eab385134",
+      "bytes": 2651
+    },
+    "python/umf_access/tests/test_golden_vectors.py": {
+      "sha256": "8c27221a7550b1643e54349349e48f9cac82c84ed145035e1809e25babc4d1e1",
+      "bytes": 4178
+    },
+    "python/umf_access/tests/test_native_key_admission.py": {
+      "sha256": "58732d3f2aac322576f6664452cea729ffe46bd40078e84494bc990b889c6a77",
+      "bytes": 2374
+    },
+    "python/umf_access/tests/test_refactor_regeneration.py": {
+      "sha256": "a22934fdc4a251773031e1dbb172280fb78fdb08bb85469491c7be5ecd7d599a",
+      "bytes": 9731
+    },
+    "python/umf_access/tests/test_reviewed_reads.py": {
+      "sha256": "50ae0d267f146cda19eb762b20e66b139be6cb31c7b851f436be365b5be8cd9c",
+      "bytes": 23654
+    },
+    "python/umf_access/tests/test_reviewed_source.py": {
+      "sha256": "2cbffb7624c79fab3b5820d8e012de89d8ba387e4835aa8c985e3b9ce54b1f0b",
+      "bytes": 5423
+    },
+    "python/umf_access/tests/test_runtime_driven_codecs.py": {
+      "sha256": "7ff1c7be28092344ddfce7c7d26542f25a4cc3775fd6af098e56798d4e6c662a",
+      "bytes": 4844
+    },
+    "python/umf_access/tests/test_temporal_carriers_red.py": {
+      "sha256": "bf1af190eb7d681c0c4e9913f6ce1dc01bd7eb3ea6896e336fb7a2b169c9ca91",
+      "bytes": 5819
+    },
+    "python/umf_access/tests/test_values_red.py": {
+      "sha256": "9b333cc2047b8b271eb2f20113705fe8ce0ab96daa81c1788d5663503c278e25",
+      "bytes": 4357
+    },
+    "python/umf_access/tests/test_wheel_contract.py": {
+      "sha256": "3e1b53ec68a7e05dee67c5ed432ceaa24574da414f47e402d6e1e5b04466a59e",
+      "bytes": 7119
+    },
+    "scripts/access-e2e.ts": {
+      "sha256": "aea6888842b37a4943bd337c2b188374e8821c7f8569bbaa94c5527461c7e520",
+      "bytes": 11024
+    },
+    "scripts/check-access-python-boundaries.py": {
+      "sha256": "d4fce59de4fa42c227ed49a10c3d016c61f9dbd73c0753832c2417e48bc814f8",
+      "bytes": 7976
+    },
+    "scripts/check-compilation-boundaries.ts": {
+      "sha256": "5e3caef8983f2f347e3635f61669e4d4e74e1e319e4d59b90cea17637e5036be",
+      "bytes": 6362
+    },
+    "scripts/generate-access-reporting-fixture.ts": {
+      "sha256": "a3ed7d41e7af67127a6e33b682256236702bde7ac9be5757d1f9b5924d46b244",
+      "bytes": 3801
+    },
+    "scripts/umf-access-generate.ts": {
+      "sha256": "4c4106ccacab55b6eaf4443a004ebff99fc4344347bd34f543f10be515a1b8a3",
+      "bytes": 9551
+    },
+    "scripts/verify-access-reporting-types.py": {
+      "sha256": "c39d519f718418942c13415e31a8680e67f75f22ebd22e231cfbc04c8a05f3b2",
+      "bytes": 3512
+    },
+    "spec/extensions/access/package.json": {
+      "sha256": "910735460e6bfb4366137aaf6b0839ca845d50baa002556867eb76a8c89ec90b",
+      "bytes": 15781
+    },
+    "spec/extensions/access/schema.json": {
+      "sha256": "2491be8c2441e3ac6ee1ca4c0b41113f8181828d33676ceb5907a5bb90eb9d34",
+      "bytes": 14175
+    },
+    "src/compilation/admission/access/index.ts": {
+      "sha256": "c1e7a6289d7c8399daba12a1bfdd90e245c270f1e02985a2ad88f16ef7eeb2a3",
+      "bytes": 15738
+    },
+    "src/compilation/admission/diff.ts": {
+      "sha256": "07a614d99f56759138f0fd16e2df236fef670203f89582fee717dc13692e8166",
+      "bytes": 7805
+    },
+    "src/compilation/admission/index.ts": {
+      "sha256": "acd2734fe94972180367df049da2cb033b2cf6fec720f2555d330ceabdfb97af",
+      "bytes": 30481
+    },
+    "src/compilation/bundle/hash.ts": {
+      "sha256": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8",
+      "bytes": 4681
+    },
+    "src/compilation/bundle/index.ts": {
+      "sha256": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8",
+      "bytes": 3502
+    },
+    "src/compilation/index.ts": {
+      "sha256": "2d62b2e0f8bafa0d8d2a26488c04fc8c1b38eb8f14141c9132312ba0cff6e7d0",
+      "bytes": 1263
+    },
+    "src/compilation/ir/index.ts": {
+      "sha256": "5e596524439b02b740a9f1423383e7f4d66c2e7f4278ddc174b67582d0126d0d",
+      "bytes": 3490
+    },
+    "src/compilation/targets/python/index.ts": {
+      "sha256": "10bf355974f9a2360c289b2b07d90e37e198c07232c7d5610b2f3e7e82aefb80",
+      "bytes": 21813
+    },
+    "src/extensions/actions/plan-identity.ts": {
+      "sha256": "a97e2a396f4a6d10209eac2debaae502a9dfc420d87402bfb76a4d12e5e646a0",
+      "bytes": 309
+    },
+    "tests/compilation/access-context.test.ts": {
+      "sha256": "5783f70d01f2d9e2f35842d328fe9957acba6bd42295ecaa6e68c4d0ba616fa6",
+      "bytes": 2856
+    },
+    "tests/compilation/access-diff.test.ts": {
+      "sha256": "5f5438b7045012492094014542ae66788de00cb3adf8bd6da3d90296a16aa104",
+      "bytes": 2778
+    },
+    "tests/compilation/access-digest.test.ts": {
+      "sha256": "bd7394a1b90d402ed5f41bad468eae2c66404f001faa8e725ccfabf27019c617",
+      "bytes": 1523
+    },
+    "tests/compilation/access-extension.test.ts": {
+      "sha256": "150e635fd37617f820196e44d96df7729052997646e39523e24701077d474a6f",
+      "bytes": 5358
+    },
+    "tests/compilation/access-fixtures.ts": {
+      "sha256": "0cb82eb2ce651ebf9b32d7b6a110b1bbdbbf755846ae30058c4b70536b7dcd2c",
+      "bytes": 1663
+    },
+    "tests/compilation/access-generator.test.ts": {
+      "sha256": "062acf837d06e8f2182f8d8d91b4be6c26047a4477989fdf94308c072dfb0c0c",
+      "bytes": 23031
+    },
+    "tests/compilation/access-golden-vectors.test.ts": {
+      "sha256": "307db3da186c57a97511e5b7463cc1aa26975bfd6cce4e884ab80b849b218c2f",
+      "bytes": 1499
+    },
+    "tests/compilation/access-joins.test.ts": {
+      "sha256": "eb63e581e20de758f04ae9ce58d31dc893c28a2f92596320df9c3db3bf4803e6",
+      "bytes": 1846
+    },
+    "tests/compilation/access-matrix.test.ts": {
+      "sha256": "bcf03c89477c43dca1f2fd1b8aaefddd8ed2ec431f1dab8db0e3e6d173ca650c",
+      "bytes": 5120
+    },
+    "tests/compilation/access-naming.test.ts": {
+      "sha256": "da5eaf395091f04ec7589dcf450a8d7df643a7729919bdb46824865fa0a34d62",
+      "bytes": 6250
+    },
+    "tests/compilation/access-schemas.test.ts": {
+      "sha256": "bc3f686db04dbc21d5ce5860da49a4d2e0af9552711014b4fbf20853345fbaf9",
+      "bytes": 1601
+    },
+    "tests/compilation/access-writer.test.ts": {
+      "sha256": "bd661fffca38ee0efd1d8dd86b9e7de24a8ca6fa826232dc12983fb292fe11db",
+      "bytes": 9483
+    },
+    "tests/compilation/boundaries.test.ts": {
+      "sha256": "5997ed3f1982d810be2d1502b527b8ced5253c7029f1bb0cf1deb645d3710180",
+      "bytes": 9689
+    }
+  }
+}

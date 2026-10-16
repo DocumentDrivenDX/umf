@@ -11,7 +11,8 @@ import json
 import re
 from typing import Generic, Protocol, TypeVar, cast
 from pydantic import BaseModel
-from .dsl._nodes import GeneratedSource, FieldRef, RecordRef, KeyLiteral
+from .dsl import GeneratedSource, FieldRef, RecordRef, KeyLiteral
+from .types import RUNTIME_ABI
 
 P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
@@ -107,7 +108,6 @@ def _fields(model: type[BaseModel]) -> list[dict[str, object]]:
 
 
 def _check_source(source: GeneratedSource, binding: Mapping[str, object]) -> None:
-    from . import RUNTIME_ABI
     model = binding.get("modelJson")
     if (type(model) is not str or hashlib.sha256(model.encode()).hexdigest() != source.document_sha256
             or binding.get("modelSha256") != source.document_sha256
@@ -225,6 +225,8 @@ def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type
         raise ReadBuildError("CATALOG_STALE: query lacks generated source")
     _check_source(source, binding)
     def check_references(value: object) -> None:
+        if isinstance(value, RecordRef) and value.key_id is None:
+            raise ReadBuildError("CATALOG_STALE: query lacks selected Key identity")
         if isinstance(value, (RecordRef, FieldRef, KeyLiteral)) and value.source != source:
             raise ReadBuildError("CATALOG_STALE: mixed query generations")
         if is_dataclass(value) and not isinstance(value, type):
@@ -247,7 +249,7 @@ def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type
         cursor_name = str(cursor.args[0])
         parameter = next(p for p in variant.parameters if p.name == cursor_name)
         identity = dict(parameter.key_identity)
-        if identity.get("module") != record.module or identity.get("element") != record.element:
+        if identity != {"documentId": source.document_id, "coreVersion": source.core_version, "module": record.module, "element": record.element, "key": record.key_id}:
             raise ReadBuildError("page cursor Key differs from root Record")
     declared = [(p.name, _carrier(p.carrier)) for p in variant.parameters if p.name != cursor_name]
     expected = [(f["name"], (f["carrier"], f["nullable"])) for f in _fields(parameters)]

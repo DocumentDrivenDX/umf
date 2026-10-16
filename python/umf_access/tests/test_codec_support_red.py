@@ -152,13 +152,13 @@ if __name__ == "__main__":
 
 class DecodeRedaction(unittest.TestCase):
     def test_nested_map_key_is_not_published_in_decode_failure(self):
-        from umf_access.codec_support import decode_model, ValueNormalizer
+        from umf_access.codec_support import decode_model
         from umf_access.types import StrictModel, CodecError
         class MapRow(StrictModel):
             data: dict[str, int]
         private = "private-customer@example.invalid"
         with self.assertRaises(CodecError) as caught:
-            decode_model(MapRow, (("data", "data", ValueNormalizer("identity")),), ["data"], [{private: "not-int"}])
+            decode_model(MapRow, ["data"], [{private: "not-int"}], ({"python": "data", "field": "data", "kind": "identity", "item": None},))
         self.assertNotIn(private, str(caught.exception))
         self.assertNotIn("not-int", str(caught.exception))
         self.assertIn("data", str(caught.exception))

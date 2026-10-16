@@ -116,8 +116,9 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   const keyMeaning=inspectCoreKeys(document,ref).meaning;
   if(keyMeaning.state==='partial'||keyMeaning.state==='legacy')unknown(located.path+'/keys');
   const keys=keyMeaning.state==='known'||keyMeaning.state==='partial'?keyMeaning.keys:[];
-  const selectedKey:unknown=view.selectedKey;
-  if(!object(selectedKey)||Object.keys(selectedKey).some(k=>!['module','element','key'].includes(k))||selectedKey.module!==ref.module||selectedKey.element!==ref.element||typeof selectedKey.key!=='string'||!keys.some(k=>k.id===selectedKey.key))add('ACCESS_REFERENCE',path+'/selectedKey');
+  const selection=view.selectedKey;
+  if(!object(selection)||selection.module!==ref.module||selection.element!==ref.element||typeof selection.key!=='string'||!keys.some(k=>k.id===selection.key)||Object.keys(selection).some(k=>!['module','element','key'].includes(k)))add('ACCESS_REFERENCE',path+'/selectedKey');
+  const orderedKeys=[...keys].sort((a,b)=>Number(b.id===selection?.key)-Number(a.id===selection?.key));
   const resolved:ResolvedField[]=[];
   for(const [fi,fv] of view.fields.entries()){
    const fp=path+`/fields/${fi}`,field=locate(fv.field).element,expectedField=expected.find(e=>identity(e.ref)===identity(fv.field));
@@ -139,7 +140,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const card=inspectCoreCardinality(document,fv.field).meaning;
    resolved.push({ref:{...fv.field},pointer:locate(fv.field).path,owned:memberIds.has(identity(fv.field)),viewPointer:fp,python:'',logicalName:typeof field.name==='string'?field.name:null,scalarType:field.scalarType??null,cardinality:card.state==='known'?card.cardinality:'unspecified',row:{...fv.row},create:{...fv.create},mutable:fv.mutable,generated:fv.generated,...(fv.temporal?{temporal:fv.temporal}:{}),facets:{...interpreted},properties,...(card.state==='known'&&card.itemType?{item:card.itemType}:{} )});
   }
-  records.push({ref:{...ref},pointer:located.path,python:'',namespace:document.modules.find(m=>m.id===ref.module)!.namespace,logicalName:typeof node.name==='string'?node.name:null,fields:resolved,keys:keys.map(k=>({id:k.id,fields:k.fields.map(r=>({...r}))})),selected:true});
+  records.push({ref:{...ref},pointer:located.path,python:'',namespace:document.modules.find(m=>m.id===ref.module)!.namespace,logicalName:typeof node.name==='string'?node.name:null,fields:resolved,keys:orderedKeys.map(k=>({id:k.id,fields:k.fields.map(r=>({...r}))})),selected:true});
  }
  return {records,diagnostics};
 }

@@ -212,6 +212,9 @@ class Query(Generic[O, R, K]):
         fields = cast(Mapping[str, object], raw_fields)
         if any(name not in fields for name in values):
             raise CaptureError("CAPTURE_UNSUPPORTED", "update requires generated mutable field metadata")
+        values = {name: value for name, value in values.items() if value is not MISSING}
+        if not values:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "update requires at least one assignment")
         assignments: list[tuple[FieldRef, Node]] = []
         for name, value in values.items():
             field = fields[name]

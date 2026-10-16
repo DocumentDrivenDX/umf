@@ -1,0 +1,145 @@
+{
+  "kind": "local-prerelease-wheel-build",
+  "status": "pass",
+  "runtimeAcceptance": "UNTESTED; building bytes does not qualify imports or generated models",
+  "command": [
+    "/private/tmp/umf-tp001-compat-env/bin/python",
+    "-I",
+    "-m",
+    "build",
+    "--wheel",
+    "--no-isolation",
+    "--outdir",
+    "/private/tmp/umf-sdk-nontemporal/wheel",
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access"
+  ],
+  "exitCode": 0,
+  "stdout": "* Getting build dependencies for wheel...\n* Building wheel...\nSuccessfully built umf_access-0.1.0.dev0-py3-none-any.whl\n",
+  "stderr": "",
+  "sources": {
+    "pyproject.toml": "65f183359a3f3bc4b0089059bcc797db2564a75e11d163f477626653da76034a",
+    "compatibility-profile.json": "4c5cebf86fcf6b65f5cde32a0ef1995cdd72ecc31c9977d4c78c250ffeec236d",
+    "src/umf_access/__init__.py": "4d924a6cba4b47b844f0ed7ca3dbc0eb2fcaf66aef3582e459250d688b769259",
+    "src/umf_access/capture.py": "60f413cb0f9ebf68629868df17d240a1ae117549892223e080461f3d676e627f",
+    "src/umf_access/codec_support.py": "77b9fbd6e57e37ad7bc0cb7fd3e531e2455fbbe81d79b1390d42bdd0fcdb7a10",
+    "src/umf_access/dsl/__init__.py": "44f441e0ac082b916b9ada9ed043e79946639d23513d9b4be4c25b12cd4b9783",
+    "src/umf_access/dsl/_context.py": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+    "src/umf_access/dsl/_expressions.py": "ef31b5ae5adf68b85fdf6594d2fc17efeccc76082ffacf4722e5e564068b5e75",
+    "src/umf_access/dsl/_nodes.py": "94750ae45c660bd2f4bfa196036ea846253ea44fa2de09b661d2062c84c164d7",
+    "src/umf_access/dsl/_query.py": "bae0dc0fe33a42a94bd23d2405cadfa9beed122991a0221d8c47bc999221fa46",
+    "src/umf_access/dsl/render.py": "d81d863e387427f26c25cde632606d941ec522082686b3d0b048da8ca4b9ed1e",
+    "src/umf_access/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/umf_access/types.py": "9a356f596d21cdf2e9e08a30f883de55fed8f7cea0b5f3e37a34606ddf7907e5",
+    "src/umf_access/values.py": "8deb1a50a085b9ff02717fdb32d4dfd341d005f10097f55d92062af7cdca4dcd"
+  },
+  "profile": {
+    "id": "umf-access-local-production-replay",
+    "version": "0.1.0",
+    "scope": "Local prerelease packaging and installed-wheel replay; no publication or native qualification",
+    "python": "3.14.8",
+    "checkerPythonTarget": "3.11",
+    "runtimeAbi": {
+      "distribution": "umf_access",
+      "version": "0.1.0.dev0",
+      "abi": "umf-access-runtime/0.1"
+    },
+    "runtimeDependencies": {
+      "pydantic": "2.14.1",
+      "pydantic-core": "2.50.1",
+      "annotated-types": "0.8.0",
+      "typing-extensions": "4.16.0",
+      "typing-inspection": "0.4.4"
+    },
+    "buildDependencies": {
+      "build": "1.3.0",
+      "hatchling": "1.27.0",
+      "packaging": "26.3",
+      "pluggy": "1.7.0",
+      "pyproject-hooks": "1.3.3",
+      "trove-classifiers": "2026.9.21.13"
+    },
+    "checkers": {
+      "mypy": "2.4.0",
+      "pyright": "1.1.414",
+      "ty": "0.0.88"
+    },
+    "requiredExports": {
+      "umf_access": [
+        "RUNTIME_ABI"
+      ],
+      "umf_access.types": [
+        "StrictModel",
+        "ActionRef"
+      ],
+      "umf_access.values": [
+        "validate_boolean",
+        "validate_integer",
+        "validate_decimal",
+        "validate_string",
+        "validate_binary",
+        "validate_date",
+        "validate_instant",
+        "validate_local",
+        "validate_length",
+        "validate_range",
+        "validate_allowed"
+      ],
+      "umf_access.codec_support": [
+        "revalidate_model",
+        "checked_row",
+        "CodecField",
+        "encode_model",
+        "decode_model"
+      ],
+      "umf_access.dsl": [
+        "Column",
+        "FieldRef",
+        "RecordRef",
+        "Query",
+        "Terminal",
+        "Related"
+      ],
+      "umf_access.capture": [
+        "ExpressionNode",
+        "ProjectionRef",
+        "CapturedKey",
+        "render_logical",
+        "capture"
+      ]
+    },
+    "forbiddenImports": [
+      "weft",
+      "truss",
+      "ashlar",
+      "umf",
+      "psycopg",
+      "databricks",
+      "pyspark"
+    ],
+    "nativeTargets": "UNTESTED; no driver extras or platform support selected",
+    "requiresPython": ">=3.11,<3.15",
+    "compatibilityRuntimes": [
+      "3.11.17",
+      "3.14.8"
+    ]
+  },
+  "wheel": "/private/tmp/umf-sdk-nontemporal/wheel/umf_access-0.1.0.dev0-py3-none-any.whl",
+  "wheelSha256": "9efcee0885be5bc26d0af3f1729727bf9cfd3bffcff5ee241536631bb178e614",
+  "inventory": {
+    "umf_access/__init__.py": "4d924a6cba4b47b844f0ed7ca3dbc0eb2fcaf66aef3582e459250d688b769259",
+    "umf_access/capture.py": "60f413cb0f9ebf68629868df17d240a1ae117549892223e080461f3d676e627f",
+    "umf_access/codec_support.py": "77b9fbd6e57e37ad7bc0cb7fd3e531e2455fbbe81d79b1390d42bdd0fcdb7a10",
+    "umf_access/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "umf_access/types.py": "9a356f596d21cdf2e9e08a30f883de55fed8f7cea0b5f3e37a34606ddf7907e5",
+    "umf_access/values.py": "8deb1a50a085b9ff02717fdb32d4dfd341d005f10097f55d92062af7cdca4dcd",
+    "umf_access/dsl/__init__.py": "44f441e0ac082b916b9ada9ed043e79946639d23513d9b4be4c25b12cd4b9783",
+    "umf_access/dsl/_context.py": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+    "umf_access/dsl/_expressions.py": "ef31b5ae5adf68b85fdf6594d2fc17efeccc76082ffacf4722e5e564068b5e75",
+    "umf_access/dsl/_nodes.py": "94750ae45c660bd2f4bfa196036ea846253ea44fa2de09b661d2062c84c164d7",
+    "umf_access/dsl/_query.py": "bae0dc0fe33a42a94bd23d2405cadfa9beed122991a0221d8c47bc999221fa46",
+    "umf_access/dsl/render.py": "d81d863e387427f26c25cde632606d941ec522082686b3d0b048da8ca4b9ed1e",
+    "umf_access-0.1.0.dev0.dist-info/METADATA": "34b9e71374058aea214f2d60aa8501d4fe70c49d147831b10c055ffbd54d2292",
+    "umf_access-0.1.0.dev0.dist-info/WHEEL": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724",
+    "umf_access-0.1.0.dev0.dist-info/RECORD": "ccdb082367536944d79cfc45851eab2188625804b13ebaedb8b0d157f6bbb1a4"
+  }
+}

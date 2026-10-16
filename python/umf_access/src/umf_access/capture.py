@@ -164,11 +164,15 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
         elif isinstance(value, tuple):
             for child in cast(tuple[object, ...], value):
                 visit(child)
-    if node.op == "get":
-        key = cast(Node, node.args[2])
+    if node.op in ("get", "page"):
+        key = cast(Node, node.args[2] if node.op == "get" else node.args[3])
         identity = dict(cast(tuple[tuple[str, str], ...], key.args[2])) if key.op == "key_param" else dict(cast(KeyLiteral, key.args[0]).identity) if key.op == "key" else {}
         if identity and (identity["module"], identity["element"]) != (record.module, record.element):
             raise CaptureError("CAPTURE_SIGNATURE", "Key belongs to another Record")
+        if record.key_id is not None and record.source is not None:
+            expected = {"documentId": record.source.document_id, "coreVersion": record.source.core_version, "module": record.module, "element": record.element, "key": record.key_id}
+            if identity != expected:
+                raise CaptureError("CAPTURE_SIGNATURE", "Key differs from selected Record Key")
     visit(node)
 
 

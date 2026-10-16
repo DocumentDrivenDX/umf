@@ -1,6 +1,6 @@
 """Typed access runtime; capability qualification is recorded per build profile."""
 
-from .types import MISSING as MISSING
+from .types import MISSING as MISSING, RUNTIME_ABI as RUNTIME_ABI
 from .dsl import (
     Column as Column,
     Continuation as Continuation,
@@ -29,7 +29,6 @@ from .capture import (
     capture as capture,
 )
 
-RUNTIME_ABI = "umf-access-runtime/0.1"
 
 from .dsl import Join as Join, Joined as Joined, JoinProjection as JoinProjection
 from .reviewed import (

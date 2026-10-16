@@ -1,15 +1,24 @@
 """Value-graph and inventory boundaries for generated codecs, without I/O."""
 from collections.abc import Sequence
-from typing import TypeVar, get_args, cast
+from datetime import timezone
+from typing import TypeVar, TypedDict, get_args, cast
 
 from pydantic import BaseModel, ValidationError
 
-from .types import CodecError, StrictModel
+from .types import CodecError, StrictModel, MISSING
+from .values import validate_instant
 
 M = TypeVar("M", bound=BaseModel)
 
 
-def _raw_graph(value: object, active: set[int], budget: list[int], depth: int = 0) -> object:
+def _model_types(annotation: object) -> tuple[type[BaseModel], ...]:
+    if isinstance(annotation, type) and issubclass(annotation, BaseModel):
+        return (annotation,)
+    return tuple(model for argument in get_args(annotation) for model in _model_types(argument))
+
+
+def _raw_graph(value: object, active: set[int], budget: list[int], depth: int = 0,
+               annotation: object = None) -> object:
     budget[0] -= 1
     if depth > 128 or budget[0] < 0:
         raise CodecError("value graph exceeds codec bounds")
@@ -21,18 +30,22 @@ def _raw_graph(value: object, active: set[int], budget: list[int], depth: int = 
     active.add(identity)
     try:
         if isinstance(value, BaseModel):
+            declared = _model_types(annotation)
+            if declared and type(value) not in declared:
+                raise CodecError("field model: wrong declared model identity")
             attributes: dict[str, object] = dict(object.__getattribute__(value, "__dict__"))
             extras = object.__getattribute__(value, "__pydantic_extra__")
             if extras:
                 attributes.update(extras)
-            return {key: _raw_graph(item, active, budget, depth + 1)
+            return {key: _raw_graph(item, active, budget, depth + 1,
+                                    type(value).model_fields[key].annotation if key in type(value).model_fields else None)
                     for key, item in attributes.items()}
         if isinstance(value, dict):
             entries = cast(dict[object, object], value)
-            return {key: _raw_graph(item, active, budget, depth + 1)
+            return {key: _raw_graph(item, active, budget, depth + 1, annotation)
                     for key, item in entries.items()}
         sequence = cast(list[object] | tuple[object, ...], value)
-        items = [_raw_graph(item, active, budget, depth + 1) for item in sequence]
+        items = [_raw_graph(item, active, budget, depth + 1, annotation) for item in sequence]
         return tuple(items) if isinstance(value, tuple) else items
     finally:
         active.remove(identity)
@@ -58,7 +71,7 @@ def revalidate_model(model_type: type[M], value: M) -> M:
     """Reconstruct every raw model/container before validation; never dump it."""
     if not isinstance(value, model_type):
         raise CodecError("codec requires the declared model type")
-    raw = _raw_graph(value, set(), [10000])
+    raw = _raw_graph(value, set(), [10000], annotation=model_type)
     return validate_graph(model_type, raw)
 
 
@@ -102,54 +115,71 @@ def checked_row(expected: Sequence[str], columns: Sequence[str],
     return _build_mapping(actual, values)
 
 
-from dataclasses import dataclass
-from datetime import timezone
-from pydantic import MISSING
-from .values import validate_instant
+class CodecField(TypedDict):
+    """Resolved local carrier metadata; never a guessed target transport tag."""
 
-
-@dataclass(frozen=True)
-class ValueNormalizer:
+    python: str
+    field: str
     kind: str
-    child: "ValueNormalizer | None" = None
+    item: "CodecField | None"
 
-    def __call__(self, value: object) -> object:
-        if value is None or value is MISSING:
-            return value
-        if self.kind == "instant":
-            return validate_instant(value).astimezone(timezone.utc)
-        if self.kind in ("array", "map"):
-            if self.child is None:
-                raise CodecError("nested normalization metadata required")
-            if self.kind == "array":
-                if not isinstance(value, (tuple, list)):
-                    raise CodecError("array carrier rule")
-                items = [self.child(item) for item in value]
-                return tuple(items) if isinstance(value, tuple) else items
-            if not isinstance(value, dict):
-                raise CodecError("map carrier rule")
-            return {key: self.child(item) for key, item in value.items()}
-        if self.kind != "identity":
-            raise CodecError("unsupported normalization metadata")
+
+def _convert(value: object, field: CodecField) -> object:
+    if value is None or value is MISSING:
         return value
+    if field["kind"] == "instant":
+        return validate_instant(value).astimezone(timezone.utc)
+    if field["kind"] in ("array", "map"):
+        child = field["item"]
+        if child is None:
+            raise CodecError("container codec requires item metadata")
+        if field["kind"] == "map":
+            if type(value) is not dict:
+                raise CodecError("map carrier required")
+            return {key: _convert(item, child)
+                    for key, item in cast(dict[str, object], value).items()}
+        if type(value) not in (list, tuple):
+            raise CodecError("array carrier required")
+        items = [_convert(item, child) for item in cast(list[object] | tuple[object, ...], value)]
+        return tuple(items) if type(value) is tuple else items
+    if field["kind"] != "identity":
+        raise CodecError("unknown local codec carrier")
+    return value
 
 
-CodecFields = tuple[tuple[str, str, ValueNormalizer], ...]
+def _codec_inventory(model_type: type[M], fields: tuple[CodecField, ...]) -> None:
+    names = tuple(field["python"] for field in fields)
+    identities = tuple(field["field"] for field in fields)
+    if (any(type(name) is not str or not name for name in names + identities)
+            or len(set(names)) != len(names) or len(set(identities)) != len(identities)
+            or set(names) != set(model_type.model_fields)):
+        raise CodecError("codec metadata does not match declared model inventory")
 
 
-def encode_model(model_type: type[M], value: M, fields: CodecFields) -> dict[str, object]:
+def encode_model(model_type: type[M], value: M,
+                 fields: tuple[CodecField, ...]) -> dict[str, object]:
+    """Revalidate the entire graph and copy admitted local carriers by Field ID.
+
+    This is the local Python carrier boundary. A target must still supply its
+    recognized Weft carrier conversion; this helper makes no native claim.
+    """
+    _codec_inventory(model_type, fields)
     checked = revalidate_model(model_type, value)
-    return {source: normalizer(getattr(checked, name)) for source, name, normalizer in fields
-            if getattr(checked, name) is not MISSING}
+    return {field["field"]: _convert(item, field) for field in fields
+            if (item := getattr(checked, field["python"])) is not MISSING}
 
 
-def decode_model(model_type: type[M], fields: CodecFields,
-                 columns: Sequence[str], row: Sequence[object]) -> M:
-    values = checked_row(tuple(source for source, _, _ in fields), columns, row)
-    checked = validate_graph(model_type, {name: values[source] for source, name, _ in fields})
-    return validate_graph(model_type, {name: normalizer(getattr(checked, name)) for _, name, normalizer in fields})
-
-
+def decode_model(model_type: type[M], columns: Sequence[str], row: Sequence[object],
+                 fields: tuple[CodecField, ...]) -> M:
+    """Check inventory before mapping and sanitize validation errors at ingress."""
+    _codec_inventory(model_type, fields)
+    values = checked_row(tuple(field["field"] for field in fields), columns, row)
+    # model_construct is deliberately followed by raw graph revalidation. This
+    # keeps decode and encode on the same sanitized, non-trusting boundary.
+    checked = revalidate_model(model_type, model_type.model_construct(_fields_set=None,
+        **{field["python"]: values[field["field"]] for field in fields}))
+    return revalidate_model(model_type, model_type.model_construct(_fields_set=None,
+        **{field["python"]: _convert(getattr(checked, field["python"]), field) for field in fields}))
 ClassT = TypeVar("ClassT")
 
 

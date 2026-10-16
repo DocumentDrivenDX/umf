@@ -57,3 +57,9 @@ test('generated provenance and join imports cannot be shadowed',()=>{
   const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.diagnostics.some(d=>d.code==='NAME')).toBe(true);
  }
 });
+
+// @covers US-080-AC4 -- joined projection descriptors are public symbols too.
+test('joined projection descriptor names cannot shadow another projection model',()=>{
+ const q=request();q.projections=[{name:'summary',record:q.records[0]!,fields:[{module:'commerce',element:'orderId'}]},{name:'summaryProjection',record:q.records[0]!,fields:[{module:'commerce',element:'amount'}]}];
+ const result=generateAccessPackage(q,profile());expect(result.outcome).toBe('refused');expect(result.diagnostics.some(d=>d.code==='NAME')).toBe(true);
+});
