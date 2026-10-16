@@ -1,6 +1,8 @@
 {
-  "sourceCommit": "4180f76dcfa9b1d9bfca172b9c76b38d6fbaa4eb",
-  "manifestSha256": "2b04a719c6ffa36c39f737a98d6d49ebcc3aee74c1cece0d8a9fc6b180ba87bb",
-  "archiveSha256": "8abd97208489e02de2ea3e542cde860c352386d5768354055d12f0a6c3f86891",
-  "scope": "Reviewed required-String local public loading, preparation, sealing, keyed submission/claim, atomic execution/recovery, bounded row history and cancellation/recovery. Lifetime-of-store-incarnation retention, no purge; no full local-bulk/native904 claim."
+  "sourceCommit": null,
+  "sourceState": "Reviewed staged candidate; canonical Truss adoption pending",
+  "weftSourceCommit": "ab94595f176cc67ed213843285dda4d401033959",
+  "manifestSha256": "d932ee3943770bcf123f614fd059633c7591a5ef66077c65bb4c80935c28e0ba",
+  "archiveSha256": "e2a30801b661aa71d462d5c9f03d2082242a7e30cb7469b35eb71accf58548d1",
+  "scope": "Exact reviewed candidate source captured in manifest.sourceHashes; fresh Chromium lifecycle and 1024 updates/replay/reopen passed. Performance remains failed. Not a release, publication or arbitrary-crash qualification."
 }

@@ -16,7 +16,7 @@ function parse(text) {
 }
 async function transaction(mode, run) {
   const db = await new Promise((resolve, reject) => {
-    const request = indexedDB.open("umf-products-demo-control", 1);
+    const request = indexedDB.open("umf-products-demo-layout02-control", 1);
     request.onupgradeneeded = () => request.result.createObjectStore("intents");
     request.onerror = () => reject(request.error);
     request.onblocked = () => reject(Error("Bulk journal blocked"));
@@ -115,7 +115,7 @@ function settleBulkIntent(value) {
 }
 
 // docs/helix/05-deploy/microsite/seal-intent.ts
-var database = "umf-products-demo-control";
+var database = "umf-products-demo-layout02-control";
 var store = "intents";
 var referenceFields = ["profile", "storeId", "incarnation", "requestKey", "attempt", "manifestSha256", "planSha256", "modelSha256"];
 function parse2(value) {
@@ -331,7 +331,7 @@ async function refreshIntent() {
     throw error;
   }
 }
-var intentChannel = new BroadcastChannel("umf-products-demo-control");
+var intentChannel = new BroadcastChannel("umf-products-demo-layout02-control");
 intentChannel.onmessage = () => {
   refreshIntent().catch(() => {}).finally(buttons);
 };

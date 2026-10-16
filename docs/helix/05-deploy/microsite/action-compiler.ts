@@ -51,7 +51,7 @@ async function refreshIntent(){
  try{const retained=await readSealIntent();if(intent&&!retained)throw Error('Original intent unexpectedly missing');intent=retained;bulkIntents=await readBulkIntents();if(Object.values(bulkIntents).some(record=>record.context!==bulkContext()))throw Error('Bulk intent belongs to another original seal');intentError='';if(intent)preview=null;}
  catch(error){intentError=error instanceof Error?error.message:String(error);throw error;}
 }
-const intentChannel=new BroadcastChannel('umf-products-demo-control');
+const intentChannel=new BroadcastChannel('umf-products-demo-layout02-control');
 intentChannel.onmessage=()=>{void refreshIntent().catch(()=>{}).finally(buttons);};
 let worker:Worker|undefined,sequence=0,available=false,prepared=false,busy=false;
 let waiting:{id:number;resolve:(value:any)=>void;reject:(error:Error)=>void}|undefined;

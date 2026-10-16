@@ -18,7 +18,7 @@ try {
   Object.defineProperty(IDBTransaction.prototype,'oncomplete',{...completion,set:function(this:IDBTransaction,listener:any){completion.set!.call(this,function(this:IDBTransaction,event:Event){if(txWrites.has(this))test.__completedIntent=txWrites.get(this);listener?.call(this,event);});}});
   const originalAdd=IDBObjectStore.prototype.add;
   IDBObjectStore.prototype.add=function(value:any,...args:any[]){
-   if(this.transaction.db.name==='umf-products-demo-control'){
+   if(this.transaction.db.name==='umf-products-demo-layout02-control'){
     if(test.__denyIntentWrite)throw new DOMException('Injected quota refusal','QuotaExceededError');
     txWrites.set(this.transaction,value);
    }
@@ -52,7 +52,7 @@ try {
  if(registered.load.outcome!=='loaded'||registered.load.objects.length!==4||registered.load.journal.length!==4||registered.rows.length!==4)throw Error('Public Truss object loading/reading differs');
  if(registered.outcome!=='prepared'||!['registered','unchanged'].includes(registered.registration)||registered.catalog.types.length!==1||registered.catalog.properties.length!==2||registered.catalog.keys.length!==1)throw Error('Actual catalog registration differs');
  if(['owner','action','grant','readGrant'].some(key=>Object.hasOwn(registered,key)))throw Error('Worker exposed authority capability');
- if(registered.preparationSha256!=='6f5e69462c327da970f07ca1f6253dbacc4db0badf1335b7d91e3f38eb67ad40'||registered.selectionRead.profile.id!=='umf.actions.local-store-read'||registered.selectionRead.fields.length!==2)throw Error('Original action/read-grant preparation differs');
+ if(registered.preparationSha256!=='7ee1afaa2b4d24a2d86473341255edf9b11ad266e5d35477126e00504f1975c0'||registered.selectionRead.profile.id!=='umf.actions.local-store-read'||registered.selectionRead.fields.length!==2)throw Error('Original action/read-grant preparation differs');
  if(registered.catalog.document.sourceSha256!=='b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27')throw Error('Catalog source differs');
  await page.reload();await page.locator('#store-open').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='Local Truss store opened');
  await page.locator('#store-register').click();await page.waitForFunction(()=>document.querySelector('#store-status')?.textContent==='UPDATE prepared');

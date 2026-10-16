@@ -4,7 +4,7 @@ export async function admitOriginalLoad(input:LoadInput):Promise<'first'|'recove
  const text=JSON.stringify({profile:'umf.demo.load-intent/1',input});
  if(new TextEncoder().encode(text).length>1024*1024)throw Error('Bounded original load intent required');
  const db=await new Promise<IDBDatabase>((resolve,reject)=>{
-  const request=indexedDB.open('umf-products-demo-control',1);
+  const request=indexedDB.open('umf-products-demo-layout02-control',1);
   request.onupgradeneeded=()=>request.result.createObjectStore('intents');
   request.onerror=()=>reject(request.error??Error('Load journal unavailable'));
   request.onblocked=()=>reject(Error('Load journal blocked'));

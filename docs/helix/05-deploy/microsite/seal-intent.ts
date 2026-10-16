@@ -1,6 +1,6 @@
 import type {SealOutcome,SealReference} from './truss-browser/store.js';
 export interface SealIntent {profile:'umf.demo.seal-intent/1';reference:SealReference;input:unknown;phase:'pending'|'settled';outcome?:SealOutcome}
-const database='umf-products-demo-control',store='intents';
+const database='umf-products-demo-layout02-control',store='intents';
 const referenceFields=['profile','storeId','incarnation','requestKey','attempt','manifestSha256','planSha256','modelSha256'] as const;
 function parse(value:unknown):SealIntent|null{
  if(value===undefined)return null;

@@ -8,7 +8,7 @@ function parse(text:unknown):BulkIntent{
  return value;
 }
 async function transaction<T>(mode:IDBTransactionMode,run:(object:IDBObjectStore,set:(value:T)=>void,fail:(error:unknown)=>void)=>void):Promise<T>{
- const db=await new Promise<IDBDatabase>((resolve,reject)=>{const request=indexedDB.open('umf-products-demo-control',1);request.onupgradeneeded=()=>request.result.createObjectStore('intents');request.onerror=()=>reject(request.error);request.onblocked=()=>reject(Error('Bulk journal blocked'));request.onsuccess=()=>resolve(request.result);});
+ const db=await new Promise<IDBDatabase>((resolve,reject)=>{const request=indexedDB.open('umf-products-demo-layout02-control',1);request.onupgradeneeded=()=>request.result.createObjectStore('intents');request.onerror=()=>reject(request.error);request.onblocked=()=>reject(Error('Bulk journal blocked'));request.onsuccess=()=>resolve(request.result);});
  try{return await new Promise<T>((resolve,reject)=>{
   const tx=db.transaction('intents',mode,mode==='readwrite'?{durability:'strict'}:undefined);let value:T,failure:unknown;
   const fail=(error:unknown)=>{failure=error;try{tx.abort();}catch{reject(error);}};

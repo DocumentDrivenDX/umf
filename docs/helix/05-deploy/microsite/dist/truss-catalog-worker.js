@@ -4,7 +4,7 @@ async function admitOriginalLoad(input) {
   if (new TextEncoder().encode(text).length > 1024 * 1024)
     throw Error("Bounded original load intent required");
   const db = await new Promise((resolve, reject) => {
-    const request = indexedDB.open("umf-products-demo-control", 1);
+    const request = indexedDB.open("umf-products-demo-layout02-control", 1);
     request.onupgradeneeded = () => request.result.createObjectStore("intents");
     request.onerror = () => reject(request.error ?? Error("Load journal unavailable"));
     request.onblocked = () => reject(Error("Load journal blocked"));
@@ -70,7 +70,7 @@ scope.onmessage = (event) => {
         const response = await fetch(new URL("./truss-browser/layout.sql", import.meta.url));
         if (!response.ok)
           throw Error("Layout unavailable");
-        current = await openBrowserStore({ name: "umf-products-demo", layoutSql: await response.text() });
+        current = await openBrowserStore({ name: "umf-products-demo-layout02", layoutSql: await response.text() });
         scope.postMessage({ id, result: current.outcome === "available" ? { outcome: "available", info: current.store.info(current.owner), catalog: await current.store.catalog(current.owner) } : current });
       } else {
         if (current?.outcome !== "available")
@@ -92,7 +92,7 @@ scope.onmessage = (event) => {
           frozen = undefined;
           modelSha256 = issued.model.sha256;
           const target = { documentId: request.modelPin.documentId, module: "sales", record: "products" };
-          const loadInput = { target, rows: input.seed.products.map((row) => ({ fields: [{ module: "sales", field: "product-id", value: row.id }, { module: "sales", field: "product-name", value: row.name }] })), request: { requestKey: "umf-products-demo-initial-load-b8-v1", attempt: "original-load-v1" } };
+          const loadInput = { target, rows: input.seed.products.map((row) => ({ fields: [{ module: "sales", field: "product-id", value: row.id }, { module: "sales", field: "product-name", value: row.name }] })), request: { requestKey: "umf-products-demo-layout02-initial-load-b8-v1", attempt: "original-load-v1" } };
           const admission = await admitOriginalLoad(loadInput);
           const loaded = admission === "first" ? await current.store.loadObjects(current.owner, loadInput) : await current.store.recoverLoad(current.owner, loadInput);
           if (loaded.outcome !== "loaded") {

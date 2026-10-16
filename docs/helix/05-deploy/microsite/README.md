@@ -19,8 +19,8 @@ committed row history and cancellation. Exact component evidence is retained
 below; broader native person/session and full bulk protocols remain independent.
 GitHub Pages remains the publishing target.
 
-This website embeds the frozen original UMF ESM from `40f01140` (producer
-`633f8ad6`) inside the pinned Truss bundle. Publishing these assets against current
+This website candidate embeds the reviewed UMF ESM from `c1e316c4` (producer
+`6b331c0b`, bundle `86fd188e`) inside the staged Truss bundle. Publishing these assets against current
 main leaves its library `src/`, `spec/`, package and lock files unchanged; it does
 not qualify that different library build as the original producer. Replacing the
 frozen artifact requires a separately constructed and qualified source cohort,
@@ -211,8 +211,10 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 `bun run typecheck`. Visual evidence and limitations:
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
-The SQL page also opens a worker-owned Truss browser catalog using the original
-reviewed bundle from Truss `4180f76d`. Build it with
+The SQL page also opens a worker-owned Truss browser catalog using the reviewed
+staged provider described by `assets/truss-browser/provenance.json`. Its
+`sourceCommit` remains null pending canonical Truss adoption; the manifest
+captures every actual source hash. This candidate is not published or released. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
@@ -226,8 +228,18 @@ Prepare UPDATE loads the four original samples through public `loadObjects`, rea
 The browser verifier checks registration, unchanged retry, second-tab exclusion
 and catalog/incarnation retention after reload under a `/umf/` base path.
 
-The local compiler is pinned to Weft `535b5c7`, original local model `b8ce3cfe`
-and preparation `6f5e6946`. Historical native compiler assets remain retained
+The local compiler is pinned to Weft compatibility source `ab94595f`, WASM
+`4434aad3`, original local model `b8ce3cfe` and preparation `7ee1afaa`.
+The new layout 0.2 store and its dispatch journals use the
+`umf-products-demo-layout02` prefix; existing layout 0.1 data stays untouched.
+Fresh Chromium checks cover the assembled page and a separate 1,024-row
+workload across 11 batches, replay and reopened readback. Observed bulk execution
+takes 7.096 seconds and the point UPDATE takes 301.79 milliseconds: performance
+remains failed. The page has not been qualified on the public GitHub Pages origin.
+The retained [publication projection](../../04-build/evidence/bulk-update/website-publication-projection.json)
+is historical evidence for the earlier UMF `633f8ad6` cohort. It does not
+qualify the current candidate; the current assembled-page results are in
+[website compiler results](../../04-build/evidence/bulk-update/website-compiler-results.json). Historical native compiler assets remain retained
 separately and are not relabelled. The compiler and catalog now use the same
 local model; the examples and actual Truss rows are displayed separately.
 
