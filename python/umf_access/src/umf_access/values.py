@@ -172,3 +172,7 @@ def validate_vector(value: object, *, dimensions: int) -> Vector:
         if exact != item:
             raise ValueRuleError("vector value requires float32 rounding")
     return cast(Vector, value)
+
+
+def validate_float32(value: object) -> float:
+    return validate_vector((value,),dimensions=1)[0]

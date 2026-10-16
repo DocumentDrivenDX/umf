@@ -1,0 +1,1627 @@
+{
+  "status": "passed",
+  "controls": [
+    {
+      "id": "allowed:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "allowed:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "allowed:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "allowed:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "allowed:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "allowed:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "allowed:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "allowed:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "undisclosed:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "revoked:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "revoked:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "revoked:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "revoked:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "revoked:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "revoked:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "revoked:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "revoked:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "incomplete-coverage:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "stale-generation:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "unchanged:tools/security/query-presence-policy-oracle.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/catalog-program-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/json.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/types.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/policy-representation-v2.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security-v0.2/package.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security/schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/schema.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/internal-schema.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/relationship-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/key-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/field-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/nullability-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/cardinality-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/facet-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/extension-package.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/ontology-checks-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/action-purpose-declarations.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/core-source-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/document.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/schema-properties.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/bit128-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/schema-properties-document.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/registry/registry.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/schema-literals.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/bit128.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/uuid.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/relationships.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/keys.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/validation/facets.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/core-extension-closure-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/index.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/structure.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/package.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/types.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/analysis.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/expression.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/references.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/known-model.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/serialization.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/selector.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/key-tuple.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/key-tuple-operation-v4.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/core/key-tuple-operation-v3.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/plans.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/model/internal/json-byte-budget.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/plan-types.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/plan-artifacts.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/plan-structure.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/bulk.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/tx-results.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/manifest.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/manifest-inspection.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/plan.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/plan-model.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/plan-capabilities.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/plan-inspection.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/plan-assessment.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/actions/executor-profile.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/plan-identity.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/manifests.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/framed-json.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/manifest-types.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/bulk.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/actions/manifest-construction.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security-v0.2/ontology.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/association-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/types.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/association-checks.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/relationship-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/entity-terms-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/literals.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/association-expression.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/association-witness.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/functions.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/adapters/gregorian-date.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/parameters.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/core-fields.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/domains.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security-protection/domain-resolution.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/references.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/catalog.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security-protection/package.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/protection/obligations.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/action-purposes.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/catalog-runtime-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/operation-budget-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/logic.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/evaluate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/policy.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security/package.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:spec/extensions/security/ontology.schema.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:src/extensions/security/catalog-storage-candidate.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged:tests/security/protection/current-query-presence-source.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:tests/security/protection/current-query-read-scenarios.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:package.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged:bun.lock",
+      "passed": true
+    },
+    {
+      "id": "unchanged:node_modules/ajv/package.json",
+      "passed": true
+    }
+  ],
+  "results": [
+    {
+      "variant": "allowed",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": "original",
+              "value": {
+                "string": "opaque-token"
+              }
+            }
+          ]
+        ],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": "original",
+              "value": {
+                "string": "opaque-token"
+              }
+            }
+          ]
+        ],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "allowed",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": "original",
+              "value": null
+            }
+          ]
+        ],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": "original",
+              "value": null
+            }
+          ]
+        ],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "allowed",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": "absent"
+            }
+          ]
+        ],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [
+          [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": "absent"
+            }
+          ]
+        ],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "allowed",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "undisclosed",
+      "state": "string",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "undisclosed",
+      "state": "null",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "undisclosed",
+      "state": "absent",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "undisclosed",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "revoked",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "revoked",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "revoked",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "revoked",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "incomplete-coverage",
+      "state": "string",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "incomplete-coverage",
+      "state": "null",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "incomplete-coverage",
+      "state": "absent",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "incomplete-coverage",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "stale-generation",
+      "state": "string",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "stale-generation",
+      "state": "null",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "stale-generation",
+      "state": "absent",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "stale-generation",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    }
+  ],
+  "inputSnapshotSha256": "196ff13ff94b2e9b9141e8c8ed9f5276129fc8523ec418378942a5be2a189ee7",
+  "scope": "Actual UMF candidate logical evaluator over an explicitly authored optional queryable model, separate Token-disclosure policy and complete supplied cuts. Exact source and model memberships preserved. Complete/authority remain false: no authenticated native source, actor/current-cut custody, compiler .4 composition, transform execution, operator authorization, P03/B08/backend acceptance or case promotion."
+}

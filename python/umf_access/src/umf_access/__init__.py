@@ -38,3 +38,6 @@ from .reviewed import (
     ReadBuildError as ReadBuildError,
     build_query as build_query,
 )
+
+from .types import Vector as Vector
+from .dsl import SearchResult as SearchResult, Scored as Scored, Score as Score, hybrid as hybrid, rrf as rrf, target_defined as target_defined

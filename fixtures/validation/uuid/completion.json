@@ -26,11 +26,12 @@
     "Native replacement/equivalence, UUID generation, performance optimality and Truss/Weft adoption are not admitted."
   ],
   "sha256": {
-    "fixtures/validation/uuid/model-qualification.json": "8eda30446a9f042caa3f6d9d09c665b2b4eab29a81340a0d2bc62394c0025875",
+    "fixtures/validation/uuid/model-qualification.json": "23f9e8d4008ae3d45288c9be6f7496bcc3aaa0b5f1f4f1df02cc553181ee23f4",
     "fixtures/validation/uuid/conformance.json": "e84c3b35bc3ff476f77e5c17337f41275c1483ef23158b684a9d4e5986fdd2f8",
     "fixtures/validation/uuid/model-runs/conformance.log": "80cf34710fa88bcde371d590b6abbc92c11dde5ab06543d691e0866109cc6b88",
-    "fixtures/validation/uuid/model-runs/conformance-tests.log": "fb2266de2d9579ce80b967c923e2172f7b688b6636552dc6384a5916000f6488",
+    "fixtures/validation/uuid/model-runs/conformance-tests.log": "82f2c86d01c4ee6d8bda316911f3000c7fd5d1dc75c43c9d47e3289c7831c003",
     "fixtures/validation/uuid/model-runs/qualified-cli.log": "80cf34710fa88bcde371d590b6abbc92c11dde5ab06543d691e0866109cc6b88",
-    "docs/helix/04-build/evidence/uuid-adapter-completion.md": "3883d7a31d681d75e37d1cacc9127f2ec93a9ba390447ee1518caefb2ceac3f2"
-  }
+    "docs/helix/04-build/evidence/uuid-adapter-completion.md": "386dc5b0559f3efe587d773091d48254869b69bd654e050065d966017e8dde4d"
+  },
+  "integration": "Merged 24 newer main commits; fresh native/browser phases and final source-bound conformance pass; timeout-only conformance test adjustment followed by gate regeneration."
 }

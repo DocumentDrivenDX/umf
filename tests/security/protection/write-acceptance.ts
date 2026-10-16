@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {writeSync} from 'node:fs';
 import {mkdtemp,cp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
-import {join} from 'node:path';
+import {join,resolve,relative,dirname,extname} from 'node:path';
 import {chromium} from 'playwright';
 import {runOracle} from './write-oracle';
 const id=Bun.argv[2],runId=Bun.env.UMF_SECURITY_RUN_ID;
@@ -15,6 +15,26 @@ const plan=await Bun.file('docs/helix/03-test/security/cases.json').json(),c=pla
 if(!c||c.backend!=='semantic'||c.oracleSource!=='tests/security/protection/write-oracle.py'||JSON.stringify(c.command)!==JSON.stringify(['bun','tests/security/protection/write-acceptance.ts',id]))throw Error('Governed command differs');
 const hash=(v:Uint8Array|string)=>createHash('sha256').update(v).digest('hex');
 const files=[...new Set<string>([c.testSource,c.oracleSource,...c.implementationSources])];
+// Fail before oracle/browser execution when the reviewed per-case inventory
+// omits a conservative relative import or adds an unaccounted source.
+const closure=new Set<string>();
+async function visit(path:string):Promise<void>{
+ const absolute=resolve(path),key=relative(process.cwd(),absolute);
+ if(key==='..'||key.startsWith('../')||closure.size>=4096)throw Error('Source closure escaped or exceeded its bound');
+ if(closure.has(key))return;closure.add(key);const source=await Bun.file(absolute).text();
+ if(!['.ts','.js'].includes(extname(absolute)))return;
+ for(const match of source.matchAll(/(?:from\s*|import\s*)['"](\.[^'"]+)['"]/g)){
+  const base=resolve(dirname(absolute),match[1]!);let found:string|undefined;
+  for(const candidate of [base,base+'.ts',base+'.json',resolve(base,'index.ts')])if(await Bun.file(candidate).exists()){found=candidate;break;}
+  if(!found)throw Error('Source closure import unresolved');await visit(found);
+ }
+}
+await visit(import.meta.path);
+// These existing governing schemas/contracts and executable dependency metadata
+// supplement the relative TypeScript/JSON import graph explicitly.
+for(const path of [c.oracleSource,'package.json','bun.lock','docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md','docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md','docs/helix/02-design/contracts/CONTRACT-066-gregorian-date-operations.md','spec/extensions/security-protection/schema.json','spec/extensions/security-v0.2/schema.json'])await visit(path);
+if(files.length!==closure.size||files.some(path=>!closure.has(path)))throw Error('Exact reviewed S24/S25 source closure required');
+
 const pins=async()=>Object.fromEntries(await Promise.all(files.map(async p=>[p,hash(new Uint8Array(await Bun.file(p).arrayBuffer()))])));
 async function writeReceipt(value:unknown){const bytes=Buffer.from(JSON.stringify(value)+'\n');if(bytes.length>900_000)throw Error('Receipt output bound');let offset=0;const deadline=Date.now()+5000;while(offset<bytes.length){try{offset+=writeSync(1,bytes,offset,Math.min(4096,bytes.length-offset));}catch(error){if((error as NodeJS.ErrnoException).code!=='EAGAIN'||Date.now()>deadline)throw error;await new Promise(resolve=>setTimeout(resolve,1));}}}
 const before=await pins(),work=await mkdtemp(join(tmpdir(),'umf-write-python-'));

@@ -1,0 +1,16 @@
+{
+  "securityCommit": "944ee59d",
+  "concurrentMain": "0396b377fcb042ad056ef00f24560877442dd647",
+  "mergeCommit": "4f2b2f174708a95b41cb278cb7a5ea60c44e9ef4",
+  "unchangedAcceptanceSourcePins": 570,
+  "typechecks": {
+    "main": 0,
+    "tools": 0
+  },
+  "focused": {
+    "exitCode": 0,
+    "tests": 1,
+    "assertions": 181
+  },
+  "qualification": "Concurrent SDK integration does not alter any selected security acceptance pin. Final native gate is retained under its actual earlier source campaign; this verifies endpoint pins and merged TypeScript/focused behavior, not a new native replay."
+}

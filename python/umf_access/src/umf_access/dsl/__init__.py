@@ -8,9 +8,11 @@ from ._expressions import (
     if_present as if_present, and_ as and_, or_ as or_, not_ as not_,
 )
 from ._query import (
-    Joined as Joined, Joined2 as Joined2, Joined3 as Joined3, JoinProjection as JoinProjection, Query as Query, Terminal as Terminal, Continuation as Continuation,
+    SortValue as SortValue, Joined as Joined, Joined2 as Joined2, Joined3 as Joined3, JoinProjection as JoinProjection, Query as Query, Terminal as Terminal, Continuation as Continuation,
     Page as Page, RelatedKeys as RelatedKeys, WithKeys as WithKeys,
     query as query, command as command,
 )
 
 from .render import render_logical as render_logical
+
+from .search import Fusion as Fusion, VectorIndex as VectorIndex, KeywordIndex as KeywordIndex, SearchLeg as SearchLeg, RankedQuery as RankedQuery, Score as Score, Scored as Scored, SearchResult as SearchResult, hybrid as hybrid, rrf as rrf, target_defined as target_defined

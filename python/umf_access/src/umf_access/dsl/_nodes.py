@@ -4,7 +4,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from decimal import Decimal
-from typing import Literal, cast, get_args
+from typing import Literal, cast, get_args, Generic, TypeVar
 from pydantic import BaseModel, MISSING
 
 from ._context import CaptureError
@@ -120,3 +120,24 @@ def literal(value: object) -> Node:
     if isinstance(value, BaseModel):
         return Node("key", (KeyLiteral(key_identity(type(value)), tuple(literal(getattr(value, name)) for name in type(value).model_fields)),))
     raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported literal carrier")
+
+R = TypeVar("R")
+O = TypeVar("O")
+ProjectionModel = TypeVar("ProjectionModel",bound=BaseModel)
+
+@dataclass(frozen=True)
+class Terminal(Generic[R]):
+    node: Node
+
+    def __bool__(self) -> bool:
+        raise TypeError("catalog terminals have no runtime truth value")
+
+
+@dataclass(frozen=True)
+class JoinProjection(Generic[O, ProjectionModel]):
+    model: type[ProjectionModel]
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.model, type) or not issubclass(self.model, BaseModel):
+            raise TypeError("joined projection requires a model class")
+

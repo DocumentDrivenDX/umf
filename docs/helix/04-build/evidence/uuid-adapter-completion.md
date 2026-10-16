@@ -153,3 +153,20 @@ Remaining limits above are explicit boundaries, not claims of universal adapter
 or downstream-runtime support. Token usage is unavailable in this runtime; no
 measured spending or enforced-cap claim is made. Native retries and review were
 kept within this single implementation workstream; no subagents were used.
+
+### Main integration — 2026-10-16
+
+Implementation commit `3b496c6e` was integrated with 24 newer commits from
+`origin/main`. The implementation-log conflict retained both workstreams.
+The fresh sequential qualification reran build, typecheck, schemas, all38
+UUID/model and65 binding tests, both native databases, Avro/Parquet,
+TableSpec/Spark, source recovery, returned values and both browser suites.
+Qualification and conformance passed against this merged source. The final
+conformance test initially exceeded Bun's default five-second timeout while
+hashing the expanded source closure; both tests now declare30 seconds.
+After that test-only adjustment, qualification fingerprints were regenerated
+and conformance, both conformance tests and verify-only all passed again.
+`model-runs/merge-qualification.log` retains the stopped orchestration; the
+separate final conformance logs record the successful closeout. The native
+phases were not repeated after the timeout-only test change. This remains a
+scoped qualification, not a full-repository regression claim.

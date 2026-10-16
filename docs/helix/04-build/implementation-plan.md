@@ -12516,3 +12516,195 @@ proofs. [Completion, exact scope, retries and limits](evidence/uuid-adapter-comp
 record what is accepted. Native equivalence, wider mixed/container/association/
 partition composition, portable native-index order and consumer deployment are
 not promoted by these gates. No full-repository replay is asserted.
+### Weft bounded String prerequisite and current core gate — 2026-10-16
+
+Bounded required Unicode String compilation and actual issued-object Python/WASM bridges are committed directly to Weft main 8e0f4cb, with no SDK bump or implicit feature activation. Frozen/committed source campaigns pass 348 core, 20 Databricks and 119 PostgreSQL compiler-library tests plus both 26-command bridge campaigns; Astra Ultra finds no actionable issue over 1,593 independent controls. [Cross-repository source/artifact custody and qualification](evidence/security/bounded-current-string-compiler-20261016/README.md) retain exact tested revisions, original failures and the separate actual original-Token logical-state probe. No database, native current-cut/caller custody or guarded-release acceptance follows from this compiler component.
+
+Current UMF core/UUID changes invalidated 30 prior case fingerprints. The fifth complete gate passed 40 cases but five native runners refused an outdated exact source inventory before SQL. A reviewed amendment adds 16 genuinely imported paths, removes none and changes no assertion, identity, required flag, command, deadline or allocation. The sixth full replay passes all 45 implementations with fresh selected source fingerprints; all 113 missing required implementations still fail. All 158 cases/34 criteria, including original P03/L03/B10 and every graph case, remain in scope. [Original failed cohort, additive inventory review and corrected gate](evidence/security/gate-refresh-20261015/README.md) preserve the complete history and broader failing audit.
+
+### Native presence and disclosure carrier prerequisite — 2026-10-16
+
+A PostgreSQL18.6 owned tmpfs fixture passes43 observations over four actual issued SQL queries and actual Rust checker calls. Complete fixture capture rejects hidden NULLs even for FALSE/LIMIT0. An explicit carrier preserves five declared DisclosureV2 outcomes and exact domain/transform provenance; scalar NULL loses these distinctions. A separately revised queryable optional Token model validates absence/null/String, while the current required-only producer refuses it before application SQL. Sixteen retained Z3 checks establish bounded abstract carrier properties and erasure counterexamples, not policy or implementation correctness.
+
+[Exact source, handoff, failures and cleanup qualification](evidence/security/native-query-presence-20261016/README.md) distinguish supplied cells and excluded-admin physical observations from authenticated owner selection, complete current-cut custody, actual transforms and guarded release. Weft owns a separately versioned protocol; existing profiles remain closed. Astra Ultra review is clean after fixing a missing generator source closure with a separate fresh replay;114 independent component observations and exact evidence are retained. Native database execution remains supplied evidence, not an independent Astra native replay. No case promoted:45 implemented passing/158 required,113 missing. Full original P03 operators/actors/bypass controls and all graph cases remain required.
+
+### Explicit optional-cell policy selection — 2026-10-16
+
+Forty-four actual candidate logical-scan scenarios pass on the explicit optional Resource model. A separately authored Token disclosure preserves String/null/absence under the existing project-membership requirement; the original salary-only policy, unreported presence, incomplete coverage and stale generation refuse. Inactive assignment, foreign subject/staff/project links and complete missing Ownership/Assignment populations yield no eligible rows. All outcomes retain complete=false/authority=false. [Exact source and supplied policy/cut packets](evidence/security/queryable-presence-policy-20261016/README.md) distinguish these logical decisions from authenticated native custody, actual compiler .4 composition and operator/transform execution. Independent Astra Ultra review is clean: exact44-scenario replay,44-packet semantic/custody audit and30 additional actual logical controls pass. No required backend case is promoted.
+
+### Canonical logical disclosure-selection provenance — 2026-10-16
+
+A private separately versioned read-disclosure scan now retains exact winning source occurrences directly inside the original kernel, including all compatible transform contributors and the first canonical selected occurrence. Old action/render/rule-scan shapes remain unchanged.42Bun/Chromium controls and both TypeScript configurations pass. The broader security suite passes318tests/4982assertions after fixing three independently reproduced pre-existing0.9-version negative expectations; separate existing browser/type harnesses pass133 metadata cases across the old and newer inspection profiles. The44-scenario optional policy oracle passes again on the changed kernel.
+
+[Exact source, initial failures, baseline reconstruction and current gate](evidence/security/disclosure-selection-20261016/README.md) retain all replaced receipt preimages. The full unchanged158-case/34-criterion gate passes45implementations with fresh fingerprints and still fails113missing required implementations; the broader221-check audit still fails87checks. Independent Astra Ultra review is clean, with3,082 checks each in Bun and Chromium plus16 edge controls and exact source/receipt custody verification; the original report and manifest-pinned artifacts are retained. Selection evidence does not authenticate caller/source/current cut, execute or certify transform values, admit DisclosureV2 wire adaptation, compose compiler .4 or grant native/operator/release authority. No backend case is promoted.
+
+
+### Conditional disclosure occurrence algebra — 2026-10-16
+
+[Exact formulas, original weak controls and strengthened analysis](evidence/security/disclosure-selection-formal-20261016/README.md) supplement US-056-AC6/AC10. The revised33-query campaign has14 UNSAT properties and19 SAT premise/counterexample controls, including actual inactive-update contributor/selection invariance. Faithful source flattening and eligibility are premises; TypeScript refinement, chooser construction, retained-output completeness and native authority remain unproved. Independent Astra Ultra final review is clean: all33 formulas replay,14 premise pairs are nonvacuous and three independent source mutations fail without a receipt; original findings and exact review inputs are retained. No required case is promoted and the full158-case goal remains open.
+
+
+### Atomic canonical V2 disclosure production — 2026-10-16
+
+CONTRACT-062/TD-056/STP-056 compose the original fold's exact winning source occurrences, issued pure recipe execution and original0.2 transport in one private supplied-cut operation. 181 Bun/Chromium controls and 319 security tests / 5163 assertions pass, with both final TypeScript configurations independently passing. Astra Ultra final source review is clean after fixing a shared parameter/Cell budget mismatch and an inherited source-inventory gap. Exact counterexamples and immutable intermediate reviews remain retained.
+
+[Original failures, frozen sources, additive inventories and replay history](evidence/security/atomic-disclosure-batch-20261016/README.md) retain all receipt preimages. The first replay passes 44 implementations and P04 refuses before SQL on missing imports; the second passes 45 with selected-file freshness. Independent review then finds 25 inherited S24/S25 import omissions. Additive amendments add six then 52 actual dependency entries without changing cases, assertions, commands, allocations or deadlines. A fail-closed conservative closure guard passes 58 independent controls; the third replay passes all 45 implementations. After a type-only annotation with byte-identical emitted JavaScript, the fourth exact-source replay passes all 45 implementations with 570 unique pins / 2236 fresh fingerprint occurrences. All 113 errors are missing implementations; the final broader audit remains 221 checks / 87 failures. All 158 required cases / 34 criteria remain required; no backend case is promoted. Private census data cannot be public diagnostics; native source/caller/current-cut, query operators, compiler .4 composition and guarded release remain required.
+
+### Actual atomic producer presence handoff — 2026-10-16
+
+[Exact supplied cuts, source snapshots, failures and producer output](evidence/security/atomic-presence-handoff-20261016/README.md) retain 66 scenarios / 546 passing Bun controls and a passing tools TypeScript check. The actual WithinOperation fold and pure null-out recipe retain exact private census/resources, stored Token carrier, distinct original/null/absent/withheld/transformed-null V2 cells, original public inspector verdicts and codec bytes. Separately authored Token policies use distinct content revisions; the original salary-only policy remains a negative. Independent Astra Ultra review is clean: byte-identical replay, 1467 provenance checks, 59 mixed/empty producer controls, 296 runtime import edges and 116 custody controls. Original reviewer harness failures are retained. Weft's separately reviewed borrowed context is now verified on main 1c1a7dba; typed native lowering remains a separate prototype. This handoff removes supplied-cell construction from the next integration input without authenticating the supplied logical facts or promoting any of the full 158 required cases.
+
+### Typed PostgreSQL atomic transport preparation — 2026-10-16
+
+[Retained source-only preflight and frozen runner/probe inputs](evidence/security/native-atomic-presence-20261016/README.md) pass 47 fresh actual producer/whole V2 operations and 1285 source/input pins without Docker or SQL. Six reviewed mixed/empty populations extend the 41 unchanged rendered handoff packets under their original coherent policies/headers. The independently reviewed typed Weft PostgreSQL transport is remote-verified on main 54a822ae. Final R5 runner/probe review is clean after resolving modeled cleanup qualification and complete-I/O deadline findings; exact earlier sources/failures and final independent controls remain retained. The subsequent actual PostgreSQL18.6 campaign passes 47 positive operations and five negative controls / 869 observations, with all 1285 source pins fresh and exact owned container/tmpfs cleanup verified. Original data, selected metadata, mixed/empty populations and private row bags survive actual SQL/driver/typed checker/whole V2 composition. Four negatives corrupt only captured checker frames; one changes actual staged metadata and proves whole V2 validation remains necessary after structural matching. Independent supplied-native-evidence audit is clean: all 901 retained artifacts, 7047 record/custody checks, 4666 provenance checks, 52 held-probe frame replays and fresh producer/V2/codecs pass. The reviewer executes no database; this qualifies supplied native observations and independent non-DB correspondence only. No independent second native campaign or backend case promotion is claimed. The next native campaign must capture complete eligible keys/cells independently, execute exact compiled SQL through the same live Rust context and retain whole V2 validation and verified cleanup. This preparation promotes no case; all 158 UMF required cases and native caller/source/current-cut/operator/release obligations remain open.
+
+### Separate disclosure process integration seam — 2026-10-16
+
+The separate private atomic disclosure child implements the process boundary
+needed by an explicit future Truss presence consumer. It fixes owner/selection
+at initialization and invokes the existing atomic WithinOperation producer once;
+legacy query child and scalar ABI2 enrollment remain unchanged. The combined
+new/legacy child suite passes11 tests/150 assertions, and tooling typechecking
+passes. Two initial test fixtures incorrectly combined byte and count refusal
+expectations; the retained failed run precedes corrected separate controls.
+The full security suite passes324 tests/5267 assertions. Independent Astra Ultra
+review passes144 actual process executions (72 original/mixed/empty packets in
+closed-stdin and held Truss-pipe modes),108 adversarial process controls,14 direct
+session controls,20 build/config controls and3867 custody checks. All749 review
+artifacts are verified and retained in
+[evidence](evidence/security/atomic-disclosure-child-20261016/README.md).
+CHILD-001 reproduced an executable change under unchanged source pins after an
+unpinned TypeScript config change; the repaired builder explicitly selects and
+pre/post-checks root TypeScript/Bun configs, refuses inherited config and retains
+254 current source/config pins. The repaired executable is byte-identical to the
+reviewed original; the counterexample remains immutable. The separately gated
+Weft Runtime/Python bridge is remote-verified on main b8c34c84, with all eight
+reviewed source files matching. No required backend case changes status:45/158
+implemented,113 missing. Next bind this exact separate profile to actual Truss caller/source/
+complete facts/held native context/result validation and guarded release, then
+execute independent ordinary-role identity and revocation cases. The child has
+no post-native whole V2 inspection operation yet; the separate Truss consumer must
+refuse publication until an exact UMF-owned inspector validates the reconstructed
+native batch. Weft owns the isolated Truss consumer/cohort patch; this workstream
+owns that inspector and native security fixtures. Supplied logical cuts and wire
+hashes cannot discharge that integration.
+
+### Held post-native inspection implementation — 2026-10-16
+
+A separate0.2 process retains the original actual atomic producer batch across
+native execution and performs the existing whole V2 inspection plus exact held
+batch comparison before returning a data-only receipt. Protocol0.1 remains
+unchanged. Eight exercising tests cover all72 original vectors, independent
+semantic/substitution barriers, strict larger-frame parsing and actual process
+lifecycle. Full security regression passes332 tests/5929 assertions and tooling
+TypeScript passes. The initial retained failure was a mixed-vector name typo,
+corrected without changing implementation or expected semantics.
+
+The actual reviewed local Python bridge also composes with the held process on
+all52 recorded native operations:47 data matches, four structural refusals and
+one whole V2 refusal after structural matching. Real Python parent/runtime handle
+custody and process cleanup are checked. This executes no new SQL and qualifies
+neither installed Truss admission nor native caller/current cut/guarded release.
+Astra Ultra independently reproduced the exact bundle and passed143 process
+controls,69 session/scanner/clear controls,19 held/legacy tests with812 assertions,
+10 builder/config negatives and eight CLI preflight negatives. Review found
+HELD-001: the replay CLI could execute adjacent cached bytecode or report changed
+pipe-source bytes after import. The repaired CLI executes captured source bytes
+directly, checks pipe and wheel-manifest bytes again at close, and reports their
+captured hashes. Independent poisoned-cache replay passes all52 while pipe and
+manifest drift each refuse without a receipt. Original failures and repair
+evidence are retained together; no actionable finding remains. Weft owns the
+isolated explicit Truss consumer/cohort patch; this workstream owns the
+inspector and native fixtures. Keep final publication refused until the exact
+reviewed profile, original key/cell correspondence and closing native guards are
+composed. The158-case plan stays45 implemented and113 missing, with no promotion.
+
+Retained evidence: `evidence/security/held-native-disclosure-child-20261016/`.
+The integration witness verifies all629 independently reviewed artifacts
+(123320098 bytes), both frozen source packets, the exact bundle and notices,
+original failures and root repaired52 replay. Review SHA256
+`c0322f50c3f632c77d69b4c054f6ec27b427ad96a4c4cc1f93c796629ed116cf`;
+manifest SHA256
+`b86a46595743ab0bafa2dabc77285cfc6db99f7c3675555cff4d0bc60fa8efd6`.
+The seven executable/test/config overlay files exactly match their reviewed
+R1/R2 snapshots. Accepted45 source correspondence remains570 exact pins and
+the158-case plan digest remains unchanged. Integrate this component directly
+to main; next complete the separately reviewed Truss consumer and actual
+ordinary-role/current-cut/closing-guard evidence.
+
+### Nested graph condition budget repair candidate — 2026-10-16
+
+The previous turn integrated the reviewed held inspector and all629 review
+artifacts directly to remote main206951ff. The current candidate addresses a
+separate reproduced limitation: the original d333 process accepts a valid
+14-object/13-core-edge parallel:Alice ontology but refuses its eager correlated condition fold
+at the unchanged100000-unit literal-work bound. Full dependency preflight is
+preserved; only pure AND/OR/EXISTS truth work now stops at an absorbing value.
+
+All15 independent incidence cases pass through the actual candidate held
+producer/inspector: three Staff identities across baseline, parallel-edge, empty,
+inactive-only and sibling-owner populations. Full security regression passes
+333 tests/6027 assertions; complete TypeScript checking passes. Chromium153.0.8010.12
+passes98 shared controls, including hidden dependency refusal. Conditional SMT
+passes30 replayed queries (12 UNSAT,18 SAT with separate nonvacuous premises);
+these algebraic claims do not prove TypeScript refinement or native authority.
+
+The only previously accepted cases fingerprinting the changed runtime are S24,
+S25 and pg-raw.P04. Original S24/S25 runners freshly pass296/124 observations
+with108 pins each. A bounded isolated PostgreSQL18.6 P04 campaign freshly passes
+807 observations/106 pins and confirms original fixture cleanup. No Truss shared
+worker or table was used. The42 other retained accepted case outputs have exact
+current source correspondence, yielding570 distinct current pins across all45.
+This is explicitly scoped revalidation, not a new full158-case canonical gate;
+the unchanged canonical acceptance receipt is historical for the changed kernel.
+No case is promoted and113 required cases remain unimplemented.
+
+The new browser harness initially failed its TypeScript regex capture annotation,
+then passed after correction; the first focused acceptance attempt lacked local
+listener permission and produced no receipt, then passed in the authorized
+local-browser execution context. Original failures remain retained. The separate
+Truss graph collector and its six simulated-cursor mapping tests remain an
+isolated draft, with opaque witnesses only and explicit Record-backed-witness
+refusal. They establish no native source/caller/current-cut/release qualification.
+Astra Ultra completed independent review with no open product findings. The retained [review and source evidence](evidence/security/condition-short-circuit-20261016/README.md) includes the separate labeling correction and scoped acceptance revalidation. Direct-main integration retains the candidate scope.
+The Truss consumer has a separate preliminary review and native qualification
+stream; no implicit cohort repin or activation is authorized by these results.
+
+## Nested ontology F/U/T formal extension — 2026-10-16
+
+The [retained conditional proof](evidence/security/nested-ontology-refinement-20261016/README.md)
+models the four-relationship same-Assignment/same-Ownership join with typed
+logical endpoints and F/U/T activity. Root18SMT queries pass5UNSAT/13SAT. Astra
+Ultra replays18, adds22 solver queries and2304 abstract truth cases, and reports
+no actionable finding. Exact source, SMT/models, development iterations and
+qualified TD056/STP056 records are retained. This does not prove implementation
+translation, codec correspondence, native authority or release; missing coverage
+is not U. No acceptance case is promoted and the shared158/34 scope remains
+45implemented/113missing. The canonical gate remains historical for the changed
+semantic kernel; the prior scoped revalidation is not a fresh158-case gate.
+
+The native graph collector prerequisite is separately reviewed and on Trussmain
+5f676884, with custody-only documentation correction59360445. Its native tests
+qualify the original9e328d91 engine/source cohort and explicitly substitute the
+accepted-source provider. Actual native binding and original host guard/release
+composition remain required before graph read admission. Existing206951/d333
+consumer assets are not implicitly repinned by either formal or native evidence.
+
+
+### Reviewed native source prerequisites on Truss main — 2026-10-16
+
+Truss31ce4449 adds the strict supplied-source descriptor0.1 and CONTRACT-013;984d6a65 adds the unexported stock-cursor observer0.2 with all four retained R1 findings resolved in a separate Astra R2 review. [Tracked component evidence](evidence/security/native-source-correspondence-20261016/README.md) checks every retention-manifest member at the immutable merged Truss commit. No old consumer, registration, ABI/default cohort or source assessor is repinned. Descriptor0.1 deliberately rejects observer0.2.
+
+Source/installed tests pass15 for descriptor and7 for observer; wheel correspondence is499/500 members at their separately retained epochs. Actual native observer4passes/8.156s apply only to the captured PostgreSQL18.6/native0.71 overlay; original59360445 differs at six paths. Later main source checks pass22 with4 native tests skipped and1485 boundary imports; no current-main native claim follows.
+
+The next correspondence boundary must use the actual borrowed Weft preparation and existing UMF resolution APIs. Its operation-specific report/hash cannot be embedded into the same persistent native descriptor that the preparation already contains: that would create a self-hash cycle. Persistent descriptors retain original model pins and explicit mappings; fresh witnesses join context-specific requirements after selection. No placeholder preparation, reconstructed context or Python policy/key interpreter establishes admission. Actual Field/ordered-Key/edge/codec mapping, native registration, authenticated source/Subject continuity and final guarded release remain open. No acceptance promotion; shared158/34 scope remains45implemented/113missing.
+
+
+### UUID five-adapter main integration — 2026-10-16
+
+Integrated `3b496c6e` with24 newer main commits, retaining both execution logs.
+Fresh merged-source build/typecheck/schema,105 scoped tests, native database,
+file/Spark, source-recovery and browser checks pass. The conformance hash test
+needed an explicit30-second budget; refreshed qualification/conformance and
+verify-only pass after that test-only adjustment. See
+[evidence and retained retry](evidence/uuid-adapter-completion.md).

@@ -1,0 +1,19 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/catalog-disclosure-selection.test.ts:
+1 | import {test,expect} from 'bun:test';
+2 | import {runCatalogDisclosureSelectionCorpus} from './catalog-disclosure-selection-corpus';
+3 | test('canonical disclosure selection retains exact source occurrences without granting native authority',()=>{for(const c of runCatalogDisclosureSelectionCorpus())expect(c.passed,c.id).toBe(true);});
+                                                                                                                                                                                             ^
+error: empty-has-no-invented-selection
+
+Expected: true
+Received: false
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/catalog-disclosure-selection.test.ts:3:186)
+(fail) canonical disclosure selection retains exact source occurrences without granting native authority [179.22ms]
+
+ 0 pass
+ 1 fail
+ 38 expect() calls
+Ran 1 test across 1 file. [721.00ms]

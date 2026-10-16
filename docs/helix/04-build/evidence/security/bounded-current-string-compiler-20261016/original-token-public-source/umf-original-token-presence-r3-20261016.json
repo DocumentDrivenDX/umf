@@ -1,0 +1,1043 @@
+{
+  "format": "umf-original-token-public-presence-component/0.1",
+  "sourceCommit": "0b2bf0c1dec886258df057c9f31c841c8780742a",
+  "selectedSourceInputsUnchanged": true,
+  "sourceSha256": "5f1814dc8530a2096bec83e940676f053ca8d38d9220ddbbf00d7dfe60b89074",
+  "field": {
+    "id": "token",
+    "kind": "field",
+    "scalarType": "string",
+    "cardinality": "one",
+    "nullability": "absent-allowed",
+    "extensions": {}
+  },
+  "probes": [
+    {
+      "value": null,
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "value": {
+        "string": ""
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "value": {
+        "string": "opaque-token"
+      },
+      "validation": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "value": {
+        "integerToken": "1"
+      },
+      "validation": {
+        "valid": false,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "CORE_SCHEMA_PROPERTIES",
+            "path": "",
+            "message": "Literal does not match scalar family",
+            "severity": "error"
+          }
+        ]
+      }
+    }
+  ],
+  "missing": {
+    "operation": "resolve-core-default",
+    "version": "1.0.0",
+    "source": {
+      "umf": "0.8.0",
+      "id": "s20-core",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-amount",
+              "kind": "field",
+              "scalarType": "integer",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "other-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "bool",
+              "kind": "field",
+              "scalarType": "boolean",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "decimal",
+              "kind": "field",
+              "scalarType": "decimal",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {},
+              "facets": {
+                "precision": 30,
+                "scale": 3
+              }
+            },
+            {
+              "id": "binary",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "date",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "date-output",
+              "kind": "field",
+              "scalarType": "date",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "token",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "cipher",
+              "kind": "field",
+              "scalarType": "binary",
+              "cardinality": "one",
+              "nullability": "absent-allowed",
+              "extensions": {}
+            },
+            {
+              "id": "parameter-text",
+              "kind": "field",
+              "scalarType": "string",
+              "cardinality": "one",
+              "nullability": "required",
+              "extensions": {}
+            },
+            {
+              "id": "record",
+              "kind": "record",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "m",
+      "element": "token"
+    },
+    "input": {
+      "state": "missing"
+    },
+    "result": {
+      "state": "missing"
+    },
+    "applied": false
+  },
+  "disclosureInspection": {
+    "status": "validated-disclosure",
+    "source": {
+      "version": "umf.security.disclosure/0.2.0",
+      "policy": {
+        "id": "s20-policy",
+        "revision": "p1"
+      },
+      "protection": {
+        "id": "s20-protection",
+        "revision": "c1"
+      },
+      "domains": [
+        {
+          "documentId": "s20-core",
+          "revision": "d1"
+        }
+      ],
+      "columns": [
+        {
+          "field": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "storageEffect": "canonical"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "disposition": "original",
+            "value": null
+          }
+        ],
+        [
+          {
+            "disposition": "absent"
+          }
+        ],
+        [
+          {
+            "disposition": "withheld"
+          }
+        ],
+        [
+          {
+            "disposition": "transformed",
+            "selection": {
+              "ruleIndex": 0,
+              "disclosureIndex": 0
+            },
+            "outputDomain": {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "text"
+            },
+            "transform": {
+              "id": "nullify",
+              "version": "v1"
+            },
+            "value": null
+          }
+        ],
+        [
+          {
+            "disposition": "transformed",
+            "selection": {
+              "ruleIndex": 1,
+              "disclosureIndex": 0
+            },
+            "outputDomain": {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "text"
+            },
+            "transform": {
+              "id": "mask",
+              "version": "v1"
+            },
+            "value": {
+              "string": "masked"
+            }
+          }
+        ]
+      ]
+    },
+    "batch": {
+      "version": "umf.security.disclosure/0.2.0",
+      "policy": {
+        "id": "s20-policy",
+        "revision": "p1"
+      },
+      "protection": {
+        "id": "s20-protection",
+        "revision": "c1"
+      },
+      "domains": [
+        {
+          "documentId": "s20-core",
+          "revision": "d1"
+        }
+      ],
+      "columns": [
+        {
+          "field": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "storageEffect": "canonical"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "disposition": "original",
+            "value": null
+          }
+        ],
+        [
+          {
+            "disposition": "absent"
+          }
+        ],
+        [
+          {
+            "disposition": "withheld"
+          }
+        ],
+        [
+          {
+            "disposition": "transformed",
+            "selection": {
+              "ruleIndex": 0,
+              "disclosureIndex": 0
+            },
+            "outputDomain": {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "text"
+            },
+            "transform": {
+              "id": "nullify",
+              "version": "v1"
+            },
+            "value": null
+          }
+        ],
+        [
+          {
+            "disposition": "transformed",
+            "selection": {
+              "ruleIndex": 1,
+              "disclosureIndex": 0
+            },
+            "outputDomain": {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "text"
+            },
+            "transform": {
+              "id": "mask",
+              "version": "v1"
+            },
+            "value": {
+              "string": "masked"
+            }
+          }
+        ]
+      ]
+    },
+    "policy": {
+      "vocabulary": "umf.security",
+      "version": "0.2.0",
+      "id": "s20-policy",
+      "revision": "p1",
+      "ontology": {
+        "documentId": "uninterpreted-ontology",
+        "revision": "o1"
+      },
+      "protection": {
+        "id": "s20-protection",
+        "revision": "c1"
+      },
+      "rules": [
+        {
+          "id": "rule-nullify",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "nullify",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-mask",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "mask",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-tokenize",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "tokenize",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "token"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-encrypt",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "amount"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "encrypt",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "cipher"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-token-mask",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "token"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "token-mask",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "rule-date-truncate",
+          "effect": "permit",
+          "actions": [
+            "read"
+          ],
+          "target": [
+            {
+              "documentId": "s20-core",
+              "moduleId": "m",
+              "elementId": "record"
+            }
+          ],
+          "condition": {
+            "op": "literal",
+            "value": true
+          },
+          "disclosure": [
+            {
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "date"
+              },
+              "disposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "date-truncate",
+                "version": "v1",
+                "field": {
+                  "documentId": "s20-core",
+                  "moduleId": "m",
+                  "elementId": "date-output"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "native": {
+        "opaque": "preserved, never authenticated"
+      }
+    },
+    "catalog": {
+      "vocabulary": "umf.security.protection",
+      "version": "0.1.0",
+      "id": "s20-protection",
+      "revision": "c1",
+      "transforms": [
+        {
+          "id": "nullify",
+          "version": "v1",
+          "kind": "mask",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "text"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "null-out"
+        },
+        {
+          "id": "mask",
+          "version": "v1",
+          "kind": "mask",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "text"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [
+            {
+              "name": "value",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "masked"
+              }
+            }
+          ],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "constant"
+        },
+        {
+          "id": "tokenize",
+          "version": "v1",
+          "kind": "tokenize",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "token"
+          },
+          "determinism": "random",
+          "reversibility": "vault",
+          "parameters": [],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "custody": {
+            "owner": "declared-owner",
+            "formatPreserving": false,
+            "storageEffect": "stored-transformed",
+            "propagation": {
+              "history": "unverified-history",
+              "snapshots": "unverified-snapshots",
+              "exports": "unverified-exports",
+              "feeds": "unverified-feeds",
+              "caches": "unverified-caches"
+            },
+            "vaultRef": "opaque-not-executable"
+          },
+          "reverseAction": "reverse-token"
+        },
+        {
+          "id": "encrypt",
+          "version": "v1",
+          "kind": "encrypt",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "amount"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "cipher"
+          },
+          "determinism": "keyed-deterministic",
+          "reversibility": "keyed",
+          "parameters": [],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "custody": {
+            "owner": "declared-owner",
+            "formatPreserving": false,
+            "storageEffect": "stored-transformed",
+            "propagation": {
+              "history": "unverified-history",
+              "snapshots": "unverified-snapshots",
+              "exports": "unverified-exports",
+              "feeds": "unverified-feeds",
+              "caches": "unverified-caches"
+            },
+            "keyRef": "opaque-not-executable"
+          },
+          "reverseAction": "reverse-cipher"
+        },
+        {
+          "id": "token-mask",
+          "version": "v1",
+          "kind": "mask",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "token"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "text"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [
+            {
+              "name": "value",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "masked"
+              }
+            }
+          ],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "constant"
+        },
+        {
+          "id": "date-truncate",
+          "version": "v1",
+          "kind": "generalize",
+          "inputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "date"
+          },
+          "outputDomain": {
+            "documentId": "s20-core",
+            "moduleId": "m",
+            "elementId": "date-output"
+          },
+          "determinism": "deterministic",
+          "reversibility": "none",
+          "parameters": [
+            {
+              "name": "calendar",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "umf-gregorian-date/1.0.0"
+              }
+            },
+            {
+              "name": "unit",
+              "field": {
+                "documentId": "s20-core",
+                "moduleId": "m",
+                "elementId": "parameter-text"
+              },
+              "value": {
+                "string": "month"
+              }
+            }
+          ],
+          "disclosureProfile": [],
+          "queryUse": {},
+          "function": "truncate-date"
+        }
+      ],
+      "native": {
+        "opaque": "never execute: () => { throw \"native\"; }\r\n😀"
+      }
+    },
+    "closure": {
+      "pins": [
+        {
+          "documentId": "s20-core",
+          "revision": "d1"
+        }
+      ],
+      "documents": [
+        {
+          "revision": "d1",
+          "document": {
+            "umf": "0.8.0",
+            "id": "s20-core",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "amount",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "text",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "other-amount",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "other-text",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "bool",
+                    "kind": "field",
+                    "scalarType": "boolean",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "decimal",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {},
+                    "facets": {
+                      "precision": 30,
+                      "scale": 3
+                    }
+                  },
+                  {
+                    "id": "binary",
+                    "kind": "field",
+                    "scalarType": "binary",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "date",
+                    "kind": "field",
+                    "scalarType": "date",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "date-output",
+                    "kind": "field",
+                    "scalarType": "date",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "token",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "cipher",
+                    "kind": "field",
+                    "scalarType": "binary",
+                    "cardinality": "one",
+                    "nullability": "absent-allowed",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "parameter-text",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "cardinality": "one",
+                    "nullability": "required",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "record",
+                    "kind": "record",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "complete": false,
+    "authority": false,
+    "diagnostics": [
+      {
+        "code": "PROTECTION_DOMAIN_ONLY",
+        "path": "",
+        "severity": "warning",
+        "message": "Core definitions resolved only; domain compatibility, literal/function/query semantics, ontology and native authority remain separate"
+      },
+      {
+        "code": "PROTECTION_PARAMETERS_ONLY",
+        "path": "",
+        "severity": "warning",
+        "message": "Typed declaration values only; function arity/names, domain compatibility, output behavior and authority remain separate"
+      },
+      {
+        "code": "SECURITY_DISCLOSURE_DATA_ONLY",
+        "path": "",
+        "severity": "warning",
+        "message": "Transport shape/domain/source correspondence only; no row authorization, actual transform execution, current custody or native admission"
+      }
+    ]
+  },
+  "originalDeclaredRows": [
+    [
+      {
+        "disposition": "original",
+        "value": null
+      }
+    ],
+    [
+      {
+        "disposition": "absent"
+      }
+    ],
+    [
+      {
+        "disposition": "withheld"
+      }
+    ],
+    [
+      {
+        "disposition": "transformed",
+        "selection": {
+          "ruleIndex": 0,
+          "disclosureIndex": 0
+        },
+        "outputDomain": {
+          "documentId": "s20-core",
+          "moduleId": "m",
+          "elementId": "text"
+        },
+        "transform": {
+          "id": "nullify",
+          "version": "v1"
+        },
+        "value": null
+      }
+    ],
+    [
+      {
+        "disposition": "transformed",
+        "selection": {
+          "ruleIndex": 1,
+          "disclosureIndex": 0
+        },
+        "outputDomain": {
+          "documentId": "s20-core",
+          "moduleId": "m",
+          "elementId": "text"
+        },
+        "transform": {
+          "id": "mask",
+          "version": "v1"
+        },
+        "value": {
+          "string": "masked"
+        }
+      }
+    ]
+  ],
+  "selectedSourcePins": {
+    "tests/security/protection/disclosure-fixtures.json": "5f1814dc8530a2096bec83e940676f053ca8d38d9220ddbbf00d7dfe60b89074",
+    "src/model/schema-properties.ts": "779f994c669e6ccd9ce2e19b7c77a69bd8d38771ea358fd37da61f46ffee9d4c",
+    "src/model/schema-literals.ts": "f44cf08ed2b4b9e349ef534af79a58b6ea6c560f41e146fc680959c7accdf6a4",
+    "src/model/internal/field-body.ts": "0ffc3dcb0ccab4eb7df2ce19002cd5bf2dee200270971cba38adb4a96b8f2a50",
+    "src/extensions/security/protection/disclosure.ts": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+  },
+  "scope": "Original authored Token Field and public logical Field/default/disclosure inspection only. No Record was added; no native null/absence/withheld carrier, issued query context, database, transform, actor or guarded release is admitted."
+}
