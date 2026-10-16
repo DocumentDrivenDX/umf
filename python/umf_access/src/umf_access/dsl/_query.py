@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, replace
+from dataclasses import field as dataclass_field
 from datetime import date, datetime
 from decimal import Decimal
 from functools import wraps
@@ -56,7 +57,7 @@ class Continuation(Generic[K]):
     key: K
     sort_values: tuple[SortValue, ...]
     identity_digest: str
-    owner_cursor: bytes | None = None
+    owner_cursor: bytes | None = dataclass_field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         if self.owner_cursor is not None and (type(self.owner_cursor) is not bytes or not 1 <= len(self.owner_cursor) <= 65536):
