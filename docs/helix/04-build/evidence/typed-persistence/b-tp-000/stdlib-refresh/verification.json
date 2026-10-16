@@ -1,0 +1,79 @@
+{
+  "kind": "boundary-checker-stdlib-refresh",
+  "slice": "B-TP-000",
+  "date": "2026-10-15",
+  "baseRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "status": "PASS for fingerprinted checker and integrated scan source",
+  "source": "source-fingerprints.json",
+  "tests": "test-output.txt",
+  "supersedes": "../verification.json for changed checker source; prior run retained as historical evidence",
+  "fix": "Python 3.9 lacks sys.stdlib_module_names and this macOS build has a stale Xcode DESTSHARED. Discover pure and extension modules in stdlib, platstdlib, their lib-dynload directories and configured DESTSHARED when present; never arbitrary sys.path/site-packages, and never import candidate modules.",
+  "changedFiles": [
+    "scripts/check-access-python-boundaries.py",
+    "tests/compilation/boundaries.test.ts"
+  ],
+  "runtimeChanges": "None by boundary session; integrated runtime files fingerprinted only.",
+  "redEvidence": {
+    "command": "bun test tests/compilation/boundaries.test.ts --test-name-pattern 'stdlib extensions'",
+    "exitCode": 1,
+    "passed": 1,
+    "failed": 1,
+    "observed": "math/struct positive refused on default Python 3.9.6 before fallback correction; Python 3.14.8 positive and third-party negative passed."
+  },
+  "versions": {
+    "bun": "1.4.2",
+    "pythonDefault": "3.9.6",
+    "pythonAdditional": "3.14.8",
+    "typescriptCompiler": "7.0.2",
+    "typescriptParser": "typescript-api 5.9.3"
+  },
+  "commands": [
+    {
+      "command": "bun test tests/compilation/boundaries.test.ts",
+      "exitCode": 0,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "assertions": 97
+    },
+    {
+      "command": "bun run check:access-boundaries",
+      "exitCode": 0,
+      "typescriptFiles": 7,
+      "pythonModules": 11,
+      "violations": 0
+    },
+    {
+      "command": "python3.14 scripts/check-access-python-boundaries.py",
+      "exitCode": 0,
+      "pythonModules": 11,
+      "violations": 0
+    },
+    {
+      "command": "sh .githooks/pre-commit",
+      "exitCode": 0,
+      "typescriptFiles": 7,
+      "pythonModules": 11
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc --ignoreConfig --noEmit --target ES2022 --module ESNext --moduleResolution Bundler --types bun --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --skipLibCheck scripts/check-compilation-boundaries.ts tests/compilation/boundaries.test.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "controls": "math and struct accepted in pure foundation values.py; numpy refused as third-party, independently under python3 and python3.14. Existing ownership/private/cycle/host-I/O/empty-scan/installed-hook controls still pass.",
+  "pythonScanRoots": [
+    "python/umf_access/",
+    "python/umf_access/src/umf_access/"
+  ],
+  "limits": [
+    "Remote CI remains UNTESTED; configured workflow Python is 3.12. The optional local python3.14-specific test explicitly skips if that executable is absent; neither interpreter control skipped in this observed run.",
+    "Static boundaries are not a sandbox. Prior semantic-review obligations remain.",
+    "Passing scans qualify dependency direction only, not runtime/generator functional support.",
+    "Full repository integration typecheck is coordinator-owned; only checker sources/tests were typechecked in this refresh.",
+    "Fingerprints bind this replay; changed inputs require new replay."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "umf": "0.8.0",
+  "id": "spark-delta-binding",
+  "vocabularies": {
+    "umf.binding": {
+      "version": "0.2.0"
+    }
+  },
+  "modules": [],
+  "extensions": {
+    "umf.binding": {
+      "profile": "umf-binding-2",
+      "logical": {
+        "documentId": "raw-profile-model",
+        "coreVersion": "0.8.0"
+      },
+      "target": {
+        "system": "spark-delta",
+        "version": "spark4-delta4",
+        "subset": "typed-access-columns/0.1"
+      },
+      "elements": [
+        {
+          "module": "sales",
+          "element": "Order",
+          "table": "orders"
+        }
+      ],
+      "fields": [
+        {
+          "module": "sales",
+          "element": "orderId",
+          "storage": "column",
+          "column": "order_id"
+        }
+      ],
+      "relationships": [],
+      "indexes": []
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "kind": "B-TP-004 exact immutable snapshot behavioral replay",
+  "date": "2026-10-15",
+  "snapshotWheelSha256": "e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899",
+  "actualWheelSha256": "e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899",
+  "python": "/private/tmp/umf-access-installed-e4c780c7bfa9b268/bin/python",
+  "snapshotManifestSha256": "891dfe5c7694086ade00062a453bf1f7ec1c4f6cfe2f00ad62cb4290189c58ac",
+  "helperSourceMatchesSnapshot": {
+    "types.py": true,
+    "values.py": true,
+    "codec_support.py": true
+  },
+  "frozenInputSha256": {
+    "python/umf_access/tests/test_values_red.py": "9b333cc2047b8b271eb2f20113705fe8ce0ab96daa81c1788d5663503c278e25",
+    "python/umf_access/tests/test_codec_support_red.py": "f9946d4ecc5201f2294cabbf62841ac0af72f265de10c8823d24d5592d88ca16",
+    "python/umf_access/tests/test_temporal_carriers_red.py": "bf1af190eb7d681c0c4e9913f6ce1dc01bd7eb3ea6896e336fb7a2b169c9ca91",
+    "python/umf_access/tests/test_golden_vectors.py": "8c27221a7550b1643e54349349e48f9cac82c84ed145035e1809e25babc4d1e1",
+    "fixtures/access/golden-vectors/core-carriers.json": "fdad48d32f30da8a66f6d72e7124debbb78442192cb8e3107e224957bb768e8a",
+    "fixtures/access/golden-vectors/temporal-profile.json": "33e246d47ead263e9b2467b57a46811cdd3628d703d91b5f4fa564b1d207f9c2",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/python-normalization-sample.json": "2fea1bf81211600cd0bf664562ab6cbfb103d0c4d97d13d5ee98568fdbad6dd8"
+  },
+  "command": [
+    "/private/tmp/umf-access-installed-e4c780c7bfa9b268/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "CONFIG={'packaging': '/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/tests/packaging', 'wheel': '/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899/umf_access-0.1.0.dev0-py3-none-any.whl', 'generatedRoot': '/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899/generated', 'manifest': '/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899/generated/shop/_umf/manifest.json', 'tests': '/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-004-snapshot-e4c780c7/frozen-inputs/python/umf_access/tests'}\nimport sys,json,unittest,importlib.metadata\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nfrom decimal import Decimal\nsys.path.insert(0,CONFIG[\"packaging\"])\nfrom replay_installed import inspect_wheel,verify_installed_files,check_generated_inventory\npin={\"distribution\":\"umf_access\",\"version\":\"0.1.0.dev0\",\"abi\":\"umf-access-runtime/0.1\"}\nsite=Path(importlib.metadata.distribution(\"umf_access\").locate_file(\"\")).resolve()\nassert site.is_relative_to(Path(sys.prefix).resolve())\nverify_installed_files(inspect_wheel(Path(CONFIG[\"wheel\"]),pin),site)\nimport umf_access\nfrom umf_access import types,values,codec_support\nfor module in (umf_access,types,values,codec_support):assert Path(module.__file__).resolve().is_relative_to(site/\"umf_access\")\nroot=Path(CONFIG[\"generatedRoot\"]);manifest=json.loads(Path(CONFIG[\"manifest\"]).read_text());check_generated_inventory(root,manifest)\nsys.path.insert(0,str(root))\nfrom shop.models import Order,OrderCreate,OrderPatch\nfrom shop.keys import OrderKey,BUNDLE_INPUT_DIGEST\nfrom shop.codecs import encode_Order_patch,encode_Order_create,decode_Order\nclass SnapshotOrder(unittest.TestCase):\n def test_presence(self):\n  self.assertEqual(encode_Order_patch(OrderPatch()),{})\n  self.assertEqual(encode_Order_patch(OrderPatch(memo=None)),{\"memo\":None})\n  for fields in ({\"amount\":None},{\"revision\":1},{\"placed_at\":datetime(2024,1,1,tzinfo=timezone.utc)}):\n   with self.assertRaises(ValueError):OrderPatch(**fields)\n  value=OrderCreate(order_id=\"o-1\",amount=Decimal(\"1.200\"),placed_at=datetime(2024,1,1,tzinfo=timezone.utc))\n  encoded=encode_Order_create(value);self.assertEqual(encoded[\"orderId\"],\"o-1\");self.assertNotIn(\"memo\",encoded)\n  self.assertEqual(encoded[\"amount\"].as_tuple(),Decimal(\"1.200\").as_tuple())\n def test_boundaries(self):\n  with self.assertRaises(TypeError):type(\"Subclass\",(OrderPatch,),{})\n  for value in (OrderPatch.model_construct(amount=\"private-invalid\"),OrderPatch().model_copy(update={\"amount\":\"private-invalid\"})):\n   with self.assertRaises(ValueError) as caught:encode_Order_patch(value)\n   self.assertNotIn(\"private-invalid\",str(caught.exception))\n def test_key_identity_only(self):\n  self.assertEqual(dict(OrderKey.KEY_IDENTITY),{\"documentId\":\"commerce-model\",\"coreVersion\":\"0.8.0\",\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"})\n  self.assertEqual(BUNDLE_INPUT_DIGEST,manifest[\"inputDigest\"])\n  with self.assertRaises(TypeError):hash(OrderKey(order_id=\"o-1\"))\n def test_decode(self):\n  from unittest.mock import patch\n  for columns,row in (([],[]),([\"orderId\",\"orderId\"],[\"a\",\"b\"]),([\"unexpected\"],[1])):\n   with patch(\"umf_access.codec_support._build_mapping\") as mapping:\n    with self.assertRaises(ValueError):decode_Order(columns,row)\n    mapping.assert_not_called()\n  value=decode_Order([\"revision\",\"placedAt\",\"memo\",\"amount\",\"orderId\"],[1,datetime(2024,1,1,tzinfo=timezone.utc),None,Decimal(\"1.20\"),\"o-1\"])\n  self.assertEqual(value.order_id,\"o-1\");self.assertIsNone(value.memo)\nloader=unittest.TestLoader();suite=unittest.TestSuite()\nfor pattern in (\"*_red.py\",\"test_golden_vectors.py\"):suite.addTests(loader.discover(CONFIG[\"tests\"],pattern=pattern))\nsuite.addTests(loader.loadTestsFromTestCase(SnapshotOrder))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nverify_installed_files(inspect_wheel(Path(CONFIG[\"wheel\"]),pin),site);check_generated_inventory(root,manifest)\nprint(json.dumps({\"installedRuntime\":umf_access.__file__,\"isolatedFlag\":sys.flags.isolated,\"testsRun\":result.testsRun,\"errors\":len(result.errors),\"failures\":len(result.failures),\"wheelByteVerification\":\"pass before/after\",\"coreGoldenSubcases\":69}))\nraise SystemExit(0 if result.wasSuccessful() else 1)\n"
+  ],
+  "exitCode": 0,
+  "status": "pass",
+  "log": "b-tp-004-snapshot-e4c780c7/replay.log",
+  "scope": "19 helper tests +1golden test69non-temporal subcases +4Order-only generated tests. Composite-Key order and generated action types absent from snapshot package, not replayed here; earlier25-test v3 record remains separately qualified.",
+  "acceptance": "B-TP-004 OPEN; no new full story/native/temporal qualification; parent reports6emitter strict pyright diagnostics."
+}

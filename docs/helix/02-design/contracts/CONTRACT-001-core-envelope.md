@@ -87,6 +87,14 @@ copy isolation and both serializations. Selection from TableSpec, PostgreSQL, SQ
 Avro and Parquet preserves native recovery. CONTRACT-036 now demonstrates all seven
 FR-41 consumer classes from one authored mixed model; general consumers remain open.
 
+### Proposed 128-bit/UUID revision
+
+[CONTRACT-076](CONTRACT-076-128-bit-uuid.md) specifies core 0.9.0 with
+`bits128` and `uuid`, new typed literals and explicit migration from 0.8.0.
+The nine-family list below governs earlier implemented profiles; it is not a
+restriction on the new design. Older profile schemas and interpretation remain
+unchanged. No native classification or delivery is established by this proposal.
+
 ### Core scalar families
 
 An element may contain `scalarType`. Recognized values are `boolean`, `integer`,

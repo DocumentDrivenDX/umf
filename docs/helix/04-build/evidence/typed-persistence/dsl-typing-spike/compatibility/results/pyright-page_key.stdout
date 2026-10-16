@@ -1,0 +1,30 @@
+{
+    "version": "1.1.414",
+    "time": "1792086742310",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/page_key.py",
+            "severity": "error",
+            "message": "Type \"Page[Order, OrderKey]\" is not assignable to declared type \"Page[Order, CustomerKey]\"\n  \"Page[Order, OrderKey]\" is not assignable to \"Page[Order, CustomerKey]\"\n    Type parameter \"K@Page\" is invariant, but \"OrderKey\" is not the same as \"CustomerKey\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 33
+                },
+                "end": {
+                    "line": 6,
+                    "character": 45
+                }
+            },
+            "rule": "reportAssignmentType"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 1,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.268
+    }
+}
+

@@ -121,6 +121,69 @@ PostgreSQL catalog index captured by CONTRACT-015 is observed native evidence
 even when its spelling matches an authored declaration; classification retains
 its original source and never invents author intent.
 
+### Declarative typed-access column profiles
+
+The named subset `typed-access-columns/0.1` defines three explicit declarative
+profiles over `umf.binding` 0.2.0 (`profile:umf-binding-2`) paired with a core
+0.8.0 logical document:
+
+| `target.system` | `target.version` | Qualification |
+| --- | --- | --- |
+| `lakebase` | Exact authored ColumnSet `target.majorVersion` identity | Native behavior UNTESTED |
+| `unity-catalog` | Exact authored ColumnSet `target.majorVersion` identity | Native behavior UNTESTED |
+| `spark-delta` | Exact authored ColumnSet `target.majorVersion` identity | Native behavior UNTESTED |
+
+These profiles add no new payload fields or extension package version. Generic
+binding target strings already admit these identifiers. Selecting a system name
+alone MUST NOT opt into this subset. Existing target subsets and full native
+version strings keep their existing meaning.
+
+For this subset only, version identity is an opaque nonempty string authored
+identically in both the binding and CONTRACT-070 ColumnSet. Consumers MUST compare
+`target.system` with ColumnSet `target.platform` and `target.version` with
+ColumnSet `target.majorVersion` by exact equality. Consumers MUST NOT parse a major
+prefix, alias `delta` to `spark-delta`, or treat `lakebase` as `postgresql`.
+This declarative identity is separate from CONTRACT-072 observed and qualified
+runtime platform version pins. It does not authorize execution on any native
+version or establish native type equivalence.
+
+The bounded physical surface MUST have:
+
+- Explicit Record element bindings with nonempty `table` identities and no
+  `partition` member, including explicit null. Table identities MUST be unique
+  within the binding; each is one opaque identifier, with no inferred catalog,
+  schema, quoting, case folding or dot splitting.
+- Direct core Field bindings with `storage:column` and explicit nonempty `column`
+  identities. Each Field MUST be a declared member of exactly one bound Record;
+  column identities MUST be unique within that Record's table. DDD field names,
+  embedded paths and shared Field ownership across bound Records refuse.
+- Empty `relationships` and `indexes` arrays. This subset declares no index,
+  clustering, partition, relationship enforcement or generated storage capability.
+- Fully interpreted binding content and explicit, fully interpreted Record
+  membership. Unknown binding content remains recoverable through generic
+  read/write, but MUST block use of this subset.
+
+ColumnSet `binding.module` MUST identify a module with an explicitly bound
+Record. CONTRACT-070 owns native column type, nullability and generation facts;
+this profile does not verify them or require every Field to have a ColumnSet.
+CONTRACT-067 owns selected Record/Field coverage and unknown relevant logical
+semantics. Weft owns SQL lowering and per-platform capability qualification.
+
+`inspectRawTableBinding(binding, logical, target, module)` returns the ordinary
+`Validation` shape and MUST leave inputs unchanged. `target` is the closed record
+`{platform:string, majorVersion:string}` from the ColumnSet; `module` is its
+binding module ID. Generic binding errors retain their existing codes; subset,
+identity, ownership or collision violations report `BINDING_RAW_PROFILE` with
+binding JSON Pointers and `valid:false, complete:false`. Unknown input content
+MUST NOT be removed to obtain a passing result. Structural declaration validation
+is separate from native qualification.
+
+For example, a binding target
+`{system:"lakebase",version:"17",subset:"typed-access-columns/0.1"}` matches
+ColumnSet target `{platform:"lakebase",majorVersion:"17"}` exactly. Changing the
+binding version to `17.4` refuses that match; no native Lakebase support is implied
+by either string. The same exact matching rule applies to the other two systems.
+
 ### Scoped implementation evidence (2026-09-24)
 
 The `umf.binding` 0.1.0 package and typed validator are published. The
@@ -232,3 +295,14 @@ the receipt; rollback does not reassociate old names with a renamed model.
 The binding suite, schema audits and Chromium migration/recovery results are
 recorded in [the transition evidence](../../04-build/evidence/binding-stable-ids.md).
 No physical storage or native relationship enforcement is claimed by this transition.
+
+
+### Proposed 128-bit scalar carrier profile
+
+[CONTRACT-076](CONTRACT-076-128-bit-uuid.md) defines the new independently
+versioned `umf.binding`0.3.0 / `umf-binding-3` scalar-carrier choice for
+core0.9.0 bits128/UUID Fields, including paired physical slots. Published0.1.0
+and0.2.0 shapes and evidence above remain unchanged. The new design preserves
+logical identity and separately qualifies bit fidelity, native constraints,
+ordering, keys/relationships, availability and mutation atomicity. It does not
+claim existing index or relationship generators support the new layout.

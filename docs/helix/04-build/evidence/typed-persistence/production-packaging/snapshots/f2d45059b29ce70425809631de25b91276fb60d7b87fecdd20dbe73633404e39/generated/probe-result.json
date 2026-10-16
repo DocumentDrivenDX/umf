@@ -1,0 +1,2033 @@
+{
+  "contract": "umf-access-generate/0.1",
+  "abi": "umf-python-types/0.1",
+  "runtimeAbi": {
+    "distribution": "umf_access",
+    "version": "0.1.0.dev0",
+    "abi": "umf-access-runtime/0.1"
+  },
+  "outcome": "candidate",
+  "inputDigest": "865d63c8cc3c80d9747ec7bf13570d2909304bd6d76bb36e860c864bab3825b0",
+  "files": [
+    {
+      "path": "shop/__init__.py",
+      "text": "# Generated from pinned UMF inputs. Regenerate; do not edit.\nfrom __future__ import annotations\nfrom pydantic import MISSING\nfrom .models import *\nfrom .keys import *\nfrom . import fields as _fields\n",
+      "sha256": "a2cc7cbecb6708d4926cebfd6eba26fcf727a915ab2977a7d28d023efd42dd4a"
+    },
+    {
+      "path": "shop/_umf/manifest.json",
+      "text": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d0\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/record/module\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/record/element\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d2\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/field/module\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d3\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/field/element\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d4\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/row/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d5\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/row/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d6\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/create/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d7\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/create/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d8\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/mutable\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d9\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/0/generated\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d10\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/field/module\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d11\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/field/element\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d12\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/row/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d13\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/row/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d14\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/create/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d15\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/create/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d16\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/mutable\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d17\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/1/generated\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d18\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/field/module\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d19\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/field/element\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d20\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/row/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d21\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/row/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d22\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/create/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d23\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/create/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d24\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/mutable\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d25\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/2/generated\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d26\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/field/module\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d27\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/field/element\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d28\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/row/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d29\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/row/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d30\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/create/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d31\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/create/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d32\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/mutable\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d33\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/generated\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d34\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/3/temporal\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d35\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/field/module\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d36\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/field/element\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d37\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/row/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d38\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/row/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d39\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/create/missing\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d40\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/create/null\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d41\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/mutable\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"umf.access\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d42\",\"obligationIds\":[],\"pointer\":\"/modules/0/extensions/umf.access/views/0/fields/4/generated\",\"reason\":\"Authored view checked against core presence and retained\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d43\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d44\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/kind\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d45\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/scalarType\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d46\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d47\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/nullability\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d48\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/extensions\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d49\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d50\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/kind\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d51\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/scalarType\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d52\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/cardinality\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d53\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/nullability\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d54\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/extensions\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"facets\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d55\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/facets/precision\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"facets\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d56\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/1/facets/scale\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d57\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/2/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d58\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/2/kind\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d59\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/2/scalarType\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d60\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/2/cardinality\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d61\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/2/nullability\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d62\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/2/extensions\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d63\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/3/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d64\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/3/kind\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d65\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/3/scalarType\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d66\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/3/cardinality\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d67\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/3/nullability\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d68\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/3/extensions\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d69\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d70\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/kind\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d71\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/scalarType\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d72\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/cardinality\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d73\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/nullability\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d74\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/extensions\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"facets\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d75\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/facets/integerWidth/bits\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"facets\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d76\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/4/facets/integerWidth/signed\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"dependency\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d77\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d78\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/kind\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d79\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/0/module\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d80\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/0/element\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d81\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/1/module\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d82\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/1/element\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d83\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/2/module\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d84\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/2/element\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d85\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/3/module\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d86\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/3/element\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d87\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/4/module\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d88\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/members/4/element\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d89\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/keys/0/id\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d90\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/keys/0/name\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d91\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/keys/0/fields/0/module\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d92\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/keys/0/fields/0/element\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d93\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/keys/0/primary\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d94\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/5/extensions\",\"reason\":\"Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d95\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/6/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d96\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/6/kind\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d97\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/6/scalarType\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d98\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/6/cardinality\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d99\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/6/nullability\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d100\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/6/extensions\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d101\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/7/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d102\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/7/kind\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d103\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/7/scalarType\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d104\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/7/cardinality\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d105\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/7/nullability\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d106\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/7/extensions\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d107\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d108\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/kind\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d109\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/members/0/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d110\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/members/0/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d111\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/members/1/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d112\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/members/1/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d113\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/keys/0/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d114\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/keys/0/name\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d115\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/keys/0/primary\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d116\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/keys/0/fields/0/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d117\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/keys/0/fields/0/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d118\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/8/extensions\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d119\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/9/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d120\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/9/kind\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d121\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/9/scalarType\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d122\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/9/cardinality\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d123\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/9/nullability\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d124\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/9/extensions\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d125\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d126\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/kind\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"scalarType\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d127\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/scalarType\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d128\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/cardinality\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"nullability\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d129\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/nullability\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d130\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/extensions\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"facets\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d131\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/facets/integerWidth/bits\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"facets\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d132\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/10/facets/integerWidth/signed\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"id\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d133\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"kind\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d134\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/kind\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d135\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/members/0/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d136\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/members/0/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d137\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/members/1/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"members\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d138\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/members/1/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d139\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/id\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d140\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/name\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d141\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/primary\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d142\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/fields/0/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d143\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/fields/0/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d144\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/fields/1/module\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"keys\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d145\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/keys/0/fields/1/element\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"},{\"assertion\":\"extensions\",\"checks\":[\"informational\"],\"fidelity\":\"unknown\",\"id\":\"d146\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/11/extensions\",\"reason\":\"Unselected content retained in exact source archive\",\"relevance\":\"unselected\",\"sourceId\":\"logical\"}],\"inputDigest\":\"865d63c8cc3c80d9747ec7bf13570d2909304bd6d76bb36e860c864bab3825b0\",\"inventory\":[{\"path\":\"shop/__init__.py\",\"sha256\":\"a2cc7cbecb6708d4926cebfd6eba26fcf727a915ab2977a7d28d023efd42dd4a\"},{\"path\":\"shop/_umf/sources.json\",\"sha256\":\"56e90148f9c226d413d1dacd96ac46db10ba3fc47ce3c740d4c7fa6b7305f44d\"},{\"path\":\"shop/codecs.py\",\"sha256\":\"77d051ae787cb9b7b2d1a1dd41044080fdf7a34970d1624441b8906d4b4de39c\"},{\"path\":\"shop/fields.py\",\"sha256\":\"594fdca2ef77337d0d0282c6b9d9e1d760b905c1a7aa46223425af897f9bc2f1\"},{\"path\":\"shop/keys.py\",\"sha256\":\"6d53f60878cd114185cb3d3ca429c363fc06dd0613f2a71d520a67132d4a4e34\"},{\"path\":\"shop/models.py\",\"sha256\":\"2b3d960c409cd139b191833e2f4bcb81b1ebbf9318d804b77d2fac1d08cc3a08\"},{\"path\":\"shop/py.typed\",\"sha256\":\"01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b\"}],\"obligations\":[],\"profile\":{\"assertionKinds\":[\"kind\",\"nullability\",\"Key\",\"facets\",\"defaults\",\"relationships\",\"actions\",\"umf.access\"],\"checkers\":[{\"configuration\":{\"check_untyped_defs\":true,\"python_version\":\"3.12\"},\"name\":\"mypy\",\"version\":\"2.4.0\"},{\"configuration\":{\"environment\":\"isolated installed local prerelease wheel\",\"pythonVersion\":\"3.12\",\"typeCheckingMode\":\"strict\"},\"name\":\"pyright\",\"version\":\"1.1.414\"}],\"codeSha256\":\"bacbca2f47899a78dab2f00578e66690415b8fbb34bce0bd348668fabf6c8670\",\"compilerVersion\":\"local-generator-f9621b7235ae408161989455ba05579badb15f90781ccfd5fcd45fb0e434a7ae\",\"coreVersions\":[\"0.8.0\"],\"dependencies\":[{\"distribution\":\"umf_access\",\"version\":\"0.1.0.dev0\"},{\"distribution\":\"pydantic\",\"version\":\"2.14.1\"}],\"id\":\"test.access\",\"importedNames\":[\"decimal\",\"pydantic\",\"umf_access\"],\"python\":{\"version\":\"3.14.8\"},\"reservedNames\":[\"test_reserved\"],\"subset\":\"local production-wheel probe over current engine-only Order fixture; not complete SDK qualification\",\"version\":\"0.1.0\",\"vocabularies\":[{\"id\":\"umf.access\",\"version\":\"0.1.0\"}]},\"runtimeAbi\":{\"abi\":\"umf-access-runtime/0.1\",\"distribution\":\"umf_access\",\"version\":\"0.1.0.dev0\"},\"symbols\":[{\"path\":\"shop/models.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"row\",\"sourceId\":\"logical\",\"symbol\":\"Order\"},{\"path\":\"shop/models.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"create\",\"sourceId\":\"logical\",\"symbol\":\"OrderCreate\"},{\"path\":\"shop/models.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"patch\",\"sourceId\":\"logical\",\"symbol\":\"OrderPatch\"},{\"path\":\"shop/keys.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"key\",\"sourceId\":\"logical\",\"symbol\":\"OrderKey\"},{\"path\":\"shop/fields.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"fields\",\"sourceId\":\"logical\",\"symbol\":\"OrderColumns\"},{\"path\":\"shop/fields.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"update\",\"sourceId\":\"logical\",\"symbol\":\"OrderUpdate\"},{\"path\":\"shop/codecs.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"codec\",\"sourceId\":\"logical\",\"symbol\":\"encode_Order_create\"},{\"path\":\"shop/codecs.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"codec\",\"sourceId\":\"logical\",\"symbol\":\"encode_Order_patch\"},{\"path\":\"shop/codecs.py\",\"pointer\":\"/modules/0/elements/5\",\"role\":\"codec\",\"sourceId\":\"logical\",\"symbol\":\"decode_Order\"}]}\n",
+      "sha256": "4706962878fe0cb9d605876aceac1e7e8a413bc72e6785760f038ee1004e333f"
+    },
+    {
+      "path": "shop/_umf/sources.json",
+      "text": "[{\"format\":\"json\",\"id\":\"logical\",\"text\":\"{\\\"umf\\\":\\\"0.8.0\\\",\\\"id\\\":\\\"commerce-model\\\",\\\"vocabularies\\\":{\\\"umf.access\\\":{\\\"version\\\":\\\"0.1.0\\\"}},\\\"modules\\\":[{\\\"id\\\":\\\"commerce\\\",\\\"namespace\\\":\\\"commerce\\\",\\\"elements\\\":[{\\\"id\\\":\\\"orderId\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"string\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"amount\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"decimal\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{},\\\"facets\\\":{\\\"precision\\\":12,\\\"scale\\\":2}},{\\\"id\\\":\\\"memo\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"string\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"absent-allowed\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"placedAt\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"timestamp\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"revision\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"integer\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{},\\\"facets\\\":{\\\"integerWidth\\\":{\\\"bits\\\":64,\\\"signed\\\":true}}},{\\\"id\\\":\\\"Order\\\",\\\"kind\\\":\\\"record\\\",\\\"members\\\":[{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"orderId\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"amount\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"memo\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"placedAt\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"revision\\\"}],\\\"keys\\\":[{\\\"id\\\":\\\"order-key\\\",\\\"name\\\":\\\"Order primary key\\\",\\\"fields\\\":[{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"orderId\\\"}],\\\"primary\\\":true}],\\\"extensions\\\":{}},{\\\"id\\\":\\\"customerId\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"string\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"name\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"string\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"Customer\\\",\\\"kind\\\":\\\"record\\\",\\\"members\\\":[{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"customerId\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"name\\\"}],\\\"keys\\\":[{\\\"id\\\":\\\"Customer-key\\\",\\\"name\\\":\\\"Customer primary key\\\",\\\"primary\\\":true,\\\"fields\\\":[{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"customerId\\\"}]}],\\\"extensions\\\":{}},{\\\"id\\\":\\\"lineOrderId\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"string\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{}},{\\\"id\\\":\\\"lineNumber\\\",\\\"kind\\\":\\\"field\\\",\\\"scalarType\\\":\\\"integer\\\",\\\"cardinality\\\":\\\"one\\\",\\\"nullability\\\":\\\"required\\\",\\\"extensions\\\":{},\\\"facets\\\":{\\\"integerWidth\\\":{\\\"bits\\\":32,\\\"signed\\\":true}}},{\\\"id\\\":\\\"OrderLine\\\",\\\"kind\\\":\\\"record\\\",\\\"members\\\":[{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"lineOrderId\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"lineNumber\\\"}],\\\"keys\\\":[{\\\"id\\\":\\\"OrderLine-key\\\",\\\"name\\\":\\\"OrderLine primary key\\\",\\\"primary\\\":true,\\\"fields\\\":[{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"lineOrderId\\\"},{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"lineNumber\\\"}]}],\\\"extensions\\\":{}}],\\\"extensions\\\":{\\\"umf.access\\\":{\\\"views\\\":[{\\\"record\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"Order\\\"},\\\"fields\\\":[{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"orderId\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":false,\\\"generated\\\":false},{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"amount\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":true,\\\"generated\\\":false},{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"memo\\\"},\\\"row\\\":{\\\"missing\\\":true,\\\"null\\\":true},\\\"create\\\":{\\\"missing\\\":true,\\\"null\\\":true},\\\"mutable\\\":true,\\\"generated\\\":false},{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"placedAt\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":false,\\\"generated\\\":false,\\\"temporal\\\":\\\"instant\\\"},{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"revision\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":true,\\\"null\\\":false},\\\"mutable\\\":false,\\\"generated\\\":true}]},{\\\"record\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"Customer\\\"},\\\"fields\\\":[{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"customerId\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":false,\\\"generated\\\":false},{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"name\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":true,\\\"generated\\\":false}]},{\\\"record\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"OrderLine\\\"},\\\"fields\\\":[{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"lineOrderId\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":false,\\\"generated\\\":false},{\\\"field\\\":{\\\"module\\\":\\\"commerce\\\",\\\"element\\\":\\\"lineNumber\\\"},\\\"row\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"create\\\":{\\\"missing\\\":false,\\\"null\\\":false},\\\"mutable\\\":false,\\\"generated\\\":false}]}],\\\"columns\\\":[],\\\"search\\\":[],\\\"searchBindings\\\":[]}}}]}\"}]\n",
+      "sha256": "56e90148f9c226d413d1dacd96ac46db10ba3fc47ce3c740d4c7fa6b7305f44d"
+    },
+    {
+      "path": "shop/codecs.py",
+      "text": "# Generated from pinned UMF inputs. Regenerate; do not edit.\nfrom __future__ import annotations\nfrom datetime import datetime, timezone\nfrom pydantic import MISSING\nfrom .models import *\nfrom .keys import *\nfrom umf_access.codec_support import revalidate_model, checked_row\n\ndef encode_Order_create(value: OrderCreate) -> dict[str, object]:\n    checked = revalidate_model(OrderCreate, value)\n    output: dict[str, object] = {}\n    if checked.order_id is not MISSING:\n        output[\"orderId\"] = checked.order_id\n    if checked.amount is not MISSING:\n        output[\"amount\"] = checked.amount\n    if checked.memo is not MISSING:\n        output[\"memo\"] = checked.memo\n    if checked.placed_at is not MISSING:\n        output[\"placedAt\"] = checked.placed_at.astimezone(timezone.utc) if checked.placed_at is not None else None\n    return output\n\ndef encode_Order_patch(value: OrderPatch) -> dict[str, object]:\n    checked = revalidate_model(OrderPatch, value)\n    output: dict[str, object] = {}\n    if checked.amount is not MISSING:\n        output[\"amount\"] = checked.amount\n    if checked.memo is not MISSING:\n        output[\"memo\"] = checked.memo\n    return output\n\ndef decode_Order(columns: list[str], row: list[object]) -> Order:\n    values = checked_row([\"orderId\", \"amount\", \"memo\", \"placedAt\", \"revision\"], columns, row)\n    return Order.model_validate({\"order_id\": values[\"orderId\"], \"amount\": values[\"amount\"], \"memo\": values[\"memo\"], \"placed_at\": values[\"placedAt\"], \"revision\": values[\"revision\"]})\n",
+      "sha256": "77d051ae787cb9b7b2d1a1dd41044080fdf7a34970d1624441b8906d4b4de39c"
+    },
+    {
+      "path": "shop/fields.py",
+      "text": "# Generated from pinned UMF inputs. Regenerate; do not edit.\nfrom __future__ import annotations\nfrom datetime import date, datetime\nfrom decimal import Decimal\nfrom typing import TypedDict, Unpack, overload, ClassVar, Mapping\nfrom types import MappingProxyType\nfrom umf_access.dsl import Column, FieldRef, RecordRef, Query, Terminal, Related\nfrom .models import *\nfrom .keys import *\n\nclass OrderColumns:\n    order_id: Column[Order, str] = Column(FieldRef(module=\"commerce\", element=\"Order\", field=\"orderId\", field_module=\"commerce\", temporal=None, logical_name=None))\n    amount: Column[Order, Decimal] = Column(FieldRef(module=\"commerce\", element=\"Order\", field=\"amount\", field_module=\"commerce\", temporal=None, logical_name=None))\n    memo: Column[Order, str | None] = Column(FieldRef(module=\"commerce\", element=\"Order\", field=\"memo\", field_module=\"commerce\", temporal=None, logical_name=None))\n    placed_at: Column[Order, datetime] = Column(FieldRef(module=\"commerce\", element=\"Order\", field=\"placedAt\", field_module=\"commerce\", temporal=\"instant\", logical_name=None))\n    revision: Column[Order, int] = Column(FieldRef(module=\"commerce\", element=\"Order\", field=\"revision\", field_module=\"commerce\", temporal=None, logical_name=None))\n\nclass OrderUpdate(TypedDict, total=False):\n    amount: Decimal\n    memo: str | None\n\nclass OrderQuery(Query[Order, Order, OrderKey]):\n    UMF_UPDATE_FIELDS: ClassVar[Mapping[str, FieldRef]] = MappingProxyType({\"amount\": FieldRef(module=\"commerce\", element=\"Order\", field=\"amount\", field_module=\"commerce\", logical_name=None), \"memo\": FieldRef(module=\"commerce\", element=\"Order\", field=\"memo\", field_module=\"commerce\", logical_name=None)})\n    def update(self, **values: Unpack[OrderUpdate]) -> Terminal[object]:\n        return self._update(values)\n\nOrder.c = OrderColumns()\nOrder.objects = OrderQuery(RecordRef(module=\"commerce\", element=\"Order\", logical_namespace=\"commerce\", logical_name=None, key=(FieldRef(module=\"commerce\", element=\"Order\", field=\"orderId\", field_module=\"commerce\", logical_name=None),)))\n",
+      "sha256": "594fdca2ef77337d0d0282c6b9d9e1d760b905c1a7aa46223425af897f9bc2f1"
+    },
+    {
+      "path": "shop/keys.py",
+      "text": "# Generated from pinned UMF inputs. Regenerate; do not edit.\nfrom __future__ import annotations\nfrom typing import Annotated, ClassVar, Mapping, final\nfrom types import MappingProxyType\nfrom pydantic import BeforeValidator\nfrom .models import *\nfrom .models import _v__modules_0_elements_0\nfrom .models import _v__modules_0_elements_1\nfrom .models import _v__modules_0_elements_2\nfrom .models import _v__modules_0_elements_3\nfrom .models import _v__modules_0_elements_4\nfrom umf_access.types import StrictModel\nBUNDLE_INPUT_DIGEST = \"865d63c8cc3c80d9747ec7bf13570d2909304bd6d76bb36e860c864bab3825b0\"\n\n@final\nclass OrderKey(StrictModel):\n    KEY_IDENTITY: ClassVar[Mapping[str, str]] = MappingProxyType({\"documentId\": \"commerce-model\", \"coreVersion\": \"0.8.0\", \"module\": \"commerce\", \"element\": \"Order\", \"key\": \"order-key\"})\n    __hash__ = None  # type: ignore[assignment]\n    order_id: Annotated[str, BeforeValidator(_v__modules_0_elements_0)]\n    def __init_subclass__(cls, **kwargs: object) -> None:\n        raise TypeError(\"generated model is final\")\n",
+      "sha256": "6d53f60878cd114185cb3d3ca429c363fc06dd0613f2a71d520a67132d4a4e34"
+    },
+    {
+      "path": "shop/models.py",
+      "text": "# Generated from pinned UMF inputs. Regenerate; do not edit.\nfrom __future__ import annotations\nfrom datetime import date, datetime\nfrom decimal import Decimal\nfrom typing import Annotated, ClassVar, TYPE_CHECKING, final\nfrom pydantic import BeforeValidator, MISSING\nfrom umf_access.dsl import FieldRef\nfrom umf_access.types import StrictModel\nfrom umf_access.values import validate_integer, validate_decimal, validate_string, validate_date, validate_instant, validate_local, validate_boolean, validate_binary, validate_length, validate_range, validate_allowed\nif TYPE_CHECKING:\n    from .fields import OrderColumns, OrderQuery\n\ndef _v__modules_0_elements_0(value: object) -> str:\n    checked = validate_string(value)\n    return checked\n\ndef _v__modules_0_elements_1(value: object) -> Decimal:\n    checked = validate_decimal(value, precision=12, scale=2)\n    return checked\n\ndef _v__modules_0_elements_2(value: object) -> str:\n    checked = validate_string(value)\n    return checked\n\ndef _v__modules_0_elements_3(value: object) -> datetime:\n    checked = validate_instant(value)\n    return checked\n\ndef _v__modules_0_elements_4(value: object) -> int:\n    checked = validate_integer(value, bits=64, signed=True)\n    return checked\n\n@final\nclass Order(StrictModel):\n    c: ClassVar[OrderColumns]\n    objects: ClassVar[OrderQuery]\n    order_id: Annotated[str, BeforeValidator(_v__modules_0_elements_0)]\n    amount: Annotated[Decimal, BeforeValidator(_v__modules_0_elements_1)]\n    memo: Annotated[str, BeforeValidator(_v__modules_0_elements_2)] | None | MISSING = MISSING\n    placed_at: Annotated[datetime, BeforeValidator(_v__modules_0_elements_3)]\n    revision: Annotated[int, BeforeValidator(_v__modules_0_elements_4)]\n    def __init_subclass__(cls, **kwargs: object) -> None:\n        raise TypeError(\"generated model is final\")\n\n@final\nclass OrderCreate(StrictModel):\n    order_id: Annotated[str, BeforeValidator(_v__modules_0_elements_0)]\n    amount: Annotated[Decimal, BeforeValidator(_v__modules_0_elements_1)]\n    memo: Annotated[str, BeforeValidator(_v__modules_0_elements_2)] | None | MISSING = MISSING\n    placed_at: Annotated[datetime, BeforeValidator(_v__modules_0_elements_3)]\n    def __init_subclass__(cls, **kwargs: object) -> None:\n        raise TypeError(\"generated model is final\")\n\n@final\nclass OrderPatch(StrictModel):\n    amount: Annotated[Decimal, BeforeValidator(_v__modules_0_elements_1)] | MISSING = MISSING\n    memo: Annotated[str, BeforeValidator(_v__modules_0_elements_2)] | None | MISSING = MISSING\n    def __init_subclass__(cls, **kwargs: object) -> None:\n        raise TypeError(\"generated model is final\")\n",
+      "sha256": "2b3d960c409cd139b191833e2f4bcb81b1ebbf9318d804b77d2fac1d08cc3a08"
+    },
+    {
+      "path": "shop/py.typed",
+      "text": "\n",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ],
+  "symbols": [
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/models.py",
+      "symbol": "Order",
+      "role": "row"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/models.py",
+      "symbol": "OrderCreate",
+      "role": "create"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/models.py",
+      "symbol": "OrderPatch",
+      "role": "patch"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/keys.py",
+      "symbol": "OrderKey",
+      "role": "key"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/fields.py",
+      "symbol": "OrderColumns",
+      "role": "fields"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/fields.py",
+      "symbol": "OrderUpdate",
+      "role": "update"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/codecs.py",
+      "symbol": "encode_Order_create",
+      "role": "codec"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/codecs.py",
+      "symbol": "encode_Order_patch",
+      "role": "codec"
+    },
+    {
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5",
+      "path": "shop/codecs.py",
+      "symbol": "decode_Order",
+      "role": "codec"
+    }
+  ],
+  "dispositions": [
+    {
+      "id": "d0",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/record/module",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d1",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/record/element",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d2",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/field/module",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d3",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/field/element",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d4",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/row/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d5",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/row/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d6",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/create/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d7",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/create/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d8",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/mutable",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d9",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/0/generated",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d10",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/field/module",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d11",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/field/element",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d12",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/row/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d13",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/row/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d14",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/create/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d15",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/create/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d16",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/mutable",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d17",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/1/generated",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d18",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/field/module",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d19",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/field/element",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d20",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/row/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d21",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/row/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d22",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/create/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d23",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/create/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d24",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/mutable",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d25",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/2/generated",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d26",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/field/module",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d27",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/field/element",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d28",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/row/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d29",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/row/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d30",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/create/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d31",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/create/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d32",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/mutable",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d33",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/generated",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d34",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/3/temporal",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d35",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/field/module",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d36",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/field/element",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d37",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/row/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d38",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/row/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d39",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/create/missing",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d40",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/create/null",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d41",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/mutable",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d42",
+      "sourceId": "logical",
+      "pointer": "/modules/0/extensions/umf.access/views/0/fields/4/generated",
+      "assertion": "umf.access",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Authored view checked against core presence and retained",
+      "obligationIds": []
+    },
+    {
+      "id": "d43",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/0/id",
+      "assertion": "id",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d44",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/0/kind",
+      "assertion": "kind",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d45",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/0/scalarType",
+      "assertion": "scalarType",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d46",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/0/cardinality",
+      "assertion": "cardinality",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d47",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/0/nullability",
+      "assertion": "nullability",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d48",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/0/extensions",
+      "assertion": "extensions",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d49",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/id",
+      "assertion": "id",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d50",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/kind",
+      "assertion": "kind",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d51",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/scalarType",
+      "assertion": "scalarType",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d52",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/cardinality",
+      "assertion": "cardinality",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d53",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/nullability",
+      "assertion": "nullability",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d54",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/extensions",
+      "assertion": "extensions",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d55",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/facets/precision",
+      "assertion": "facets",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d56",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/1/facets/scale",
+      "assertion": "facets",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d57",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/2/id",
+      "assertion": "id",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d58",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/2/kind",
+      "assertion": "kind",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d59",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/2/scalarType",
+      "assertion": "scalarType",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d60",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/2/cardinality",
+      "assertion": "cardinality",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d61",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/2/nullability",
+      "assertion": "nullability",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d62",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/2/extensions",
+      "assertion": "extensions",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d63",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/3/id",
+      "assertion": "id",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d64",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/3/kind",
+      "assertion": "kind",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d65",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/3/scalarType",
+      "assertion": "scalarType",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d66",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/3/cardinality",
+      "assertion": "cardinality",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d67",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/3/nullability",
+      "assertion": "nullability",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d68",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/3/extensions",
+      "assertion": "extensions",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d69",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/id",
+      "assertion": "id",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d70",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/kind",
+      "assertion": "kind",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d71",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/scalarType",
+      "assertion": "scalarType",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d72",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/cardinality",
+      "assertion": "cardinality",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d73",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/nullability",
+      "assertion": "nullability",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d74",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/extensions",
+      "assertion": "extensions",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d75",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/facets/integerWidth/bits",
+      "assertion": "facets",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d76",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/4/facets/integerWidth/signed",
+      "assertion": "facets",
+      "relevance": "dependency",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d77",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/id",
+      "assertion": "id",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d78",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/kind",
+      "assertion": "kind",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d79",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/0/module",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d80",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/0/element",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d81",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/1/module",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d82",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/1/element",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d83",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/2/module",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d84",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/2/element",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d85",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/3/module",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d86",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/3/element",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d87",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/4/module",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d88",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/members/4/element",
+      "assertion": "members",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d89",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/keys/0/id",
+      "assertion": "keys",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d90",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/keys/0/name",
+      "assertion": "keys",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d91",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/keys/0/fields/0/module",
+      "assertion": "keys",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d92",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/keys/0/fields/0/element",
+      "assertion": "keys",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d93",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/keys/0/primary",
+      "assertion": "keys",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "client"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d94",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/5/extensions",
+      "assertion": "extensions",
+      "relevance": "selected",
+      "fidelity": "exact",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+      "obligationIds": []
+    },
+    {
+      "id": "d95",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/6/id",
+      "assertion": "id",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d96",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/6/kind",
+      "assertion": "kind",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d97",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/6/scalarType",
+      "assertion": "scalarType",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d98",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/6/cardinality",
+      "assertion": "cardinality",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d99",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/6/nullability",
+      "assertion": "nullability",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d100",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/6/extensions",
+      "assertion": "extensions",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d101",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/7/id",
+      "assertion": "id",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d102",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/7/kind",
+      "assertion": "kind",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d103",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/7/scalarType",
+      "assertion": "scalarType",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d104",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/7/cardinality",
+      "assertion": "cardinality",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d105",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/7/nullability",
+      "assertion": "nullability",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d106",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/7/extensions",
+      "assertion": "extensions",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d107",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/id",
+      "assertion": "id",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d108",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/kind",
+      "assertion": "kind",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d109",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/members/0/module",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d110",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/members/0/element",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d111",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/members/1/module",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d112",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/members/1/element",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d113",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/keys/0/id",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d114",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/keys/0/name",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d115",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/keys/0/primary",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d116",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/keys/0/fields/0/module",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d117",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/keys/0/fields/0/element",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d118",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/8/extensions",
+      "assertion": "extensions",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d119",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/9/id",
+      "assertion": "id",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d120",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/9/kind",
+      "assertion": "kind",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d121",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/9/scalarType",
+      "assertion": "scalarType",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d122",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/9/cardinality",
+      "assertion": "cardinality",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d123",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/9/nullability",
+      "assertion": "nullability",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d124",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/9/extensions",
+      "assertion": "extensions",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d125",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/id",
+      "assertion": "id",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d126",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/kind",
+      "assertion": "kind",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d127",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/scalarType",
+      "assertion": "scalarType",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d128",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/cardinality",
+      "assertion": "cardinality",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d129",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/nullability",
+      "assertion": "nullability",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d130",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/extensions",
+      "assertion": "extensions",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d131",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/facets/integerWidth/bits",
+      "assertion": "facets",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d132",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/10/facets/integerWidth/signed",
+      "assertion": "facets",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d133",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/id",
+      "assertion": "id",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d134",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/kind",
+      "assertion": "kind",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d135",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/members/0/module",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d136",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/members/0/element",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d137",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/members/1/module",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d138",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/members/1/element",
+      "assertion": "members",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d139",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/id",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d140",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/name",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d141",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/primary",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d142",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/fields/0/module",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d143",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/fields/0/element",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d144",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/fields/1/module",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d145",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/keys/0/fields/1/element",
+      "assertion": "keys",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    },
+    {
+      "id": "d146",
+      "sourceId": "logical",
+      "pointer": "/modules/0/elements/11/extensions",
+      "assertion": "extensions",
+      "relevance": "unselected",
+      "fidelity": "unknown",
+      "checks": [
+        "informational"
+      ],
+      "reason": "Unselected content retained in exact source archive",
+      "obligationIds": []
+    }
+  ],
+  "diagnostics": [],
+  "obligations": []
+}

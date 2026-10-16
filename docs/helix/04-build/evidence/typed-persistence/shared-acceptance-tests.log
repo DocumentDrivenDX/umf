@@ -1,0 +1,50 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/typed-access-shared-acceptance.test.ts:
+(pass) source documents and physical binding pass public admission with explicit unknown access status [38.09ms]
+(pass) public dataset admission exposes temporal refusal; other field carriers are checked independently [777.97ms]
+(pass) truth-and fixed semantic witness (backend UNTESTED) [0.40ms]
+(pass) truth-or fixed semantic witness (backend UNTESTED) [0.17ms]
+(pass) truth-not fixed semantic witness (backend UNTESTED) [0.04ms]
+(pass) not-equal fixed semantic witness (backend UNTESTED) [0.57ms]
+(pass) not-in fixed semantic witness (backend UNTESTED) [0.07ms]
+(pass) not-between fixed semantic witness (backend UNTESTED) [0.05ms]
+(pass) empty-in fixed semantic witness (backend UNTESTED)
+(pass) empty-not-in fixed semantic witness (backend UNTESTED) [0.02ms]
+(pass) comparison-8 fixed semantic witness (backend UNTESTED)
+(pass) comparison-9 fixed semantic witness (backend UNTESTED) [0.01ms]
+(pass) comparison-10 fixed semantic witness (backend UNTESTED) [0.03ms]
+(pass) comparison-11 fixed semantic witness (backend UNTESTED) [0.01ms]
+(pass) comparison-12 fixed semantic witness (backend UNTESTED)
+(pass) comparison-13 fixed semantic witness (backend UNTESTED) [0.02ms]
+(pass) comparison-14 fixed semantic witness (backend UNTESTED) [0.15ms]
+(pass) comparison-15 fixed semantic witness (backend UNTESTED) [0.03ms]
+(pass) comparison-date fixed semantic witness (backend UNTESTED) [1.38ms]
+(pass) comparison-instant-offset fixed semantic witness (backend UNTESTED) [1.38ms]
+(pass) comparison-local-time fixed semantic witness (backend UNTESTED) [0.04ms]
+(pass) states-19 fixed semantic witness (backend UNTESTED) [0.03ms]
+(pass) states-20 fixed semantic witness (backend UNTESTED)
+(pass) states-21 fixed semantic witness (backend UNTESTED) [0.02ms]
+(pass) states-22 fixed semantic witness (backend UNTESTED)
+(pass) states-23 fixed semantic witness (backend UNTESTED)
+(pass) desc-nulls-last fixed semantic witness (backend UNTESTED) [0.15ms]
+(pass) desc-nulls-first fixed semantic witness (backend UNTESTED) [0.01ms]
+(pass) unicode-order fixed semantic witness (backend UNTESTED)
+(pass) mixed-keyset fixed semantic witness (backend UNTESTED) [0.16ms]
+(pass) missing-relational fixed semantic witness (backend UNTESTED)
+(pass) instant-local fixed semantic witness (backend UNTESTED)
+(pass) set-null-required fixed semantic witness (backend UNTESTED) [84.12ms]
+(pass) bulk-over-bound fixed semantic witness (backend UNTESTED) [0.09ms]
+(pass) truss-instant-offset fixed semantic witness (backend UNTESTED) [0.05ms]
+(pass) missing-not-equal fixed semantic witness (backend UNTESTED)
+(pass) missing-not-in fixed semantic witness (backend UNTESTED)
+(pass) missing-not-between fixed semantic witness (backend UNTESTED)
+(pass) count fixed semantic witness (backend UNTESTED) [0.01ms]
+(pass) exists fixed semantic witness (backend UNTESTED)
+(pass) mixed-keyset-null-continuation fixed semantic witness (backend UNTESTED) [0.08ms]
+(pass) minimum corpus safeguards and discriminating negative controls [0.22ms]
+
+ 42 pass
+ 0 fail
+ 447 expect() calls
+Ran 42 tests across 1 file. [4.89s]

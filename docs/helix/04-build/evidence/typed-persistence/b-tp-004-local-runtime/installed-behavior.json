@@ -1,0 +1,17 @@
+{
+  "kind": "B-TP-004 installed wheel behavioral subset replay",
+  "status": "pass",
+  "command": [
+    "/private/tmp/umf-btp004-installed-env/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "import sys,json,unittest,importlib.metadata\nfrom pathlib import Path\nsys.path.insert(0,\"/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/tests/packaging\")\nfrom replay_installed import inspect_wheel,verify_installed_files\npin={\"distribution\":\"umf_access\",\"version\":\"0.1.0.dev0\",\"abi\":\"umf-access-runtime/0.1\"}\ndist=importlib.metadata.distribution(\"umf_access\")\nassert dist.version==pin[\"version\"]\nsite=Path(dist.locate_file(\"\")).resolve()\nassert site.is_relative_to(Path(sys.prefix).resolve())\nverify_installed_files(inspect_wheel(Path(\"/private/tmp/umf-btp004-wheel/umf_access-0.1.0.dev0-py3-none-any.whl\"),pin),site)\nimport umf_access\nfrom umf_access import types,values,codec_support\nfor module in (umf_access,types,values,codec_support):assert Path(module.__file__).resolve().is_relative_to(site/\"umf_access\")\nassert umf_access.RUNTIME_ABI==pin[\"abi\"]\nsys.path.insert(0,\"/private/tmp/umf-btp004-installed-generated\")\nstart=\"/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/tests\"\nloader=unittest.TestLoader();suite=unittest.TestSuite()\nfor pattern in (\"*_red.py\",\"test_golden_vectors.py\",\"test_generated_models.py\"):suite.addTests(loader.discover(start,pattern=pattern))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nprint(json.dumps({\"installedRuntime\":umf_access.__file__,\"isolatedFlag\":sys.flags.isolated,\"testsRun\":result.testsRun,\"errors\":len(result.errors),\"failures\":len(result.failures),\"wheelByteVerification\":\"pass\",\"coreGoldenSubcases\":69}))\nraise SystemExit(0 if result.wasSuccessful() else 1)\n"
+  ],
+  "exitCode": 0,
+  "log": "b-tp-004-local-runtime/installed-behavior.log",
+  "wheelSha256": "2de26364270b11a145012845b02be8aee5c5a2aef65548127b93278d2bd000fa",
+  "buildReport": "b-tp-004-local-runtime/wheel-build.json",
+  "fullAbiHarness": "REFUSED; compatibility profile still requires obsolete validate_constraints export; see installed-abi.json",
+  "qualification": "Behavioral subset only. No B-TP-004 closure, full ABI/import audit, static corpus or native acceptance."
+}

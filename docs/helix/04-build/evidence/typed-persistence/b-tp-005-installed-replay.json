@@ -1,0 +1,30 @@
+{
+  "wheelSha256": "e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899",
+  "python": "/private/tmp/umf-access-installed-e4c780c7bfa9b268/bin/python",
+  "command": [
+    "/private/tmp/umf-access-installed-e4c780c7bfa9b268/bin/python",
+    "-I",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/production-packaging/snapshots/e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899/test-sources",
+    "-p",
+    "test_*.py"
+  ],
+  "cwd": "/private/tmp",
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "..................................................\n----------------------------------------------------------------------\nRan 50 tests in 0.011s\n\nOK\n",
+  "currentSourceDifferences": [
+    "src/umf_access/capture.py",
+    "src/umf_access/dsl/render.py"
+  ],
+  "scope": "Frozen installed snapshot only; no current-source claim for changed modules",
+  "testSourcesSha256": {
+    "test_dsl_render.py": "a79f9110e658833a035c97e832820461963ed86f388687e0a3edfd88abe4193d",
+    "test_dsl_runtime.py": "f19c63cde3eebae26985d321f6d62116c5154b05aadddfda9cb75f3000cf8a29",
+    "test_capture.py": "caa951e8d6e46b52952c8b27529997b9ca99500950cc7e4a5e4b4c6d0758d418"
+  }
+}

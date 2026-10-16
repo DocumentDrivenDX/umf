@@ -1,0 +1,116 @@
+{
+  "kind": "B-TP-002/003 partial execution and prerequisite pause",
+  "date": "2026-10-15",
+  "specRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "checkout": "/Users/erik/.codex/worktrees/39bf/umf",
+  "branch": "codex/typed-access-implementation",
+  "sliceAcceptance": "UNTESTED; B-TP-002 and B-TP-003 OPEN",
+  "status": "B-TP-000 accepted by coordinator; pause further feature implementation until B-TP-001 evidence and explicit coordinator resumption. Temporal qualification separately pending new governed access profile.",
+  "ownership": [
+    "src/compilation/admission/access/index.ts",
+    "src/compilation/ir/index.ts",
+    "spec/extensions/access/schema.json",
+    "spec/extensions/access/package.json",
+    "fixtures/access/commerce/engine-only.json",
+    "fixtures/access/commerce/postgresql18.json",
+    "fixtures/access/commerce/postgresql18-binding.json",
+    "tests/compilation/access-extension.test.ts",
+    "tests/compilation/access-fixtures.ts",
+    "tests/compilation/access-generator.test.ts",
+    "tests/compilation/access-naming.test.ts",
+    "tests/compilation/access-writer.test.ts",
+    "tests/compilation/access-context.test.ts"
+  ],
+  "notOwned": [
+    "boundary checker scripts and CI",
+    "Python compatibility/profile files",
+    "Python DSL and runtime files",
+    "shared handoff"
+  ],
+  "attempts": [
+    {
+      "command": "bun test tests/compilation/access-extension.test.ts",
+      "initialExitCode": 1,
+      "initialResult": "missing presence-validator module before implementation",
+      "latestExitCode": 0,
+      "latestResult": "356 passing tests, 364 assertions; local presence policy and structural fixtures only",
+      "log": "b-tp-002-003/presence-and-schema.log"
+    },
+    {
+      "command": "bun test tests/compilation/access-generator.test.ts tests/compilation/access-naming.test.ts tests/compilation/access-writer.test.ts",
+      "exitCode": 1,
+      "result": "three module import failures; no behavioral assertions executed; not behavioral red qualification",
+      "log": "b-tp-002-003/red-integration.log"
+    },
+    {
+      "command": "bun scripts/check-compilation-boundaries.ts",
+      "exitCode": 0,
+      "result": "2 current compilation source files, zero violations; not entire B-TP-000 acceptance"
+    },
+    {
+      "command": "bun test tests/compilation/access-context.test.ts",
+      "initialExitCode": 1,
+      "initialResult": "missing export; later invalid mutation fixtures failed at core admission",
+      "latestExitCode": 0,
+      "latestResult": "3 pass, 5 assertions after fixing invalid container fixture and retaining original temporal-Key admission refusal",
+      "log": "b-tp-002-003/contextual-attempt.log"
+    },
+    {
+      "command": "bun test tests/compilation/access-extension.test.ts tests/compilation/access-context.test.ts",
+      "exitCode": 0,
+      "result": "359 pass, 369 assertions; declaration-only subset",
+      "log": "b-tp-002-003/current-declaration-tests.log"
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc --noEmit --pretty false",
+      "exitCode": 0,
+      "scope": "library TypeScript only; tools config remains blocked by intentional absent generator imports"
+    },
+    {
+      "command": "bun scripts/check-compilation-boundaries.ts",
+      "initialExitCode": 1,
+      "initialResult": "local variable named module triggered four host-name violations; renamed authoredModule",
+      "latestExitCode": 0,
+      "result": "2 source files, 0 violations"
+    }
+  ],
+  "limitations": [
+    "A partial contextual inspectAccessViews validator now exists, uses public core inspectors and validates coverage/conflicts; generator facade, complete search/native checks, emitter, bundle and host writer remain absent.",
+    "No full AC has acceptance; browser parity and native qualification UNTESTED.",
+    "Presence cases cover all row/create pairs in 11 representative branches plus NOT NULL and nested controls; not every Cartesian combination of defaults/native facts.",
+    "Schema registers structure only; additional unknown members preserved but not yet contextualized.",
+    "Core 0.8 source and PostgreSQL binding admission are existing-library fixture observations, not native equivalence.",
+    "Test profile is deliberately unqualified and uses historical design-spike pins; replace with B-TP-001 selected profile before acceptance."
+  ],
+  "coordination": {
+    "moduleMap": "Architecture src/compilation takes precedence over TD-080 older src/access path; no document edited.",
+    "stageTwo": "Writer tests require byte preservation of exactly queries.py, _umf/catalog.json and _umf/catalog-manifest.json.",
+    "modelAbi": "Read b-tp-004-runtime-scope.json. Proposed StrictModel allows direct generated inheritance; seal generated classes; Keys unhashable; validators and checked_row/revalidate_model remain proposed.",
+    "dslAbi": "Received RecordRef(module,element,key tuple) and FieldRef(module,element,field), Query[O,R,K] protected _into/_update proposal; actual emitter must consume final runtime public ABI.",
+    "fixtureMeaning": "Order includes engine-generated revision and required placedAt without default; generated row requires revision. Customer.name is authored Field name. OrderLine has ordered lineOrderId,lineNumber composite Key. Do not fake optionality or omit revision to match stand-ins.",
+    "missingProposal": "b-tp-004-preparation.json was not present; actual record is b-tp-004-runtime-scope.json.",
+    "temporal": "Owner selected new authored access temporal profile. Separate chat owns validator/oracle; this session adds no core temporal meaning. Core temporal Keys continue refusing before access validation.",
+    "prerequisiteClarification": "Latest coordinator instruction explicitly requires waiting for B-TP-001 and resumption; after prior non-temporal continuation message, contextual attempt completed but no further feature work proceeds."
+  },
+  "nextActions": [
+    "Wait for B-TP-001 gate and explicit coordinator resumption; B-TP-000 acceptance reported.",
+    "Then implement contextual extension validation against public UMF inspectors; retained ACCESS_* codes and pointers, unknown semantic blocking, every native target remains separately qualified.",
+    "Implement admission/closure/naming/census and immutable IR, then bundle and facade, emitter ABI integration and atomic writer.",
+    "Run all STP-080 gates and Chromium parity, preserve failures, record fresh exact source/runtime/profile evidence."
+  ],
+  "sha256": {
+    "src/compilation/admission/access/index.ts": "60c0de0640269cce9aff1fcc3a430307b4f96905a43bce041411b6f52be8fac5",
+    "src/compilation/ir/index.ts": "e292d6065f7fd6e771f62a5bccf954b15adae90e4c564b77f193be519e5ab7f5",
+    "spec/extensions/access/schema.json": "95977b7c1937174db0a663fb9060f34c6a6abbf18f2e257a1d0ae84f050225b2",
+    "spec/extensions/access/package.json": "4d57f2ed52d2ad37b6262165dde1d46cc740507cee3c086bd6bab86ef01c336c",
+    "fixtures/access/commerce/engine-only.json": "ec5482f79b023a8e4da58b9741960cd440d6e209e16a04a9f91caba470259730",
+    "fixtures/access/commerce/postgresql18.json": "1f8624bdef5429ecbe58e5df962c93984d49999f0f628911ea237384803edc52",
+    "fixtures/access/commerce/postgresql18-binding.json": "a8d523d74def9a8e9c795071a3297c2cfb775ecda914b5eaf2ce3d7bd872dc04",
+    "tests/compilation/access-extension.test.ts": "480e3396982ec51a856e684c6ae9b9f6cfdd1c1eac71e6845f0bbe782bdbf0ee",
+    "tests/compilation/access-fixtures.ts": "388557b7653ea53b97f0873c99260fa0d60c7e395074e875dfc7006da9099a54",
+    "tests/compilation/access-generator.test.ts": "6bc5a5837a0d1ce82f459d38236800c67e0b14767c2f03ee2e8ef009a48b7e90",
+    "tests/compilation/access-naming.test.ts": "59c0ec3de1c6abd7b56714fa5a7b1fd2518f237518364fa9b11e34abf05dfacd",
+    "tests/compilation/access-writer.test.ts": "56e40f686ba309d1657a5e34d80aaa3042709a58e92cc4e1603b1da80e9df83c",
+    "tests/compilation/access-context.test.ts": "854b0c31b9ca35dcff9f22aba3472f0e8e4bf538fed51cf23a4a54f203e82eac"
+  }
+}

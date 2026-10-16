@@ -1,0 +1,30 @@
+{
+    "version": "1.1.414",
+    "time": "1792086735681",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/call_type.py",
+            "severity": "error",
+            "message": "Argument of type \"Literal['1']\" cannot be assigned to parameter \"amount\" of type \"Decimal\" in function \"orders\"\n  \"Literal['1']\" is not assignable to \"Decimal\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 14
+                },
+                "end": {
+                    "line": 6,
+                    "character": 17
+                }
+            },
+            "rule": "reportArgumentType"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 1,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.292
+    }
+}
+

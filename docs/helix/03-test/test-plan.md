@@ -3226,3 +3226,32 @@ email qualification remain separate gates.
 ## Shared security acceptance allocation
 
 FEAT-008 and US-079, US-056 and US-057 define the owner-requested security slice. STP-079 allocates authoring/typing/composition/disclosure/portable evaluation to contract and browser integration tests. STP-056 allocates backend mappings, bypass, privacy and drift to native integration. STP-057 allocates writes/history/revocation/propagation to native concurrent integration. All P0 criteria require 100% exercising coverage with canonical citations; missing native runs block qualification. The per-AC matrices live in the story plans. Backend procedures SEC-PG-RAW, SEC-TRUSS, SEC-DELTA-RAW and SEC-ASHLAR supplement this strategy; SQL Server is a future admission witness, not an initial release backend.
+
+## Typed data access SDK strategy
+
+FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-074 and STP-080 to
+STP-088 define proposed coverage. STPs own per-AC matrices. No planned test is
+current evidence; the DSL typing spike is design-time evidence only.
+
+- Generator unit and contract tests: `umf.access` conflict table, closure and
+  census, naming, determinism, hand-edit refusal and drift check; Bun and real
+  Chromium byte parity.
+- Python value tests: `MISSING` presence, strict carriers, decimal scale rule,
+  temporal kinds, revalidation of nested mutation, golden-vector agreement with
+  UMF core validators.
+- Static tests: positive and negative corpora on pinned pyright and mypy (with
+  `check_untyped_defs`), covering every CONTRACT-071 typing row and generated
+  call-site signatures. Failures must be for the intended reason.
+- Catalog tests: capture determinism, Weft-blocked forms per target, variant
+  expansion, drift check, `NotCompiledForTarget` and `PLAN_DRIFT`.
+- Native lanes per target: pinned Postgres, Lakebase, local Spark/Delta and a
+  separately selected Unity Catalog workspace, each running the shared
+  conformance suite plus read, search, action and bulk witnesses. Injected commit
+  loss must reconcile to `Committed` or `Conflict` on Postgres and Lakebase when a
+  reconnection is available, and classify as `Indeterminate` otherwise and on
+  Delta targets.
+- Engine lanes run in Truss and Ashlar repositories against their own fixtures.
+
+Evidence retains exact pins, commands, versions, observed outcomes, failed attempts
+and limits. Unavailable managed or engine lanes stay unqualified and are never
+silently skipped in an overall claim.

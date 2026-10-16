@@ -12163,6 +12163,22 @@ retains exact provenance, separately qualified from owner-native/build evidence.
 No runtime/test/schema/case definition changed in this provenance-only follow-up;
 45accepted/113unbound and the active overall goal remain.
 
+## Proposed typed data access SDK
+
+FR-52 to FR-55 and FEAT-028 to FEAT-031 are specified in the
+[typed data access SDK design and build handoff](typed-persistence-design.md),
+which replaces the first typed-persistence draft. That scoped plan allocates
+B-TP-000 to B-TP-015 to US/TD/STP-080 to 088 and lists cross-repository
+dependencies on Weft, Truss and Ashlar.
+
+The owner now authorizes implementation under the focused plan's Execution
+Contract and explicitly waived the spending-ceiling prerequisite on 2026-10-15.
+The coordinating chat integrates parallel subprojects while retaining ordered
+STP closure, exact dependency pins and fresh version/subset-qualified evidence.
+[Current coordination evidence](evidence/typed-persistence/implementation-coordination.json)
+separates passing checkpoints from open slice and native/consumer gates. This
+scope does not reorder TableSpec-first integration or authorize production
+operations or migrations.
 
 ### Atomic complete scan batches and direct issuer bridge — 2026-10-15
 
@@ -12406,3 +12422,15 @@ See [versioned source and evidence](evidence/security/projection-query-child-v2-
 ### Typed reporting reads — 2026-10-15
 
 Restored the typed SDK foundation from archived `39bf/umf` snapshot `8c9d0fb6`, then implemented the FR-53 Praxis reporting amendment: three-edge declared to-one joins, generated cross-record projections, reviewed SQL aggregates, native caller-role execution, joined keyset continuations and per-call typed timeouts. Weft core owns source/SQL admission; its PostgreSQL backend owns native lowering. WR-B7 and WR-A14 are the located interface work references from `20bc/umf`. [Execution evidence](evidence/typed-reporting/README.md) records source pins, actual installed-wheel tests and limits. [Usage](guides/typed-reporting.md) shows build and runtime calls. This scoped milestone does not close broader SDK targets, native aggregate DSL or Lakebase service qualification.
+
+### Raw retirement-first ordering component — 2026-10-15
+
+For US-057-AC2/5/7, the existing PG17.9 publisher routine now has an independent retirement-first native schedule. Forty matching observations cover commit/refusal, rollback/refusal and an unsafe claim-omission control that returns rows after terminal retirement. Exact native lock barriers precede release; the original routine is restored and the owned fixture removed. This closes a component test gap, not L03 or backend acceptance. The psycopg harness does not qualify the public decoder, host issuer, complete writer closure or final transport. [Source, native receipt and review evidence](evidence/security/retirement-first-20261015/README.md) retain the scope and failed exploratory attempt.45/158 cases remain accepted; all158 remain required.
+
+The accompanying broader evidence audit fails101/221 checks on existing source/cross-repository drift;31 of the45 retained accepted cases are source-current. The failing current report is preserved, not represented as full qualification. Resolving that drift remains required by the original goal.
+
+Independent Astra Ultra review found no remaining component finding after two cleanup corrections. Its ten fault-injection controls and original reports are retained verbatim in the packet. This is source/receipt inspection and modeled cleanup testing, not an independent replay of the native concurrency campaign.
+
+### Current gate replay and P04 test budget — 2026-10-15
+
+The complete158-required-case replay executes45 implementations:43 pass, S12 fails its selected solver environment and P04 exceeds the60-second outer harness limit. A restored pinnedZ3 replay passes84 observations; the unchanged isolated P04 passes806 in65.1 seconds. Only P04's outer budget increases to120 seconds; assertions and native limits are unchanged. Astra Ultra review finds no actionable issue. The first failed run and qualified diagnostics are [retained](evidence/security/gate-refresh-20261015/README.md). A second full run is underway; no corrected full-gate result or case promotion is asserted at this commit. All113 missing implementations and full34-criterion completion remain required.

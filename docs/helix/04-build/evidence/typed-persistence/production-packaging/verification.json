@@ -1,0 +1,41 @@
+{
+  "kind": "B-TP-001 local production packaging preparation",
+  "status": "packaging-harness-and-installed-import-pass; strict-generated-pyright-blocked",
+  "runtimeVersion": "0.1.0.dev0",
+  "python": "3.14.8",
+  "pydantic": "2.14.1",
+  "harnessTests": 8,
+  "harnessTestStatus": "pass",
+  "wheelBuildStatus": "pass",
+  "retainedWheel": "docs/helix/04-build/evidence/typed-persistence/production-packaging/artifacts/a983e8dc047027f24fa704d7e98010a8f7d0065a0dacf8a2898ba1b3dafa95a0/umf_access-0.1.0.dev0-py3-none-any.whl",
+  "retainedWheelSha256": "a983e8dc047027f24fa704d7e98010a8f7d0065a0dacf8a2898ba1b3dafa95a0",
+  "generatedProbe": "generated-probe/probe-result.json",
+  "installedImport": "pass for recorded minimal actual-generated Order fixture against exact installed wheel; module-loader metadata qualification retained",
+  "installedStaticCheckers": {
+    "mypy": "pass",
+    "pyright": "refused: 6 generated-source diagnostics (one unnecessary datetime/None comparison in codecs.py, five private-validator imports in keys.py)"
+  },
+  "runtimeSourcesChangedSinceCapturedBuild": [
+    "src/umf_access/dsl/_query.py",
+    "src/umf_access/types.py"
+  ],
+  "sourceSha256": {
+    "python/umf_access/pyproject.toml": "c2df9f590493620dbdfd8d35846d567b715f709902acd8fc088c226709e1eb8a",
+    "python/umf_access/compatibility-profile.json": "03b8291666c0886f77a8892f72c89b60ac75a97e3028814ad1df9677bdde03e0",
+    "python/umf_access/src/umf_access/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python/umf_access/tests/test_wheel_contract.py": "c3ec984029f68c9c9f4f31c5b1e87a2d39cce447b0b6c671c97419526f6e6806",
+    "python/umf_access/tests/packaging/build_wheel.py": "ef9a15ee49e639cf66a54390df2796d5d127ff6274d0e0438641a3b58de37cec",
+    "python/umf_access/tests/packaging/replay_installed.py": "2aec7cbed03c7be726b6773bf01ca79db2e0b7a548dffb47cc82ef861d80b526",
+    "python/umf_access/tests/packaging/emit_replay_fixture.ts": "bacbca2f47899a78dab2f00578e66690415b8fbb34bce0bd348668fabf6c8670"
+  },
+  "nativeTargets": "UNTESTED; no extras or target support selected",
+  "publishing": "No publishing; prerelease local test artifact only",
+  "boundaryObservation": {
+    "command": "python3 scripts/check-access-python-boundaries.py",
+    "status": "refused on newly landed values.py math stdlib import under macOS Python3.9 checker inventory; outside this ownership",
+    "currentStatus": "Needs boundary owner replay; no boundary checker edited"
+  },
+  "nextAction": "Generator owner corrects emitted private validator imports and unnecessary optional comparison; regenerate/rebuild/replay after source settles. No B-TP-004 closure.",
+  "replayHarnessSha256": "2aec7cbed03c7be726b6773bf01ca79db2e0b7a548dffb47cc82ef861d80b526",
+  "replayReportSha256": "bf73c17b552806fdcb87f9cced0eaa1a7c3b8f447dfae0635581b029f68bd31d"
+}

@@ -1098,3 +1098,7 @@ It does not complete M2 or any full backend profile: additional field-protection
 procedures, remaining P/B/L cases, native current-authority/effect custody and
 actual Truss/Ashlar/Delta consumers remain required. Never infer18 evidence from
 an old17.9 receipt. The full158-case gate remains authoritative for actual execution.
+
+### Retirement-first component evidence — 2026-10-15
+
+`tools/security/pg-retirement-first-probe.py` retains40 PostgreSQL17.9 observations for the read-committed authored publisher profile. Independently observed exclusive-retirement/shared-reader barriers precede committed and rolled-back retirement, both followed by token-reuse refusal. A claim-omission native control returns rows after terminal retirement. [The evidence packet](../../04-build/evidence/security/retirement-first-20261015/README.md) records exact scope and cleanup. This is a psycopg component, not public pg-runtime/issuer/final-release qualification. The prior mandatory older-snapshot, writer-closure, other-backend and full L03 requirements remain; no acceptance case is promoted.
