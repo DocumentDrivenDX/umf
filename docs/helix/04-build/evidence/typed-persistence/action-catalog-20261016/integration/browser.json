@@ -1,0 +1,41 @@
+{
+  "scope": "Experimental stage-one candidate bytes and refusal/report parity; Python runtime ABI/native execution not qualified",
+  "bun": "1.4.2",
+  "chromium": "153.0.8010.12",
+  "cases": [
+    "commerce-engine",
+    "all-commerce",
+    "unknown-selected",
+    "missing-view",
+    "coverage-gap",
+    "name-reserved",
+    "profile-changed",
+    "profile-invalid-digest",
+    "hostile-literal",
+    "report-mode",
+    "containers",
+    "actions",
+    "relationships",
+    "named",
+    "multiple-projections"
+  ],
+  "runsPerRuntime": 2,
+  "candidates": 10,
+  "refusals": 5,
+  "externalRequests": [],
+  "bundleSha256": "28c9aca8a696f18dfff7809c927ffc7ee7ce66cc85462fefabecba564b913d5c",
+  "inputsSha256": "ead8396dbc589759c56c94206aa505cdce3467ca7fcc4a0e7616df85434e6b1a",
+  "outputsSha256": "944c216a14548aa33dd9f4157db86ece57c58e2168d4f89b4ba210f005eafd48",
+  "sourceSha256": {
+    "src/compilation/index.ts": "8f7cb6898a4890173eb6e5a6287052513fda30cc9639a356585a126dc40d9489",
+    "src/compilation/admission/index.ts": "95c76a751c2d56e404e41a1185673c909d8388b483d58239b97d4273b8c65ac5",
+    "src/compilation/admission/diff.ts": "07a614d99f56759138f0fd16e2df236fef670203f89582fee717dc13692e8166",
+    "src/compilation/admission/access/index.ts": "cc2b01c4f248fcf2edb818523cef4d0f39885f48aa7d49102d52189538a29ad3",
+    "src/compilation/ir/index.ts": "5e596524439b02b740a9f1423383e7f4d66c2e7f4278ddc174b67582d0126d0d",
+    "src/compilation/bundle/index.ts": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8",
+    "src/compilation/bundle/hash.ts": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8",
+    "src/compilation/targets/python/index.ts": "ae720de56d2053cdcc84b78810a771ecda7ff638f704d1b2f91996bed050b25c",
+    "docs/helix/04-build/evidence/typed-persistence/action-catalog-20261016/integration/browser-replay.ts": "cc063a6f4d99cd651d725780653f323094cfc8f8b888e82eba4f7ec136a61791",
+    "tests/compilation/access-fixtures.ts": "0cb82eb2ce651ebf9b32d7b6a110b1bbdbbf755846ae30058c4b70536b7dcd2c"
+  }
+}

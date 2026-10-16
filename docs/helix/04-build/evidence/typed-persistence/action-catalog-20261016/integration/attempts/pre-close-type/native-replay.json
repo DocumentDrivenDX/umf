@@ -1,0 +1,70 @@
+{
+  "status": "pass",
+  "postgresql": "18.6",
+  "python": "3.11.17",
+  "tests": 15,
+  "cluster": "/private/tmp/umf-sdk-pg18-eftmw7k0",
+  "ownedServerStopped": true,
+  "weftWheelSha256": "23399ac55ca886587aa4762f5674adf24d40a1429d54cda8c10276846603aabf",
+  "sdkWheelSha256": "4a136686674d8accd02e78bc1fed159e66da232d738a8c520f3579001c46283d",
+  "commands": [
+    {
+      "label": "native-init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/initdb",
+        "-D",
+        "/private/tmp/umf-sdk-pg18-eftmw7k0/data",
+        "-A",
+        "trust",
+        "-U",
+        "sdk_test",
+        "--no-sync"
+      ],
+      "exitCode": 0,
+      "log": "native-init.log"
+    },
+    {
+      "label": "native-start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/umf-sdk-pg18-eftmw7k0/data",
+        "-l",
+        "/private/tmp/umf-sdk-pg18-eftmw7k0/server.log",
+        "-o",
+        "-F -k /private/tmp/umf-sdk-pg18-eftmw7k0/socket -c listen_addresses='' -p 55492",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "log": "native-start.log"
+    },
+    {
+      "label": "native-tests",
+      "command": [
+        "/private/tmp/umf-sdk-merged/python311/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,unittest,zipfile\nfrom pathlib import Path\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile('/private/tmp/umf-sdk-actions-final/wheel/umf_access-0.1.0.dev0-py3-none-any.whl') as z:\n for name in z.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):assert (site/name).read_bytes()==z.read(name)\nsys.path.insert(0,'/private/tmp/umf-sdk-actions-final/generated')\nsuite=unittest.defaultTestLoader.discover('/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests',pattern='test_reviewed_reads.py')\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nassert not result.skipped,result.skipped\nassert result.testsRun==15,result.testsRun\nassert result.wasSuccessful()\nfrom commerce.codecs import decode_OrderCustomer\nrow=decode_OrderCustomer(['orderId','name'],['o-1',None])\nassert row.name is None\ntry:decode_OrderCustomer(['orderId','name'],['o-1',123])\nexcept ValueError:pass\nelse:raise AssertionError('joined codec accepted invalid carrier')\nprint('joined thin codec: nullable right row and invalid carrier controls pass')\n"
+      ],
+      "exitCode": 0,
+      "log": "native-tests.log"
+    },
+    {
+      "label": "native-stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/umf-sdk-pg18-eftmw7k0/data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "log": "native-stop.log"
+    }
+  ],
+  "scope": "Actual installed wheels and generated schema/capture/catalog/native reads on an isolated owned cluster; no Lakebase service or temporal qualification."
+}
