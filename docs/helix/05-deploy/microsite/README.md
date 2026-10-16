@@ -20,7 +20,7 @@ below; broader native person/session and full bulk protocols remain independent.
 GitHub Pages remains the publishing target.
 
 This website candidate embeds the reviewed UMF ESM from `c1e316c4` (producer
-`6b331c0b`, bundle `86fd188e`) inside the staged Truss bundle. Publishing these assets against current
+`6b331c0b`, bundle `86fd188e`) inside the canonical Truss bundle. Publishing these assets against current
 main leaves its library `src/`, `spec/`, package and lock files unchanged; it does
 not qualify that different library build as the original producer. Replacing the
 frozen artifact requires a separately constructed and qualified source cohort,
@@ -212,9 +212,9 @@ panels remain inside the viewport. Browser entry-point typechecking is part of
 [workspace qualification](../../04-build/evidence/schema-browser-ux.md).
 
 The SQL page also opens a worker-owned Truss browser catalog using the reviewed
-staged provider described by `assets/truss-browser/provenance.json`. Its
-`sourceCommit` remains null pending canonical Truss adoption; the manifest
-captures every actual source hash. This candidate is not published or released. Build it with
+canonical provider described by `assets/truss-browser/provenance.json`, built from
+Truss commit `2a8bd1fee8ee8d644e6d47fff37145ff161170bb`. The manifest
+captures every actual source hash. This website candidate is not published. Build it with
 `bun docs/helix/05-deploy/microsite/build-truss-browser.ts` before the compiler
 build. The retained archive binds the original manifest and every original asset;
 the build needs no sibling checkout or network download. The worker keeps its
@@ -234,7 +234,10 @@ The new layout 0.2 store and its dispatch journals use the
 `umf-products-demo-layout02` prefix; existing layout 0.1 data stays untouched.
 Fresh Chromium checks cover the assembled page and a separate 1,024-row
 workload across 11 batches, replay and reopened readback. Observed bulk execution
-takes 7.096 seconds and the point UPDATE takes 301.79 milliseconds: performance
+takes 6.338 seconds and the point UPDATE takes 326.27 milliseconds in the
+separate exploratory provider run. Private seal input 0.2 retains the model source
+once instead of repeating it in every key receipt, while preserving old seal recovery.
+These observations do not establish a statistical speedup or meet a performance target: performance
 remains failed. The page has not been qualified on the public GitHub Pages origin.
 The retained [publication projection](../../04-build/evidence/bulk-update/website-publication-projection.json)
 is historical evidence for the earlier UMF `633f8ad6` cohort. It does not
