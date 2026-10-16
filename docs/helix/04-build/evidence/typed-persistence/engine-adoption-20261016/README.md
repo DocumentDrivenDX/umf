@@ -32,14 +32,25 @@ The approved dedicated aidev-cus warehouse was created as
 from historical qualification; the old profile correctly refuses. A separately
 named candidate passes five installed managed UC publication/typed-query
 controls, including real catalog CLI generation/check. Native STOPPED evidence
-is retained in Ashlar. This administrative development publication uses real
-local PostgreSQL pins; independent UC actor enforcement remains unqualified.
-The existing scope-test login requires refresh before its independent identity
-can be tested.
+is retained in Ashlar. The subsequent `ci-final/managed-independent.json`
+records eight checks through an explicitly approved temporary non-admin native
+principal: before-grant denial, SELECT-only access, no UPDATE, original typed
+publication reads and native SELECT-revocation refusal. Its one-hour credential
+was revoked, the principal deleted and compute stopped. Local PostgreSQL pins
+remain the explicit development pin owner. Broader managed profiles remain
+unqualified by this scalar STRING evidence.
 
-Protected Truss action authority/current-policy adoption, original-commit
-reconciliation after uncertainty, managed Delta action atomicity, complete
+Protected Truss action authority/current-policy adoption, managed Delta action atomicity, complete
 engine page/search semantics and broader managed target qualification remain
 separate required gates. Ordinary RC Truss reads and local Delta evidence do
 not close those gates. Failed setup/refusal attempts remain retained alongside
 successful replays; no source, historical receipt or preservation tag is replaced.
+
+The CI repair packet also verifies final source-guarded wheels on both pinned
+Python versions, all runtime units, native suites and checker corpora. Repeated
+caller cancellation now awaits one finite original settlement and retains its
+original cause; an actual native row-lock test cancels five times during held
+rollback. Local Delta has eighteen installed controls after explicit original
+commit/marker reconciliation, including a later independent commit and a strict
+inspection bound. This custody operation does not fabricate typed replay or
+clear quarantine. Truss's tested ordinary-read iteration is merged via PR11.
