@@ -2745,3 +2745,13 @@ revocation/source changes. No backend acceptance case is promoted by this source
 The corpus also renders salary to verify the independent read mask. A SUM-only
 query does not select that public Cell and must not require unselected rendering;
 its hidden original operand still requires exact read/action/presence admission.
+
+## Native presence and disclosure-provenance boundary — 2026-10-16
+
+CONTRACT-062/063 and US-056-AC6 require original null, absence, withholding and transformed values to remain distinct. The original DisclosureV2 fixture additionally distinguishes original null from transformed null through original Field, selected policy indices, output domain and exact transform id/version. A single presence enum or nullable scalar cannot retain that meaning. The original Token Field's public logical API accepts null and preserves missing; this does not itself declare a native null codec.
+
+The next native oracle exercises the current issued Weft bounded String SQL/checker against actual PostgreSQL 18.6 values, then captures distinct raw-column presence and JSONB bag representations. Its separate original disclosed-cell population retains native column/source-revision metadata, disposition, explicit payload presence and transformation metadata before public data inspection. Those populations are deliberately separate: the required-only query context is not repurposed as admission for the original optional Token or for arbitrary per-row transforms. The current producer must continue refusing unsupported optional source before SQL.
+
+The abstract sum model proves left/right inverses and injectivity for an explicit discriminant, optional typed payload and optional transformation metadata with complete Field/revision identity. SAT weakened controls erase disposition, original document/revision, output domain, transform version or selection. Encoding well-formedness is not actual UMF Field/domain/policy validity. Payload wire encoding, real disclosure decisions, complete original data/caller/current cut, native operator permissions and guarded release remain premises or separate obligations. Real native observations test the fixture implementation; the solver does not prove PostgreSQL, the Python decoder or compiler code.
+
+This component supplements the full original P03 generalize/hash/token predicate/order/group/join/aggregate and weakened-barrier campaign. It cannot promote P03, any graph backend case or a complete acceptance criterion. Weft owns a separately versioned optional/presence-aware producer and checker; the existing required-only profile remains closed.
