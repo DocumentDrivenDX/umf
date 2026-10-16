@@ -1,0 +1,40 @@
+{
+  "kind": "design-review",
+  "date": "2026-10-15",
+  "reviewer": {"agent": "Claude Code", "prompt": "docs/helix/04-build/typed-persistence-claude-prompt.txt"},
+  "scope": "Typed persistence proposal at commit 81d78af2 plus sibling Truss, Ashlar and Weft documentation",
+  "independence": "Findings were formed before reading astra-review.json.",
+  "verdict": {
+    "draftDesign": "Sound with specified changes for model generation; reject engine substrate adoption as framed.",
+    "implementation": "Not ready: blocking gaps in value-binding authority, core 0.8 type mapping, temporal basis and engine storage model."
+  },
+  "findings": [
+    {"id": "C1", "severity": "critical", "issue": "Adoption contract assumed per-entity tables; Truss and Ashlar store domain values in generic JSON carriers keyed by catalog property IDs and already generate their DDL from UMF.", "disposition": "resolved", "resolution": "CONTRACT-069 rewritten: engines implement CONTRACT-072 protocols over their protected paths; engine storage is never a binding target."},
+    {"id": "C2", "severity": "high", "issue": "Bypass guard for Truss protected paths was prose only; generated Core tables, ORM entities and create/patch encoders exposed write paths; SQLAlchemy relationship cascade defaults to save-update, merge.", "disposition": "resolved", "resolution": "Generated code holds no table handles or SQLAlchemy/PySpark mappings (CONTRACT-068); writes only through actions or catalog commands (ADR-004)."},
+    {"id": "C3", "severity": "high", "issue": "valueBindings were new semantics carried only in the compile request; no conflict rules with core meaning.", "disposition": "resolved", "resolution": "Owner decision: extension. CONTRACT-070 umf.access with a normative conflict table."},
+    {"id": "C4", "severity": "high", "issue": "Existing PostgreSQL projections accept only core 0.7; no native type input for core 0.8.", "disposition": "resolved", "resolution": "Owner decision: core 0.8. Native column types are authored in umf.access ColumnSets; SQL lowering belongs to Weft backends."},
+    {"id": "C5", "severity": "high", "issue": "Nothing selected instant versus local timestamp.", "disposition": "resolved", "resolution": "CONTRACT-070 FieldView.temporal is required for timestamp Fields."},
+    {"id": "C6", "severity": "medium", "issue": "Pydantic aliases break typed constructors for non-identifier IDs.", "disposition": "resolved", "resolution": "No aliases; codecs own name mapping (CONTRACT-067/068)."},
+    {"id": "C7", "severity": "medium", "issue": "Decimal rule contradicted CONTRACT-040 scale equality; Pydantic decimal_places is an upper bound.", "disposition": "resolved", "resolution": "Coefficient-at-scale rule checked with Decimal.as_tuple() (CONTRACT-068)."},
+    {"id": "C8", "severity": "medium", "issue": "KEY_IDENTITY included the bundle input digest.", "disposition": "resolved", "resolution": "KEY_IDENTITY matches CoreKeyIdentity plus document/core identity; BUNDLE_INPUT_DIGEST separate."},
+    {"id": "C9", "severity": "medium", "issue": "SchemaMatch lacked table identity and version; PostgreSQL observation missed identity/generated columns.", "disposition": "resolved", "resolution": "CONTRACT-072 verify() observes relation OID or table UUID, attidentity and attgenerated; Ashlar reads pinned through its resolver (CONTRACT-069)."},
+    {"id": "C10", "severity": "medium", "issue": "Bundle writer machinery: changing import paths, no garbage collection, no abandoned-lock recovery.", "disposition": "resolved", "resolution": "Fixed checked-in directory with manifest, hand-edit refusal and CI drift check (CONTRACT-067)."},
+    {"id": "C11", "severity": "low", "issue": "Profile code not in input digest; no float carrier stated; revalidation mechanism unnamed; MISSING sentinel and toArrow transport not considered; stale PostgreSQL and Spark pins; unachievable US-084/085 criteria; machine-specific prompt paths.", "disposition": "resolved", "resolution": "codeSha256 in profile; floats refuse except Vector; revalidate_instances=always; Pydantic MISSING adopted (owner decision); pins deferred to B-TP-001; stories rewritten as US-080 to US-088."}
+  ],
+  "astraAssessment": "Astra's internal-consistency fixes mostly held (A2, A5, A8). It did not read sibling repositories and missed C1, C2 and C9. Its A1 fix produced C3 and its A9 fix produced C8.",
+  "ownerDecisions": [
+    "Value bindings become an authored extension (umf.access).",
+    "Target core 0.8.",
+    "Keep the Truss and Ashlar adoption goal.",
+    "Build an ORM-like typed SDK with action support, over Weft, for raw tables and Truss ontologies.",
+    "Raw-table execution uses the host platform's native SQL interface (Postgres, Lakebase, Unity Catalog/Spark SQL).",
+    "Avoid runtime-generated SQL; precompile queries.",
+    "Align with Pydantic MISSING.",
+    "Follow common Python query DSL conventions (SQLAlchemy, Django, PySpark, Polars); no string column references; use type checking to catch errors early and support refactoring.",
+    "Include semantic and keyword search in the same interface, with implementations selecting mechanisms; consider SOQL/SOSL prior art."
+  ],
+  "limitations": [
+    "Review and revision are design evidence only; no implementation, native qualification or consumer adoption.",
+    "Sibling repositories were read from docs-only clones at their default-branch heads on 2026-10-15."
+  ]
+}

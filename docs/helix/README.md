@@ -1,5 +1,22 @@
 # UMF project documentation
 
+## Proposed typed data access SDK
+
+[Design and build handoff](04-build/typed-persistence-design.md) indexes draft
+FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-075 and nine
+story/design/test slices (080 to 088). A TypeScript generator emits typed Python
+models and action clients from UMF; a build step compiles typed query, search and
+bulk declarations through Weft into a checked-in catalog; the `umf_access`
+runtime executes catalog entries on raw tables or through Truss and Ashlar
+adapters. These specs do not claim implementation, native acceptance or consumer
+adoption. Current work is recorded in the
+[coordination evidence](04-build/evidence/typed-persistence/implementation-coordination.json).
+Scoped passing evidence exists for
+[boundary checker adoption](04-build/evidence/typed-persistence/b-tp-000/verification.json),
+the [bounded compatibility spike](04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/README.md)
+and the [typed-access temporal profile](04-build/evidence/typed-persistence/temporal-profile/verification.json).
+Production generator/runtime, backend and engine acceptance remain separate gates.
+
 **Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
 
 ## Domain-pack planning
@@ -1278,7 +1295,7 @@ Security planning: [shared security feature](01-frame/features/FEAT-008-shared-s
 ## Proposed native 128-bit and UUID design — 2026-10-15
 
 [SD-005](02-design/solution-designs/SD-005-128-bit-uuid.md) and
-[CONTRACT-067](02-design/contracts/CONTRACT-067-128-bit-uuid.md) specify first-class
+[CONTRACT-076](02-design/contracts/CONTRACT-076-128-bit-uuid.md) specify first-class
 opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
 versioned keys and native/bytes/text/two64-bit physical carriers. This is an
 implementable design, not implemented core0.9.0 or qualified native support.

@@ -1,0 +1,25 @@
+{
+  "kind": "Portable generator to host writer ABI",
+  "status": "Portable facade and schema resources implemented; local generator/writer tests and earlier Bun/Chromium bytes pass; fresh full replay in progress.",
+  "facade": "src/compilation/index.ts: generateAccessPackage(request, profile) -> AccessResult; synchronous pure files-as-data",
+  "types": "src/compilation/ir/index.ts exports AccessResult, GeneratedFile, AccessSymbol, AccessRequest, AccessProfile",
+  "file": "{path,text,sha256}; path includes caller package name, POSIX relative; LF final newline",
+  "manifest": "<package>/_umf/manifest.json; includes contract, abi, runtimeAbi, inputDigest, profile, symbols, dispositions, obligations and inventory[{path,sha256}] of all other stage-one files; no self-hash",
+  "writerSeam": "writeAccessPackage(destination,result,{fault?}) and checkAccessPackage(destination,result); existing red tests use fault(stage) with before-swap and after-swap; WRITE_FAILED carries written boolean",
+  "reservedStageTwo": [
+    "<package>/queries.py",
+    "<package>/_umf/catalog.json",
+    "<package>/_umf/catalog-manifest.json"
+  ],
+  "stageTwoRule": "Ignore exactly these for stage-one drift/inventory and preserve bytes through directory replacement; no broader catalog-* exclusion",
+  "ownershipTransfer": "scripts/umf-access-generate.ts and tests/compilation/access-writer.test.ts transferred to writer chat by coordinator; generator session no longer edits them",
+  "publicExportNote": "Portable facade is its own module. Admission imports existing UMF public src/index.ts. Do not re-export compilation from src/index.ts without resolving this dependency cycle.",
+  "compatibilityDiff": {
+    "api": "src/compilation/index.ts: diffAccessPackages(before:AccessResult,after:AccessResult): AccessSymbolChange[]",
+    "source": "src/compilation/admission/diff.ts",
+    "shape": "{symbol,role,classification:source-compatible|value-compatible|breaking,change:added|removed|changed|unchanged,reason,before?,after?}",
+    "policy": "Conservative: preserve typed old fields; optional Create additions source-compatible; removal/retype/constraints/Key/codec identity changes breaking; no native/data/behavior compatibility inferred. Current code makes no value-compatible promotion without proof.",
+    "hostIntegration": "Old manifest holds all result metadata except outcome=known candidate, files=verified stage-one tree and diagnostics=[] for successful candidate. Writer may reconstruct old AccessResult from its verified manifest + file bytes, then report diff on deliberate regeneration. This session does not edit transferred writer files.",
+    "tests": "tests/compilation/access-diff.test.ts: rename/retype breaking, optional Create addition source-compatible, unchanged signatures unchanged"
+  }
+}

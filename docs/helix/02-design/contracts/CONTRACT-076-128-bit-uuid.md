@@ -1,9 +1,10 @@
 ---
 ddx:
-  id: CONTRACT-067
+  id: CONTRACT-076
   type: contract
   activity: design
   status: draft
+  x-recovery-previous-id: CONTRACT-067
   authoring:
     home: repo
   links:
@@ -15,7 +16,7 @@ ddx:
       kind: informed_by
 ---
 
-# CONTRACT-067: Exact 128-bit values and UUIDs
+# CONTRACT-076: Exact 128-bit values and UUIDs
 
 **Type:** schema/library and physical binding. **Version:** proposed core 0.9.0;
 `umf-128/1`, `umf-key-tuple-v2`, `umf.binding` 0.3.0 / `umf-binding-3`.

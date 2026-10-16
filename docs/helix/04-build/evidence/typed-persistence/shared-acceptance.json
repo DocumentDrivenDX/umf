@@ -1,0 +1,129 @@
+{
+  "format": "umf-shared-acceptance-evidence/0.1",
+  "capturedAt": "2026-10-15T17:47:51.433874+00:00",
+  "scope": "UMF portable contribution; canonical owner Weft",
+  "authorization": "Owner authorized implementation; spending-ceiling prerequisite waived 2026-10-15 in typed-persistence-design.md Execution Contract. No measured budget claimed.",
+  "repositoryHead": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "branch": "codex/typed-access-implementation",
+  "versions": {
+    "bun": "1.4.2 (43848b5a7)",
+    "core": "0.8.0",
+    "umfPackage": "0.2.0",
+    "access": "proposed 0.1.0",
+    "binding": "umf.binding 0.1.0 / umf-binding-1",
+    "fixtureTarget": "PostgreSQL 17, not executed",
+    "weftSyntax": "baseline 0.2.0 read only; proposed 0.3 delta not accepted"
+  },
+  "commands": [
+    {
+      "command": "bun test tests/typed-access-shared-acceptance.test.ts",
+      "exitCode": 0,
+      "tests": 42,
+      "pass": 42,
+      "fail": 0,
+      "assertions": 447,
+      "log": "shared-acceptance-tests.log"
+    }
+  ],
+  "filesSha256": {
+    "fixtures/umf-typed-access/models.json": "133a8f971f3de15e16ae70d93d8e7c84821b8243712b528df52d62157ab5e201",
+    "fixtures/umf-typed-access/corpus.json": "b2fafe485774c3d703e5a86925cd5db764e07b8e906647b223ec62d8b3f112ec",
+    "fixtures/umf-typed-access/README.md": "fb113d1f11b3cd6414384ff71b2126bd78e8ae6c67cf944bae57f20c39eb0c11",
+    "tests/typed-access-shared-acceptance.test.ts": "222709fa387a2d998b3bd4103c8dcb24c3bbac48e24d1f31b020acccfd2e7639",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "src/model/record-values.ts": "2fd3c112a27917ad4f193ec2de3f37faca05a5eef65fa98db925283a3315ce99",
+    "src/model/dataset-values.ts": "7c19229f3e238b37e05a14715db829d809ff37272e812eb04a50d3ad8ea2c308",
+    "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
+    "src/extensions/binding/index.ts": "239e5a737a5b92edbef1e447685f75fb905cf093aa392971aadd8df2c64a050c"
+  },
+  "weftSyntaxProvenance": {
+    "repository": "/Users/erik/Projects/weft",
+    "head": "94b2de5e303fe53f0c9432458119b6fe1eef187c",
+    "files": [
+      {
+        "path": "docs/helix/02-design/contracts/weft-sql-v0.2.ebnf",
+        "sha256": "20a33eda431e7cc7c1f0be610ce05e0f54610b67d4d9412e888db6de0acb53df"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md",
+        "sha256": "3dc1708a414f6693442d413380f3a2b67f63e7c368fb1828481577d6b7d47015"
+      }
+    ],
+    "acceptedBaseline": "source namespace.record [AS alias]; column alias.field; parameter :name; = and > joined AND; ORDER BY qualified columns ASC; LIMIT 1..1000; no bare columns. Syntax alone is not profile acceptance.",
+    "pending": "OR, NOT, extra comparisons, null/missing, membership, temporal, mixed direction, NULLS placement and UPDATE forms in this contribution are proposed, not accepted baseline."
+  },
+  "caseCount": 39,
+  "datasets": {
+    "rows": 8,
+    "present": 6,
+    "truth": 16,
+    "missing": 3
+  },
+  "admission": {
+    "sourceEnvelopes": "valid, incomplete: UNKNOWN_EXTENSION retained for umf.access under default public registry",
+    "physicalBinding": "inspectBinding valid against supplied core 0.8 relational model",
+    "nonTemporalFieldValues": "validateCoreFieldValue passes original carriers; wrong id carrier, duplicate key and required null negative controls refuse",
+    "temporalFieldValues": "present non-null date/timestamp refuse CORE_SCHEMA_PROPERTIES: Value/default semantics for float/temporal domain are not defined",
+    "datasetValues": "truth and missing datasets valid/incomplete due unknown access; rows and present datasets invalid/incomplete due temporal refusals. Tests assert exact limitation; no full dataset admission claimed.",
+    "accessExtension": "Full CONTRACT-070 schema/semantic admission not established by this contribution; default public registry does not know it."
+  },
+  "coverage": {
+    "S2 truth tables": "truth-and/or: all 16 T/F/null/missing pairs, truth-not: all four states with both b origins",
+    "null negated predicates": "not-equal, not-in, not-between and missing-not-*",
+    "empty lists": "empty-in and empty-not-in on six present rows; null/missing intersection unresolved",
+    "DESC null placement": "desc-nulls-first/last; required PostgreSQL and Spark target witnesses remain UNTESTED",
+    "mixed keyset": "mixed-keyset and mixed-keyset-null-continuation; size 2/1, no skip/repeat, last-row tuples include appended complete Key",
+    "offset instants": "comparison-instant-offset and truss-instant-offset; same UTC microsecond across Z/-05:00/+01:00; adjacent microsecond excluded",
+    "decimal equality": "comparison-14: 1.2/1.20/1.200 match 1.20 using integer coefficients",
+    "Unicode": "unicode-order includes composed/decomposed accents, U+E000 and U+1F600; scalar order differs from UTF-16",
+    "bulk required null": "set-null-required uses non-key mutable requiredValue; public core rejects explicit null",
+    "bulk bounded selection": "bulk-over-bound fixes five selected IDs, maxItems=2, requires unchanged dataset; backend refusal/no-effect UNTESTED",
+    "additional": "date/local comparison, property-store state tests, count and existence probe"
+  },
+  "ambiguities": [
+    {
+      "id": "EMPTY_NULL_PRECEDENCE",
+      "detail": "S8 says null/missing gives UNKNOWN and empty list gives FALSE; resolve intersection before expected values are assigned. Present empty IN/NOT IN are covered."
+    },
+    {
+      "id": "EMPTY_LIST_SYNTAX",
+      "detail": "Proposed grammar cannot spell IN (); empty list parameter is used. Compiler spelling awaits Weft."
+    },
+    {
+      "id": "CANONICAL_DECIMAL",
+      "detail": "WR-I4 canonical carrier form is unspecified; source 1.2/1.20/1.200 equality is fixed but no parameter canonical spelling is invented."
+    },
+    {
+      "id": "PAGE_PROFILE",
+      "detail": "Entity page API and related-entity page grammar/profile and binding are not supplied; mixed-keyset is logical request plus external continuation, not claimed compile input."
+    },
+    {
+      "id": "TRUSS_INSTANT",
+      "detail": "Offset equality is required if accepted; refuse specifically if exact lowering unavailable. Current Truss support is UNTESTED."
+    },
+    {
+      "id": "BULK_NULL_DOMAIN",
+      "detail": "CONTRACT-902 wider/null SET is pending U-3; bulk expected refusals are requirements, not observed backend behavior."
+    },
+    {
+      "id": "CORE_TEMPORAL_ADMISSION",
+      "detail": "Existing validateCoreFieldValue/validateCoreDatasetValues refuse present non-null date/timestamp value semantics (CORE_SCHEMA_PROPERTIES). Shapes admit but datasets do not fully admit; retain refusal and separately check finite semantic witnesses."
+    }
+  ],
+  "claims": {
+    "finiteSemanticWitnesses": "PASS",
+    "sourceShapeAdmission": "PASS_WITH_UNKNOWN_ACCESS",
+    "fullTemporalDatasetAdmission": "REFUSED_BY_CURRENT_CORE",
+    "weftParserAcceptance": "NOT_ESTABLISHED_PROPOSAL_ONLY",
+    "backendCompilation": "UNTESTED",
+    "nativeExecution": "UNTESTED",
+    "backendSupport": "UNQUALIFIED",
+    "consumerAdoption": "UNTESTED"
+  },
+  "review": {
+    "method": "self-review against minimum corpus and read-only Weft primary grammar; added alias qualification, isolated non-key SET NULL field, and size-1 null continuation control",
+    "independentReview": "not performed",
+    "changesOutsideOwnership": "none by this task; concurrent unrelated changes preserved"
+  },
+  "transfer": "Copy fixtures/umf-typed-access into Weft canonical corpus; adapt focused checker imports, agree open decisions and accepted grammar, supply pinned target bindings/security/carriers, then compile and execute same expected rows or specific refusal obligations per target. No companion Weft repository changes made."
+}

@@ -481,3 +481,6 @@ export type {BulkOutcomeValidation} from './extensions/actions/bulk';
 
 export {constructActionManifest} from './extensions/actions/manifest-construction';
 export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManifest} from './extensions/actions/manifest-construction';
+export * from './adapters/access-temporal';
+export { RAW_TABLE_BINDING_SUBSET, rawTableBindingProfiles, inspectRawTableBinding } from './extensions/binding/raw-profiles';
+export type { RawTableBindingTarget } from './extensions/binding/raw-profiles';

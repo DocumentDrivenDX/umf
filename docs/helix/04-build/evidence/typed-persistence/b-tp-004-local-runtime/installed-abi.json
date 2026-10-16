@@ -1,0 +1,103 @@
+{
+  "kind": "local-production-installed-wheel-replay",
+  "status": "refused",
+  "commands": [
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "venv",
+        "--without-pip",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-xqxu4jrk/venv"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-xqxu4jrk/venv/bin/python",
+        "/private/tmp/umf-btp004-wheel/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "pydantic==2.14.1",
+        "pydantic-core==2.50.1",
+        "annotated-types==0.8.0",
+        "typing-extensions==4.16.0",
+        "typing-inspection==0.4.4"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Using Python 3.14.8 environment at: venv\nResolved 6 packages in 2ms\nInstalled 6 packages in 12ms\n + annotated-types==0.8.0\n + pydantic==2.14.1\n + pydantic-core==2.50.1\n + typing-extensions==4.16.0\n + typing-inspection==0.4.4\n + umf-access==0.1.0.dev0 (from file:///private/tmp/umf-btp004-wheel/umf_access-0.1.0.dev0-py3-none-any.whl)\n"
+    },
+    {
+      "command": [
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-xqxu4jrk/venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/tests/packaging/replay_installed.py",
+        "--child",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-xqxu4jrk/replay.json"
+      ],
+      "exitCode": 1,
+      "stdout": "{\"status\": \"refused\", \"reason\": \"required runtime export missing: umf_access.values.validate_constraints\"}\n",
+      "stderr": ""
+    }
+  ],
+  "nativeTargets": "UNTESTED; no selected driver/platform",
+  "storyAcceptance": "Not B-TP-004 closure",
+  "buildReportSha256": "3d8e951dfff6ac78256aa402135f665e117598f4f281d600060fa60928d3d073",
+  "runtimeSources": {
+    "pyproject.toml": "c2df9f590493620dbdfd8d35846d567b715f709902acd8fc088c226709e1eb8a",
+    "compatibility-profile.json": "1ac1e1c8cfbd972ef07b1b71eeb31f83ed1dd1737c180331ac1c4569d7d29263",
+    "src/umf_access/__init__.py": "4d924a6cba4b47b844f0ed7ca3dbc0eb2fcaf66aef3582e459250d688b769259",
+    "src/umf_access/capture.py": "b882897f1e5f165d48505d052540fb193acc578d38c420a5dc02c06fa3d38f79",
+    "src/umf_access/codec_support.py": "bc656bb0b94c5e4da9733c7edb8d471525a3632e52c638a4522801f976c17681",
+    "src/umf_access/dsl/__init__.py": "44f441e0ac082b916b9ada9ed043e79946639d23513d9b4be4c25b12cd4b9783",
+    "src/umf_access/dsl/_context.py": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+    "src/umf_access/dsl/_expressions.py": "604b1198398bf26544c2d758b8ba108e603bbbb7a18a33dc590a3e626da785a0",
+    "src/umf_access/dsl/_nodes.py": "088cd3082497e5cbf0189dc26b253617e45214e60853ad766104597e9298619d",
+    "src/umf_access/dsl/_query.py": "337f98148ca500428f0ffa9a8e596a1bb010bc3c0da863a98cf05057941b3dec",
+    "src/umf_access/dsl/render.py": "8ddba68eb4a2812db6f9c17cf25243948e8d7d177a6ab8e2e6b9cfe4338922a9",
+    "src/umf_access/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/umf_access/types.py": "5f4fd979da93497e62e72adc0aea3efe98172eef601c15939ffe2a79b9b72961",
+    "src/umf_access/values.py": "1ba42f18409d93526335cb266edfc65e7ec2e27c82b972cf4704bb89d14dd36a"
+  },
+  "profileSha256": "1ac1e1c8cfbd972ef07b1b71eeb31f83ed1dd1737c180331ac1c4569d7d29263",
+  "wheelSha256": "2de26364270b11a145012845b02be8aee5c5a2aef65548127b93278d2bd000fa",
+  "manifestSha256": "7c94b8a91d992a510d4fc208f44e8f20b2af102b7548f7fb2bc6cdab60b5d017",
+  "generatedInventory": [
+    {
+      "path": "shop/__init__.py",
+      "sha256": "a2cc7cbecb6708d4926cebfd6eba26fcf727a915ab2977a7d28d023efd42dd4a"
+    },
+    {
+      "path": "shop/_umf/sources.json",
+      "sha256": "56e90148f9c226d413d1dacd96ac46db10ba3fc47ce3c740d4c7fa6b7305f44d"
+    },
+    {
+      "path": "shop/codecs.py",
+      "sha256": "471f8f26c367eaad526b2069c46db272e110df2cfcca3b81331c2dbae9e53d2c"
+    },
+    {
+      "path": "shop/fields.py",
+      "sha256": "dd5ca930e19f6c05e0f59fd534c424d94947b47350f2532c16fd532bd6fb4bd0"
+    },
+    {
+      "path": "shop/keys.py",
+      "sha256": "6ef0079627121c5fec49ccc4a8f3f2b07d386e32de825f4d2fbbee4d9140dac2"
+    },
+    {
+      "path": "shop/models.py",
+      "sha256": "1d3ba83fe2fc4fbc5b47269dc2ce7a700f5338d45a69f8f4762c302fc8b1159a"
+    },
+    {
+      "path": "shop/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ],
+  "reason": "replay command failed; see retained command outcome"
+}

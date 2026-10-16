@@ -1,0 +1,88 @@
+{
+  "kind": "Typed SDK recovery and main integration record",
+  "originalWorktree": "/Users/erik/.codex/worktrees/39bf/umf",
+  "recoveryWorktree": "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf",
+  "archiveSnapshot": "8c9d0fb68ca5f1e0e4d4a11736b3f18a2f1c5298",
+  "laterReviewedSpecs": "e05e6736",
+  "integrationMainBase": "31ac7d90cb7475b8d52451c0d67b8a1b65ec46d9",
+  "preservationTags": [
+    "recovery/typed-sdk-archive-20261015",
+    "recovery/typed-sdk-specs-20261015",
+    "recovery/typed-sdk-specs-stash-20261015"
+  ],
+  "originalRecoveredFiles": 650,
+  "byteIdenticalFiles": 629,
+  "reconciledDocumentsOrReceipts": [
+    "docs/helix/01-frame/features/FEAT-029-precompiled-queries-and-search.md",
+    "docs/helix/01-frame/user-stories/US-083-precompiled-reads-on-raw-tables.md",
+    "docs/helix/02-design/architecture.md",
+    "docs/helix/02-design/contracts/CONTRACT-042-physical-binding.md",
+    "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md",
+    "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md",
+    "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+    "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+    "docs/helix/02-design/solution-designs/SD-029-precompiled-queries-and-search.md",
+    "docs/helix/02-design/technical-designs/TD-080-generate-typed-package.md",
+    "docs/helix/02-design/technical-designs/TD-081-typed-models-and-codecs.md",
+    "docs/helix/02-design/technical-designs/TD-082-type-checked-query-declarations.md",
+    "docs/helix/02-design/technical-designs/TD-083-precompiled-reads-on-raw-tables.md",
+    "docs/helix/02-design/technical-designs/TD-084-semantic-and-keyword-search.md",
+    "docs/helix/03-test/test-plans/STP-081-typed-models-and-codecs.md",
+    "docs/helix/03-test/test-plans/STP-083-precompiled-reads-on-raw-tables.md",
+    "docs/helix/04-build/evidence/typed-persistence/structure-check.json",
+    "docs/helix/04-build/implementation-plan.md",
+    "docs/helix/04-build/typed-persistence-design.md",
+    "docs/helix/04-build/weft-requirements-typed-access.md",
+    "docs/helix/README.md"
+  ],
+  "missingFiles": [],
+  "sourceRecovery": "src/compilation, python/umf_access, tests/compilation and fixtures/access retain original archive bytes; no source implementation was reconstructed from chat.",
+  "supplemental": "20 scratch scripts/receipts/wheel variants in supplemental-inventory.json; originals retained in temp, copied with SHA256.",
+  "integrationDecisions": [
+    "Retained independently added main UUID/security sections and Typed SDK sections in documentation merge conflicts.",
+    "Merged later Typed SDK reviewed requirements while retaining the separately selected CONTRACT075 temporal oracle, logical-name renderer and actual module boundary paths.",
+    "Explicit ID migration: native128/UUID contract CONTRACT067->CONTRACT076, updated canonical path/links; original ID retained in x-recovery-previous-id and original main history. Typed SDK CONTRACT067 unchanged.",
+    "Saved specification stash anchored in a local preservation tag; later canonical specs merged, older draft variants not silently substituted."
+  ],
+  "freshVerification": {
+    "BunFocusedTests": 927,
+    "assertions": 3143,
+    "files": 14,
+    "typecheck": "pass",
+    "boundaries": "pass",
+    "structure": "pass",
+    "browser": "Chromium153.0.8010.12;15cases with Bun/browser result parity and zero external requests",
+    "PythonInstalled": "83tests pass against byte-verified stable9189wheel",
+    "generatedMypy": "pass",
+    "generatedStrictPyright": "pass",
+    "sourceDrift": []
+  },
+  "evidence": [
+    "verification.json",
+    "python-verification.json",
+    "browser.json",
+    "recovered-file-inventory.json",
+    "supplemental-inventory.json"
+  ],
+  "limits": [
+    "Integration/recovery does not close all B-TP slices or native/target/transport/callsite gates. Existing scoped failures and open decisions remain retained.",
+    "Historical evidence paths point to the original deleted checkout; fresh receipts identify the restored tree. Original evidence is retained rather than falsely reattributed.",
+    "No publication of Python runtime, no native SQL implementation, no production operations or migrations."
+  ],
+  "localMainIntegration": {
+    "status": "merged",
+    "implementationIntegrationCommit": "bf0b9cc7",
+    "cleanMainWorktree": "/Users/erik/.codex/worktrees/7b14/umf"
+  },
+  "remotePublication": {
+    "status": "authorized for publication; remote Git refs are the publication authority",
+    "destination": "https://github.com/DocumentDrivenDX/umf.git",
+    "repositoryId": "1382276802",
+    "visibility": "public",
+    "destinationVerifiedBy": "connected GitHub get_repo; clone URL matches origin and committed project URL; authenticated account has admin/push permission",
+    "automaticReview": "Two push attempts rejected: initial remote unverified, then explicit specific public-export authorization required even after repository verification. No workaround attempted.",
+    "userAuthorization": "Yes, push main, the recovery branch, and all three preservation tags to the public DocumentDrivenDX/umf repository.",
+    "authorizationDate": "2026-10-15"
+  },
+  "additionalMainIntegration": "e3f3e1c2: newer security gate evidence and harness budget correction merged without conflicts before publication"
+}

@@ -77,7 +77,7 @@ are supported design choices, with target-qualified loss, equality, ordering,
 constraint and atomicity obligations. A fallback string must retain UUID logical
 meaning. No pair of unrelated integer columns is inferred to be a UUID.
 [SD-005](../../02-design/solution-designs/SD-005-128-bit-uuid.md) selects the approach;
-[CONTRACT-067](../../02-design/contracts/CONTRACT-067-128-bit-uuid.md) owns exact surfaces.
+[CONTRACT-076](../../02-design/contracts/CONTRACT-076-128-bit-uuid.md) owns exact surfaces.
 Core admission, five-priority-system delivery and downstream adoption retain
 separate evidence gates; this requirement does not declare implementation support.
 

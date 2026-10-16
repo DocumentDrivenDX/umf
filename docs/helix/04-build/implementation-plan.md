@@ -12163,6 +12163,22 @@ retains exact provenance, separately qualified from owner-native/build evidence.
 No runtime/test/schema/case definition changed in this provenance-only follow-up;
 45accepted/113unbound and the active overall goal remain.
 
+## Proposed typed data access SDK
+
+FR-52 to FR-55 and FEAT-028 to FEAT-031 are specified in the
+[typed data access SDK design and build handoff](typed-persistence-design.md),
+which replaces the first typed-persistence draft. That scoped plan allocates
+B-TP-000 to B-TP-015 to US/TD/STP-080 to 088 and lists cross-repository
+dependencies on Weft, Truss and Ashlar.
+
+The owner now authorizes implementation under the focused plan's Execution
+Contract and explicitly waived the spending-ceiling prerequisite on 2026-10-15.
+The coordinating chat integrates parallel subprojects while retaining ordered
+STP closure, exact dependency pins and fresh version/subset-qualified evidence.
+[Current coordination evidence](evidence/typed-persistence/implementation-coordination.json)
+separates passing checkpoints from open slice and native/consumer gates. This
+scope does not reorder TableSpec-first integration or authorize production
+operations or migrations.
 
 ### Atomic complete scan batches and direct issuer bridge — 2026-10-15
 

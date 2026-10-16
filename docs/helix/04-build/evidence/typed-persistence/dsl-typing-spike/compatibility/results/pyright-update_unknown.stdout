@@ -1,0 +1,30 @@
+{
+    "version": "1.1.414",
+    "time": "1792086748500",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/update_unknown.py",
+            "severity": "error",
+            "message": "No parameter named \"ammount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportCallIssue"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 1,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.305
+    }
+}
+

@@ -506,3 +506,24 @@ URLs must resolve to pack-owned entries without losing selected definitions.
 Show only declared UMF meaning; inheritance, equivalence and native ontology
 reasoning are not inferred. Table/record links use CONTRACT-053's explicit
 record-to-table identity convention within the same pack/version.
+
+## Owner direction: generated typed persistence substrate
+
+The owner requested design-time UMF-to-Python generation for typed persistence on
+PostgreSQL and Spark SQL / Unity Catalog, owned in the UMF repository, with Truss
+and Ashlar as adopters. After an independent review the owner directed a broader
+schema-first data access SDK:
+
+- typed models;
+- a precompiled, expression-first query and search DSL with no string column
+  references;
+- typed action clients;
+- execution on raw tables through the host platform's native SQL interface
+  (Postgres, Lakebase, Unity Catalog/Spark SQL) and on Truss and Ashlar through
+  their own protocols.
+
+This direction authorizes specification work, not implementation, migrations or
+production adoption.
+
+[FEAT-028](../01-frame/features/FEAT-028-typed-model-generation.md) to FEAT-031
+frame the proposal. It does not displace the TableSpec-first integration priority.

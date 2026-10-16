@@ -1,0 +1,124 @@
+{
+  "kind": "bounded-boundary-adoption",
+  "slice": "B-TP-000",
+  "date": "2026-10-15",
+  "specRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "branch": "codex/typed-access-implementation",
+  "status": "PASS for captured checker adoption source only",
+  "authorization": "Owner waived spending-ceiling prerequisite; coordinating chat authorized implementation. No commits or branch changes by this session.",
+  "source": "source-fingerprints.json",
+  "testOutput": "test-output.txt",
+  "versions": {
+    "bun": "1.4.2 (43848b5a7)",
+    "typescriptCompiler": "7.0.2",
+    "typescriptParserApi": "typescript-api npm:typescript@5.9.3",
+    "pythonDefault": "3.9.6",
+    "pythonAdditional": "3.14.8",
+    "ciPython": "3.12 configured, remote execution UNTESTED"
+  },
+  "commands": [
+    {
+      "command": "bun test tests/compilation/boundaries.test.ts",
+      "exitCode": 0,
+      "tests": 15,
+      "assertions": 89
+    },
+    {
+      "command": "bun run check:access-boundaries",
+      "exitCode": 0,
+      "typescriptFiles": 2,
+      "pythonModules": 1,
+      "violations": 0
+    },
+    {
+      "command": "python3.14 scripts/check-access-python-boundaries.py",
+      "exitCode": 0,
+      "pythonModules": 1,
+      "violations": 0
+    },
+    {
+      "command": "sh .githooks/pre-commit",
+      "exitCode": 0,
+      "note": "Actual integration source; hook additionally installed and exercised with real git commits in isolated test repository."
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc --ignoreConfig --noEmit --target ES2022 --module ESNext --moduleResolution Bundler --types bun --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --skipLibCheck scripts/check-compilation-boundaries.ts tests/compilation/boundaries.test.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "discovery": {
+    "typescriptRoot": "src/compilation/",
+    "pythonRoots": [
+      "python/umf_access/",
+      "python/umf_access/src/umf_access/"
+    ],
+    "emptyScans": "refuse",
+    "duplicatePythonModules": "refuse",
+    "actualPythonModule": "Package __init__.py scaffold only; no runtime exports or behavior claimed.",
+    "testFixtures": "Both Python layouts, mixed-layout graph, named helper ownership, forbidden edges and empty scans exercised."
+  },
+  "redAttempts": [
+    {
+      "stage": "Initial tests before checker scripts",
+      "tests": 9,
+      "passed": 0,
+      "failed": 9
+    },
+    {
+      "stage": "Initial implementation",
+      "note": "Temporary-directory canonicalization and macOS Python 3.9 stdlib discovery corrected after failing controls."
+    },
+    {
+      "stage": "New src-layout and empty-scan controls",
+      "passed": 9,
+      "failed": 2,
+      "note": "Controls exposed unknown MODULE classification for src layout and successful empty scan; both corrected."
+    },
+    {
+      "stage": "IR-relative-import and portable network/code controls",
+      "passed": 11,
+      "failed": 2,
+      "note": "Controls exposed external-value relative import bypass and missing network/code identifiers; both corrected."
+    },
+    {
+      "stage": "Explicit named helper ownership controls",
+      "passed": 14,
+      "failed": 1,
+      "note": "Foundation/capture/runtime helper owners added explicitly; unknown helper names still refuse."
+    },
+    {
+      "stage": "Focused TypeScript command",
+      "exitCode": 1,
+      "note": "TS5112 required --ignoreConfig when passing exact source files; corrected focused command passes."
+    },
+    {
+      "stage": "Dependency installation",
+      "exitCode": 1,
+      "note": "Sandbox tempdir EPERM; approved retry of existing frozen lockfile succeeded. No dependency manifest or lockfile edits."
+    },
+    {
+      "stage": "Full repository typecheck during concurrent red-test authoring",
+      "exitCode": 1,
+      "note": "Missing src/compilation/index and scripts/umf-access-generate imports and consequent implicit-any diagnostics in concurrently authored generator/writer tests. No checker diagnostics. Not suppressed; full integration check remains coordinator-owned."
+    }
+  ],
+  "enforcement": {
+    "local": "package.json check:access-boundaries",
+    "preCommit": ".githooks/pre-commit (executable); installed-hook positive and TS/Python rejection controls passed in isolated git repository",
+    "ci": ".github/workflows/access-boundaries.yml runs same command plus checker suite; remote GitHub execution UNTESTED",
+    "integrationHookConfiguration": "Not modified: core.hooksPath is shared across linked worktrees by default. Explicit local installation command documented in Architecture."
+  },
+  "limits": [
+    "Only static dependency enforcement is qualified. SDK generator, runtime, models, DSL, catalog, native targets and consumer adoption remain UNTESTED by this slice.",
+    "No full browser or native execution is required or claimed for host-side checker tooling. Portable generator browser parity remains STP-080 work.",
+    "AST/import checks are not a security sandbox and do not prove absence of reflective/obscured I/O, runtime SQL assembly, generated connection/table handles or engine-storage access. Semantic review and behavioral gates remain required.",
+    "CI workflow is wired but has not executed remotely in this session.",
+    "Architecture is the authoritative destination map; TD-080 still uses src/access paths and should be aligned by its owner before dependent closeout.",
+    "Acceptance applies only to the exact listed source fingerprints. Concurrent later source changes require a fresh checker replay."
+  ],
+  "nextAction": "Coordinator may accept B-TP-000 and replay on integrated source before B-TP-001 closeout. Keep later runtime/native support claims separate."
+}

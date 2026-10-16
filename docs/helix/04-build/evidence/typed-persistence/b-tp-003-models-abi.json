@@ -1,0 +1,45 @@
+{
+  "kind": "Generator/models production ABI integration proposal",
+  "status": "Production generated source imports against production source runtime for scalar/key/patch smoke; exact installed-wheel and full static/golden acceptance still pending.",
+  "facade": "src/compilation/index.ts generateAccessPackage(request,profile): AccessResult; aliases exported from that facade and src/compilation/ir/index.ts",
+  "runtimeImports": {
+    "umf_access.types": [
+      "StrictModel",
+      "ActionRef (new selected-action type ABI, pending implementation)"
+    ],
+    "umf_access.values": [
+      "validate_boolean",
+      "validate_integer",
+      "validate_decimal",
+      "validate_string",
+      "validate_binary",
+      "validate_date",
+      "validate_instant",
+      "validate_local",
+      "validate_length",
+      "validate_range",
+      "validate_allowed"
+    ],
+    "umf_access.codec_support": [
+      "revalidate_model",
+      "checked_row"
+    ],
+    "umf_access.dsl": [
+      "Column",
+      "FieldRef",
+      "RecordRef",
+      "Query",
+      "Terminal",
+      "Related"
+    ]
+  },
+  "newConstraintProposal": "Superseded: emitter now calls the existing runtime scalar, validate_length, validate_range and validate_allowed functions directly with resolved inert literals. It no longer imports or emits validate_constraints. Runtime remains sole validation algorithm owner.",
+  "keyValidation": "Emitter now annotates Key components with the same unique field BeforeValidator as row models. KEY_IDENTITY is MappingProxyType and __hash__ None.",
+  "knownIncomplete": [
+    "Selected action ActionRef runtime binding not yet imported/qualified; proposal constructor ActionRef(module,action,input_type,output_type) generic Input/Output; no executor/action clients claimed.",
+    "Search and nested carriers remain explicit LOSS refusals.",
+    "Multiple Keys remain ambiguous and refuse; keyless selectedRecords explicitly refuse this keyed-query profile.",
+    "Full installed-wheel model import, checker, codec and golden parity remain required."
+  ],
+  "dslMetadata": "Final FieldRef field_module + logical_name; RecordRef logical_namespace/logical_name populated directly from source. Generated projection UMF_PROJECTION_FIELDS and query UMF_UPDATE_FIELDS are immutable metadata."
+}

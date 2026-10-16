@@ -1,0 +1,67 @@
+{
+  "profile": "umf-access-temporal/0.1.0",
+  "contract": "CONTRACT-075",
+  "worktree": "/Users/erik/.codex/worktrees/39bf/umf",
+  "branch": "codex/typed-access-implementation",
+  "versions": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "python": "3.14.8"
+  },
+  "results": {
+    "red": "Missing-module failure; 0 assertions executed",
+    "profileBun": {
+      "tests": 40,
+      "assertions": 57,
+      "failed": 0
+    },
+    "focusedRegression": {
+      "tests": 120,
+      "assertions": 350,
+      "failed": 0
+    },
+    "browser": {
+      "goldenTokens": 38,
+      "independentPythonNormalizationSamples": 308,
+      "total": 346,
+      "failed": 0
+    },
+    "strictStandaloneTypecheck": "passed",
+    "diffWhitespace": "passed"
+  },
+  "commands": [
+    "bun test tests/access-temporal-profile.test.ts",
+    "bun test tests/access-temporal-profile.test.ts tests/compilation/access-golden-vectors.test.ts tests/adapters/rfc3339-exact-instant.test.ts tests/adapters/gregorian-date.test.ts",
+    "bun node_modules/typescript/bin/tsc --ignoreConfig --noEmit --strict --target ES2022 --module ESNext --moduleResolution bundler --skipLibCheck src/adapters/access-temporal.ts",
+    "/private/tmp/umf-tp001-compat-env/bin/python -B docs/helix/04-build/evidence/typed-persistence/temporal-profile/oracle.py",
+    "/private/tmp/umf-tp001-compat-env/bin/python -B docs/helix/04-build/evidence/typed-persistence/temporal-profile/normalization-sample.py",
+    "bun docs/helix/04-build/evidence/typed-persistence/temporal-profile/browser.ts"
+  ],
+  "limits": [
+    "Python stdlib oracle is not generated model or umf_access runtime acceptance",
+    "Native/backend support UNTESTED",
+    "No generic core temporal meaning or Key equality changed",
+    "No SQL lowering or string column APIs",
+    "No commits or branch changes",
+    "Repository-wide integration/typecheck remains coordinating session responsibility"
+  ],
+  "sha256": {
+    "docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md": "ae6ecfa2ae7c91168286edd1c2b5ad803382c25e765ea7312d7048fffda327ba",
+    "src/adapters/access-temporal.ts": "45dac162a1502c90d2e2e0ecca5e01b790d126c84fcf3880edbf4dc92405a8c5",
+    "src/adapters/gregorian-date.ts": "bb589bf938b33c36e8decc5d09fe3a760f3104bcfd13cf1a23aee074993a2ff1",
+    "src/adapters/rfc3339-exact-instant.ts": "323828b047b88321facab39aac05943635bd28dcef156b7951c69c462c9e4adb",
+    "tests/access-temporal-profile.test.ts": "edc9b68425fd7da025d8eef8a1ea5088f370b2207c743345c70f76d819e6661a",
+    "fixtures/access/golden-vectors/temporal-profile.json": "33e246d47ead263e9b2467b57a46811cdd3628d703d91b5f4fa564b1d207f9c2",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/attempts.json": "9ae4cc6122037f770574f0242288160114de9cd99f703aa680003da71a21e719",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/browser.ts": "e12f52e98b475440cdeb233d312506818a0e9c100106905eebeca3918dfd190e",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/bun.txt": "70cf539c3063bbc5a5b95a9c41dacfb3a3dacad843b11d566d475bb0c35fdf36",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/chromium.json": "72db00f3ee828333e3ab1f1982cd732aa4cbe40da72db4834c046269bf74ef18",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/normalization-sample.py": "62567745d1ca14495dc1ccd1c48b69db00eb8081326e82b37c64a297984a7d73",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/oracle.py": "0a8359274bee4fca0e3eb3fab0a3b4ee49382a474c95cc924db148971aa2228d",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/python-normalization-sample.json": "2fea1bf81211600cd0bf664562ab6cbfb103d0c4d97d13d5ee98568fdbad6dd8",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/python-stdlib.json": "55e636382322348d485a4dae7e3e33edd2e337c97475519ed6a04c314c3b3686",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/red.txt": "a4d6084876b7e9d0bc13ed8d5dc8ce62b9f2336ea69739eec19135ad36097b09",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/regression.txt": "2f96e5336dde97906499001bc5c4cf945658d44eceea6bc16ba22a8b7613af6d",
+    "docs/helix/04-build/evidence/typed-persistence/temporal-profile/typecheck.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

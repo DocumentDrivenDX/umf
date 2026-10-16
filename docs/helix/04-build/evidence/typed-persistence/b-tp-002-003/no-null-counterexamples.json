@@ -1,0 +1,678 @@
+{
+  "scope": "Five pinned core0.8 non-null-allowed-value/constraint counterexamples; not a witness for Null=no, not native equivalence",
+  "coreVersion": "0.8.0",
+  "upstreamSource": "src/model/schema-literals.ts",
+  "upstreamSha256": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+  "cases": [
+    {
+      "family": "boolean",
+      "source": {
+        "umf": "0.8.0",
+        "id": "no-null-counterexample",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "proof",
+            "elements": [
+              {
+                "id": "value",
+                "kind": "field",
+                "scalarType": "boolean",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "facets": {},
+                "allowedValues": [
+                  {
+                    "boolean": true
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "Row",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldResult": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "recordResult": {
+        "operation": "validate-core-record-values",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.8.0",
+          "id": "no-null-counterexample",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "proof",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "cardinality": "one",
+                  "nullability": "absent-allowed",
+                  "facets": {},
+                  "allowedValues": [
+                    {
+                      "boolean": true
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "Row",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "Row"
+        },
+        "values": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "value": null
+          }
+        ],
+        "documentValidation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "validation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "fields": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family": "integer",
+      "source": {
+        "umf": "0.8.0",
+        "id": "no-null-counterexample",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "proof",
+            "elements": [
+              {
+                "id": "value",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "facets": {
+                  "integerWidth": {
+                    "bits": 32,
+                    "signed": true
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "Row",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldResult": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "recordResult": {
+        "operation": "validate-core-record-values",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.8.0",
+          "id": "no-null-counterexample",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "proof",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "cardinality": "one",
+                  "nullability": "absent-allowed",
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "integerToken": "1"
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "Row",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "Row"
+        },
+        "values": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "value": null
+          }
+        ],
+        "documentValidation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "validation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "fields": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family": "decimal",
+      "source": {
+        "umf": "0.8.0",
+        "id": "no-null-counterexample",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "proof",
+            "elements": [
+              {
+                "id": "value",
+                "kind": "field",
+                "scalarType": "decimal",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "facets": {
+                  "precision": 8,
+                  "scale": 2
+                },
+                "allowedValues": [
+                  {
+                    "decimalToken": "1.20"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "Row",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldResult": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "recordResult": {
+        "operation": "validate-core-record-values",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.8.0",
+          "id": "no-null-counterexample",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "proof",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "cardinality": "one",
+                  "nullability": "absent-allowed",
+                  "facets": {
+                    "precision": 8,
+                    "scale": 2
+                  },
+                  "allowedValues": [
+                    {
+                      "decimalToken": "1.20"
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "Row",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "Row"
+        },
+        "values": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "value": null
+          }
+        ],
+        "documentValidation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "validation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "fields": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family": "string",
+      "source": {
+        "umf": "0.8.0",
+        "id": "no-null-counterexample",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "proof",
+            "elements": [
+              {
+                "id": "value",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 1,
+                    "unit": "unicode-scalar"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "string": "x"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "Row",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldResult": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "recordResult": {
+        "operation": "validate-core-record-values",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.8.0",
+          "id": "no-null-counterexample",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "proof",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "cardinality": "one",
+                  "nullability": "absent-allowed",
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 1,
+                      "unit": "unicode-scalar"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "string": "x"
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "Row",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "Row"
+        },
+        "values": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "value": null
+          }
+        ],
+        "documentValidation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "validation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "fields": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family": "binary",
+      "source": {
+        "umf": "0.8.0",
+        "id": "no-null-counterexample",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "proof",
+            "elements": [
+              {
+                "id": "value",
+                "kind": "field",
+                "scalarType": "binary",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 1,
+                    "unit": "byte"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "binaryHex": "01"
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "Row",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "m",
+                    "element": "value"
+                  }
+                ],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldResult": {
+        "valid": true,
+        "complete": true,
+        "diagnostics": []
+      },
+      "recordResult": {
+        "operation": "validate-core-record-values",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.8.0",
+          "id": "no-null-counterexample",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "proof",
+              "elements": [
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "cardinality": "one",
+                  "nullability": "absent-allowed",
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 1,
+                      "unit": "byte"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "binaryHex": "01"
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "Row",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "Row"
+        },
+        "values": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "value": null
+          }
+        ],
+        "documentValidation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "validation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "fields": [
+          {
+            "field": {
+              "module": "m",
+              "element": "value"
+            },
+            "state": "present",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

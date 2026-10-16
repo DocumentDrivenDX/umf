@@ -1,0 +1,128 @@
+{
+  "scope": "current B005 source and independent local tests; not ordered slice/STP acceptance",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "pydantic": "2.14.1",
+  "mypy": "2.4.0",
+  "pyright": "1.1.414",
+  "checkerLanguageTarget": "3.12; execution qualified only on Python3.14.8",
+  "sourceSha256": {
+    "python/umf_access/src/umf_access/dsl/__init__.py": "44f441e0ac082b916b9ada9ed043e79946639d23513d9b4be4c25b12cd4b9783",
+    "python/umf_access/src/umf_access/dsl/_context.py": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+    "python/umf_access/src/umf_access/dsl/_expressions.py": "ef31b5ae5adf68b85fdf6594d2fc17efeccc76082ffacf4722e5e564068b5e75",
+    "python/umf_access/src/umf_access/dsl/_nodes.py": "94750ae45c660bd2f4bfa196036ea846253ea44fa2de09b661d2062c84c164d7",
+    "python/umf_access/src/umf_access/dsl/_query.py": "6859e43d7b0ef7756049fae47d48bdf3c6f2306a8b387e3456ee6a4a03eb8641",
+    "python/umf_access/src/umf_access/dsl/render.py": "d81d863e387427f26c25cde632606d941ec522082686b3d0b048da8ca4b9ed1e",
+    "python/umf_access/src/umf_access/capture.py": "60f413cb0f9ebf68629868df17d240a1ae117549892223e080461f3d676e627f",
+    "python/umf_access/tests/test_dsl_runtime.py": "8cd3ed1fb318283d5bbd59d4161a66d0a1475a31672f87561dde7639a785abcf",
+    "python/umf_access/tests/test_capture.py": "6dec4c3168c0fd6566b05661c4415fabdf590a698a8a350fe662a98515389d55",
+    "python/umf_access/tests/test_dsl_render.py": "470355e07061ed2564faff43e80d8b2e9ce1d74636a6b348d1c48ffb0a3502d4",
+    "tests/compilation/python/static/queries/negative/call_missing_keyword.py": "93a5b2127a247a30096409ddbbbec32c634ba75ade5afd0c2b938d2e5641ab8e",
+    "tests/compilation/python/static/queries/negative/call_wrong_keyword.py": "fe7b6b38af2f05e131ee1abc355392f97f7ef94ff6bee94bc8a36329d63e68bb",
+    "tests/compilation/python/static/queries/negative/call_wrong_type.py": "3f50ed87243f405131d2b8ca982de0e1b4d6bb7f2905aa7ecb25a06c77d169dd",
+    "tests/compilation/python/static/queries/negative/count_iterated.py": "805024de958715cb664c11f3ea725732788297ead9239d022d81ee255dcb51c0",
+    "tests/compilation/python/static/queries/negative/expected.json": "0d7f30e0d5dc75e905a80b5bd165766ae4ade4879fa362b428cd0cde53282bff",
+    "tests/compilation/python/static/queries/negative/first_used_as_value.py": "2c98b2c047cd1095bd38c2bf22339e9c27e3354c012710fca8562864e38232a3",
+    "tests/compilation/python/static/queries/negative/foreign_column_filter.py": "af13630154ed99cf086ade33420f1e36d21af6f00708bd4bd8f0f895e3e9bf49",
+    "tests/compilation/python/static/queries/negative/foreign_column_select.py": "e86a816ef76abf8caa7bfd642aea013ffb79adbbd70ccd5c3f48c2820f6880d1",
+    "tests/compilation/python/static/queries/negative/foreign_projection.py": "c2568d3e005377e99e9729ae74142ad0bca23fb38b5fbbc322d40ec7cd7db1b8",
+    "tests/compilation/python/static/queries/negative/ninth_select_column.py": "fb7c59edc9770f1388e8a3c24bb0c2021c584555af8841ed0eedc4670f889e6c",
+    "tests/compilation/python/static/queries/negative/null_optional_filter.py": "531b7b8eb114ca4469033555e71c0405012cc70e059539dc101550bfc999e1bd",
+    "tests/compilation/python/static/queries/negative/nullable_param_nonnull.py": "b8254cfb5bddf1a258bdf2535ae2d2cd469b2dc6afead08e93d5b6c743320894",
+    "tests/compilation/python/static/queries/negative/page_indexed.py": "291b8fb70b1d7303744f4183e6605850f5fa9d65d74a4dc7cdaf0556d693c478",
+    "tests/compilation/python/static/queries/negative/runtime_foreign_filter.py": "b6987cea96967254808fed3ae8466ebc5b373806fbe269a0126956e7f4970ebb",
+    "tests/compilation/python/static/queries/negative/runtime_foreign_select.py": "253ef0d343995a973f7ef91b7ce65d8953c5425c23bde8fca18a3aa21fda2ef0",
+    "tests/compilation/python/static/queries/negative/runtime_ninth_select.py": "66e6171b8be54684da8016e3a47ae96576c93169fc09da12c57179e73e65b78c",
+    "tests/compilation/python/static/queries/negative/runtime_null_optional.py": "8eae99e3a87405cf47a3bb112d792115efcc58a827fec6d08340cda9c05e444e",
+    "tests/compilation/python/static/queries/negative/runtime_wrong_eq.py": "53c8064af944f237ef02b7175489f7b9e633efbdb46b9e954254f7c0d167af55",
+    "tests/compilation/python/static/queries/negative/runtime_wrong_operand.py": "057a2fefc929e19f46b8917625e1957221576b8f7c4b678cacf5f1c54271b367",
+    "tests/compilation/python/static/queries/negative/unknown_column.py": "b4209b63838dc5a3eca13e0cb7177ba87170d55a740c6d567e85c08b45b8794b",
+    "tests/compilation/python/static/queries/negative/update_generated_field.py": "e57bbd3462847f3fd2c53bda974d5eeccf662dcd45bcd1ee346a1f2ede9e80a6",
+    "tests/compilation/python/static/queries/negative/update_immutable_field.py": "8bc5bc41cdf552a63644c1c9f6d94d57d7893d5dc00802fc1b0f967121ed790e",
+    "tests/compilation/python/static/queries/negative/update_unknown_field.py": "b69efd3ae0fcf9b7e2d539e566ae9e1e0993871bbbbddfcc143d4e720c7dfe09",
+    "tests/compilation/python/static/queries/negative/update_wrong_type.py": "80231296d425114bbc2c6838fbbcf4f8a1ddc546335956c4300792384ffbd4b5",
+    "tests/compilation/python/static/queries/negative/wrong_eq_operand.py": "9608e3ef84dd0ef454f93791c4a1b42896cfda92db0387624693eed438caee24",
+    "tests/compilation/python/static/queries/negative/wrong_ne_operand.py": "07ae3f8d96ef74597d68dab00e21f03ed4fdd5a48290c9ad8468c6f7fa7d0c6a",
+    "tests/compilation/python/static/queries/negative/wrong_operand.py": "4a5596670a4214fa46afa1d70f20addfb5eebb1b0e3eb0e66c72dbc967c389d1",
+    "tests/compilation/python/static/queries/negative/wrong_param.py": "abd03aa8265f21a87aced6a2587c4a7581a578b02cea48a01556eecb25141ae2",
+    "tests/compilation/python/static/queries/positive/expected.json": "855011257892af7172ac5a1bf45aed96affa48e743373e39273ee508a5f825fc",
+    "tests/compilation/python/static/queries/positive/forms.py": "3c030141c7fae25b07604d98ee05ec94e7f6468b7c2206048748f9d3e1192905",
+    "tests/compilation/python/static/queries/positive/runtime_types.py": "3ea00de6a56202e67b9f6cf55628d95e69b8fc03f4614f43fe1ea29ad3bd1092",
+    "tests/compilation/python/static/queries/positive/terminals.py": "3213758e7290fcd1acf27cc9080efd70fd547b1fe96ca3da28f57a670026170c",
+    "tests/compilation/python/static/queries/refactor/expected.json": "b4e7aee463d47f1974333433b96551bbd8f40829fa950890428d37cf58ef0bd8",
+    "tests/compilation/python/static/queries/refactor/unchanged.py": "162c327dd79b44e1e58b46b5e78656985b797ef0eb2c8578a25c6b9f9702f43f"
+  },
+  "changedDuringReplay": [],
+  "results": [
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "python/umf_access/tests/test_dsl_runtime.py",
+        "python/umf_access/tests/test_capture.py",
+        "python/umf_access/tests/test_dsl_render.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "........................................................\n----------------------------------------------------------------------\nRan 56 tests in 0.013s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/pyright",
+        "--project",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/pyrightconfig.json",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/__init__.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_context.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_expressions.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_nodes.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_query.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/render.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/capture.py"
+      ],
+      "exitCode": 0,
+      "stdout": "0 errors, 0 warnings, 0 informations\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/mypy",
+        "--config-file",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/__init__.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_context.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_expressions.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_nodes.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/_query.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/dsl/render.py",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/src/umf_access/capture.py"
+      ],
+      "exitCode": 0,
+      "stdout": "Success: no issues found in 7 source files\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "scripts/check-access-python-boundaries.py"
+      ],
+      "exitCode": 0,
+      "stdout": "scan roots: python/umf_access, python/umf_access/src/umf_access\naccess Python boundaries: 11 modules, 0 violations\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-B",
+        "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-check-runtime-types.py"
+      ],
+      "exitCode": 0,
+      "stdout": "runtime typing: 14/14 exact diagnostic checks passed\n",
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}
