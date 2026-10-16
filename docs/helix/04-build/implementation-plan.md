@@ -12204,3 +12204,12 @@ promoted and the overall goal remains active.
 ## Browser-local declaration profile — 2026-10-15
 
 Owner clarification keeps GitHub Pages with browser WASM compilation and local sample execution. CONTRACT-905 defines a separate local-owner bundle, independent selection-read grant and local bulk companion, preserving tx1/human/delegation semantics. [Portable evidence](evidence/bulk-update/local-profile-20261015/receipt.json) records346regression tests/4016assertions,56original action tests/343assertions, both strict TypeScript checks, actual Chromium and Astra58independent controls. The two review findings (selection-read policy mapping and allocation) are resolved. [Owned source handoff](evidence/bulk-update/local-profile-20261015/README.md) retains exact new model/preparation/request/seed/provenance. Actual Weft local compilation, Truss PGlite schema/capabilities/lowering/sealing/execution/durability and protected native66 completion remain open; no executable backend claim is made.
+
+
+## Reusable action and Key declarations — 2026-10-16
+
+CONTRACT-901 defines `prepareCoreKeyTuples` and `prepareActionIdentities` for one immutable copied declaration lifetime. Reuse successful declaration checks; keep input literals, exact receipts and selector identity checks on every call. Native authorization, guards, effects and transaction checks remain executor duties. Existing stateless APIs remain the equivalence oracle.
+
+The focused gate is `bun test tests/actions/prepared-identities.test.ts tests/core/key-tuple.test.ts tests/actions/interpreter.test.ts` (28 tests,474 assertions). `bun scripts/actions-prepared-browser.ts <report> <exact-esm>` compares83 shared cases in actual Chromium. The scoped source passed Astra review, including independent output, unknown-dependency, accessor, foreign-receipt and mutation-isolation controls. These pure checks do not measure or qualify native execution.
+
+Next, use a separately pinned new UMF/Weft producer cohort in Truss; do not relabel the previous producer. Re-run the actual1024-row UPDATE, point UPDATE, replay/reopen readback and latency measurements with the same workloads. Publication remains gated on the integrated review, acceptable measured single/bulk behavior and the requested stress matrix; declaration preparation alone does not close those gates.

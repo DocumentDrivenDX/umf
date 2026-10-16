@@ -3,7 +3,7 @@ import {validateDocument} from '../../validation/document';
 import {admitAction,checkActionLiteral} from './structure';
 import {knownActionModel} from './known-model';
 import {checkSchemaLiteral,canonicalSchemaJson,type CoreLiteral} from '../../model/schema-literals';
-import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../model/key-tuple';
+import {encodeCoreKeyTuple,prepareCoreKeyTuples,type CoreKeyTupleValue} from '../../model/key-tuple';
 import type {Document,Element} from '../../model/types';
 import type {CoreKeyDefinition} from '../../validation/keys';
 import type {Action,ActionFrame,ActionKeyReference} from './types';
@@ -23,6 +23,11 @@ export function admitActionInputs(documentInput:Document,actionInput:Action,inpu
  const document=copyJson(documentInput) as unknown as Document,action=admitAction(actionInput);
  if(document.umf!=='0.8.0'||!validateDocument(document).valid)actionExpressionError('ACTION_PARAMETER','Expected valid exact core 0.8.0 document');
  exactActionReferences(action);
+ return admitInputs(document,action,inputsInput,outputs,(key,values)=>encodeCoreKeyTuple(document,key,values));
+}
+function admitInputs(document:Document,action:Action,inputsInput:ActionInputs,outputs:boolean,encode:(key:ActionKeyReference,values:CoreKeyTupleValue[])=>unknown,
+ fieldFor:(reference:{module:string;element:string})=>Element=reference=>actionModelField(document,reference),
+ keyFor:(reference:ActionKeyReference)=>unknown=reference=>selectedKey(document,reference)):ActionInputs {
  const inputs=copyJson(inputsInput) as unknown as ActionInputs,parameters=outputs?action.outputs:action.parameters;
  if(!inputs||typeof inputs!=='object'||Array.isArray(inputs))return actionExpressionError('ACTION_PARAMETER','Inputs must be an exact parameter map');
  if(new Set(parameters.map(p=>p.id)).size!==parameters.length)actionExpressionError('ACTION_PARAMETER','Duplicate parameter identity is ambiguous');
@@ -32,15 +37,15 @@ export function admitActionInputs(documentInput:Document,actionInput:Action,inpu
   const supplied=inputs[parameter.id]!;
   if(parameter.kind==='value'){
    if(!checkActionLiteral(supplied))actionExpressionError('ACTION_PARAMETER','Expected exact typed literal');
-   exactActionObject(parameter.field,['module','element']);const field=actionModelField(document,parameter.field);
+   exactActionObject(parameter.field,['module','element']);const field=fieldFor(parameter.field);
    if(!['boolean','integer','decimal','string','binary'].includes(field.scalarType??'')||field.cardinality!=='one'||!['required','absent-allowed'].includes(field.nullability as string))actionExpressionError('ACTION_PARAMETER','Input value domain is not qualified');
    checkSchemaLiteral(document,field,supplied as CoreLiteral);
   }else{
    exactActionObject(parameter.target,['module','element','key']);const entity=exactActionObject(supplied,['key','components']) as unknown as ActionEntityInput;
    exactActionObject(entity.key,['module','element','key']);
    if(canonicalSchemaJson(entity.key)!==canonicalSchemaJson(parameter.target))actionExpressionError('ACTION_PARAMETER','Entity input must carry the declared exact Key');
-   selectedKey(document,entity.key);
-   encodeCoreKeyTuple(document,entity.key,entity.components as CoreKeyTupleValue[]);
+   keyFor(entity.key);
+   encode(entity.key,entity.components as CoreKeyTupleValue[]);
   }
  }
  return inputs;
@@ -88,4 +93,36 @@ export function selectActionIdentity(document:Document,action:Action,frame:Actio
  else entity={key:{module:frame.record.module,element:frame.record.element,key:compiled.ast.key},components:compiled.ast.components.map(c=>'input'in c?inputs[c.input] as CoreLiteral:c.literal)};
  const tuple=encodeCoreKeyTuple(document,entity.key,entity.components as CoreKeyTupleValue[]);
  return copyJson({entity,tupleHex:tuple.bytesHex}) as unknown as SelectedActionIdentity;
+}
+
+export interface PreparedActionIdentities {
+ readonly profile:'umf.actions.keys.prepared/1';
+ readonly source:Document;
+ readonly action:Action;
+ admitInputs(inputs:ActionInputs,outputs?:boolean):ActionInputs;
+ select(frameId:string,inputs:ActionInputs):SelectedActionIdentity;
+}
+/** Compile selectors against private immutable declarations, without store access. */
+export function prepareActionIdentities(documentInput:Document,actionInput:Action):PreparedActionIdentities {
+ const document=copyJson(documentInput) as unknown as Document,action=admitAction(actionInput);
+ if(document.umf!=='0.8.0'||!validateDocument(document).valid)actionExpressionError('ACTION_PARAMETER','Expected valid exact core 0.8.0 document');
+ exactActionReferences(action);
+ const keys=prepareCoreKeyTuples(document);
+ const frames=new Map([...action.reads,...action.writes].map(frame=>[frame.id,{frame,compiled:compileActionSelector(document,action,frame)}]));
+ const freeze=(value:unknown):void=>{if(value!==null&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}};
+ freeze(document);freeze(action);for(const {compiled} of frames.values())freeze(compiled);
+ // Cache only successful declaration resolution within these immutable copies.
+ // Missing optional values still do not resolve their unused declarations.
+ const fields=new Map<string,Element>(),targets=new Map<string,ReturnType<typeof selectedKey>>();
+ const fieldFor=(reference:{module:string;element:string})=>{const id=JSON.stringify([reference.module,reference.element]);let field=fields.get(id);if(!field){field=actionModelField(document,reference);fields.set(id,field);}return field;};
+ const keyFor=(reference:ActionKeyReference)=>{const id=JSON.stringify([reference.module,reference.element,reference.key]);let target=targets.get(id);if(!target){target=selectedKey(document,reference);targets.set(id,target);}return target;};
+ const admit=(inputs:ActionInputs,outputs=false)=>admitInputs(document,action,inputs,outputs,keys.encode,fieldFor,keyFor);
+ const select=(frameId:string,inputsInput:ActionInputs):SelectedActionIdentity=>{
+  const selected=frames.get(frameId);if(!selected)return actionExpressionError('ACTION_SELECTOR_FRAME','Selector must retain an exact declared frame');
+  const {frame,compiled}=selected,inputs=admit(inputsInput);let entity:ActionEntityInput;
+  if('entity'in compiled.ast)entity=inputs[compiled.ast.entity] as ActionEntityInput;
+  else entity={key:{module:frame.record.module,element:frame.record.element,key:compiled.ast.key},components:compiled.ast.components.map(c=>'input'in c?inputs[c.input] as CoreLiteral:c.literal)};
+  return copyJson({entity,tupleHex:keys.encode(entity.key,entity.components as CoreKeyTupleValue[]).bytesHex}) as unknown as SelectedActionIdentity;
+ };
+ return Object.freeze({profile:'umf.actions.keys.prepared/1' as const,source:document,action,admitInputs:admit,select});
 }
