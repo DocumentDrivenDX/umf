@@ -372,7 +372,11 @@ class Native(unittest.TestCase):
         import psycopg
 
         cls.connect = staticmethod(psycopg.connect)
-        cls.admin = psycopg.connect(os.environ["UMF_PG_TEST_DSN"], autocommit=True)
+        cls.admin = psycopg.connect(
+            os.environ["UMF_PG_TEST_DSN"],
+            password=os.environ.get("UMF_PG_ADMIN_TEST_PASSWORD"),
+            autocommit=True,
+        )
         if not cls.admin.execute(
             "SELECT 1 FROM pg_catalog.pg_roles WHERE rolname = 'praxis_a'"
         ).fetchone():

@@ -1,0 +1,28 @@
+{
+  "create_time": "2026-10-16T17:54:44Z",
+  "endpoint_id": "primary",
+  "name": "projects/umf-typed-sdk-qualification-20261016/branches/production/endpoints/primary",
+  "parent": "projects/umf-typed-sdk-qualification-20261016/branches/production",
+  "status": {
+    "autoscaling_limit_max_cu": 0.5,
+    "autoscaling_limit_min_cu": 0.5,
+    "current_state": "IDLE",
+    "disabled": false,
+    "endpoint_id": "primary",
+    "endpoint_type": "ENDPOINT_TYPE_READ_WRITE",
+    "group": {
+      "enable_readable_secondaries": false,
+      "max": 1,
+      "min": 1
+    },
+    "hosts": {
+      "host": "ep-holy-art-e8jswo02.database.centralus.azuredatabricks.net",
+      "read_write_pooled_host": "ep-holy-art-e8jswo02-pooler.database.centralus.azuredatabricks.net"
+    },
+    "last_active_time": "2026-10-16T18:01:15Z",
+    "settings": {},
+    "suspend_timeout_duration": "60s"
+  },
+  "uid": "ep-holy-art-e8jswo02",
+  "update_time": "2026-10-16T18:04:15Z"
+}

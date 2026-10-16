@@ -33,6 +33,24 @@ pg = Path(tempfile.mkdtemp(prefix="umf-search-pg18-", dir="/private/tmp"))
 bin = Path("/opt/homebrew/opt/postgresql@18/bin")
 started = False
 cases = []
+remote_dsn = os.environ.get("UMF_SEARCH_TEST_DSN")
+target_kind = os.environ.get("UMF_SEARCH_TARGET_KIND", "postgresql")
+if target_kind not in ("postgresql", "lakebase"):
+    raise ValueError("explicit native search target kind required")
+if target_kind == "lakebase":
+    from umf_access.postgres_search import (
+        AsyncLakebaseSearchTarget as AsyncPostgresSearchTarget,
+    )
+    from umf_access.postgres_search import (
+        LakebaseSearchTarget as PostgresSearchTarget,
+    )
+if target_kind == "lakebase":
+    from umf_access.postgres_search import PostgresSearchTarget as OtherSearchTarget
+else:
+    from umf_access.postgres_search import LakebaseSearchTarget as OtherSearchTarget
+vector_version = os.environ.get("UMF_SEARCH_VECTOR_VERSION", "0.8.7")
+if vector_version not in ("0.8.6", "0.8.7"):
+    raise ValueError("explicit pinned native vector test version required")
 
 
 def command(*args):
@@ -60,7 +78,9 @@ def combined(term:Param[str]):return Doc.objects.search(hybrid(Doc.s.text.matche
 @query
 def filtered(q:Param[Vector],minimum:Param[str]):return Doc.objects.filter(Doc.c.id >= minimum).search(Doc.s.semantic.near_vector(q)).top(3)
 """)
-model = (root / "fixtures/access/search/model.json").read_text()
+model = json.loads((generated / "stage-one-request.json").read_text())["sources"][0][
+    "text"
+]
 binding = {
     "version": "umf.raw-read-binding/0.1",
     "schema": "search_app",
@@ -85,7 +105,7 @@ config = {
     "targets": [
         {
             "id": "local",
-            "kind": "postgresql",
+            "kind": target_kind,
             "backendId": "weft-postgresql",
             "backendVersion": "raw-read/0.1",
             "targetProfile": "weft.raw-read/0.1",
@@ -97,7 +117,7 @@ config = {
                     "native": "embedding",
                     "dimensions": 3,
                     "extensionSchema": "public",
-                    "extensionVersion": "0.8.7",
+                    "extensionVersion": vector_version,
                 }
             ],
         }
@@ -131,32 +151,50 @@ from search_docs import (
     queries,
 )
 
-control = Path(os.environ["UMF_PGVECTOR_CONTROL_ROOT"]).resolve()
-if any(c.isspace() for c in str(control)):
-    raise ValueError("owned fixture control path must have no whitespace")
 try:
-    command(
-        bin / "initdb", "-D", pg / "data", "-U", "sdk_test", "-A", "trust", "--no-sync"
+    if remote_dsn is None:
+        control = Path(os.environ["UMF_PGVECTOR_CONTROL_ROOT"]).resolve()
+        if any(c.isspace() for c in str(control)):
+            raise ValueError("owned fixture control path must have no whitespace")
+        command(
+            bin / "initdb",
+            "-D",
+            pg / "data",
+            "-U",
+            "sdk_test",
+            "-A",
+            "trust",
+            "--no-sync",
+        )
+        command(
+            bin / "pg_ctl",
+            "-D",
+            pg / "data",
+            "-l",
+            pg / "server.log",
+            "-o",
+            f"-F -k {pg / 'socket'} -c listen_addresses='' -c extension_control_path={control} -p 55494",
+            "-w",
+            "start",
+        )
+        started = True
+        dsn = f"host={pg / 'socket'} port=55494 dbname=postgres"
+        admin = psycopg.connect(dsn + " user=sdk_test", autocommit=True)
+    else:
+        dsn = remote_dsn
+        admin = psycopg.connect(
+            dsn, password=os.environ["UMF_SEARCH_TEST_ADMIN_PASSWORD"], autocommit=True
+        )
+    admin.execute(
+        psycopg.sql.SQL("CREATE EXTENSION vector VERSION {}").format(
+            psycopg.sql.Literal(vector_version)
+        )
     )
-    command(
-        bin / "pg_ctl",
-        "-D",
-        pg / "data",
-        "-l",
-        pg / "server.log",
-        "-o",
-        f"-F -k {pg / 'socket'} -c listen_addresses='' -c extension_control_path={control} -p 55494",
-        "-w",
-        "start",
-    )
-    started = True
-    dsn = f"host={pg / 'socket'} port=55494 dbname=postgres"
-    admin = psycopg.connect(dsn + " user=sdk_test", autocommit=True)
-    admin.execute("CREATE EXTENSION vector VERSION '0.8.7'")
     assert admin.execute(
         "SELECT extversion FROM pg_extension WHERE extname='vector'"
-    ).fetchone() == ("0.8.7",)
-    admin.execute("CREATE ROLE search_user LOGIN NOSUPERUSER NOBYPASSRLS")
+    ).fetchone() == (vector_version,)
+    if remote_dsn is None:
+        admin.execute("CREATE ROLE search_user LOGIN NOSUPERUSER NOBYPASSRLS")
     admin.execute("CREATE ROLE hidden_user NOLOGIN")
     admin.execute("CREATE SCHEMA search_app")
     admin.execute("GRANT USAGE ON SCHEMA search_app TO search_user")
@@ -202,6 +240,20 @@ try:
         if name.startswith("_S")
         for v in value.variants
     )
+    try:
+        OtherSearchTarget(
+            connection, configuration, search_variants=all_variants
+        ).verify()
+    except TargetMismatch:
+        pass
+    else:
+        raise AssertionError(
+            "eager search verification accepted a foreign target profile"
+        )
+    assert connection.info.transaction_status == 0
+    cases.append(
+        "eager verification refuses a foreign target profile before native search"
+    )
     embedder = Embedding()
     target = PostgresSearchTarget(
         connection,
@@ -229,7 +281,7 @@ try:
     filtered = queries.filtered(target, q=(1.0, 0.0, 0.0), minimum="b")
     assert [h.item.id for h in filtered] == ["b", "c"]
     cases.append(
-        "actual pgvector0.8.7 exact distance, complete pre-filtering and Key tie order"
+        f"actual pgvector{vector_version} exact distance, complete pre-filtering and Key tie order"
     )
     embedded = queries.embedded(target, term="cats")
     assert [h.item.id for h in embedded] == ["a", "b", "c"] and embedder.calls == 1
@@ -347,9 +399,13 @@ try:
             {
                 "status": "pass",
                 "cases": cases,
-                "versions": {"postgresql": "18.6", "pgvector": "0.8.7"},
+                "versions": {"postgresql": "18.6", "pgvector": vector_version},
                 "temporal": "HELD",
-                "scope": "owned local source-bound exact search fixture; no managed Lakebase/Unity service qualification",
+                "scope": (
+                    "isolated managed Lakebase source-bound exact search fixture; no broader engine/Unity qualification"
+                    if remote_dsn is not None
+                    else "owned local source-bound exact search fixture; no managed Lakebase/Unity service qualification"
+                ),
             },
             indent=2,
         )
@@ -358,4 +414,8 @@ finally:
     if started:
         command(bin / "pg_ctl", "-D", pg / "data", "-m", "fast", "-w", "stop")
     assert not (pg / "data/postmaster.pid").exists()
-    print("ownedServerStopped=true")
+    print(
+        "ownedServerStopped=true"
+        if remote_dsn is None
+        else "managedConnectionClosed=true"
+    )
