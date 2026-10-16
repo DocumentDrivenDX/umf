@@ -6,7 +6,8 @@ lowering leaves authored ordering and bounds to the native owner compiler and
 compares the original authored Key identity/field order. Continuations retain
 bounded opaque owner cursor bytes without exposing them in automatic repr.
 
-The final installed Python 3.11.17 SDK wheel and stable-version Weft 0.4.40 pass
+The final installed SDK wheel on Python 3.11.17 and 3.14.8 with stable-version
+Weft 0.4.40 passes
 all 126 runtime tests, public schema/instance/codec E2Es and native read/action/
 bulk/search controls, with before/after installed byte verification and owned
 PostgreSQL cleanup. Pinned mypy, Pyright and ty accept the positive corpus and
