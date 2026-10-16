@@ -1,0 +1,95 @@
+{
+  "reviewer": "Astra Ultra",
+  "reviewedAt": "2026-10-15T17:18:52.059340+00:00",
+  "scope": "Actual static GitHub Pages compiler plus original Truss lifecycle/core catalog registration component; no action execution",
+  "verdict": "No open implementation or local Pages publication-validation blocker in the scoped website lifecycle/core catalog component. Overall local action E2E remains incomplete; no deployment claim.",
+  "findings": [],
+  "publicationGate": {
+    "status": "cleared",
+    "verification": "Independent exact pinned Innsigle4185eb56 verify --all exits0; all17 claims VALID, including finalized action-compiler.html",
+    "attestationPath": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/.innsigle/public/claims/action-compiler-html.attestation.json",
+    "attestationSha256": "c10fbb225966791ae14c5e5a40d305d9db7f528870a441cfdc0d3bfd6a078177",
+    "verificationLog": "/private/tmp/umf-website-catalog-review-20261015/signature-check-final.log",
+    "verificationLogSha256": "c1c9119f9372ac74064ba2dc24737e6eed1faef50503234feaeb05391143e5fc",
+    "sourceAndBrowserReceiptUnchanged": true,
+    "scope": "Local Pages component verification only; no deployment or action-execution qualification"
+  },
+  "pins": {
+    "umfHead": "31bfc40d88da44d5737fe055d591cb636ea21ad5",
+    "workingTree": "Dirty candidate; exact source hashes below",
+    "truss": "a75e614eca9824ca98d290013e93ce8bc31f6945",
+    "manifestSha256": "0f31f0ece67a2ccc725e5280b9cf5fae45ef04e1ee061723ad2d884d18398b42",
+    "archiveSha256": "f9c4cfb3da178dc3d0f5b451420944273136eda251ef675b6d8183cc05c128de",
+    "providerSha256": "0e27f2545208b74294364a197456099f34dd57508f8a976d10703c257f22cf29",
+    "umfCoreProducer": {
+      "revision": "7c0f0c98beee2cc1a5a407992b5c53cc2616da8e",
+      "bundleSha256": "88899e3c1221ca3998e80a878d37d5344d68062afa82eb15d6cffc49dd3752f3"
+    },
+    "localModelSha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+    "legacyWeftWasmSha256": "ee95eb1a360cc7e7fd53f671b1efb5d0bb4cdf7bbeae6193dcfef77c78dadf74"
+  },
+  "independentChecks": {
+    "retainedBrowserSourceAndServedHashes": 17,
+    "originalAssets": 314,
+    "originalTrussSourcePins": 14,
+    "freshFinalOutputByteParity": 317,
+    "finalPinnedSignatureClaimsValid": 17
+  },
+  "controls": {
+    "packaging": {
+      "path": "/private/tmp/umf-website-catalog-review-20261015/packaging-controls.json",
+      "passed": 7
+    },
+    "worker": {
+      "path": "/private/tmp/umf-website-catalog-review-20261015/worker-controls.json",
+      "script": "/private/tmp/umf-website-catalog-review-20261015/worker-controls.ts",
+      "passed": 8,
+      "qualification": "Bun adapter test of original worker control flow; actual provider import and fetch explicitly fixture-adapted, no native/browser qualification"
+    }
+  },
+  "browserEvidence": {
+    "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/04-build/evidence/bulk-update/website-compiler-results.json",
+    "sha256": "8572d60a4f0399a57370d662c3fd2aba41becda6801ad47d70a6a56f39a64428",
+    "browser": "153.0.8010.12",
+    "passed": true,
+    "scope": "GitHub Pages-compatible original Weft WASM compilation entirely in browser; unchanged example data; actual Truss core catalog registration and persistence only; no action execution",
+    "sourceCorrespondence": "All17 hashes match current source/served bytes; final typed worker changes erase to unchanged c5450615 output",
+    "reviewerBrowserRun": false,
+    "qualification": "Parent retained actual Chromium evidence inspected; reviewer does not claim an independent Chromium run"
+  },
+  "evidenceRepair": "A transient source-only receipt mismatch after adding StoreOpen type was observed, reported and resolved by the parent refreshed actual Chromium receipt. Final current worker probe passed again.",
+  "boundaries": [
+    "Original provider owner stays inside worker; messages cannot install models, SQL, owner capabilities or execution commands",
+    "Fixed local b8 catalog model remains distinct from unchanged b7 compiler cohort",
+    "All314 original assets remain byte-identical; 80MiB decompression ceiling and per-file manifest hashes/path checks precede output replacement",
+    "Relative asset and worker URLs support /umf/ deployment prefix; CI rebuilds from retained archive and checks types/browser",
+    "Core catalog metadata and original opaque actions retention do not issue action registration, read grants, seals or effect authority",
+    "No native human/SCRAM/C-D-E or production provider equivalence"
+  ],
+  "outstanding": [
+    "Actual matching local-profile Weft compile/lower integration",
+    "Truss action registration, issued read grants, selection/seal/effects/replay/recovery and complete original outcomes",
+    "Final combined browser-local E2E qualification and deployment"
+  ],
+  "sourceHashes": {
+    ".github/workflows/microsite.yml": "62d5b03b0c5ea9043574d96a0657d878f618e7eaa0d2f8e78231e1d8c7d057a5",
+    "docs/helix/05-deploy/microsite/action-compiler.html": "1d9fa174aaad6a53514c025b61d9b0da0e7845aa4b1d12c045ebd1a844509ed8",
+    "docs/helix/05-deploy/microsite/action-compiler.ts": "69e4a029314ed115e9231d996f3fc2b75609cd1f8090c4b73069631870d95e57",
+    "docs/helix/05-deploy/microsite/truss-catalog-worker.ts": "f1fb15d3efb2b61b90aa7f855a355c4e5a40af9d30a0d753401c645eab640e2f",
+    "docs/helix/05-deploy/microsite/build-action-compiler.ts": "f7a0279a79a9d0a9ca8a17e30e7be4f977a5d3491568f1d104ffd39c77b98594",
+    "docs/helix/05-deploy/microsite/build-truss-browser.ts": "74c750d136eb9e9c7af4df22d13734b07187cd807b29b829d0df61d0111c81ec",
+    "docs/helix/05-deploy/microsite/verify-action-compiler.ts": "2785d0ffe80841e19f2685d149a51b86b64370219f8df1fde5dea7c6165137e7",
+    "docs/helix/05-deploy/microsite/action-runtime-assets.d.ts": "7e08879df09397ea991aefb662d50d8b46b1b667f5b8c2fc5eb9c7410aa6d96c",
+    "docs/helix/05-deploy/microsite/tsconfig.actions.json": "3f206295f77545fcdce33b86cd557b65a7d75906aa10edeee022f89624bcbf69",
+    "docs/helix/05-deploy/microsite/README.md": "89bd864fcc8428f8b404d4b0b133c915bc049a6bddbcd35feef28c0580a6c2e0",
+    "docs/helix/05-deploy/microsite/assets/truss-browser/provenance.json": "1580ed4c6226476b2483c63844444de3b389e4634a4c6636187fe68d6dee80c4"
+  },
+  "publicationGateHistory": [
+    {
+      "kind": "known unresolved gate",
+      "file": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/.innsigle/public/claims/action-compiler-html.attestation.json",
+      "verification": "Exact pinned Innsigle 4185eb56 verifier independently returns exit1: action-compiler.html STALE, all other16 VALID",
+      "reportedCause": "Parent reported existing approved 1Password op read authorization timeout; no signing key was obtained. Reviewer did not request/read any secret or attempt signing."
+    }
+  ]
+}

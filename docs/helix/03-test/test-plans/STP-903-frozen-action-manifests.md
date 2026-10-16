@@ -42,6 +42,7 @@ Prove US-903's original portable or native outcomes under its contracted profile
 | US-903-AC5 | `bulk_outcome_shape` | complete unions preserve immutable original control results and native/business uncertainty without later-state reconstruction or fresh-token permission. | `@covers US-903-AC5` | portable-contract | `tests/actions-manifest.test.ts` |
 | US-903-AC6 | `manifest_browser_parity` | each agrees with the independent oracle; identical shared-implementation output alone is insufficient. | `@covers US-903-AC6` | portable-contract | `tests/actions-manifest.test.ts` |
 | US-903-AC7 | `pure_construction` | original plan/receipt correspondence, complete invocation derivation and pre-serialization limits without native authority | `@covers US-903-AC7` | portable-contract | `tests/actions-manifest-construction.test.ts` |
+| US-903-AC8 | `local_companion` | exact local bundle, native/mixed/unknown refusal and separate custody claims | `@covers US-903-AC8` | portable-contract | `tests/actions-local-profile.test.ts` |
 
 ## Executable Proof
 
@@ -68,3 +69,7 @@ Allocated tests now execute in `tests/actions-manifest.test.ts`; `tests/actions-
 ## Pure construction acceptance slice — US-903-AC7
 
 Run tests/actions-manifest-construction.test.ts against the public library and scripts/actions-manifest-construction-browser.ts against built ESM in actual Chromium. The independent expected output checks exact original plan bytes, unchanged core Key receipts, retained native order, complete action inputs, ordered frame versions and the full-first partition. Refuse receipt/source/tuple/guard substitution, unknown members, duplicate work, bounds and getters; empty work yields no fabricated invocation. Semantically equal numeric Key spellings must pass the original tuple codec while both spellings remain retained. Charge expanded output bytes before canonical serialization. Native selection completeness/order, current authorization, guard issuance, seal/recovery/queue/effects are not qualified by these portable tests.
+
+## Browser-local profiles — US-903-AC8
+
+tests/actions-local-profile.test.ts and actual Chromium controls verify original native preparation remains unchanged, exact local pair syntax/resources/invocation, unknown/mixed pair refusal, separate bulk.localOwner vs bulk.principal, original Key/manifest construction and no authority from compatible claims. Native PGlite/Truss/Weft and storage recovery qualification is separately mandatory under CONTRACT-905.

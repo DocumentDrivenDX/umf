@@ -477,3 +477,7 @@ Executor qualification additionally requires the separate witnesses in STP-900.
 ## Portable action plans and frozen-manifest UPDATE — owner direction, 2026-10-13
 
 PAP-UMF-01 through PAP-UMF-04 require a separately versioned portable action-plan/manifest contract built on this extension. Existing Action, Parameter, FrameEntry, recipe and authorization meaning stays authoritative. A plan references registered declarations; it does not add arbitrary executable SQL, credentials, automatic registration or new core meanings. Unknown plan content must be retained and relevant unknown obligations must block executable assessment. CONTRACT-902/903/904 now define exact companion protocol identifiers and surfaces; US-902/903 allocate schema/library implementation and portable proof, retaining this contract as action authority.
+
+### Explicit browser-local profile branch — 2026-10-15
+
+CONTRACT-905 adds exact local-owner actor/policy/invocation interpretation and conditional reuse of plan-model/1, plan/1 and manifest/1 carriers. Previous human/tx1 restrictions remain mandatory whenever invocation is umf.actions.tx/1; local invocation uses its separately defined local-owner custody and bulk companion, never a fabricated human or bulk.principal. Unknown/mixed profiles refuse. Existing native producer/enrollment bytes are not relabeled or requalified. Metadata success never issues a store capability or seal.
