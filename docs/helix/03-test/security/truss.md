@@ -700,3 +700,22 @@ Definition correspondence does not prove complete graph occurrence populations,
 codec/domain equivalence, whole-source semantics, authenticated Subject/current
 authority, source registration or final guarded release. Those original
 obligations remain independently required; a metadata join cannot promote them.
+
+
+For a composed context/population profile, start from the committed registered
+original sources and issue the compiler parent/current once. Match the complete
+Record/member/Key and graph definition joins to every native/logical occurrence,
+including parallel edges and empty complete coverage. Retain that same actual
+parent/current through semantic evaluation, SQL staging and whole-batch
+inspection. Changing SQL or the retained source request must refuse before a
+replacement parent or semantic child is constructed. Equal report bytes do not
+supply object continuity.
+
+Exercise actual registered source capture without provider substitution, preserve
+original opaque UTF8 and consumer selection, and compare native row incidence to
+logical endpoint Keys. Repeat closing observation with the retained context;
+mutate an edge version or other dependency in the caller transaction and require
+refusal, then restore and require equality. Keep any earlier diagnostic setup
+separate from this registered-source evidence. Source archival and same-context
+population correspondence still do not authenticate the Subject or establish a
+continuous native authority issuer or guarded public release.
