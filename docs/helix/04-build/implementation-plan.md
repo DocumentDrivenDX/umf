@@ -12708,3 +12708,8 @@ file/Spark, source-recovery and browser checks pass. The conformance hash test
 needed an explicit30-second budget; refreshed qualification/conformance and
 verify-only pass after that test-only adjustment. See
 [evidence and retained retry](evidence/uuid-adapter-completion.md).
+
+
+### Typed SDK original Truss pages — 2026-10-16
+
+[Original page custody and native evidence](evidence/typed-persistence/engine-pages-native-20261016/README.md) adds complete owner page programs, native opaque/typed cursor agreement and real generated page calls. Installed Truss14 controls pass on both pinned interpreters; full SDK native replays/126 units each, Rust6, Chromium32 and all three pinned positive/24-negative reporting checkers pass. Compiler source remains an explicitly unpublished combined preview; published compiler/default recapture, protected action/manifest bulk and remaining backend gates stay open. Truss's RC-only read authority does not qualify snapshot streams. B-TP-003 remains OPEN and temporal qualification HELD.

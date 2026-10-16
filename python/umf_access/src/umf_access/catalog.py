@@ -142,7 +142,7 @@ class ReadPlan:
                 raise StaleContinuation(
                     "continuation Key differs from its complete sort context"
                 )
-            after = ReadContinuation(after.sort_values, after.identity_digest)
+            after = ReadContinuation(after.sort_values, after.identity_digest, after.owner_cursor)
         presence = tuple(
             a.name
             for a in self.arguments
@@ -218,7 +218,7 @@ def _page(plan: ReadPlan, page: ReadPage[Any]) -> Page[Any, Any]:
             strict=True,
         )
         after = Continuation(
-            key, cast(tuple[SortValue, ...], original.values), original.identity_digest
+            key, cast(tuple[SortValue, ...], original.values), original.identity_digest, original.owner_cursor
         )
     return Page(tuple(_row(plan, row) for row in page.items), after)
 
