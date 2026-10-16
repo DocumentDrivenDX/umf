@@ -30,3 +30,11 @@ from .capture import (
 )
 
 RUNTIME_ABI = "umf-access-runtime/0.1"
+
+from .dsl import Join as Join, Joined as Joined, JoinProjection as JoinProjection
+from .reviewed import (
+    ReviewedSQL as ReviewedSQL,
+    CatalogRead as CatalogRead,
+    ReadBuildError as ReadBuildError,
+    build_query as build_query,
+)

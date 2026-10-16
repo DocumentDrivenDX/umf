@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "umf_access"
 version = "0.1.0.dev0"
 description = "Local prerelease typed access runtime; target qualification pending"
-requires-python = "==3.14.8"
+requires-python = ">=3.11,<3.15"
 dependencies = ["pydantic==2.14.1"]
 
 [tool.hatch.build.targets.wheel]

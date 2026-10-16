@@ -126,7 +126,7 @@ def validate_length(value: T, *, minimum: int | None = None,
     """Length for resolved string/bytes/array/map constraints; no coercion."""
     if type(value) not in (str, bytes, tuple, list, dict):
         raise ValueRuleError("length requires a supported carrier")
-    size = len(value)  # type: ignore[arg-type]
+    size = len(cast(str | bytes | tuple[object, ...] | list[object] | dict[object, object], value))
     if ((minimum is not None and size < minimum)
             or (maximum is not None and size > maximum)):
         raise ValueRuleError("length outside authored bounds")
@@ -159,7 +159,7 @@ def validate_allowed(value: T, allowed: tuple[T, ...]) -> T:
 def validate_vector(value: object, *, dimensions: int) -> Vector:
     if type(dimensions) is not int or dimensions < 1 or type(value) is not tuple:
         raise ValueRuleError("vector dimension or carrier mismatch")
-    items = cast(tuple[object, ...], value)
+    items = value
     if len(items) != dimensions:
         raise ValueRuleError("vector dimension or carrier mismatch")
     for item in items:

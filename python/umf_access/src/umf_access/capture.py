@@ -10,7 +10,7 @@ from types import UnionType
 from typing import Any, Callable, Union, cast, get_args, get_origin, get_type_hints
 from pydantic import BaseModel, MISSING
 
-from .dsl import Param, Terminal
+from .dsl import Join, Param, Terminal
 from .types import ActionRef, ActionSource
 from .dsl._context import CURRENT, CaptureContext, CaptureError as CaptureError
 from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, key_identity, ProjectionRef as ProjectionRef
@@ -114,6 +114,14 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
     if not node.args or not isinstance(node.args[0], RecordRef):
         raise CaptureError("CAPTURE_UNSUPPORTED", "terminal has no record identity")
     record = node.args[0]
+    steps = cast(tuple[Node, ...], node.args[1])
+    owners = {(record.module, record.element)}
+    for step in steps:
+        if step.op == "join":
+            relation = cast(Join[Any, Any, Any], step.args[0])
+            if (relation.ref.module, relation.ref.element) not in owners:
+                raise CaptureError("CAPTURE_UNSUPPORTED", "join source is absent")
+            owners.add((relation.target.module, relation.target.element))
     parameter_map = {p.name: p for p in parameters}
     temporal_parameters: dict[str, str] = {}
 
@@ -124,8 +132,10 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
 
     def visit(value: object) -> None:
         if isinstance(value, FieldRef):
-            if (value.module, value.element) != (record.module, record.element):
+            if (value.module, value.element) not in owners:
                 raise TypeError("expression column belongs to another Record")
+        elif isinstance(value, Join):
+            visit(value.ref)
         elif isinstance(value, Node):
             if value.op in ("param", "key_param"):
                 name = cast(str, value.args[0])
@@ -222,4 +232,4 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
         if not isinstance(reference, ActionRef):
             raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
         action = reference.source
-    return CapturedDeclaration(function.__name__, kind, parameters, tuple(variants), action)
+    return CapturedDeclaration(cast(str, getattr(function, "__name__")), kind, parameters, tuple(variants), action)

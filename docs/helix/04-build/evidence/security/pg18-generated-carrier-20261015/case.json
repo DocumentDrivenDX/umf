@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.P05",
   "backend": "pg-raw",
-  "runId": "9ba73c88-3120-4863-8b5b-44e6f3457ac4",
+  "runId": "2c6239da-55d7-453a-b356-1b4231c39678",
   "command": [
     "python3",
     "tests/security/native/pg18-generated-carrier.py"
@@ -16,7 +16,7 @@
   },
   "sourceDigests": {
     "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
-    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "package.json": "1ae9f7bd1b5657d8f1a984dbca681edca0d55c11b6ab34fc791ccb1a88e0136b",
     "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
     "spec/core/extension-package.schema.json": "fe26a341e31ee0ef9433411122dbb43c5c809037bc96e277ec046b145221e794",
     "spec/core/facet-document.schema.json": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
@@ -4721,7 +4721,7 @@
     ],
     "installedSourceInventory": {
       "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
-      "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+      "package.json": "1ae9f7bd1b5657d8f1a984dbca681edca0d55c11b6ab34fc791ccb1a88e0136b",
       "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
       "spec/core/extension-package.schema.json": "fe26a341e31ee0ef9433411122dbb43c5c809037bc96e277ec046b145221e794",
       "spec/core/facet-document.schema.json": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
@@ -5330,7 +5330,7 @@
       "containerAbsent": true,
       "volumesAbsent": true
     },
-    "digest": "d70f814d1325329c4a65ebab00f41e63d45a02181b49c1a1373cb148f3ba461e"
+    "digest": "6f9e94fb1330f69ca828b2f0f273addc2883406fb982bda7b116d66045a3537d"
   },
   "requests": [
     {

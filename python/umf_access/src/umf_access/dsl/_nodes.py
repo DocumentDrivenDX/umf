@@ -56,6 +56,7 @@ class ProjectionRef:
     module: str
     name: str
     fields: tuple[FieldRef, ...]
+    names: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)

@@ -8,7 +8,7 @@ from typing import Any, Generic, TypeVar, cast, overload
 from pydantic import BaseModel, MISSING
 
 from ._context import CaptureError, require_capture
-from ._nodes import FieldRef, Node, literal
+from ._nodes import FieldRef, Node, RecordRef, literal
 
 O = TypeVar("O")
 T = TypeVar("T")
@@ -98,10 +98,12 @@ class Column(Generic[O, T]):
             raise CaptureError("CAPTURE_UNSUPPORTED", "instant/local comparison cannot preserve meaning")
         return Predicate(Node(op, (Node("column", (self.ref,)), right)))
 
-    def __eq__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:  # type: ignore[override]
+    # Symbolic equality intentionally replaces object’s bool result. The narrow
+    # operand/result types remain active in caller checks (including misuse).
+    def __eq__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
         return self._cmp("=", other)
 
-    def __ne__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:  # type: ignore[override]
+    def __ne__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
         return self._cmp("<>", other)
 
     def __lt__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:
@@ -210,3 +212,17 @@ def or_(*predicates: Predicate[O]) -> Predicate[O]:
 
 def not_(predicate: Predicate[O]) -> Predicate[O]:
     return ~predicate
+
+
+J = TypeVar("J")
+
+
+@dataclass(frozen=True)
+class Join(Related[O, K], Generic[O, J, K]):
+    target: RecordRef
+    optional: bool = False
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if not isinstance(self.target, RecordRef) or type(self.optional) is not bool:
+            raise TypeError("join requires generated target metadata")
