@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24171,
+        "line": 24,
+        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+        "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipLayoutPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipLayoutPolicy {profile:'sqlserver-relationship-layout-1';targetVersion:string;fieldLayouts:SqlServerLayoutField[];keyLayouts:SqlServerLayoutKey[];relationshipLayouts:SqlServerRelationshipLayout[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipLayoutPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24171,
+      "line": 24,
+      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+      "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/relationship-layout.ts",
+  "title": "SqlServerRelationshipLayoutPolicy"
+}

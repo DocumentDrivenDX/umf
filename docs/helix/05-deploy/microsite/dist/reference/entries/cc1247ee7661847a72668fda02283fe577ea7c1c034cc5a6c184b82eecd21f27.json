@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6436,
+        "line": 9,
+        "path": "src/extensions/security/protection/catalog.ts",
+        "sha256": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "protectionPackage",
+    "runtime": "unassessed",
+    "signatureText": [
+      "protectionPackage=copyJson(manifest) as unknown as ExtensionPackage"
+    ]
+  },
+  "id": "[\"api\",\".\",\"protectionPackage\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6436,
+      "line": 9,
+      "path": "src/extensions/security/protection/catalog.ts",
+      "sha256": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/protection/catalog.ts",
+  "title": "protectionPackage"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4810,
+        "line": 30,
+        "path": "src/adapters/postgresql/key-catalog.ts",
+        "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectPostgresqlKeyCatalog",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string): { root: NativeJson; nativeSource: string; serverVersion: 170004; encoding: \"UTF8\"; query: string; indexes: PostgresqlKeyIndex[]; provenance: \"unverified\"; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectPostgresqlKeyCatalog\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4810,
+      "line": 30,
+      "path": "src/adapters/postgresql/key-catalog.ts",
+      "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+    }
+  ],
+  "summary": "Validate observations without inferring authored keys, equivalent equality or trusted provenance.",
+  "title": "inspectPostgresqlKeyCatalog"
+}

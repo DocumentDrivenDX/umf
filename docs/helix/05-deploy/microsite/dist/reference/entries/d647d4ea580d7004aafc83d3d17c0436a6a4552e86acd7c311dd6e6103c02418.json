@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10045,
+        "line": 17,
+        "path": "src/core-ideals/relationship-sqlserver.ts",
+        "sha256": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifySqlServerRelationships",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: SqlServerRelationshipRequest): SqlServerRelationshipClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifySqlServerRelationships\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10045,
+      "line": 17,
+      "path": "src/core-ideals/relationship-sqlserver.ts",
+      "sha256": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385"
+    }
+  ],
+  "summary": "Permission-limited catalog observations; trust flags never establish authored relationship meaning.",
+  "title": "classifySqlServerRelationships"
+}

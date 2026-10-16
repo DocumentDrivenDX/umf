@@ -1,0 +1,169 @@
+{
+  "data": {
+    "extensionId": "umf.tablespec.keys",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/key-tablespec.test.ts",
+          "tests/core-ideals/key-tablespec-projection.test.ts",
+          "spec/core/key-tablespec-projection.schema.json",
+          "fixtures/validation/key-tablespec-discovery-native.json",
+          "fixtures/validation/key-tablespec-projection-native.json"
+        ],
+        "native": {
+          "subset": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference",
+          "system": "TableSpec",
+          "version": "647e8e566ad78b864282ec65c0b0b2237aa63084"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "TableSpec key observations and authored declaration projection with explicit residuals",
+      "id": "umf.tablespec.keys",
+      "schema": {
+        "$id": "urn:umf:tablespec:key-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.tablespec.keys",
+              "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+              "subset": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference",
+              "version": "1.0.0"
+            }
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "columns": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "enforcement": {
+                  "const": "unknown"
+                },
+                "interpretation": {
+                  "enum": [
+                    "declared",
+                    "unknown",
+                    "unsupported"
+                  ]
+                },
+                "kind": {
+                  "enum": [
+                    "primary",
+                    "alternate"
+                  ]
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "resolvedFields": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "element": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "module": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "state": {
+                  "enum": [
+                    "absent",
+                    "empty",
+                    "declared",
+                    "invalid"
+                  ]
+                }
+              },
+              "required": [
+                "nativePath",
+                "kind",
+                "state",
+                "interpretation",
+                "columns",
+                "resolvedFields",
+                "enforcement",
+                "authorIntent",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "const": "declared-metadata"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "observations"
+        ],
+        "title": "TableSpec native key observations; not authored identity",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-040 and TD-044; native declarations and explicit authored projection with retained recovery. Qualified TableSpec binding acceptance is recorded separately; Key ideal admission and native equivalence are not claimed.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/tablespec-keys/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.tablespec.keys\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/tablespec-keys/schema.json\",\"\"]",
+    "[\"integration\",\"umf.tablespec.keys@1.0.0:import\"]",
+    "[\"integration\",\"umf.tablespec.keys@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4132,
+      "path": "spec/extensions/tablespec-keys/package.json",
+      "sha256": "dc1a4e7d2e7a10056c234e7a33a743ee3123beea498aa15a96d1399a1db398c3"
+    }
+  ],
+  "summary": "TableSpec key observations and authored declaration projection with explicit residuals",
+  "title": "umf.tablespec.keys · 1.0.0"
+}

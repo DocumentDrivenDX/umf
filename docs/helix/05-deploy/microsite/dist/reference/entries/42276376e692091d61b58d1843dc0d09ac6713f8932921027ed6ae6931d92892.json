@@ -1,0 +1,197 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/manifest.schema.json\",\"\"]",
+        "target": "urn:umf:actions:manifest:1"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/manifest.schema.json\",\"\"]",
+        "target": "urn:umf:actions:manifest:1#/$defs/artifact"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan-inspection.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan-inspection:1"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/diagnostic"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/actions/manifest-inspection.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:actions:manifest-inspection:1"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "urn:umf:actions:plan:1#/$defs/diagnostic"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "128"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "eligible": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "boolean"
+                }
+              }
+            },
+            "manifest": {
+              "kind": "object",
+              "members": {
+                "anyOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:manifest:1"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "null"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "plan": {
+              "kind": "object",
+              "members": {
+                "anyOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan-inspection:1"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "null"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:manifest:1#/$defs/artifact"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "manifest"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "plan"
+            },
+            {
+              "kind": "string",
+              "value": "eligible"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/actions/manifest-inspection.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/extensions/actions/manifest.schema.json\",\"\"]",
+    "[\"schema\",\"spec/extensions/actions/plan-inspection.schema.json\",\"\"]",
+    "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 924,
+      "path": "spec/extensions/actions/manifest-inspection.schema.json",
+      "sha256": "f450cde6a0d81aed79a95454d8cdd7aaec5cee712ee571f50423cb01d0f27cf2"
+    }
+  ],
+  "summary": "spec/extensions/actions/manifest-inspection.schema.json",
+  "title": "manifest-inspection.schema.json"
+}

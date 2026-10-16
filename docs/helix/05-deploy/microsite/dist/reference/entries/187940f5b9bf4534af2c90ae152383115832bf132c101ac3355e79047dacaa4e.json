@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7634,
+        "line": 47,
+        "path": "src/core-ideals/avro-record.ts",
+        "sha256": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverAvroRecordBundle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: AvroRecordClassification, current: Document): { schema: string; dependencies: { id: string; schema: string; }[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverAvroRecordBundle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7634,
+      "line": 47,
+      "path": "src/core-ideals/avro-record.ts",
+      "sha256": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/avro-record.ts",
+  "title": "recoverAvroRecordBundle"
+}

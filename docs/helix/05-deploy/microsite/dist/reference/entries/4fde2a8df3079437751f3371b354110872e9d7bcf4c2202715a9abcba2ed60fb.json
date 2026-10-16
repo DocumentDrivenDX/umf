@@ -1,0 +1,193 @@
+{
+  "data": {
+    "extensionId": "umf.odcs",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/odcs/odcs.test.ts",
+          "fixtures/odcs/oracle-results.json",
+          "fixtures/odcs/browser-results.json",
+          "tests/odcs/references.test.ts",
+          "tests/odcs/relationships.test.ts",
+          "tests/odcs/rename.test.ts",
+          "fixtures/odcs/rename/oracle-results.json",
+          "fixtures/odcs/rename/browser-results.json"
+        ],
+        "native": {
+          "subset": "JSON/YAML preservation and native shapes; local v3.2.0 reference/relationship checks and ID-selected rename candidates; no external resolution, quality/SLA execution or physical lowering",
+          "system": "Open Data Contract Standard",
+          "version": "3.0.0/3.0.1/3.0.2/3.1.0/3.2.0 schemas at f0bdad95346905d500be5ef4b2c2d9b1d95223b7"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "ODCS source contracts, native schema shapes and copied candidates",
+      "id": "umf.odcs",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:odcs:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "originalFormat": {
+            "enum": [
+              "json",
+              "yaml"
+            ]
+          },
+          "originalSource": {
+            "maxLength": 4000000,
+            "type": "string"
+          },
+          "profile": {
+            "const": "odcs-json-yaml"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root",
+          "originalSource",
+          "originalFormat"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-023; preserve exact source and unknown values; native shape validity does not enforce a data contract",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"odcsRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/odcs/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.odcs\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"odcsRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/odcs/schema.json\",\"\"]",
+    "[\"integration\",\"umf.odcs@0.1.0:import\"]",
+    "[\"integration\",\"umf.odcs@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4007,
+      "path": "spec/extensions/odcs/package.json",
+      "sha256": "7df669639285b24657b6b67b96e0353c0d4686fdd0e8bad2b914645f2c283f56"
+    }
+  ],
+  "summary": "ODCS source contracts, native schema shapes and copied candidates",
+  "title": "umf.odcs · 0.1.0"
+}

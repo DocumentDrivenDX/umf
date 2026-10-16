@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5627,
+        "line": 11,
+        "path": "src/core-ideals/record-report.ts",
+        "sha256": "31175fbce46d5055a713e75cada1e30d1a0b9ea5ec0c2f5d26ae0ec24527a486"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectRecordProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: AuthoredRecordProjection, backend?: PostgresqlBackend | undefined): Promise<RecordProjectionInspection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectRecordProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5627,
+      "line": 11,
+      "path": "src/core-ideals/record-report.ts",
+      "sha256": "31175fbce46d5055a713e75cada1e30d1a0b9ea5ec0c2f5d26ae0ec24527a486"
+    }
+  ],
+  "summary": "Recompute a native-specific receipt before exposing common consumer metadata.",
+  "title": "inspectRecordProjection"
+}

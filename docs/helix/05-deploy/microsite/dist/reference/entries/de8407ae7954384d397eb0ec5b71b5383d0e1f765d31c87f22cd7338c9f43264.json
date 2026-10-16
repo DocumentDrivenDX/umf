@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2470,
+        "line": 23,
+        "path": "src/extensions/security/types.ts",
+        "sha256": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityQueryUse",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type SecurityQueryUse = 'disclosed'|'original-authorized'|'prohibited';"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityQueryUse\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2470,
+      "line": 23,
+      "path": "src/extensions/security/types.ts",
+      "sha256": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/types.ts",
+  "title": "SecurityQueryUse"
+}

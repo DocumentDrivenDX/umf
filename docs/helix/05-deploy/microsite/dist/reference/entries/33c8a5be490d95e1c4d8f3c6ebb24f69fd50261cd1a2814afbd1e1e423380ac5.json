@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6383,
+        "line": 38,
+        "path": "src/core-ideals/avro-field.ts",
+        "sha256": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverAvroFieldBundle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: AvroFieldClassification, current: Document): { schema: string; dependencies: { id: string; schema: string; }[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverAvroFieldBundle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6383,
+      "line": 38,
+      "path": "src/core-ideals/avro-field.ts",
+      "sha256": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/avro-field.ts",
+  "title": "recoverAvroFieldBundle"
+}

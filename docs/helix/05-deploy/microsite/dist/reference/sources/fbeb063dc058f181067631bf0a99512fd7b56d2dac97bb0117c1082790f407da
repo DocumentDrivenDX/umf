@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:ddd-postgresql-policy:1.0.0",
+  "title": "Complete DDD PostgreSQL 17.4 generation policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "version",
+    "targetVersion",
+    "mode",
+    "objectCheckNaming",
+    "tablePolicy",
+    "layoutPolicy"
+  ],
+  "properties": {
+    "profile": {
+      "const": "ddd-postgresql-1"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "targetVersion": {
+      "const": "17.4"
+    },
+    "mode": {
+      "enum": [
+        "strict",
+        "report"
+      ]
+    },
+    "objectCheckNaming": {
+      "const": "ck-table-column-object-v1"
+    },
+    "tablePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fieldTypes",
+        "partitionFamilies"
+      ],
+      "properties": {
+        "fieldTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module",
+              "element",
+              "field",
+              "sqlType"
+            ],
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "field": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sqlType": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "partitionFamilies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "column",
+              "defaultTable"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "column": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultTable": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "layoutPolicy": {
+      "$ref": "urn:umf:postgresql:relationship-layout:1.0.0"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14243,
+        "line": 77,
+        "path": "src/adapters/sqlserver/index.ts",
+        "sha256": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getSqlServerConstraintMetadata",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): SqlServerConstraintMetadata"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getSqlServerConstraintMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14243,
+      "line": 77,
+      "path": "src/adapters/sqlserver/index.ts",
+      "sha256": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40"
+    }
+  ],
+  "summary": "Missing observations are distinct from empty, permission-limited catalog results.",
+  "title": "getSqlServerConstraintMetadata"
+}

@@ -1,0 +1,3409 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:schema-inspection:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "checked",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "wire": {
+      "$ref": "#/$defs/wireValue"
+    },
+    "metadata": {
+      "$ref": "#/$defs/FileMetaData"
+    },
+    "tree": {
+      "$ref": "#/$defs/schemaNode"
+    },
+    "leaves": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "ordinal": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "physicalType": {
+            "enum": [
+              "BOOLEAN",
+              "INT32",
+              "INT64",
+              "INT96",
+              "FLOAT",
+              "DOUBLE",
+              "BYTE_ARRAY",
+              "FIXED_LEN_BYTE_ARRAY"
+            ]
+          },
+          "definitionLevel": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "repetitionLevel": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "index",
+          "ordinal",
+          "path",
+          "physicalType",
+          "definitionLevel",
+          "repetitionLevel"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "diagnostics"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "wireValue": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "bool"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "i8",
+                "i16",
+                "i32",
+                "i64"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^(0|-?[1-9][0-9]*)$"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "double"
+            },
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "kind",
+            "bits"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "binary"
+            },
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "kind",
+            "hex"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "uuid"
+            },
+            "hex": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "required": [
+            "kind",
+            "hex"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "list",
+                "set"
+              ]
+            },
+            "elementType": {
+              "enum": [
+                "bool",
+                "i8",
+                "i16",
+                "i32",
+                "i64",
+                "double",
+                "binary",
+                "list",
+                "set",
+                "map",
+                "struct",
+                "uuid"
+              ]
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/wireValue"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "elementType",
+            "items"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "map"
+            },
+            "keyType": {
+              "enum": [
+                "bool",
+                "i8",
+                "i16",
+                "i32",
+                "i64",
+                "double",
+                "binary",
+                "list",
+                "set",
+                "map",
+                "struct",
+                "uuid"
+              ]
+            },
+            "valueType": {
+              "enum": [
+                "bool",
+                "i8",
+                "i16",
+                "i32",
+                "i64",
+                "double",
+                "binary",
+                "list",
+                "set",
+                "map",
+                "struct",
+                "uuid"
+              ]
+            },
+            "entries": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "$ref": "#/$defs/wireValue"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/wireValue"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "entries"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "struct"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "minimum": -32768,
+                    "maximum": 32767
+                  },
+                  "value": {
+                    "$ref": "#/$defs/wireValue"
+                  }
+                },
+                "required": [
+                  "id",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "fields"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Type": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"BOOLEAN\":0,\"INT32\":1,\"INT64\":2,\"INT96\":3,\"FLOAT\":4,\"DOUBLE\":5,\"BYTE_ARRAY\":6,\"FIXED_LEN_BYTE_ARRAY\":7}"
+    },
+    "ConvertedType": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"UTF8\":0,\"MAP\":1,\"MAP_KEY_VALUE\":2,\"LIST\":3,\"ENUM\":4,\"DECIMAL\":5,\"DATE\":6,\"TIME_MILLIS\":7,\"TIME_MICROS\":8,\"TIMESTAMP_MILLIS\":9,\"TIMESTAMP_MICROS\":10,\"UINT_8\":11,\"UINT_16\":12,\"UINT_32\":13,\"UINT_64\":14,\"INT_8\":15,\"INT_16\":16,\"INT_32\":17,\"INT_64\":18,\"JSON\":19,\"BSON\":20,\"INTERVAL\":21}"
+    },
+    "FieldRepetitionType": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"REQUIRED\":0,\"OPTIONAL\":1,\"REPEATED\":2}"
+    },
+    "SizeStatistics": {
+      "type": "object",
+      "properties": {
+        "unencoded_byte_array_data_bytes": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "repetition_level_histogram": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 2"
+        },
+        "definition_level_histogram": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct SizeStatistics from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "BoundingBox": {
+      "type": "object",
+      "properties": {
+        "xmin": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 1"
+        },
+        "xmax": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 2"
+        },
+        "ymin": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 3"
+        },
+        "ymax": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 4"
+        },
+        "zmin": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 5"
+        },
+        "zmax": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 6"
+        },
+        "mmin": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 7"
+        },
+        "mmax": {
+          "type": "object",
+          "properties": {
+            "bits": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "bits"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 8"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "xmin",
+        "xmax",
+        "ymin",
+        "ymax"
+      ],
+      "additionalProperties": false,
+      "description": "struct BoundingBox from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "GeospatialStatistics": {
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "$ref": "#/$defs/BoundingBox",
+          "$comment": "Thrift field 1"
+        },
+        "geospatial_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i32 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct GeospatialStatistics from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "Statistics": {
+      "type": "object",
+      "properties": {
+        "max": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 1"
+        },
+        "min": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 2"
+        },
+        "null_count": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "distinct_count": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 4"
+        },
+        "max_value": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 5"
+        },
+        "min_value": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 6"
+        },
+        "is_max_value_exact": {
+          "type": "boolean",
+          "$comment": "Thrift field 7"
+        },
+        "is_min_value_exact": {
+          "type": "boolean",
+          "$comment": "Thrift field 8"
+        },
+        "nan_count": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 9"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct Statistics from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "StringType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct StringType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "UUIDType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct UUIDType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "MapType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct MapType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "ListType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct ListType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "EnumType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct EnumType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "DateType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct DateType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "Float16Type": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct Float16Type from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "NullType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct NullType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "DecimalType": {
+      "type": "object",
+      "properties": {
+        "scale": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "precision": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "scale",
+        "precision"
+      ],
+      "additionalProperties": false,
+      "description": "struct DecimalType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "MilliSeconds": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct MilliSeconds from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "MicroSeconds": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct MicroSeconds from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "NanoSeconds": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct NanoSeconds from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "TimeUnit": {
+      "type": "object",
+      "properties": {
+        "MILLIS": {
+          "$ref": "#/$defs/MilliSeconds",
+          "$comment": "Thrift field 1"
+        },
+        "MICROS": {
+          "$ref": "#/$defs/MicroSeconds",
+          "$comment": "Thrift field 2"
+        },
+        "NANOS": {
+          "$ref": "#/$defs/NanoSeconds",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union TimeUnit from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "TimestampType": {
+      "type": "object",
+      "properties": {
+        "isAdjustedToUTC": {
+          "type": "boolean",
+          "$comment": "Thrift field 1"
+        },
+        "unit": {
+          "$ref": "#/$defs/TimeUnit",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "isAdjustedToUTC",
+        "unit"
+      ],
+      "additionalProperties": false,
+      "description": "struct TimestampType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "TimeType": {
+      "type": "object",
+      "properties": {
+        "isAdjustedToUTC": {
+          "type": "boolean",
+          "$comment": "Thrift field 1"
+        },
+        "unit": {
+          "$ref": "#/$defs/TimeUnit",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "isAdjustedToUTC",
+        "unit"
+      ],
+      "additionalProperties": false,
+      "description": "struct TimeType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "IntType": {
+      "type": "object",
+      "properties": {
+        "bitWidth": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i8 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "isSigned": {
+          "type": "boolean",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "bitWidth",
+        "isSigned"
+      ],
+      "additionalProperties": false,
+      "description": "struct IntType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "JsonType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct JsonType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "BsonType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct BsonType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "VariantType": {
+      "type": "object",
+      "properties": {
+        "specification_version": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i8 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct VariantType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "EdgeInterpolationAlgorithm": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"SPHERICAL\":0,\"VINCENTY\":1,\"THOMAS\":2,\"ANDOYER\":3,\"KARNEY\":4}"
+    },
+    "GeometryType": {
+      "type": "object",
+      "properties": {
+        "crs": {
+          "type": "string",
+          "$comment": "Thrift field 1"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct GeometryType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "GeographyType": {
+      "type": "object",
+      "properties": {
+        "crs": {
+          "type": "string",
+          "$comment": "Thrift field 1"
+        },
+        "algorithm": {
+          "$ref": "#/$defs/EdgeInterpolationAlgorithm",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct GeographyType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "FileType": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct FileType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "LogicalType": {
+      "type": "object",
+      "properties": {
+        "STRING": {
+          "$ref": "#/$defs/StringType",
+          "$comment": "Thrift field 1"
+        },
+        "MAP": {
+          "$ref": "#/$defs/MapType",
+          "$comment": "Thrift field 2"
+        },
+        "LIST": {
+          "$ref": "#/$defs/ListType",
+          "$comment": "Thrift field 3"
+        },
+        "ENUM": {
+          "$ref": "#/$defs/EnumType",
+          "$comment": "Thrift field 4"
+        },
+        "DECIMAL": {
+          "$ref": "#/$defs/DecimalType",
+          "$comment": "Thrift field 5"
+        },
+        "DATE": {
+          "$ref": "#/$defs/DateType",
+          "$comment": "Thrift field 6"
+        },
+        "TIME": {
+          "$ref": "#/$defs/TimeType",
+          "$comment": "Thrift field 7"
+        },
+        "TIMESTAMP": {
+          "$ref": "#/$defs/TimestampType",
+          "$comment": "Thrift field 8"
+        },
+        "INTEGER": {
+          "$ref": "#/$defs/IntType",
+          "$comment": "Thrift field 10"
+        },
+        "UNKNOWN": {
+          "$ref": "#/$defs/NullType",
+          "$comment": "Thrift field 11"
+        },
+        "JSON": {
+          "$ref": "#/$defs/JsonType",
+          "$comment": "Thrift field 12"
+        },
+        "BSON": {
+          "$ref": "#/$defs/BsonType",
+          "$comment": "Thrift field 13"
+        },
+        "UUID": {
+          "$ref": "#/$defs/UUIDType",
+          "$comment": "Thrift field 14"
+        },
+        "FLOAT16": {
+          "$ref": "#/$defs/Float16Type",
+          "$comment": "Thrift field 15"
+        },
+        "VARIANT": {
+          "$ref": "#/$defs/VariantType",
+          "$comment": "Thrift field 16"
+        },
+        "GEOMETRY": {
+          "$ref": "#/$defs/GeometryType",
+          "$comment": "Thrift field 17"
+        },
+        "GEOGRAPHY": {
+          "$ref": "#/$defs/GeographyType",
+          "$comment": "Thrift field 18"
+        },
+        "FILE": {
+          "$ref": "#/$defs/FileType",
+          "$comment": "Thrift field 19"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union LogicalType from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "SchemaElement": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/Type",
+          "$comment": "Thrift field 1"
+        },
+        "type_length": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2"
+        },
+        "repetition_type": {
+          "$ref": "#/$defs/FieldRepetitionType",
+          "$comment": "Thrift field 3"
+        },
+        "name": {
+          "type": "string",
+          "$comment": "Thrift field 4"
+        },
+        "num_children": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 5"
+        },
+        "converted_type": {
+          "$ref": "#/$defs/ConvertedType",
+          "$comment": "Thrift field 6"
+        },
+        "scale": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 7"
+        },
+        "precision": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 8"
+        },
+        "field_id": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 9"
+        },
+        "logicalType": {
+          "$ref": "#/$defs/LogicalType",
+          "$comment": "Thrift field 10"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "struct SchemaElement from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "Encoding": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"PLAIN\":0,\"PLAIN_DICTIONARY\":2,\"RLE\":3,\"BIT_PACKED\":4,\"DELTA_BINARY_PACKED\":5,\"DELTA_LENGTH_BYTE_ARRAY\":6,\"DELTA_BYTE_ARRAY\":7,\"RLE_DICTIONARY\":8,\"BYTE_STREAM_SPLIT\":9,\"ALP\":10}"
+    },
+    "CompressionCodec": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"UNCOMPRESSED\":0,\"SNAPPY\":1,\"GZIP\":2,\"LZO\":3,\"BROTLI\":4,\"LZ4\":5,\"ZSTD\":6,\"LZ4_RAW\":7}"
+    },
+    "PageType": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"DATA_PAGE\":0,\"INDEX_PAGE\":1,\"DICTIONARY_PAGE\":2,\"DATA_PAGE_V2\":3}"
+    },
+    "BoundaryOrder": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$",
+      "description": "Signed i32 enumeration; unknown numeric values are retained. Known values: {\"UNORDERED\":0,\"ASCENDING\":1,\"DESCENDING\":2}"
+    },
+    "DataPageHeader": {
+      "type": "object",
+      "properties": {
+        "num_values": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "encoding": {
+          "$ref": "#/$defs/Encoding",
+          "$comment": "Thrift field 2"
+        },
+        "definition_level_encoding": {
+          "$ref": "#/$defs/Encoding",
+          "$comment": "Thrift field 3"
+        },
+        "repetition_level_encoding": {
+          "$ref": "#/$defs/Encoding",
+          "$comment": "Thrift field 4"
+        },
+        "statistics": {
+          "$ref": "#/$defs/Statistics",
+          "$comment": "Thrift field 5"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "num_values",
+        "encoding",
+        "definition_level_encoding",
+        "repetition_level_encoding"
+      ],
+      "additionalProperties": false,
+      "description": "struct DataPageHeader from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "IndexPageHeader": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct IndexPageHeader from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "DictionaryPageHeader": {
+      "type": "object",
+      "properties": {
+        "num_values": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "encoding": {
+          "$ref": "#/$defs/Encoding",
+          "$comment": "Thrift field 2"
+        },
+        "is_sorted": {
+          "type": "boolean",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "num_values",
+        "encoding"
+      ],
+      "additionalProperties": false,
+      "description": "struct DictionaryPageHeader from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "DataPageHeaderV2": {
+      "type": "object",
+      "properties": {
+        "num_values": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "num_nulls": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2"
+        },
+        "num_rows": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "encoding": {
+          "$ref": "#/$defs/Encoding",
+          "$comment": "Thrift field 4"
+        },
+        "definition_levels_byte_length": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 5"
+        },
+        "repetition_levels_byte_length": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 6"
+        },
+        "is_compressed": {
+          "type": "boolean",
+          "$comment": "Thrift field 7 has effective default true; absence is preserved"
+        },
+        "statistics": {
+          "$ref": "#/$defs/Statistics",
+          "$comment": "Thrift field 8"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "num_values",
+        "num_nulls",
+        "num_rows",
+        "encoding",
+        "definition_levels_byte_length",
+        "repetition_levels_byte_length"
+      ],
+      "additionalProperties": false,
+      "description": "struct DataPageHeaderV2 from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "SplitBlockAlgorithm": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct SplitBlockAlgorithm from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "BloomFilterAlgorithm": {
+      "type": "object",
+      "properties": {
+        "BLOCK": {
+          "$ref": "#/$defs/SplitBlockAlgorithm",
+          "$comment": "Thrift field 1"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union BloomFilterAlgorithm from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "XxHash": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct XxHash from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "BloomFilterHash": {
+      "type": "object",
+      "properties": {
+        "XXHASH": {
+          "$ref": "#/$defs/XxHash",
+          "$comment": "Thrift field 1"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union BloomFilterHash from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "Uncompressed": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct Uncompressed from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "BloomFilterCompression": {
+      "type": "object",
+      "properties": {
+        "UNCOMPRESSED": {
+          "$ref": "#/$defs/Uncompressed",
+          "$comment": "Thrift field 1"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union BloomFilterCompression from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "BloomFilterHeader": {
+      "type": "object",
+      "properties": {
+        "numBytes": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "algorithm": {
+          "$ref": "#/$defs/BloomFilterAlgorithm",
+          "$comment": "Thrift field 2"
+        },
+        "hash": {
+          "$ref": "#/$defs/BloomFilterHash",
+          "$comment": "Thrift field 3"
+        },
+        "compression": {
+          "$ref": "#/$defs/BloomFilterCompression",
+          "$comment": "Thrift field 4"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "numBytes",
+        "algorithm",
+        "hash",
+        "compression"
+      ],
+      "additionalProperties": false,
+      "description": "struct BloomFilterHeader from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "PageHeader": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/PageType",
+          "$comment": "Thrift field 1"
+        },
+        "uncompressed_page_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2"
+        },
+        "compressed_page_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "crc": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 4"
+        },
+        "data_page_header": {
+          "$ref": "#/$defs/DataPageHeader",
+          "$comment": "Thrift field 5"
+        },
+        "index_page_header": {
+          "$ref": "#/$defs/IndexPageHeader",
+          "$comment": "Thrift field 6"
+        },
+        "dictionary_page_header": {
+          "$ref": "#/$defs/DictionaryPageHeader",
+          "$comment": "Thrift field 7"
+        },
+        "data_page_header_v2": {
+          "$ref": "#/$defs/DataPageHeaderV2",
+          "$comment": "Thrift field 8"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "type",
+        "uncompressed_page_size",
+        "compressed_page_size"
+      ],
+      "additionalProperties": false,
+      "description": "struct PageHeader from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "KeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "$comment": "Thrift field 1"
+        },
+        "value": {
+          "type": "string",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "additionalProperties": false,
+      "description": "struct KeyValue from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "SortingColumn": {
+      "type": "object",
+      "properties": {
+        "column_idx": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "descending": {
+          "type": "boolean",
+          "$comment": "Thrift field 2"
+        },
+        "nulls_first": {
+          "type": "boolean",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "column_idx",
+        "descending",
+        "nulls_first"
+      ],
+      "additionalProperties": false,
+      "description": "struct SortingColumn from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "PageEncodingStats": {
+      "type": "object",
+      "properties": {
+        "page_type": {
+          "$ref": "#/$defs/PageType",
+          "$comment": "Thrift field 1"
+        },
+        "encoding": {
+          "$ref": "#/$defs/Encoding",
+          "$comment": "Thrift field 2"
+        },
+        "count": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "page_type",
+        "encoding",
+        "count"
+      ],
+      "additionalProperties": false,
+      "description": "struct PageEncodingStats from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "ColumnMetaData": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/Type",
+          "$comment": "Thrift field 1"
+        },
+        "encodings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Encoding"
+          },
+          "$comment": "Thrift field 2"
+        },
+        "path_in_schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "$comment": "Thrift field 3"
+        },
+        "codec": {
+          "$ref": "#/$defs/CompressionCodec",
+          "$comment": "Thrift field 4"
+        },
+        "num_values": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 5"
+        },
+        "total_uncompressed_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 6"
+        },
+        "total_compressed_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 7"
+        },
+        "key_value_metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KeyValue"
+          },
+          "$comment": "Thrift field 8"
+        },
+        "data_page_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 9"
+        },
+        "index_page_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 10"
+        },
+        "dictionary_page_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 11"
+        },
+        "statistics": {
+          "$ref": "#/$defs/Statistics",
+          "$comment": "Thrift field 12"
+        },
+        "encoding_stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PageEncodingStats"
+          },
+          "$comment": "Thrift field 13"
+        },
+        "bloom_filter_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 14"
+        },
+        "bloom_filter_length": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 15"
+        },
+        "size_statistics": {
+          "$ref": "#/$defs/SizeStatistics",
+          "$comment": "Thrift field 16"
+        },
+        "geospatial_statistics": {
+          "$ref": "#/$defs/GeospatialStatistics",
+          "$comment": "Thrift field 17"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "type",
+        "encodings",
+        "path_in_schema",
+        "codec",
+        "num_values",
+        "total_uncompressed_size",
+        "total_compressed_size",
+        "data_page_offset"
+      ],
+      "additionalProperties": false,
+      "description": "struct ColumnMetaData from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "EncryptionWithFooterKey": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct EncryptionWithFooterKey from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "EncryptionWithColumnKey": {
+      "type": "object",
+      "properties": {
+        "path_in_schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "$comment": "Thrift field 1"
+        },
+        "key_metadata": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "path_in_schema"
+      ],
+      "additionalProperties": false,
+      "description": "struct EncryptionWithColumnKey from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "ColumnCryptoMetaData": {
+      "type": "object",
+      "properties": {
+        "ENCRYPTION_WITH_FOOTER_KEY": {
+          "$ref": "#/$defs/EncryptionWithFooterKey",
+          "$comment": "Thrift field 1"
+        },
+        "ENCRYPTION_WITH_COLUMN_KEY": {
+          "$ref": "#/$defs/EncryptionWithColumnKey",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union ColumnCryptoMetaData from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "ColumnChunk": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "$comment": "Thrift field 1"
+        },
+        "file_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2 has effective default 0; absence is preserved"
+        },
+        "meta_data": {
+          "$ref": "#/$defs/ColumnMetaData",
+          "$comment": "Thrift field 3"
+        },
+        "offset_index_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 4"
+        },
+        "offset_index_length": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 5"
+        },
+        "column_index_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 6"
+        },
+        "column_index_length": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 7"
+        },
+        "crypto_metadata": {
+          "$ref": "#/$defs/ColumnCryptoMetaData",
+          "$comment": "Thrift field 8"
+        },
+        "encrypted_column_metadata": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 9"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "file_offset"
+      ],
+      "additionalProperties": false,
+      "description": "struct ColumnChunk from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "RowGroup": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ColumnChunk"
+          },
+          "$comment": "Thrift field 1"
+        },
+        "total_byte_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2"
+        },
+        "num_rows": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "sorting_columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SortingColumn"
+          },
+          "$comment": "Thrift field 4"
+        },
+        "file_offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 5"
+        },
+        "total_compressed_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 6"
+        },
+        "ordinal": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i16 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 7"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "columns",
+        "total_byte_size",
+        "num_rows"
+      ],
+      "additionalProperties": false,
+      "description": "struct RowGroup from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "TypeDefinedOrder": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct TypeDefinedOrder from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "IEEE754TotalOrder": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct IEEE754TotalOrder from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "Int96TimestampOrder": {
+      "type": "object",
+      "properties": {
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct Int96TimestampOrder from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "ColumnOrder": {
+      "type": "object",
+      "properties": {
+        "TYPE_ORDER": {
+          "$ref": "#/$defs/TypeDefinedOrder",
+          "$comment": "Thrift field 1"
+        },
+        "IEEE_754_TOTAL_ORDER": {
+          "$ref": "#/$defs/IEEE754TotalOrder",
+          "$comment": "Thrift field 2"
+        },
+        "INT96_TIMESTAMP_ORDER": {
+          "$ref": "#/$defs/Int96TimestampOrder",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union ColumnOrder from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "PageLocation": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "compressed_page_size": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 2"
+        },
+        "first_row_index": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "offset",
+        "compressed_page_size",
+        "first_row_index"
+      ],
+      "additionalProperties": false,
+      "description": "struct PageLocation from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "OffsetIndex": {
+      "type": "object",
+      "properties": {
+        "page_locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PageLocation"
+          },
+          "$comment": "Thrift field 1"
+        },
+        "unencoded_byte_array_data_bytes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "page_locations"
+      ],
+      "additionalProperties": false,
+      "description": "struct OffsetIndex from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "ColumnIndex": {
+      "type": "object",
+      "properties": {
+        "null_pages": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          },
+          "$comment": "Thrift field 1"
+        },
+        "min_values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "hex": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{2})*$"
+              }
+            },
+            "required": [
+              "hex"
+            ],
+            "additionalProperties": false
+          },
+          "$comment": "Thrift field 2"
+        },
+        "max_values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "hex": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{2})*$"
+              }
+            },
+            "required": [
+              "hex"
+            ],
+            "additionalProperties": false
+          },
+          "$comment": "Thrift field 3"
+        },
+        "boundary_order": {
+          "$ref": "#/$defs/BoundaryOrder",
+          "$comment": "Thrift field 4"
+        },
+        "null_counts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 5"
+        },
+        "repetition_level_histograms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 6"
+        },
+        "definition_level_histograms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 7"
+        },
+        "nan_counts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "description": "Exact signed i64 decimal; decoder enforces bit width"
+          },
+          "$comment": "Thrift field 8"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "null_pages",
+        "min_values",
+        "max_values",
+        "boundary_order"
+      ],
+      "additionalProperties": false,
+      "description": "struct ColumnIndex from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "AesGcmV1": {
+      "type": "object",
+      "properties": {
+        "aad_prefix": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 1"
+        },
+        "aad_file_unique": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 2"
+        },
+        "supply_aad_prefix": {
+          "type": "boolean",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct AesGcmV1 from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "AesGcmCtrV1": {
+      "type": "object",
+      "properties": {
+        "aad_prefix": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 1"
+        },
+        "aad_file_unique": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 2"
+        },
+        "supply_aad_prefix": {
+          "type": "boolean",
+          "$comment": "Thrift field 3"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "description": "struct AesGcmCtrV1 from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "EncryptionAlgorithm": {
+      "type": "object",
+      "properties": {
+        "AES_GCM_V1": {
+          "$ref": "#/$defs/AesGcmV1",
+          "$comment": "Thrift field 1"
+        },
+        "AES_GCM_CTR_V1": {
+          "$ref": "#/$defs/AesGcmCtrV1",
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "maxProperties": 1,
+      "description": "union EncryptionAlgorithm from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "FileMetaData": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i32 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 1"
+        },
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SchemaElement"
+          },
+          "$comment": "Thrift field 2"
+        },
+        "num_rows": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "description": "Exact signed i64 decimal; decoder enforces bit width",
+          "$comment": "Thrift field 3"
+        },
+        "row_groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RowGroup"
+          },
+          "$comment": "Thrift field 4"
+        },
+        "key_value_metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KeyValue"
+          },
+          "$comment": "Thrift field 5"
+        },
+        "created_by": {
+          "type": "string",
+          "$comment": "Thrift field 6"
+        },
+        "column_orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ColumnOrder"
+          },
+          "$comment": "Thrift field 7"
+        },
+        "encryption_algorithm": {
+          "$ref": "#/$defs/EncryptionAlgorithm",
+          "$comment": "Thrift field 8"
+        },
+        "footer_signing_key_metadata": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 9"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "schema",
+        "num_rows",
+        "row_groups"
+      ],
+      "additionalProperties": false,
+      "description": "struct FileMetaData from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "FileCryptoMetaData": {
+      "type": "object",
+      "properties": {
+        "encryption_algorithm": {
+          "$ref": "#/$defs/EncryptionAlgorithm",
+          "$comment": "Thrift field 1"
+        },
+        "key_metadata": {
+          "type": "object",
+          "properties": {
+            "hex": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{2})*$"
+            }
+          },
+          "required": [
+            "hex"
+          ],
+          "additionalProperties": false,
+          "$comment": "Thrift field 2"
+        },
+        "$unknown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -32768,
+                "maximum": 32767
+              },
+              "value": {
+                "$ref": "#/$defs/wireValue"
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "encryption_algorithm"
+      ],
+      "additionalProperties": false,
+      "description": "struct FileCryptoMetaData from parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+    },
+    "schemaNode": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "definitionLevel": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "repetitionLevel": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/schemaNode"
+          }
+        }
+      },
+      "required": [
+        "index",
+        "name",
+        "path",
+        "definitionLevel",
+        "repetitionLevel",
+        "children"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3061,
+        "line": 1,
+        "path": "spec/core/nullability-operation-v7.schema.json",
+        "sha256": "18bc5717486dd78997ba8b52ff9a24a5fa50166decdf6fe3226443f499030b17"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreNullabilityOperationV7Schema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:nullability-operation:7.0.0\",\n  \"title\": \"Core 0.9.0 nullability-operation-v7\",\n  \"$defs\": {\n    \"nullability\": {\n      \"enum\": [\n        \"required\",\n        \"absent-allowed\",\n        \"unspecified\"\n      ]\n    },\n    \"identity\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"module\",\n        \"element\"\n      ],\n      \"properties\": {\n        \"module\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"element\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.9.0\"\n    },\n    \"lookup\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"operation\",\n        \"version\",\n        \"source\",\n        \"identity\",\n        \"path\",\n        \"meaning\",\n        \"provenance\"\n      ],\n      \"properties\": {\n        \"operation\": {\n          \"const\": \"inspect-core-nullability\"\n        },\n        \"version\": {\n          \"const\": \"7.0.0\"\n        },\n        \"source\": {\n          \"$ref\": \"#/$defs/source\"\n        },\n        \"identity\": {\n          \"$ref\": \"#/$defs/identity\"\n        },\n        \"path\": {\n          \"type\": \"string\"\n        },\n        \"provenance\": {\n          \"const\": \"unverified\"\n        },\n        \"meaning\": {\n          \"oneOf\": [\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\",\n                \"nullability\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"known\"\n                },\n                \"nullability\": {\n                  \"$ref\": \"#/$defs/nullability\"\n                }\n              }\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"missing\"\n                }\n              }\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\",\n                \"value\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"unknown\"\n                },\n                \"value\": {\n                  \"type\": \"string\",\n                  \"minLength\": 1,\n                  \"not\": {\n                    \"$ref\": \"#/$defs/nullability\"\n                  }\n                }\n              }\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"inapplicable\"\n                }\n              }\n            }\n          ]\n        }\n      }\n    }\n  },\n  \"$ref\": \"#/$defs/lookup\"\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreNullabilityOperationV7Schema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3061,
+      "line": 1,
+      "path": "spec/core/nullability-operation-v7.schema.json",
+      "sha256": "18bc5717486dd78997ba8b52ff9a24a5fa50166decdf6fe3226443f499030b17"
+    }
+  ],
+  "summary": "Public export · spec/core/nullability-operation-v7.schema.json",
+  "title": "coreNullabilityOperationV7Schema"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6107,
+        "line": 6,
+        "path": "src/adapters/arrow/flatbuffer-decode.ts",
+        "sha256": "a3132fef7075616b426856723f0879314f880f1a4ed1e526f094765b137a647c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowFlatbufferRoot",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ArrowFlatbufferRoot='Schema'|'Message'|'Footer'|'Tensor'|'SparseTensor';"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowFlatbufferRoot\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6107,
+      "line": 6,
+      "path": "src/adapters/arrow/flatbuffer-decode.ts",
+      "sha256": "a3132fef7075616b426856723f0879314f880f1a4ed1e526f094765b137a647c"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/flatbuffer-decode.ts",
+  "title": "ArrowFlatbufferRoot"
+}

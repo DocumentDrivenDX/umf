@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8277,
+        "line": 16,
+        "path": "src/core-ideals/relationship-avro.ts",
+        "sha256": "d17af31ed97f1b824c91407f1e26a930b7f102d1fc53b367bd537bd4ad76d5b5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroRelationshipObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroRelationshipObservation {nativePath:string;kind:'record'|'named-type-token'|'union'|'array'|'map';nativeNode:NativeJson;nameResolution:'unverified';enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'schema-structure'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroRelationshipObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8277,
+      "line": 16,
+      "path": "src/core-ideals/relationship-avro.ts",
+      "sha256": "d17af31ed97f1b824c91407f1e26a930b7f102d1fc53b367bd537bd4ad76d5b5"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-avro.ts",
+  "title": "AvroRelationshipObservation"
+}

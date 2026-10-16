@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9911,
+        "line": 21,
+        "path": "src/core-ideals/cardinality-sqlserver.ts",
+        "sha256": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerCardinalityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerCardinalityClassification {\n operation:'classify-sqlserver-cardinality';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerCardinalityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;cardinality:Cardinality;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'approximated'|'unknown'|'not-expressible';basis:typeof basis};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9911,
+      "line": 21,
+      "path": "src/core-ideals/cardinality-sqlserver.ts",
+      "sha256": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-sqlserver.ts",
+  "title": "SqlServerCardinalityClassification"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3050,
+        "line": 1,
+        "path": "spec/extensions/openapi/schema-extraction.schema.json",
+        "sha256": "41ce4ae8f3a80eccfacd93f650f231f4d9bbf708877efbc2ddce551970b42cf0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "openapiSchemaExtractionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:openapi-schema-extraction:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"source\",\n    \"pointer\",\n    \"openapiVersion\",\n    \"dialect\",\n    \"dialectOrigin\",\n    \"schema\",\n    \"nativeSchema\",\n    \"complete\",\n    \"limitations\"\n  ],\n  \"properties\": {\n    \"pointer\": {\n      \"type\": \"string\"\n    },\n    \"retrievalUri\": {\n      \"type\": \"string\"\n    },\n    \"openapiVersion\": {\n      \"type\": \"string\"\n    },\n    \"dialect\": {\n      \"type\": \"string\"\n    },\n    \"nativeSchema\": {\n      \"type\": \"string\"\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"dialectOrigin\": {\n      \"enum\": [\n        \"schema\",\n        \"document\",\n        \"openapi-default\"\n      ]\n    },\n    \"schema\": {\n      \"$ref\": \"#/$defs/node\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"limitations\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"openapiSchemaExtractionSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3050,
+      "line": 1,
+      "path": "spec/extensions/openapi/schema-extraction.schema.json",
+      "sha256": "41ce4ae8f3a80eccfacd93f650f231f4d9bbf708877efbc2ddce551970b42cf0"
+    }
+  ],
+  "summary": "Public export · spec/extensions/openapi/schema-extraction.schema.json",
+  "title": "openapiSchemaExtractionSchema"
+}

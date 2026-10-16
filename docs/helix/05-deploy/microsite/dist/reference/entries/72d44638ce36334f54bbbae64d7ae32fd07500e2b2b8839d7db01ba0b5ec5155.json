@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3838,
+        "line": 18,
+        "path": "src/model/scalar-type.ts",
+        "sha256": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreScalarType",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identityInput: CoreScalarTypeIdentity): CoreScalarTypeInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreScalarType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3838,
+      "line": 18,
+      "path": "src/model/scalar-type.ts",
+      "sha256": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d"
+    }
+  ],
+  "summary": "Inspect a value-family label without inferring role, native domain or container item type.",
+  "title": "inspectCoreScalarType"
+}

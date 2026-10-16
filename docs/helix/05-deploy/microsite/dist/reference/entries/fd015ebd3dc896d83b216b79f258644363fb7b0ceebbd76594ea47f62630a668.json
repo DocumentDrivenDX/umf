@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7806,
+        "line": 14,
+        "path": "src/adapters/postgresql/index.ts",
+        "sha256": "7baa071d95e5f9863a4ce2bf892d87fb27cab9d8605ba4cf8887016d14ca17b4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validatePostgresqlAst",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(tree: unknown): { valid: boolean | Promise<unknown>; complete: boolean; errors: Json; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validatePostgresqlAst\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7806,
+      "line": 14,
+      "path": "src/adapters/postgresql/index.ts",
+      "sha256": "7baa071d95e5f9863a4ce2bf892d87fb27cab9d8605ba4cf8887016d14ca17b4"
+    }
+  ],
+  "summary": "Validate the known native JSON vocabulary without removing unknown fields.",
+  "title": "validatePostgresqlAst"
+}

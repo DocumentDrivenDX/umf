@@ -1,0 +1,148 @@
+{
+  "id": "umf.sqlserver",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "SQL Server catalog capture and core column metadata",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:sqlserver:0.1.0",
+    "type": "object",
+    "required": [
+      "profile",
+      "root"
+    ],
+    "properties": {
+      "profile": {
+        "const": "sqlserver-catalog-v1"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-031; bounded observations, not full server semantics or reconstruction",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Microsoft SQL Server",
+      "version": "SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2/v3",
+      "subset": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction."
+    },
+    "evidence": [
+      "tests/sqlserver/catalog.test.ts",
+      "native/sqlserver/catalog.sql",
+      "fixtures/sqlserver/oracle.json",
+      "fixtures/sqlserver/browser.json",
+      "tests/sqlserver/constraints.test.ts",
+      "fixtures/sqlserver/constraints-oracle.json",
+      "tests/sqlserver/indexes.test.ts",
+      "fixtures/sqlserver/indexes-oracle.json"
+    ]
+  }
+}

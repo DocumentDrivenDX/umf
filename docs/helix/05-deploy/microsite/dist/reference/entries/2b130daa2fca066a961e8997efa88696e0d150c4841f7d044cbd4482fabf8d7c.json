@@ -1,0 +1,3365 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/scalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/itemType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/element"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/version"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/module"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/scalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/itemType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/facets"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/element"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/version"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/module"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/residual"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/upgrade"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/upgrade"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+        "target": "#/$defs/rollback"
+      }
+    ],
+    "role": "other",
+    "schemaPath": "spec/core/facet-transition.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "field": {
+              "kind": "object",
+              "members": {
+                "$defs": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "allOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "record"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "group"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "boolean",
+                                          "value": false
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "nullability": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "nullability"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "cardinality"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "array"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "map"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "cardinality"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "not": {
+                                      "kind": "object",
+                                      "members": {
+                                        "required": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "scalarType"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "itemType": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "itemType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "array"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "map"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        },
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "cardinality"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "facets": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "facets"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "one"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "unspecified"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        },
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        },
+                                        "references": {
+                                          "kind": "object",
+                                          "members": {
+                                            "not": {
+                                              "kind": "object",
+                                              "members": {
+                                                "contains": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "properties": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "role": {
+                                                          "kind": "object",
+                                                          "members": {
+                                                            "const": {
+                                                              "kind": "string",
+                                                              "value": "record-type"
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "required": {
+                                                      "items": [
+                                                        {
+                                                          "kind": "string",
+                                                          "value": "role"
+                                                        }
+                                                      ],
+                                                      "kind": "array"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "object"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "facets": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "length": {
+                                                  "kind": "object",
+                                                  "members": {}
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "length"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "facets"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "string"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "binary"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "scalarType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "facets": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "length": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "properties": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "unit": {
+                                                          "kind": "object",
+                                                          "members": {
+                                                            "const": {
+                                                              "kind": "string",
+                                                              "value": "unicode-scalar"
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "required": {
+                                                      "items": [
+                                                        {
+                                                          "kind": "string",
+                                                          "value": "unit"
+                                                        }
+                                                      ],
+                                                      "kind": "array"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "object"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "length"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "facets"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "scalarType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "facets": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "length": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "properties": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "unit": {
+                                                          "kind": "object",
+                                                          "members": {
+                                                            "const": {
+                                                              "kind": "string",
+                                                              "value": "byte"
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "required": {
+                                                      "items": [
+                                                        {
+                                                          "kind": "string",
+                                                          "value": "unit"
+                                                        }
+                                                      ],
+                                                      "kind": "array"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "object"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "length"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "facets"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "binary"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "scalarType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "facets": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "precision": {
+                                                  "kind": "object",
+                                                  "members": {}
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "precision"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "facets"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "decimal"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "scalarType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "facets": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "integerWidth": {
+                                                  "kind": "object",
+                                                  "members": {}
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "integerWidth"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "facets"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "integer"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "scalarType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "cardinality": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "description": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/extensions"
+                                }
+                              }
+                            },
+                            "facets": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/facets"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "itemType": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/itemType"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "nullability": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "references": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "scalarType": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/scalarType"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "extensions"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/field/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "facets": {
+                      "kind": "object",
+                      "members": {
+                        "dependentRequired": {
+                          "kind": "object",
+                          "members": {
+                            "precision": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "scale"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "scale": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "precision"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "description": {
+                          "kind": "string",
+                          "value": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation."
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "integerWidth": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion."
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "bits": {
+                                      "kind": "object",
+                                      "members": {
+                                        "maximum": {
+                                          "kind": "number",
+                                          "value": "9007199254740991"
+                                        },
+                                        "minimum": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "integer"
+                                        }
+                                      }
+                                    },
+                                    "signed": {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "boolean"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "bits"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "signed"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "length": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "max": {
+                                      "kind": "object",
+                                      "members": {
+                                        "maximum": {
+                                          "kind": "number",
+                                          "value": "9007199254740991"
+                                        },
+                                        "minimum": {
+                                          "kind": "number",
+                                          "value": "0"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "integer"
+                                        }
+                                      }
+                                    },
+                                    "unit": {
+                                      "kind": "object",
+                                      "members": {
+                                        "description": {
+                                          "kind": "string",
+                                          "value": "Known units: unicode-scalar for string, byte for binary. Unknown units remain uninterpreted."
+                                        },
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "max"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "unit"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "precision": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+                                },
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "9007199254740991"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "scale": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+                                },
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "9007199254740991"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "0"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "itemType": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "element": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "module": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "module"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "knownCardinality": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "one"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "map"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unspecified"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownElementKind": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "field"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "group"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownNullability": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "required"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "absent-allowed"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unspecified"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownScalarType": {
+                      "kind": "object",
+                      "members": {
+                        "description": {
+                          "kind": "string",
+                          "value": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+                        },
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "boolean"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "integer"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "decimal"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "float"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "binary"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "date"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "time"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "timestamp"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "elements": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/element"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "namespace"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "elements"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "reference": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "element": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "module": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "role": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "role"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "module"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "scalarType": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/knownScalarType"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Unknown family retained with incomplete semantic validation."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "not": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/knownScalarType"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Candidate facet envelope: author-stated scalar bounds with explicit units. Requires semantic validation of scale <= precision, identities and references. Native enforcement, encoding and exactness require separate bindings."
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field/$defs/extensions"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field/$defs/id"
+                        }
+                      }
+                    },
+                    "modules": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/field/$defs/module"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "umf": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "0.5.0"
+                        }
+                      }
+                    },
+                    "vocabularies": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/version"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/field/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "umf"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "vocabularies"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "modules"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "title": {
+                  "kind": "string",
+                  "value": "UMF 0.5.0 facet envelope"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "legacy": {
+              "kind": "object",
+              "members": {
+                "$defs": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "allOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "record"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "group"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "boolean",
+                                          "value": false
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "nullability": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "nullability"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "cardinality"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "array"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "map"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "cardinality"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "not": {
+                                      "kind": "object",
+                                      "members": {
+                                        "required": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "scalarType"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "itemType": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "itemType"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "cardinality": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "array"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "map"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        },
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "cardinality"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "cardinality": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "description": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "itemType": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/itemType"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "nullability": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "references": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "scalarType": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/scalarType"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "extensions"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/legacy/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "itemType": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "element": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "module": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "module"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "knownCardinality": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "one"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "map"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unspecified"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownElementKind": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "field"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "group"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownNullability": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "required"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "absent-allowed"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unspecified"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownScalarType": {
+                      "kind": "object",
+                      "members": {
+                        "description": {
+                          "kind": "string",
+                          "value": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+                        },
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "boolean"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "integer"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "decimal"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "float"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "binary"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "date"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "time"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "timestamp"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "elements": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/element"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "namespace"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "elements"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "reference": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "element": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "module": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "role": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "role"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "module"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "scalarType": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/knownScalarType"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Unknown family retained with incomplete semantic validation."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "not": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/knownScalarType"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Explicit Field shape and optional array-item/map-value Field reference; no native repetition, dimension or physical encoding inference."
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy/$defs/extensions"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy/$defs/id"
+                        }
+                      }
+                    },
+                    "modules": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/legacy/$defs/module"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "umf": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "0.4.0"
+                        }
+                      }
+                    },
+                    "vocabularies": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/version"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/legacy/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "umf"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "vocabularies"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "modules"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "title": {
+                  "kind": "string",
+                  "value": "UMF 0.4.0 cardinality envelope"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "residual": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "path": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^/modules/[0-9]+/elements/[0-9]+/facets$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "reason": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "Legacy facets are opaque; no value bounds inferred"
+                        }
+                      }
+                    },
+                    "value": {
+                      "kind": "object",
+                      "members": {}
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "path"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "value"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "reason"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "rollback": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "operation": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "rollback-facet-envelope"
+                        }
+                      }
+                    },
+                    "reason": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "Original envelope restored; all subsequent content retained in source, not applied to legacy target"
+                        }
+                      }
+                    },
+                    "receipt": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/upgrade"
+                        }
+                      }
+                    },
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field"
+                        }
+                      }
+                    },
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "operation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "receipt"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "reason"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "upgrade": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "operation": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "upgrade-facet-envelope"
+                        }
+                      }
+                    },
+                    "residuals": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/residual"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy"
+                        }
+                      }
+                    },
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "operation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "residuals"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:facet-transition:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "oneOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/upgrade"
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/rollback"
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Explicit Facet envelope transition receipts"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/facet-transition.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 27605,
+      "path": "spec/core/facet-transition.schema.json",
+      "sha256": "f67a32df85ee0c5a730e588f09a11b228f4d8a4c34b7cc8d018c1a6d00f44682"
+    }
+  ],
+  "summary": "spec/core/facet-transition.schema.json",
+  "title": "Explicit Facet envelope transition receipts"
+}

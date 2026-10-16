@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4087,
+        "line": 8,
+        "path": "src/adapters/parquet/transform.ts",
+        "sha256": "292afc996a29cd4b35304b20a2cf1170c8dc5d6d150dab17f94c00bfdc62af9b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetMetadataTransform",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetMetadataTransform {source:Document;status:'transformed'|'blocked';complete:false;diagnostics:Diagnostic[];output?:Document;added?:ParquetKeyValue[];unchangedPrefixBytes?:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetMetadataTransform\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4087,
+      "line": 8,
+      "path": "src/adapters/parquet/transform.ts",
+      "sha256": "292afc996a29cd4b35304b20a2cf1170c8dc5d6d150dab17f94c00bfdc62af9b"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/transform.ts",
+  "title": "ParquetMetadataTransform"
+}

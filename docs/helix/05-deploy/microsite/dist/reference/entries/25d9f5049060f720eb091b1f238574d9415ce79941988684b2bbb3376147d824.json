@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11423,
+        "line": 28,
+        "path": "src/core-ideals/facets-parquet-projection.ts",
+        "sha256": "d4b23d70f185b5c4fc8fe7b63dda59267ba54a8e3edd8ea34d874bedfdf2a718"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFacetsToParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Author, options: FacetsParquetRequest): FacetsParquetProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFacetsToParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11423,
+      "line": 28,
+      "path": "src/core-ideals/facets-parquet-projection.ts",
+      "sha256": "d4b23d70f185b5c4fc8fe7b63dda59267ba54a8e3edd8ea34d874bedfdf2a718"
+    }
+  ],
+  "summary": "Project verified ideal assertions; custom metadata never becomes an implicit validator.",
+  "title": "projectFacetsToParquet"
+}

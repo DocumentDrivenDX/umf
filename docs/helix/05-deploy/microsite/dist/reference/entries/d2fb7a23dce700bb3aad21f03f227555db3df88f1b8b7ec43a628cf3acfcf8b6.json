@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8903,
+        "line": 46,
+        "path": "src/model/field-kind.ts",
+        "sha256": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreElementKind",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreKindIdentity): CoreKindInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreElementKind\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8903,
+      "line": 46,
+      "path": "src/model/field-kind.ts",
+      "sha256": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292"
+    }
+  ],
+  "summary": "Read a role without inventing author/classifier provenance or interpreting legacy collisions.",
+  "title": "inspectCoreElementKind"
+}

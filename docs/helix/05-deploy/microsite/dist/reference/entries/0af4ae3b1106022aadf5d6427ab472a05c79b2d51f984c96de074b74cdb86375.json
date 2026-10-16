@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 7016,
+        "path": "spec/extensions/postgresql-relationships/package.json",
+        "sha256": "9395908061a061976c067d3922dd34687b9629dd123233ece78b9225d722a9e6"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.postgresql.relationships@1.0.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.postgresql.relationships@1.0.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "PostgreSQL · 17.4",
+      "subset": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee",
+      "targetSystem": "PostgreSQL · 17.4",
+      "title": "umf.postgresql.relationships · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.postgresql.relationships@1.0.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.postgresql.relationships\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee",
+  "title": "umf.postgresql.relationships · export"
+}

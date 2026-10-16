@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 2030,
+        "path": "spec/extensions/sqlserver-cardinality/package.json",
+        "sha256": "417038f2c6d1618600780370027f53fd9316f6c8dd664c4c307c4674af97dd4e"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.sqlserver.cardinality@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.sqlserver.cardinality@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "SQL Server · 16.0.4295.3",
+      "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.sqlserver.cardinality · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.sqlserver.cardinality@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.sqlserver.cardinality\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+  "title": "umf.sqlserver.cardinality · import"
+}

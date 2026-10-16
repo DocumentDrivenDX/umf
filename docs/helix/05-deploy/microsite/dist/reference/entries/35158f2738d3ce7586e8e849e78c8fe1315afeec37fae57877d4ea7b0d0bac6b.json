@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7573,
+        "line": 8,
+        "path": "src/adapters/typespec/semantic.ts",
+        "sha256": "e1f3f73386c4766d4575f1ddc4cb4945cdb33a1c35953b0c29788f4525c303ae"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getTypeSpecSemanticGraph",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, input: { roots: string[]; }): Promise<{ status: \"blocked\" | \"available\"; source: Document; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; roots: { expression: string; target: string; }[]; nodes: TypeSpecSemanticNode[]; complete: false; limitations: string[]; issues: { code: string; detail: string; }[]; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getTypeSpecSemanticGraph\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7573,
+      "line": 8,
+      "path": "src/adapters/typespec/semantic.ts",
+      "sha256": "e1f3f73386c4766d4575f1ddc4cb4945cdb33a1c35953b0c29788f4525c303ae"
+    }
+  ],
+  "summary": "Selected compiled graph snapshot; source remains authoritative for omitted compiler state.",
+  "title": "getTypeSpecSemanticGraph"
+}

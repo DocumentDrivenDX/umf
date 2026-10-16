@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22860,
+        "line": 14,
+        "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+        "sha256": "e2298b9d5f89937e30989e64ed6e3f437066b1466cb44938cad2c97da8b50126"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlLayoutKey",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlLayoutKey {record:CoreKeyFieldReference;key:string;table:string;constraint:string;components:PostgresqlLayoutKeyComponent[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlLayoutKey\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22860,
+      "line": 14,
+      "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+      "sha256": "e2298b9d5f89937e30989e64ed6e3f437066b1466cb44938cad2c97da8b50126"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/relationship-layout.ts",
+  "title": "PostgresqlLayoutKey"
+}

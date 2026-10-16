@@ -1,0 +1,75 @@
+import {search,identity,type Entry,type ReferenceIndex,type Summary} from '../../reference/model';
+import {mountWorkbench} from './workbench';
+const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
+const digest=async(bytes:ArrayBuffer)=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
+let manifest:any,index:ReferenceIndex;const loaded=new Map<string,Entry>();
+export async function verified(path:string):Promise<ArrayBuffer>{
+ if(!/^(?:[a-zA-Z0-9_.-]+\/)*[a-zA-Z0-9_.-]+$/.test(path)||path.includes('..'))throw Error('REFERENCE_INPUT invalid asset path');
+ const expected=manifest.outputs.find((o:any)=>o.path===path);if(!expected)throw Error('REFERENCE_INTEGRITY unlisted asset '+path);
+ const response=await fetch(new URL(path,location.href),{redirect:'error',credentials:'omit'});if(!response.ok)throw Error('REFERENCE_INTEGRITY unavailable '+path);const bytes=await response.arrayBuffer();if(bytes.byteLength!==expected.bytes||await digest(bytes)!==expected.sha256)throw Error('REFERENCE_INTEGRITY changed '+path);return bytes;
+}
+export const decode=(bytes:ArrayBuffer)=>new TextDecoder().decode(bytes);
+export async function getEntry(id:string):Promise<Entry>{
+ if(loaded.has(id))return loaded.get(id)!;const row=index.entries.find(e=>e.id===id);if(!row)throw Error('REFERENCE_LINK unknown entry or version');const bytes=await verified(row.href);if(await digest(bytes)!==row.sha256)throw Error('REFERENCE_INTEGRITY index/detail disagreement');const e=JSON.parse(decode(bytes)) as Entry;if(e.id!==id)throw Error('REFERENCE_INTEGRITY entry identity');loaded.set(id,e);return e;
+}
+export function element(tag:string,text?:string,className?:string){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;}
+export function link(text:string,href:string,className?:string){const el=element('a',text,className) as HTMLAnchorElement;el.href=href;return el;}
+export function pre(value:unknown){return element('pre',typeof value==='string'?value:JSON.stringify(value,null,2));}
+export function download(name:string,bytes:BlobPart,media='text/plain'){const url=URL.createObjectURL(new Blob([bytes],{type:media}));const a=link(name,url) as HTMLAnchorElement;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500);}
+function route(id:string,pointer=''){return '#'+new URLSearchParams({entry:id,...(pointer?{pointer}:{})});}
+function section(parent:HTMLElement,title:string){parent.append(element('h3',title));}
+function facts(parent:HTMLElement,values:[string,string][]) {const wrap=element('div',undefined,'status-grid');for(const[label,value]of values){const cell=element('div');cell.append(element('span',label),element('strong',value));wrap.append(cell);}parent.append(wrap);}
+async function sources(parent:HTMLElement,records:any[]){const wrap=element('div',undefined,'source-links');for(const s of records){const a=link('↓ '+s.path.split('/').at(-1),'#');a.title=s.path+' · SHA-256 '+s.sha256;a.addEventListener('click',async ev=>{ev.preventDefault();try{download(s.path.split('/').at(-1)!,await verified('sources/'+s.sha256));}catch(e){wrap.append(element('p',String(e),'callout warning'));}});wrap.append(a);}parent.append(wrap);}
+function sourceTree(node:any):any {if(!node)return node;switch(node.kind){case 'object':return Object.fromEntries(Object.entries(node.members).map(([k,v])=>[k,sourceTree(v)]));case 'array':return node.items.map(sourceTree);case 'null':return null;case 'number':return {numberToken:node.value};default:return node.value;}}
+function navigateTree(root:any,pointer:string){if(pointer&&(!pointer.startsWith('/')||/~(?![01])/.test(pointer)))throw Error('REFERENCE_LINK invalid schema pointer');let n=root;for(const s of pointer.split('/').slice(1)){const k=s.replaceAll('~1','/').replaceAll('~0','~');n=n?.kind==='object'&&Object.hasOwn(n.members,k)?n.members[k]:n?.kind==='array'&&/^(0|[1-9][0-9]*)$/.test(k)?n.items[Number(k)]:undefined;}if(!n)throw Error('REFERENCE_LINK unknown schema pointer');return n;}
+function simple(node:any):string {if(!node)return '';if(node.kind==='number'||node.kind==='string'||node.kind==='boolean')return String(node.value);return JSON.stringify(sourceTree(node));}
+function schemaView(parent:HTMLElement,e:Entry,pointer:string){
+ const root=e.data.sourceData,node=navigateTree(root,pointer),m=node.kind==='object'?node.members:{};
+ facts(parent,[['Role',e.data.role],['Core profile',e.data.profileVersions.join(', ')||'Separately versioned'],['Selected location',pointer||'Document root']]);
+ if(m.description)parent.append(element('p',simple(m.description)));
+ if(node.kind==='boolean')parent.append(element('p',node.value?'Boolean schema accepts structurally without further constraints.':'Boolean schema rejects all instances.','callout'));
+ const props=m.properties?.members??{};const required=(m.required?.items??[]).map((n:any)=>n.value);
+ if(Object.keys(props).length){section(parent,'Properties');const wrap=element('div',undefined,'table-wrap'),table=element('table');const head=element('tr');for(const t of ['Property','Presence','Type / structure','Description'])head.append(element('th',t));const thead=element('thead');thead.append(head);table.append(thead);const body=element('tbody');
+  for(const [name,v]of Object.entries(props) as [string,any][]){const p=v.members??{},row=element('tr'),cell=element('td');cell.append(link(name,route(e.id,pointer+'/properties/'+name.replaceAll('~','~0').replaceAll('/','~1'))));row.append(cell,element('td',required.includes(name)?'Required':'Optional'));const type=element('td');if(p.$ref?.value?.startsWith('#/'))type.append(link(p.$ref.value,route(e.id,p.$ref.value.slice(1))));else type.textContent=simple(p.type)||simple(p.enum)||simple(p.const)||'Composed / see constraints';row.append(type,element('td',simple(p.description)));body.append(row);}table.append(body);wrap.append(table);parent.append(wrap);
+ }
+ const keywords=Object.entries(m).filter(([k])=>!['properties','$defs','definitions','description','title'].includes(k));if(keywords.length){section(parent,'Constraints and annotations');const table=element('div',undefined,'table-wrap');const t=element('table');for(const [k,v]of keywords){const row=element('tr');row.append(element('th',k),element('td',simple(v)));t.append(row);}table.append(t);parent.append(table);}
+ const defs=m.$defs?.members??m.definitions?.members;if(defs){section(parent,'Definitions');const chips=element('div',undefined,'chips');for(const k of Object.keys(defs))chips.append(link(k,route(e.id,pointer+(m.$defs?'/$defs/':'/definitions/')+k.replaceAll('~','~0').replaceAll('/','~1')),'chip'));parent.append(chips);}
+ if(pointer)parent.append(link('← Back to document root',route(e.id),'wide-action'));
+ if(e.data.references.length){section(parent,'Reference graph · '+Math.min(40,e.data.references.length)+' of '+e.data.references.length+' links');const graph=element('div',undefined,'graph');for(const ref of e.data.references.slice(0,40)){graph.append(ref.resolvedId?link(ref.target,ref.target.startsWith('#')?route(e.id,ref.target.slice(1)):route(ref.resolvedId)):element('span',ref.target+' · unresolved'));}parent.append(graph);}
+ const raw=element('details');raw.append(element('summary','Original schema structure · exact number tokens'),pre(sourceTree(node)));parent.append(raw);
+}
+function prose(parent:HTMLElement,body:string){for(const block of body.split(/\n\s*\n/)){if(!block.trim())continue;const heading=/^(#{1,3})\s+([\s\S]+)$/.exec(block);parent.append(heading?element('h3',heading[2]):element('p',block));}}
+export async function show(e:Entry,pointer=''){
+ const parent=$('inspector');parent.replaceChildren(element('span',e.kind,'entry-kind'),element('h2',e.title),element('p',e.summary,'intro'));await sources(parent,e.sources);
+ if(e.kind==='schema')schemaView(parent,e,pointer);
+ if(e.kind==='api'){facts(parent,[['Entrypoint',e.data.entrypoint],['Runtime classification',e.data.runtime],['Export',e.data.exportName]]);parent.append(pre(e.data.signatureText.join('\n\n')));}
+ if(e.kind==='extension'){
+  const m=e.data.manifest;facts(parent,[['Extension version',e.data.version],['Registration',e.data.registration.mode],['Validation declaration',m.capabilities.validation]]);
+  parent.append(element('p',m.semantics,'callout'));section(parent,'Participation');parent.append(element('p','Scopes: '+m.scopes.join(', ')),element('p','Declared directions: '+(m.capabilities.directions.join(', ')||'Metadata only; no native interchange direction declared.')));
+  if(m.capabilities.native){section(parent,'Native declaration');parent.append(element('p',m.capabilities.native.system+' · '+m.capabilities.native.version),element('p',m.capabilities.native.subset));}
+  parent.append(element('p','Mapped core profiles: '+(e.data.registration.coreProfiles.join(', ')||'Not qualified by this registration mapping.'),'quiet'));if(e.data.registration.mode==='unmapped')parent.append(element('p','Runtime registration has not been mapped in this reference. This does not remove the package or establish validation availability.','callout warning'));
+  parent.append(element('p','Declarations describe capabilities. Follow an integration record for observed test outcomes.','quiet'));
+ }
+ if(e.kind==='integration'){
+  const op=e.data.operation;facts(parent,[['Declared operation',op.kind],['Recorded observations',e.data.evidence.length?e.data.evidence.map((r:any)=>r.outcome).join(' / '):'Unassessed'],['Source correspondence',e.data.correspondence]]);
+  section(parent,'Version and subset');parent.append(element('p',op.sourceSystem+' → '+op.targetSystem),element('p',op.subset,'callout'));
+  for(const l of op.limitations)parent.append(element('p',l,'quiet'));
+  if(op.runtime.availability==='browser')parent.append(link('Try this operation →','workbench.html#'+new URLSearchParams({operation:op.id}),'button'));
+  if(!e.data.evidence.length)parent.append(element('p','No test record is allocated to this declaration. Evidence file existence is not a support claim.','callout warning'));
+  for(const r of e.data.evidence){const card=element('section',undefined,'evidence');card.append(element('h3',r.id));facts(card,[['Recorded outcome',r.outcome],['Source correspondence',r.correspondence],['Dependency closure',r.closureComplete?'Complete':'Incomplete / unknown']]);card.append(element('p',r.scope));await sources(card,[r.source]);for(const [k,v]of Object.entries(r.versions))card.append(element('p',k+': '+v,'quiet'));for(const l of r.limitations)card.append(element('p',l,'quiet'));const details=element('details');details.append(element('summary','Original observation and provenance'),pre(r));card.append(details);parent.append(card);}
+ }
+ if(e.kind==='example'){parent.append(link('Open this example →','workbench.html#'+new URLSearchParams({example:JSON.parse(e.id)[1]}),'button'));section(parent,'Checked original inputs');await sources(parent,e.data.inputs);}
+ if(e.kind==='guide')prose(parent,e.data.body);
+ if(e.links.length){section(parent,'Related definitions and operations');const chips=element('div',undefined,'chips');for(const id of e.links){const row=index.entries.find(r=>r.id===id);if(row)chips.append(link(row.title,route(id),'chip'));}parent.append(chips);}
+ const details=element('details');details.append(element('summary','Machine-readable reference record'),pre(e));parent.append(details);
+}
+async function start(){
+ const expected=JSON.parse($('reference-integrity').textContent!).sha256;const response=await fetch('manifest.json',{redirect:'error',credentials:'omit'});if(!response.ok)throw Error('REFERENCE_INTEGRITY missing manifest');const bytes=await response.arrayBuffer();if(await digest(bytes)!==expected)throw Error('REFERENCE_INTEGRITY manifest');manifest=JSON.parse(decode(bytes));if(manifest.profile!=='umf.reference.manifest/1')throw Error('REFERENCE_PROTOCOL manifest version');index=JSON.parse(decode(await verified('index.json')));if(index.profile!=='umf.reference/1')throw Error('REFERENCE_PROTOCOL index version');const readyMessage='Source-bound reference · '+index.entries.length+' entries · assets verified on use';
+ const view=location.pathname.split('/').at(-1)?.replace('.html','')??'index';if(view==='workbench'){await mountWorkbench(index.entries,getEntry,verified);$('load-status').textContent=readyMessage;return;}
+ const kinds:Record<string,string>={core:'schema',extensions:'extension',integrations:'integration',api:'api',examples:'example',index:'guide'};let limit=50;
+ const refresh=()=>{const selected=new URLSearchParams(location.hash.slice(1)).get('entry');const query=$<HTMLInputElement>('search').value;const version=$<HTMLSelectElement>('profile-filter').value;const searchable=index.entries.filter(e=>view!=='core'||e.kind!=='schema'||JSON.parse(e.id)[1].startsWith('spec/core/')).map(e=>loaded.has(e.id)?{...e,summary:e.summary+' '+JSON.stringify(loaded.get(e.id)!.data)}:e);const preferred=new Set(search(index.entries,query,kinds[view] as any).map(e=>e.id));const matches=search(searchable,query,kinds[view] as any).map(e=>index.entries.find(row=>row.id===e.id)!).filter(e=>!version||e.kind!=='schema'||e.summary.includes('Core '+version)).sort((a,b)=>Number(preferred.has(b.id))-Number(preferred.has(a.id))||(view==='core'?Number(b.summary.startsWith('Core '))-Number(a.summary.startsWith('Core '))||b.summary.localeCompare(a.summary):0));$('catalog-count').textContent=matches.length+' entries'+(matches.length>limit?' · showing '+limit:'');$('catalog').replaceChildren();for(const e of matches.slice(0,limit)){const b=element('button',undefined,'entry-button') as HTMLButtonElement;b.append(element('span',e.title),element('small',e.summary.slice(0,130)));if(selected===e.id)b.setAttribute('aria-current','true');b.onclick=()=>{location.hash=route(e.id);};$('catalog').append(b);}$('more').hidden=matches.length<=limit;return matches;};
+ let navigation=0;const changed=async()=>{const current=++navigation;refresh();const params=new URLSearchParams(location.hash.slice(1)),id=params.get('entry');if(id)try{const selected=await getEntry(id);if(current!==navigation)return;await show(selected,params.get('pointer')??'');}catch(error){$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'));}};
+ $('search').oninput=()=>{limit=50;refresh();};$('profile-filter').onchange=()=>{limit=50;refresh();};$('more').onclick=()=>{limit+=50;refresh();};window.addEventListener('hashchange',()=>void changed());await changed();
+ if(!location.hash){const first=view==='core'?index.entries.find(e=>e.id===identity('schema','spec/core/bit128-document.schema.json','')):refresh()[0];if(first){history.replaceState(null,'',route(first.id));await changed();}}$('load-status').textContent=readyMessage;
+}
+void start().catch(error=>{$('load-status').textContent=String(error);$('load-status').className='callout warning';document.querySelectorAll('button').forEach(b=>b.disabled=true);});

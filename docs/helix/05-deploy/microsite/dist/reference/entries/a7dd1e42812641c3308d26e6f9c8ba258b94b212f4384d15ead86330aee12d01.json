@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3937,
+        "line": 22,
+        "path": "src/model/key-transition.ts",
+        "sha256": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "upgradeKeyEnvelope",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document): KeyUpgradeReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"upgradeKeyEnvelope\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3937,
+      "line": 22,
+      "path": "src/model/key-transition.ts",
+      "sha256": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172"
+    }
+  ],
+  "summary": "Explicit opt-in: every element collision is archived, even if it looks like a valid key or membership assertion.",
+  "title": "upgradeKeyEnvelope"
+}

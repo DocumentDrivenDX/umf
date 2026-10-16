@@ -1,0 +1,24 @@
+$ bun test tests/reference && bun scripts/reference/build.ts --check
+bun test v1.4.2 (744846f84)
+
+tests/reference/reference.test.ts:
+(pass) every extension version and its exact manifest/schema are present [29.51ms]
+(pass) all schema files and exact core profiles are accounted for [113.85ms]
+(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [693.59ms]
+(pass) real independent oracle failures and qualified priority results remain separate [2.78ms]
+(pass) source hash changes and missing dependency closures cannot become current evidence [0.08ms]
+(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.24ms]
+(pass) schema comparison is structural, bounded and preserves exact token spelling [0.29ms]
+(pass) exclusions require an existing source and nonempty reason [0.07ms]
+(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [15.32ms]
+(pass) boundary checker rejects actual forbidden source and import cycle injections [46.95ms]
+(pass) a second isolated generation matches; drift check refuses tampering without rewriting [39625.19ms]
+(pass) reference manifest retains every Protobuf notice producer input [4.09ms]
+
+ 12 pass
+ 0 fail
+ 9937 expect() calls
+Ran 12 tests across 1 file. [43.84s]
+Extracting schemas and public export graph…
+Building fixed runtime, guides and evidence inventory…
+{"checked":true,"entries":2499,"schemas":405,"extensions":69,"exports":1864,"operations":146,"evidenceFiles":7512,"indexBytes":1071897,"inputDigest":"02fa3a1e977262230110f9710af7d97c8ae06ce90c31829a22795251d45fe143"}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4909,
+        "line": 7,
+        "path": "src/adapters/parquet/rename.ts",
+        "sha256": "1f71d8cfdb5f37165c65379bdb0c8cb188ecb5fa107b5bd531a71aa180270d93"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRenameResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetRenameResult {source:Document;status:'transformed'|'blocked';complete:false;diagnostics:Diagnostic[];output?:Document;rename?:{index:number;from:string[];to:string[]};unchangedPrefixBytes?:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRenameResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4909,
+      "line": 7,
+      "path": "src/adapters/parquet/rename.ts",
+      "sha256": "1f71d8cfdb5f37165c65379bdb0c8cb188ecb5fa107b5bd531a71aa180270d93"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/rename.ts",
+  "title": "ParquetRenameResult"
+}

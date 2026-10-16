@@ -1,0 +1,176 @@
+{
+  "data": {
+    "extensionId": "umf.iceberg",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/iceberg/schema.test.ts",
+          "fixtures/iceberg/oracle-results.json",
+          "fixtures/iceberg/browser-results.json"
+        ],
+        "native": {
+          "subset": "Standalone recursive schema preservation, field-ID and identifier checks, pointer access and candidate edits; no table compatibility or data-reader claim",
+          "system": "Apache Iceberg schema JSON",
+          "version": "1.11.0 spec 6976e020b894f6a6777704df2b8c4458cb291ae9; PyIceberg 0.11.0 oracle"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Exact Iceberg schema JSON with field identity and explicit table-context limits",
+      "id": "umf.iceberg",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:iceberg:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "iceberg-schema-json"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-020. Native JSON tokens remain authoritative. Identifier fields do not imply enforced uniqueness. Table metadata, storage evolution and default execution remain separate.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"icebergRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/iceberg/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.iceberg\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"icebergRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/iceberg/schema.json\",\"\"]",
+    "[\"integration\",\"umf.iceberg@0.1.0:import\"]",
+    "[\"integration\",\"umf.iceberg@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3621,
+      "path": "spec/extensions/iceberg/package.json",
+      "sha256": "3116085a064adb8cf13aa9ae035fb719f8f9a844444e3e74dee14696ecf2de31"
+    }
+  ],
+  "summary": "Exact Iceberg schema JSON with field identity and explicit table-context limits",
+  "title": "umf.iceberg · 0.1.0"
+}

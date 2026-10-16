@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2394,
+        "line": 13,
+        "path": "src/adapters/parquet/footer.ts",
+        "sha256": "9d7f0077301cc2877fa46e12b515461d2333387af641f64e50dd30c2ff34ef07"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetFooterDecode",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetFooterDecode {source:Document;status:'decoded'|'blocked';complete:false;diagnostics:Diagnostic[];value?:ParquetWireValue;consumedBytes?:number;trailingBytes?:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetFooterDecode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2394,
+      "line": 13,
+      "path": "src/adapters/parquet/footer.ts",
+      "sha256": "9d7f0077301cc2877fa46e12b515461d2333387af641f64e50dd30c2ff34ef07"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/footer.ts",
+  "title": "ParquetFooterDecode"
+}

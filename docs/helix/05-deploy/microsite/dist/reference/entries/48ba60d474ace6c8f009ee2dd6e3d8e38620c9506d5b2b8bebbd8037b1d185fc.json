@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 2921,
+        "path": "spec/extensions/typespec/package.json",
+        "sha256": "8e1a09756c146cc09e0382779033c0c5f2431ac3512f7155b0b97363097b115e"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.typespec@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.typespec@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TypeSpec · 1.16.0",
+      "subset": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossless projection claim",
+      "targetSystem": "TypeSpec · 1.16.0",
+      "title": "umf.typespec · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.typespec@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.typespec\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossless projection claim",
+  "title": "umf.typespec · export"
+}

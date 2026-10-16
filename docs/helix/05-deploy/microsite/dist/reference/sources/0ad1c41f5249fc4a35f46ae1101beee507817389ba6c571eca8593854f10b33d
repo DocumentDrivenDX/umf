@@ -1,0 +1,198 @@
+{
+  "id": "umf.sqlserver.relationships",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Qualified SQL Server relationship observations",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:sqlserver:relationship-binding:1.0.0",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.sqlserver.relationships",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference"
+        }
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "table": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "schema",
+                "name"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "nativeForeignKey": {},
+            "referencedKeys": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nativeKey": {}
+                },
+                "required": [
+                  "path",
+                  "nativeKey"
+                ]
+              },
+              "minItems": 0
+            },
+            "sourceFields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "module",
+                  "element"
+                ]
+              },
+              "minItems": 0
+            },
+            "targetFields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "module",
+                  "element"
+                ]
+              },
+              "minItems": 0
+            },
+            "enforcement": {
+              "enum": [
+                "enabled-trusted",
+                "enabled-untrusted",
+                "disabled",
+                "unknown"
+              ]
+            },
+            "authorIntent": {
+              "const": "unknown"
+            },
+            "provenance": {
+              "const": "inferred"
+            },
+            "deleteAction": {
+              "type": "string",
+              "minLength": 1
+            },
+            "updateAction": {
+              "type": "string",
+              "minLength": 1
+            },
+            "notForReplication": {
+              "type": "boolean"
+            },
+            "resolution": {
+              "enum": [
+                "captured-tuple-candidate",
+                "unresolved"
+              ]
+            }
+          },
+          "required": [
+            "nativePath",
+            "table",
+            "name",
+            "nativeForeignKey",
+            "referencedKeys",
+            "sourceFields",
+            "targetFields",
+            "enforcement",
+            "authorIntent",
+            "provenance",
+            "deleteAction",
+            "updateAction",
+            "notForReplication",
+            "resolution"
+          ]
+        },
+        "minItems": 0
+      }
+    },
+    "required": [
+      "origin",
+      "binding",
+      "observations"
+    ]
+  },
+  "semantics": "CONTRACT-041 and TD-045. Native observations preserve refinements and never infer authored intent.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "SQL Server",
+      "version": "16.0.4295.3",
+      "subset": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference"
+    },
+    "evidence": [
+      "tests/core-ideals/relationship-sqlserver.test.ts",
+      "fixtures/validation/relationship-sqlserver-native.json",
+      "fixtures/validation/relationship-sqlserver-browser.json"
+    ]
+  }
+}

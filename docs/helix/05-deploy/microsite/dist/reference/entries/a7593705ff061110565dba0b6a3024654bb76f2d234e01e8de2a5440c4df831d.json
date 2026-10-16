@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10869,
+        "line": 7,
+        "path": "src/projections/avro-tablespec.ts",
+        "sha256": "d7775ec655ba9c355c98e24d6a6f387409ba3d7fb2af3ef282ec71fdf262f3e1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroTableSpecRepresentation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type AvroTableSpecRepresentation='string'|'integer32'|'float32'|'boolean'|'decimal'|'date'|'timestamp'|'local-timestamp'|'hex-text'|'json-text';"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroTableSpecRepresentation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10869,
+      "line": 7,
+      "path": "src/projections/avro-tablespec.ts",
+      "sha256": "d7775ec655ba9c355c98e24d6a6f387409ba3d7fb2af3ef282ec71fdf262f3e1"
+    }
+  ],
+  "summary": "Type declaration · src/projections/avro-tablespec.ts",
+  "title": "AvroTableSpecRepresentation"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17297,
+        "line": 132,
+        "path": "src/core-ideals/key-sqlserver-projection.ts",
+        "sha256": "8973415a4aa9b380b20e093cc78d125528f00cfc0a148d2f1e84600d6a9fe67d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverKeysSqlServerIdeal",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverKeysSqlServerIdeal\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17297,
+      "line": 132,
+      "path": "src/core-ideals/key-sqlserver-projection.ts",
+      "sha256": "8973415a4aa9b380b20e093cc78d125528f00cfc0a148d2f1e84600d6a9fe67d"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/key-sqlserver-projection.ts",
+  "title": "recoverKeysSqlServerIdeal"
+}

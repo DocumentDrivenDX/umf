@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5965,
+        "line": 51,
+        "path": "src/projections/binding-sqlserver/tables-indexes.ts",
+        "sha256": "fbf5b3c85305f10281ad12a6fcd0399336f361b4d311f0726a0f68180b34ab17"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectBindingTablesAndIndexesFromPlanToSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logical: Document, binding: Document, policy: SqlServerTablePolicy, lossPolicy: \"strict\" | \"report\", nativeSource?: string | undefined): SqlServerTableProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectBindingTablesAndIndexesFromPlanToSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5965,
+      "line": 51,
+      "path": "src/projections/binding-sqlserver/tables-indexes.ts",
+      "sha256": "fbf5b3c85305f10281ad12a6fcd0399336f361b4d311f0726a0f68180b34ab17"
+    }
+  ],
+  "summary": "Generate relationship-independent SQL Server DDL from authored inputs; catalog evidence is optional.",
+  "title": "projectBindingTablesAndIndexesFromPlanToSqlServer"
+}

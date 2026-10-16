@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 9467,
+        "path": "spec/extensions/shacl/package.json",
+        "sha256": "6a8e65fec3e29383a26160adf8457075c365e432045081c6c3701c9e37509fdd"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.shacl@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.shacl@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "SHACL · W3C Recommendation 2017-07-20",
+      "subset": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim",
+      "targetSystem": "UMF",
+      "title": "umf.shacl · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.shacl@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.shacl\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim",
+  "title": "umf.shacl · import"
+}

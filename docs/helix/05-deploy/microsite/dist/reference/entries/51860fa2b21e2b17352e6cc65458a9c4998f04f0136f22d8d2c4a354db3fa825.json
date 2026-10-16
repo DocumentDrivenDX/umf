@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22860,
+        "line": 17,
+        "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+        "sha256": "e2298b9d5f89937e30989e64ed6e3f437066b1466cb44938cad2c97da8b50126"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRelationshipLayout",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRelationshipLayout {\n relationship:{module:string;id:string};storage:'foreign_key'|'junction'|'edge';carrierTable:string;\n targetKey:PostgresqlLayoutKeyRef;targetConstraint:string;targetComponents:PostgresqlLayoutEndpointComponent[];\n sourceKey?:PostgresqlLayoutKeyRef;sourceConstraint?:string;sourceComponents?:PostgresqlLayoutEndpointComponent[];\n associationRecord?:CoreKeyFieldReference;associationKey?:PostgresqlLayoutKeyRef;\n discriminator?:PostgresqlLayoutType&{column:string;value:string};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRelationshipLayout\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22860,
+      "line": 17,
+      "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+      "sha256": "e2298b9d5f89937e30989e64ed6e3f437066b1466cb44938cad2c97da8b50126"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/relationship-layout.ts",
+  "title": "PostgresqlRelationshipLayout"
+}

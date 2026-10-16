@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10059,
+        "line": 10,
+        "path": "src/projections/sqlserver-avro.ts",
+        "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectSqlServerToAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, input: SqlServerAvroPolicy): SqlServerAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectSqlServerToAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10059,
+      "line": 10,
+      "path": "src/projections/sqlserver-avro.ts",
+      "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+    }
+  ],
+  "summary": "Public export · src/projections/sqlserver-avro.ts",
+  "title": "projectSqlServerToAvro"
+}

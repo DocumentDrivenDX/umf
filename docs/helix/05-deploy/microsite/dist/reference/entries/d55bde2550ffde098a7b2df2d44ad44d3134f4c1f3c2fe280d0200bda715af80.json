@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4215,
+        "line": 7,
+        "path": "src/adapters/parquet/containers.ts",
+        "sha256": "27465b92962eae9e52ec10d7795d782394e6785d8e4d22cd99493fb4e63486aa"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectParquetContainers",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetContainerInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectParquetContainers\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4215,
+      "line": 7,
+      "path": "src/adapters/parquet/containers.ts",
+      "sha256": "27465b92962eae9e52ec10d7795d782394e6785d8e4d22cd99493fb4e63486aa"
+    }
+  ],
+  "summary": "Native reading interpretation only; source structure, names and annotations remain authoritative.",
+  "title": "inspectParquetContainers"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13283,
+        "line": 11,
+        "path": "src/projections/ddd-postgresql/tables.ts",
+        "sha256": "3789f24aac49742f2499bb09fd716eaca2ac529da7ae69ae34feca6a6eaf5262"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddPostgresqlTableMapping",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddPostgresqlTableMapping {sourcePath:string;target:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddPostgresqlTableMapping\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13283,
+      "line": 11,
+      "path": "src/projections/ddd-postgresql/tables.ts",
+      "sha256": "3789f24aac49742f2499bb09fd716eaca2ac529da7ae69ae34feca6a6eaf5262"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/tables.ts",
+  "title": "DddPostgresqlTableMapping"
+}

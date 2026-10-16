@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10849,
+        "line": 19,
+        "path": "src/core-ideals/cardinality-tablespec.ts",
+        "sha256": "e63b7438c04f01d52996d9970cf242881fc3f00773fc5e78b24e4cc448de94c1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecCardinalityRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecCardinalityRequest {\n column:number;mode:'strict'|'report';profile:'runtime-model'|'checked-schema'|'unresolved';author?:CoreCardinalityDeclaration;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecCardinalityRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10849,
+      "line": 19,
+      "path": "src/core-ideals/cardinality-tablespec.ts",
+      "sha256": "e63b7438c04f01d52996d9970cf242881fc3f00773fc5e78b24e4cc448de94c1"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-tablespec.ts",
+  "title": "TableSpecCardinalityRequest"
+}

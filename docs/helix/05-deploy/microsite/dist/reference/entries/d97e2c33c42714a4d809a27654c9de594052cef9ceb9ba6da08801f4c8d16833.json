@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2865,
+        "line": 4,
+        "path": "src/adapters/arrow/ipc.ts",
+        "sha256": "090f18dbbcbda0297ade9b6e9217ba92decca462a6af98117d85cfb26d3bda01"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowSchemaIpcBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowSchemaIpcBackend {\n identity:'apache-arrow@21.2.0';\n encode(schema:unknown):{before:unknown;after:unknown;bytes:Uint8Array};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowSchemaIpcBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2865,
+      "line": 4,
+      "path": "src/adapters/arrow/ipc.ts",
+      "sha256": "090f18dbbcbda0297ade9b6e9217ba92decca462a6af98117d85cfb26d3bda01"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/ipc.ts",
+  "title": "ArrowSchemaIpcBackend"
+}

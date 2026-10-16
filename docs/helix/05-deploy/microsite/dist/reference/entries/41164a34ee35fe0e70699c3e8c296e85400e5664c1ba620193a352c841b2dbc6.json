@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11420,
+        "line": 25,
+        "path": "src/core-ideals/nullability-parquet.ts",
+        "sha256": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetNullabilityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetNullabilityClassification {\n operation:'classify-parquet-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetNullabilityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:Json;ancestry:{index:number;repetition:'required'|'optional'|'repeated';definitionLevel:number;repetitionLevel:number}[];contextIndex:number|null;absencePaths:string[];nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:ParquetNullabilityRequest['scope'];carrier:ParquetNullabilityRequest['carrier'];basis:'Physical definition-level availability in the selected context; repeated cardinality, writer inputs, Arrow metadata and logical refinements remain separate'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11420,
+      "line": 25,
+      "path": "src/core-ideals/nullability-parquet.ts",
+      "sha256": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-parquet.ts",
+  "title": "ParquetNullabilityClassification"
+}

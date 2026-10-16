@@ -1,0 +1,1861 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/scalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/element"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/version"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/module"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/knownScalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/scalarType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/element"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/version"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/id"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/module"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field/$defs/extensions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/residual"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/field"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/legacy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/upgrade"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/upgrade"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+        "target": "#/$defs/rollback"
+      }
+    ],
+    "role": "other",
+    "schemaPath": "spec/core/nullability-transition.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "field": {
+              "kind": "object",
+              "members": {
+                "$defs": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "allOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "record"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "group"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "boolean",
+                                          "value": false
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "nullability": {
+                                          "kind": "object",
+                                          "members": {}
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "nullability"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "field"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "description": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "nullability": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "references": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "scalarType": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/scalarType"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "extensions"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/field/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "knownElementKind": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "field"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "group"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownNullability": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "required"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "absent-allowed"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unspecified"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownScalarType": {
+                      "kind": "object",
+                      "members": {
+                        "description": {
+                          "kind": "string",
+                          "value": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+                        },
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "boolean"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "integer"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "decimal"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "float"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "binary"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "date"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "time"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "timestamp"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "elements": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/element"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "namespace"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "elements"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "reference": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "element": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "module": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            },
+                            "role": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "role"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "module"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "scalarType": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/field/$defs/knownScalarType"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Unknown family retained with incomplete semantic validation."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "not": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/knownScalarType"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Explicit ideal value availability on Fields. No implicit upgrade from older envelopes, native NULL mapping, or default execution."
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field/$defs/extensions"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field/$defs/id"
+                        }
+                      }
+                    },
+                    "modules": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/field/$defs/module"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "umf": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "0.3.0"
+                        }
+                      }
+                    },
+                    "vocabularies": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/field/$defs/version"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/field/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "umf"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "vocabularies"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "modules"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "title": {
+                  "kind": "string",
+                  "value": "UMF 0.3.0 nullability envelope"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "legacy": {
+              "kind": "object",
+              "members": {
+                "$defs": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "allOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "if": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "record"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "group"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "scalarType": {
+                                          "kind": "boolean",
+                                          "value": false
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "description": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "references": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "scalarType": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/scalarType"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "extensions"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/legacy/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "knownElementKind": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "field"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "group"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "knownScalarType": {
+                      "kind": "object",
+                      "members": {
+                        "description": {
+                          "kind": "string",
+                          "value": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+                        },
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "boolean"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "integer"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "decimal"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "float"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "binary"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "date"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "time"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "timestamp"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "elements": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/element"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extensions": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/extensions"
+                                }
+                              }
+                            },
+                            "id": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "namespace"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "elements"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "reference": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "element": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "module": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            },
+                            "role": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "role"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "module"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "scalarType": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/legacy/$defs/knownScalarType"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "string",
+                                  "value": "Unknown family retained with incomplete semantic validation."
+                                },
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "not": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/knownScalarType"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Opt-in field/record/group roles. No implicit upgrade from 0.1.0. Provenance, migration and binding evidence remain required."
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "extensions": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy/$defs/extensions"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy/$defs/id"
+                        }
+                      }
+                    },
+                    "modules": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/legacy/$defs/module"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "umf": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "0.2.0"
+                        }
+                      }
+                    },
+                    "vocabularies": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/legacy/$defs/version"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "propertyNames": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/legacy/$defs/id"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "umf"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "vocabularies"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "modules"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "title": {
+                  "kind": "string",
+                  "value": "UMF 0.2.0 field envelope"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "residual": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "path": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^/modules/[0-9]+/elements/[0-9]+/nullability$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "reason": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "Legacy nullability is opaque; no availability assertion inferred"
+                        }
+                      }
+                    },
+                    "value": {
+                      "kind": "object",
+                      "members": {}
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "path"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "value"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "reason"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "rollback": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "operation": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "rollback-nullability-envelope"
+                        }
+                      }
+                    },
+                    "reason": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "Original envelope restored; all subsequent content retained in source, not applied to legacy target"
+                        }
+                      }
+                    },
+                    "receipt": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/upgrade"
+                        }
+                      }
+                    },
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field"
+                        }
+                      }
+                    },
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "operation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "receipt"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "reason"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "upgrade": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "operation": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "upgrade-nullability-envelope"
+                        }
+                      }
+                    },
+                    "residuals": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/residual"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/legacy"
+                        }
+                      }
+                    },
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/field"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "operation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "residuals"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:nullability-transition:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "oneOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/upgrade"
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/rollback"
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Explicit Nullability envelope transition receipts"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/nullability-transition.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13477,
+      "path": "spec/core/nullability-transition.schema.json",
+      "sha256": "718bd9783b520faf87754d6e008c93eee918478309ca0a434e9d37299bbb43a3"
+    }
+  ],
+  "summary": "spec/core/nullability-transition.schema.json",
+  "title": "Explicit Nullability envelope transition receipts"
+}

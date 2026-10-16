@@ -1,0 +1,103 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql.nullability",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/nullability-postgresql.test.ts",
+          "fixtures/validation/nullability-postgresql-native.json"
+        ],
+        "native": {
+          "subset": "Captured PostgreSQL 17.4 stored-column declarations; excludes query results and input omission; not live enforcement verification",
+          "system": "PostgreSQL",
+          "version": "17.4"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Retained relation and SQL-NULL carrier scope for a PostgreSQL availability observation; not native execution or equivalence",
+      "id": "umf.postgresql.nullability",
+      "schema": {
+        "$id": "urn:umf:postgresql:nullability-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.postgresql.nullability",
+              "version": "1.0.0"
+            }
+          },
+          "carrier": {
+            "enum": [
+              "sql-null",
+              "unresolved"
+            ]
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "scope": {
+            "enum": [
+              "stored-relation",
+              "query-result",
+              "write-input",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "scope",
+          "carrier",
+          "interpretation",
+          "nativePath"
+        ],
+        "title": "Retained PostgreSQL availability binding scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-041 PostgreSQL up-classification; core 0.3.0 ideal label is qualified by this retained scope. Unknown refinements must remain attached.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql-nullability/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql.nullability\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql-nullability/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql.nullability@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1951,
+      "path": "spec/extensions/postgresql-nullability/package.json",
+      "sha256": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b"
+    }
+  ],
+  "summary": "Retained relation and SQL-NULL carrier scope for a PostgreSQL availability observation; not native execution or equivalence",
+  "title": "umf.postgresql.nullability · 1.0.0"
+}

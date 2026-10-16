@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8731,
+        "line": 11,
+        "path": "src/adapters/parquet/arrow-rename.ts",
+        "sha256": "f05e39a83c93693952fc10267f1f1962476fffbd0889c57e8cd76201cecaf541"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetArrowRenameResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetArrowRenameResult {source:Document;policy:ParquetArrowRenamePolicy;status:'blocked'|'transformed';complete:false;diagnostics:Diagnostic[];output?:Document;unchangedPrefixBytes?:number;rename?:{from:string[];to:string[];parquetFrom?:string[];parquetTo?:string[]}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetArrowRenameResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8731,
+      "line": 11,
+      "path": "src/adapters/parquet/arrow-rename.ts",
+      "sha256": "f05e39a83c93693952fc10267f1f1962476fffbd0889c57e8cd76201cecaf541"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/arrow-rename.ts",
+  "title": "ParquetArrowRenameResult"
+}

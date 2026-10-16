@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3074,
+        "line": 1,
+        "path": "spec/extensions/parquet/offset-repair.schema.json",
+        "sha256": "8afa520ec060cdd6a50c7815e96df4195a2570c3a19426bde6e1c786355a4e19"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "parquetOffsetRepairSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:parquet:offset-repair:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"source\",\n    \"status\",\n    \"complete\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"status\": {\n      \"enum\": [\n        \"transformed\",\n        \"blocked\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"output\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"unchangedPrefixBytes\": {\n      \"type\": \"integer\",\n      \"minimum\": 4\n    },\n    \"repairs\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"rowGroup\",\n          \"column\",\n          \"oldDataOffset\",\n          \"dataOffset\",\n          \"dictionaryOffset\"\n        ],\n        \"properties\": {\n          \"rowGroup\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"column\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"oldDataOffset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"dataOffset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"dictionaryOffset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"transformed\"\n          }\n        }\n      },\n      \"then\": {\n        \"properties\": {\n          \"output\": true,\n          \"repairs\": true,\n          \"unchangedPrefixBytes\": true\n        },\n        \"required\": [\n          \"output\",\n          \"repairs\",\n          \"unchangedPrefixBytes\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"anyOf\": [\n            {\n              \"properties\": {\n                \"output\": true\n              },\n              \"required\": [\n                \"output\"\n              ]\n            },\n            {\n              \"properties\": {\n                \"repairs\": true\n              },\n              \"required\": [\n                \"repairs\"\n              ]\n            },\n            {\n              \"properties\": {\n                \"unchangedPrefixBytes\": true\n              },\n              \"required\": [\n                \"unchangedPrefixBytes\"\n              ]\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"parquetOffsetRepairSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3074,
+      "line": 1,
+      "path": "spec/extensions/parquet/offset-repair.schema.json",
+      "sha256": "8afa520ec060cdd6a50c7815e96df4195a2570c3a19426bde6e1c786355a4e19"
+    }
+  ],
+  "summary": "Public export · spec/extensions/parquet/offset-repair.schema.json",
+  "title": "parquetOffsetRepairSchema"
+}

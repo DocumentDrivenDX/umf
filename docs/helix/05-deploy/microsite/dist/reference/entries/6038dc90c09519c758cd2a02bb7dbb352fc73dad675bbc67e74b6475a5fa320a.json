@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4865,
+        "line": 12,
+        "path": "src/adapters/odcs/rename.ts",
+        "sha256": "9faf54fb19b7e53c3cb2e00223d2e958faf68adf34603c1e633023c5a4bc5122"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeOdcsElementRename",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { reference: string; name: string; }): OdcsRenameResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeOdcsElementRename\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4865,
+      "line": 12,
+      "path": "src/adapters/odcs/rename.ts",
+      "sha256": "9faf54fb19b7e53c3cb2e00223d2e958faf68adf34603c1e633023c5a4bc5122"
+    }
+  ],
+  "summary": "Rename an ID-selected element while preserving the currently resolved local foreign-key endpoints.",
+  "title": "proposeOdcsElementRename"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7873,
+        "line": 15,
+        "path": "src/projections/openapi-json-schema.ts",
+        "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectOpenapiToJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, input: OpenapiJsonSchemaPolicy): OpenapiJsonSchemaProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectOpenapiToJsonSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7873,
+      "line": 15,
+      "path": "src/projections/openapi-json-schema.ts",
+      "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+    }
+  ],
+  "summary": "Project static JSON instance constraints with explicit API/annotation losses.",
+  "title": "projectOpenapiToJsonSchema"
+}

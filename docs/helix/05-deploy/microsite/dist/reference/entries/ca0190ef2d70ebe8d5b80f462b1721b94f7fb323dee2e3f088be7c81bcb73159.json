@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4654,
+        "line": 19,
+        "path": "src/adapters/arrow/ipc-consistency.ts",
+        "sha256": "7b83af801aece8a9e400261ea36fa8bc71eb566af531b80e93479ff919dce9bc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectArrowIpcConsistency",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): ArrowIpcConsistency"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectArrowIpcConsistency\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4654,
+      "line": 19,
+      "path": "src/adapters/arrow/ipc-consistency.ts",
+      "sha256": "7b83af801aece8a9e400261ea36fa8bc71eb566af531b80e93479ff919dce9bc"
+    }
+  ],
+  "summary": "Compares file footer declarations to observed embedded-stream metadata and extents.",
+  "title": "inspectArrowIpcConsistency"
+}

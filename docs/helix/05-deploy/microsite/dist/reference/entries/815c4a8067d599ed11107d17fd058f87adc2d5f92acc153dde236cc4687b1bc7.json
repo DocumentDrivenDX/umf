@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7231,
+        "line": 27,
+        "path": "src/model/schema-properties.ts",
+        "sha256": "779f994c669e6ccd9ce2e19b7c77a69bd8d38771ea358fd37da61f46ffee9d4c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreSchemaProperties",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreSchemaPropertyIdentity): { operation: \"inspect-core-schema-properties\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreSchemaProperties\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7231,
+      "line": 27,
+      "path": "src/model/schema-properties.ts",
+      "sha256": "779f994c669e6ccd9ce2e19b7c77a69bd8d38771ea358fd37da61f46ffee9d4c"
+    }
+  ],
+  "summary": "Public export · src/model/schema-properties.ts",
+  "title": "inspectCoreSchemaProperties"
+}

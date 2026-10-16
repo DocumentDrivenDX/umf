@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:sqlserver:nullability-evidence:1.0.0",
+  "title": "Native SQL Server availability evidence supplement",
+  "type": "object",
+  "required": [
+    "profile",
+    "query",
+    "sourceSql",
+    "database_view_definition",
+    "triggers",
+    "alias_types",
+    "column_refinements"
+  ],
+  "properties": {
+    "profile": {
+      "const": "umf-sqlserver-nullability-evidence-v2"
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceSql": {
+      "type": "string"
+    },
+    "database_view_definition": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema",
+          "table",
+          "name",
+          "is_disabled",
+          "is_instead_of_trigger",
+          "definition"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string"
+          },
+          "table": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "is_disabled": {
+            "type": "boolean"
+          },
+          "is_instead_of_trigger": {
+            "type": "boolean"
+          },
+          "definition": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "alias_types": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema",
+          "name",
+          "is_nullable",
+          "default_object_id",
+          "rule_object_id"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "is_nullable": {
+            "type": "boolean"
+          },
+          "default_object_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "rule_object_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "column_refinements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema",
+          "table",
+          "name",
+          "is_sparse",
+          "generated_always_type",
+          "is_hidden",
+          "rule_object_id"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string"
+          },
+          "table": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "is_sparse": {
+            "type": "boolean"
+          },
+          "generated_always_type": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "is_hidden": {
+            "type": "boolean"
+          },
+          "rule_object_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

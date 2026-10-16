@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4043,
+        "line": 5,
+        "path": "src/adapters/iceberg/table-context.ts",
+        "sha256": "46b0d780e1ed3b07d1125179c3fa0c6d002e2407a854e6f5a74b33c58f134c66"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "IcebergTableContext",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergTableContext {\n status:'checked'|'blocked';\n complete:false;\n scope:'iceberg-v1-v3-current-references';\n resolved:Record<string,string>;\n diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"IcebergTableContext\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4043,
+      "line": 5,
+      "path": "src/adapters/iceberg/table-context.ts",
+      "sha256": "46b0d780e1ed3b07d1125179c3fa0c6d002e2407a854e6f5a74b33c58f134c66"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/iceberg/table-context.ts",
+  "title": "IcebergTableContext"
+}

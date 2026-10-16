@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6166,
+        "line": 6,
+        "path": "src/extensions/security/dependencies.ts",
+        "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "securityPolicyDependencies",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policyInput: SecurityPolicy, resolutionInput: SecurityResolution): SecurityDependencies"
+    ]
+  },
+  "id": "[\"api\",\".\",\"securityPolicyDependencies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6166,
+      "line": 6,
+      "path": "src/extensions/security/dependencies.ts",
+      "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+    }
+  ],
+  "summary": "Conservative dependency closure over complete typed meaning; no label-based ownership inference.",
+  "title": "securityPolicyDependencies"
+}

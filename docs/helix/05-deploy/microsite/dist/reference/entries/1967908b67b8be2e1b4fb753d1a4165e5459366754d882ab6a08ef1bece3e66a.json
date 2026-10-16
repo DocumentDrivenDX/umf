@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6503,
+        "line": 36,
+        "path": "src/adapters/linkml/index.ts",
+        "sha256": "f80ae7b078280be0846e472bb5e3afe1159c4e6bc2a31fe0fdc3ed27c9e0b4e0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importLinkmlDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; format: \"json\" | \"yaml\"; metamodelVersion?: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importLinkmlDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6503,
+      "line": 36,
+      "path": "src/adapters/linkml/index.ts",
+      "sha256": "f80ae7b078280be0846e472bb5e3afe1159c4e6bc2a31fe0fdc3ed27c9e0b4e0"
+    }
+  ],
+  "summary": "Public export · src/adapters/linkml/index.ts",
+  "title": "importLinkmlDocument"
+}

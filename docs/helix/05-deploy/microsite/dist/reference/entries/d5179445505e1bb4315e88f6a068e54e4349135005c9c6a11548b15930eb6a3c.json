@@ -1,0 +1,1218 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/identity"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/profile"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/field"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
+        "target": "urn:umf:core:0.8.0#/$defs/literal"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/model"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/artifact"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/profile"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/artifact"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/field"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/action"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/key"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+        "target": "urn:umf:actions:plan:1#/$defs/assignment"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/actions/plan.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "action": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "documentSha256": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[0-9a-f]{64}$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "identity": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan:1#/$defs/identity"
+                        }
+                      }
+                    },
+                    "invocation": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan:1#/$defs/profile"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "identity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "documentSha256"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "invocation"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "artifact": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "mediaType": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "sha256": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[0-9a-f]{64}$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "utf8": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "1048576"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "mediaType"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "utf8"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sha256"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "assignment": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "field": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan:1#/$defs/field"
+                        }
+                      }
+                    },
+                    "input": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "value": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:core:0.8.0#/$defs/literal"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "input"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "field"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "value"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "diagnostic": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "code": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "message": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "1024"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "path": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "code"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "path"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "message"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "field": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "id": {
+              "kind": "object",
+              "members": {
+                "maxLength": {
+                  "kind": "number",
+                  "value": "256"
+                },
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "identity": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "action": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "action"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "key": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "key": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "key"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "model": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "documentId": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "revision": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "sha256": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[0-9a-f]{64}$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "umfVersion": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "0.8.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "documentId"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "revision"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "umfVersion"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sha256"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "sha256": {
+              "kind": "object",
+              "members": {
+                "pattern": {
+                  "kind": "string",
+                  "value": "^[0-9a-f]{64}$"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:actions:plan:1"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "action": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/action"
+                }
+              }
+            },
+            "annotations": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "execution": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "atomicity": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "batch"
+                        }
+                      }
+                    },
+                    "batchSize": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "100"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    },
+                    "conflict": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "stop"
+                        }
+                      }
+                    },
+                    "partition": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "manifest-order"
+                        }
+                      }
+                    },
+                    "selection": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "frozen"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "selection"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "atomicity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "conflict"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "partition"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "batchSize"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "inputs": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "assignments": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:actions:plan:1#/$defs/assignment"
+                            }
+                          }
+                        },
+                        "maxItems": {
+                          "kind": "number",
+                          "value": "64"
+                        },
+                        "minItems": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "entityParameter": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "entityParameter"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "assignments"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "limits": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "maxItems": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "10000"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    },
+                    "maxManifestBytes": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "16777216"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "maxItems"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "maxManifestBytes"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "model": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/model"
+                }
+              }
+            },
+            "protocol": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "umf.actions.plan/1"
+                }
+              }
+            },
+            "selection": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "artifact": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan:1#/$defs/artifact"
+                        }
+                      }
+                    },
+                    "dependencies": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:actions:plan:1#/$defs/field"
+                            }
+                          }
+                        },
+                        "maxItems": {
+                          "kind": "number",
+                          "value": "256"
+                        },
+                        "minItems": {
+                          "kind": "number",
+                          "value": "0"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "profile": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:actions:plan:1#/$defs/profile"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "profile"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "artifact"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "dependencies"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/artifact"
+                }
+              }
+            },
+            "target": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:actions:plan:1#/$defs/key"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "protocol"
+            },
+            {
+              "kind": "string",
+              "value": "model"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "selection"
+            },
+            {
+              "kind": "string",
+              "value": "action"
+            },
+            {
+              "kind": "string",
+              "value": "target"
+            },
+            {
+              "kind": "string",
+              "value": "inputs"
+            },
+            {
+              "kind": "string",
+              "value": "execution"
+            },
+            {
+              "kind": "string",
+              "value": "limits"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 7328,
+      "path": "spec/extensions/actions/plan.schema.json",
+      "sha256": "6ab8bf676e60724792cf2ac41c7c3cd1c143a5c3173e9b63b334672e92547089"
+    }
+  ],
+  "summary": "spec/extensions/actions/plan.schema.json",
+  "title": "plan.schema.json"
+}

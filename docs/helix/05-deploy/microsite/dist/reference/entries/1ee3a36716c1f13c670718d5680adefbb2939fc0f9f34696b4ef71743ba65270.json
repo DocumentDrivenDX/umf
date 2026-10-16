@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5627,
+        "line": 5,
+        "path": "src/core-ideals/record-report.ts",
+        "sha256": "31175fbce46d5055a713e75cada1e30d1a0b9ea5ec0c2f5d26ae0ec24527a486"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AuthoredRecordProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type AuthoredRecordProjection=RecordTableSpecProjection|RecordPostgresqlProjection|RecordSqlServerProjection|RecordAvroProjection|RecordParquetProjection;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AuthoredRecordProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5627,
+      "line": 5,
+      "path": "src/core-ideals/record-report.ts",
+      "sha256": "31175fbce46d5055a713e75cada1e30d1a0b9ea5ec0c2f5d26ae0ec24527a486"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-report.ts",
+  "title": "AuthoredRecordProjection"
+}

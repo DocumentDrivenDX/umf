@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2108,
+        "line": 1,
+        "path": "spec/core/postgresql-key-catalog-correlation.schema.json",
+        "sha256": "96e6d77ad1dbc7701b201ffd38e21cf09d0ba24232030a7e366718f8e00e5ba4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "postgresqlKeyCatalogCorrelationSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:postgresql-key-catalog-correlation:1.0.0\",\n  \"title\": \"PostgreSQL Key catalog correlation result; consistency only\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"nativeSupplement\",\n    \"root\",\n    \"nativeCatalog\",\n    \"matches\",\n    \"sameSnapshotVerified\",\n    \"authenticated\",\n    \"idealEqualityVerified\"\n  ],\n  \"properties\": {\n    \"nativeSupplement\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"root\": {\n      \"$ref\": \"urn:umf:native-json:0.1.0\"\n    },\n    \"nativeCatalog\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"matches\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"identity\",\n          \"relationPath\",\n          \"indexPath\",\n          \"componentPaths\"\n        ],\n        \"properties\": {\n          \"identity\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\n              \"schema\",\n              \"table\",\n              \"index\"\n            ],\n            \"properties\": {\n              \"schema\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"table\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"index\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              }\n            }\n          },\n          \"relationPath\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          },\n          \"indexPath\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          },\n          \"componentPaths\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ]\n            }\n          }\n        }\n      }\n    },\n    \"sameSnapshotVerified\": {\n      \"const\": false\n    },\n    \"authenticated\": {\n      \"const\": false\n    },\n    \"idealEqualityVerified\": {\n      \"const\": false\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"postgresqlKeyCatalogCorrelationSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2108,
+      "line": 1,
+      "path": "spec/core/postgresql-key-catalog-correlation.schema.json",
+      "sha256": "96e6d77ad1dbc7701b201ffd38e21cf09d0ba24232030a7e366718f8e00e5ba4"
+    }
+  ],
+  "summary": "Public export · spec/core/postgresql-key-catalog-correlation.schema.json",
+  "title": "postgresqlKeyCatalogCorrelationSchema"
+}

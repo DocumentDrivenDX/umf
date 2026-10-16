@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3526,
+        "line": 27,
+        "path": "src/adapters/protobuf/source.ts",
+        "sha256": "b30928b75d0b74674625d2bb25d6462ee4553b1ae58188c138438b252b4bd004"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "exportProtobufSources",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, emitter: ProtobufSourceEmitter): Promise<{ source: Document; diagnostics: Diagnostic[]; files: Record<string, string>; compiler: string; printer: string; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"exportProtobufSources\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3526,
+      "line": 27,
+      "path": "src/adapters/protobuf/source.ts",
+      "sha256": "b30928b75d0b74674625d2bb25d6462ee4553b1ae58188c138438b252b4bd004"
+    }
+  ],
+  "summary": "Emit current descriptors; the original source archive is never replayed.",
+  "title": "exportProtobufSources"
+}

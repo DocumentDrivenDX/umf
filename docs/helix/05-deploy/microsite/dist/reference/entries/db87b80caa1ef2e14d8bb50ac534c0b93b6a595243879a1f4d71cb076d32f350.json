@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12137,
+        "line": 26,
+        "path": "src/core-ideals/facets-tablespec-projection.ts",
+        "sha256": "57e767f5466b6de295673fa908d3c927a0f4410eec91390a1735b2a40cd2ec67"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFacetsToTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Author, options: FacetsTableSpecRequest): FacetsTableSpecProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFacetsToTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12137,
+      "line": 26,
+      "path": "src/core-ideals/facets-tablespec-projection.ts",
+      "sha256": "57e767f5466b6de295673fa908d3c927a0f4410eec91390a1735b2a40cd2ec67"
+    }
+  ],
+  "summary": "Project verified author intent. Native carrier defaults never become author assertions.",
+  "title": "projectFacetsToTableSpec"
+}

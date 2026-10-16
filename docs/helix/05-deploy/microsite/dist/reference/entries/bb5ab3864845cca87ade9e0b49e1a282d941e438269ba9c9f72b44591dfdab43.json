@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18078,
+        "line": 39,
+        "path": "src/core-ideals/facets-tablespec.ts",
+        "sha256": "85788db939b162e3ca3af3d7aa06919afb4f428218d906e38ecde96033462f5d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyTableSpecFacets",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: TableSpecFacetRequest): TableSpecFacetClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyTableSpecFacets\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18078,
+      "line": 39,
+      "path": "src/core-ideals/facets-tablespec.ts",
+      "sha256": "85788db939b162e3ca3af3d7aa06919afb4f428218d906e38ecde96033462f5d"
+    }
+  ],
+  "summary": "Qualified interpretation, never native validation or execution. No implicit migration.",
+  "title": "classifyTableSpecFacets"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13184,
+        "line": 4,
+        "path": "src/domain-packs/medical.ts",
+        "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "MedicalRow",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type MedicalRow = Record<string, string | boolean | null>;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"MedicalRow\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13184,
+      "line": 4,
+      "path": "src/domain-packs/medical.ts",
+      "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+    }
+  ],
+  "summary": "Type declaration · src/domain-packs/medical.ts",
+  "title": "MedicalRow"
+}

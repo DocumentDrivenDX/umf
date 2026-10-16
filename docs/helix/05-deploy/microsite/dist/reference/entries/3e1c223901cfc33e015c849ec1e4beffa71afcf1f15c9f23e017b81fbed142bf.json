@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 5350,
+        "path": "spec/extensions/openapi/package.json",
+        "sha256": "dc6a79ceedd394ec253f7db3e67cb157d5d8ac6efdb3e4f37c7c16a8310cd45b"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.openapi@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.openapi@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "OpenAPI · Swagger 2.0 schema 2017-08-27; OpenAPI 3.0 schema 2024-10-18; 3.1 schema 2026-08-03; 3.2 schema 2026-08-30",
+      "subset": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; references and runtime rules remain incomplete; explicit URI-addressed resource archives and literal document-pointer lookup, without schema scope inference",
+      "targetSystem": "UMF",
+      "title": "umf.openapi · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.openapi@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.openapi\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; references and runtime rules remain incomplete; explicit URI-addressed resource archives and literal document-pointer lookup, without schema scope inference",
+  "title": "umf.openapi · import"
+}

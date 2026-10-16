@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14243,
+        "line": 13,
+        "path": "src/adapters/sqlserver/index.ts",
+        "sha256": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerColumnMetadata",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerColumnMetadata {path:string;table:{schema:string;name:string};element:Element;nativeColumn:NativeJson;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerColumnMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14243,
+      "line": 13,
+      "path": "src/adapters/sqlserver/index.ts",
+      "sha256": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/sqlserver/index.ts",
+  "title": "SqlServerColumnMetadata"
+}

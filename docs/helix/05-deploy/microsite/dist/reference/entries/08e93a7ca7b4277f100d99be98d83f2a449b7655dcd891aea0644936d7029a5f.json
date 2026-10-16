@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10653,
+        "line": 36,
+        "path": "src/core-ideals/nullability-tablespec.ts",
+        "sha256": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyTableSpecNullability",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: TableSpecNullabilityRequest): TableSpecNullabilityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyTableSpecNullability\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10653,
+      "line": 36,
+      "path": "src/core-ideals/nullability-tablespec.ts",
+      "sha256": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b"
+    }
+  ],
+  "summary": "Read exact declarations under the caller's profile/context/carrier. Never use native coercion or defaults as ideal meaning.",
+  "title": "classifyTableSpecNullability"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2289,
+        "line": 6,
+        "path": "src/adapters/arrow/flatbuffer-encode.ts",
+        "sha256": "c55de39ddb1522a16e79c64a451081f61072253e7a36acca34e0431af754cc83"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowFlatbufferEncodingBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowFlatbufferEncodingBackend{identity:'flatbuffers@25.9.23';encode(model:unknown):Uint8Array;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowFlatbufferEncodingBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2289,
+      "line": 6,
+      "path": "src/adapters/arrow/flatbuffer-encode.ts",
+      "sha256": "c55de39ddb1522a16e79c64a451081f61072253e7a36acca34e0431af754cc83"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/flatbuffer-encode.ts",
+  "title": "ArrowFlatbufferEncodingBackend"
+}

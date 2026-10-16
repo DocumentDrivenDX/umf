@@ -1,0 +1,145 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/parquet/hybrid-values.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:parquet:hybrid-values:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "description": {
+          "kind": "string",
+          "value": "Internal raw hybrid decoder result; no automatic handling of level or dictionary prefixes"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "consumedBytes": {
+              "kind": "object",
+              "members": {
+                "maximum": {
+                  "kind": "number",
+                  "value": "8388608"
+                },
+                "minimum": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            },
+            "padding": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "maximum": {
+                      "kind": "number",
+                      "value": "4294967295"
+                    },
+                    "minimum": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "integer"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "7"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "values": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "maximum": {
+                      "kind": "number",
+                      "value": "4294967295"
+                    },
+                    "minimum": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "integer"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "100000"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "values"
+            },
+            {
+              "kind": "string",
+              "value": "consumedBytes"
+            },
+            {
+              "kind": "string",
+              "value": "padding"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/parquet/hybrid-values.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 815,
+      "path": "spec/extensions/parquet/hybrid-values.schema.json",
+      "sha256": "5ffc3252783d46fdbcb759c121fed695cebb221ba0e55ca91122741f69c7eb49"
+    }
+  ],
+  "summary": "Internal raw hybrid decoder result; no automatic handling of level or dictionary prefixes",
+  "title": "hybrid-values.schema.json"
+}

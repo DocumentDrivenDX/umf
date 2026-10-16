@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5558,
+        "line": 9,
+        "path": "src/adapters/delta/multipart.ts",
+        "sha256": "19a557a25cd624cc68a0cf27447f227cb537e0d729ac720036f5d70bfac9df3a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaCheckpointPart",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaCheckpointPart {name:string;source:Document}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaCheckpointPart\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5558,
+      "line": 9,
+      "path": "src/adapters/delta/multipart.ts",
+      "sha256": "19a557a25cd624cc68a0cf27447f227cb537e0d729ac720036f5d70bfac9df3a"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/multipart.ts",
+  "title": "DeltaCheckpointPart"
+}

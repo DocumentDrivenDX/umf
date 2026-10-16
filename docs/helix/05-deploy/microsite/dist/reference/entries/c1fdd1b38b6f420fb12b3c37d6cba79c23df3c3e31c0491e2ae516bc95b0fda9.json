@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11436,
+        "line": 11,
+        "path": "src/core-ideals/key-avro-projection.ts",
+        "sha256": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeyAvroRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeyAvroRequest {\n id:string;record:CoreRecordIdentity;recordName:string;namespace:string;mode:'strict'|'report';\n columns:{field:CoreRecordIdentity;name:string;nativeType:'boolean'|'int'|'long'|'bytes'|'string'|'float'|'double'|'decimal-bytes'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeyAvroRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11436,
+      "line": 11,
+      "path": "src/core-ideals/key-avro-projection.ts",
+      "sha256": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-avro-projection.ts",
+  "title": "KeyAvroRequest"
+}

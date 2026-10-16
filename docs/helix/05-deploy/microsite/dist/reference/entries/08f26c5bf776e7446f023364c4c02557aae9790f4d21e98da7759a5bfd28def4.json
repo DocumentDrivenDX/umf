@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4577,
+        "line": 8,
+        "path": "src/extensions/binding/model-shape-values.ts",
+        "sha256": "406c9f88127c42853ab6dc02c8a068aca9fcba4bfdf27634b664cc5afbf594f1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ModelLiteral",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ModelLiteral=CoreLiteral|{group:{field:{module:string;element:string};value:ModelLiteral}[]}|{array:ModelLiteral[]}|{map:{[key:string]:ModelLiteral}};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ModelLiteral\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4577,
+      "line": 8,
+      "path": "src/extensions/binding/model-shape-values.ts",
+      "sha256": "406c9f88127c42853ab6dc02c8a068aca9fcba4bfdf27634b664cc5afbf594f1"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/binding/model-shape-values.ts",
+  "title": "ModelLiteral"
+}

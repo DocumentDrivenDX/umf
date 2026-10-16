@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4756,
+        "line": 8,
+        "path": "src/extensions/binding/raw-profiles.ts",
+        "sha256": "7ad89fe5e9c7bd1c78bd1199e74cfaefadae36677ce06661e83ee3512ad8973e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "rawTableBindingProfiles",
+    "runtime": "unassessed",
+    "signatureText": [
+      "rawTableBindingProfiles=Object.freeze(\n  (['lakebase','unity-catalog','spark-delta'] as const).map(system=>Object.freeze({\n    system,subset:RAW_TABLE_BINDING_SUBSET,bindingProfile:'umf-binding-2' as const,\n    vocabularyVersion:'0.2.0' as const,nativeQualification:'UNTESTED' as const,\n    directions:Object.freeze([] as string[]),\n  })),\n)"
+    ]
+  },
+  "id": "[\"api\",\".\",\"rawTableBindingProfiles\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4756,
+      "line": 8,
+      "path": "src/extensions/binding/raw-profiles.ts",
+      "sha256": "7ad89fe5e9c7bd1c78bd1199e74cfaefadae36677ce06661e83ee3512ad8973e"
+    }
+  ],
+  "summary": "Public export · src/extensions/binding/raw-profiles.ts",
+  "title": "rawTableBindingProfiles"
+}

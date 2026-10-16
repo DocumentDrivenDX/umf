@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11451,
+        "line": 9,
+        "path": "src/projections/arrow-spark.ts",
+        "sha256": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectArrowToSpark",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, input: ArrowSparkPolicy): ArrowSparkProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectArrowToSpark\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11451,
+      "line": 9,
+      "path": "src/projections/arrow-spark.ts",
+      "sha256": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27"
+    }
+  ],
+  "summary": "Arrow logical schema to Spark 4.0.1 JSON, retaining source independently of recovery.",
+  "title": "projectArrowToSpark"
+}

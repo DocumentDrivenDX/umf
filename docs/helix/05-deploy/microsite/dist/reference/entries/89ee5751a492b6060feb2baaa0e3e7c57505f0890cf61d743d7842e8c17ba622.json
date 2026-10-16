@@ -1,0 +1,194 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/sqlserver-cardinality/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:sqlserver:cardinality-binding:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "basis": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "Explicit representation selection and pinned catalog constraint profile; physical column and logical Field remain distinct"
+                }
+              }
+            },
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.sqlserver.cardinality"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "interpretation": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "declared"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unsupported"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "nativePath": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "origin": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "classified"
+                }
+              }
+            },
+            "physicalColumn": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "native-scalar"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "json-array"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "json-object"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unresolved"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "origin"
+            },
+            {
+              "kind": "string",
+              "value": "physicalColumn"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "interpretation"
+            },
+            {
+              "kind": "string",
+              "value": "nativePath"
+            },
+            {
+              "kind": "string",
+              "value": "basis"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Retained SQL Server Cardinality scope"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/sqlserver-cardinality/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1120,
+      "path": "spec/extensions/sqlserver-cardinality/schema.json",
+      "sha256": "27e0a63019e60cdda2bb2f5f34c5d4a7d43d0e744da4d659909d3759773abede"
+    }
+  ],
+  "summary": "spec/extensions/sqlserver-cardinality/schema.json",
+  "title": "Retained SQL Server Cardinality scope"
+}

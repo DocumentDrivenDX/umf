@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14906,
+        "line": 26,
+        "path": "src/core-ideals/facets-sqlserver-projection.ts",
+        "sha256": "e4a5a0f72c2d6c219105aba99327e1c20835bf279137f0ece1678a2f4983d2f3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFacetsToSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Author, options: FacetsSqlServerRequest): FacetsSqlServerProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFacetsToSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14906,
+      "line": 26,
+      "path": "src/core-ideals/facets-sqlserver-projection.ts",
+      "sha256": "e4a5a0f72c2d6c219105aba99327e1c20835bf279137f0ece1678a2f4983d2f3"
+    }
+  ],
+  "summary": "Project verified author intent. Native carrier defaults never become author assertions.",
+  "title": "projectFacetsToSqlServer"
+}

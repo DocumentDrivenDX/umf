@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7777,
+        "line": 4,
+        "path": "src/core-ideals/avro-record-type.ts",
+        "sha256": "33b6e4845af04f14c91eb21294510ff8e39ac82d4f9b8e6a6e6902fbcb19bdfc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroRecordTypeRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type AvroRecordTypeRequest=Omit<AvroRecordRequest,'path'|'dependencyId'>&{column:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroRecordTypeRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7777,
+      "line": 4,
+      "path": "src/core-ideals/avro-record-type.ts",
+      "sha256": "33b6e4845af04f14c91eb21294510ff8e39ac82d4f9b8e6a6e6902fbcb19bdfc"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/avro-record-type.ts",
+  "title": "AvroRecordTypeRequest"
+}

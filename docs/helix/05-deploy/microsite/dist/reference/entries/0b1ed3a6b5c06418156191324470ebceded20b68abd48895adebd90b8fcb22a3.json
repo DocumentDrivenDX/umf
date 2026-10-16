@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4859,
+        "line": 8,
+        "path": "src/adapters/arrow/ipc-layout.ts",
+        "sha256": "72fd59d43e2902e9e7a33a34c6f6523a732f7e3884480083ca1b6ccb022106f1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectArrowIpcLayout",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): ArrowIpcLayout"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectArrowIpcLayout\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4859,
+      "line": 8,
+      "path": "src/adapters/arrow/ipc-layout.ts",
+      "sha256": "72fd59d43e2902e9e7a33a34c6f6523a732f7e3884480083ca1b6ccb022106f1"
+    }
+  ],
+  "summary": "Inspects encapsulated metadata/body boundaries; does not execute array or dictionary semantics.",
+  "title": "inspectArrowIpcLayout"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1991,
+        "line": 12,
+        "path": "src/domain-packs/loader.ts",
+        "sha256": "b979bdc0db0208a7a44d4110e2546c0b1e5e1ef6887200aa61c41a3fd5f7f7c9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectDomainPackLoader",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown): { valid: boolean; complete: boolean; diagnostics: string[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectDomainPackLoader\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1991,
+      "line": 12,
+      "path": "src/domain-packs/loader.ts",
+      "sha256": "b979bdc0db0208a7a44d4110e2546c0b1e5e1ef6887200aa61c41a3fd5f7f7c9"
+    }
+  ],
+  "summary": "Admission only. This function neither invokes nor resolves a companion.",
+  "title": "inspectDomainPackLoader"
+}

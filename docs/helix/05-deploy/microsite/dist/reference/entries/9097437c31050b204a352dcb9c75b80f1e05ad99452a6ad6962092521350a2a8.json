@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2865,
+        "line": 27,
+        "path": "src/adapters/arrow/ipc.ts",
+        "sha256": "090f18dbbcbda0297ade9b6e9217ba92decca462a6af98117d85cfb26d3bda01"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "exportArrowSchemaIpc",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, backend: ArrowSchemaIpcBackend): Uint8Array<ArrayBufferLike>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"exportArrowSchemaIpc\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2865,
+      "line": 27,
+      "path": "src/adapters/arrow/ipc.ts",
+      "sha256": "090f18dbbcbda0297ade9b6e9217ba92decca462a6af98117d85cfb26d3bda01"
+    }
+  ],
+  "summary": "Schema-only IPC stream. Does not export arrays, dictionary values or arbitrary IPC.",
+  "title": "exportArrowSchemaIpc"
+}

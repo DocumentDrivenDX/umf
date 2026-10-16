@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1151,
+        "line": 1,
+        "path": "spec/extensions/arrow-ipc/rename-result.schema.json",
+        "sha256": "c28a5fa2e2fd83a551cdc4d6d75cec69ab432d4c0ec5d7e7719d7efa23dfeaa9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "arrowIpcRenameSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:arrow-ipc-rename:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"source\",\n    \"document\",\n    \"complete\",\n    \"bodyBytesPreserved\",\n    \"validation\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"document\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"bodyBytesPreserved\": {\n      \"const\": true\n    },\n    \"validation\": {\n      \"$ref\": \"urn:umf:arrow-ipc-consistency:0.1.0\"\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"const\": \"warning\"\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"arrowIpcRenameSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1151,
+      "line": 1,
+      "path": "spec/extensions/arrow-ipc/rename-result.schema.json",
+      "sha256": "c28a5fa2e2fd83a551cdc4d6d75cec69ab432d4c0ec5d7e7719d7efa23dfeaa9"
+    }
+  ],
+  "summary": "Public export · spec/extensions/arrow-ipc/rename-result.schema.json",
+  "title": "arrowIpcRenameSchema"
+}

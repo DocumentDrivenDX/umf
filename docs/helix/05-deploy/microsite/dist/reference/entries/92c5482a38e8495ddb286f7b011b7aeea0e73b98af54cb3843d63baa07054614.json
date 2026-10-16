@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22324,
+        "line": 228,
+        "path": "src/extensions/binding/index.ts",
+        "sha256": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "migrateBindingRelationships",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(binding: Document, logical: Document): BindingMigrationResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"migrateBindingRelationships\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22324,
+      "line": 228,
+      "path": "src/extensions/binding/index.ts",
+      "sha256": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b"
+    }
+  ],
+  "summary": "Explicit, atomic name-to-ID migration against the caller's exact paired model.",
+  "title": "migrateBindingRelationships"
+}

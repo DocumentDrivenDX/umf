@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6137,
+        "line": 3,
+        "path": "src/domain-packs/public-company.ts",
+        "sha256": "3e228ec8f965e40bc140ec2a5453202898a22aef177ac94b2a1529329367f513"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PublicCompanyRow",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type PublicCompanyRow = Record<string, string | null>;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PublicCompanyRow\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6137,
+      "line": 3,
+      "path": "src/domain-packs/public-company.ts",
+      "sha256": "3e228ec8f965e40bc140ec2a5453202898a22aef177ac94b2a1529329367f513"
+    }
+  ],
+  "summary": "Type declaration · src/domain-packs/public-company.ts",
+  "title": "PublicCompanyRow"
+}

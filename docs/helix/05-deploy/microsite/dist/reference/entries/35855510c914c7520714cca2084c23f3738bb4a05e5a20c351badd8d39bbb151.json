@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4363,
+        "path": "spec/extensions/avro-keys/package.json",
+        "sha256": "feebd03e9e3b45e82f6234eb35e38d512d14ee141b0a2c20e1fbdf5379032819"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.avro.keys@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.avro.keys@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Avro · 1.12.0",
+      "subset": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.avro.keys · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.avro.keys@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.avro.keys\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence",
+  "title": "umf.avro.keys · import"
+}

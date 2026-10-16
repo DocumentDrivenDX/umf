@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2633,
+        "line": 1,
+        "path": "spec/extensions/parquet/metadata-transform.schema.json",
+        "sha256": "1cb7ad3b8f4a28026040c2d04246f37f756f95898a90c17c24606c5dd0a769fc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "parquetMetadataTransformSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:parquet:metadata-transform:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"source\",\n    \"status\",\n    \"complete\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"status\": {\n      \"enum\": [\n        \"transformed\",\n        \"blocked\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"output\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"added\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 1000,\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"key\"\n        ],\n        \"properties\": {\n          \"key\": {\n            \"type\": \"string\"\n          },\n          \"value\": {\n            \"type\": \"string\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"unchangedPrefixBytes\": {\n      \"type\": \"integer\",\n      \"minimum\": 4\n    }\n  },\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"transformed\"\n          }\n        }\n      },\n      \"then\": {\n        \"properties\": {\n          \"output\": true,\n          \"added\": true,\n          \"unchangedPrefixBytes\": true\n        },\n        \"required\": [\n          \"output\",\n          \"added\",\n          \"unchangedPrefixBytes\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"anyOf\": [\n            {\n              \"properties\": {\n                \"output\": true\n              },\n              \"required\": [\n                \"output\"\n              ]\n            },\n            {\n              \"properties\": {\n                \"added\": true\n              },\n              \"required\": [\n                \"added\"\n              ]\n            },\n            {\n              \"properties\": {\n                \"unchangedPrefixBytes\": true\n              },\n              \"required\": [\n                \"unchangedPrefixBytes\"\n              ]\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"parquetMetadataTransformSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2633,
+      "line": 1,
+      "path": "spec/extensions/parquet/metadata-transform.schema.json",
+      "sha256": "1cb7ad3b8f4a28026040c2d04246f37f756f95898a90c17c24606c5dd0a769fc"
+    }
+  ],
+  "summary": "Public export · spec/extensions/parquet/metadata-transform.schema.json",
+  "title": "parquetMetadataTransformSchema"
+}

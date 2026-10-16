@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12426,
+        "line": 10,
+        "path": "src/projections/parquet-avro.ts",
+        "sha256": "474628d9ff9ce2a94d88d1179b27c2439b4b82e79d9241fcaef890a74fdc559b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetAvroPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetAvroPolicy {id:string;recordName:string;namespace:string;fieldNames:Record<string,string>;maps:'entry-arrays';lossPolicy:'strict'|'allow-reported-loss';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetAvroPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12426,
+      "line": 10,
+      "path": "src/projections/parquet-avro.ts",
+      "sha256": "474628d9ff9ce2a94d88d1179b27c2439b4b82e79d9241fcaef890a74fdc559b"
+    }
+  ],
+  "summary": "Type declaration · src/projections/parquet-avro.ts",
+  "title": "ParquetAvroPolicy"
+}

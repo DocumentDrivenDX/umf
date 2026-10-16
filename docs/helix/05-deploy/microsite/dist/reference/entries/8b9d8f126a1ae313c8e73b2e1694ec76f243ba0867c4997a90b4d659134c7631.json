@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10468,
+        "line": 80,
+        "path": "src/adapters/delta/ddl.ts",
+        "sha256": "2491fc7a336d88744dbe981861c5e0a2a38e93ff1171299ac5db9fa6cf08da44"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "generateDeltaDDL",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document): { sql: string; definition: DeltaDefinition; schemaJson: string; qualification: string; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"generateDeltaDDL\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10468,
+      "line": 80,
+      "path": "src/adapters/delta/ddl.ts",
+      "sha256": "2491fc7a336d88744dbe981861c5e0a2a38e93ff1171299ac5db9fa6cf08da44"
+    }
+  ],
+  "summary": "Pure browser-compatible CREATE generator. Never applies SQL or changes maintenance policy.",
+  "title": "generateDeltaDDL"
+}

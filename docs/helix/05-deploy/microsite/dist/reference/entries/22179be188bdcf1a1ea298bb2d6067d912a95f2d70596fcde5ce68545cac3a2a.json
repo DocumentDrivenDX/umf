@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6026,
+        "line": 4,
+        "path": "src/model/bit128.ts",
+        "sha256": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128Value",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128Value {readonly profile:typeof BIT128_PROFILE;readonly hex:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128Value\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6026,
+      "line": 4,
+      "path": "src/model/bit128.ts",
+      "sha256": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91"
+    }
+  ],
+  "summary": "Type declaration · src/model/bit128.ts",
+  "title": "Bit128Value"
+}

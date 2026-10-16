@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7003,
+        "line": 55,
+        "path": "src/core-ideals/parquet-field.ts",
+        "sha256": "67e3500e9956e761e86d03eff089e984610d01c016d9a2c172c215695843c3a3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyParquetFieldClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ParquetFieldClassification, current: Document): ParquetFieldClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyParquetFieldClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7003,
+      "line": 55,
+      "path": "src/core-ideals/parquet-field.ts",
+      "sha256": "67e3500e9956e761e86d03eff089e984610d01c016d9a2c172c215695843c3a3"
+    }
+  ],
+  "summary": "Recompute the native basis and reject classification receipts after any target edit.",
+  "title": "verifyParquetFieldClassification"
+}

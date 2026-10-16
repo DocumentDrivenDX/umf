@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2775,
+        "line": 4,
+        "path": "src/model/json.ts",
+        "sha256": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "copyJson",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown): Json"
+    ]
+  },
+  "id": "[\"api\",\".\",\"copyJson\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2775,
+      "line": 4,
+      "path": "src/model/json.ts",
+      "sha256": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5"
+    }
+  ],
+  "summary": "Copy JSON data without invoking getters, toJSON, or custom prototypes.",
+  "title": "copyJson"
+}

@@ -1,0 +1,3373 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/column"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/constraint"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/index"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/sequence"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/namespace"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/relation"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/type"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/function"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/trigger"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/compositeType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/rangeType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/collation"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/dependency"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/dependencyObject"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/dependencyObject"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+        "target": "#/$defs/snapshot"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/postgresql-catalog/capture.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "collation": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "collate": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "ctype": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "deterministic": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "encoding": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "2147483647"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "-1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    },
+                    "locale": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "provider": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "rules": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "provider"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "deterministic"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "encoding"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "collate"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "ctype"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "locale"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "rules"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "column": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "collation": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "compression": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "default": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "generated": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "identity": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "nativeType": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "category": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "dimensions": {
+                              "kind": "object",
+                              "members": {
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "0"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "modifier": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "schema": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "schema"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "name"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "category"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "dimensions"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "modifier"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "notNull": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "position": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "32767"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    },
+                    "storage": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "position"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "notNull"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "identity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "generated"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "collation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "default"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "storage"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "compression"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "compositeType": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "attributes": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "collation": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "string"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "null"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "name": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "position": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "32767"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "name"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "position"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "type"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "collation"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "attributes"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "constraint": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "deferrable": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "deferred": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "definition": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "kind": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "validated": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "kind"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "definition"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "deferrable"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "deferred"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "validated"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "dependency": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "dependent": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/dependencyObject"
+                        }
+                      }
+                    },
+                    "kind": {
+                      "kind": "object",
+                      "members": {
+                        "maxLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "referenced": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/dependencyObject"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "dependent"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "referenced"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "kind"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "dependencyObject": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "catalog": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "identity": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "catalog"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "identity"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "function": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "definition": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "identity": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "identity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "definition"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "index": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "definition": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "ready": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "replicaIdentity": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "valid": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "definition"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "valid"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "ready"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "replicaIdentity"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "namespace": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "policy": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "check": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "command": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "permissive": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "roles": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "using": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "command"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "permissive"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "roles"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "using"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "check"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "rangeType": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "canonical": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "collation": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "multirange": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "operatorClass": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "subtype": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "subtypeDifference": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "subtype"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "multirange"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "collation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "operatorClass"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "canonical"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "subtypeDifference"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "relation": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "columns": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/column"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "constraints": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/constraint"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "forceRowSecurity": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "indexes": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/index"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "kind": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "options": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "parents": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "partitionBound": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "partitionKey": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "persistence": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "policies": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/policy"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "rowSecurity": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "sequence": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/sequence"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "view": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "kind"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "persistence"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "options"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "rowSecurity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "forceRowSecurity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "partitionKey"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "partitionBound"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "parents"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "view"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "columns"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "constraints"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "indexes"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "policies"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sequence"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "sequence": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "cache": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^-?[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "cycle": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "increment": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^-?[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "max": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^-?[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "min": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^-?[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "start": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^-?[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "start"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "increment"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "min"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "max"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "cache"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "cycle"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "snapshot": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "allOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "profile": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "umf-postgresql-catalog-evidence-17-v2"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "umf-postgresql-catalog-evidence-17-v3"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "triggers"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "compositeTypes"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "rangeTypes"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "collations"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "profile": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "umf-postgresql-catalog-evidence-17-v3"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "dependencies"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "collations": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/collation"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "compositeTypes": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/compositeType"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "dependencies": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/dependency"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "functions": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/function"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "namespaces": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/namespace"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "profile": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "umf-postgresql-catalog-evidence-17-v1"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "umf-postgresql-catalog-evidence-17-v2"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "umf-postgresql-catalog-evidence-17-v3"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "rangeTypes": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/rangeType"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "relations": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/relation"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "triggers": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/trigger"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "types": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/type"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "profile"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "namespaces"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "relations"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "types"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "functions"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "trigger": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "deferrable": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "deferred": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "definition": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "enabled": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "function": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "relation": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "relation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "enabled"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "definition"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "function"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "deferrable"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "deferred"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "type": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "acl": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "base": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "comment": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "constraints": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "definition": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "name": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "validated": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "boolean"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "name"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "definition"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "validated"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "default": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "kind": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "labels": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "notNull": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "owner": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "name"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "kind"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "owner"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "acl"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "base"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "notNull"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "default"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "comment"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "labels"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "constraints"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:postgresql-catalog:capture:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "description": {
+          "kind": "string",
+          "value": "Observed catalog metadata for the versioned UMF PostgreSQL 17 evidence query, with original query and schema-only dump. Native expressions/ACLs/physical types remain strings. Unknown properties are retained. Not the entire PostgreSQL catalog or a guarantee of reconstruction."
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "profile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "postgresql-catalog-capture-v1"
+                }
+              }
+            },
+            "query": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "reconstruction": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "format": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "pg-dump-plain-schema-only"
+                        }
+                      }
+                    },
+                    "sql": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "toolVersion": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "format"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "toolVersion"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sql"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "serverVersion": {
+              "kind": "object",
+              "members": {
+                "maximum": {
+                  "kind": "number",
+                  "value": "179999"
+                },
+                "minimum": {
+                  "kind": "number",
+                  "value": "170000"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            },
+            "snapshot": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/snapshot"
+                }
+              }
+            },
+            "state": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "captured"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "modified"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "serverVersion"
+            },
+            {
+              "kind": "string",
+              "value": "query"
+            },
+            {
+              "kind": "string",
+              "value": "snapshot"
+            },
+            {
+              "kind": "string",
+              "value": "reconstruction"
+            },
+            {
+              "kind": "string",
+              "value": "state"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/postgresql-catalog/capture.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 20396,
+      "path": "spec/extensions/postgresql-catalog/capture.schema.json",
+      "sha256": "c66fa1c1e3de6494135510f83ba968276adef6a14081a35c83b5efe7c3697217"
+    }
+  ],
+  "summary": "Observed catalog metadata for the versioned UMF PostgreSQL 17 evidence query, with original query and schema-only dump. Native expressions/ACLs/physical types remain strings. Unknown properties are retained. Not the entire PostgreSQL catalog or a guarantee of reconstruction.",
+  "title": "capture.schema.json"
+}

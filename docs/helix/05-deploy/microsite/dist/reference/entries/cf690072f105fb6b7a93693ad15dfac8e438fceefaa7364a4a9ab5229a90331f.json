@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 19620,
+        "line": 52,
+        "path": "src/adapters/rdf/index.ts",
+        "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeRdfIriRename",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { from: string; to: string; }): RdfIriRenameReport"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeRdfIriRename\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 19620,
+      "line": 52,
+      "path": "src/adapters/rdf/index.ts",
+      "sha256": "d6b781d0480c4ea40fefc7def31e8eba6cc990326da0950227f7b0fe999bd604"
+    }
+  ],
+  "summary": "Explicit identity change, never a claim that the renamed IRI denotes the same resource.",
+  "title": "proposeRdfIriRename"
+}

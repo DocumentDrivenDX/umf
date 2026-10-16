@@ -1,0 +1,224 @@
+{
+  "id": "umf.jsonld",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "JSON-LD source and supplied context preservation with explicit expansion, flattening, compaction and framing proposals",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:jsonld:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "jsonld-source"
+      },
+      "processingMode": {
+        "enum": [
+          "json-ld-1.0",
+          "json-ld-1.1"
+        ]
+      },
+      "baseIRI": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      },
+      "originalSource": {
+        "type": "string",
+        "maxLength": 4000000
+      },
+      "contexts": {
+        "type": "array",
+        "maxItems": 100,
+        "items": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "minLength": 1
+            },
+            "documentUrl": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root": {
+              "$ref": "#/$defs/node"
+            },
+            "originalSource": {
+              "type": "string",
+              "maxLength": 4000000
+            }
+          },
+          "required": [
+            "url",
+            "documentUrl",
+            "root",
+            "originalSource"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "expandContext": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "required": [
+      "profile",
+      "processingMode",
+      "baseIRI",
+      "root",
+      "originalSource",
+      "contexts"
+    ],
+    "additionalProperties": true,
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-026; exact source and context values remain authoritative; JSON-LD processing proposals are qualified transformations, not an RDF or ontology equivalence proof",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "JSON-LD",
+      "version": "1.0/1.1; jsonld.js 9.0.0 + UMF processing patch",
+      "subset": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; qualified JSON-LD-to-RDF proposals with explicitly recorded strict/binary64 numeric policies with explicit quantization and finite-overflow blocks; optional generalized dataset projection through umf.generalized-rdf; malformed terms omitted with explicit loss events; compound-literal direction conversion with graph/list round-trip evidence; no network"
+    },
+    "evidence": [
+      "tests/generalized-rdf/dataset.test.ts",
+      "fixtures/generalized-rdf/oracle-results.json",
+      "fixtures/generalized-rdf/browser-results.json",
+      "fixtures/jsonld/to-rdf/numeric-oracle-results.json",
+      "tests/jsonld/to-rdf.test.ts",
+      "fixtures/jsonld/to-rdf/oracle-results.json",
+      "fixtures/jsonld/to-rdf/rdf-oracle-results.json",
+      "fixtures/jsonld/to-rdf/browser-results.json",
+      "tests/jsonld/from-rdf.test.ts",
+      "fixtures/jsonld/from-rdf/oracle-results.json",
+      "fixtures/jsonld/from-rdf/browser-results.json",
+      "tests/jsonld/framing.test.ts",
+      "fixtures/jsonld/framing/oracle-results.json",
+      "fixtures/jsonld/framing/browser-results.json",
+      "tests/jsonld/compaction.test.ts",
+      "fixtures/jsonld/compaction/oracle-results.json",
+      "fixtures/jsonld/compaction/browser-results.json",
+      "tests/jsonld/flatten.test.ts",
+      "fixtures/jsonld/flatten/oracle-results.json",
+      "fixtures/jsonld/flatten/browser-results.json",
+      "tests/jsonld/numeric.test.ts",
+      "fixtures/jsonld/numeric/oracle-results.json",
+      "tests/jsonld/nest.test.ts",
+      "fixtures/jsonld/nest/results.json",
+      "fixtures/jsonld/patch-results.json",
+      "tests/jsonld/legacy.test.ts",
+      "fixtures/jsonld/legacy/results.json",
+      "tests/jsonld/jsonld.test.ts",
+      "fixtures/jsonld/expansion/oracle-results.json",
+      "fixtures/jsonld/expansion/browser-results.json"
+    ]
+  }
+}

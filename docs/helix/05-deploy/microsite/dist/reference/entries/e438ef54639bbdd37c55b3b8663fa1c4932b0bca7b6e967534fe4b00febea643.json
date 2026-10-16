@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16496,
+        "line": 152,
+        "path": "src/extensions/security/protection/functions.ts",
+        "sha256": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectProtectionFunction",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): ProtectionFunctionResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectProtectionFunction\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16496,
+      "line": 152,
+      "path": "src/extensions/security/protection/functions.ts",
+      "sha256": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db"
+    }
+  ],
+  "summary": "Signature/domain applicability only; output validity may still depend on input.",
+  "title": "inspectProtectionFunction"
+}

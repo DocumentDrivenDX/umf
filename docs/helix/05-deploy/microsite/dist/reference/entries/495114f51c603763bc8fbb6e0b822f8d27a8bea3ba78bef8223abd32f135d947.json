@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2259,
+        "line": 17,
+        "path": "src/adapters/smithy/sources.ts",
+        "sha256": "0a8399a31a9bb6a99140c43631c3d873bf80438f7194448464c7b4fac0de4d57"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeSmithySourceEdit",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, path: string, text: string): { document: Document; validation: Validation; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeSmithySourceEdit\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2259,
+      "line": 17,
+      "path": "src/adapters/smithy/sources.ts",
+      "sha256": "0a8399a31a9bb6a99140c43631c3d873bf80438f7194448464c7b4fac0de4d57"
+    }
+  ],
+  "summary": "Public export · src/adapters/smithy/sources.ts",
+  "title": "proposeSmithySourceEdit"
+}

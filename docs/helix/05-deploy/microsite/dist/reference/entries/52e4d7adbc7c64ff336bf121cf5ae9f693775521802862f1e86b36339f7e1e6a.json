@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1865,
+        "line": 5,
+        "path": "src/model/bit128-field.ts",
+        "sha256": "075943b6f23dc1bd5484d7dc60aeb73b1e386a2cdbb89c2561a076e56692ac27"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "declareCoreBit128Field",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identityInput: { module: string; element: string; }, scalarType: \"bits128\" | \"uuid\"): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"declareCoreBit128Field\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1865,
+      "line": 5,
+      "path": "src/model/bit128-field.ts",
+      "sha256": "075943b6f23dc1bd5484d7dc60aeb73b1e386a2cdbb89c2561a076e56692ac27"
+    }
+  ],
+  "summary": "Explicit copied metadata declaration; never converts stored values or issues a receipt.",
+  "title": "declareCoreBit128Field"
+}

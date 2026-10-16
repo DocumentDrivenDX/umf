@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5518,
+        "line": 9,
+        "path": "src/validation/keys.ts",
+        "sha256": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKeyDefinition",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreKeyDefinition {id:string;name:string;fields:CoreKeyFieldReference[];primary?:boolean;[key:string]:unknown}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKeyDefinition\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5518,
+      "line": 9,
+      "path": "src/validation/keys.ts",
+      "sha256": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb"
+    }
+  ],
+  "summary": "Type declaration · src/validation/keys.ts",
+  "title": "CoreKeyDefinition"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12137,
+        "line": 12,
+        "path": "src/core-ideals/facets-tablespec-projection.ts",
+        "sha256": "57e767f5466b6de295673fa908d3c927a0f4410eec91390a1735b2a40cd2ec67"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsTableSpecRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsTableSpecRequest {id:string;tableName:string;columnName:string;nativeType:'BOOLEAN'|'INTEGER'|'DECIMAL'|'FLOAT'|'TEXT'|'VARCHAR'|'CHAR'|'DATE'|'DATETIME'|'TIMESTAMP';mode:'strict'|'report';profile:TableSpecFacetProfile;input:'raw'|'model-normalized';obligation:'value-domain'|'exact-input'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsTableSpecRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12137,
+      "line": 12,
+      "path": "src/core-ideals/facets-tablespec-projection.ts",
+      "sha256": "57e767f5466b6de295673fa908d3c927a0f4410eec91390a1735b2a40cd2ec67"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-tablespec-projection.ts",
+  "title": "FacetsTableSpecRequest"
+}

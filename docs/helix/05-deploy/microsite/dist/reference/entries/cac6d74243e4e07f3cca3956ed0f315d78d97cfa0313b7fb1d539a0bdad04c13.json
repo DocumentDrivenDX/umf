@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7820,
+        "line": 13,
+        "path": "src/core-ideals/field-sqlserver-projection.ts",
+        "sha256": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldSqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldSqlServerProjection {\n operation:'project-field-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:FieldSqlServerRequest;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;diagnostics:Diagnostic[];binding:typeof binding;\n mapping:{origin:'authored';idealPath:string;nativePath:'/sql';outcome:'exact'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldSqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7820,
+      "line": 13,
+      "path": "src/core-ideals/field-sqlserver-projection.ts",
+      "sha256": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-sqlserver-projection.ts",
+  "title": "FieldSqlServerProjection"
+}

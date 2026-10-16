@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12478,
+        "line": 115,
+        "path": "src/adapters/tablespec/index.ts",
+        "sha256": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importTableSpecBundle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(files: Record<string, string>, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importTableSpecBundle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12478,
+      "line": 115,
+      "path": "src/adapters/tablespec/index.ts",
+      "sha256": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8"
+    }
+  ],
+  "summary": "Captures all files; the metadata view does not execute loader migrations.",
+  "title": "importTableSpecBundle"
+}

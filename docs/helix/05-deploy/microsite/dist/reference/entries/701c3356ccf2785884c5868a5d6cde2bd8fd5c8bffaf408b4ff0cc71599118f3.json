@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1882,
+        "line": 8,
+        "path": "src/projections/ddd-postgresql/tables-indexes.ts",
+        "sha256": "3724ac5ca90bd89d5ace4035fed2cb8602af8687e5d001bc4a97f01f2c78b1fe"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectDddTablesAndIndexesToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logical: Document, binding: Document, backend: PostgresqlBackend, policy: DddPostgresqlTablePolicy, lossPolicy: \"strict\" | \"report\"): Promise<DddPostgresqlTableProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectDddTablesAndIndexesToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1882,
+      "line": 8,
+      "path": "src/projections/ddd-postgresql/tables-indexes.ts",
+      "sha256": "3724ac5ca90bd89d5ace4035fed2cb8602af8687e5d001bc4a97f01f2c78b1fe"
+    }
+  ],
+  "summary": "Relationship-independent stage of CONTRACT-043: DDD tables followed by physical indexes.",
+  "title": "projectDddTablesAndIndexesToPostgresql"
+}

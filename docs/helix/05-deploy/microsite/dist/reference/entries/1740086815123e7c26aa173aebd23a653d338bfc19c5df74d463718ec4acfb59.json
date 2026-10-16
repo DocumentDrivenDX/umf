@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3356,
+        "line": 11,
+        "path": "src/projections/tablespec-via-avro.ts",
+        "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecViaAvroPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableSpecViaAvroPolicy=({sourceKind:'postgresql';toAvro:PostgresqlAvroPolicy}|{sourceKind:'sqlserver';toAvro:SqlServerAvroPolicy}|{sourceKind:'parquet';toAvro:ParquetAvroPolicy})&{toTableSpec:AvroTableSpecPolicy};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecViaAvroPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3356,
+      "line": 11,
+      "path": "src/projections/tablespec-via-avro.ts",
+      "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+    }
+  ],
+  "summary": "Type declaration · src/projections/tablespec-via-avro.ts",
+  "title": "TableSpecViaAvroPolicy"
+}

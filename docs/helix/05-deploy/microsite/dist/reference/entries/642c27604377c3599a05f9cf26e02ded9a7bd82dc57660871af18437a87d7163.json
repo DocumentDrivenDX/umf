@@ -1,0 +1,65 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unassessed",
+        "id": "uuid-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "unassessed",
+        "readerId": "source-only",
+        "scope": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
+        "selector": "",
+        "source": {
+          "bytes": 12168,
+          "path": "docs/helix/04-build/evidence/uuid-adapter-completion.md",
+          "sha256": "386dc5b0559f3efe587d773091d48254869b69bd654e050065d966017e8dde4d"
+        },
+        "supersedes": [],
+        "versions": {}
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "uuid",
+      "kind": "consumer-execution",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "uuid",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF consumers",
+      "subset": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
+      "targetSystem": "UMF consumers",
+      "title": "UUID / bits128 · five-adapter completion"
+    }
+  },
+  "id": "[\"integration\",\"uuid\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
+  "title": "UUID / bits128 · five-adapter completion"
+}

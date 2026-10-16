@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10832,
+        "line": 93,
+        "path": "src/core-ideals/cardinality-postgresql.ts",
+        "sha256": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverPostgresqlCardinalitySource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlCardinalityClassification, current: Document): { nativeSource: string; supplement: string; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverPostgresqlCardinalitySource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10832,
+      "line": 93,
+      "path": "src/core-ideals/cardinality-postgresql.ts",
+      "sha256": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608"
+    }
+  ],
+  "summary": "Recover both exact native texts, including unclaimed content.",
+  "title": "recoverPostgresqlCardinalitySource"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3862,
+        "line": 22,
+        "path": "src/extensions/security/disclosure.ts",
+        "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateSecurityDisclosure",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown, policyInput: SecurityPolicy, resolutionInput: SecurityResolution): SecurityDisclosureBatch"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateSecurityDisclosure\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3862,
+      "line": 22,
+      "path": "src/extensions/security/disclosure.ts",
+      "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+    }
+  ],
+  "summary": "Shape/domain validation only. Transport, pins and dispositions do not authenticate or authorize a result.",
+  "title": "validateSecurityDisclosure"
+}

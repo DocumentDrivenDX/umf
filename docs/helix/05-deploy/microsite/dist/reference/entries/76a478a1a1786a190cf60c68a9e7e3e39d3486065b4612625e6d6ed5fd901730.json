@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9610,
+        "line": 10,
+        "path": "src/core-ideals/record-avro-projection.ts",
+        "sha256": "6a59d8c67a937030a1edfed507a49b6884c178096e5ddc0d848b3b90e9f9d0a6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordAvroRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordAvroRequest {id:string;recordName:string;namespace:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;fieldName:string;nativeType:FieldAvroRequest['nativeType']}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordAvroRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9610,
+      "line": 10,
+      "path": "src/core-ideals/record-avro-projection.ts",
+      "sha256": "6a59d8c67a937030a1edfed507a49b6884c178096e5ddc0d848b3b90e9f9d0a6"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-avro-projection.ts",
+  "title": "RecordAvroRequest"
+}

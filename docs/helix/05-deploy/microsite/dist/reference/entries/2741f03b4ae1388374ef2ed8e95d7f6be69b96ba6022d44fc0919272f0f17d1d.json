@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15010,
+        "line": 12,
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "sha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeyPostgresqlRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeyPostgresqlRequest {\n id:string;record:CoreRecordIdentity;namespace:string;tableName:string;scope:'new-table-stored-values';keyNames:{keyId:string;name:string}[];mode:'strict'|'report';\n columns:{field:CoreRecordIdentity;name:string;nativeType:keyof typeof carriers}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeyPostgresqlRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15010,
+      "line": 12,
+      "path": "src/core-ideals/key-postgresql-projection.ts",
+      "sha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-postgresql-projection.ts",
+  "title": "KeyPostgresqlRequest"
+}

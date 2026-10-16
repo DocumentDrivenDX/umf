@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5108,
+        "line": 21,
+        "path": "src/extensions/actions/manifest-construction.ts",
+        "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ConstructedActionManifest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ConstructedActionManifest {\n artifact:ActionPlanArtifact;keyReceipts:CoreKeyTupleReceipt[];sealed:false;complete:false;authority:false;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ConstructedActionManifest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5108,
+      "line": 21,
+      "path": "src/extensions/actions/manifest-construction.ts",
+      "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/manifest-construction.ts",
+  "title": "ConstructedActionManifest"
+}

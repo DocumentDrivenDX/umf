@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2402,
+        "line": 1,
+        "path": "spec/extensions/postgresql/schema.json",
+        "sha256": "736bab3b2ee547c6d4d31c772a1dfd8204cbaf3d837148a444f36d863946ab0a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "postgresqlSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:postgresql:0.1.0\",\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  },\n  \"type\": \"object\",\n  \"required\": [\n    \"profile\",\n    \"source\",\n    \"root\"\n  ],\n  \"properties\": {\n    \"profile\": {\n      \"const\": \"postgresql-raw-parse-tree\"\n    },\n    \"source\": {\n      \"type\": \"string\"\n    },\n    \"root\": {\n      \"$ref\": \"#/$defs/node\"\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"postgresqlSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2402,
+      "line": 1,
+      "path": "spec/extensions/postgresql/schema.json",
+      "sha256": "736bab3b2ee547c6d4d31c772a1dfd8204cbaf3d837148a444f36d863946ab0a"
+    }
+  ],
+  "summary": "Public export · spec/extensions/postgresql/schema.json",
+  "title": "postgresqlSchema"
+}

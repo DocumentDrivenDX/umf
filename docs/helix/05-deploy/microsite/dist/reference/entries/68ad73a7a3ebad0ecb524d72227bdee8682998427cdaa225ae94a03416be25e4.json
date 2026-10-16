@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4089,
+        "line": 7,
+        "path": "src/model/bit128-transition.ts",
+        "sha256": "ce8a9b031dbc88db077b43c05a2d4afd097ce502d02a622a0bfcc7e2f79252a7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128UpgradeReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128UpgradeReceipt {operation:'upgrade-bit128-envelope';version:'1.0.0';source:Document;options:Bit128UpgradeOptions;target:Document}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128UpgradeReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4089,
+      "line": 7,
+      "path": "src/model/bit128-transition.ts",
+      "sha256": "ce8a9b031dbc88db077b43c05a2d4afd097ce502d02a622a0bfcc7e2f79252a7"
+    }
+  ],
+  "summary": "Type declaration · src/model/bit128-transition.ts",
+  "title": "Bit128UpgradeReceipt"
+}

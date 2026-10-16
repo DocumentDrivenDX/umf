@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5209,
+        "line": 11,
+        "path": "src/adapters/delta/sidecars.ts",
+        "sha256": "765fa7897cd2361332ec2879c71253363a96406ea17c5b0e1e32a487b63b994c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaSidecarReconciliation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaSidecarReconciliation extends DeltaReconciliation {\n checkpoint:DeltaCommit;sidecars:DeltaSidecar[];\n derivedCheckpoint?:DeltaCommit;origins?:DeltaSidecarOrigin[];\n omittedNullFields?:{sidecar:number;row:number;path:string}[];scalarConversions?:(DeltaScalarConversion&{sidecar:number})[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaSidecarReconciliation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5209,
+      "line": 11,
+      "path": "src/adapters/delta/sidecars.ts",
+      "sha256": "765fa7897cd2361332ec2879c71253363a96406ea17c5b0e1e32a487b63b994c"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/sidecars.ts",
+  "title": "DeltaSidecarReconciliation"
+}

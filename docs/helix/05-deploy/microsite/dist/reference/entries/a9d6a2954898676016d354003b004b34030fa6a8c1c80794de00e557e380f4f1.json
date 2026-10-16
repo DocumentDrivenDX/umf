@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7758,
+        "line": 7,
+        "path": "src/adapters/parquet/values.ts",
+        "sha256": "3487055e71d5edbb3336863bc77390255b7bcdedb827726aec1c8f7a94e9d4b6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetValues",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetValues {source:Document;status:'projected'|'blocked';complete:false;diagnostics:Diagnostic[];rows?:ParquetTypedValue[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetValues\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7758,
+      "line": 7,
+      "path": "src/adapters/parquet/values.ts",
+      "sha256": "3487055e71d5edbb3336863bc77390255b7bcdedb827726aec1c8f7a94e9d4b6"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/values.ts",
+  "title": "ParquetValues"
+}

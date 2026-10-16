@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3802,
+        "line": 7,
+        "path": "src/adapters/parquet/arrow-schema.ts",
+        "sha256": "e06ae36af58da50a98656ccdb492055e109089860700e8f236a29dc04b11c6a8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetArrowSchema",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetArrowSchema {\n source:Document;status:'absent'|'decoded'|'blocked';complete:false;diagnostics:Diagnostic[];\n metadataIndex?:number;ipcHex?:string;message?:Document;schema?:Document;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetArrowSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3802,
+      "line": 7,
+      "path": "src/adapters/parquet/arrow-schema.ts",
+      "sha256": "e06ae36af58da50a98656ccdb492055e109089860700e8f236a29dc04b11c6a8"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/arrow-schema.ts",
+  "title": "ParquetArrowSchema"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13697,
+        "line": 97,
+        "path": "src/projections/bit128.ts",
+        "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverBit128CarrierProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Bit128NativeProjection, nativeText: string): { logical: Document; binding: Document; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverBit128CarrierProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13697,
+      "line": 97,
+      "path": "src/projections/bit128.ts",
+      "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+    }
+  ],
+  "summary": "Exact artifact/source recovery; not independent native semantic classification.",
+  "title": "recoverBit128CarrierProjection"
+}

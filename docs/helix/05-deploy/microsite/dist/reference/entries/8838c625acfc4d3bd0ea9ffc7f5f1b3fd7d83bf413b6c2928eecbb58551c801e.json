@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11518,
+        "line": 19,
+        "path": "src/core-ideals/cardinality-avro-projection.ts",
+        "sha256": "b092be71ebe9c0330e0ec2ef02caa08f6d1eac10b8d1d179b14215f57deedbb7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CardinalityAvroProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CardinalityAvroProjection {\n operation:'project-cardinality-avro';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreCardinalityDeclaration;request:CardinalityAvroRequest;target?:Document;nativeBundle?:Bundle;binding:typeof binding;\n mapping:{origin:'authored';idealPath:string;cardinality:'one'|'array'|'map'|'unspecified';outcome:'exact'|'approximated'|'unknown'|'not-expressible';items:{idealPath:string;nativeLocation:AvroTypeLocation}[]};\n residuals:{path:string;value:Json;reason:string;outcome:'approximated'|'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CardinalityAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11518,
+      "line": 19,
+      "path": "src/core-ideals/cardinality-avro-projection.ts",
+      "sha256": "b092be71ebe9c0330e0ec2ef02caa08f6d1eac10b8d1d179b14215f57deedbb7"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-avro-projection.ts",
+  "title": "CardinalityAvroProjection"
+}

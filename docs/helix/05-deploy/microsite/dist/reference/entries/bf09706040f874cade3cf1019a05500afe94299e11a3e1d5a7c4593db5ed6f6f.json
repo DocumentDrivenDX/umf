@@ -1,0 +1,216 @@
+{
+  "data": {
+    "extensionId": "umf.dataset-source",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [
+          "tests/domain-packs/schema.test.ts"
+        ],
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Dataset source references and provenance, without retrieval or authentication",
+      "id": "umf.dataset-source",
+      "schema": {
+        "$id": "urn:umf:dataset-source:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "external"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "format": {},
+                "reference": {}
+              },
+              "required": [
+                "reference",
+                "format"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "synthetic"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "generator": {}
+              },
+              "required": [
+                "generator"
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "checksum": {
+            "additionalProperties": true,
+            "properties": {
+              "algorithm": {
+                "const": "sha256"
+              },
+              "value": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "algorithm",
+              "value"
+            ],
+            "type": "object"
+          },
+          "data_kind": {
+            "enum": [
+              "fabricated",
+              "observed",
+              "deidentified",
+              "unknown"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "format": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "generator": {
+            "additionalProperties": true,
+            "properties": {
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "kind": {
+            "enum": [
+              "synthetic",
+              "external"
+            ]
+          },
+          "license": {
+            "additionalProperties": true,
+            "properties": {
+              "attribution": {
+                "type": "string"
+              },
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "notices": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "redistribution": {
+                "enum": [
+                  "allowed",
+                  "restricted",
+                  "unknown"
+                ]
+              },
+              "reference": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "properties": {
+              "publisher": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "retrieved_at": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "source_ids": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "transformations": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "reference": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "revision": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "data_kind"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "References are data. No imports, fetching, generation, loading or ontology semantics are authorized.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/dataset-source/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.dataset-source\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"consumers\"]",
+    "[\"schema\",\"spec/extensions/dataset-source/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4059,
+      "path": "spec/extensions/dataset-source/package.json",
+      "sha256": "3bba79c99e90d52ec7d4f790c09d03ed2e7f3d88458fdb1f0645aff24a955a12"
+    }
+  ],
+  "summary": "Dataset source references and provenance, without retrieval or authentication",
+  "title": "umf.dataset-source · 1.0.0"
+}

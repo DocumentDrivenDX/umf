@@ -1,0 +1,99 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/parquet/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:parquet:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "bytes": {
+              "kind": "object",
+              "members": {
+                "maxLength": {
+                  "kind": "number",
+                  "value": "2000000"
+                },
+                "pattern": {
+                  "kind": "string",
+                  "value": "^(?:[0-9a-f]{2})*$"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "encoding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "hex"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "parquet-file-source"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "encoding"
+            },
+            {
+              "kind": "string",
+              "value": "bytes"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/parquet/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 455,
+      "path": "spec/extensions/parquet/schema.json",
+      "sha256": "9600ee4599b65705a9eb186b751fb9fcbd712a813b5f5e32de6ff6e8abe1cfa7"
+    }
+  ],
+  "summary": "spec/extensions/parquet/schema.json",
+  "title": "schema.json"
+}
