@@ -35,6 +35,8 @@ describe('access_views_validated: CONTRACT-070 complete allow table',()=>{
   const facts={key:false,availability:'absent-allowed',admitsNull:true,defaultOn:'none',bound:false,notNull:[],generated:false,nested:true};
   expect(checkAccessPresence(facts,{row:presences[1]!,create:presences[1]!,mutable:false,generated:false})).toBe(true);
   expect(checkAccessPresence(facts,{row:presences[3]!,create:presences[1]!,mutable:false,generated:false})).toBe(false);
+  expect(checkAccessPresence(facts,{row:presences[0]!,create:presences[1]!,mutable:false,generated:false})).toBe(false);
+  expect(checkAccessPresence(facts,{row:presences[1]!,create:presences[0]!,mutable:false,generated:false})).toBe(false);
  });
 });
 

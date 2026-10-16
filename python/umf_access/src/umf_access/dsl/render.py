@@ -115,6 +115,7 @@ def render_logical(variant: LogicalVariant) -> str:
     order: list[Ordering[object]] = []
     includes: list[str] = []
     limit: int | None = None
+    group_limit: int | None = None
     for step in steps:
         if step.op == "filter":
             for item in step.args:
@@ -131,11 +132,15 @@ def render_logical(variant: LogicalVariant) -> str:
             order.extend(cast(tuple[Ordering[object], ...], step.args))
         elif step.op == "limit":
             limit = cast(int, step.args[0])
+        elif step.op == "group_limit":
+            group_limit = cast(int, step.args[0])
         elif step.op == "include_keys":
             field, bound = cast(tuple[FieldRef, int], step.args)
             includes.append(f"RELATED_KEYS({_column(field)}, {bound}) AS {_quote(field.field + '_keys')}")
         else:
             raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported logical query step")
+    if group_limit is not None and node.op != "group_count":
+        raise CaptureError("CAPTURE_UNSUPPORTED", "group limit requires grouped count")
     if mutation:
         if selected is not None or grouped or order or includes or limit is not None or not predicates:
             raise CaptureError("CAPTURE_UNSUPPORTED", "bulk update requires a filtered unprojected selection")
@@ -146,6 +151,10 @@ def render_logical(variant: LogicalVariant) -> str:
         projection = ", ".join([*(_column(f) for f in grouped), "COUNT(*)"])
         if order or includes or selected is not None or limit is not None:
             raise CaptureError("CAPTURE_UNSUPPORTED", "count with projection/order/limit requires explicit Weft semantics")
+        if node.op == "group_count":
+            if not grouped or group_limit is None:
+                raise CaptureError("CAPTURE_UNSUPPORTED", "grouped count requires an explicit result-group limit")
+            limit = group_limit
     else:
         projection = '"r".*' if selected is None else ", ".join(_column(f) for f in selected)
         if includes:

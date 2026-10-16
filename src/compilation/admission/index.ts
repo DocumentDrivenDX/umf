@@ -173,8 +173,9 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  for(const entry of selectedActionEntries){
   const python=resolveName(entry.action.id,'class',entry.path);
   for(const suffix of ['','Input','Output','Rejected']){const name=python+suffix;if(classNames.has(name))add('NAME',entry.path);classNames.add(name);}
-  const parameters=(group:'parameters'|'outputs')=>entry.action[group].flatMap<ResolvedActionParameter>((parameter,i)=>{
+  const parameters=(group:'parameters'|'outputs')=>{const usedNames=new Set<string>();return entry.action[group].flatMap<ResolvedActionParameter>((parameter,i)=>{
    const pointer=entry.path+'/'+group+'/'+i,python=resolveName(parameter.id,'field',pointer);
+   if(usedNames.has(python))add('NAME',pointer);usedNames.add(python);
    if(parameter.kind==='entity'){
     const record=ir.records.find(r=>identity(r.ref)===identity(parameter.target));
     if(!record||!record.keys.some(k=>k.id===parameter.target.key)){add('REFERENCE',pointer);return [];}
@@ -183,7 +184,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
    const field=ir.records.flatMap(r=>r.fields).find(f=>identity(f.ref)===identity(parameter.field));
    if(!field){add('REFERENCE',pointer+'/field');return [];}
    return [{id:parameter.id,python,required:parameter.required,pointer,field:{...field,row:{...field.row,null:validateCoreFieldValue(document,field.ref,null).valid}}}];
-  });
+  });};
   ir.actions!.push({module:entry.module,id:entry.action.id,python,pointer:entry.path,parameters:parameters('parameters'),outputs:parameters('outputs'),failures:entry.action.failures.map(f=>({code:f.code,retryable:f.retryable})),kind:entry.action.binding.kind});
   for(const obligation of entry.obligations){
    const id='d'+dispositions.length,oid='o'+obligations.length;
@@ -207,7 +208,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   if(overrides.length>1){add('NAME',pointer);return '_invalid';}
   const words=id.replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z0-9])([A-Z])/g,'$1_$2').split('_');
   const name=overrides[0]?.python??(role==='field'?words.join('_').toLowerCase():words.map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join(''));
-  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Column','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','ActionRef','Literal','Never','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
+  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Column','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','ActionRef','ActionSource','ActionProfile','FieldValidator','seal_model','unhashable_key','ValueNormalizer','encode_model','decode_model','initialize_rejection','Literal','Never','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
   return name;
  }
 }

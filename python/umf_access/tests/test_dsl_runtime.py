@@ -20,6 +20,17 @@ objects = Query[Order, Order, str](RECORD)
 
 
 class RuntimeGuards(unittest.TestCase):
+    # @covers US-082-AC2
+    def test_foreign_rhs_column_refuses_even_under_a_valid_root_predicate(self):
+        foreign = Column[Order, Decimal](FieldRef(module="commerce", element="Customer", field="credit"))
+
+        @query
+        def declaration():
+            return objects.filter(amount > foreign).limit(1).all()
+
+        with self.assertRaises((TypeError, ValueError)):
+            capture(declaration)
+
     # @covers US-082-AC5
     def test_schema_constructors_reject_string_column_paths(self):
         with self.assertRaises(TypeError):
@@ -220,19 +231,26 @@ class GeneratedDelegationHooks(unittest.TestCase):
         class UnitRoot(Query[Order, Order, str]):
             UMF_UPDATE_FIELDS: ClassVar[Mapping[str, FieldRef]] = MappingProxyType({"python_memo": memo_ref})
 
-        from umf_access.types import ActionRef, StrictModel
+        from umf_access.types import ActionRef, ActionSource, ActionProfile, StrictModel
 
         class UnitActionInput(StrictModel):
             memo: str
 
-        action = ActionRef(module="commerce", action="annotate-orders", input_type=UnitActionInput, output_type=type(None))
+        action = ActionRef(module="commerce", action="annotate-orders", input_type=UnitActionInput, output_type=type(None), source=ActionSource("unit", "0.8.0", "commerce", "annotate-orders", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", ActionProfile("umf.actions.tx", "1")))
 
         @command(action=action)
         def declaration(minimum: Param[Decimal], memo_value: Param[str]):
             return UnitRoot(record).filter(unit_amount > minimum)._update({"python_memo": memo_value})
 
         captured = capture(declaration)
-        self.assertEqual(captured.action, ("commerce", "annotate-orders"))
+        self.assertEqual(captured.action, action.source)
+        self.assertEqual(captured.action.documentSha256, "a" * 64)
+        from dataclasses import replace
+        changed = replace(action, source=replace(action.source, documentSha256="b" * 64))
+        @command(action=changed)
+        def changed_declaration(minimum: Param[Decimal], memo_value: Param[str]):
+            return UnitRoot(record).filter(unit_amount > minimum)._update({"python_memo": memo_value})
+        self.assertNotEqual(captured.action, capture(changed_declaration).action)
         self.assertEqual(render_logical(captured.variants[0]), 'UPDATE "sales"."Orders" SET "Memo" = :memo_value WHERE "Amount" > :minimum')
 
     # @covers US-082-AC6

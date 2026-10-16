@@ -59,6 +59,11 @@ def revalidate_model(model_type: type[M], value: M) -> M:
     if not isinstance(value, model_type):
         raise CodecError("codec requires the declared model type")
     raw = _raw_graph(value, set(), [10000])
+    return validate_graph(model_type, raw)
+
+
+def validate_graph(model_type: type[M], raw: object) -> M:
+    """Persistence validation with locations limited to authored field names."""
     try:
         return model_type.model_validate(raw, strict=True)
     except ValidationError as error:
@@ -95,3 +100,74 @@ def checked_row(expected: Sequence[str], columns: Sequence[str],
     if len(actual) != len(values):
         raise CodecError("column and row cardinality mismatch")
     return _build_mapping(actual, values)
+
+
+from dataclasses import dataclass
+from datetime import timezone
+from pydantic import MISSING
+from .values import validate_instant
+
+
+@dataclass(frozen=True)
+class ValueNormalizer:
+    kind: str
+    child: "ValueNormalizer | None" = None
+
+    def __call__(self, value: object) -> object:
+        if value is None or value is MISSING:
+            return value
+        if self.kind == "instant":
+            return validate_instant(value).astimezone(timezone.utc)
+        if self.kind in ("array", "map"):
+            if self.child is None:
+                raise CodecError("nested normalization metadata required")
+            if self.kind == "array":
+                if not isinstance(value, (tuple, list)):
+                    raise CodecError("array carrier rule")
+                items = [self.child(item) for item in value]
+                return tuple(items) if isinstance(value, tuple) else items
+            if not isinstance(value, dict):
+                raise CodecError("map carrier rule")
+            return {key: self.child(item) for key, item in value.items()}
+        if self.kind != "identity":
+            raise CodecError("unsupported normalization metadata")
+        return value
+
+
+CodecFields = tuple[tuple[str, str, ValueNormalizer], ...]
+
+
+def encode_model(model_type: type[M], value: M, fields: CodecFields) -> dict[str, object]:
+    checked = revalidate_model(model_type, value)
+    return {source: normalizer(getattr(checked, name)) for source, name, normalizer in fields
+            if getattr(checked, name) is not MISSING}
+
+
+def decode_model(model_type: type[M], fields: CodecFields,
+                 columns: Sequence[str], row: Sequence[object]) -> M:
+    values = checked_row(tuple(source for source, _, _ in fields), columns, row)
+    checked = validate_graph(model_type, {name: values[source] for source, name, _ in fields})
+    return validate_graph(model_type, {name: normalizer(getattr(checked, name)) for _, name, normalizer in fields})
+
+
+ClassT = TypeVar("ClassT")
+
+
+def seal_model(model: type[ClassT]) -> type[ClassT]:
+    def refuse_subclass(cls: type[object], **kwargs: object) -> None:
+        raise TypeError("generated model is final")
+    type.__setattr__(model, "__init_subclass__", classmethod(refuse_subclass))
+    return model
+
+
+def unhashable_key(model: type[M]) -> type[M]:
+    type.__setattr__(model, "__hash__", None)
+    return model
+
+
+def initialize_rejection(error: Exception, code: str, retryable: dict[str, bool]) -> None:
+    if code not in retryable:
+        raise CodecError("undeclared action rejection code")
+    error.code = code  # type: ignore[attr-defined]
+    error.retryable = retryable[code]  # type: ignore[attr-defined]
+    Exception.__init__(error, "action rejected")

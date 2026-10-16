@@ -172,3 +172,51 @@ def validate_vector(value: object, *, dimensions: int) -> Vector:
         if exact != item:
             raise ValueRuleError("vector value requires float32 rounding")
     return cast(Vector, value)
+
+
+# Generated packages carry instances of this metadata-driven callable, not
+# private copies of validation algorithms.
+from dataclasses import dataclass
+from typing import Any
+from pydantic import TypeAdapter
+
+
+@dataclass(frozen=True)
+class FieldValidator:
+    kind: str
+    bits: int | None = None
+    signed: bool = True
+    precision: int | None = None
+    scale: int | None = None
+    adapter: TypeAdapter[Any] | None = None
+    minimum: int | None = None
+    maximum: int | None = None
+    range_min: int | Decimal | None = None
+    range_max: int | Decimal | None = None
+    min_inclusive: bool = True
+    max_inclusive: bool = True
+    allowed: tuple[object, ...] | None = None
+
+    def __call__(self, value: object) -> object:
+        if self.adapter is not None:
+            checked = self.adapter.validate_python(value, strict=True)
+        elif self.kind == "integer":
+            checked = validate_integer(value, bits=self.bits, signed=self.signed)
+        elif self.kind == "decimal":
+            checked = validate_decimal(value, precision=self.precision, scale=self.scale)
+        else:
+            validators = {"boolean": validate_boolean, "binary": validate_binary,
+                          "string": validate_string, "date": validate_date,
+                          "instant": validate_instant, "local": validate_local}
+            validator = validators.get(self.kind)
+            if validator is None:
+                raise ValueRuleError("unsupported generated carrier metadata")
+            checked = validator(value)
+        if self.minimum is not None or self.maximum is not None:
+            checked = validate_length(checked, minimum=self.minimum, maximum=self.maximum)
+        if self.range_min is not None or self.range_max is not None:
+            checked = validate_range(checked, minimum=self.range_min, maximum=self.range_max,
+                                     min_inclusive=self.min_inclusive, max_inclusive=self.max_inclusive)
+        if self.allowed is not None:
+            checked = validate_allowed(checked, self.allowed)
+        return checked

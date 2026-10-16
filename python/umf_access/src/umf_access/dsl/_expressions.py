@@ -98,22 +98,22 @@ class Column(Generic[O, T]):
             raise CaptureError("CAPTURE_UNSUPPORTED", "instant/local comparison cannot preserve meaning")
         return Predicate(Node(op, (Node("column", (self.ref,)), right)))
 
-    def __eq__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]:  # type: ignore[override]
+    def __eq__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:  # type: ignore[override]
         return self._cmp("=", other)
 
-    def __ne__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]:  # type: ignore[override]
+    def __ne__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:  # type: ignore[override]
         return self._cmp("<>", other)
 
-    def __lt__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]:
+    def __lt__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:
         return self._cmp("<", other)
 
-    def __le__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]:
+    def __le__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:
         return self._cmp("<=", other)
 
-    def __gt__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]:
+    def __gt__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:
         return self._cmp(">", other)
 
-    def __ge__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[O]:
+    def __ge__(self, other: T | Param[T] | Column[O, T]) -> Predicate[O]:
         return self._cmp(">=", other)
 
     def _test(self, op: str) -> Predicate[O]:

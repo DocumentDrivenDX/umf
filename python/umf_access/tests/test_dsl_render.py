@@ -36,6 +36,29 @@ PREFIX = 'SELECT "r"."order_id" FROM "commerce"."Order" AS "r"'
 
 
 class LogicalWeftRendering(unittest.TestCase):
+    # @covers US-082-AC6
+    def test_unbounded_group_count_refuses_but_global_count_is_one_row(self):
+        @query
+        def unbounded():
+            return objects.group_by(order_id).count()
+        @query
+        def global_count():
+            return objects.count()
+        @query
+        def limited_input():
+            return objects.limit(7).group_by(order_id).limit(3).count()
+        for declaration in (unbounded, limited_input):
+            with self.assertRaisesRegex(ValueError, "CAPTURE_UNSUPPORTED"):
+                render_logical(capture(declaration).variants[0])
+        self.assertEqual(render_logical(capture(global_count).variants[0]),
+                         'SELECT COUNT(*) FROM "commerce"."Order" AS "r"')
+        for bound in (0, -1, 1001, True):
+            @query
+            def bad_bound():
+                return objects.group_by(order_id).limit(bound).count()
+            with self.assertRaises(ValueError):
+                capture(bad_bound)
+
     # @covers US-082-AC1
     def test_comparison_operators_render_logical_predicates(self):
         operations = (
@@ -86,9 +109,9 @@ class LogicalWeftRendering(unittest.TestCase):
     def test_grouped_count_keeps_all_grouping_columns(self):
         @query
         def declaration():
-            return objects.group_by(order_id, amount).count()
+            return objects.group_by(order_id, amount).limit(7).count()
 
-        self.assertEqual(render_logical(capture(declaration).variants[0]), 'SELECT "r"."order_id", "r"."amount", COUNT(*) FROM "commerce"."Order" AS "r" GROUP BY "r"."order_id", "r"."amount"')
+        self.assertEqual(render_logical(capture(declaration).variants[0]), 'SELECT "r"."order_id", "r"."amount", COUNT(*) FROM "commerce"."Order" AS "r" GROUP BY "r"."order_id", "r"."amount" LIMIT 7')
 
     # @covers US-082-AC1
     def test_range_retains_parameters_and_canonical_whitespace(self):

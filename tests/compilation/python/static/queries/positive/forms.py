@@ -50,7 +50,7 @@ def eight_columns():
 
 @query
 def grouped_counts():
-    return Order.objects.group_by(Order.c.memo).count()
+    return Order.objects.group_by(Order.c.memo).limit(10).count()
 
 
 @query

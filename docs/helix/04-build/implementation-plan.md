@@ -12180,6 +12180,9 @@ separates passing checkpoints from open slice and native/consumer gates. This
 scope does not reorder TableSpec-first integration or authorize production
 operations or migrations.
 
+The recovered main implementation now has an [explicit component/slice status matrix](typed-persistence-design.md#recovered-implementation-status--2026-10-15) and [Astra implementation review](evidence/typed-persistence/implementation-review-20261015/astra-review.json). Stage-one generation and local model/value/capture components have scoped fresh evidence; complete Python3.11/three-checker, revised DSL, stage-two catalogs, native targets and engine-adoption qualification remain open. This status is separate from the frozen browser SQL-to-actions cohort and its Truss performance/publication gates.
+
+
 ### Atomic complete scan batches and direct issuer bridge — 2026-10-15
 
 CONTRACT-062/TD-079/STP-079 now define and exercise private ordered multi-scan

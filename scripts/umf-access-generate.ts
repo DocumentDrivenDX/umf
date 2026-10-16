@@ -13,7 +13,7 @@ function candidate(result:AccessPackageData){
  if(result.outcome!=='candidate'||!result.files.length)throw failure('INVALID_CANDIDATE','Only nonempty candidates can be written');
  const files=new Map<string,Buffer>();let pkg:string|undefined;
  for(const f of result.files){if(!safe(f.path)||files.has(f.path)||hash(f.text)!==f.sha256)throw failure('INVALID_CANDIDATE','Invalid path, duplicate or digest: '+f.path);const prefix=f.path.split('/')[0]!;if(!pkg)pkg=prefix;if(prefix!==pkg||!f.path.includes('/'))throw failure('INVALID_CANDIDATE','Expected one package');files.set(f.path,Buffer.from(f.text));}
- const reserved=new Set([`${pkg}/queries.py`,`${pkg}/_umf/catalog.json`,`${pkg}/_umf/catalog-manifest.json`]);
+ const reserved=new Set([`${pkg}/queries.py`,`${pkg}/_umf/catalog.json`,`${pkg}/_umf/catalog-manifest.json`,`${pkg}/_umf/privileges.json`]);
  for(const p of reserved)if(files.has(p))throw failure('INVALID_CANDIDATE','Stage-two path: '+p);
  const manifest=`${pkg}/_umf/manifest.json`;
  const inventory=readInventory(files.get(manifest),manifest,reserved);

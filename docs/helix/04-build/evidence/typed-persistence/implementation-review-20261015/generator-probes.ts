@@ -1,0 +1,12 @@
+import {generateAccessPackage} from '/Users/erik/.codex/worktrees/20bc/umf/src/compilation/index.ts';
+import {request,profile} from '/Users/erik/.codex/worktrees/20bc/umf/tests/compilation/access-fixtures.ts';
+import {readFileSync,writeFileSync} from 'node:fs';
+const root='/Users/erik/.codex/worktrees/20bc/umf/';
+const results:any[]=[];
+const run=(name:string,q:any)=>{const r=generateAccessPackage(q,profile());results.push({name,outcome:r.outcome,diagnostics:r.diagnostics,actionText:r.files.find(f=>f.path.endsWith('/actions.py'))?.text});return r;};
+const q=request();q.sources[0].text=readFileSync(root+'fixtures/access/commerce/actions.json','utf8');q.actions=[{module:'commerce',action:'shipOrder'}];
+const d=JSON.parse(q.sources[0].text);console.log(d.modules[0].extensions['umf.actions'].actions.map((a:any)=>({id:a.id,parameters:a.parameters})));
+q.names=[{sourceId:'logical',pointer:'/modules/0/extensions/umf.actions/actions/0/parameters/0',python:'same'},{sourceId:'logical',pointer:'/modules/0/extensions/umf.actions/actions/0/parameters/1',python:'same'}];
+run('action-alias-collision',q);
+const q2=request();const d2=JSON.parse(q2.sources[0].text);const v=d2.modules[0].extensions['umf.access'].views.find((v:any)=>v.record.element==='Order');v.selectedKey={module:'commerce',element:'Order',key:'order-key'};q2.sources[0].text=JSON.stringify(d2);run('explicit-selectedKey',q2);
+writeFileSync('/private/tmp/astra-sdk-review-20261015/generator-probes.json',JSON.stringify(results,null,2));console.log(results.map(({actionText,...rest})=>({...rest,collision:actionText?.includes('    same:')})));

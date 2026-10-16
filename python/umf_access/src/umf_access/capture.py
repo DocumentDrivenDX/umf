@@ -11,7 +11,7 @@ from typing import Any, Callable, Union, cast, get_args, get_origin, get_type_hi
 from pydantic import BaseModel, MISSING
 
 from .dsl import Param, Terminal
-from .types import ActionRef
+from .types import ActionRef, ActionSource
 from .dsl._context import CURRENT, CaptureContext, CaptureError as CaptureError
 from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, key_identity, ProjectionRef as ProjectionRef
 from .dsl._nodes import Node as ExpressionNode, KeyLiteral as CapturedKey
@@ -40,7 +40,7 @@ class CapturedDeclaration:
     kind: str
     parameters: tuple[CapturedParameter, ...]
     variants: tuple[CapturedVariant, ...]
-    action: tuple[str, str] | None = None
+    action: ActionSource | None = None
 
 
 def _members(annotation: object) -> tuple[object, ...]:
@@ -221,5 +221,5 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
         reference = getattr(function, "__umf_action__", None)
         if not isinstance(reference, ActionRef):
             raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
-        action = (reference.module, reference.action)
+        action = reference.source
     return CapturedDeclaration(function.__name__, kind, parameters, tuple(variants), action)

@@ -6,7 +6,7 @@ export function checkAccessPresence(f:PresenceFacts,v:FieldView):boolean {
  if(f.generated!==v.generated||f.availability==='unspecified'||!['required','absent-allowed'].includes(f.availability))return false;
  if(f.key&&(f.availability!=='required'||f.admitsNull||v.mutable))return false;
  if(f.availability==='required'&&f.admitsNull)return false;
- if(f.nested)return !f.key&&!v.generated&&!v.mutable&&!v.row.missing&&!v.create.missing&&(!v.row.null||f.admitsNull)&&(!v.create.null||f.admitsNull);
+ if(f.nested)return !v.generated&&!v.mutable&&!v.row.missing&&!v.create.missing&&v.row.null===f.admitsNull&&v.create.null===f.admitsNull;
  if(f.bound&&(!f.notNull.length||f.notNull.some(n=>n!==!v.row.null)||v.row.missing))return false;
  if(v.generated){
   return v.create.missing&&!v.create.null&&!v.row.missing&&(!v.row.null||(f.bound&&f.admitsNull));
@@ -23,7 +23,7 @@ export function checkAccessPresence(f:PresenceFacts,v:FieldView):boolean {
 import {inspectCoreElementKind,inspectCoreNullability,inspectCoreCardinality,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,validateCoreFieldValue,validateDocument,getBinding,inspectBinding,inspectRawTableBinding,RAW_TABLE_BINDING_SUBSET,type Document,type Element} from '../../../index';
 import type {AccessDiagnostic,Ref,ResolvedField,ResolvedRecord} from '../../ir/index';
 export interface SuppliedBinding {sourceId:string;document:Document}
-interface View {record:Ref;fields:(FieldView&{field:Ref})[]}
+interface View {record:Ref;selectedKey:Ref&{key:string};fields:(FieldView&{field:Ref})[]}
 interface NativeColumn {field:Ref;type:string;notNull:boolean;generation:null|'identity'|'stored-expression'|'default'}
 interface ColumnSet {binding:{sourceId:string;module:string};target:{platform:string;majorVersion:string};columns:NativeColumn[]}
 const identity=(r:Ref)=>JSON.stringify([r.module,r.element]);
@@ -98,14 +98,14 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   const candidates=allViews.filter(v=>identity(v.view.record)===identity(ref));
   if(candidates.length!==1){add('ACCESS_REFERENCE',located.path);continue;}
   const {view,path}=candidates[0]!;
-  for(const key of Object.keys(view))if(!['record','fields'].includes(key))unknown(path+'/'+key);
+  for(const key of Object.keys(view))if(!['record','selectedKey','fields'].includes(key))unknown(path+'/'+key);
   const members=Array.isArray(node.members)?node.members as Ref[]:[];
   const expected:{ref:Ref;nested:boolean}[]=[],seen=new Set<string>(),memberIds=new Set(members.map(identity));
   const collect=(r:Ref,nested:boolean,stack:Set<string>)=>{
    if(!reference(r)){add('ACCESS_REFERENCE',path+'/fields');return;}
    const id=identity(r);if(stack.has(id))return;
    const field=locate(r).element;if(!field||inspectCoreElementKind(document,r).meaning.state!=='known'||field.kind!=='field'){add('ACCESS_REFERENCE',path+'/fields');return;}
-   if(!seen.has(id)){expected.push({ref:r,nested});seen.add(id);}
+   if(!seen.has(id)){expected.push({ref:r,nested});seen.add(id);}else if(nested){expected.find(e=>identity(e.ref)===id)!.nested=true;}
    const card=inspectCoreCardinality(document,r).meaning;
    if(card.state==='known'&&card.itemType){const next=new Set(stack);next.add(id);collect(card.itemType,true,next);}
   };
@@ -116,6 +116,8 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   const keyMeaning=inspectCoreKeys(document,ref).meaning;
   if(keyMeaning.state==='partial'||keyMeaning.state==='legacy')unknown(located.path+'/keys');
   const keys=keyMeaning.state==='known'||keyMeaning.state==='partial'?keyMeaning.keys:[];
+  const selectedKey:unknown=view.selectedKey;
+  if(!object(selectedKey)||Object.keys(selectedKey).some(k=>!['module','element','key'].includes(k))||selectedKey.module!==ref.module||selectedKey.element!==ref.element||typeof selectedKey.key!=='string'||!keys.some(k=>k.id===selectedKey.key))add('ACCESS_REFERENCE',path+'/selectedKey');
   const resolved:ResolvedField[]=[];
   for(const [fi,fv] of view.fields.entries()){
    const fp=path+`/fields/${fi}`,field=locate(fv.field).element,expectedField=expected.find(e=>identity(e.ref)===identity(fv.field));
@@ -129,7 +131,8 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const columns=allColumns.flatMap(c=>c.set.columns.filter(n=>identity(n.field)===identity(fv.field)).map(column=>({column,set:c.set,path:c.path})));
    const key=keys.some(k=>k.fields.some(r=>identity(r)===identity(fv.field)));
    const defaultOn=object(properties.default)?String(properties.default.on):'none';
-   const valid=checkAccessPresence({key,availability:availability.state==='known'?availability.nullability:'unspecified',admitsNull:validateCoreFieldValue(document,fv.field,null).valid,defaultOn,generated:fv.generated,bound:columns.length>0,notNull:columns.map(c=>c.column.notNull),nested:expectedField.nested&&!memberIds.has(identity(fv.field))},fv);
+   const facts={key,availability:availability.state==='known'?availability.nullability:'unspecified',admitsNull:validateCoreFieldValue(document,fv.field,null).valid,defaultOn,generated:fv.generated,bound:columns.length>0,notNull:columns.map(c=>c.column.notNull)};
+   const valid=(!memberIds.has(identity(fv.field))||checkAccessPresence(facts,fv))&&(!expectedField.nested||checkAccessPresence({...facts,key:false,nested:true},fv));
    if(!valid||key&&['date','timestamp'].includes(field.scalarType??'')||(field.scalarType==='timestamp')!==(fv.temporal!==undefined)||fv.generated&&columns.some(c=>c.column.generation===null))add('ACCESS_CONFLICT',fp);
    const interpreted=facets.state==='known'||facets.state==='partial'?facets.interpreted:{};
    for(const c of columns)if(!nativeDeclarationCompatible(field,fv,c.column,c.set,{...interpreted}))add('ACCESS_NATIVE',c.path+'/columns');

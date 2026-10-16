@@ -1,6 +1,14 @@
 import {expect,test} from 'bun:test';
 import {generateAccessPackage} from '../../src/compilation/index';
 import {profile,request,mutateSource} from './access-fixtures';
+// @covers US-082-AC1
+test('generated updates have explicit keyword parameters checked by every checker',()=>{
+ const result=generateAccessPackage(request(),profile());
+ const fields=result.files.find(f=>f.path==='shop/fields.py')!.text;
+ expect(fields).not.toContain('**values: Unpack[');
+ expect(fields).toContain('def update(self, *, amount:');
+ expect(fields).toContain(' = MISSING');
+});
 // @covers US-080-AC1
  test('generation_is_deterministic; exact source and profile identity affect digest',()=>{
  const req=request(),p=profile(),before=JSON.stringify({req,p});const a=generateAccessPackage(req,p),b=generateAccessPackage(req,p);
@@ -52,7 +60,7 @@ import {profile,request,mutateSource} from './access-fixtures';
   Object.assign(d.vocabularies,{'umf.actions':{version:'0.1.0'}});
   Object.assign(d.modules[0]!.extensions,{'umf.actions':{actions:[{id:'shipOrder',name:'Ship order',description:'Typed action fixture; no executor qualification',parameters:[{id:'order',kind:'entity',target:{module:'commerce',element:'Order',key:'order-key'},required:true},{id:'memo',kind:'value',field:{module:'commerce',element:'memo'},required:false}],outputs:[{id:'amount',kind:'value',field:{module:'commerce',element:'amount'},required:true}],preconditions:[],postconditions:[],reads:[],writes:[],binding:{kind:'handler',profile:{id:'test-handler-profile',version:'1'},handler:{id:'test-ship',version:'1'}},failures:[{code:'NOT_READY',message:'Not ready',retryable:false}],authorization:{kind:'roles',profile:{id:'umf.actions.roles',version:'1'},roles:['shipper']},attribution:{subject:'person-required'},atomicity:'single-store',idempotency:'caller-key-optional',result:{identities:'created-and-changed',version:'store-opaque',receipt:'read-at-least'}}]}});
  });
- const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('candidate');const actions=r.files.find(f=>f.path==='shop/actions.py')!.text;expect(actions).toContain('class ShipOrderInput');expect(actions).toContain('class ShipOrderOutput');expect(actions).toContain('class ShipOrderRejected');expect(actions).toContain('Literal["NOT_READY"]');expect(actions).toContain('order: OrderKey');expect(actions).toContain('memo:');expect(r.obligations.some(o=>o.owner==='engine')).toBe(true);
+ const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('candidate');const actions=r.files.find(f=>f.path==='shop/actions.py')!.text;expect(actions).toContain('class ShipOrderInput');expect(actions).toContain('documentSha256="'+new Bun.CryptoHasher('sha256').update(req.sources[0]!.text).digest('hex')+'"');expect(actions).toContain('class ShipOrderOutput');expect(actions).toContain('class ShipOrderRejected');expect(actions).toContain('Literal["NOT_READY", "ENTITY_MISSING"]');expect(actions).toContain('order: OrderKey');expect(actions).toContain('memo:');expect(r.obligations.some(o=>o.owner==='engine')).toBe(true);
  });
 // @covers US-080-AC1
  test('generated DSL metadata keeps IDs, authored names and Python names separate',()=>{
@@ -108,4 +116,46 @@ import {profile,request,mutateSource} from './access-fixtures';
  const req=request();req.records.push({module:'commerce',element:'OrderLine'});const r=generateAccessPackage(req,profile());expect(r.symbols[0]!.symbol).toBe('BUNDLE_INPUT_DIGEST');
  const pointers=[...new Set(r.symbols.map(s=>s.pointer))];expect(pointers.indexOf('/modules/0/elements/0')).toBeLessThan(pointers.indexOf('/modules/0/elements/1'));
  expect(r.files.find(f=>f.path==='shop/keys.py')!.text.indexOf('    line_order_id:')).toBeLessThan(r.files.find(f=>f.path==='shop/keys.py')!.text.indexOf('    line_number:'));
+ });
+
+// @covers US-080-AC2
+ test('selectedKey is explicit and must identify this Records declared Key',()=>{
+ expect(generateAccessPackage(request(),profile()).outcome).toBe('candidate');
+ for(const invalid of [undefined,null,{module:'commerce',element:'Customer',key:'order-key'},{module:'foreign',element:'Order',key:'order-key'},{module:'commerce',element:'Order',key:'unknown'},{module:'commerce',element:'Order',key:'order-key',unknown:true}]){
+  const req=request();mutateSource(req,d=>{const view=d.modules[0]!.extensions['umf.access'].views[0]! as unknown as Record<string,unknown>;if(invalid===undefined)delete view.selectedKey;else view.selectedKey=invalid;});
+  const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.files).toEqual([]);
+  expect(result.diagnostics.some(d=>d.accessCode==='ACCESS_REFERENCE'&&d.pointer.endsWith('/selectedKey'))).toBe(true);
+ }
+ });
+
+// @covers US-081-AC8
+test('generated validators and codecs delegate to shared runtime algorithms',()=>{
+ const result=generateAccessPackage(request(),profile());
+ const models=result.files.find(f=>f.path==='shop/models.py')!.text;
+ const codecs=result.files.find(f=>f.path==='shop/codecs.py')!.text;
+ expect(models).toContain('FieldValidator(');
+ expect(models).not.toContain('def validate_field_');
+ expect(models).not.toContain('raise ');
+ expect(models).not.toContain('def __init_subclass__');
+ expect(codecs).not.toContain('if ');
+ expect(codecs).not.toContain('astimezone(');
+ expect(codecs).toContain('return encode_model(');
+ expect(codecs).toContain('return decode_model(');
+});
+
+// @covers US-080-AC2
+ test('Field reused as an item must satisfy owned and nested occurrence rules',()=>{
+ for(const field of ['memo','amount']){
+  const req=request();mutateSource(req,d=>{
+   const m=d.modules[0]!;
+   m.elements.push({id:'values',kind:'field',cardinality:'array',itemType:{module:'commerce',element:field},nullability:'required',extensions:{}} as never);
+   (m.elements[5]! as unknown as {members:unknown[]}).members.push({module:'commerce',element:'values'});
+   const fields=m.extensions['umf.access'].views[0]!.fields;
+   fields.push({field:{module:'commerce',element:'values'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:true,generated:false} as never);
+   if(field==='amount')fields.find(f=>f.field.element==='amount')!.mutable=false;
+  });
+  const result=generateAccessPackage(req,profile());
+  expect(result.outcome).toBe(field==='amount'?'candidate':'refused');
+  if(field==='memo')expect(result.diagnostics.some(d=>d.accessCode==='ACCESS_CONFLICT')).toBe(true);
+ }
  });

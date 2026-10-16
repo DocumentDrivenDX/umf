@@ -20,6 +20,7 @@
           "type": "object",
           "required": [
             "record",
+            "selectedKey",
             "fields"
           ],
           "properties": {
@@ -118,6 +119,29 @@
                 },
                 "additionalProperties": true
               }
+            },
+            "selectedKey": {
+              "type": "object",
+              "required": [
+                "module",
+                "element",
+                "key"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
             }
           },
           "additionalProperties": true

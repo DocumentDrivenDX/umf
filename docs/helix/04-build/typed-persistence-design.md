@@ -28,9 +28,7 @@ ddx:
 A schema-first Python data access SDK generated from UMF. Developers get typed
 models, a precompiled query and search catalog, typed action clients, and runtime
 targets for raw Postgres, Lakebase, Unity Catalog and Spark/Delta tables and for
-Truss ontologies and Ashlar publications. Everything here is a draft
-specification; no generator, runtime, native support or consumer adoption is
-delivered by these documents.
+Truss ontologies and Ashlar publications. Main now includes a recovered stage-one generator and local Python model/value/DSL runtime. Only the source-pinned component evidence below is complete; the full SDK surface, catalogs, native targets and engine adoption remain subject to their separate acceptance gates.
 
 This handoff replaces the first typed-persistence draft (commit 81d78af2) after an
 independent review and owner decisions recorded in
@@ -101,7 +99,7 @@ catalog slice is qualified per target as the matching Weft requirement lands.
 | T-1 | Truss | Public action admission, read and bulk APIs callable by an adapter; Truss-local adoption design; typed carriers for timestamp and binary fields and exact values (CONTRACT-069 current limits); attribution is decided by Truss admission from the host-supplied connection, not by the SDK | — | B-TP-013 |
 | A-1 | Ashlar | Resolver API for pinned execution by an adapter; Ashlar-local adoption design; core 0.8 document admission; byte equality between Ashlar's read-time recompilation and catalog entries; instant and numeric decoders beyond `published_at` and string scalars | — | B-TP-014 |
 | U-1 | UMF | CONTRACT-901 rule profile support for decimal values | — | Decimal action conditions |
-| U-2 | UMF | CONTRACT-042 binding profiles for `lakebase`, `unity-catalog` and `spark-delta` that `umf.access` ColumnSets can reference | — | B-TP-002, B-TP-008 |
+| U-2 | UMF | CONTRACT-042 raw binding profile definitions/inspectors are implemented and locally tested; native target binding/admission remains separately unqualified | — | B-TP-002, B-TP-008 |
 | U-3 | UMF | CONTRACT-902 null and wider value domains for bulk SET, matching WR-A9 | — | Bulk `SET NULL` and non-string/boolean SET |
 
 ## Coordinated SQL-to-actions implementation ledger
@@ -149,6 +147,25 @@ Slices B-TP-000 to B-TP-005 need no Weft change. Praxis makes Lakebase/Postgres 
 Each target and engine adapter is qualified separately; no local pass substitutes
 for managed Unity Catalog or engine witnesses.
 
+## Recovered implementation status — 2026-10-15
+
+Baseline main `5bcfaec09075bb02586f7e04f9aa349208582d35` recovered the original work through `bf0b9cc7`. The [Astra implementation review](evidence/typed-persistence/implementation-review-20261015/astra-review.json) checks actual code against current specs; [fresh verification](evidence/typed-persistence/implementation-review-20261015/verification.json) records corrected-source replay. Historical recovery/packaging evidence remains immutable and does not qualify changed source.
+
+| Scope | Complete component / current state | Still required for slice closure |
+| --- | --- | --- |
+| B-TP-000 | Local TS/Python boundary maps and violation controls implemented; current local commands replayed | Remote CI observation for the final integrated source; checker success is not SDK acceptance |
+| B-TP-001 | Exact local Python3.14.8/Pydantic2.14.1 prerelease packaging; scoped checker and installed-wheel replay | Real Python3.11 runtime compatibility, complete three-checker corpora/settings, driver/platform pins and qualified release profile. Do not widen requires-python from the exact local pin without evidence |
+| B-TP-002 | Access schema/context/matrix admission, single explicit selected Key, nested presence and safe refusals | Full per-story criteria and any additionally claimed schema/Key/profile breadth; alternate/multiple Keys remain refused rather than coerced |
+| B-TP-003 | Deterministic stage-one candidates, source census/hash, naming/refusal, host writer/drift checks; four stage-two paths preserved; Bun/Chromium parity | Full STP-080 closure for the final qualified profile and ordered prerequisite record; report/candidate is not native schema acceptance |
+| B-TP-004 | Generated model/Key/projection/action-input types and shared metadata-driven validators/codecs; exact installed-wheel local corpus replay | Full US-081 matrix on Python3.11 and all three pinned checkers, complete action client/result ABI, target transport/native proof. ActionRef now retains exact source, not issued engine authority |
+| B-TP-005 | In-memory capture/render for implemented forms, source-bound command identity, generated explicit update keywords, bounded grouped counts and guarded owner typing | Complete revised DSL (aggregates/buckets, prefix/terms, distinctness, joins/snapshots, ranked search), genuine stage-two generated callsite/refactor corpus and owner Weft interface/grammar qualification |
+| B-TP-006–014 | No catalog builder/native SQL targets/Truss or Ashlar SDK adapter delivered by the recovered Python package | Weft versioned complete artifacts/digest boundary; first-consumer Postgres18/Lakebase reads; native action/timeout/admission/reconciliation/async/stream/search witnesses; original Truss/Ashlar adoption protocols and witnesses |
+| B-TP-015 | Component receipts identify exact generator/runtime/source inputs | Integrated unchanged-source replay and every claimed scope's prerequisites. No blanket completion or publication claim |
+
+Completed fixes preserve full source pins through action capture, reject ambiguous action Python names and unsupported Key reuse, replace unpacked keyword updates, constrain foreign-column operands, bound grouped results, share validation/conversion logic, sanitize persistence decode locations, and preserve `_umf/privileges.json`. The corrected wheel has its own SHA; it does not overwrite or inherit the older `9189...` wheel's acceptance. Nominal `0.1.0.dev0`/ABI0.1 remains an unreleased local pairing; only the exact byte-qualified wheel and regenerated package are observed here.
+
+Next: close B-TP-001's real Python3.11/three-checker profile and B-TP-002–005's remaining STP criteria, then implement the first-consumer schema-neutral catalog/read path when its Weft outputs qualify. Truss browser/local-905 progress and the separate performance/publication hold remain owned by the SQL-to-actions/Truss workstream; this recovery review neither releases that hold nor promotes L0 into SDK adoption. New main source changes produce a new action-plan producer identity; preserve and separately qualify cohorts, never relabel frozen artifacts.
+
 ## Execution Contract
 
 The owner authorizes implementation of the ordered slices, test-first, with
@@ -175,8 +192,7 @@ inputs.
 
 At design time, run `check_structure.py` for unique IDs, required sections, link
 resolution and AC traceability across all artifacts added since the base branch.
-Actual tests remain UNTESTED until code and native observations exist. At build
-time, write failing tests first, then run each STP's gates and the replay.
+Only named source/version-pinned executable receipts establish the component results above. All other STP/native/consumer criteria remain UNTESTED; write regressions for repairs and close slices only through their complete gates.
 
 ## Risks and Rollbacks
 

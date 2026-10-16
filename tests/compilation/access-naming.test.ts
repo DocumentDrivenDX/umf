@@ -3,7 +3,7 @@ import {generateAccessPackage} from '../../src/compilation/index';
 import {profile,request,mutateSource} from './access-fixtures';
 // @covers US-080-AC4
  test('unsafe_names_and_limits_refuse',()=>{
- for(const name of ['c','objects','model_config','test_reserved','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS']){const req=request();req.names=[{sourceId:'logical',pointer:'/modules/0/elements/0',python:name}];const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='NAME')).toBe(true);expect(r.files).toEqual([]);}
+ for(const name of ['c','objects','model_config','test_reserved','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS','ActionSource','ActionProfile','FieldValidator','seal_model','unhashable_key','ValueNormalizer','encode_model','decode_model','initialize_rejection']){const req=request();req.names=[{sourceId:'logical',pointer:'/modules/0/elements/0',python:name}];const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='NAME')).toBe(true);expect(r.files).toEqual([]);}
  for(const name of ['decimal','pydantic','umf_access']){const req=request();req.package=name;expect(generateAccessPackage(req,profile()).diagnostics.some(d=>d.code==='NAME')).toBe(true);}
  for(const name of ['../evil','NotAPackage']){const req=request();req.package=name;expect(()=>generateAccessPackage(req,profile())).toThrow();}
  const req=request();for(let i=1;i<33;i++)req.sources.push({id:`extra${i}`,format:'json',text:req.sources[0]!.text});const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='LIMIT')).toBe(true);
@@ -32,4 +32,20 @@ import {profile,request,mutateSource} from './access-fixtures';
 // @covers US-080-AC4
  test('malformed and ambiguous profile pins refuse as PROFILE',()=>{
  for(const change of [(p:ReturnType<typeof profile>)=>{p.dependencies=[null as never];},(p:ReturnType<typeof profile>)=>{p.checkers=[null as never];},(p:ReturnType<typeof profile>)=>{p.dependencies.push({...p.dependencies[0]!});},(p:ReturnType<typeof profile>)=>{p.dependencies[0]!.version='>=0.1';}]){const p=profile();change(p);const r=generateAccessPackage(request(),p);expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='PROFILE')).toBe(true);}
+ });
+
+// @covers US-080-AC4
+ test('action input and output aliases cannot overwrite a declared parameter',async()=>{
+ const actionFixture=await Bun.file(new URL('../../fixtures/access/commerce/actions.json',import.meta.url)).json();
+ for(const group of ['parameters','outputs'] as const){
+  const req=request();req.sources[0]!.text=JSON.stringify(actionFixture);req.actions=[{module:'commerce',action:'shipOrder'}];
+  if(group==='outputs'){
+   const doc=JSON.parse(req.sources[0]!.text),action=doc.modules[0].extensions['umf.actions'].actions[0];
+   action.outputs.push({...action.outputs[0],id:'secondAmount'});req.sources[0]!.text=JSON.stringify(doc);
+  }
+  req.names=[0,1].map(i=>({sourceId:'logical',pointer:`/modules/0/extensions/umf.actions/actions/0/${group}/${i}`,python:'same'}));
+  const result=generateAccessPackage(req,profile());
+  expect(result.outcome).toBe('refused');expect(result.files).toEqual([]);
+  expect(result.diagnostics.some(d=>d.code==='NAME'&&d.pointer===`/modules/0/extensions/umf.actions/actions/0/${group}/1`)).toBe(true);
+ }
  });

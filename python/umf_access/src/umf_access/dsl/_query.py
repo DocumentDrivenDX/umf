@@ -78,6 +78,11 @@ class Terminal(Generic[R]):
 class Grouped(Generic[O, G_co, K]):
     query: Query[O, Any, K]
 
+    def limit(self, n: int) -> Grouped[O, G_co, K]:
+        """Bound the number of result groups, never the input population."""
+        Query._bound(n)
+        return replace(self, query=self.query._add("group_limit", n))
+
     def count(self) -> Terminal[list[G_co]]:
         require_capture()
         return Terminal(Node("group_count", (self.query.ref, self.query.steps)))
@@ -172,6 +177,9 @@ class Query(Generic[O, R, K]):
         for field in fields:
             self._check_field(field)
         return Query(self.ref, self.steps + (Node("into", (ProjectionRef(model.__module__, model.__qualname__, fields),)),))
+
+    def _update_present(self, values: Mapping[str, object]) -> Terminal[object]:
+        return self._update({name: value for name, value in values.items() if value is not MISSING})
 
     def _update(self, values: Mapping[str, object]) -> Terminal[object]:
         require_capture()
