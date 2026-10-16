@@ -1627,3 +1627,48 @@ constant mask may produce its valid typed DTO without inventing a live input
 where the renderer is qualified to do so. Whole-query value admission must not
 confuse read-value availability with original-input presence. Existing permission
 helpers and current selected-optional compiler refusals keep their scoped meaning.
+
+### Operator-free conditional read-projection metadata — 2026-10-15
+
+A source-only projection inspector MUST accept the original issued policy
+program, validated owner and qualified Type/Field selection without inventing
+scan identifiers, query operators, paths or original-use actions. It MUST retain
+all applicable read conditions and every permit-source occurrence, including
+explicit disposition and original/default/missing/withheld distinctions. Output
+Field metadata retains original identity, revision and complete definition.
+Stored transformed values refer to their current live Field, never an implicit
+pre-storage clear value. Query-use prohibition does not prohibit read metadata.
+
+These alternatives do not select an active rule, prove scalar availability,
+compute a uniform output domain or grant permission. Empty-output typing requires
+a nonempty set of compatible output projections plus original descriptor
+correspondence; actual policy/disclosure folding, eligibility, native authority
+and guarded release remain independent. Unknown/conflicting/withheld/missing
+output cases cannot become guessed scalar domains. Metadata refusal is atomic.
+The initial private helper bounds serialized output including framing to4,000,000
+UTF-16 code units; that is not a UTF-8 frame limit or aggregate heap/work theorem.
+
+### Separately versioned private projection transport — 2026-10-15
+
+The optional `umf.security.private-query-child/0.2-candidate` transport carries
+operator-free qualified Type/Field projections alongside genuine query routes.
+Each closed request and response declares that exact protocol. One actual local
+program is compiled from original source input; imported handles refuse. The
+sequence initialize → inspect-inputs → evaluate binds the canonical owner, ordered
+routes and ordered projections and the full framed initialization receipt.
+That receipt correlates bytes; it is not source admission, runtime authority or
+a permit. Projection identifiers are distinct from all route identifiers.
+
+Both inspection and evaluation return unchanged original projection metadata.
+A completed batch remains separate from permission and a projection alternative
+remains separate from an active, uniform scalar domain. Query-use prohibition
+does not invent an operator for a plain projection. Missing/withheld/conflicting
+outputs and empty populations preserve original source semantics.
+
+The v2 transport has independent artifact/source/consumer custody. Frozen r3
+source579675bd and its bundle/registrations remain unchanged. Its protocol cannot
+be inferred from compatible framing. Native adoption requires an explicit new
+consumer/source cohort, including the changed full initializer bytes/receipt;
+no old registration migrates automatically. Requests are bounded to4MiB, replies
+to16MiB UTF-8, projections256, routes4096, operations256, scans16 and facts10000.
+These transport bounds do not prove aggregate heap/time or native noninterference.

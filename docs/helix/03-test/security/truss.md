@@ -543,3 +543,34 @@ PUBLIC/effective grants with the original installation closure. A body-only
 false-filter mutation must fail correspondence despite unchanged name/signature;
 rollback must restore exact bodies before later execution. Native dependency and
 role resolution require separate qualification beyond this source comparison.
+
+
+### Protection activation and delegated authority closure — 2026-10-15
+
+This expands existing truss.B04/B05/B06/B10/B11/B14 and L12; all original
+30 backend obligations remain required. It adds no case IDs or accepted cases.
+The [native namespace-lockdown counterexample](../../04-build/evidence/security/truss-external-delegation-20261015/README.md)
+shows why direct object-table SELECT denial and a correct guarded query are
+insufficient. The earlier [granted native query facade counterexample](../../04-build/evidence/security/truss-current-query-replay-20261015/README.md)
+remains independently relevant. Execute each control on the exact admitted
+installation, native ordinary connections, and actual registered model/Subject;
+retain original OIDs, memberships, routine/view dependencies, grants and outcomes.
+
+| Existing cases | Required exercising controls | Required observation |
+| --- | --- | --- |
+| B04/B06/B10 | Cache a real native query binding before activation. After commit invoke legacy query binding/object/edge/page/get/history/feed routines directly over ordinary SQL, plus every corresponding public API. Include hidden Assignment list/count/diagnostic paths. | Exact privilege or protected-profile refusal before any values, keys, hidden counts or partial result. Guarded masked positive query and scoped catalog metadata still work. |
+| B04/B05/B06/B14 | Before activation install an outside-schema runtime-owner or administrator SECURITY DEFINER wrapper reading protected objects. Repeat with private EXECUTE ACL and a pre-existing trigger path; include a chain through an unprivileged definer. | Explicit activation refusal or independently qualified equivalent policy enforcement. Namespace-only routine revocation, SQL-body heuristics and absence of direct caller SELECT cannot qualify delegation closure. |
+| B04/B06/B10 | Create an external view over protected data and a transitive view over that view; include column-only grants to an unenrolled ordinary LOGIN. Include rule-backed relation and descendant/partition access where native layout permits it. | Dependency/effective privilege inventory detects the path; no protected activation with an unqualified read or mutation delegation. Hidden facts remain unavailable to unenrolled outsiders. |
+| B05/B11/B14 | Inspect enrolled and unenrolled database-connectable LOGINs, effective inherited and SET-reachable roles, ADMIN-enabled regrant transitions, raw-access predefined roles and untrusted elevated LOGINs. | Only explicitly excluded installer/integrity authority is exempt; ordinary callers cannot reach it through membership, grants, routines, rules or triggers. Do not silently exclude a LOGIN merely because its flags are elevated. |
+| B06/B09/B11 | Remove or replace each allowed metadata/Subject signature; add overloads, change owners/settings/PUBLIC/column grants, and mutate the activation marker or source inventory. | Missing-OID/NULL logic refuses instead of emptying an allowlist; exact verified allowlist and source correspondence are required before admission and final release. |
+| B09/B11/L12 | Attempt module configuration, feed enrollment and runtime upgrade after activation. Fail activation midway after revocations/marker work, then roll back. | Supported configuration cannot silently restore legacy access. Failed activation rolls back atomically; an already admitted protected profile is never weakened. Observe committed grants and marker state independently. |
+| B11/L12 | Keep another native client connected during activation; separately exercise trusted-host traffic quiescence through activation commit and serialization against grant-changing configuration. | Refusal while an existing client can retain an old read; installation exclusion orders supported regrant paths. A snapshot of no clients alone does not prove new-connection exclusion. Retain the host quiescence premise explicitly until an equivalent native protocol is qualified. |
+
+A first activated read-only profile may explicitly refuse legacy writes, imports,
+reads and feeds while their equivalent providers are implemented. Those refusals
+are compatibility limits, not completion of required L01/L02/L07-L10 or the full
+storage/backend goal. Likewise, a quiescent administrative-DDL premise does not
+prove adversarial DDL fencing or live policy migration. Full backend acceptance
+still requires the other scenarios above, original source/current-authority
+custody, output lifetime and original acceptance runner evidence. No reproduction
+or source inspection alone promotes a case.

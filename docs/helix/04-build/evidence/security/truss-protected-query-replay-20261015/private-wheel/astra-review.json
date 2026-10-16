@@ -1,0 +1,67 @@
+{
+  "review": "Activated protected current-query replay harness and procedure expansion",
+  "date": "2026-10-15",
+  "status": "no-blocking-finding-for-stated-finite-replay-and-procedure-scope",
+  "findings": [],
+  "sourceCommit": "123cd2ec6b02e6ad12785ade28972d61159a3d5a",
+  "harnessSha256": "b9876f3692ef84640ddf77ebd6b5a2f395a0d8e30f05b055f36205420d2407bd",
+  "independentChecks": {
+    "sourceCustodyAndAllocation": 21,
+    "syntheticUnittestCompletionControls": 4,
+    "sourceFilesMatched": 1133,
+    "loadedTrussModulesMatched": 73,
+    "wheelPythonNativeFilesMatched": 2,
+    "nativeDbRunByReviewer": false
+  },
+  "parentNativeEvidence": {
+    "path": "/private/tmp/truss-protected-query-root-replay-20261015/receipt.json",
+    "status": "passed",
+    "originalMethods": [
+      "test_all_denied_population_returns_empty_rows",
+      "test_empty_population_returns_empty_rows",
+      "test_protected_activation_closes_legacy_data_facades",
+      "test_public_masked_projection_with_authorized_exact_raw_predicate"
+    ],
+    "tests": 4,
+    "seconds": 29.713,
+    "server": "PostgreSQL 18.6",
+    "runtime": "pgserver-pg18 18.6.1",
+    "custody": "Retained test log and original source inspected. Actual observed postmaster PID is absent after runtime/lease release and test-directory removal; reviewer did not replay the database."
+  },
+  "resolvedHarnessFinding": {
+    "issue": "unittest.wasSuccessful and testsRun count alone also admit skips or expected failures.",
+    "fix": "Current completion assertion explicitly rejects skipped, expectedFailures and unexpectedSuccesses before receipt publication.",
+    "controls": "Exact source assertion accepts all-pass and rejects one-skip, one-expected-failure and ordinary-failure outcomes; completion-controls.json."
+  },
+  "actualCoverage": [
+    "Exact four named original methods execute without skipped or expected-failure status. One shared owned PostgreSQL runtime is used; each test invokes original setup/cleanup.",
+    "The masked positive query preserves the exact signed64 predicate, excludes the same-salary denied Resource, restores both search paths, refuses source-prohibited ORDER and one-byte limits, and leaves no private temp relations.",
+    "All-denied and empty populations return empty rows with declared salary column; the original FALSE-plus-prohibited-ORDER query still refuses in both variants.",
+    "A cached pre-activation binding cannot access object/edge/page/get/history/feed facades after activation. The corresponding tested get_object public API refuses; scoped reader catalog remains usable.",
+    "Activation refuses an external runtime-owner SECURITY DEFINER with public ACL and after its EXECUTE ACL is made private, a transitive external view with a column-only grant to an unenrolled outsider, and an elevated BYPASSRLS outsider. Each refusal is checked for the specific delegated-authority reason before restoring source and succeeding.",
+    "Selected supported module/feed regrant and private preparation/catalog-issuer bootstrap paths refuse after protection activation and do not create the selected issuers."
+  ],
+  "sourceReview": [
+    "The exact Git archive matches all 1133 tracked file paths and bytes, including the committed binding fixture. Loaded Truss module paths/digests match the archived originals; actual wheel shim/native bytes match the exact fixed wheel and module hashes.",
+    "Activation records the one excluded administrator identity; it checks database-connectable LOGINs beyond enrolled Subjects, considers role authority transitions, refuses external privileged definers even with private EXECUTE, and follows relation/view dependencies and inheritance for the selected inventory.",
+    "The outside-definer refusal is intentionally conservative; passing these controls does not prove every possible delegation/effect path is closed.",
+    "The procedure is an expansion of existing required cases, not an easier replacement. Exact cases.json bytes match HEAD; 158 total and all 30 Truss cases remain allocated. The table explicitly retains trigger/role/view/current-source/migration/quiescence requirements beyond this run."
+  ],
+  "limits": [
+    "This review approves the evidence framing and finite original test replay, not a production or whole-backend security profile.",
+    "Host-controlled traffic quiescence through activation commit, fresh trusted private executor and quiescent administrative DDL remain premises. The client census alone does not exclude later connections.",
+    "The separately raised external-trigger to internal SECURITY DEFINER effect path is not demonstrated or disproved by these four methods; no complete callable/effect-closure claim follows.",
+    "No general COUNT, graph/raw-table, aggregate, actor/backend, concurrency, live migration, output-lifetime or publication-drain acceptance is supplied.",
+    "Wheel, child, PostgreSQL binary and selected source hashes plus environment versions are not a complete transitive executable/runtime attestation; Bun/Python and every dependency binary are not independently pinned here. Before/after observations do not prove hostile transient-replacement exclusion.",
+    "No original acceptance case, criterion, assertion or timeout was changed or promoted. Procedure controls that are required but unexecuted remain required."
+  ],
+  "artifacts": [
+    "source-pins.json",
+    "verification.json",
+    "completion-controls.py",
+    "completion-controls.json",
+    "completion-guard-source.py",
+    "verify.py"
+  ],
+  "acceptanceCasesPromoted": []
+}
