@@ -2168,3 +2168,15 @@ is raised. Re-run affected accepted cases against the changed kernel and qualify
 unchanged retained case/source correspondence separately. The existing158 required
 cases and34 criteria remain mandatory. Actual ordinary-role native graph identity
 and guarded-release cases require the composed Truss collector and consumer.
+
+### Nested ownership/membership F/U/T proof controls — 2026-10-16
+
+Run `python tools/security/prove-nested-ontology-refinement.py --output <receipt>`
+with the pinned Z3 environment. Require18 replayed queries: conditional nested
+truth/negation equality, nonvacuous F/U/T and empty/mixed populations, and SAT
+controls for split owner/assignment witnesses, treating U as permission, early-U
+dominance and missing incidence/endpoint/attribute correspondence. Retain exact
+source, pre-solve SMT, results and SAT models. The qualified first-order slice
+supports US-056-AC2; it does not replace required actual backend native cases or
+qualify a compiler/runtime translation. Missing coverage must still refuse and
+is not modeled as U.

@@ -12626,3 +12626,23 @@ refusal. They establish no native source/caller/current-cut/release qualificatio
 Astra Ultra completed independent review with no open product findings. The retained [review and source evidence](evidence/security/condition-short-circuit-20261016/README.md) includes the separate labeling correction and scoped acceptance revalidation. Direct-main integration retains the candidate scope.
 The Truss consumer has a separate preliminary review and native qualification
 stream; no implicit cohort repin or activation is authorized by these results.
+
+## Nested ontology F/U/T formal extension — 2026-10-16
+
+The [retained conditional proof](evidence/security/nested-ontology-refinement-20261016/README.md)
+models the four-relationship same-Assignment/same-Ownership join with typed
+logical endpoints and F/U/T activity. Root18SMT queries pass5UNSAT/13SAT. Astra
+Ultra replays18, adds22 solver queries and2304 abstract truth cases, and reports
+no actionable finding. Exact source, SMT/models, development iterations and
+qualified TD056/STP056 records are retained. This does not prove implementation
+translation, codec correspondence, native authority or release; missing coverage
+is not U. No acceptance case is promoted and the shared158/34 scope remains
+45implemented/113missing. The canonical gate remains historical for the changed
+semantic kernel; the prior scoped revalidation is not a fresh158-case gate.
+
+The native graph collector prerequisite is separately reviewed and on Trussmain
+5f676884, with custody-only documentation correction59360445. Its native tests
+qualify the original9e328d91 engine/source cohort and explicitly substitute the
+accepted-source provider. Actual native binding and original host guard/release
+composition remain required before graph read admission. Existing206951/d333
+consumer assets are not implicitly repinned by either formal or native evidence.
