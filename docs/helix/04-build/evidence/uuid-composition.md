@@ -120,3 +120,15 @@ required proof entries cannot bypass freshness verification. The final runner
 receipt is retained with the evidence; copied logs normalize whitespace only.
 Earlier failed/tooling and pre-review attempts above do not establish the final
 claim. Both profile verification commands pass against the retained final source.
+
+### Main integration — 2026-10-16
+
+Implementation `6aea0792` was merged with50 newer main commits at `5e7a4670`.
+Both execution-log entries were retained. Conflicting generated identity and
+qualification receipts were regenerated against the merged source. Fresh model1
+17-phase and model2 14-phase runs passed all commands, including native databases,
+file/Spark values, source recovery, public browser execution and both gate suites.
+Normalized retained logs and both source-bound verification commands pass. The
+later `902c9f71` commit changes only security test documentation; it does not
+change the qualified source or schemas. This remains115 distinct scoped tests,
+not a full-repository regression claim.

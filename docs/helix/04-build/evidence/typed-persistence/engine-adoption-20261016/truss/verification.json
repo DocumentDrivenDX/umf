@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "original core08 schema accepted through public API",
+    "instance created through public atomic group API",
+    "original engine catalog roundtrip",
+    "typed native read",
+    "bound injection remains data",
+    "eager verify uses native read path",
+    "different valid compiler SQL refuses original correspondence",
+    "real CLI catalog/check and generated typed query through original Truss path",
+    "native authorization revocation refuses SDK read"
+  ],
+  "ownedServerStopped": true,
+  "temporal": "HELD",
+  "scope": "Truss RC module ACL schema, instance and typed read; no protected current-policy/action qualification"
+}

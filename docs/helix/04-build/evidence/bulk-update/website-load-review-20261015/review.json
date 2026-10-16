@@ -1,0 +1,139 @@
+{
+  "reviewer": "Astra Ultra",
+  "date": "2026-10-15",
+  "verdict": "No open implementation blockers within the public loading/read/recovery website integration scope. Publication remains gated on the current HTML signature.",
+  "findings": [],
+  "resolved": [
+    {
+      "id": "LOAD-WEB-01",
+      "priority": 1,
+      "issue": "Calling loadObjects on every prepare could redispatch the same uncertain original control when native outcome custody was absent. Stable key/attempt alone only protected retained-outcome replay.",
+      "resolution": "A strict atomic IndexedDB intent records exact original load input/control before first native load dispatch. Only the first committed journal admission calls loadObjects; all later callers use recoverLoad. Unresolved absence and all other unsuccessful native results never fall through to a new load.",
+      "proof": "Fourteen independent actual Chromium Worker/IndexedDB controls include unknown followed by a new worker, missing recovery/no writes, strict completion ordering, quota/abort/relaxed failures and concurrent admission. The full actual-provider website verifier additionally injects interruption after journal admission but before first native load and observes unresolved recovery after reload."
+    },
+    {
+      "id": "LOAD-WEB-02",
+      "priority": 2,
+      "issue": "Initial verifier dropped acknowledgement of a second prepare (recovery) while claiming initial load acknowledgement-loss coverage.",
+      "resolution": "Drop enabled before the first actual prepare/load; expected original creation receipt captured from suppressed response; reload recovers exact original receipt and rows.",
+      "proof": "Reviewer independently ran the corrected original verifier unchanged in a temporary fixture against current built assets. Receipt matches the parent result and all 20 hashes exactly."
+    }
+  ],
+  "repository": "/Users/erik/.codex/worktrees/security-action-source-custody/umf",
+  "baseCommit": "f9f28483624d10919d5cc5add5e2ddad07aff20a",
+  "originalTrussCommit": "62b3e30213b188afec1e240793c4b3c31d52d6ce",
+  "originalTrussManifestSha256": "07030e7b3f8e73c3f18a6b809fc536453a574562b87f7a655dc63339d74d9718",
+  "originalTrussProviderSha256": "25cca4c9b0876d834f2b162857283b1666dab6ca6015cc6d7ae90e59f6191a5e",
+  "sources": [
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/truss-catalog-worker.ts",
+      "sha256": "5a1516c81dd0e4d6ab78212e5592487858eb08f308f15f3a320d4427063c6e35"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/load-intent.ts",
+      "sha256": "e57ddc1a9de851058ead94cbf9838f51ce82f8e172d9a4a9d9b8a96060e24814"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/seal-intent.ts",
+      "sha256": "3c00f3a26a6b96eb9732ba4a52a285dc3f7e60e4e26f3310f8b65ae8077c23eb"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-compiler.ts",
+      "sha256": "1dba7b86b7d615c73ac26313ae1f0a5b3870320e8685cb2f65bb6853d9ed7c9c"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-compiler.html",
+      "sha256": "366ac59fc2537b6dd8585178837d8121b11691b73114b18d6e23ca3936fcdca3"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/action-runtime-assets.d.ts",
+      "sha256": "ba28236ac05f358a2abbbc35a217ee31f4a6c4ade66e05212f18f664e708eaec"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/build-action-compiler.ts",
+      "sha256": "9bb7a28f25a270e4dfff8aad982569414a4706248b9a0a286eef92d826dd09d3"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/build-truss-browser.ts",
+      "sha256": "df29820743d3bb00918406252fc367459bafb54a826dec735b541f6da16df2bb"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/verify-action-compiler.ts",
+      "sha256": "b20cde77521fde0f2f824a8d869dc48045c61512e936293206be08264005819b"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/README.md",
+      "sha256": "7c26f3a71e3103ff1a39a89807fbbbd02d866704a2b2544cd39ff6223a41ccd9"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/tsconfig.actions.json",
+      "sha256": "3f206295f77545fcdce33b86cd557b65a7d75906aa10edeee022f89624bcbf69"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/assets/truss-browser/provenance.json",
+      "sha256": "da85b2bdac05ca15c494302a5c945d34d0280ff77ba00a7a7e86da7f6f82796c"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/dist/action-compiler.js",
+      "sha256": "372217c60852b611dd97e58165d954a810da583e866a0cd73bb45bfc6880098c"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/dist/truss-catalog-worker.js",
+      "sha256": "b93fed0f30f5cedbb07cfbfcf02fc78f4110a892fd1204e568abdbbd65a21d72"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/04-build/evidence/bulk-update/website-compiler-results.json",
+      "sha256": "e686161e25017e2b93972f5d24695cb43c51b4533d32297fbb5a74553c5ceded"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/.innsigle/public/claims/action-compiler-html.attestation.json",
+      "sha256": "39f0450789adccf023004067c878e212a9282ca8fea5ac6f0da028d55c1d31a4"
+    }
+  ],
+  "independentChecks": {
+    "actualChromiumVersion": "153.0.8010.12",
+    "actualWorkerIndexedDbControlsWithSyntheticProvider": 14,
+    "actualFullOriginalWebsiteVerifier": "passed; original public Truss/PGlite, all current checks",
+    "exactOriginalAssets": 372,
+    "exactCommittedOwnerSourcePins": 78,
+    "currentIndependentAndParentWebsiteHashes": 20,
+    "isolatedTrussPackagingControls": 8,
+    "exactTrussBuildOutputs": 375,
+    "exactCompilerPageBuildOutputs": 6,
+    "strictSiteTypes": "passed",
+    "signatureStatus": "Pinned verifier reports current action-compiler.html STALE; other 16 claims VALID. Final signature pending authorized key access; not a runtime defect."
+  },
+  "boundaryConclusions": [
+    "The only load input is the exact fixed source-retained four-row Products input, with permanent request key and attempt. Worker messages cannot substitute load values, target, source or identifiers.",
+    "Only the first committed host admission may call public loadObjects. Reopen/retry routes through public recoverLoad with the unchanged original input/control; no reset, reseed, key rotation or absent-outcome write fallback exists.",
+    "Returned native failure/refusal/conflict/unknown/unresolved carriers are kept complete for display. Page detaches on unavailable bootstrap; no public read or successful preparation is reported from an unsuccessful load.",
+    "Successful preparation displays values returned by original public readObjects. Independent control supplies changed stored values to prove source seed values are not substituted or reset.",
+    "Original action/read/owner capabilities remain worker-local and are freshly issued per open. All writes use the original public Truss API; no administrative SQL or fixture-only population route is introduced.",
+    "Actual website proof loads four objects, preserves exact creation receipts/data across first-acknowledgement loss and reopen, then selects three actual rows with full-first batches [2,1]. Existing seal journal, quota-before-dispatch and existing-tab recovery controls pass.",
+    "Historical native compiler inputs and current local model/preparation cohort remain unchanged."
+  ],
+  "scopeLimits": [
+    "The independent 14-case worker harness uses explicit synthetic provider responses; it establishes host admission/custody behavior, not Truss effect semantics. Separate independent full-site Chromium execution uses the actual original provider.",
+    "No physical power-loss/storage eviction/general restore or arbitrary browser qualification is inferred.",
+    "Provider keyed submit APIs are bundled but not exposed by the website command surface. Job claiming, UPDATE effects, terminal batch outcomes/replay and full mutating E2E remain outstanding.",
+    "No deployment or all-story completion is claimed."
+  ],
+  "publicationGate": {
+    "file": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/docs/helix/05-deploy/microsite/dist/action-compiler.html",
+    "status": "signature_stale",
+    "correction": "After authorized signing, rerun the pinned verify --all against this exact HTML and record all 17 valid. Runtime code requires no further change for this gate."
+  },
+  "evidenceFiles": [
+    "worker-browser.ts",
+    "worker-browser.json",
+    "website-browser-results.json",
+    "website-browser.log",
+    "website-browser-fixture/docs/helix/05-deploy/microsite/verify-action-compiler.ts",
+    "correspondence.json",
+    "packaging-controls.py",
+    "packaging-controls.json",
+    "compiler-build.json",
+    "typecheck.log",
+    "signature-check.log"
+  ]
+}

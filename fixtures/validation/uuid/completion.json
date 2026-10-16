@@ -26,10 +26,10 @@
     "Native replacement/equivalence, UUID generation, performance optimality and Truss/Weft adoption are not admitted."
   ],
   "sha256": {
-    "fixtures/validation/uuid/model-qualification.json": "4969ff5912b79a08d3dc858e2c13028b00d3262c26a02170c489a15ec8a8ac1a",
+    "fixtures/validation/uuid/model-qualification.json": "40a1886e1818f5885526ac390a75050442b07484b74a660c35051fc42538d8eb",
     "fixtures/validation/uuid/conformance.json": "e84c3b35bc3ff476f77e5c17337f41275c1483ef23158b684a9d4e5986fdd2f8",
     "fixtures/validation/uuid/model-runs/conformance.log": "80cf34710fa88bcde371d590b6abbc92c11dde5ab06543d691e0866109cc6b88",
-    "fixtures/validation/uuid/model-runs/conformance-tests.log": "48d4fb2b359a1930b9214ec86907886f0e386220602a635541be86787d18a1d0",
+    "fixtures/validation/uuid/model-runs/conformance-tests.log": "e21951399a76a8dca6c9dc3cc4531bd0cfa5768250a02a9e55fb5c50945278a0",
     "fixtures/validation/uuid/model-runs/qualified-cli.log": "80cf34710fa88bcde371d590b6abbc92c11dde5ab06543d691e0866109cc6b88",
     "docs/helix/04-build/evidence/uuid-adapter-completion.md": "386dc5b0559f3efe587d773091d48254869b69bd654e050065d966017e8dde4d"
   },
@@ -38,6 +38,8 @@
     "date": "2026-10-16",
     "profile": "uuid-model1",
     "freshSeventeenPhaseRunPassed": true,
-    "compositionProfileEvidence": "fixtures/validation/uuid/composition-qualification.json"
+    "compositionProfileEvidence": "fixtures/validation/uuid/composition-qualification.json",
+    "mergedMain": "5e7a4670",
+    "freshFourteenPhaseCompositionRunPassed": true
   }
 }

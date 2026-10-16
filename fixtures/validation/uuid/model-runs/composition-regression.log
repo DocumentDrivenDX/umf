@@ -1,4 +1,4 @@
-{"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-Xqr4ol","scope":"Fresh owned-fixture UUID qualification; stops at first failed step"}
+{"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-YrMD91","scope":"Fresh owned-fixture UUID qualification; stops at first failed step"}
 {"step":1,"total":17,"key":"build","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","run","build"]}
 {"step":2,"total":17,"key":"typecheck","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","run","typecheck"]}
 {"step":3,"total":17,"key":"schemas","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","run","test:schemas"]}
@@ -16,4 +16,4 @@
 {"step":15,"total":17,"key":"qualification","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/model-gates.ts"]}
 {"step":16,"total":17,"key":"conformance","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","scripts/uuid/conformance.ts"]}
 {"step":17,"total":17,"key":"conformanceTests","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","tests/uuid-conformance.test.ts"]}
-{"complete":true,"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-Xqr4ol","commands":{"build":0,"typecheck":0,"schemas":0,"tests":0,"bindingRegression":0,"postgresql":0,"sqlserver":0,"artifacts":0,"files":0,"tablespec":0,"nativeAdapters":0,"returned":0,"browser":0,"coreBrowser":0,"qualification":0,"conformance":0,"conformanceTests":0}}
+{"complete":true,"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-YrMD91","commands":{"build":0,"typecheck":0,"schemas":0,"tests":0,"bindingRegression":0,"postgresql":0,"sqlserver":0,"artifacts":0,"files":0,"tablespec":0,"nativeAdapters":0,"returned":0,"browser":0,"coreBrowser":0,"qualification":0,"conformance":0,"conformanceTests":0}}

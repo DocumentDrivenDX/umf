@@ -6,6 +6,7 @@ import {validateDocument} from '../../validation/document';
 import {compileActionRule} from './expression';
 import {compileActionSelector} from './selector';
 import {actionReferencePositions} from './references';
+import {hasLocalActor,hasLocalPolicy,hasLocalActionBundle} from './local-profiles';
 export interface ActionAnalysis {obligations:ActionObligation[];diagnostics:Diagnostic[]}
 const identity=(r:ActionReference)=>JSON.stringify([r.module,r.element]);
 const recordKeys=(e:Element)=>(e.keys??[]) as CoreKeyDefinition[];
@@ -126,10 +127,11 @@ export function analyzeAction(document:Document,action:Action,path:string,dddInt
  for(const member of ['authorization','attribution','atomicity','idempotency','result'] as const)obligation(path+'/'+member,member);
  unknown(action.result,['identities','version','receipt'],path+'/result');
  unknown(action.attribution,action.attribution.subject==='person-required'?['subject']:['subject','profile'],path+'/attribution');
- if(action.attribution.subject==='actor-profile'){unknown(action.attribution.profile,['id','version'],path+'/attribution/profile');obligation(path+'/attribution','attribution','unchecked');add('ACTION_UNCHECKED',path+'/attribution','Actor semantics require exact qualification','warning');}
+ if(action.attribution.subject==='actor-profile'){unknown(action.attribution.profile,['id','version'],path+'/attribution/profile');if(!hasLocalActor(action)){obligation(path+'/attribution','attribution','unchecked');add('ACTION_UNCHECKED',path+'/attribution','Actor semantics require exact qualification','warning');}}
  unknown(action.authorization,action.authorization.kind==='roles'?['kind','profile','roles']:['kind','profile','resources'],path+'/authorization');unknown(action.authorization.profile,['id','version'],path+'/authorization/profile');const knownRoles=action.authorization.kind==='roles'&&action.authorization.profile.id==='umf.actions.roles'&&action.authorization.profile.version==='1';
  if(knownRoles){if((action.authorization.roles as string[]).some(role=>role.length>256))add('LIMIT',path+'/authorization/roles','roles/1 identity bound exceeded');}
- else {obligation(path+'/authorization','authorization','unchecked');add('ACTION_UNCHECKED',path+'/authorization','Authorization profile is an inert declaration requiring exact interpretation','warning');}
+ else if(!hasLocalPolicy(action)){obligation(path+'/authorization','authorization','unchecked');add('ACTION_UNCHECKED',path+'/authorization','Authorization profile is an inert declaration requiring exact interpretation','warning');}
+ if((hasLocalActor(action)||hasLocalPolicy(action))&&!hasLocalActionBundle(action))add('ACTION_PROFILE',path+'/authorization','Local owner actor/policy require the complete ordered original frame bundle');
  if(action.authorization.kind==='policy')action.authorization.resources.forEach((id,i)=>{if(!frames.some(f=>f.id===id))add('ACTION_REFERENCE',path+'/authorization/resources/'+i,'Policy resource must resolve a frame');});
  obligation(path+'/binding','binding');unknown(action.binding,action.binding.kind==='recipe'?['kind','profile','effects']:['kind','profile','handler'],path+'/binding');unknown(action.binding.profile,['id','version'],path+'/binding/profile');
  if(action.binding.kind==='handler'){

@@ -1,0 +1,76 @@
+{
+  "scope": "Independent actual Chromium IndexedDB execution of transpiled unchanged seal-intent.ts; isolated reviewer origin/context; injected boundary failures are explicit; no Truss/PGlite effect execution or physical power-loss claim",
+  "browser": "153.0.8010.12",
+  "sourceSha256": "3c00f3a26a6b96eb9732ba4a52a285dc3f7e60e4e26f3310f8b65ae8077c23eb",
+  "javascriptSha256": "2cb86d57a2facc427bbd30e604df5152ff22e77d8b6dd5699d97bdedb1042add",
+  "passed": 8,
+  "cases": [
+    {
+      "name": "Actual simultaneous cross-tab reservations commit exactly one original intent",
+      "passed": true,
+      "details": {
+        "results": [
+          "reserved",
+          "refused"
+        ]
+      }
+    },
+    {
+      "name": "Foreign/stale settlement cannot overwrite original intent",
+      "passed": true
+    },
+    {
+      "name": "Settled full receipt strings survive fresh-page read unchanged",
+      "passed": true
+    },
+    {
+      "name": "Strict native transaction completion precedes reservation resolution",
+      "passed": true,
+      "details": {
+        "events": [
+          "request-success",
+          "still-pending",
+          "transaction-complete",
+          "reservation-resolved"
+        ],
+        "durability": "strict"
+      }
+    },
+    {
+      "name": "Abort after successful add still refuses reservation with no retained intent",
+      "passed": true,
+      "details": {
+        "rejected": true,
+        "read": null,
+        "events": [
+          "request-success"
+        ]
+      }
+    },
+    {
+      "name": "Unqualified relaxed durability refuses before durable reservation",
+      "passed": true,
+      "details": {
+        "rejected": true,
+        "read": null
+      }
+    },
+    {
+      "name": "Synchronous native store-add failure refuses and leaves no intent",
+      "passed": true,
+      "details": {
+        "rejected": true,
+        "read": null
+      }
+    },
+    {
+      "name": "Malformed retained record fails closed on reads and new reservations",
+      "passed": true,
+      "details": {
+        "readRejected": true,
+        "reserveRejected": true
+      }
+    }
+  ],
+  "externalRequests": []
+}

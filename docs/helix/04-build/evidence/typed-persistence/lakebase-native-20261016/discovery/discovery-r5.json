@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "endpoint": "projects/praxis/branches/dev/endpoints/primary",
+  "identity": [
+    "db-aidev-users",
+    "databricks_postgres",
+    "18.6 (4e955f5)",
+    "180006",
+    "on"
+  ],
+  "requester": "erik.labianca@synaptiq.ai",
+  "authentication": "Existing Databricks GROUP role using individual OAuth token; native SQL identity is the group, not individual person authority.",
+  "availableExtensions": [
+    [
+      "btree_gin",
+      "1.3",
+      null
+    ],
+    [
+      "pg_trgm",
+      "1.6",
+      null
+    ],
+    [
+      "vector",
+      "0.8.6",
+      "0.8.6"
+    ]
+  ],
+  "fixturePrivileges": {
+    "createSchema": false,
+    "temporary": true
+  },
+  "qualification": "Read-only native identity/version/extension prerequisites only; no data queried or modified.",
+  "temporal": "HELD"
+}
