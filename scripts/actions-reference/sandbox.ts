@@ -8,7 +8,7 @@ export const referenceHandlerImage='mcr.microsoft.com/playwright@sha256:eff16c30
 export type ReferenceHandlerOperation='read'|'exists'|'linked'|'create'|'set'|'delete'|'link'|'unlink';
 const confinement=['--pull=never','--network=none','--read-only','--user','65534:65534','--cap-drop=ALL','--security-opt=no-new-privileges','--pids-limit=32','--memory=128m','--memory-swap=128m','--cpus=1','--ipc=none','--log-driver=none','--entrypoint','/usr/bin/env'] as const;
 const runtime=['-i','HOME=/nonexistent','PATH=/usr/local/bin:/usr/bin:/bin','/usr/bin/timeout','--signal=KILL','10s','node','--max-old-space-size=64'] as const;
-export type ReferenceHandlerObservation={stage:'started';container:string}|{stage:'pending-cleanup';container:string;owner:string;cleanupConfirmed:false}|{stage:'finished';container:string;exitCode:number;oomKilled:boolean;cleanupConfirmed:true};
+export type ReferenceHandlerObservation={stage:'started';container:string}|{stage:'pending-cleanup';container:string;owner:string;cleanupConfirmed:false}|{stage:'finished';container:string;exitCode:number;oomKilled:boolean;cleanupConfirmed:true;initialState:{ExitCode:number;OOMKilled:boolean;Running:boolean}|null;attachExitCode:number|null;attachExitedBeforeInspect:boolean};
 const operations=new Set<ReferenceHandlerOperation>(['read','exists','linked','create','set','delete','link','unlink']);
 const bootstrap=String.raw`
 const readline=require('node:readline');
@@ -44,14 +44,14 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
  const abort=(code:string,message:string):never=>{throw new UmfError(code,message);};
  const protocolCopy=(value:unknown)=>{try{return copyJson(value);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw error;return abort('FRAME_ACCESS','Handler payload is outside qualified JSON profile');}};
  let timer:ReturnType<typeof setTimeout>|undefined;
- let active=true,naturalEof=false;
+ let active=true,naturalEof=false,attachExitCode:number|null=null;
  const withinDeadline=()=>{if(!active||performance.now()>=deadline){active=false;abort('LIMIT','Handler absolute time bound exceeded');}};
  const timeout=new Promise<never>((_,reject)=>{timer=setTimeout(()=>{active=false;creator.kill();child?.kill();reject(new UmfError('LIMIT','Handler time bound exceeded'));},timeoutMs);});
  const write=(value:unknown)=>{const line=JSON.stringify(value)+'\n';if(line.length>131072)abort('LIMIT','Supervisor message exceeds bound');child!.stdin!.write(line);child!.stdin!.flush();};
  // Drain stderr with a hard bound; do not retain or expose handler-controlled diagnostics.
  const execute=(async()=>{
   const [created,_diagnostics,creationExit]=await Promise.all([new Response(creator.stdout).text(),new Response(creator.stderr).text(),creator.exited]);if(creationExit!==0||!/^[0-9a-f]{64}\n?$/.test(created))abort('LIMIT','Handler creation acknowledgement unavailable');const cid=created.trim();withinDeadline();await owner.acknowledge(cid);containerId=cid;withinDeadline();
-  child=start(cid);
+  child=start(cid);void child.exited.then(code=>{attachExitCode=code;},()=>{});
   stderr=(async()=>{let size=0;for await(const chunk of child!.stderr as ReadableStream<Uint8Array>){size+=chunk.byteLength;if(size>65536)abort('LIMIT','Handler stderr exceeds bound');}})();
   const consume=(async()=>{
   try{observe?.(Object.freeze({stage:'started' as const,container:name}));}catch{/* Instrumentation must not change execution. */}withinDeadline();
@@ -95,9 +95,11 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
   };
   const cleanup=(async()=>{
    let state:{ExitCode:number;OOMKilled:boolean;Running:boolean}|undefined,invalidState=false;
+   const attachExitedBeforeInspect=attachExitCode!==null;
    try{const inspected=await docker(['inspect','--format','{{json .State}}',containerId!],500);
     if(inspected.exit===0){try{state=JSON.parse(inspected.stdout);if(!state||typeof state.ExitCode!=='number'||typeof state.OOMKilled!=='boolean'||typeof state.Running!=='boolean')invalidState=true;}catch{invalidState=true;}}else if(!failed)invalidState=true;
    }catch{invalidState=true;}
+   const initialState=state?{ExitCode:state.ExitCode,OOMKilled:state.OOMKilled,Running:state.Running}:null;
    // EOF can precede Docker's terminal-state publication. Preserve the protocol
    // failure while allowing native OOM state to settle; reserve half the existing
    // cleanup budget for removal and ownership release.
@@ -127,7 +129,7 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
    await Promise.allSettled([stderr,child?.exited,creator.exited]);guard();
    await owner.release();guard();
    if(invalidState)abort('LIMIT','Owned handler state could not be verified');
-   observation={stage:'finished',container:name,exitCode:state?.Running?-1:state?.ExitCode??-1,oomKilled:state?.Running===false&&state.OOMKilled,cleanupConfirmed:true};
+   observation={stage:'finished',container:name,exitCode:state?.Running?-1:state?.ExitCode??-1,oomKilled:state?.Running===false&&state.OOMKilled,cleanupConfirmed:true,initialState,attachExitCode,attachExitedBeforeInspect};
   })();
   try{await Promise.race([cleanup,new Promise<never>((_,reject)=>{cleanupTimer=setTimeout(()=>{cancelled=true;for(const client of clients)client.kill();reject(new UmfError('LIMIT','Owned handler cleanup timed out'));},Math.max(1,cleanupDeadline-performance.now()));})]);}finally{cancelled=true;child?.kill();if(cleanupTimer)clearTimeout(cleanupTimer);}
 
