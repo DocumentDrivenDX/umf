@@ -42,7 +42,7 @@
     "Retained independently added main UUID/security sections and Typed SDK sections in documentation merge conflicts.",
     "Merged later Typed SDK reviewed requirements while retaining the separately selected CONTRACT075 temporal oracle, logical-name renderer and actual module boundary paths.",
     "Explicit ID migration: native128/UUID contract CONTRACT067->CONTRACT076, updated canonical path/links; original ID retained in x-recovery-previous-id and original main history. Typed SDK CONTRACT067 unchanged.",
-    "Saved specification stash anchored and included in remote recovery tag; later canonical specs merged, older draft variants not silently substituted."
+    "Saved specification stash anchored in a local preservation tag; later canonical specs merged, older draft variants not silently substituted."
   ],
   "freshVerification": {
     "BunFocusedTests": 927,
@@ -68,5 +68,19 @@
     "Integration/recovery does not close all B-TP slices or native/target/transport/callsite gates. Existing scoped failures and open decisions remain retained.",
     "Historical evidence paths point to the original deleted checkout; fresh receipts identify the restored tree. Original evidence is retained rather than falsely reattributed.",
     "No publication of Python runtime, no native SQL implementation, no production operations or migrations."
-  ]
+  ],
+  "localMainIntegration": {
+    "status": "merged",
+    "implementationIntegrationCommit": "bf0b9cc7",
+    "cleanMainWorktree": "/Users/erik/.codex/worktrees/7b14/umf"
+  },
+  "remotePublication": {
+    "status": "blocked; no recovered code or preservation refs pushed",
+    "destination": "https://github.com/DocumentDrivenDX/umf.git",
+    "repositoryId": "1382276802",
+    "visibility": "public",
+    "destinationVerifiedBy": "connected GitHub get_repo; clone URL matches origin and committed project URL; authenticated account has admin/push permission",
+    "automaticReview": "Two push attempts rejected: initial remote unverified, then explicit specific public-export authorization required even after repository verification. No workaround attempted.",
+    "requiredUserApproval": "Explicit permission to publish local main, recovery branch and three preservation tags to public DocumentDrivenDX/umf."
+  }
 }
