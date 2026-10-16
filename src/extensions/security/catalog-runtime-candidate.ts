@@ -34,6 +34,24 @@ export function evaluateCandidateCatalogReadRuleScan(handle:unknown,owner:unknow
 export function evaluateCandidateCatalogReadRuleScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogRuleScanResult {
  return readRuleScan(handle,owner,cut,selection,operation);
 }
+export interface CandidateCatalogDisclosureOccurrence {ruleIndex:number;disclosureIndex:number|null}
+export interface CandidateCatalogDisclosureScanResult {
+ version:'umf.security.logical-disclosure-selection/0.1-candidate';status:'evaluated'|'refused';complete:false;authority:false;sources:unknown;
+ rows:readonly {resource:unknown;decision:SecurityDecision;rules:readonly {ruleIndex:number;truth:SecurityTruth}[];
+  dispositions:readonly {field:unknown;disposition:unknown;sourceOccurrences:readonly CandidateCatalogDisclosureOccurrence[];selectedOccurrence:CandidateCatalogDisclosureOccurrence|null}[]}[];
+}
+function readDisclosureScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation?:CandidateSecurityOperationBudget):CandidateCatalogDisclosureScanResult {
+ try{return run(handle,owner,cut,selection,false,operation,true,false,true) as CandidateCatalogDisclosureScanResult;}
+ catch{return freeze({version:'umf.security.logical-disclosure-selection/0.1-candidate',status:'refused',complete:false,authority:false,sources:null,rows:[]});}
+}
+/** Exact canonical fold source positions; no rendered value, native credential or authenticated cut. */
+export function evaluateCandidateCatalogReadDisclosureScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogDisclosureScanResult {
+ return readDisclosureScan(handle,owner,cut,selection);
+}
+/** Private composition leaf sharing all input, condition and retained-result work charges. */
+export function evaluateCandidateCatalogReadDisclosureScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogDisclosureScanResult {
+ return readDisclosureScan(handle,owner,cut,selection,operation);
+}
 export interface CandidateCatalogCollectionResult {status:'rendered'|'refused';complete:false;authority:false;rows:readonly (readonly SecurityOutput[])[];valueProfiles:readonly {field:unknown;profile:string}[]}
 /** Atomic logical collection: denied rows are filtered; U/conflict/any rendering failure refuses the whole batch. */
 export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,cut:unknown,request:unknown):CandidateCatalogCollectionResult {
@@ -73,7 +91,7 @@ export function evaluateCandidateCatalogScanBatch(handle:unknown,ownerInput:unkn
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
-function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false,ruleTrace=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult{
+function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false,ruleTrace=false,disclosureTrace=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult|CandidateCatalogDisclosureScanResult{
  const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut}=packet;
  let request:any=packet.request;
  if(scanPopulation){shape(request,['type','fields']);request={action:owner?.disclosure?.readAction,resources:[],targets:[request.type],fields:request.fields};}
@@ -184,19 +202,28 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  };
  const evaluate=(expr:any,resource:any,vars:Map<number,{checks:any;row:any}>):SecurityTruth=>{step();switch(expr.op){case'literal':return expr.value?'T':'F';case'eq':{const a=readTerm(expr.left,resource,vars),b=readTerm(expr.right,resource,vars);if(a===undefined||b===undefined)return 'U';budget.step(a.length+b.length);return a===b?'T':'F';}case'not':return securityNot(evaluate(expr.arg,resource,vars));case'and':return securityAnd(expr.args.map((x:any)=>evaluate(x,resource,vars)));case'or':return securityOr(expr.args.map((x:any)=>evaluate(x,resource,vars)));case'exists':{const checks=associations[expr.association];let found=false,unknown=false;for(const row of sourceRows(checks)){step();const nested=new Map(vars);nested.set(expr.occurrence,{checks,row});const t=evaluate(expr.where,resource,nested);found ||= t==='T';unknown ||= t==='U';}return found?'T':unknown?'U':'F';}default:return fail('Unknown compiled operation');}};
  const traces:any[]=[];const rows:any[]=[];for(const resource of resources){const evaluated=scoped(resource.type).map((c:any)=>({ruleIndex:c.ruleIndex,rule:program.policy.rules[c.ruleIndex],truth:evaluate(c.condition.expression,resource,new Map())}));let decision:SecurityDecision=evaluated.some((r:any)=>r.truth==='U')?'indeterminate':!evaluated.some((r:any)=>r.rule.effect==='permit'&&r.truth==='T')||evaluated.some((r:any)=>r.rule.effect==='require'&&r.truth!=='T')||evaluated.some((r:any)=>r.rule.effect==='forbid'&&r.truth==='T')?'deny':'permit';const dispositions:any[]=[];
-  if(decision==='permit')for(const r of request.fields){step();const ds:any[]=[];for(const x of evaluated){step();if(x.rule.effect==='permit'&&x.truth==='T')for(const d of x.rule.disclosure??[]){step();if(id(d.field)===id(r))ds.push(d.disposition);}}
+  if(decision==='permit')for(const r of request.fields){step();const ds:any[]=[],origins:any[]=[];for(const x of evaluated){step();if(x.rule.effect==='permit'&&x.truth==='T'){
+   let matched=false;for(const [disclosureIndex,d]of (x.rule.disclosure??[]).entries()){step();if(id(d.field)===id(r)){matched=true;ds.push(d.disposition);if(disclosureTrace)origins.push({ruleIndex:x.ruleIndex,disclosureIndex,disposition:d.disposition});}}
+   if(disclosureTrace&&!matched&&member(resource.type,id(r)).protection==='unprotected')origins.push({ruleIndex:x.ruleIndex,disclosureIndex:null,disposition:{kind:'original'}});
+  }}
+   const retainDisposition=(d:any)=>{if(!disclosureTrace)return {field:r,disposition:d};const sourceOccurrences=origins.filter(o=>o.disposition.kind===d.kind).map(({ruleIndex,disclosureIndex})=>({ruleIndex,disclosureIndex}));return {field:r,disposition:d,sourceOccurrences,selectedOccurrence:d.kind==='transformed'?sourceOccurrences[0]:null};};
    if(!ds.length&&member(resource.type,id(r)).protection==='protected'){decision='indeterminate';break;}
-   if(ds.some((d:any)=>d.kind==='withheld')){dispositions.push({field:r,disposition:{kind:'withheld'}});continue;}
+   if(ds.some((d:any)=>d.kind==='withheld')){dispositions.push(retainDisposition({kind:'withheld'}));continue;}
    const transforms=ds.filter((d:any)=>d.kind==='transformed'),identities=new Set(transforms.map((d:any)=>d.vocabulary==='umf.security.protection'?canonicalSchemaJson([d.vocabulary,d.transform,d.version,id(d.field)]):canonicalSchemaJson([d.transform,d.version,id(d.field),literal(d.field,d.value)])));
-   if(identities.size>1){decision='conflict';break;}const d=transforms[0]??{kind:'original'};if(d.kind==='original')admitField(resource.type,r,[resource]);dispositions.push({field:r,disposition:d});
+   if(identities.size>1){decision='conflict';break;}const d=transforms[0]??{kind:'original'};if(d.kind==='original')admitField(resource.type,r,[resource]);dispositions.push(retainDisposition(d));
   }
-  if(ruleTrace){
-   const trace={resource:{type:resource.type,key:resource.key},decision,rules:evaluated.map((r:any)=>({ruleIndex:r.ruleIndex,truth:r.truth}))};
+  if(ruleTrace||disclosureTrace){
+   const trace={resource:{type:resource.type,key:resource.key},decision,rules:evaluated.map((r:any)=>({ruleIndex:r.ruleIndex,truth:r.truth})),...(disclosureTrace?{dispositions:decision==='permit'?dispositions:[]}:{})};
    // Result retention shares the same operation/literal budget as condition evaluation.
    const pending:any[]=[trace];while(pending.length){step();budget.step();const v=pending.pop();if(v&&typeof v==='object')pending.push(...Object.values(v));}
    const encoded=JSON.stringify(trace);step(encoded.length);budget.step(encoded.length);budget.reserveText(encoded.length+1);traces.push(trace);
   }
   rows.push({decision,dispositions:decision==='permit'?dispositions:[]});
+ }
+ if(disclosureTrace){
+  const sources={policy:{id:program.policy.id,revision:program.policy.revision},ontology:{documentId:ontology.documentId,revision:ontology.revision},protection:program.catalog?{id:program.catalog.id,revision:program.catalog.revision}:null,domains:program.closure.pins,owner:{id:owner.id,revision:owner.revision},generation:cut.generation,readAction:owner.disclosure.readAction};
+  const retained=JSON.stringify(sources);step(retained.length);budget.reserveText(retained.length);
+  return freeze({version:'umf.security.logical-disclosure-selection/0.1-candidate',status:'evaluated',complete:false,authority:false,sources,rows:traces});
  }
  if(ruleTrace)return freeze({status:'evaluated',complete:false,authority:false,rows:traces});
  if(!render)return freeze({status:'evaluated',complete:false,authority:false,rows});
