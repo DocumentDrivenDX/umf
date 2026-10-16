@@ -200,6 +200,125 @@
         },
         "additionalProperties": false
       }
+    },
+    "compositeMappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "record",
+          "root",
+          "field",
+          "column",
+          "storage",
+          "path",
+          "slots"
+        ],
+        "properties": {
+          "record": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "element": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "root": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "element": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "field": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "element": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "column": {
+            "type": "string"
+          },
+          "storage": {
+            "enum": [
+              "json-column",
+              "native-nested"
+            ]
+          },
+          "slots": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "kind",
+                    "name"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "member"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "kind"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "array-item",
+                        "map-value"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false,

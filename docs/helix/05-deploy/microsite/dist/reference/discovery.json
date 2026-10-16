@@ -4715,6 +4715,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"Bit128DatasetRecord\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/binding/model-dataset.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"Bit128FieldBinding\"]",
       "kind": "api",
       "paths": [
@@ -6931,6 +6939,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"ModelLiteral\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/binding/model-shape-values.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"Module\"]",
       "kind": "api",
       "paths": [
@@ -8299,10 +8315,26 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"PreparedActionIdentities\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/actions/selector.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"PreparedActionPlanModel\"]",
       "kind": "api",
       "paths": [
         "src/extensions/actions/plan-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"PreparedCoreKeyTuples\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/key-tuple.ts"
       ]
     },
     {
@@ -15163,10 +15195,26 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"prepareActionIdentities\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/actions/selector.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"prepareActionPlanModel\"]",
       "kind": "api",
       "paths": [
         "src/extensions/actions/plans.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"prepareCoreKeyTuples\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/key-tuple.ts"
       ]
     },
     {
@@ -17943,6 +17991,14 @@
       "kind": "api",
       "paths": [
         "src/model/uuid.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"validateBit128Dataset\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/binding/model-dataset.ts"
       ]
     },
     {

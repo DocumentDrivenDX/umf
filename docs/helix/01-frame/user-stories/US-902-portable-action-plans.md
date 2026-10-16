@@ -42,6 +42,8 @@ This is a bounded part of the owner-selected portable-action proof. Existing act
 
 - [ ] **US-902-AC6** — Given duplicate JSON members, unpaired surrogates, overflowing bytes/depth/nodes or a mutated owner preparation artifact, when inspection/preparation runs with an explicit Registry, then it refuses without partial eligible output and preserves the original input/callback registry.
 
+- [ ] **US-902-AC7** — Given exact local-owner actor/policy/invocation declarations, preparation admits only the complete known bundle against original action semantics; mixed native/local, unknown versions and incomplete resources refuse, preserving native tx1 and historical sources.
+
 ## Edge Cases
 
 Relevant unknown meaning and mismatched pins refuse; missing native evidence cannot be replaced by shape validity. Uncertain commits require original reconciliation. Empty/no-op work never fabricates business changes.

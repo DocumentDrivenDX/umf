@@ -460,6 +460,35 @@
             },
             "type": "array"
           },
+          "groups": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "element": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "members": {
+                  "items": {
+                    "$ref": "#/$defs/elementRef"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "module",
+                "element",
+                "members"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
           "indexes": {
             "items": {
               "$ref": "#/$defs/index"
@@ -571,9 +600,9 @@
   ],
   "sources": [
     {
-      "bytes": 13683,
+      "bytes": 14360,
       "path": "spec/extensions/binding-128/package.json",
-      "sha256": "ed5184276860ab41d45f8a1f64f31da680eb7725d878af565d1edff67203508b"
+      "sha256": "e19490b9e71698d0a008e8fcb6fce0a2734a2539146c0aaa636de7ce1a566488"
     }
   ],
   "summary": "Explicit exact 128-bit physical carrier metadata; native enforcement separately qualified",

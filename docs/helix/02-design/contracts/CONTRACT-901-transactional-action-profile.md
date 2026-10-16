@@ -139,6 +139,16 @@ resolution cannot bypass immutable keys, delete/use ordering or relationship
 constraints. No scans, joins, recursive selectors or expression queries are
 accepted; another selector language needs separate qualification.
 
+### Reusable declaration preparation
+
+`prepareCoreKeyTuples(source)` returns `{profile:"umf.core.key-tuples.prepared/1",source,encode(identity,values),verify(receipt)}`. `prepareActionIdentities(document,action)` returns `{profile:"umf.actions.keys.prepared/1",source,action,admitInputs(inputs,outputs=false),select(frameId,inputs)}`. These are pure library helpers for the existing Core Key and keys/1 meanings, not new executable profiles or portable capabilities. This prepared profile accepts core 0.8.0 only; it does not select or qualify the separate core 0.9.0 tuple codecs.
+
+Each helper MUST own an immutable JSON copy of its admitted declarations. Its exposed source/action and nested data MUST be frozen; subsequent caller mutation and mutation of returned invocation results MUST NOT change that copy. Successful declaration checks MAY be reused only within that lifetime. Relevant unknown dependency closure MUST still refuse, including after prior successful calls. Missing optional inputs MUST retain their existing absence behavior; preparation MUST NOT force interpretation of an unused optional parameter merely to cache it.
+
+Every call MUST copy/admit its supplied values, enforce current declared literal domains/facets, Key identity/order and exact receipt recomputation, and preserve the existing stateless helper's result or refusal for the admitted declarations. `verify` binds to the captured source; foreign/stale or forged receipts refuse. `select` accepts only a declared frame ID and returns the same copied entity/tuple as `selectActionIdentity`. Inputs and receipts MUST NOT be admitted through accessors, custom prototypes or a mutable-object cache.
+
+Preparation MUST NOT cache or assert current authorization, native identity, existence, version, selection reads, effects, fencing or transaction state. Hosts MUST reestablish those checks for each actual execution and create a new helper when choosing a different declaration. For example, `prepareActionIdentities(document,action).select("product-write",inputs)` computes an inert identity; it neither finds nor authorizes the product.
+
 ### Revision and deployment
 
 `RevisionRef` is `{module:string,action:string,revision:string}`. The revision is

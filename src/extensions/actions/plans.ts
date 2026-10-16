@@ -11,6 +11,7 @@ import type {ActionPlanArtifact,ActionPlanModelPin,PortableActionPin,ActionPlanI
 import {readPlanArtifact,verifyPlanArtifact,parsePlanJson,preparedArtifact,planError,jsonEqual,utf8Size,validatePlanStrings} from './plan-artifacts';
 import {checkActionPlan,checkPreparedActionPlanModel,checkActionPlanCapabilities,checkActionPlanModelPin,checkPortableActionPin,checkActionPlanField,checkActionPlanDiagnostic,planUnknownMembers,actionPlanModelSchemaDigest} from './plan-structure';
 import {actionPlanProducerBuild} from './plan-identity';
+import {hasLocalActionBundle,localActionProfiles} from './local-profiles';
 const copy=<T>(v:T):T=>{const safe=copyJson(v);validatePlanStrings(safe);return safe as unknown as T;};
 const refId=(r:ActionReference)=>JSON.stringify([r.module,r.element]);
 const profile=(p:{id:string;version:string},id:string)=>p.id===id&&p.version==='1';
@@ -21,7 +22,8 @@ function errorDiagnostic(error:unknown):ActionPlanDiagnostic {if(error instanceo
 export function resolveActionPlanContext(modelInput:ActionPlanModelPin,actionInput:PortableActionPin,context:ActionPlanInspectionContext):{document:Document;target:InspectedAction;model:ActionPlanModelPin;action:PortableActionPin;snapshotBytes:number;ownerBytes:number} {
  const model=copy(modelInput),action=copy(actionInput);if(!checkActionPlanModelPin(model)||!checkPortableActionPin(action))planError('PAP_INVALID','Malformed original model/action pin');
  for(const text of [model.documentId,model.revision,action.identity.module,action.identity.action,action.invocation.id,action.invocation.version])if(text.length>256)planError('PAP_INVALID','UTF-16 pin identity limit');
- if(!profile(action.invocation,'umf.actions.tx')||action.documentSha256!==model.sha256)planError('PAP_PROFILE','Exact action/model/invocation pins required');
+ const local=profile(action.invocation,localActionProfiles.invocation);
+ if((!profile(action.invocation,'umf.actions.tx')&&!local)||action.documentSha256!==model.sha256)planError('PAP_PROFILE','Exact action/model/invocation pins required');
  const registry=data<Registry>(context,'registry');if(!(registry instanceof Registry))planError('PAP_INVALID','Explicit original Registry required');
  const models=data<ActionPlanInspectionContext['models']>(context,'models'),actions=data<ActionPlanInspectionContext['actions']>(context,'actions');
  if(!Array.isArray(models)||!Array.isArray(actions)||models.length+actions.length>2||models.length!==1||actions.length!==1)planError('PAP_LIMIT','One original model and action snapshot required');
@@ -33,6 +35,7 @@ export function resolveActionPlanContext(modelInput:ActionPlanModelPin,actionInp
  const before=copy(document),inspection=inspectActions(document,registry);if(!jsonEqual(before,inspection.source))planError('PAP_ACTION','Owner inspection changed original source');
  if(!inspection.validation.valid)planError('PAP_ACTION','Original action/model validation failed');
  const matches=inspection.actions.filter(t=>t.module===action.identity.module&&t.action.id===action.identity.action);if(matches.length!==1)planError('PAP_ACTION','Exact action identity must resolve');const target=matches[0]!;
+ if(local!==hasLocalActionBundle(target.action))planError('PAP_PROFILE','Invocation differs from original local/native actor and policy bundle');
  if(target.obligations.some(o=>o.status!=='checked'))planError('PAP_UNKNOWN','Relevant original action/model meaning unchecked');
  return {document:inspection.source,target,model,action,ownerBytes:utf8Size(m.artifact.utf8)+utf8Size(a.artifact.utf8),snapshotBytes:boundedJsonBytes(m.artifact as never,4194304)+boundedJsonBytes(a.artifact as never,4194304)};
 }
@@ -83,8 +86,8 @@ export function assessActionPlan(inspection:ActionPlanInspection,capabilities:Ac
  const result:ActionPlanAssessment={compatible:false,executionVerified:false,obligations:[],diagnostics:[]};
  try{
   const supplied=snapshotActionPlanInspection(inspection),fresh=inspectActionPlan(supplied.source,context);if(!jsonEqual(supplied,fresh)||!fresh.eligible||!fresh.plan)planError('PAP_ACTION','Inspection differs from fresh original inspection or is ineligible');const plan=fresh.plan!,caps=copy(capabilities);if(!checkActionPlanCapabilities(caps)||planUnknownMembers(caps,'capabilities').length)planError('PAP_PROFILE','Malformed/unknown exact capabilities');
-  const fixed={plan:'umf.actions.plan',manifest:'umf.actions.manifest',bulk:'umf.actions.bulk'};
-  for(const family of Object.keys(companionClaims) as (keyof typeof companionClaims)[]){const cap=caps[family],expected=companionClaims[family].map(id=>family+'.'+id);if(family in fixed&&!profile(cap.profile,fixed[family as keyof typeof fixed]))planError('PAP_PROFILE','Companion version mismatch');if(family==='selection'&&!jsonEqual(cap.profile,plan.selection.profile))planError('PAP_PROFILE','Selection capability/profile mismatch');
+  const local=profile(plan.action.invocation,localActionProfiles.invocation),fixed={plan:'umf.actions.plan',manifest:'umf.actions.manifest',bulk:local?localActionProfiles.bulk:'umf.actions.bulk'};
+  for(const family of Object.keys(companionClaims) as (keyof typeof companionClaims)[]){const cap=caps[family],expected=companionClaims[family].map(id=>family+'.'+(local&&family==='bulk'&&id==='principal'?'localOwner':id));if(family in fixed&&!profile(cap.profile,fixed[family as keyof typeof fixed]))planError('PAP_PROFILE','Companion version mismatch');if(family==='selection'&&!jsonEqual(cap.profile,plan.selection.profile))planError('PAP_PROFILE','Selection capability/profile mismatch');
    if(cap.claims.length!==expected.length||new Set(cap.claims.map(c=>c.id)).size!==expected.length||cap.claims.some(c=>!expected.includes(c.id)))planError('PAP_PROFILE','Missing/duplicate/unknown companion claim');
    for(const id of expected){const claim=cap.claims.find(c=>c.id===id)!;if(claim.status==='supported'&&!claim.evidence.length)planError('PAP_PROFILE','Supported claim lacks evidence');result.obligations.push(copy(claim));if(claim.status!=='supported')result.diagnostics.push(diag('PAP_PROFILE','/capabilities/'+family,'Companion obligation '+claim.status));}
   }

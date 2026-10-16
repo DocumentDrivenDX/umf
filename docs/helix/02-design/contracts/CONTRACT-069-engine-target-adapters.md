@@ -51,6 +51,15 @@ Implements `ReadTarget`, `ReplayingActionExecutor` and
   the accepted catalog revision. The adapter executes them through Truss's own
   read execution path with its admission, session settings and decoders, and
   applies every Weft host obligation.
+- **Original pages.** The candidate `weft.engine-page/0.1` carrier retains the
+  complete original first-page compiler request, native artifact, hidden authored
+  Key outputs, page metadata and exact 1..999 row bound. Truss recomposes and
+  compares the complete original page program under its current native binding
+  before data SQL. Initial support is the owner's single-source, nonaggregated,
+  authored primary-Key ordering; caller ORDER BY/LIMIT, joins and unsupported Key
+  types refuse through that compiler. Typed continuations retain the exact native
+  cursor plus decoded Key values; Truss checks their agreement and original
+  caller/query context. This does not qualify streams or protected actions.
 - **Actions.** `invoke` submits the action identity and encoded input to Truss's
   protected action admission (Truss's action subject and role authority design).
   Truss authenticates the subject, authorizes, evaluates, commits, journals and

@@ -1,17 +1,19 @@
 # UMF project documentation
 
-## Proposed generated reference and microsite expansion
+## Generated reference and microsite expansion
 
 [TD-089](02-design/technical-designs/TD-089-generated-reference.md) specifies
 the generated core/extension/API reference, scoped integration evidence and local
 interactive tools. [SD-032](02-design/solution-designs/SD-032-generated-reference.md)
 owns the feature approach; [CONTRACT-077](02-design/contracts/CONTRACT-077-generated-reference.md)
 owns the reference format and tooling boundaries. These draft designs link to
-FEAT-032 and US-089; implementation and qualification are not claimed.
+FEAT-032 and US-089. The implemented reference and local browser qualification
+are recorded in the [execution evidence](04-build/evidence/generated-reference/README.md);
+native integration support remains qualified by each source record.
 
-The experimental non-temporal SDK now has [installed native integration evidence](04-build/evidence/typed-persistence/integrated-native-20261016/README.md) for schema/instance/codec E2Es, catalog reads, actions, atomic bulk, exact search, async execution and local Delta snapshot reads. Temporal qualification remains **HELD**. Truss/Ashlar SDK adoption, Delta action/bulk prerequisites and managed-service qualification remain unfinished.
+The experimental non-temporal SDK now has [installed native integration evidence](04-build/evidence/typed-persistence/integrated-native-20261016/README.md) for schema/instance/codec E2Es, catalog reads, actions, atomic bulk, exact search, async execution and local Delta snapshot reads. Temporal qualification remains **HELD**. [Original engine and Delta evidence](04-build/evidence/typed-persistence/engine-adoption-20261016/README.md) qualifies ordinary Truss reads, held Ashlar publications and local atomic Delta actions/bulk. [Managed Lakebase evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md) qualifies the pinned read/catalog and exact search cohort. Protected Truss action/current-policy/manifest adoption, managed mutation authority and broader backend forms remain unfinished.
 
-The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Lakebase service execution remains unverified.
+The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Pinned Lakebase 18.6 read/catalog and exact pgvector 0.8.6 search execution now has [isolated native evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md); other managed forms remain separately gated.
 
 ## Proposed typed data access SDK
 
@@ -1327,3 +1329,14 @@ records complete singular Record/Key/index/FK SQL layouts, native constraints an
 transaction observations, Avro/Parquet grouped pairs and actual TableSpec/Spark
 string fallback. Native equivalence, wider composition and deployed consumer
 adoption are separate; unsupported meanings still refuse or remain residuals.
+
+
+The separately selected `uuid-model2` profile now qualifies mixed flat Records,
+finite nested arrays/maps and explicit groups, then association Records with
+polymorphic endpoint alternatives across all five priority targets.
+[Composition evidence and limits](04-build/evidence/uuid-composition.md) records
+native returned values, adapter recovery, complete-snapshot integrity checks,
+Chromium and source-bound gates. SQL/TableSpec JSON and file scalar text are
+explicit storage choices with residual enforcement obligations. Model1 retains
+its original interpretation; consumer execution and native equivalence remain
+separate.

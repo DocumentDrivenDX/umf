@@ -1,19 +1,19 @@
-bun test v1.4.3 (26aa4e1a9)
+bun test v1.4.2 (43848b5a7)
 
 tests/reference/reference.test.ts:
-(pass) every extension version and its exact manifest/schema are present [40.65ms]
-(pass) all schema files and exact core profiles are accounted for [170.10ms]
-(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [850.33ms]
-(pass) real independent oracle failures and qualified priority results remain separate [2.39ms]
-(pass) source hash changes and missing dependency closures cannot become current evidence [0.07ms]
-(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.23ms]
-(pass) schema comparison is structural, bounded and preserves exact token spelling [0.30ms]
-(pass) exclusions require an existing source and nonempty reason [0.06ms]
-(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [16.27ms]
-(pass) boundary checker rejects actual forbidden source and import cycle injections [73.16ms]
-(pass) a second isolated generation matches; drift check refuses tampering without rewriting [46809.38ms]
+(pass) every extension version and its exact manifest/schema are present [39.39ms]
+(pass) all schema files and exact core profiles are accounted for [166.54ms]
+(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [1058.94ms]
+(pass) real independent oracle failures and qualified priority results remain separate [2.87ms]
+(pass) source hash changes and missing dependency closures cannot become current evidence [0.08ms]
+(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.26ms]
+(pass) schema comparison is structural, bounded and preserves exact token spelling [0.48ms]
+(pass) exclusions require an existing source and nonempty reason [0.20ms]
+(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [28.16ms]
+(pass) boundary checker rejects actual forbidden source and import cycle injections [106.75ms]
+(pass) a second isolated generation matches; drift check refuses tampering without rewriting [49001.78ms]
 
  11 pass
  0 fail
- 9858 expect() calls
-Ran 11 tests across 1 file. [52.09s]
+ 9883 expect() calls
+Ran 11 tests across 1 file. [54.84s]

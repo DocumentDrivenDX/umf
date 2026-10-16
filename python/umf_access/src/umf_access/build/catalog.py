@@ -754,18 +754,18 @@ def compile_catalog(
                 entry_class = "CatalogRead"
                 if engine:
                     if terminal == "page":
-                        raise CatalogBuildError(
-                            "WEFT_BLOCKED: original engine page catalog required"
-                        )
+                        logical = render_logical(replace(current, node=Node("all", current.node.args[:2])), binding=binding, owner_bound=True)
                     method = target.get("engineCompiler")
                     if method not in (
                         {"truss-runtime"}
                         if kind == "truss"
-                        else {"registered", "ashlar-spark4", "ashlar-dbsql-20261016"}
+                        else {"registered", "ashlar-spark4", "ashlar-dbsql-20261016", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"}
                     ):
                         raise CatalogBuildError(
                             "explicit engine compiler selection required"
                         )
+                    if terminal == "page" and kind == "ashlar" and method not in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"):
+                        raise CatalogBuildError("WEFT_BLOCKED: separately registered original Ashlar page compiler required")
                     original = target.get("engineRequests", {}).get(
                         name + ":" + str(vi)
                     )
@@ -792,6 +792,7 @@ def compile_catalog(
                         parameters=params,
                         result=result,
                         method=method,
+                        page_size=cast(int, node.args[2]) if terminal == "page" else None,
                     )
                     entry_class = "EngineRead"
                 else:
@@ -815,6 +816,13 @@ def compile_catalog(
                 compiled = replace(compiled, context_json=context)
                 if cursor_key is not None:
                     ordering = json.loads(compiled.artifact_json).get("cursorOrdering")
+                    if engine:
+                        native_key = compiled.artifact()["artifact"]["logicalPlan"]["pageKey"]
+                        key_identity = dict(cursor_parameter.key_identity)
+                        fields = getattr(cursor_key, "UMF_FIELDS", ())
+                        if native_key["id"] != key_identity["key"] or key_identity["module"] != record_ref.module or key_identity["element"] != record_ref.element or [(f["documentId"], f["module"], f["element"]) for f in native_key["fields"]] != [(key_identity["documentId"], m, e) for m,e,_ in fields]:
+                            raise CatalogBuildError("WEFT_BLOCKED: native authored page Key differs from declared Key")
+                        ordering = [{"table": [record_ref.logical_namespace, record_ref.logical_name], "field": getattr(record.c, python_name).ref.logical_name} for _,_,python_name in fields]
                     if not isinstance(ordering, list):
                         raise CatalogBuildError(
                             "WEFT_BLOCKED: complete ordering provenance required"

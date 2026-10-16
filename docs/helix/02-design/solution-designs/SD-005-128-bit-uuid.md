@@ -246,3 +246,19 @@ records PostgreSQL/SQL Server model constraints and transactions, grouped Avro/
 Parquet carriers, actual TableSpec/Spark fallback, both recoveries and the separate
 source-bound admission/delivery checks. Its declared subset and residuals govern
 the support claim; earlier proposed verification tables retain design context.
+
+### Owner-authorized model composition — 2026-10-16
+
+The next explicit profile is `uuid-model2`: mixed flat Records first, finite
+arrays/maps and explicitly grouped Fields second, then association Records with
+endpoint alternatives. CONTRACT-076 owns the exact layout, typed group values,
+composite mapping and dataset validation APIs. One shared resolver/value pipeline
+serves all five targets. SQL native scalars and JSON composites, nested Avro/
+Parquet schemas and TableSpec exact-text/JSON fallback preserve value domains
+without asserting equal native enforcement. Scalar, shape, association and finite
+snapshot modules keep their responsibilities separate. Admission requires current
+native reads/writes and source recovery for each stage/target, actual Chromium
+public API checks, and negative controls on missing/stale/falsified evidence.
+Earlier model1 evidence remains scoped and is refreshed separately after changes
+to the shared implementation. Consumer concurrency, lifecycle execution, arbitrary
+native edit reconciliation and physical migration remain separately qualified.

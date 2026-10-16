@@ -761,3 +761,24 @@ The public-bundle browser and forbidden-host/value-layer controls verify the
 portable boundary. Existing mixed/container/association/partition profiles are
 not silently widened; unsupported composition refuses and native file enforcement
 limits remain residuals. No persistent routine metadata receipt is added.
+
+### UUID model2 composition boundaries
+
+CONTRACT-076's explicitly selected `uuid-model2` adds mixed scalar leaves,
+finite array/map/group shapes and explicit junction endpoint alternatives.
+`binding/model-source.ts` owns copied source resolution shared by projections and
+snapshot validation. `model-scalar.ts` owns exact scalar tokens and SQL type
+selection; `model-shape.ts` owns finite shape resolution; `model-shape-values.ts`
+owns recursive value/group validation; `model-associations.ts` lowers explicit
+endpoint alternatives into a private FK view; `model-dataset.ts` validates complete
+finite populations, Keys, references and distinct-endpoint counts. These binding
+modules import portable model/validation helpers, never projections or native
+runtimes. Existing bit128 value modules retain their smaller dependency boundary.
+
+`projections/model-shape-schema.ts` renders nested Avro/Parquet schemas;
+`model-shape-mappings.ts` reports tagged native paths. SQL uses explicit JSON
+storage for composites; TableSpec uses explicit JSON/exact-text fallback. All
+native enforcement gaps remain residuals. Host-only composition qualification
+stays under `scripts/uuid/`; public-bundle Chromium execution and current-source
+fingerprint refusal controls verify portability and proof freshness. Library
+functions do not execute transactions or claim native lifecycle equivalence.

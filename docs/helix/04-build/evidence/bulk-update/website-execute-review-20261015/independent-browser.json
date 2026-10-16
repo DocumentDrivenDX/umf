@@ -1,0 +1,84 @@
+{
+  "scope": "Independent actual website/pinned Truss provider: missing effect dispatch and true no-op execution. One explicitly injected declared unsupported JobReview carrier tests page refusal handling; no other native substitution.",
+  "browser": "153.0.8010.12",
+  "passed": 15,
+  "hashes": {
+    "action-compiler.js": "31e3b396af16769ededf2aa70e374318c582f9ed3833ed95f4ad619a5f953539",
+    "truss-catalog-worker.js": "7e04183affea80dffc6a9a3cbc5fc1640dbb8b057f0968ebd7e377a96bb698ac",
+    "truss-browser/store.js": "1a6f849ffd60af5510badb5ce018bfb5276d7dd70718d53ae83cbf40d2f3b809"
+  },
+  "cases": [
+    {
+      "name": "Original execution input committed before interrupted first dispatch",
+      "passed": true
+    },
+    {
+      "name": "Missing original execution blocks fresh execute and claim",
+      "passed": true
+    },
+    {
+      "name": "Actual original missing execution recovery remains indeterminate",
+      "passed": true,
+      "detail": {
+        "status": "indeterminate",
+        "job": {
+          "namespace": "7eed1a19-a544-4d95-bb5d-ce346f3e22f0",
+          "id": "f8d624ae-6d59-49a9-9e3d-f8afa760ca4c"
+        },
+        "batch": 0
+      }
+    },
+    {
+      "name": "Recovery uses exact original input without redispatch",
+      "passed": true
+    },
+    {
+      "name": "Missing execution recovery leaves actual native values and versions unchanged",
+      "passed": true
+    },
+    {
+      "name": "Forced UI event cannot replace original execution admission",
+      "passed": true
+    },
+    {
+      "name": "Missing execution recovery retains zero committed native prefix",
+      "passed": true
+    },
+    {
+      "name": "Declared unsupported review carrier stays visible and detaches without a UI exception",
+      "passed": true
+    },
+    {
+      "name": "Actual no-op execution completes full [2,1] partitions",
+      "passed": true
+    },
+    {
+      "name": "No-op batch 0 retains exact full receipt with zero business journal entries",
+      "passed": true
+    },
+    {
+      "name": "No-op batch 1 retains exact full receipt with zero business journal entries",
+      "passed": true
+    },
+    {
+      "name": "No-op execution preserves all actual native versions and values",
+      "passed": true
+    },
+    {
+      "name": "No-op recovery preserves exact complete terminal result",
+      "passed": true
+    },
+    {
+      "name": "No-op original job reaches complete two-batch prefix",
+      "passed": true
+    },
+    {
+      "name": "No external requests or page errors",
+      "passed": true,
+      "detail": {
+        "external": [],
+        "errors": []
+      }
+    }
+  ]
+}

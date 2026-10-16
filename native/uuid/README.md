@@ -62,3 +62,21 @@ versions, both recovery directions, target coverage and conflict controls. It
 performs no fresh native execution and makes no claim that historical unrelated
 repository gates were replayed. SQL Server callers must apply the published
 `nativeRequirements` connection settings to every writer connection.
+
+## Mixed/container/association profile
+
+`uuid-model2` is explicitly selected; model1 retains its original interpretation.
+`bun scripts/uuid/qualify-composition.ts` runs fresh build/types/schemas, scoped
+unit/refusal checks,20 target/stage cases, owned SQL fixtures, Apache Avro/
+fastavro/PyArrow, installed TableSpec/Spark, native adapter recovery, returned
+values, Chromium and source-bound qualification gates. It uses the same native
+interpreter/Java/browser environment variables above. `--verify-only` verifies
+retained current-source evidence without asserting fresh native execution.
+
+Avro/Parquet containers are native nested values. SQL composites use JSON;
+TableSpec composites use JSON strings. TableSpec CSV ingestion must select the
+CSV writer's doubled-quote escaping (`escape='"'` in the Spark reader). File/model
+mixed scalars use explicit exact-text tokens. Complete-value and complete-dataset
+validation remain required where native schemas do not enforce the logical
+meaning. See [composition evidence](../../docs/helix/04-build/evidence/uuid-composition.md)
+and CONTRACT-076 for exact group/association layouts and retained limits.

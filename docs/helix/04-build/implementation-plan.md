@@ -12217,6 +12217,18 @@ same-store execution. Native ABI/mode/property/relationship admission and releas
 authority remain open; mutation0.1 custody is not repurposed. No criterion/case is
 promoted and the overall goal remains active.
 
+## Browser-local declaration profile — 2026-10-15
+
+Owner clarification keeps GitHub Pages with browser WASM compilation and local sample execution. CONTRACT-905 defines a separate local-owner bundle, independent selection-read grant and local bulk companion, preserving tx1/human/delegation semantics. [Portable evidence](evidence/bulk-update/local-profile-20261015/receipt.json) records346regression tests/4016assertions,56original action tests/343assertions, both strict TypeScript checks, actual Chromium and Astra58independent controls. The two review findings (selection-read policy mapping and allocation) are resolved. [Owned source handoff](evidence/bulk-update/local-profile-20261015/README.md) retains exact new model/preparation/request/seed/provenance. Actual Weft local compilation, Truss PGlite schema/capabilities/lowering/sealing/execution/durability and protected native66 completion remain open; no executable backend claim is made.
+
+
+## Reusable action and Key declarations — 2026-10-16
+
+CONTRACT-901 defines `prepareCoreKeyTuples` and `prepareActionIdentities` for one immutable copied declaration lifetime. Reuse successful declaration checks; keep input literals, exact receipts and selector identity checks on every call. Native authorization, guards, effects and transaction checks remain executor duties. Existing stateless APIs remain the equivalence oracle.
+
+The focused gate is `bun test tests/actions/prepared-identities.test.ts tests/core/key-tuple.test.ts tests/actions/interpreter.test.ts` (28 tests,474 assertions). `bun scripts/actions-prepared-browser.ts <report> <exact-esm>` compares83 shared cases in actual Chromium. The scoped source passed Astra review, including independent output, unknown-dependency, accessor, foreign-receipt and mutation-isolation controls. These pure checks do not measure or qualify native execution.
+
+Next, use a separately pinned new UMF/Weft producer cohort in Truss; do not relabel the previous producer. Re-run the actual1024-row UPDATE, point UPDATE, replay/reopen readback and latency measurements with the same workloads. Publication remains gated on the integrated review, acceptable measured single/bulk behavior and the requested stress matrix; declaration preparation alone does not close those gates.
 
 ### Query value origin/source spike — 2026-10-15
 
@@ -12632,6 +12644,18 @@ the158-case plan digest remains unchanged. Integrate this component directly
 to main; next complete the separately reviewed Truss consumer and actual
 ordinary-role/current-cut/closing-guard evidence.
 
+### Prepared API integration with current main — 2026-10-16
+
+The merge retains current main's core 0.9.0 stateless tuple codecs and keeps the
+prepared profile limited to core 0.8.0. Astra found a foreign v4 receipt refusal
+difference; version-dispatched receipt validation now preserves the stateless
+code/path, including stale-source and malformed receipt cases. The corrected
+focused gate passes29tests/480assertions, the existing plan/local/manifest gate
+passes48tests/296assertions, UUID/128-bit checks pass6tests/6663assertions, both
+strict TypeScript configurations pass, and86public ESM cases agree in Chromium.
+The merged producer is distinct from the frozen c1/6b browser integration cohort;
+these source checks do not qualify a replacement compiler or native executor.
+
 ### Nested graph condition budget repair candidate — 2026-10-16
 
 The previous turn integrated the reviewed held inspector and all629 review
@@ -12708,3 +12732,45 @@ file/Spark, source-recovery and browser checks pass. The conformance hash test
 needed an explicit30-second budget; refreshed qualification/conformance and
 verify-only pass after that test-only adjustment. See
 [evidence and retained retry](evidence/uuid-adapter-completion.md).
+
+### UUID composition execution — 2026-10-16
+
+Owner authorizes mixed flat Records, then recursive containers/groups, then
+associations across the five priority adapters with qualification gates.
+CONTRACT-076 governs an explicitly selected composition profile; historical
+uuid-model1 behavior remains fixed. First extend shared scalar/layout lowering
+and full-row codecs; next implement explicit recursive storage and dataset
+recovery; then association endpoint mappings and integrity checks. Each stage
+requires focused positive/refusal tests, independent native values and browser
+public API evidence before support promotion. No new support gate is admitted
+by this execution entry. Work is single-agent; token/spending metering is
+unavailable. Verification, retries and evidence review are included in scope.
+
+
+### UUID composition closeout — 2026-10-16
+
+Completed the authorized sequence under explicit uuid-model2: mixed flat scalar/
+UUID Records, finite arrays/maps and declared groups, then keyed association
+Records and polymorphic endpoint alternatives. New snapshot validation enforces
+Keys/unique indexes, references, endpoint choice and distinct-endpoint bounds.
+The final14-phase composition runner passes20 native target/stage cases,72
+returned rows,16 native-invalid refusals,116 source recoveries, real Chromium
+and both gate tests. The original17-phase model1 qualification also passes on
+the shared final source. [Evidence, retries and remaining boundaries](evidence/uuid-composition.md)
+qualify115 distinct scoped tests; no full-repository, native-equivalence or
+consumer-deployment claim is made. Governed IDs/frontmatter/traceability are retained.
+
+### Typed SDK original Truss pages — 2026-10-16
+
+[Original page custody and native evidence](evidence/typed-persistence/engine-pages-native-20261016/README.md) adds complete owner page programs, native opaque/typed cursor agreement and real generated page calls. Installed Truss14 controls pass on both pinned interpreters; full SDK native replays/126 units each, Rust6, Chromium32 and all three pinned positive/24-negative reporting checkers pass. Compiler source remains an explicitly unpublished combined preview; published compiler/default recapture, protected action/manifest bulk and remaining backend gates stay open. Truss's RC-only read authority does not qualify snapshot streams. B-TP-003 remains OPEN and temporal qualification HELD.
+
+
+### UUID composition main integration — 2026-10-16
+
+Integrated `6aea0792` with50 newer main commits at `5e7a4670`, preserving both
+execution logs. Regenerated generated identity and conflicting qualification
+receipts; fresh17-phase model1 and14-phase model2 campaigns pass on merged
+source. Both native/browser and source-bound gates pass. The later `902c9f71`
+security test-documentation correction changes no qualified source/schema.
+[Integration evidence](evidence/uuid-composition.md#main-integration--2026-10-16)
+retains scope and the115-test boundary.

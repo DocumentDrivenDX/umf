@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3297,
-        "line": 6,
+        "bytes": 4009,
+        "line": 9,
         "path": "src/extensions/binding/bit128-record.ts",
-        "sha256": "0f8b2278c337ca36d6aab129c99998e55f8bc171748fa6cf97aefb3bd818399b"
+        "sha256": "d99a33c739237562456b6a6773f31dbc328c84450b9e763cb0fa300169dd4f0f"
       }
     ],
     "entrypoint": ".",
     "exportName": "Bit128RecordValue",
     "runtime": "type-only",
     "signatureText": [
-      "export interface Bit128RecordValue {field:Bit128Ref;value:CoreLiteral}"
+      "export interface Bit128RecordValue {field:Bit128Ref;value:ModelLiteral}"
     ]
   },
   "id": "[\"api\",\".\",\"Bit128RecordValue\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3297,
-      "line": 6,
+      "bytes": 4009,
+      "line": 9,
       "path": "src/extensions/binding/bit128-record.ts",
-      "sha256": "0f8b2278c337ca36d6aab129c99998e55f8bc171748fa6cf97aefb3bd818399b"
+      "sha256": "d99a33c739237562456b6a6773f31dbc328c84450b9e763cb0fa300169dd4f0f"
     }
   ],
   "summary": "Type declaration · src/extensions/binding/bit128-record.ts",

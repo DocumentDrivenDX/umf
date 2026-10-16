@@ -1,0 +1,11 @@
+bun test v1.4.3 (26aa4e1a9)
+
+
+tests/uuid-composition-gates.test.ts:
+(pass) source-bound composition qualification requires all five native targets and all stages [377.58ms]
+(pass) missing, falsified, stale and unsafe evidence cannot promote composition [569.65ms]
+
+ 2 pass
+ 0 fail
+ 9 expect() calls
+Ran 2 tests across 1 file. [1224.00ms]

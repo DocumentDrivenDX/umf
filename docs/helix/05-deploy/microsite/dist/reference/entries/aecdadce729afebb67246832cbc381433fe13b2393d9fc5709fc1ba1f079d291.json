@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12539,
+        "line": 98,
+        "path": "src/extensions/actions/selector.ts",
+        "sha256": "0bd7f164ceceaca5a397237ed654de3fc62f6a7e98ad14ba10d6f94d0b8fbd6d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PreparedActionIdentities",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PreparedActionIdentities {\n readonly profile:'umf.actions.keys.prepared/1';\n readonly source:Document;\n readonly action:Action;\n admitInputs(inputs:ActionInputs,outputs?:boolean):ActionInputs;\n select(frameId:string,inputs:ActionInputs):SelectedActionIdentity;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PreparedActionIdentities\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12539,
+      "line": 98,
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "0bd7f164ceceaca5a397237ed654de3fc62f6a7e98ad14ba10d6f94d0b8fbd6d"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/selector.ts",
+  "title": "PreparedActionIdentities"
+}

@@ -1,9 +1,12 @@
+import {encodeShape,decodeStoredShape,type ModelLiteral} from './model-shape-values';
+import {canonicalSchemaJson} from '../../model/schema-literals';
+import {encodeModelScalar,decodeModelScalar} from './model-scalar';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document} from '../../model/types';
 import type {CoreLiteral} from '../../model/schema-literals';
 import {inspectBit128Binding,encodeBit128CarrierValue,decodeBit128CarrierValue,type Bit128BindingPayload} from './bit128';
 import {resolveBit128ModelLayout,bit128RefKey,type Bit128Ref} from './bit128-layout';
-export interface Bit128RecordValue {field:Bit128Ref;value:CoreLiteral}
+export interface Bit128RecordValue {field:Bit128Ref;value:ModelLiteral}
 function locate(bindingInput:Document,sourceInput:Document,identityInput:Bit128Ref){
  const binding=copyJson(bindingInput) as unknown as Document,source=copyJson(sourceInput) as unknown as Document,identity=copyJson(identityInput) as unknown as Bit128Ref;
  if(!identity||Object.keys(identity).sort().join(',')!=='element,module')throw new UmfError('BIT128_RECORD_IDENTITY','Exact Record identity required');
@@ -16,14 +19,14 @@ function locate(bindingInput:Document,sourceInput:Document,identityInput:Bit128R
 export function encodeBit128Record(bindingInput:Document,sourceInput:Document,identity:Bit128Ref,input:Bit128RecordValue[]):Record<string,string|null>{
  const {binding,source,record}=locate(bindingInput,sourceInput,identity),values=copyJson(input) as unknown as Bit128RecordValue[];
  if(!Array.isArray(values)||values.length!==record.fields.length)throw new UmfError('BIT128_RECORD_VALUE','Exact complete logical row required');
- const map=new Map<string,CoreLiteral>();for(const item of values){if(!item||Object.keys(item).sort().join(',')!=='field,value'||!item.field||Object.keys(item.field).sort().join(',')!=='element,module'||map.has(bit128RefKey(item.field)))throw new UmfError('BIT128_RECORD_VALUE','Malformed or duplicate Field');map.set(bit128RefKey(item.field),item.value);}
+ const map=new Map<string,ModelLiteral>();for(const item of values){if(!item||Object.keys(item).sort().join(',')!=='field,value'||!item.field||Object.keys(item.field).sort().join(',')!=='element,module'||map.has(bit128RefKey(item.field)))throw new UmfError('BIT128_RECORD_VALUE','Malformed or duplicate Field');map.set(bit128RefKey(item.field),item.value);}
  const output:Record<string,string|null>=Object.create(null);
- for(const f of record.fields){const key=bit128RefKey(f.identity);if(!map.has(key))throw new UmfError('BIT128_RECORD_VALUE','Missing Field');Object.assign(output,encodeBit128CarrierValue(binding,source,f.identity,map.get(key)!));}
+ for(const f of record.fields){const key=bit128RefKey(f.identity);if(!map.has(key))throw new UmfError('BIT128_RECORD_VALUE','Missing Field');Object.assign(output,f.carrier.kind==='json'?{[f.carrier.column]:((value)=>value===null?null:canonicalSchemaJson(value))(encodeShape(binding,source,f.carrier.shape,map.get(key)!))}:f.carrier.kind==='scalar'?{[f.carrier.column]:encodeModelScalar(source,f.identity,f.field,map.get(key)! as CoreLiteral)}:encodeBit128CarrierValue(binding,source,f.identity,map.get(key)! as CoreLiteral));}
  return copyJson(output) as Record<string,string|null>;
 }
 export function decodeBit128Record(bindingInput:Document,sourceInput:Document,identity:Bit128Ref,input:Record<string,string|null>):Bit128RecordValue[]{
  const {binding,source,record}=locate(bindingInput,sourceInput,identity),slots=copyJson(input) as Record<string,string|null>;
  const names=record.fields.flatMap(f=>f.slots);
  if(!slots||Array.isArray(slots)||typeof slots!=='object'||Object.keys(slots).length!==names.length||names.some(n=>!Object.hasOwn(slots,n)))throw new UmfError('BIT128_RECORD_VALUE','Exact complete native row required');
- return record.fields.map(f=>({field:f.identity,value:decodeBit128CarrierValue(binding,source,f.identity,Object.fromEntries(f.slots.map(n=>[n,slots[n]!])))}));
+ return record.fields.map(f=>({field:f.identity,value:f.carrier.kind==='json'?decodeStoredShape(binding,source,f.carrier.shape,slots[f.carrier.column]!):f.carrier.kind==='scalar'?decodeModelScalar(source,f.identity,f.field,slots[f.carrier.column]!):decodeBit128CarrierValue(binding,source,f.identity,Object.fromEntries(f.slots.map(n=>[n,slots[n]!])))}));
 }

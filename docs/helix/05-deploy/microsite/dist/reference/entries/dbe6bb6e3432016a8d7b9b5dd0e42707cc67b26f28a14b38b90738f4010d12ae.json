@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15962,
+        "line": 165,
+        "path": "src/model/key-tuple.ts",
+        "sha256": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "prepareCoreKeyTuples",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown): PreparedCoreKeyTuples"
+    ]
+  },
+  "id": "[\"api\",\".\",\"prepareCoreKeyTuples\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15962,
+      "line": 165,
+      "path": "src/model/key-tuple.ts",
+      "sha256": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8"
+    }
+  ],
+  "summary": "Reuse declaration validation for one immutable source, never authorization.",
+  "title": "prepareCoreKeyTuples"
+}

@@ -98,3 +98,7 @@ Implemented public manifest inspection/assessment and bulk result validation in 
 ## Construction implementation boundary — 2026-10-15
 
 The portable constructor uses existing plan inspection/preparation, original core Key verification and manifest inspection. It retains supplied row order and original receipt sidecars, derives inputs/frame versions/batches, and returns no native authority. This requires integrating the existing US-902 plan implementation first; current-main absence of that prerequisite must not be hidden by a substitute plan parser. CONTRACT-903 defines the exact bounded API. Truss owns native selection/order/guard/current authorization, sealing and custody; compiler output does not establish those duties.
+
+## Exact browser-local branch — 2026-10-15
+
+CONTRACT-905 defines a complete local actor/policy/invocation pairing, independently selected local bulk claims and conditional reuse of the original data carriers. The declaration analyzer recognizes only that exact bundle; preparation rejects mixed native/local intent, and assessment chooses its fixed companion table from original invocation. No unchecked override or native human substitution is introduced. Actual browser Truss storage/lowering/capability/seal/flush/recovery qualification remains required and is not provided by portable metadata support.

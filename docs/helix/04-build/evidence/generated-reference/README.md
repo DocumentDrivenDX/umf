@@ -17,14 +17,14 @@ the independent JSON Schema oracle's mixed outcome remains visible.
 - `*-desktop.png`, `*-mobile.png`: actual Playwright captures of every new route.
 - `unit.log`, `types.log`, `docs.log`: retained final command outputs when present.
 
-Final local result: 2,492 reference entries cover 405 schema sources, 69 extension
-versions, 1,857 public exports, 146 operation/declaration entries, five examples
-and ten guides. The evidence census contains 7,382 paths; these counts are
+Final local result: 2,499 reference entries cover 405 schema sources, 69 extension
+versions, 1,864 public exports, 146 operation/declaration entries, five examples
+and ten guides. The evidence census contains 7,512 paths; these counts are
 inventory coverage, not support grades. Thirty Chromium 153.0.8010.12 checks pass
 with zero page errors and zero unexpected external requests from the reference.
 The report's tested manifest SHA-256 matches the final generated manifest.
 
-The full reference suite passes 11 tests / 9,858 assertions, including isolated
+The full reference suite passes 11 tests / 9,883 assertions, including isolated
 regeneration, deliberate drift refusal and boundary injections. Focused final
 record/runtime checks also pass. Both TypeScript configurations pass; action
 guide generation, malformed-source controls and runnable examples pass. The
@@ -71,11 +71,12 @@ the earlier failed harness log remains in `browser-route-control-failed.log`.
 Malformed pointer routes explicitly refuse instead of selecting the root.
 
 Implementation, visual review and local qualification are complete for this
-scope. After the user unlocked 1Password, the approved retry sealed all 23 pages
-with the existing configured key: zero failures and zero skipped pages. The
-public verifier reports `VALID all (23 claim(s))`; see `sealing.log` and
+scope. The final approved signing pass resealed 19 changed pages with the
+existing configured key and retained five up-to-date seals: zero failures
+and zero skipped pages. The
+public verifier reports `VALID all (24 claim(s))`; see `sealing.log` and
 `signatures.log`. Public keys and claims were copied into the local site's
-`.well-known/innsigle/` directory, and all 24 public artifacts match their
+`.well-known/innsigle/` directory, and all 25 public artifacts match their
 staging originals byte for byte. The reference manifest still matches the
 Playwright-tested digest. Earlier key-access attempts timed out without
 releasing the key; no key material is retained in the repository.
@@ -83,3 +84,25 @@ releasing the key; no key material is retained in the repository.
 Production deployment has not been requested. No comparable token-usage
 baseline or runtime per-turn usage meter is available; no measured token total
 or enforced spending cap is claimed.
+
+## Current-main integration
+
+PR #27 integrates main at `d40988e72406e35e2e9af75c47e77968d94b1957`.
+The merge retains the newer prepared-action APIs, browser SQL-to-actions/store
+flow, immutable schema-browser producer checks and SDK qualification evidence.
+The homepage retains the upstream interactive compiler and the new reference;
+the action guides are regenerated from the merged API source rather than
+choosing a generated side of the conflict. HELIX artifact identities and draft
+review status remain unchanged.
+
+The refreshed SQL-to-actions browser check passes actual local catalog loading,
+three-row batch execution, lost-acknowledgement recovery, replay/reopen, original
+history and cancellation controls. Its scoped record is retained in
+`../bulk-update/website-compiler-results.json`; it does not claim full native904
+qualification. The reference was regenerated after that record was refreshed,
+and final reference screenshots and results bind that final manifest.
+Action-guide navigation covers ten routes at desktop/mobile widths. The
+reusable installed browser package passes fourteen Chromium checks, and the
+strict-CSP embedding, public protocols and standalone example pass again.
+Both TypeScript configurations and browser-action types pass. Guide malformed
+source/output controls and executable examples also pass after the merge.

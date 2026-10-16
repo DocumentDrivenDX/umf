@@ -1,0 +1,142 @@
+{
+  "review": "Independent Astra Ultra requested review of working browser-local UPDATE with history and cancellation",
+  "date": "2026-10-15",
+  "repository": "/Users/erik/.codex/worktrees/security-action-source-custody/umf",
+  "head": "49ea52c43d9ec4fa00232baf855992d0927152d2",
+  "verdict": "No open implementation blockers for the reviewed required-String browser-local UPDATE, original history and cancellation component",
+  "findings": [],
+  "scope": "Read-only current dirty website sources, homepage entry link and exact original Truss4180f76d bundle. Actual complete browser workflow independently reproduced. No repository source edits, signing-key access or deployment.",
+  "sourceCommit": "4180f76dcfa9b1d9bfca172b9c76b38d6fbaa4eb",
+  "manifestSha256": "2b04a719c6ffa36c39f737a98d6d49ebcc3aee74c1cece0d8a9fc6b180ba87bb",
+  "providerSha256": "48e1f33b300aa26301fbf25562f553dd7f28c87abbab292402144480d612d100",
+  "independentEvidence": {
+    "chromium": "153.0.8010.12",
+    "journalControls": 42,
+    "additionalActualWebsiteControls": 18,
+    "fullOriginalWebsiteVerifierIncludingHomepageLink": true,
+    "websiteReceiptExactlyMatchesCurrent22Pins": true,
+    "originalAssets": 372,
+    "originalSourcePins": 80,
+    "originalOwnerArtifactDigestsChecked": 23,
+    "exactOriginalOwnerBundleAndReceipt": true,
+    "packagingControls": 8,
+    "byteIdenticalTrussBuildOutputs": 375,
+    "byteIdenticalCompilerBuildOutputs": 6,
+    "strictWebsiteTypecheck": true
+  },
+  "conclusions": [
+    "The complete public load, original Weft selection, UMF manifest/seal, keyed submit/claim, two-batch UPDATE and original outcome recovery continue to pass against actual browser PostgreSQL. Three matching rows change once, the fourth remains unchanged, and the job completes a contiguous two-batch prefix.",
+    "Cancel has a separate strict atomic host reservation before its first native dispatch; competing pages cannot reserve another original cancel control. Every later attempt calls recoverCancel with unchanged original input. All eight CancelResult variants, including failed and uncertain carriers, survive host journal serialization.",
+    "Actual missing original cancellation recovery remains unresolved with the original control and never redispatches cancel or infers business rollback. Unknown cancellation observation detaches, retains its full carrier and recovers the original sampled result after reopen.",
+    "Independent cancellation after the first batch commits preserves both committed items and exact prior batch receipt, cancels the uncommitted remainder, leaves later targets untouched and disables fresh claim/effect admission. Confirmed cancelled work remains recoverable without rewriting prior results.",
+    "Original public history pages preserve event and origin UTF-8 artifacts, digests, increasing original sequence and exact scoped cursor. Full workflow pages are 5+2 events; independent cancelled-prefix pages are 5+1, deliberately splitting a committed batch across pages without changing transaction identity. Empty tails remain byte-identical after reopen.",
+    "History has no acknowledgement, projection checkpoint, automatic purge or destructive cursor action. The cursor is inert metadata and native owner/cursor scope still governs reading.",
+    "Private owner/action/read-grant/work capabilities stay inside the worker. New cancellation/history APIs preserve original provider unions and do not relabel local browser authority as native human/service authority.",
+    "The relative homepage link reaches the compiler under the /umf/ base path. Exact source/static asset cohort remains intact; both original builders reproduce served bytes."
+  ],
+  "networkEvidence": {
+    "compilerAndWorkflowExternalRequests": [],
+    "writeRequests": [],
+    "homepageBlockedExternalRequests": [
+      "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
+    ],
+    "interpretation": "The existing homepage attempts a Google Fonts stylesheet request, explicitly aborted by the verifier. The compiler/workflow makes no external requests and uses no HTTP mutation service. This is not a claim that the whole homepage is network-free."
+  },
+  "publicationGate": {
+    "status": "blocked",
+    "reason": "Independent pinned verify --all reports changed index.html and action-compiler.html STALE; 15 other claims VALID. Human 1Password signing remains pending. No publication clearance or deployment claim."
+  },
+  "limitations": [
+    "This is the fixed required-String/rootless local-owner Products slice, not complete local-bulk/1 or native CONTRACT-904 qualification.",
+    "Lifetime-of-store-incarnation retention is supported by the current no-purge design; it does not promise browser eviction/clearing recovery, arbitrary restore or unlimited storage.",
+    "Full feed acknowledgement/projection protocols, shorter retention, namespace migration, arbitrary crash/restore qualification, wider scalar/relationship semantics and native human/service equivalence remain outside scope.",
+    "A cancellation that was never acknowledged remains unresolved, not confirmed cancelled; only original native settlement establishes its cutoff. No liveness, automatic retry or claim-renewal guarantee is inferred.",
+    "The independent unknown-cancel UI check explicitly substitutes the declared control-unknown observation for an actual committed cancelled response. It proves host retention/detach/recovery behavior, not a newly qualified native uncertain-commit fault campaign. Failed cancel carriers were checked for exact host serialization; no native rollback-fault qualification is inferred."
+  ],
+  "sourceHashes": {
+    "docs/helix/03-test/fixtures/bulk-update/local-products-model.json": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+    "docs/helix/03-test/fixtures/bulk-update/local-products-input.json": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e",
+    "docs/helix/05-deploy/microsite/action-runtime-assets.d.ts": "994b98d272e163b7f531d78bafc398af8e6682fcca8107cfbed1e266d9cc8f3d",
+    "docs/helix/05-deploy/microsite/action-compiler.ts": "bb475f666c7546a321f773e76e612149ed60f0a3933ac63433bf6a9532e7e4fa",
+    "docs/helix/05-deploy/microsite/verify-action-compiler.ts": "9d3129e642b22dfa69a070ceb97270761d2d5b5f0299b7082156b5abf62d705b",
+    "docs/helix/05-deploy/microsite/bulk-intent.ts": "c7493ad86ea0a96dd350e65e319fdd87e7b2a989806bd5149146efcb53f13fb6",
+    "docs/helix/05-deploy/microsite/load-intent.ts": "e57ddc1a9de851058ead94cbf9838f51ce82f8e172d9a4a9d9b8a96060e24814",
+    "docs/helix/05-deploy/microsite/README.md": "1b180e0f2324a4612ec4d7766529e1d103d86b60a67aa2b9eabc6fdb3b5bf28f",
+    "docs/helix/05-deploy/microsite/truss-catalog-worker.ts": "97a93a780fa621d5d3702fb77218f6cb285c10fb5ccd407c55b9a59f6091c1d0",
+    "docs/helix/05-deploy/microsite/build-truss-browser.ts": "09f6a3eb622885868c207dcb5c97ec76a0166c0cb2cc1ce168d5b3818648a9a1",
+    "docs/helix/05-deploy/microsite/action-compiler.html": "76cf2ff28bc49d9ff567045e0d20f7e0882866b3b04ffc3c448eb88bd96c5e69",
+    "docs/helix/05-deploy/microsite/build-action-compiler.ts": "9bb7a28f25a270e4dfff8aad982569414a4706248b9a0a286eef92d826dd09d3",
+    "docs/helix/05-deploy/microsite/tsconfig.actions.json": "3f206295f77545fcdce33b86cd557b65a7d75906aa10edeee022f89624bcbf69",
+    "docs/helix/05-deploy/microsite/seal-intent.ts": "3c00f3a26a6b96eb9732ba4a52a285dc3f7e60e4e26f3310f8b65ae8077c23eb",
+    "docs/helix/05-deploy/microsite/dist/index.html": "280f448f0177591ca98521842ac8d3ac0e308e349025355e3bf154b9442383f3",
+    "docs/helix/05-deploy/microsite/assets/weft-local-mutation/provenance.json": "11f1cf08dc250726dadd92b48469b6c16548b12e167e92c84c2a5fa769788acf",
+    "docs/helix/05-deploy/microsite/assets/truss-browser/provenance.json": "f43d4035a6c06a231595f82f96656f7fb47a545c8e6402bfcbad22c42adc0621",
+    ".github/workflows/microsite.yml": "62d5b03b0c5ea9043574d96a0657d878f618e7eaa0d2f8e78231e1d8c7d057a5"
+  },
+  "evidenceFiles": {
+    "independent-browser.ts": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/independent-browser.ts",
+      "sha256": "c4248d5c30ba24e7f971c670ad4708a872a0d4350ba40e5809c7c16c1c68b900"
+    },
+    "independent-browser.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/independent-browser.json",
+      "sha256": "2cc5e0d720a1c457dada2fc19975bdc9012f67fd713f8a4e2695b362c1dbc4ea"
+    },
+    "independent-browser.log": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/independent-browser.log",
+      "sha256": "a34b87f0aa1bf2164ccdd773d33055d448fd7dfce51a6d9af39f8aeb17714df0"
+    },
+    "journal-browser.ts": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/journal-browser.ts",
+      "sha256": "42c889e981c74879101c59145519fbc47fc6ad945018fc245b11e3ea529b572b"
+    },
+    "journal-browser.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/journal-browser.json",
+      "sha256": "9ce38f4b219d4e99c0b7fd04c1c94a071a849eba5a24a92c0210b5a8f699f724"
+    },
+    "audit.py": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/audit.py",
+      "sha256": "bfa646ea9db719b2490ee214388ab7d5bbeadf9013bace26e81841461959d591"
+    },
+    "packaging-controls.py": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/packaging-controls.py",
+      "sha256": "638a9c54525fbe018ed5388fc193d793d947308c4c431c75a5f5ee9028b02886"
+    },
+    "packaging-controls.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/packaging-controls.json",
+      "sha256": "086871af7a8c97af40100abd3b95ff94da37eced220e75a0f2a7f18775736212"
+    },
+    "compiler-build.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/compiler-build.json",
+      "sha256": "47b210103d60ac958dcc263c53a5e99567707891f2947b5b83451bfe2f1b28da"
+    },
+    "bundle-correspondence.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/bundle-correspondence.json",
+      "sha256": "f566032a53abf31d7d6fe170e4f95a92a2118531b30164e3cbead701d81f9c59"
+    },
+    "website-correspondence.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/website-correspondence.json",
+      "sha256": "424b77c966cc14d573a7c26372868ab34d0886fc9b7165faa488312ff72ed750"
+    },
+    "website-browser-results.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/website-browser-results.json",
+      "sha256": "440e1a6e68bec5ece25c80858473c6ce295cc7e7b3c7279911b00f46e82b3502"
+    },
+    "website-browser.log": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/website-browser.log",
+      "sha256": "3921a10f6fef15c69048faa9d66b8206014d8456a95b1c57c2c6165e6dbd9f40"
+    },
+    "original-owner-receipt.json": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/original-owner-receipt.json",
+      "sha256": "b41b8e1e8cf00b947edbaa8e54a14867f9faae132b7446feb172ee5e79b69978"
+    },
+    "typecheck.log": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "signature-check.log": {
+      "path": "/private/tmp/umf-history-cancel-review-20261015/signature-check.log",
+      "sha256": "f6b290d18e8f04f1b62706ee78224f239fa16ec06fd814c251caa726bfa02334"
+    }
+  }
+}

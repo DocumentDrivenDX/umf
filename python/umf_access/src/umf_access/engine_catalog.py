@@ -37,8 +37,11 @@ class EngineRead(CatalogRead[P, R]):
         parameters: type[P],
         result: type[R],
         method: str,
+        page_size: int | None = None,
     ) -> EngineRead[P, R]:
-        compile_method = getattr(compiler, "compile_engine_read_json", None)
+        if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999 or method not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
+            raise ReadBuildError("original engine page size must be in 1..999")
+        compile_method = getattr(compiler, "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
         if not callable(compile_method):
             raise ReadBuildError(
                 "WEFT_BLOCKED: original engine catalog compiler required"
@@ -46,7 +49,8 @@ class EngineRead(CatalogRead[P, R]):
         original = compile_method(
             canonical_json(
                 {
-                    "version": "weft.engine-read/0.1",
+                    "version": "weft.engine-page/0.1" if page_size is not None else "weft.engine-read/0.1",
+                    **({"pageSize": page_size} if page_size is not None else {}),
                     "compiler": method,
                     "request": dict(request),
                 }
@@ -55,6 +59,8 @@ class EngineRead(CatalogRead[P, R]):
         program = program_json(original)
         if program.get("status") != "compiled":
             raise ProgramBuildError(original)
+        if program.get("request") != dict(request) or program.get("compiler") != method or (page_size is not None and program.get("pageSize") != page_size):
+            raise ReadBuildError("original engine request or page bound differs")
         wrapper = {
             "version": "umf.engine-catalog/0.1",
             "programJson": original,
@@ -102,14 +108,17 @@ class EngineRead(CatalogRead[P, R]):
             raise ReadBuildError("bounded original engine program required")
         program = program_json(original)
         if (
-            program.get("version") != "weft.engine-read/0.1"
+            program.get("version") not in ("weft.engine-read/0.1", "weft.engine-page/0.1")
             or program.get("status") != "compiled"
         ):
             raise ReadBuildError("original compiled engine program required")
+        page = program["version"] == "weft.engine-page/0.1"
+        if page and (program.get("after") is not None or type(program.get("pageSize")) is not int or not 1 <= program["pageSize"] <= 999 or program.get("compiler") not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
+            raise ReadBuildError("original first-page engine catalog required")
         structural = dict(program)
         pin = structural.pop("structuralDigest", None)
         if pin != {
-            "owner": "weft-runtime-engine-read",
+            "owner": "weft-runtime-engine-page" if page else "weft-runtime-engine-read",
             "version": "0.1",
             "sha256": hashlib.sha256(canonical_json(structural).encode()).hexdigest(),
         }:
