@@ -23,17 +23,26 @@ const source=await Bun.file(root+'tests/security/protection/current-query-presen
 const scenarios=await Bun.file(root+'tests/security/protection/current-query-read-scenarios.json').json();
 const ref=(elementId:string)=>({documentId:'domain',moduleId:'m',elementId});
 const results=[];
-for(const variant of ['allowed','undisclosed','revoked','incomplete-coverage','stale-generation'])for(const state of ['string','null','absent','unreported']){
+for(const variant of ['allowed','undisclosed','revoked','foreign-subject','foreign-assignment-staff','foreign-assignment-project','foreign-ownership-project','no-ownership','no-assignment','incomplete-coverage','stale-generation'])for(const state of ['string','null','absent','unreported']){
  const policy=structuredClone(source.policy);if(variant!=='undisclosed'){policy.revision='query-presence-token-read-policy-r2';policy.rules[0].disclosure.push({field:ref('token'),disposition:{kind:'original'}});}
  const owner=structuredClone(source.owner);owner.revision='query-presence-read-owner-r2';owner.disclosure={readAction:'read'};
  const cut=structuredClone(scenarios.cut);cut.generation=cut.expectedGeneration='query-presence-supplied-cut-r2';cut.policy={id:policy.id,revision:policy.revision};cut.ontology={documentId:source.ontology.documentId,revision:source.ontology.revision};cut.protection={id:source.catalog.id,revision:source.catalog.revision};cut.domains=source.closure.pins;cut.owner={id:owner.id,revision:owner.revision};
  const fact=cut.facts.find((f:any)=>f.type.elementId==='Resource');fact.fields=fact.fields.filter((f:any)=>f.field.elementId!=='token');fact.absent=[];
  if(state==='absent')fact.absent.push(ref('token'));else if(state!=='unreported')fact.fields.push({field:ref('token'),value:state==='null'?null:{string:'opaque-token'}});
  if(variant==='revoked')cut.facts.find((f:any)=>f.type.elementId==='Assignment').fields.find((f:any)=>f.field.elementId==='active').value={boolean:false};
+ const addIdentity=(type:string,idField:string,value:string)=>{const f=structuredClone(cut.facts.find((f:any)=>f.type.elementId===type));f.key=[{string:value}];f.fields=[{field:ref(idField),value:{string:value}}];cut.facts.push(f);};
+ if(variant==='foreign-subject'||variant==='foreign-assignment-staff')addIdentity('Staff','staffId','bob');
+ if(variant==='foreign-subject')cut.subject.key=[{string:'bob'}];
+ if(variant==='foreign-assignment-staff')cut.facts.find((f:any)=>f.type.elementId==='Assignment').fields.find((f:any)=>f.field.elementId==='assignmentStaff').value={string:'bob'};
+ if(variant==='foreign-assignment-project'||variant==='foreign-ownership-project')addIdentity('Project','projectId','p2');
+ if(variant==='foreign-assignment-project')cut.facts.find((f:any)=>f.type.elementId==='Assignment').fields.find((f:any)=>f.field.elementId==='assignmentProject').value={string:'p2'};
+ if(variant==='foreign-ownership-project')cut.facts.find((f:any)=>f.type.elementId==='Ownership').fields.find((f:any)=>f.field.elementId==='ownerProject').value={string:'p2'};
+ if(variant==='no-ownership')cut.facts=cut.facts.filter((f:any)=>f.type.elementId!=='Ownership');
+ if(variant==='no-assignment')cut.facts=cut.facts.filter((f:any)=>f.type.elementId!=='Assignment');
  if(variant==='incomplete-coverage')cut.coverage.find((f:any)=>f.type.elementId==='Resource').fields=cut.coverage.find((f:any)=>f.type.elementId==='Resource').fields.filter((f:any)=>f.elementId!=='token');
  if(variant==='stale-generation')cut.expectedGeneration='other';
  const program=compileCandidateCatalogProgram(policy,source.catalog,source.closure,source.ontology);const scan=evaluateCandidateCatalogScan(program,owner,cut,{type:ref('Resource'),fields:[ref('token')]});
- const validPresence=state!=='unreported',rendered=validPresence&&(variant==='allowed'||variant==='revoked');
+ const validPresence=state!=='unreported',rendered=validPresence&&!['undisclosed','incomplete-coverage','stale-generation'].includes(variant);
  const expectedRows=variant!=='allowed'||!validPresence?[]:[[{field:ref('token'),disposition:state==='absent'?'absent':'original',...(state==='absent'?{}:{value:state==='null'?null:{string:'opaque-token'}})}]];
  const expected={status:rendered?'rendered':'refused',complete:false,authority:false,rows:expectedRows,valueProfiles:[]};
  check(variant+':'+state+':exact-result',canonical(scan)===canonical(expected));

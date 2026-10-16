@@ -98,6 +98,198 @@
       "passed": true
     },
     {
+      "id": "foreign-subject:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-subject:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-staff:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-assignment-project:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "foreign-ownership-project:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-ownership:unreported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:string:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:string:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:null:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:null:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:absent:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:absent:no-authority",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:unreported:exact-result",
+      "passed": true
+    },
+    {
+      "id": "no-assignment:unreported:no-authority",
+      "passed": true
+    },
+    {
       "id": "incomplete-coverage:string:exact-result",
       "passed": true
     },
@@ -854,6 +1046,438 @@
       }
     },
     {
+      "variant": "foreign-subject",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-subject",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-staff",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-assignment-project",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "foreign-ownership-project",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-ownership",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "string",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "null",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "absent",
+      "expected": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "rendered",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
+      "variant": "no-assignment",
+      "state": "unreported",
+      "expected": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      },
+      "scan": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "rows": [],
+        "valueProfiles": []
+      }
+    },
+    {
       "variant": "incomplete-coverage",
       "state": "string",
       "expected": {
@@ -998,6 +1622,6 @@
       }
     }
   ],
-  "inputSnapshotSha256": "bb612ae23f7515e755ef2afd4360f50e0f617c7b115510546cbfc00562218ec2",
+  "inputSnapshotSha256": "196ff13ff94b2e9b9141e8c8ed9f5276129fc8523ec418378942a5be2a189ee7",
   "scope": "Actual UMF candidate logical evaluator over an explicitly authored optional queryable model, separate Token-disclosure policy and complete supplied cuts. Exact source and model memberships preserved. Complete/authority remain false: no authenticated native source, actor/current-cut custody, compiler .4 composition, transform execution, operator authorization, P03/B08/backend acceptance or case promotion."
 }
