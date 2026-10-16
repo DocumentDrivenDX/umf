@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:compilation:access-manifest:0.1",
+  "type": "object",
+  "required": [
+    "contract",
+    "abi",
+    "runtimeAbi",
+    "inputDigest",
+    "profile",
+    "symbols",
+    "dispositions",
+    "obligations",
+    "inventory"
+  ],
+  "properties": {
+    "contract": {
+      "const": "umf-access-generate/0.1"
+    },
+    "abi": {
+      "const": "umf-python-types/0.1"
+    },
+    "runtimeAbi": {
+      "type": "object",
+      "required": [
+        "distribution",
+        "version",
+        "abi"
+      ],
+      "properties": {
+        "distribution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "abi": {
+          "const": "umf-access-runtime/0.1"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputDigest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "compilerVersion",
+        "coreVersions",
+        "vocabularies",
+        "python",
+        "dependencies",
+        "checkers",
+        "reservedNames",
+        "importedNames",
+        "assertionKinds",
+        "subset",
+        "codeSha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compilerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coreVersions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "vocabularies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "version"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "python": {
+          "type": "object",
+          "required": [
+            "version"
+          ],
+          "properties": {
+            "version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "distribution",
+              "version"
+            ],
+            "properties": {
+              "distribution": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "checkers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "version",
+              "configuration"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "configuration": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "reservedNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "importedNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assertionKinds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "kind",
+              "nullability",
+              "Key",
+              "facets",
+              "defaults",
+              "relationships",
+              "actions",
+              "umf.access"
+            ]
+          }
+        },
+        "subset": {
+          "type": "string"
+        },
+        "codeSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sourceId",
+          "pointer",
+          "path",
+          "symbol",
+          "role"
+        ],
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pointer": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "symbol": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "enum": [
+              "row",
+              "create",
+              "patch",
+              "update",
+              "key",
+              "projection",
+              "fields",
+              "search",
+              "action-ref",
+              "action-input",
+              "action-output",
+              "action-failure",
+              "action-client",
+              "codec"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "dispositions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sourceId",
+          "pointer",
+          "assertion",
+          "relevance",
+          "fidelity",
+          "checks",
+          "reason",
+          "obligationIds"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pointer": {
+            "type": "string"
+          },
+          "assertion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relevance": {
+            "enum": [
+              "selected",
+              "dependency",
+              "unselected"
+            ]
+          },
+          "fidelity": {
+            "enum": [
+              "exact",
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "client",
+                "database",
+                "engine",
+                "informational"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "reason": {
+            "type": "string"
+          },
+          "obligationIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "owner",
+          "description",
+          "dispositionIds"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "enum": [
+              "host",
+              "database",
+              "engine",
+              "catalog",
+              "qualifier"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "dispositionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

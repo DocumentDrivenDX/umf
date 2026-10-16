@@ -1,5 +1,7 @@
 # UMF project documentation
 
+The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Lakebase service execution remains unverified.
+
 **Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
 
 ## Domain-pack planning

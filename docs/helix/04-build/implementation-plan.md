@@ -12401,3 +12401,8 @@ No native case promotion:45/158 accepted,113 unimplemented; original132 IDs/hash
 runner; Delta B04/B10 have no native runner and ordinary identity/deployment
 qualification remains missing. This transport implements no diagnostic provider.
 See [versioned source and evidence](evidence/security/projection-query-child-v2-20261015/README.md).
+
+
+### Typed reporting reads — 2026-10-15
+
+Restored the typed SDK foundation from archived `39bf/umf` snapshot `8c9d0fb6`, then implemented the FR-53 Praxis reporting amendment: three-edge declared to-one joins, generated cross-record projections, reviewed SQL aggregates, native caller-role execution, joined keyset continuations and per-call typed timeouts. Weft core owns source/SQL admission; its PostgreSQL backend owns native lowering. WR-B7 and WR-A14 are the located interface work references from `20bc/umf`. [Execution evidence](evidence/typed-reporting/README.md) records source pins, actual installed-wheel tests and limits. [Usage](guides/typed-reporting.md) shows build and runtime calls. This scoped milestone does not close broader SDK targets, native aggregate DSL or Lakebase service qualification.
