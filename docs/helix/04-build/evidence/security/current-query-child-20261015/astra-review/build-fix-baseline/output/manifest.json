@@ -1,0 +1,14 @@
+{
+  "profile": "umf.security.private-query-child/0.1-candidate",
+  "bun": "1.4.2",
+  "bundleSha256": "eedabaf806413c6b3cbeeedc89e1c51cf1f7132427268725e0c9a0c600320aa8",
+  "sourcePins": {
+    "tools/security/current-query-child-main.ts": "0070309a5cced6c94386bb7df081bb664f48a324799e74a8db5bbf2d51c716cf",
+    "tools/security/build-current-query-child.ts": "d5c20f42572fdcf93cbd474cf489b6fbb12cc1047aaf3db52158008cbbbbbb34",
+    "bun.lock": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "package.json": "69db5d41aba271f1ba76abbbe5870cee96997cb82e62282d1592bda3b22c5d34"
+  },
+  "notices": [],
+  "sourceCapture": "Discovery then pre-build pins, actual build, exact closure equality and post-build pins",
+  "scope": "Original private computation only; no database, native issuer, permission or guarded release"
+}

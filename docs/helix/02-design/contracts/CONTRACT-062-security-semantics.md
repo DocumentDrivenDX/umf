@@ -139,7 +139,7 @@ versioned composition is qualified. Omitted obligations do not cancel existing
 ones. For every field/action profile, predicate/order/group/join/aggregate use
 MUST select `disclosed`, `original-authorized` or `prohibited`; omission means
 `prohibited` for protected fields. `original-authorized` needs a separate exact
-action permission. Operators using withheld fields refuse. Canonical data is
+action permission. Disclosed-mode operators using withheld values refuse. Canonical data is
 never overwritten by a read mask (see §Field protection catalog for the
 write-side rule and the statement-level refusal distinction).
 
@@ -1534,3 +1534,141 @@ dependencies from its original AST, and the native consumer must bind those
 requirements and actual current authority before execution. This operation does
 not parse queries, choose query-use modes, grant original-value actions, perform
 aggregates, register a backend, or qualify P03/B08. It is not a public root API.
+
+
+### Atomic complete logical scan batches — 2026-10-15
+
+The private `evaluateCandidateCatalogScanBatch(handle,owner,cut,requests)` accepts
+one original compiled program and one detached supplied logical cut. `requests`
+is a nonempty ordered array of at most256 exact `{scan,type,fields}` objects.
+`scan` is a unique Weft occurrence label matching `[st][0-9]+`; type/fields are
+existing qualified references. Each occurrence remains separate, including self
+joins and field-free scans. Requests cannot designate actions, resource subsets,
+completion flags or native permissions. The trusted adapter remains responsible
+for supplying the whole original compiler-issued population; arbitrary supplied
+JSON cannot establish compiler completeness or issuance.
+
+All scans MUST share one operation work, snapshot-text and literal ledger. The
+aggregate fact limit charges the original facts/graph witnesses once plus every
+target fact visit across occurrences, before rendering. Source, limit or scan
+refusal at any occurrence MUST return `status:refused,scans:[]` for the entire
+batch, including failures after an earlier positive scan. A rendered result
+retains ordered `{scan,rows,valueProfiles}` entries with existing Cell tags and
+`complete:false,authority:false`. No result prefix may escape on refusal. Empty
+row populations retain preflight/read-purpose obligations.
+
+This is logical read preparation, not query evaluation. Relationship-observation
+duties, operator property/mode checks, aggregate semantics and exact compiler
+source/AST completeness remain mandatory separate whole-query obligations. A
+rendered scan batch alone MUST NOT become executable query admission. Native
+source/caller authentication, current-authority guards and final-release custody
+remain CONTRACT-063 obligations; no historical mutation cohort is widened.
+
+
+### Query value origin and domain fidelity — 2026-10-15
+
+A source-bound query program MUST retain the original live Field identity and
+core descriptor separately from the effective operator-value descriptor and its
+provenance. A read-time transform may change the value domain/nullability. That
+output domain MUST NOT overwrite the original core Field or original resolved
+query expression. Actual operand compatibility must be checked against the
+selected query value; absent evidence or an incompatible comparison refuses.
+No implicit retyping, literal coercion, DTO-to-member promotion or raw fallback
+may manufacture a matching program.
+Value bindings MUST retain scan/source path and operand role/operator occurrence.
+One Field can project its read mask while a hidden operand uses a separately
+authorized original; a global Field remap MUST NOT expose that original in output. Original null, absence, transformed null
+and withholding remain distinct even when a SQL carrier uses NULL.
+
+Disclosed use selects the actual composed read value. Withheld has no disclosed
+operator value. Original-authorized use requires the exact Weft-owned designated
+separate action, its required source dependencies and current permission; it
+selects the original live Field value independently of presentation masking. It
+does not acquire reverse/vault permission. For a stored-transformed Field, that
+live original is the stored outputDomain/carrier, never its pre-storage
+inputDomain. Equal bytes or equal descriptors do not merge these authority paths.
+Compiler Field dependency intents are not uniformly public-read requests. The
+query adapter must retain every occurrence but route it through row-read,
+disclosed-value or exact original-action admission as required. Every scan still
+needs row-read eligibility. The existing read-only scan batch must neither force
+hidden original operands through the read renderer nor replace public projection
+values with the hidden originals.
+The preceding withheld-operator wording refers to the disclosed path, consistent
+with the existing separately authorized original-value path.
+
+Ontology/operator modes and every applicable catalog/profile constraint remain
+independent obligations. Property compatibility cannot override prohibition,
+select a different source mode or issue an original-value action. Unknown or
+conflicting value-origin obligations refuse until an exact separately versioned
+composition is qualified. Missing applicable catalog queryUse means prohibited;
+no-applicable-catalog is a distinct source-derived fact, never an omitted member.
+All selected gaps and prohibited operators require preflight even for FALSE,
+empty populations or LIMIT0. Logical read-batch success alone is insufficient.
+
+A binary operation needs actual paired operand provenance and a qualified common
+comparison scope, including relevant transform version/parameters/key/runtime
+scope. Per-Field retained equality does not prove that different key scopes are
+comparable, nor that a deterministic transform is injective. Equality/grouping
+on generalized/hash/token values describes the disclosed value classes; it MUST
+NOT be relabeled equality of original values without additional evidence.
+
+Lowering MUST preserve the complete ordered operation metadata issued by Weft,
+including per-expression ASC/DESC directions, original aliases, parameters and
+limits. A retained expression list or global capability set is insufficient to
+reconstruct direction positions. Preserve the original request/report/context
+bytes; do not reconstruct absent semantic metadata from convenient defaults.
+These are requirements on the next native lowering cohort, not a new public
+UMF query compiler, wire profile, native credential or admission claim.
+
+A permission to observe known absence does not define a native scalar operator
+encoding. Keep known absence separate from NULL; unqualified scalar conversion
+refuses until the operator/presence profile is established. Conversely, a pure
+constant mask may produce its valid typed DTO without inventing a live input
+where the renderer is qualified to do so. Whole-query value admission must not
+confuse read-value availability with original-input presence. Existing permission
+helpers and current selected-optional compiler refusals keep their scoped meaning.
+
+### Operator-free conditional read-projection metadata — 2026-10-15
+
+A source-only projection inspector MUST accept the original issued policy
+program, validated owner and qualified Type/Field selection without inventing
+scan identifiers, query operators, paths or original-use actions. It MUST retain
+all applicable read conditions and every permit-source occurrence, including
+explicit disposition and original/default/missing/withheld distinctions. Output
+Field metadata retains original identity, revision and complete definition.
+Stored transformed values refer to their current live Field, never an implicit
+pre-storage clear value. Query-use prohibition does not prohibit read metadata.
+
+These alternatives do not select an active rule, prove scalar availability,
+compute a uniform output domain or grant permission. Empty-output typing requires
+a nonempty set of compatible output projections plus original descriptor
+correspondence; actual policy/disclosure folding, eligibility, native authority
+and guarded release remain independent. Unknown/conflicting/withheld/missing
+output cases cannot become guessed scalar domains. Metadata refusal is atomic.
+The initial private helper bounds serialized output including framing to4,000,000
+UTF-16 code units; that is not a UTF-8 frame limit or aggregate heap/work theorem.
+
+### Separately versioned private projection transport — 2026-10-15
+
+The optional `umf.security.private-query-child/0.2-candidate` transport carries
+operator-free qualified Type/Field projections alongside genuine query routes.
+Each closed request and response declares that exact protocol. One actual local
+program is compiled from original source input; imported handles refuse. The
+sequence initialize → inspect-inputs → evaluate binds the canonical owner, ordered
+routes and ordered projections and the full framed initialization receipt.
+That receipt correlates bytes; it is not source admission, runtime authority or
+a permit. Projection identifiers are distinct from all route identifiers.
+
+Both inspection and evaluation return unchanged original projection metadata.
+A completed batch remains separate from permission and a projection alternative
+remains separate from an active, uniform scalar domain. Query-use prohibition
+does not invent an operator for a plain projection. Missing/withheld/conflicting
+outputs and empty populations preserve original source semantics.
+
+The v2 transport has independent artifact/source/consumer custody. Frozen r3
+source579675bd and its bundle/registrations remain unchanged. Its protocol cannot
+be inferred from compatible framing. Native adoption requires an explicit new
+consumer/source cohort, including the changed full initializer bytes/receipt;
+no old registration migrates automatically. Requests are bounded to4MiB, replies
+to16MiB UTF-8, projections256, routes4096, operations256, scans16 and facts10000.
+These transport bounds do not prove aggregate heap/time or native noninterference.

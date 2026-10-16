@@ -751,3 +751,19 @@ native read and search witnesses per target. FR-54 requires native action and
 bulk witnesses per target and the shared conformance suite. FR-55 requires
 engine-local adoption designs and engine witnesses. Specifications and
 local-only tests establish none of those native support claims.
+
+## Native 128-bit values and UUIDs — owner direction, 2026-10-15
+
+Under FR-3/8/20/21/28/39/41, UMF must expose first-class exact 128-bit values
+and Universally Unique Identifiers (UUIDs), independently of physical storage.
+Consumers must retain all bits, distinguish UUID identity from integer arithmetic,
+and use exact equality and keys. Signed/unsigned 128-bit integers reuse integer
+width facets. Adapters must support useful lossless representations including
+native UUID, sixteen bytes, canonical string and paired 64-bit integers where
+supported. Carrier choice must preserve logical identity and make enforcement,
+comparison, ordering and interoperability differences explicit. Paired integers
+may be optimal for a particular workload; no universal layout or performance
+claim follows. Native refinements and original representations remain recoverable.
+[FEAT-005 IDEAL-09](features/FEAT-005-core-ideals.md),
+[SD-005](../02-design/solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-067](../02-design/contracts/CONTRACT-067-128-bit-uuid.md) define the design.

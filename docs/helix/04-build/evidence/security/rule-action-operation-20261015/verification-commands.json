@@ -1,0 +1,113 @@
+[
+  {
+    "log": "build.log",
+    "command": [
+      "/opt/homebrew/bin/bun",
+      "run",
+      "build"
+    ],
+    "exitCode": 0
+  },
+  {
+    "log": "typecheck.log",
+    "command": [
+      "/opt/homebrew/bin/bun",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0
+  },
+  {
+    "log": "tests.log",
+    "command": [
+      "/opt/homebrew/bin/bun",
+      "test",
+      "tests/actions-plan.test.ts",
+      "tests/security-reference-links-owner.test.ts",
+      "tests/security-core08-owner.test.ts",
+      "tests/actions-manifest.test.ts",
+      "tests/security-scalar-owner.test.ts",
+      "tests/security-record-type-owner.test.ts",
+      "tests/actions-manifest-construction.test.ts",
+      "tests/security-record-type-journal.test.ts",
+      "tests/security-record-members-owner.test.ts",
+      "tests/security/write.test.ts",
+      "tests/security/catalog-write.test.ts",
+      "tests/security/association-witness.test.ts",
+      "tests/security/action-purposes.test.ts",
+      "tests/security/registration.test.ts",
+      "tests/security/stored-query.test.ts",
+      "tests/security/catalog-operation-batch.test.ts",
+      "tests/security/operation-budget-candidate.test.ts",
+      "tests/security/policy.test.ts",
+      "tests/security/catalog-scan.test.ts",
+      "tests/security/candidate-domains.test.ts",
+      "tests/security/catalog-runtime.test.ts",
+      "tests/security/identity-transport.test.ts",
+      "tests/security/core-extension-closure.test.ts",
+      "tests/security/entity-terms-candidate.test.ts",
+      "tests/security/relationship-candidate.test.ts",
+      "tests/security/policy-migration-candidate.test.ts",
+      "tests/security/evaluate.test.ts",
+      "tests/security/write-read-protection.test.ts",
+      "tests/security/catalog-scan-batch.test.ts",
+      "tests/security/association-expression.test.ts",
+      "tests/security/publication-custody.test.ts",
+      "tests/security/catalog-collection.test.ts",
+      "tests/security/ontology-migration-candidate.test.ts",
+      "tests/security/logic.test.ts",
+      "tests/security/authority-guard.test.ts",
+      "tests/security/policy-checks-candidate.test.ts",
+      "tests/security/compact-conditions.test.ts",
+      "tests/security/shared-source.test.ts",
+      "tests/security/dependencies.test.ts",
+      "tests/security/catalog-program.test.ts",
+      "tests/security/query-value-source.test.ts",
+      "tests/security/preparation-sources.test.ts",
+      "tests/security/run-command.test.ts",
+      "tests/security/association-selector.test.ts",
+      "tests/security/ontology-checks-candidate.test.ts",
+      "tests/security/disclosure.test.ts",
+      "tests/security/native/pg18-projection-expressions.test.ts",
+      "tests/security/protection/wire.test.ts",
+      "tests/security/protection/obligations.test.ts",
+      "tests/security/protection/current-query-read.test.ts",
+      "tests/security/protection/catalog.test.ts",
+      "tests/security/protection/source.test.ts",
+      "tests/security/protection/current-query-source.test.ts",
+      "tests/security/protection/domains.test.ts",
+      "tests/security/protection/functions.test.ts",
+      "tests/security/protection/policy-v2.test.ts",
+      "tests/security/protection/query-properties.test.ts",
+      "tests/security/protection/disclosure.test.ts",
+      "tests/security/query-value-routes.test.ts",
+      "tests/security/query-value-route-evaluation.test.ts",
+      "tests/security/catalog-rule-duty-batch.test.ts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "log": "action-plan-browser.log",
+    "command": [
+      "/opt/homebrew/bin/bun",
+      "scripts/actions-plan-browser.ts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "log": "action-manifest-browser.log",
+    "command": [
+      "/opt/homebrew/bin/bun",
+      "scripts/actions-manifest-browser.ts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "log": "action-construction-browser.log",
+    "command": [
+      "/opt/homebrew/bin/bun",
+      "scripts/actions-manifest-construction-browser.ts"
+    ],
+    "exitCode": 0
+  }
+]

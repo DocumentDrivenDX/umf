@@ -1,0 +1,22 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun rule4 () Bool)
+(declare-fun rule3 () Bool)
+(declare-fun rule2 () Bool)
+(declare-fun rule1 () Bool)
+(declare-fun rule0 () Bool)
+(declare-fun rule5 () Bool)
+(declare-fun current_original_action_permission () Bool)
+(assert
+ (let (($x15 (or rule4)))
+ (let (($x29 (not $x15)))
+ (let (($x13 (or rule2)))
+ (let (($x28 (not $x13)))
+ (let (($x12 (or rule0 rule1)))
+ (let (($x21 (not $x12)))
+ (let (($x16 (or rule5)))
+ (let (($x11 (or rule0 rule1 rule2 rule3 rule4 rule5)))
+ (and $x11 $x16 $x21 $x28 (not (or rule3)) $x29))))))))))
+(assert
+ (not current_original_action_permission))
+(check-sat)

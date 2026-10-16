@@ -821,3 +821,162 @@ and all affected current kernel/native acceptance source closures must replay.
 
 Source-only compiler readsets and native permission/dispatch remain separate
 requirements; no SQL/query compiler or backend authority is introduced in UMF.
+
+
+### Atomic scan composition and native issuer boundary — 2026-10-15
+
+Use the existing catalog runtime module and shared CandidateSecurityOperationBudget
+for ordered multi-scan logical preparation. Snapshot owner/cut/requests once at
+entry, validate unique bounded compiler occurrence labels, precharge aggregate
+fact visits and invoke the original complete-scan kernel with one shared ledger.
+Keep all rendered scans local until every occurrence succeeds; discard the entire
+result on any refusal. Do not expose a second policy parser/compiler or reset a
+work/literal budget per scan. Existing single-scan APIs and semantics remain.
+
+Truss main652a3f5e has no registered protected multi-scan read consumer. Its private
+OriginalPreparationProgram/PendingPreparationProgram, retained preparation SQL
+and resolve_preparation_program_binding are original mutation0.1 custody and
+identity resolution only. Do not reinterpret them as read permissions.
+
+Proposed native read-program source packet for owner review (not a frozen public
+protocol): `{version,compiler,security,binding}`. Version is a separately named
+read-program candidate. `compiler` retains the original exact Weft request/report
+Artifacts plus selected compiler source/binary/schema pins; `security` retains
+original policy/catalog-or-null/ontology/core-closure/owner/bindings Artifacts;
+`binding` retains original native runtime manifest/mapping Artifacts under their
+existing owners. An Artifact is original mediaType/utf8/sha256, not regenerated
+JSON. Explicit source pin correspondence and immutable original bytes precede any
+backend admission. Runtime facts, caller assertions and trusted:true cuts do not
+belong in the stored program as authority. Truss must independently register and
+authenticate the actual issuer, caller, complete fact sources/current context,
+mode/property capabilities and final publication ordering. A source packet/hash
+or diagnostic JSON boolean never supplies those guarantees.
+
+Open: exact native registered issuer/consumer ABI, supported relationship
+observation admission, physical capability/action binding and native lease
+protocol. Review this proposed packet with Truss and Weft before implementation;
+keep the pure scan-batch reference separately usable as the logical oracle.
+
+Native-owner review of this proposal identifies existing transport-only types
+`ExactArtifact(identity,bytes_base64,sha256)` and `ProfilePin(identity,version,sha256)`
+in Truss contracts.py, while private preparation custody already retains original
+mediaType/utf8/sha256 Artifact and outer bytes. Preserve this original Artifact
+shape for the separate read cohort rather than normalizing it into another
+protocol. Registration must invoke/capture the producer through owner-private
+custody and retain original packet/report/source bytes, installed mapping/runtime
+and authenticated control enrollment. Consumption takes a committed registration
+identity and original live same-store transaction context, never claimed source
+flags/actions. These are design constraints; native ABI approval and execution
+evidence remain open. Exact selected Weft source/schema/fixture closure is already
+retained in the prior current-logical-scan final-weft-provenance packet.
+
+
+### Query value-source algebra and lowering prerequisites — 2026-10-15
+
+Separate three coordinates: original Field/core type; selected value source and
+descriptor; authorization route. Disclosed ORIGINAL selects the live Field,
+disclosed TRANSFORMED selects its actual output descriptor, and disclosed
+WITHHELD has no scalar value. Explicit absence is not a scalar NULL. An exact
+original-authorized route can select a present live value despite presentation
+withholding, but always needs its separate source-bound action. Stored originals
+remain token/ciphertext Fields; storage input DTOs are not live canonical data.
+
+Candidate initial-cohort composition: each applicable mode is a constraint on
+the route. Disclosed requires the disclosed route; original-authorized requires
+the original route; prohibited permits none. Their intersection must be nonempty.
+Do not silently pick a source winner or infer a privilege ordering from equal
+values. This conservative conjunction is a proposed Weft-cohort rule for peer
+review; no existing conditional helper is reclassified as whole-query admission.
+Multiple-stage function facts, current native scope and descriptor compatibility
+remain explicit prerequisites, not caller boolean credentials.
+
+Use a formal finite mode/source selection model and unbounded deterministic
+function counterexamples. Prove conditional source/domain fidelity, prohibition
+independent of row count, exact separate-action gating, no original-to-reverse
+promotion, pair-scope requirements and full direction-vector retention. Retain
+positive witnesses plus weakened-domain/action/mode/pair/direction controls.
+A primitive PG18 VALUES probe observes changed DTO types/nullability, incompatible
+operator refusal before LIMIT0, generalized value classes, key-scope differences,
+and ASC/DESC position effects. It uses an isolated owner context and proves no
+public actor, row-level policy, native registration or protected execution.
+
+Actual Weft source reports now distinguish hidden ASC/DESC and mixed direction
+positions. The older ApplicationPlan expression list omits those positions;
+report.orderDirections and the new retained typed context carry them. Two mixed
+direction queries can have identical whole ApplicationPlan bytes/global
+capabilities but opposite direction vectors. Keep this actual witness alongside
+the formal model; do not infer a producer loss, since the original report retains
+the information. Weft reports there is still no committed native0.2 SQL lowerer
+or canonical policy/catalog0.2 originalAction designation; those are next cohort
+implementation requirements, distinct from legacy relationship profile0.2.
+
+
+### Atomic mixed logical operations — 2026-10-15
+
+The private supplied-operation boundary composes typed population read rendering and explicit canonical action checks using one detached owner/cut snapshot and one cumulative work/text/literal ledger. Charge inventory once plus every scan population visit and explicit action target across the entire bounded ordered list. A late structural/preflight/render/budget refusal releases an empty operation list. Preserve caller operation IDs and typed outcomes; do not flatten read Cells into action dispositions or infer original operator values from action success.
+
+A completed batch means the requested diagnostic evaluations completed. Each action can still deny, be indeterminate or conflict; those decisions must remain explicit and a consumer must enforce the actual action duty. It is not whole-query admission or an original-action designation. The compiler still owns exact occurrence/role/purpose selection and the native consumer still owns authentication, registration/current-cut custody and final release. No supplied batch is a native credential. Public projection rendering remains independent of separately authorized hidden-use actions.
+
+
+### Per-use source routes and guarded read alternatives — 2026-10-15
+
+The private source inspector takes the original compiled catalog program, exhaustive owner storage map, and a supplied scan/path/Record/Field/operator/operation/property requirement. It does not accept a mode, original action, branch truth or permission override. Occurrence labels/properties must still be joined to Weft’s original preparation; inspection itself does not authenticate them. Original Field descriptors/full identities and exact selected catalog declarations are retained, including storage input/output and declared transform/key metadata. Actual paired runtime/key compatibility is unresolved and cannot be inferred from retained equality or determinism.
+
+Always retain ontology and applicable storage mode constraints, even without a read-disclosure branch. Group potential read directives by the original runtime’s recipe identity; legacy constants use original checked typed literal identity, including checked null. Preserve every original directive/token spelling. The representative directive is not the chosen runtime value. Retain all scoped read-rule conditions and explicit context bindings.
+
+A candidate branch requires actual read eligibility, an active contributor group, and no active excluded groups. Withholding excludes no groups; transforms exclude withholding and other distinct transform groups; original fallback excludes withholding/transforms. A protected missing-disclosure alternative excludes every actual directive. It leaves public projection unresolved but can retain a separately designated original-use route over the live Field. It must never force a hidden original operand through the public renderer or unmask a projected Field.
+
+For this conditional plan, a read-catalog mode constraint belongs to the effective selected recipe branch. Suppressed/unselected recipes remain guarded alternatives, not globally asserted current constraints. A native profile must qualify actual policy/disclosure fold and this applicability before use; the diagnostic plan selects nothing. Ontology/storage/effective-recipe constraints conjunct; prohibition/conflicting modes cannot be overridden. Original mode requires the exact Weft-issued designation, present live Field and separate current permission. Disclosed output properties remain conditional; native operand/presence/order/pair scope and guarded release remain mandatory. No public root API, source credential or native query permit is introduced.
+
+
+### Actual logical read-rule evidence and route activation — 2026-10-15
+
+Evaluate the original compiled scoped read conditions over every row of the supplied complete typed population. Retain original rule indices and three-valued truth, canonical resource selectors and the actual field-free read decision. Validate dependencies and coverage even on empty populations; any source/cut/preflight/budget failure erases the entire result. This private evidence path does not render or require public projection and does not evaluate a separately designated original-use action. Its retention shares the original condition operation budget.
+
+Route activation must reconstruct its plan from the original program and supplied owner, never accept caller guards, rule truth, modes or actions. Select alternatives only when actual row read decision is permit, a contributor is true and all excluded groups are inactive. Distinguish read denial/indeterminacy from effective disclosure conflict and the chosen route's unresolved/prohibited/property/original-action duties. No scalar value, branch permission, compiler occurrence credential or native authority follows from selection. Source-plan inspection and logical-cut evaluation retain their separate bounded preparation/evaluation costs; no whole-query cumulative budget or complete native refinement is claimed.
+
+
+### Same-cut field-free rule evidence and action duties — 2026-10-15
+
+The bounded private mixed operation list also accepts `read-rules` with exactly one Record type. Evaluate the complete typed population through the original compiled field-free read conditions, retaining private row selectors/rule truth/actual eligibility decisions. The leaf uses the same detached owner/cut and cumulative operation/text/literal ledger as every neighboring read-render/action leaf. Count inventory once plus every typed population visit and explicit action target. No caller truth, guard, mode, branch or read action override is accepted. Any late structural/preflight/retention/budget failure erases every operation result.
+
+This supplies actual eligibility evidence for native-host route activation without demanding public disclosure of hidden original operands. A missing protected public projection can therefore refuse rendering while field-free eligibility and a separately supplied action check complete. Completion still preserves denied/unknown/conflicting action/read outcomes; it never issues action designations, scalar values, occurrence completeness or query/native permission. Exact issued original query/use/action correspondence and authenticated held native release remain consumer obligations. Rule evidence includes denied selectors and is strictly private host diagnostic material.
+
+### Private operator-free read projection inspection — 2026-10-15
+
+`inspectCandidateReadProjection(handle, owner, {type, field})` in
+`src/extensions/security/read-projection-candidate.ts` enumerates conditional
+read-disclosure source alternatives through the original issued program. It
+validates complete owner storage, exact read purpose and catalog parameters,
+retains relevant require/forbid/permit conditions and per-permit source positions,
+and returns complete pinned Field definitions for original/transformed domains.
+No query-use function is called or fabricated. Alternatives intentionally retain
+individual source occurrences; consumers must use the original runtime fold,
+including typed equivalence of legacy transform literals, rather than infer
+conflict or activation from lexical differences in those occurrences.
+
+Result flags remain `complete:false, authority:false`; source inspection does
+not authenticate the owner or facts. The helper supports Field metadata across
+flat and graph ontologies without qualifying any physical scalar/collection
+codec. Native hosts must require nonempty unanimous supported projection
+identities/exposures and still enforce complete policy/disclosure admission.
+Domains include source descriptors and cannot be treated as selected output by
+array position. Work/output limits refuse without partial alternatives or echo
+of an unvalidated selection. Existing r3 child protocol and all registered
+native cohorts remain unchanged; a future bridge needs explicit version/pins.
+
+### Private projection child v2 — 2026-10-15
+
+`tools/security/projection-query-child-v2.ts` composes the original source-only
+projection inspector and original batch/route evaluators on one local program.
+`projection-query-child-main-v2.ts` owns only framed stdin/stdout computation;
+`build-projection-query-child-v2.ts` pins the selected dependency closure before
+and after the actual build and preserves original dependency notices. Separate
+files and mandatory protocol prevent silently upgrading frozen r3 consumers.
+
+The parent retains original Weft CQP projection occurrences/descriptors and maps
+qualified Type/Field arguments without dummy operators. Source metadata can type
+an empty output only after the independently required nonempty unanimous domain
+checks; it does not prove eligibility or choose the final scalar. Original rule
+folding, exact source/consumer admission and guarded native release are mandatory.
+The new child supplies no database provider or private diagnostic boundary.

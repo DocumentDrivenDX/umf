@@ -662,3 +662,103 @@ and all affected current kernel/native acceptance source closures must replay.
 
 Source-only compiler readsets and native permission/dispatch remain separate
 requirements; no SQL/query compiler or backend authority is introduced in UMF.
+
+
+### Atomic scan batch controls — 2026-10-15
+
+Exercise flat/graph positive self joins, ordered distinct scan labels, field-free
+read duties, denied rows and empty target preflight. A late missing disclosure,
+unknown target, stale cut or malformed request must erase every earlier scan.
+Reject empty/over256/duplicate/invalid scan labels, caller actions/subsets and
+extra members. Preserve detached frozen results, no getter invocation, original
+input immutability and copied/forged program refusal. Distinguish a deliberately
+reset per-scan work ledger from the shared ledger: find a cut where each original
+single scan passes but the combined batch exceeds work, literal or text limits.
+Charge aggregate target visits across occurrences against maxFacts.
+
+Run identical independently authored controls in Bun and Chromium with host
+globals absent and no outside requests. Formal analysis must state exact complete
+scan outcomes/faithful leaf kernel as premises and prove atomic result release,
+order/occurrence retention and monotone cumulative budget refusal, including a
+SAT countermodel for independent-reset budgets. This is not a compiler or native
+refinement proof. Keep all158 original required cases/34criteria; no case is
+promoted by these component controls. Original P03/B08/native gates remain.
+
+
+### Query value-origin and operation-metadata controls — 2026-10-15
+
+Support original S08/S16/S20/S22 and pg-raw.P03/B08 obligations without promoting
+them: distinguish original live Fields, read DTOs and stored pre-input DTOs;
+check separate-action/no-reverse paths; reject incompatible operand domains and
+unknown/conflicting mode sources; retain null/absence/withheld distinctions.
+Formal positives include separately authorized original use under presentation
+withholding, original stored-token use remaining token typed, compatible disclosed
+use and exact direction retention. Weakened controls must expose raw fallback,
+plaintext substitution, row-emptiness bypass, mismatched key scope, deterministic
+many-to-one grouping and swapped direction positions.
+
+The actual source verifier must compare the whole independent direction vector,
+including default ASC, explicit DESC and two mixed-position queries with the
+same original plan bytes. Preserve all previous report bytes. A finite isolated
+PG18 primitive probe supplies actual type/operator/count/order observations; no
+actor/policy/registration/current-authority claim follows. Formal proofs must
+state supplied source/mode/type/scope correctness as premises, without compiler,
+TypeScript or SQL refinement. Retain exact solver/native sources and failures.
+The original158case definitions/34criteria remain unchanged and the full goal
+continues to require all missing backend implementations.
+
+
+### Mixed logical operation controls — 2026-10-15
+
+Extend the supplied-batch prerequisite for S08/S16/S20/S22 and P03/B08 with reads plus distinct original-use action checks: retain masked public output, live opaque stored output, ordered operation IDs, and explicit denied action decisions. Exercise ordinary relational associations and graph relationship witnesses, empty populations, missing action dependency coverage even when empty, stale cuts, caller shape/authority injection, forged handles and accessor refusal. Every late structural or resource failure must erase preceding results.
+
+Demonstrate independent single operations can pass while the mixed whole operation refuses shared fact, work, text and literal exhaustion. Preserve detached frozen results and unchanged inputs. Independently replay the same corpus in Chromium without host globals or external requests. Conditional formal analysis should separate structural completion from permission and show how independent resets or prefix release violate atomic/budget requirements; it does not prove the actual kernel or native query execution. No original acceptance definition is replaced or promoted.
+
+
+### Source-route and disclosure-guard qualification — 2026-10-15
+
+Support S08/S16/S20/S22 and P03/B08 without replacing their integrated tests. Exhaust all27 ontology/storage/read-mode combinations and retain original live versus disclosed DTO origins. Check independent missing defaults, no caller mode/action, exact full Field identities/catalog declarations, original Project membership/context rules, no storage-input promotion, null/absence/withholding, numerically equivalent legacy token spellings, missing properties, random-token restrictions and all source/literal bounds. The4096 canonical literal bound must apply without a catalog as well as inside property comparison.
+
+Use a separately authored six-Boolean-context fixture to enumerate all64 states of same/different masks, original, withholding and missing disclosure. Compare generated branch guards to an independent fold and to actual field-free/read-render evaluations. Model the actual generated guard metadata in Z3 against that independent finite fold, retaining SAT weakenings for omitted exclusions/contributors and diagnostic-permission confusion. This qualifies only the named finite family, not arbitrary policy expressions, native SQL or current authority. Preserve original source/schema/issuer bytes, source endpoint hashes, failures and independent browser/mutation review. All original158 acceptance definitions/34criteria remain required.
+
+
+### Actual route activation controls — 2026-10-15
+
+For all64 context states, compare actual original compiled rule truth and resulting route choice with an independent finite oracle. Cover complete flat Record and graph witness membership, stale source/cut pins, missing context/coverage, invalid late rows, empty populations, unknown/denied decisions, caller guard/mode/action/truth injection, forged handles, immutable results and operation exhaustion. Field-free eligibility must not force a hidden original operand through public disclosure. Native current authority, exact issued occurrence/action correspondence and original integrated acceptance cases remain mandatory and unpromoted.
+
+
+### Same-cut rule/action composition controls — 2026-10-15
+
+For S08/S16/S20/S22 and P03/B08 prerequisites, compose original field-free rule evidence and separate action duties on one detached complete cut. Preserve permit/deny/U and rule/source indices, private resource identity and operation order; do not render hidden operands through public masking. Test missing public disclosure, action denial, valid flat/graph membership revocation, empty original dependencies, closed shapes and caller truth/action/branch injection, stale cuts, source/accessor forgery, all-or-nothing late failure, frozen detached results and cumulative fact/work/text/literal exhaustion. Freeze the original fixture work threshold independently and retain calibration; standalone successes must not bypass whole-operation limits. Browser correspondence and conditional composition proofs do not establish issued query correspondence or native authority. All original158cases/34criteria remain required.
+
+### Exhaustive finite route composition — 2026-10-15
+
+Exhaust the finite eight-guard read/route composition with known absence, duplicate/conflicting transforms, withheld/original/missing dispositions and independent forbid/require. Compare original rule truths and selected branches in forward/reverse orders in Bun and real Chromium; retain semantic mutation controls. This adds logical coverage, not native acceptance. See [retained evidence](../../04-build/evidence/security/three-valued-route-exhaustion-20261015/README.md).
+
+### Operator-free read projection metadata — 2026-10-15
+
+US-079-AC3/AC7/AC10 gain component checks in
+`tests/security/read-projection-corpus.ts` and its Bun wrapper. Exercise qualified
+flat/graph Fields, protected missing versus withheld, stored live token identity,
+legacy scalar NULL transform, duplicate permit occurrences, no permit, complete
+owner/source refusal, closed/scoped selections and opaque handles, immutable
+snapshots, actual rendered output-domain correspondence and prohibited query use
+independent of read metadata. Check whole serialized-result limits at -1/exact/+1
+including framing, plus large invalid selection refusal without echo. Run the
+same portable corpus in Chromium. No native case or source permission is inferred;
+r3 transport is unchanged and no backend adoption is implied by helper tests.
+
+### Versioned projection child controls — 2026-10-15
+
+For US-079-AC3/AC7/AC10 prerequisites, test the actual v2 subprocess and exact
+built bundle through the original Truss generic pipe. Regenerate actual public
+Weft projection packets byte-exact, including plain salary, FALSE, LIMIT0 and live
+stored-token projections with no invented query operators. Retain original model
+and opaque source byte custody. Compare source metadata and batch results with
+original functions; test empty population, query-prohibited read independence,
+withheld/missing/conflicting active transforms, imported handles, changed source
+receipt/owner/projection order, duplicate IDs, foreign Fields, stale cuts, terminal
+refusal, invalid UTF-8, fragmented frames and exact response limits. FALSE/LIMIT
+are compiler inputs here, not executed SQL. Native enforcement requires its own
+qualified cohort and original integrated assertions. Frozen r3 compatibility is
+explicit refusal, not protocol downgrade or registration migration.

@@ -1291,3 +1291,11 @@ Security planning: [shared security feature](01-frame/features/FEAT-008-shared-s
 ## Portable plan and frozen-manifest construction — 2026-10-15
 
 [US-902](01-frame/user-stories/US-902-portable-action-plans.md) and [US-903](01-frame/user-stories/US-903-frozen-action-manifests.md) define the bounded plan preparation/inspection and unsealed frozen-manifest construction slice. [CONTRACT-903](02-design/contracts/CONTRACT-903-frozen-action-manifest.md) separates the pure constructor from Truss-owned selection, ordering, guard issuance, current authorization and durable sealing. Portable success is not execution qualification.
+
+## Proposed native 128-bit and UUID design — 2026-10-15
+
+[SD-005](02-design/solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-067](02-design/contracts/CONTRACT-067-128-bit-uuid.md) specify first-class
+opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
+versioned keys and native/bytes/text/two64-bit physical carriers. This is an
+implementable design, not implemented core0.9.0 or qualified native support.

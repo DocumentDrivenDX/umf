@@ -12179,3 +12179,249 @@ STP closure, exact dependency pins and fresh version/subset-qualified evidence.
 separates passing checkpoints from open slice and native/consumer gates. This
 scope does not reorder TableSpec-first integration or authorize production
 operations or migrations.
+
+### Atomic complete scan batches and direct issuer bridge — 2026-10-15
+
+CONTRACT-062/TD-079/STP-079 now define and exercise private ordered multi-scan
+logical preparation. One immutable supplied cut/program and one operation ledger
+cover every occurrence, including field-free/self-join/graph scans. Aggregate
+facts include every target visit. Any source/limit/disclosure failure erases the
+entire batch; independent per-scan success does not authorize partial release.
+
+The combined suite passes342tests/3987expectations. Both strict TypeScript
+configurations pass. Final Bun/Chromium corpus passes56controls. An initially
+masked text-budget control is isolated with larger metadata/two scans; original
+receipts and exact earlier source are preserved. The abstract unbounded prefix
+composition model replays6UNSAT/4SAT with explicit source/outcome/cost premises,
+without implementation or native refinement. Exact committed Weft CLI issuer
+passes280host controls/18reports through batch composition; operator properties,
+modes and unsupported aggregates remain separate whole-query obligations.
+
+The optional original Python bridge in Weftc0de9f1e independently returns all18
+original reports byte-identically and refuses6malformed/ordinary-compile controls.
+Exact dev-wheel custody,8committed interface pins and40unchanged earlier core/
+schema/fixture pins verify. This is functional evidence, not a root build,
+performance, publication or native authority claim. Current action ESM identity
+and all3browser corpora are refreshed without changing historical enrollment.
+
+The whole original158-case gate still passes45implemented cases, with113explicit
+unimplemented bindings/34criteria. All158case definitions remain exact; within-run
+plan/source pins are unchanged. Evidence validation retains221checks and the same
+86failed IDs. Component-to-AC4/6/10 traceability, original test-authoring correction
+and all scoped evidence are in `evidence/security/atomic-scan-batch-20261015/`.
+
+Truss confirms no supported registered native multi-scan consumer exists. The
+reviewed source-packet direction preserves original Artifacts and separates
+private producer invocation/registration custody from current authenticated
+same-store execution. Native ABI/mode/property/relationship admission and release
+authority remain open; mutation0.1 custody is not repurposed. No criterion/case is
+promoted and the overall goal remains active.
+
+
+### Query value origin/source spike — 2026-10-15
+
+Executed the CONTRACT-062 / TD-079 / STP-079 per-occurrence source/domain constraints with 31 fresh-context formal queries (17 UNSAT / 14 SAT), 73 matching Bun/Chromium controls, 445 original-source issuer checks across 27 reports, and 109 explicit-new-source issuer checks across seven reports. Fourteen isolated PostgreSQL 18.6 primitives establish only the observed type/class/count/order behavior. The new canonical source fixture supplies explicit ontology/catalog modes and separate original-purpose actions while preserving live Field descriptors. A Weft-issued designation/lowering profile and Truss protected read consumer remain unfinished. Independent review corrected source-hash custody and cleanup-reporting defects; failed/calibration/preimage evidence is retained. Both TypeScript configurations pass. Evidence and precise proof limits: [query-value source packet](evidence/security/query-value-sources-20261015/README.md). The original full gate remains 45/158 accepted, 113 unimplemented, 34 criteria; a fresh full-gate execution and current selected source fingerprints were verified. No case is promoted.
+
+
+### Mixed logical operation composition — 2026-10-15
+
+Implemented a private atomic mixed read/action batch with one detached supplied cut, cumulative work/text/literal accounting, ordered typed outcomes and aggregate inventory/target-visit charges. Completion remains diagnostic: action deny/indeterminate/conflict is explicit, and any refused leaf erases the entire result. Fifty Bun/Chromium controls pass; independent original-work calibration freezes1609 instead of normalizing the oracle around a weakened implementation. The12-query conditional model passes6UNSAT/6SAT; an initial solver-unknown attempt is retained without qualification. Fresh build, both strict types and344focusedtests/4110assertions pass; a broader prebuild420test native/action regression also passed with stated custody limits. [Evidence and acceptance traceability](evidence/security/mixed-operation-batch-20261015/README.md) supports S08/S16/S20/S22 and P03/B08 prerequisites only. Whole-query designation/lowering/native-current authority remain unfinished; no original case is promoted or removed.
+
+Final mixed-operation qualification: Astra independently passes49 Bun/Chromium controls, detects eight actual-source weakenings and rechecks106 source pins. The fresh whole gate remains45/158accepted with113unimplemented and34criteria; all original case definitions/fixtures remain exact. Phase validation retains221checks and the same86failed IDs; recognized formal replay passes758formulas/42receipts. The full objective remains active.
+
+
+### Conditional per-use query value routes — 2026-10-15
+
+Implemented private original-source inspection for one exact query occurrence, retaining full live/DTO Field domains, original transform declarations, conditional rule/context guards and ontology/storage/effective-read constraints. Caller mode/action overrides refuse. Typed equivalent constants and admitted null group correctly; original-authorized operands stay independent of unresolved public projection. No branch choice, separate action permission, scalar availability or native authority is issued.
+
+The309-control Bun/Chromium corpus includes27mode combinations and192 comparisons over all64 Boolean context states against the actual read APIs. Thirteen fresh Z3 queries pass8UNSAT/5SAT for the exact generated guard fixture. Independent Astra passes112 controls in both runtimes, detects12 source weakenings and independently replays the focused and finite checks. Review fixed the missing no-catalog literal bound and nullable constant grouping; original failures/preimages are retained. Root verifies the archive and113 current selected pins. Fresh build, both strict type configurations and345focusedtests/4419assertions pass; rebuilt action browser controls also pass. [Evidence and acceptance traceability](evidence/security/query-value-routes-20261015/README.md) explicitly limits these results to source prerequisites; no original acceptance case is promoted.
+
+Final route qualification: the whole original gate retains45accepted/113unimplemented/158required/34criteria, without new execution failures. Phase validation retains221checks and identical86failed IDs; recognized formal replay passes758formulas/42receipts. All original case definitions and named sources remain unchanged. Seven committed Weft designation reports replay against the matching retained final producer; this supplies no native authority. The overall goal remains active.
+
+
+### Actual logical source-route activation — 2026-10-15
+
+Added a private field-free population path retaining actual original compiled rule truth and canonical row selectors. Source-route activation reconstructs original guards instead of accepting caller truth/guards/modes/actions. Denied/unknown read decisions, effective disclosure conflict and selected-but-still-prohibited/original-action-required branches remain distinct. Traces are private host diagnostics, not public output or native authority. Separate bounded source preparation and logical operation costs are explicit.
+
+All481controls match Bun/Chromium, including all64 finite context states and flat/graph membership, absence/unknown, empty dependency preflight and atomic refusal. The retained actual observation relation passes12fresh Z3 queries8UNSAT/4SAT within that finite scope. Fresh build, both strict types and346focusedtests/4900assertions pass; all3rebuilt action browser suites pass. [Evidence and traceability](evidence/security/query-route-activation-20261015/README.md) retains the limits and unresolved issued occurrence/action/native-release integration. No acceptance case is promoted.
+
+Final actual-route qualification: the fresh full gate retains45accepted/113unimplemented/158required/34criteria with no new execution failures. Phase validation retains221checks and identical86failed IDs. Recognized formal replay passes758formulas/42receipts; the new12query finite relation proof is separate. Original case definitions and named source fixtures remain exact. The goal stays active.
+
+
+### Same-cut rule evidence and original-use action duties — 2026-10-15
+
+Extended the private atomic mixed operation list with original field-free `read-rules` scans. They share the detached owner/cut, typed population charges and work/text/literal ledger with every neighboring rendered scan/action. Hidden original-use eligibility can complete without public protected disclosure; public rendering still refuses unresolved disclosure and separate action denial remains explicit. No supplied operation list becomes an issued query designation or native permit.
+
+All47controls agree in Bun/Chromium. The original work boundary is frozen1781/1780 with standalone positive controls, and cumulative fact/text/literal plus late-failure controls pass. The conditional12-query mixed model replays6UNSAT/6SAT with current source pins and explicit premises. Fresh build, both strict types,347focusedtests/4947assertions and all3rebuilt action browser corpora pass. [Evidence and traceability](evidence/security/rule-action-operation-20261015/README.md) retains exact scope. Issued same-parent occurrence/action correspondence, scalar/domain scope and held native release remain unfinished; no original case is promoted.
+
+Final rule/action qualification: the fresh full gate retains45accepted/113unimplemented/158required/34criteria with no new execution failures. Phase validation retains221checks and identical86failed IDs. Recognized formal replay passes758formulas/42receipts; the12query conditional mixed-operation model is separately replayed with current source pins. Original case definitions and named source fixtures remain exact. The goal stays active.
+
+
+### Native actor observation failure custody — 2026-10-15
+
+A live Databricks actor recheck failed instead of establishing the independent principals required by Delta/Ashlar, exposing that the old helper left historical receipt state current after errors. Implemented source-root canonical pending evidence before authentication, sanitized failure/partial observations with unknown counts, and false authority/completeness flags. Independent review additionally found overlapping-attempt overwrite and URL-normalization holes; stable POSIX flock/current-pending conditional publication and pre-parse host validation fix them. All21Python tests pass, including real owned termination/concurrency over synthetic CLI fixtures.
+
+[Exact evidence and limitations](evidence/security/native-actor-preflight-20261015/README.md) retain preimages and live outcomes. This qualifies host-tool process-abort visibility, not power-loss durability or native grant/permission. Original same-actor samples remain historical. Real independent principals and dedicated Delta/Ashlar test resources are requested; local PostgreSQL integration remains available. No semantic/browser source, original158case definition or backend admission is changed. The overall goal remains active.
+
+### Independent current-query artifact replay — 2026-10-15
+
+[Retained packet](evidence/security/weft-current-object-root-20261015/README.md) verifies exact Weft a6168847 source/evidence pins, unpublished wheel/native-module correspondence, and 111 original Python controls under a separately observed Python 3.14.8 embedding. This qualifies artifact custody and existing source-only behavior; current native issuer, typed SQL lowering and guarded release remain open. No backend case is promoted; all 158 cases remain in scope.
+
+### Exhaustive finite route composition — 2026-10-15
+
+The original compiled kernel and route evaluator pass all 13,122 finite truth/order cases in Bun and Chromium. Six private weakenings are detected; the security directory suite passes 304 tests and 4,684 assertions. Source-only coverage does not promote backend cases; current native lowering/held-context integration remains open. See [retained evidence](evidence/security/three-valued-route-exhaustion-20261015/README.md).
+
+### Native computation adapter contract proposal — 2026-10-15
+
+TD-056 now maps exact private Bun initialization/evaluation inputs to the
+existing original source compiler, atomic batch evaluator and per-use route
+helper. STP-056 records native integration/refusal/lifecycle tests. Truss requested
+this contract and explicitly needs its DB-derived source/fact/current-Subject
+capture ABI before driver implementation; no issuer or semantic wrapper is
+implemented here. Independent route calls do not share the atomic batch ledger:
+whole-query accounting is explicitly open. Weft's current-scalar consumer is a
+compiling, unfrozen candidate. No backend case is promoted; all 158 original cases
+remain required and the retained gate stays 45 accepted / 113 unimplemented.
+
+### Independent current-source native scalar edges — 2026-10-15
+
+Astra-reviewed independent current-query edge evidence passes17 native SQL cases and4 exact prepare refusals; all harness findings are fixed and final owned container/volumes are absent. No backend case is promoted. Truss has now supplied its concrete private-pipe/child handoff; the next implementation is the original UMF Bun child against that contract, followed by real native capture and typed-result lineage integration. See the [retained packet](evidence/security/current-scalar-native-edges-20261015/README.md).
+
+### Private computation child implementation — 2026-10-15
+
+Original UMF source compilation/inspection/evaluation now runs through a bounded
+private Bun child and the actual Truss Python pipe. The reviewed builder retains
+source closure pins and original dependency notices. Practical wire/count limits
+and parent deadline do not claim aggregate heap/work guarantees. Native Subject,
+fact capture, typed compiler lineage and guarded release remain next. No backend
+case is promoted: 45/158 accepted, 113 unimplemented, all original cases required.
+See [retained evidence](evidence/security/current-query-child-20261015/README.md).
+
+### Actual compiler packet and original child correspondence — 2026-10-15
+
+Five actual typed Weft packet cases pass original UMF source inspection, atomic
+read/action/scan evaluation and route selection over the supplied original
+fixture cut. Exact populations/Cells and empty-tuple COUNT scans are checked;
+inactive assignment denies without rendering. This is conditional computation
+evidence, not SQL/native authorization, contributor lineage or guarded release.
+All original backend cases remain required and acceptance stays 45/158.
+See [retained interop evidence](evidence/security/weft-current-child-20261015/README.md).
+
+### Separate live-original integer SUM source — 2026-10-15
+
+Distinct original source revisions preserve the String read mask and introduce
+an exact independent Project-membership action for live required signed64 SUM.
+Original helper checks agree in Bun/Chromium; ten qualified Z3 design-algebra
+queries retain concrete unsafe-alternative witnesses, without implementation
+refinement or native aggregation claims. The old SUM negatives stay unchanged.
+Actual compiler capability, exact accumulation, contributor bags, authenticated
+source/Subject/current authority and guarded release remain pending. All original
+backend cases remain required; acceptance stays 45/158 accepted, 113 unimplemented.
+See [retained source evidence](evidence/security/live-original-integer-sum-20261015/README.md).
+
+### Independent native fact-to-child component replay — 2026-10-15
+
+Original Truss37511eb8 tests pass from an isolated 1,124-file tracked snapshot on
+PG18.6: native six-object/five-type capture, original UMF Key receipts, original
+child, exact r1permit/r2deny and integerToken9007199254740993. Both original tests
+and owned runtime/PID/directory cleanup pass. This contributes component evidence
+to US-056-AC2/AC6/AC7; it closes no native query case. Installer capture and
+diagnostic owner/cut with a separately observed ordinary Subject do not prove
+authenticated same-held-context admission. Registered owner/Weft binding, original
+occurrence/action/projection checks, exact typed staging/contributor bags and
+current guard/revocation/release remain required, as do raw/graph and other
+backend/principal cases. Acceptance stays 45/158 accepted, 113 unimplemented.
+See [the original replay packet](evidence/security/truss-current-facts-replay-20261015/README.md).
+
+### Public guarded-query replay and alternate-read gap — 2026-10-15
+
+Original Truss9a495 public workflow passes with ordinary Subject, registered
+source, exact original child/CQP, masked projection, signed64 predicate, public
+budgets and final two-host checks. Independent native probing also confirms
+granted query_objects returns both permitted and denied raw Resource values
+to that ordinary actor. Registration is not global protected-source activation.
+CONTRACT-063 / US-056-AC5 remains unmet until alternate native/public reads are
+closed or equivalently guarded; raw-table SELECT denial alone is insufficient.
+No backend case promoted; 45/158 accepted,113 unimplemented unchanged.
+See [original replay, Astra review and exact reproduction](evidence/security/truss-current-query-replay-20261015/README.md).
+
+### Actual explicit SUM packet / original policy interoperability — 2026-10-15
+
+Five supplied-cut cases plus two producer controls pass with exact new Weft
+capability and unchanged original UMF child. Whole typed operations, independent
+SUM action, global/grouped nullability, live original salary origin, branch
+indices and raw-only rendering independence are checked. This contributes to
+US-056-AC2/AC6 semantic correspondence only; no native aggregate guard or
+backend case is promoted. Acceptance45/158,113 unimplemented unchanged.
+See [scoped evidence and review](evidence/security/weft-sum-child-20261015/README.md).
+
+### External delegation closure counterexample — 2026-10-15
+
+Independent native testing of in-progress activation confirms a pre-existing
+PUBLIC-callable outside-schema SECURITY DEFINER function owned by runtime owner
+can read all six objects after truss-only grant lockdown, while ordinary raw
+SELECT is false and the positive guarded query still passes. Denied Resource
+rawsalary and hidden Assignment facts escape. This keeps US-056-AC5/AC8 and
+B04/B05/B10/B14 open; CONTRACT-063 requires complete delegated authority closure.
+Truss is implementing external routine/view admission checks; no verified fix
+or backend promotion is inferred. See [exact counterexample](evidence/security/truss-external-delegation-20261015/README.md).
+
+### Independent explicit protected activation replays — 2026-10-15
+
+Exact committed Truss123cd2ec/privateABI2wheel and edebb67f/standardCI0.4.33ABI2
+cohorts each pass four native public workflows. Masked exact predicates and empty
+populations work; legacy data facades/regrant paths refuse. Privileged external
+definers, transitive column-granted views and unenrolled elevated roles refuse
+activation; finalCIcohort also rejects external internal-routine attachments.
+This closes exercised namespace-only paths under trusted activation/DDL
+quiescence, not complete native writer/effect/lifecycle or managed deployment
+qualification. Existing B04/B05/B06/B10/B11/B14/L12 procedures are expanded; all
+30 Truss cases remain required. No case promoted:45/158 accepted,113 unimplemented.
+See [separate exact source/wheel cohorts](evidence/security/truss-protected-query-replay-20261015/README.md).
+
+### Published compiler artifact correspondence — 2026-10-15
+
+Actual public Weft0.4.33ARM archive8ea8 differs from testedCIarchivedfe0, but all
+five member payloads are byte-identical. Original Trussad794577 selects its
+explicit published ABI2 manifest and refuses retained CI selection;467 tracked
+source files and original UMF assets correspond. Official release API asset
+digests/sizes match local public wheel and checksums. This is artifact/consumer
+correspondence only: no database rerun, Linux/aggregate/native authority or
+release-readiness promotion. Earlier CI native receipt remains immutable.
+Acceptance45/158,113 unimplemented unchanged. See [exact evidence](evidence/security/published-weft-cohort-20261015/README.md).
+
+### Operator-free read projection source inspection — 2026-10-15
+
+Private inspectCandidateReadProjection(handle,owner,{type,field}) now retains
+conditional original disclosure alternatives and pinned Field metadata for flat
+and graph types. It invents no query operator/action and grants no authority.
+25focusedBun/Chromiumchecks and312securitytests/4776assertions pass; typecheck
+passes. Framing/invalid-selection bound defect found by Astra is corrected.
+Original source-fold/descriptor/native admission remain required; empty metadata
+is not a permission or a guessed scalar domain. No r3 child protocol/bundle or
+backend cohort changes here. No case promoted:45/158 accepted,113 unimplemented.
+See [source, final portable evidence and review](evidence/security/read-projection-20261015/README.md).
+
+### Versioned original projection child — 2026-10-15
+
+The separate v2 child carries original operator-free read-projection metadata on
+one original local program, alongside existing original batch/route computations.
+Mandatory protocol, exact canonical inspection context and terminal refusals
+prevent silent r3 upgrade. All317securitytests/4934assertions and typecheck pass.
+Actual publicWeft034 packets regenerate byte-exact and traverse the original
+Truss generic pipe into the built child in nine supplied-cut controls. FALSE and
+LIMIT remain compiler inputs, not executed SQL. Oldr3 source/bundle/registrations
+remain frozen; native adoption needs an explicit new source/consumer cohort.
+No native case promotion:45/158 accepted,113 unimplemented; original132 IDs/hash
+37308740 preserved. pg-raw.B10 retains diagnostic leakage/no full registered
+runner; Delta B04/B10 have no native runner and ordinary identity/deployment
+qualification remains missing. This transport implements no diagnostic provider.
+See [versioned source and evidence](evidence/security/projection-query-child-v2-20261015/README.md).
+
+### Raw retirement-first ordering component — 2026-10-15
+
+For US-057-AC2/5/7, the existing PG17.9 publisher routine now has an independent retirement-first native schedule. Forty matching observations cover commit/refusal, rollback/refusal and an unsafe claim-omission control that returns rows after terminal retirement. Exact native lock barriers precede release; the original routine is restored and the owned fixture removed. This closes a component test gap, not L03 or backend acceptance. The psycopg harness does not qualify the public decoder, host issuer, complete writer closure or final transport. [Source, native receipt and review evidence](evidence/security/retirement-first-20261015/README.md) retain the scope and failed exploratory attempt.45/158 cases remain accepted; all158 remain required.
+
+The accompanying broader evidence audit fails101/221 checks on existing source/cross-repository drift;31 of the45 retained accepted cases are source-current. The failing current report is preserved, not represented as full qualification. Resolving that drift remains required by the original goal.
+
+Independent Astra Ultra review found no remaining component finding after two cleanup corrections. Its ten fault-injection controls and original reports are retained verbatim in the packet. This is source/receipt inspection and modeled cleanup testing, not an independent replay of the native concurrency campaign.

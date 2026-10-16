@@ -18,6 +18,22 @@ function ref(r:any):string{shape(r,['documentId','moduleId','elementId']);if(Obj
 function relationship(r:any):string{shape(r,['documentId','moduleId','relationshipId']);if(Object.values(r).some(v=>typeof v!=='string'||!v))fail('Exact relationship reference');return relationId(r);}
 function freeze(v:any):any{if(v&&typeof v==='object'&&!Object.isFrozen(v)){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
 export interface CandidateCatalogActionResult {status:'evaluated'|'refused';complete:false;authority:false;rows:readonly {decision:SecurityDecision;dispositions:readonly unknown[]}[]}
+/** Original compiled scoped rule truth on a supplied complete typed population. No disclosure rendering. */
+export interface CandidateCatalogRuleScanResult {status:'evaluated'|'refused';complete:false;authority:false;rows:readonly {resource:unknown;decision:SecurityDecision;rules:readonly {ruleIndex:number;truth:SecurityTruth}[]}[]}
+function readRuleScan(handle:unknown,ownerInput:unknown,cut:unknown,selectionInput:unknown,operation?:CandidateSecurityOperationBudget):CandidateCatalogRuleScanResult {
+ try{
+  const packet:any=copyJson({owner:ownerInput,selection:selectionInput});shape(packet.selection,['type']);
+  if(!packet.owner?.disclosure)fail('Original owner read action required');
+  return run(handle,packet.owner,cut,{type:packet.selection.type,fields:[]},false,operation,true,true) as CandidateCatalogRuleScanResult;
+ }catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
+}
+export function evaluateCandidateCatalogReadRuleScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogRuleScanResult {
+ return readRuleScan(handle,owner,cut,selection);
+}
+/** Private composition leaf. Every trace/condition charge uses the supplied operation ledger. */
+export function evaluateCandidateCatalogReadRuleScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogRuleScanResult {
+ return readRuleScan(handle,owner,cut,selection,operation);
+}
 export interface CandidateCatalogCollectionResult {status:'rendered'|'refused';complete:false;authority:false;rows:readonly (readonly SecurityOutput[])[];valueProfiles:readonly {field:unknown;profile:string}[]}
 /** Atomic logical collection: denied rows are filtered; U/conflict/any rendering failure refuses the whole batch. */
 export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,cut:unknown,request:unknown):CandidateCatalogCollectionResult {
@@ -27,11 +43,37 @@ export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,
 export function evaluateCandidateCatalogScan(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogCollectionResult {
  try{return run(handle,owner,cut,selection,true,undefined,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
 }
+export interface CandidateCatalogScanBatchResult {status:'rendered'|'refused';complete:false;authority:false;scans:readonly {scan:string;rows:CandidateCatalogCollectionResult['rows'];valueProfiles:CandidateCatalogCollectionResult['valueProfiles']}[]}
+/** Atomic logical preparation only: supplied occurrence completeness is a host premise. */
+export function evaluateCandidateCatalogScanBatch(handle:unknown,ownerInput:unknown,cutInput:unknown,requestsInput:unknown):CandidateCatalogScanBatchResult {
+ const refused=()=>freeze({status:'refused',complete:false,authority:false,scans:[]});
+ try{
+  readCandidateCatalogProgram(handle);
+  const packet:any=copyJson({owner:ownerInput,cut:cutInput,requests:requestsInput}),{owner,cut,requests}=packet;
+  if(!Array.isArray(requests)||requests.length<1||requests.length>256)fail('Nonempty bounded scan occurrences required');
+  if(!Number.isSafeInteger(cut.maxFacts)||cut.maxFacts<1||cut.maxFacts>10000)fail('Invalid aggregate fact budget');
+  const ledger=new CandidateSecurityOperationBudget(cut.maxSteps),pending=[packet];
+  while(pending.length){ledger.step();const x=pending.pop();if(typeof x==='string')ledger.snapshotText(x.length);else if(x&&typeof x==='object')for(const [key,value] of Object.entries(x)){ledger.snapshotText(key.length);pending.push(value);}}
+  const names=new Set<string>();let visits=0;
+  list(cut.facts,cut.maxFacts);list(cut.graphs,cut.maxFacts);
+  for(const request of requests){shape(request,['scan','type','fields']);if(typeof request.scan!=='string'||request.scan.length>32||!/^[st][0-9]+$/.test(request.scan)||names.has(request.scan))fail('Unique compiler scan occurrence required');names.add(request.scan);ref(request.type);
+   for(const fact of cut.facts){ledger.step();if(id(fact.type)===id(request.type))visits++;}
+   if(cut.facts.length+cut.graphs.length+visits>cut.maxFacts)fail('Aggregate scan visits exhausted');
+  }
+  const scans=[];
+  for(const request of requests){
+   const result=run(handle,owner,cut,{type:request.type,fields:request.fields},true,ledger,true) as CandidateCatalogCollectionResult;
+   if(result.status!=='rendered')fail('Whole scan batch refused');
+   scans.push({scan:request.scan,rows:result.rows,valueProfiles:result.valueProfiles});
+  }
+  return freeze({status:'rendered',complete:false,authority:false,scans});
+ }catch{return refused();}
+}
 /** owner/cut must originate from a trusted host. This function does not authenticate their provenance. */
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
-function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult{
+function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false,ruleTrace=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult{
  const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut}=packet;
  let request:any=packet.request;
  if(scanPopulation){shape(request,['type','fields']);request={action:owner?.disclosure?.readAction,resources:[],targets:[request.type],fields:request.fields};}
@@ -141,15 +183,22 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   const v=value(row,d.field);return v===undefined?undefined:literal(d.field,v);
  };
  const evaluate=(expr:any,resource:any,vars:Map<number,{checks:any;row:any}>):SecurityTruth=>{step();switch(expr.op){case'literal':return expr.value?'T':'F';case'eq':{const a=readTerm(expr.left,resource,vars),b=readTerm(expr.right,resource,vars);if(a===undefined||b===undefined)return 'U';budget.step(a.length+b.length);return a===b?'T':'F';}case'not':return securityNot(evaluate(expr.arg,resource,vars));case'and':return securityAnd(expr.args.map((x:any)=>evaluate(x,resource,vars)));case'or':return securityOr(expr.args.map((x:any)=>evaluate(x,resource,vars)));case'exists':{const checks=associations[expr.association];let found=false,unknown=false;for(const row of sourceRows(checks)){step();const nested=new Map(vars);nested.set(expr.occurrence,{checks,row});const t=evaluate(expr.where,resource,nested);found ||= t==='T';unknown ||= t==='U';}return found?'T':unknown?'U':'F';}default:return fail('Unknown compiled operation');}};
- const rows:any[]=[];for(const resource of resources){const evaluated=scoped(resource.type).map((c:any)=>({rule:program.policy.rules[c.ruleIndex],truth:evaluate(c.condition.expression,resource,new Map())}));let decision:SecurityDecision=evaluated.some((r:any)=>r.truth==='U')?'indeterminate':!evaluated.some((r:any)=>r.rule.effect==='permit'&&r.truth==='T')||evaluated.some((r:any)=>r.rule.effect==='require'&&r.truth!=='T')||evaluated.some((r:any)=>r.rule.effect==='forbid'&&r.truth==='T')?'deny':'permit';const dispositions:any[]=[];
+ const traces:any[]=[];const rows:any[]=[];for(const resource of resources){const evaluated=scoped(resource.type).map((c:any)=>({ruleIndex:c.ruleIndex,rule:program.policy.rules[c.ruleIndex],truth:evaluate(c.condition.expression,resource,new Map())}));let decision:SecurityDecision=evaluated.some((r:any)=>r.truth==='U')?'indeterminate':!evaluated.some((r:any)=>r.rule.effect==='permit'&&r.truth==='T')||evaluated.some((r:any)=>r.rule.effect==='require'&&r.truth!=='T')||evaluated.some((r:any)=>r.rule.effect==='forbid'&&r.truth==='T')?'deny':'permit';const dispositions:any[]=[];
   if(decision==='permit')for(const r of request.fields){step();const ds:any[]=[];for(const x of evaluated){step();if(x.rule.effect==='permit'&&x.truth==='T')for(const d of x.rule.disclosure??[]){step();if(id(d.field)===id(r))ds.push(d.disposition);}}
    if(!ds.length&&member(resource.type,id(r)).protection==='protected'){decision='indeterminate';break;}
    if(ds.some((d:any)=>d.kind==='withheld')){dispositions.push({field:r,disposition:{kind:'withheld'}});continue;}
    const transforms=ds.filter((d:any)=>d.kind==='transformed'),identities=new Set(transforms.map((d:any)=>d.vocabulary==='umf.security.protection'?canonicalSchemaJson([d.vocabulary,d.transform,d.version,id(d.field)]):canonicalSchemaJson([d.transform,d.version,id(d.field),literal(d.field,d.value)])));
    if(identities.size>1){decision='conflict';break;}const d=transforms[0]??{kind:'original'};if(d.kind==='original')admitField(resource.type,r,[resource]);dispositions.push({field:r,disposition:d});
   }
+  if(ruleTrace){
+   const trace={resource:{type:resource.type,key:resource.key},decision,rules:evaluated.map((r:any)=>({ruleIndex:r.ruleIndex,truth:r.truth}))};
+   // Result retention shares the same operation/literal budget as condition evaluation.
+   const pending:any[]=[trace];while(pending.length){step();budget.step();const v=pending.pop();if(v&&typeof v==='object')pending.push(...Object.values(v));}
+   const encoded=JSON.stringify(trace);step(encoded.length);budget.step(encoded.length);budget.reserveText(encoded.length+1);traces.push(trace);
+  }
   rows.push({decision,dispositions:decision==='permit'?dispositions:[]});
  }
+ if(ruleTrace)return freeze({status:'evaluated',complete:false,authority:false,rows:traces});
  if(!render)return freeze({status:'evaluated',complete:false,authority:false,rows});
  if(rows.some(r=>r.decision==='indeterminate'||r.decision==='conflict'))fail('Collection decision is unresolved');
  const selected=rows.map((r,i)=>({row:r,resource:resources[i]})).filter(r=>r.row.decision==='permit');
@@ -192,4 +241,9 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
 /** Internal multi-action composition only. The public entry always creates its own ledger. */
 export function evaluateCandidateCatalogActionWithinOperation(handle:unknown,owner:unknown,cut:unknown,request:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogActionResult {
  try{return run(handle,owner,cut,request,false,operation) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
+}
+
+/** Private composition leaf; callers must provide one shared operation ledger. */
+export function evaluateCandidateCatalogScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogCollectionResult {
+ try{return run(handle,owner,cut,selection,true,operation,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
 }

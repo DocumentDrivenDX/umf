@@ -1,0 +1,108 @@
+{
+  "kind": "Independent conditional native scalar edge harness review",
+  "date": "2026-10-15",
+  "stage": "Initial reviewed run; open harness findings, retain as historical on fix",
+  "disposition": "Finite oracle/results are consistent; four harness/evidence custody corrections remain before treating this as final qualified component evidence.",
+  "findings": [
+    {
+      "id": "R1",
+      "priority": 2,
+      "subject": "Owned PostgreSQL volume cleanup is incomplete",
+      "source": "run.py finally block",
+      "evidence": "Only docker rm -f is used; no mount retention, anonymous-volume deletion, shared-user guard or final successful absence inventory. Receipt records removal exit code only.",
+      "fix": "Capture and retain original owned mounts, verify exact ownership and no shared volume users, remove owned anonymous volumes with the container, and verify both absent before publishing."
+    },
+    {
+      "id": "R2",
+      "priority": 2,
+      "subject": "Unrelated ValueError can satisfy a semantic refusal",
+      "source": "run.py refusal loop around compile_case",
+      "evidence": "Any ValueError, including JSONDecodeError from malformed producer output, is counted as compile refusal. Four current actual codes are three WFT-NUMERIC-DOMAIN and one WFT-PARAMETER.",
+      "fix": "Require exact expected diagnostic from the original producer invocation; parsing/artifact errors must fail the harness rather than count as capability refusal."
+    },
+    {
+      "id": "R3",
+      "priority": 2,
+      "subject": "Incomplete executed-harness and import custody",
+      "source": "run.py initial/end source checks",
+      "evidence": "Own runner/generator and installed Python shim are not included in before/after pins. A present matching .so does not by itself identify the loaded extension. Source checks precede cleanup.",
+      "fix": "Pin executed harness/generator/shim and confirm actual loaded extension origin/hash against wheel; recheck selected endpoints after cleanup before success publication. Current reviewer comparison independently confirms shim matches wheel now, but not during prior execution."
+    },
+    {
+      "id": "R4",
+      "priority": 2,
+      "subject": "A failed rerun can leave an old passing receipt beside new artifacts",
+      "source": "run.py fixed output directory and final success-only receipt write",
+      "evidence": "Existing receipt.json is not invalidated before compilation; per-case compiled artifacts are overwritten before success.",
+      "fix": "Use a fresh per-attempt output directory or publish pending/invalidate prior current success before any compile, with exact attempt correlation on all retained artifacts."
+    }
+  ],
+  "independentChecks": {
+    "positiveCasesRecomputedFromFixtureRows": 17,
+    "expectedAndRetainedObservedRowsMatch": true,
+    "fixtureRows": 33,
+    "eligibleRows": 32,
+    "distinctTokens": 30,
+    "selfJoinBagCount": 36,
+    "selectedFrozenSourceHashesCheckedNow": 978,
+    "installedShimComparedWithWheelNow": true,
+    "dockerOrCloudCalls": 0,
+    "nativeExecution": "Parent run inspected, not independently rerun",
+    "producerExecutionByReviewer": false
+  },
+  "soundnessNotes": [
+    "UTF8 byte order oracle is independently computed from explicit strings, including whitespace/control/quotes/combining forms/astral/max scalar values; exact returned string comparison performs no normalization.",
+    "Unordered native rows are compared as complete sorted lists, preserving multiplicity; numeric equality edge expectations use mathematical int64 values without JavaScript conversion.",
+    "Native text output OIDs and computed result descriptor expectations are checked; salary projections remain synthetic masked strings, not raw int64 output qualification.",
+    "Removed eligibility SQL filter changes count32 to33 and is a useful physical SQL sensitivity witness only.",
+    "Binding modes/actions/comparisonScope and staged eligibility/value provenance are explicit assumptions; no permission/current issuer/guarded release/native acceptance is claimed."
+  ],
+  "limits": [
+    "No universal SQL/core-value refinement theorem.",
+    "No actual HMAC/vault/source-authentication/current-authority/caller credential proof.",
+    "Frozen source manifest plus matching binary/wheel are selected provenance evidence, not independently established build reproducibility or hermetic execution.",
+    "All driver dependencies and whole-process transient memory are outside these claims."
+  ],
+  "sourcePins": [
+    {
+      "path": "/private/tmp/umf-current-scalar-edge-20261015/run.py",
+      "copy": "run.py",
+      "sha256": "0e4de0af00bbc81cf6097d9c9620a4e6538d92c7744679d1f1ef3e2c099c3ed9"
+    },
+    {
+      "path": "/private/tmp/umf-current-scalar-edge-20261015/oracle.json",
+      "copy": "oracle.json",
+      "sha256": "bd29c8ff64e2d6d7511c0e23ccf864ff9a9d2b7299243edd4c19fdaa0f20aeec"
+    },
+    {
+      "path": "/private/tmp/umf-current-scalar-edge-20261015/receipt.json",
+      "copy": "receipt.json",
+      "sha256": "4a54c4502716196bd6ca197efc0e0c0c9ecf1764b02621834e41806916178a37"
+    },
+    {
+      "path": "/private/tmp/umf-current-scalar-edge-20261015/compile-preflight.json",
+      "copy": "compile-preflight.json",
+      "sha256": "9ef21112fa971ccc78cf68a8adf8022978fb48b0f7d0094080acb602d80d9e58"
+    },
+    {
+      "path": "/private/tmp/umf-current-scalar-edge-20261015/native.log",
+      "copy": "native.log",
+      "sha256": "44fef001ae5f0d7eaa83508fcefc13c4ae3c8749e395f755e07e393a02e1903d"
+    },
+    {
+      "path": "/private/tmp/prepare-current-scalar-edge-oracle.py",
+      "copy": "prepare-current-scalar-edge-oracle.py",
+      "sha256": "0bcef650ac0ae91af04b35765b1171ea286d3d4429b56651ae5df0cdddc7c373"
+    },
+    {
+      "path": "/private/tmp/weft-current-scalar-frozen-20261015/source-manifest.json",
+      "copy": "source-manifest.json",
+      "sha256": "6a901c4bdb5c9a5b1e6c2b2dd40c9a19df374584250e65c8d1290263722670d8"
+    },
+    {
+      "path": "/private/tmp/weft-current-scalar-installed/weft/__init__.py",
+      "copy": "installed-__init__.py",
+      "sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    }
+  ]
+}

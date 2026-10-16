@@ -1,0 +1,75 @@
+{
+  "disposition": "Confirmed: only the two recommended identity assertions were added; no blocker",
+  "scope": "Source-delta audit only; no new full replay",
+  "exactReplacementVerified": true,
+  "changes": [
+    "Compare returned Resource type/key with the exact fixture Resource",
+    "Compare complete ordered returned ruleIndex vector with policy indices 0..8"
+  ],
+  "independentEvidence": "Prior private replay exercised both exact checks successfully for all 13,122 states. The adopted optional chaining changes no passing behavior.",
+  "unchanged": [
+    "All existing expectations and enumeration",
+    "Test wrapper",
+    "All other selected source pins"
+  ],
+  "sources": [
+    {
+      "path": "tests/security/query-value-three-valued-corpus.ts",
+      "sha256": "3db28cf8d498a6807a6cca7ff8f8eb18bc5ad13a05afe6372de757011e8d2916",
+      "changed": true
+    },
+    {
+      "path": "tests/security/query-value-three-valued.test.ts",
+      "sha256": "d74782b5c81ea1a9e93c5a06aa822af8565848cef3f735cc9101d11b8772595c",
+      "changed": false
+    },
+    {
+      "path": "tests/security/protection/query-value-route-guards.json",
+      "sha256": "5f56d6730c6413bc45b565dfe0ec4b32c53c8452ffd222438d5bc2339b3b08cf",
+      "changed": false
+    },
+    {
+      "path": "src/extensions/security/query-value-route-evaluation-candidate.ts",
+      "sha256": "6a2cf50a8c15d2feecd1da73abaa79f4da547aca834d263f2aa999f23a607552",
+      "changed": false
+    },
+    {
+      "path": "src/extensions/security/query-value-routes-candidate.ts",
+      "sha256": "2eccc51f05a3e34280a1b1e5b44dbfdb9b43acd739e96d20236a649d02347f59",
+      "changed": false
+    },
+    {
+      "path": "src/extensions/security/catalog-runtime-candidate.ts",
+      "sha256": "28f4fd603fbe47a82f878f0fceb042a2071daecf1db114005886dc2cb7e57dfd",
+      "changed": false
+    },
+    {
+      "path": "src/extensions/security/catalog-program-candidate.ts",
+      "sha256": "e8c2db84126e5ebf4dcf5bd33efe80c8a2235e7ab192d17105cda64ab8facc6d",
+      "changed": false
+    },
+    {
+      "path": "src/extensions/security/operation-budget-candidate.ts",
+      "sha256": "cba50f93e51b489ee5aa12d56b8f002ac54af0d78916abde2c90f2d9c6aa22e5",
+      "changed": false
+    },
+    {
+      "path": "docs/helix/03-test/security/cases.json",
+      "sha256": "50c0ed77e6219e026dd74fd554d66dfc6c7a5ffadfdd0a581802e3d770f31489",
+      "changed": false
+    }
+  ],
+  "priorReview": "/private/tmp/query-value-three-valued-astra-20261015/review.json",
+  "priorArchive": {
+    "path": "/private/tmp/query-value-three-valued-astra-20261015/archive.zip",
+    "sha256": "2e673736335daca4d5c49b80c3d1e3a546cdc152eb7f2d9bc423352ba438abba"
+  },
+  "parentReportedSeparately": {
+    "BunStatesPassed": 13122,
+    "typecheck": "passed",
+    "mutantsDetected": 6,
+    "browserAndFullSuite": "finishing at request time"
+  },
+  "nativeAuthority": false,
+  "acceptancePromotion": false
+}

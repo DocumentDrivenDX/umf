@@ -1,0 +1,460 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/actions-plan.test.ts:
+(pass) @covers US-902-AC1 registered_action: owner preparation, exact binding and callback preservation [60.02ms]
+(pass) @covers US-902-AC2 retain_unknown: source retained and relevant unknown blocks, annotations remain inert [29.15ms]
+(pass) @covers US-902-AC3 capability_assessment: all claims and original action assessment, no execution attestation [61.63ms]
+(pass) @covers US-902-AC4 exact_values: incompatible/null/optional/key writes refuse [35.41ms]
+(pass) @covers US-902-AC6 strict_json_bounds: duplicate keys, surrogate, integrity, depth, hostile getter [16.81ms]
+(pass) @covers US-902-AC5 portable_boundary: API result copies cannot mutate caller input [18.82ms]
+(pass) @covers US-902-AC5 @covers US-902-AC6 independent expected corpus through public exports [1108.18ms]
+(pass) @covers US-902-AC1 schema resources and original schema byte pin [35.10ms]
+(pass) @covers US-902-AC6 SHA256 matches independent native crypto including block and UTF8 boundaries [20.63ms]
+(pass) @covers US-902-AC4 exact integer/string carriers retain original spelling and semantic bounds [98.47ms]
+(pass) @covers US-902-AC1 original unrelated semantic callbacks remain installed and enforced [19.03ms]
+(pass) @covers US-902-AC6 schema metadata bounds use UTF16, prepared artifact cannot replace original document [30.89ms]
+(pass) @covers US-902-AC5 new portable modules have no host-only import or global [2.38ms]
+(pass) @covers US-902-AC6 opaque artifact metadata remains bounded without invoking getters [32.83ms]
+(pass) @covers US-902-AC6 review regressions: context slots, metadata Unicode, diagnostic and evidence boundaries [117.08ms]
+(pass) @covers US-902-AC1 shared frame admission: identity and per-list boundaries [22262.09ms]
+(pass) @covers US-902-AC1 assignment bindings form a complete unique set while preserving source order [42.20ms]
+(pass) portable artifacts retain exact original numeric metadata meaning [0.14ms]
+(pass) small plan framing cannot silently round numeric metadata [0.06ms]
+
+tests/security-reference-links-owner.test.ts:
+(pass) original reference links preserve qualified ordered occurrences without type promotion [17.85ms]
+
+tests/security-core08-owner.test.ts:
+(pass) versioned original0.8 source owners retain meaning and original0.7 receipts [32.81ms]
+
+tests/actions-manifest.test.ts:
+(pass) @covers US-903-AC1 complete_partition: original action inputs/frames and full-first partition [44.37ms]
+(pass) @covers US-903-AC2 artifact_integrity: retained bytes, source hash and scope [38.83ms]
+(pass) @covers US-903-AC3 empty_and_limits: empty work, wrong ordinals and bounds refuse [35.31ms]
+(pass) @covers US-903-AC4 no_false_attestation: current-source reassessment remains unverified [93.65ms]
+(pass) @covers US-903-AC1 identities, entity input and frame versions refuse divergent work [133.00ms]
+(pass) @covers US-903-AC2 relevant unknowns retained, annotations inert, original bytes are integral [40.13ms]
+(pass) @covers US-903-AC5 complete bulk result unions preserve failure/unknown/refusal distinctions [40.99ms]
+(pass) @covers US-903-AC6 independent expected manifest/bulk corpus through public API [1316.70ms]
+(pass) @covers US-903-AC3 exact10000-item carrier and first overflow [5843.64ms]
+(pass) @covers US-903-AC3 exact16MiB original artifact bytes and first-byte overflow [570.76ms]
+(pass) @covers US-903-AC4 malformed capabilities return an incompatible result [47.68ms]
+(pass) @covers US-903-AC5 handler output typed maps refuse unknown authority and oversized UTF16 IDs [17.37ms]
+(pass) @covers US-903-AC3 opaque metadata uses manifest framing, typed items retain core admission [99.42ms]
+(pass) @covers US-903-AC5 original output/effect carrier limits and output ID bounds [178.31ms]
+(pass) @covers US-903-AC5 original literal admission and embedded Artifact integrity [129.98ms]
+(pass) @covers US-903-AC5 complete recipe/condition/item vectors refuse portable contradictions [17.18ms]
+(pass) @covers US-903-AC6 portable modules contain no host-only imports or globals [2.90ms]
+(pass) manifest and bulk framing preserve original numeric metadata meaning [29.40ms]
+
+tests/security-scalar-owner.test.ts:
+(pass) original scalar owner preserves label role source context and refuses malformed inputs [14.58ms]
+
+tests/security-record-type-owner.test.ts:
+(pass) exact-current type receipts verify consistency without issuer or native authority [59.62ms]
+
+tests/actions-manifest-construction.test.ts:
+(pass) @covers US-903-AC7 pure construction preserves original plan, Key receipts and exact original invocation semantics [65.81ms]
+(pass) @covers US-903-AC7 empty work has no fabricated items, batches or receipts [43.16ms]
+(pass) @covers US-903-AC7 original numeric Key equality preserves distinct receipt and row spellings [70.59ms]
+(pass) @covers US-903-AC7 original source, tuple, identity, guard and complete intent substitutions refuse atomically [650.61ms]
+(pass) @covers US-903-AC7 finite item/byte bounds and accessors refuse without exposing partial work [74.14ms]
+(pass) @covers US-903-AC7 malformed guard versions return source-qualified errors [109.44ms]
+(pass) @covers US-903-AC7 repeated plan constants are charged before output serialization [35.44ms]
+
+tests/security-record-type-journal.test.ts:
+(pass) explicit transition journal reconciles multiple typed Fields without issuer authority [109.26ms]
+
+tests/security-record-members-owner.test.ts:
+(pass) original Record membership distinguishes absence empty order and unknown qualifiers [13.75ms]
+
+tests/security/write.test.ts:
+(pass) writes require both states and exact field permission; admission has no effects [151.67ms]
+(pass) ownership changes require a separately granted action even with permitted old/new states [78.33ms]
+(pass) incomplete states, mixed authority and changed authorization facts refuse [11.49ms]
+(pass) create and delete admit only their declared state shape [82.27ms]
+(pass) policy attribute changes need separate authority and null/absence remain distinct [295.07ms]
+(pass) ownership inventories used by policy require policy-change authority on both states [246.87ms]
+(pass) ownership policy-change action cannot borrow permission from only one update state [110.93ms]
+(pass) create/delete policy-used ownership inventory checks are independent of target fields [49.44ms]
+(pass) unchanged used inventory and changed policy-unused inventory do not need policy-change permission [84.70ms]
+(pass) write authority comparison ignores field order and equivalent typed context literals [60.20ms]
+(pass) write comparison uses typed subject keys and authorization fact values [33.14ms]
+(pass) write comparison rejects duplicate projections and exhausted comparison budgets [15.16ms]
+(pass) normalized comparison payload has a discriminating refusal independent of step exhaustion [1271.47ms]
+(pass) numeric ownership equivalence avoids special actions while actual changes require both grants [91.81ms]
+
+tests/security/catalog-write.test.ts:
+(pass) catalog transaction guard checks actual normalized original/proposed flat and graph records [85.86ms]
+(pass) masked changes require exact per-Field blind designation and actual grant in every required state [18.62ms]
+(pass) all-state ordinary grants and original visibility remain independently necessary [12.75ms]
+(pass) every changed association Record receives its own Field protections [16.32ms]
+(pass) graph role deltas require the fixed owner anchor and its own ownership grant [28.87ms]
+(pass) opaque IDs never become cross-cut identity while endpoint multiplicity remains visible [7.92ms]
+(pass) complete comparison cuts, Subject/context/profiles and exact mutation inventory cannot be weakened [35.33ms]
+(pass) actual stored output-carrier changes require a present vault action and its grant in every required state [52.48ms]
+(pass) mask equality never substitutes for original visibility and no-op updates invent no Field requirements [12.42ms]
+(pass) whole-cut create proves prior absence and guards every created association Record [9.24ms]
+(pass) both removed and added retargeting anchors must be explicitly checked [9.70ms]
+(pass) ordinary purpose classification cannot be relabelled as other or reused as an implicit blind route [9.23ms]
+(pass) a listed ordinary data mutation cannot rewrite current Subject attributes [3.73ms]
+(pass) unused context and value-profile changes still violate the comparable authority-cut invariant [7.09ms]
+(pass) known null compares without allowed-value identity and remains distinct from known absence [10.92ms]
+(pass) blind action IDs are distinct from ordinary routes across all type profiles [3.48ms]
+(pass) delete retains declared ownership checks even when the owned incidence inventory is empty [9.75ms]
+(pass) Record-witness attribute changes need both their own Field guard and the association owner guard [19.37ms]
+
+tests/security/association-witness.test.ts:
+(pass) lexical witness occurrences retain term correlation and reject shadowing or forged custody [4.96ms]
+
+tests/security/action-purposes.test.ts:
+(pass) source purposes close the exact opaque action universe, never infer a permission [3.16ms]
+(pass) ordinary purposes may combine while reverse, vault-write and other remain exclusive [24.66ms]
+(pass) purpose closure refuses incomplete, duplicated, unknown and extra source atomically [10.45ms]
+(pass) legacy absence remains legacy and migration invents no action purposes [2.13ms]
+(pass) no action spelling or policy-grant list supplies missing classification [2.82ms]
+(pass) resource exhaustion and hostile accessors refuse without partial purposes [0.75ms]
+
+tests/security/registration.test.ts:
+(pass) opaque host registration pins immutable complete definitions and refuses foreign handles [12.98ms]
+(pass) stale classification and core source reuse cannot alter an existing registered revision [10.15ms]
+(pass) a late ontology pin conflict cannot reserve the earlier candidate policy revision [10.60ms]
+(pass) unsupported candidates consume no slots and exhausted capacity preserves every issued handle [178.84ms]
+
+tests/security/stored-query.test.ts:
+(pass) stored Field source resolution preserves original sources and conditional properties [433.60ms]
+(pass) source snapshots resist mutation and getters refuse without execution [5.64ms]
+
+tests/security/operation-budget-candidate.test.ts:
+(pass) multiple write-style action checks share one step allowance across both states [5.21ms]
+(pass) comparison literal charges cannot be reset by subsequent action checks [2.23ms]
+(pass) snapshot text is cumulative across action calls rather than independently admitted per state [2.76ms]
+(pass) invalid operation accounting and cap increases cannot manufacture a fresh allowance [0.08ms]
+
+tests/security/policy.test.ts:
+(pass) Staff/Project nested correlated policy resolves exact qualified types and keys [0.95ms]
+(pass) display labels cannot resolve a different document and revisions must match [4.78ms]
+(pass) unknown security meaning and opaque native archives survive JSON/YAML [7.65ms]
+(pass) operand, variable, role, action, classification and bound errors refuse interpretation [12.80ms]
+(pass) unknown ontology/facet/key qualifiers refuse while original source remains retained [5.71ms]
+(pass) registered policy preserves extension but core inspection requires explicit closure [12.67ms]
+(pass) typed entrypoint never invokes hostile accessors [0.03ms]
+(pass) browser corpus has independent valid/incomplete/refusal and preservation expectations [14.51ms]
+(pass) editing public package metadata cannot change the built-in registry [9.65ms]
+(pass) core primary metadata preserves explicit security Key selection [4.77ms]
+
+tests/security/catalog-scan.test.ts:
+(pass) complete logical scans retain all typed read duties and refuse unresolved populations atomically [82.97ms]
+
+tests/security/candidate-domains.test.ts:
+(pass) nullable intrinsic attributes and null constants retain exact declared domains [2.59ms]
+(pass) domain-only Field constants resolve from the exact core closure without acquiring live ownership [1.10ms]
+(pass) nullable witness attributes use the same exact scalar domain without loosening endpoint Keys [2.90ms]
+(pass) inline constant output may use a domain-only nullable Field but its disclosed input must be live [7.11ms]
+(pass) nullable domains remain exact and original model/source cuts cannot be mixed [2.58ms]
+(pass) explicit DTO-only context Fields are exact closure domains, never live entity attributes [3.22ms]
+
+tests/security/catalog-runtime.test.ts:
+(pass) canonical logical kernel evaluates the actual Staff/project membership and original disposition [4.34ms]
+(pass) directed graph Record and opaque witnesses use native roles, not arbitrary member Fields [10.89ms]
+(pass) graph completeness is separate from endpoint inventory and preflights empty and false branches [13.33ms]
+(pass) graph witness attributes require their actual Record fact and independent coverage [11.59ms]
+(pass) distinct parallel Record witnesses survive and duplicate or contradictory witnesses refuse [6.64ms]
+(pass) typed null is known while absence remains unknown and a missing projection refuses [6.55ms]
+(pass) source/owner pins, storage coverage, fact identity and all operation bounds refuse atomically [21.24ms]
+(pass) catalog transform identity governs conflicts and withheld dominates without rendering values [22.67ms]
+(pass) withheld disposition does not invent a plaintext projection dependency [2.15ms]
+(pass) actual stored output-domain Fields require exact exhaustive owner classification and never infer vault permission [25.01ms]
+(pass) normalized duplicate numeric keys and conflicting known key projections refuse [7.73ms]
+(pass) Gregorian values including null require an explicit exact operation profile [9.52ms]
+(pass) non-record reference metadata preserves the original primitive Field domain [2.45ms]
+(pass) flat and graph endpoint domains preserve differing opaque reference metadata [5.61ms]
+(pass) endpoint record-type semantics and malformed opaque references refuse source compilation [7.05ms]
+
+tests/security/identity-transport.test.ts:
+(pass) identity transport adds association keys without relabeling policy reads [2.39ms]
+(pass) compound original identity components retain order [1.59ms]
+(pass) endpoint components preserve original role order and qualified target [1.38ms]
+(pass) unused ontology records do not become inferred ownership or capture requirements [1.17ms]
+(pass) literal association predicates still require its key and endpoint transport [1.41ms]
+(pass) unknown original meaning refuses identity transport without mutating source [2.24ms]
+(pass) association resource targets include endpoint target identities without an exists read [1.46ms]
+(pass) endpoint identity selection reaches nested association targets [1.25ms]
+
+tests/security/core-extension-closure.test.ts:
+(pass) original products action extension survives explicit source custody and real policy compilation [50.63ms]
+(pass) absent or forged closure cannot grant extension interpretation [1.43ms]
+(pass) only exact original selected extension version is admitted, not callback or hash claims [0.05ms]
+(pass) unregistered vocabulary and malformed actions retain fail-closed behavior [40.12ms]
+(pass) registry access cannot mutate subsequent captures or original source snapshots [38.95ms]
+(pass) selection accessors never execute and mutable public package cannot drift from retained closure [13.43ms]
+(pass) actions metadata cannot be widened before the closure module loads in a fresh process [524.98ms]
+
+tests/security/entity-terms-candidate.test.ts:
+(pass) intrinsic entity identities and attributes resolve without any association [4.12ms]
+(pass) intrinsic terms reject wrong owners, undeclared context and coercible constants [1.68ms]
+(pass) explicit alternate primary metadata does not replace selected identity Key [0.82ms]
+(pass) issued scopes and terms cannot be copied or composed across source cuts [1.32ms]
+
+tests/security/relationship-candidate.test.ts:
+(pass) selected original Keys and Record attributes remain frozen and primary meaning retained [0.26ms]
+(pass) bare witnesses support only correlated endpoint access and existence [0.09ms]
+(pass) entity alternate Key choice, duplicate identity and opaque Record replacement refuse [0.19ms]
+(pass) metadata accessors are refused without execution [0.03ms]
+(pass) endpoint and witness Key IDs use the schema Unicode code-point boundary [0.45ms]
+(pass) unsupported source shapes refuse without mutating original source [0.28ms]
+(pass) complete relationship and association Record source snapshots retain unconsumed metadata [0.07ms]
+(pass) selected terms resolve exact roles and qualified members without authorizing them [0.17ms]
+(pass) self-relationship selected endpoints preserve role and side provenance [0.05ms]
+
+tests/security/policy-migration-candidate.test.ts:
+(pass) policy draft migration preserves rules and explicitly rebinds ontology revision [34.20ms]
+(pass) relationship refs stay distinct and unknown nested semantics remain visible [1.10ms]
+(pass) policy migration refuses reused or malformed destination revisions [0.67ms]
+
+tests/security/evaluate.test.ts:
+(pass) correlated ownership and active same-Project assignment govern a broad read grant [27.81ms]
+(pass) incomplete, stale, malformed or ambiguous host inputs refuse the whole collection [24.17ms]
+(pass) forbids dominate and false permits never add masks [14.90ms]
+(pass) query-use admission refuses withholding and requires a separate original-value action [91.74ms]
+(pass) original null, absence and typed constant replacement remain distinct [15.96ms]
+(pass) hostile accessors cannot run at the evaluation boundary [0.10ms]
+(pass) an empty collection still admits every scoped complete dependency [4.76ms]
+(pass) transform conflicts refuse; withholding dominates all transform permutations [15.45ms]
+(pass) any/all owners and nonempty-owner requirements have explicit different meanings [18.82ms]
+(pass) keys compare exact Unicode and integers without normalization or host rounding [16.78ms]
+(pass) empty queries preflight prohibited fields and all original-action dependencies [32.80ms]
+(pass) one cut refuses conflicting known projections of the same keyed fact [7.55ms]
+(pass) consistent partial projections merge known values without inventing missing attributes [2.60ms]
+(pass) explicit null and absence conflict across known projections even without output selection [3.57ms]
+(pass) subject and inventory projections must agree on non-key attributes [9.47ms]
+
+tests/security/write-read-protection.test.ts:
+(pass) missing or unknown read protection never keeps legacy write permission [7.93ms]
+(pass) withheld and transformed reads cannot write even a value equal to the mask [142.28ms]
+(pass) blind write is exact Field-bound explicit permission, independent of field mutation grant [159.37ms]
+(pass) blind bindings refuse duplicated foreign malformed or ordinary-action aliases [8.21ms]
+(pass) update requires original or blind permission in both original and proposed states [152.30ms]
+(pass) original null and canonical absence keep original meaning before cell transport [59.44ms]
+(pass) create checks proposed, delete original, and unchanged masked fields need no invented mutation [101.50ms]
+(pass) original permission can satisfy the guard despite unknown blind alternative and vice versa [78.49ms]
+(pass) unknown facts, generation, source and exhausted budgets cannot issue write permission [32.52ms]
+(pass) internal original captures clear on later conflict, projection failure or denied read [16.69ms]
+
+tests/security/catalog-scan-batch.test.ts:
+(pass) complete multi-scan logical preparation is atomic with one operation budget [85.68ms]
+
+tests/security/association-expression.test.ts:
+(pass) original nested Staff/Project expression retains exact lexical occurrences and explicit typing residuals [3.72ms]
+(pass) unbound, shadowed, wrong-owner and unknown associations refuse normalization [1.38ms]
+(pass) normalizer refuses coercible collection length and policy grammar boundary violations [1.55ms]
+(pass) association operand typing rejects nominal identity and scalar/identity disagreement [1.24ms]
+(pass) constants use classified source definitions and actual core literal validity [1.36ms]
+(pass) declared subject/resource endpoint bindings resolve the full nested policy types [1.42ms]
+(pass) constant literal wrappers have closed structural validity before field checks [1.36ms]
+(pass) unused context declarations and conflicting captured models refuse eagerly [2.86ms]
+(pass) shared multi-field Unicode Record classifications are exactly order independent [2.71ms]
+(pass) JSON transport preserves nested witness correlation and refuses unissued or residual expressions [1.55ms]
+(pass) transport receiver regenerates lexical descriptors and rejects tampered correlation or sources [7.96ms]
+(pass) receiver retains unused declaration dependencies for literal expressions [2.81ms]
+
+tests/security/publication-custody.test.ts:
+(pass) publication custody retains replay/inflight buffers and quarantines uncertain release [0.74ms]
+
+tests/security/catalog-collection.test.ts:
+(pass) atomic collection preserves original, absent, null and withheld cells across flat and graph facts [13.26ms]
+(pass) legacy inline constants remain independent of source null, absence or unavailable projection [5.19ms]
+(pass) catalog collection runs all admitted pure recipes with exact typed outputs [32.20ms]
+(pass) catalog constant validates present null but refuses known absence and unavailable input [12.36ms]
+(pass) Gregorian rendered output retains exact value-profile context [11.40ms]
+(pass) owner read role, actual grant, forged handles and empty-request metadata remain enforced [10.16ms]
+(pass) deny filtering preserves order while late unknown, conflict or invalid output clears the whole collection [11.08ms]
+(pass) one output ledger spans repeated selectors and refuses a late oversized batch without partial rows [4.59ms]
+(pass) empty requested targets preflight source output dependencies without inventing inline/withheld inputs [13.87ms]
+(pass) unconditional inline transformation suppresses empty-target original dependencies [3.44ms]
+(pass) catalog value work shares the action ledger across every rendered row [12.07ms]
+
+tests/security/ontology-migration-candidate.test.ts:
+(pass) draft migration separates Record classification from association selection [1.33ms]
+(pass) unknown source semantics and conflicting declarations remain explicit [0.35ms]
+(pass) reserved qualifier names remain explicit and target edits cannot corrupt the archive [0.71ms]
+(pass) ontology migration reissues immutable revision explicitly [0.27ms]
+
+tests/security/logic.test.ts:
+(pass) strong Kleene tables agree with an independently enumerated oracle [0.06ms]
+(pass) all 27 grant/require/forbid combinations agree with composition oracle [0.44ms]
+(pass) all disposition triples and permutations preserve dominance and conflicts [2.78ms]
+(pass) false permits never contribute obligations and protected omission refuses [0.05ms]
+(pass) runtime boundary rejects malformed/unknown meaning without invoking accessors [0.26ms]
+
+tests/security/authority-guard.test.ts:
+(pass) revocation drains prior final releases and later readers observe the new generation [2.02ms]
+(pass) active cancellation cannot release the guard while application buffers remain live [0.10ms]
+(pass) queued cancellation never invokes the producer or cancels a still active reader [0.10ms]
+(pass) unknown transition outcomes close admission and cannot acknowledge a fresh generation [0.10ms]
+(pass) generation reuse refuses before effects and preserves the current generation [0.05ms]
+(pass) close before an acquired producer starts prevents effects [0.03ms]
+(pass) resource bounds refuse excess admission without invoking the producer [0.36ms]
+
+tests/security/policy-checks-candidate.test.ts:
+(pass) whole policy validates action/target/disclosure closure and typed nested correlation [8.59ms]
+(pass) whole policy refuses wrong revisions, actions, targets, disclosures and contextual types [34.52ms]
+(pass) whole policy retains graph Relationship scope and Record-backed attributes [17.21ms]
+(pass) constant disclosure validates exact output literals without integer coercion [9.04ms]
+(pass) expression node limit applies once to the policy document across rules [34.56ms]
+(pass) document node count does not multiply by rule target count [23.21ms]
+(pass) dependency closure retains live association fields and refuses copied or unresolved results [10.62ms]
+(pass) constant domain references do not become live read dependencies [4.21ms]
+(pass) standalone Record conditions transport intrinsic fields and trusted context dependencies [6.44ms]
+(pass) intrinsic nominal identity compares against exact correlated association endpoints [9.91ms]
+
+tests/security/compact-conditions.test.ts:
+(pass) compact condition preserves exact scoped IR without duplicating source archives [6.44ms]
+(pass) compact emitter refuses residuals, copied handles, missing unused declarations and hostile tables [2.07ms]
+(pass) graph Record and opaque witnesses retain native side/role meaning in compact IR [3.79ms]
+
+tests/security/shared-source.test.ts:
+(pass) shared core source captures immutable detached complete JSON without transferable issuance [0.74ms]
+(pass) ontology associations and target scopes share one issued source closure while public reads detach [1.25ms]
+
+tests/security/dependencies.test.ts:
+(pass) typed dependency closure includes endpoint components and exact identity keys [2.60ms]
+(pass) a write binding cannot omit a policy-read field to avoid separate policy mutation authority [72.13ms]
+(pass) incomplete interpretation cannot produce an apparently complete dependency inventory [0.61ms]
+
+tests/security/catalog-program.test.ts:
+(pass) canonical catalog program retains actual source and compact lexical conditions in one shared closure [4.65ms]
+(pass) genuine no-catalog policies compile directly, including legacy inline constant meaning [2.11ms]
+(pass) unused pure definitions are checked directly without inventing selected rules [5.04ms]
+(pass) source pins, live ownership, exact recipe domains and unknown meaning refuse atomically [30.15ms]
+(pass) rule-target expansion refuses before normalized condition construction [11.87ms]
+(pass) condition and inline literals consume one private normalization ledger across the program [3.44ms]
+(pass) explicit binding source is retained detached and endpoint correspondence is mandatory [11.08ms]
+(pass) whole catalog recipes share the parameter ledger and clear partial definitions on exhaustion [11.70ms]
+
+tests/security/preparation-sources.test.ts:
+(pass) original enrolled products packet derives separate read/update/Field requirements from explicit owner designations [83.05ms]
+(pass) authored owner profile actually passes existing logical write consumer for original/proposed products [59.62ms]
+(pass) native Subject carrier uses original String Key codec with exact Unicode and explicit refusal domains [12.22ms]
+(pass) review controls refuse getter execution, profile drift, unknown selection meaning and refined Subject domains [349.98ms]
+(pass) exact selected interface, provenance, batch bounds and Subject Key are independently checked [238.06ms]
+(pass) selected predicate restrictions and unknown lowering obligations are never dropped [162.36ms]
+(pass) actual host CLI emits the typed packet and refuses replacement-decoded transport bytes [737.84ms]
+(pass) missing owner actions and unsupported obligations refuse before any native installation [323.74ms]
+
+tests/security/run-command.test.ts:
+(pass) collects successful bounded stdout and stderr [9.11ms]
+(pass) deadline terminates the runner and inherited-pipe descendant [259.56ms]
+(pass) parent completion cleans up descendants retaining output pipes [66.28ms]
+(pass) combined output cap fails closed and terminates [11.62ms]
+(pass) spawn failure returns a bounded failure [0.44ms]
+
+tests/security/association-selector.test.ts:
+(pass) shared draft selector represents original member-backed associations without inferred graph refs [0.51ms]
+(pass) shared selector keeps graph references and endpoint representation distinct [0.11ms]
+(pass) member-backed source correspondence retains original Keys and refuses wrong owners [0.43ms]
+(pass) member-backed mapping has the same 256 component bound as the draft schema [4.18ms]
+(pass) endpoint equality domains resolve from issued snapshot and reject mismatches or unresolved meaning [0.41ms]
+(pass) selected Record classification coverage is explicit, exact and retained [0.46ms]
+(pass) composed association checks require actual core validity before descriptor matching [1.91ms]
+(pass) graph core composition retains original-source refusal and checks independently authored supported sources [3.20ms]
+(pass) classification utility refuses a foreign scoped Record even when local labels match [0.10ms]
+(pass) original graph qualifier requires explicit draft Key-agreement interpretation [2.08ms]
+(pass) shared checked association entrypoint keeps branch semantics and refuses wrong-scope interpretations [1.76ms]
+
+tests/security/ontology-checks-candidate.test.ts:
+(pass) whole migrated ontology resolves original Keys, classifications and association sources [0.99ms]
+(pass) whole ontology refuses incoherent revisions, declarations and unresolved semantics [6.93ms]
+(pass) one ontology supports member associations and both graph witness forms [1.70ms]
+
+tests/security/disclosure.test.ts:
+(pass) typed disclosure preserves null, absence, withholding and replacement domain [1.92ms]
+(pass) whole batch refuses malformed or extra representations without exposing values [5.06ms]
+
+tests/security/native/pg18-projection-expressions.test.ts:
+(pass) closed expression input and provider refuse unsupported SQL/semantics atomically [0.53ms]
+(pass) quotes, slash and supplementary scalars remain SQL literals; no native permit [0.02ms]
+
+tests/security/protection/wire.test.ts:
+(pass) wire requires known kind, qualified domains and explicit transform declarations [0.39ms]
+(pass) typed literal carriers and parameter names are bounded without truncating source [0.35ms]
+(pass) parameterized disclosure properties have explicit wire shapes and typed bucket bounds [0.41ms]
+(pass) custody, reversal and hash salt have explicit unverified shapes [0.42ms]
+(pass) known wire shape never qualifies function/domain/query or native custody [0.39ms]
+
+tests/security/protection/obligations.test.ts:
+(pass) stored declarations retain every unverified custody, propagation and separate action obligation [2.18ms]
+(pass) unsalted hashes require effective equality and report dictionary warning without executing an algorithm [6.75ms]
+(pass) exact source purpose separation refuses ordinary aliases without banning explicit reverse grants [22.91ms]
+(pass) source pins, complete declarations and selected domains refuse atomically, including unused transforms [31.83ms]
+(pass) ordinary original transport carries the stored canonical token and never reverses it [2.56ms]
+
+tests/security/protection/current-query-read.test.ts:
+(pass) query source/property compatibility never grants an undisclosed protected token read [5.10ms]
+(pass) separately authored token-original policy preserves Staff/project membership and complete-fact refusal [21.58ms]
+
+tests/security/protection/catalog.test.ts:
+(pass) envelope inspection preserves uninterpreted payload and never grants interpretation [0.77ms]
+(pass) exact pair identities reject duplicates without separator collisions or normalization [0.11ms]
+(pass) malformed envelopes and structural bounds refuse without truncation [5.12ms]
+(pass) snapshot does not invoke getters; public metadata cannot redefine built-in schema [0.07ms]
+
+tests/security/protection/source.test.ts:
+(pass) protection source preserves unknown catalog content in JSON and YAML [0.47ms]
+(pass) protection boundary refuses host imports/globals and accepts library source [2.76ms]
+
+tests/security/protection/current-query-source.test.ts:
+(pass) named current query sources resolve coherently and reject stale or substituted owner sources [40.30ms]
+
+tests/security/protection/domains.test.ts:
+(pass) qualified closure resolves every occurrence and preserves distinct complete domain definitions [0.45ms]
+(pass) pin closure refuses stale duplicate missing extra and unknown metadata without partial coordinates [1.27ms]
+(pass) foreign missing and non-Field domains refuse including unused transforms and all declaration sites [3.86ms]
+(pass) unknown core policy and catalog meaning remains source but cannot qualify domains [0.98ms]
+(pass) core definitions retain all known families containers and unspecified meaning without inventing function semantics [1.95ms]
+(pass) domain closure is bounded before document validation and never executes getters [24.13ms]
+
+tests/security/protection/functions.test.ts:
+(pass) constant changes output family but always checks original input and output domain [3.38ms]
+(pass) null-out and constant null are transformed values and never bypass invalid inputs [1.40ms]
+(pass) partial uses Unicode scalars without overlap and exposes short inputs explicitly [1.64ms]
+(pass) fixed redaction and prefix use explicit units zero counts and output refinements [1.02ms]
+(pass) numeric buckets floor negative values and retain exact large integers [0.67ms]
+(pass) decimal bucket coefficients preserve scale and original spelling without rounding [0.83ms]
+(pass) explicit Gregorian profile owns date truncation and refuses calendar/refinement substitution [1.34ms]
+(pass) closed signatures scalar domains exact source scope and immutable results refuse substitutions [2.18ms]
+(pass) bounds refuse before producing oversize output and unsupported/native recipes stay closed [0.77ms]
+(pass) selected policy Fields cannot be substituted for the declared transform domains [0.84ms]
+
+tests/security/protection/policy-v2.test.ts:
+(pass) representation upgrade changes only version/revision and preserves exact legacy constant payload [36.16ms]
+(pass) new revision, source shape and source/target text budgets are enforced [1.33ms]
+(pass) unknown old members cannot be silently promoted into recognized new meaning [0.91ms]
+(pass) catalog references require an exact pin and cannot masquerade as inline constants [1.36ms]
+(pass) record/relationship prototype grammar is preserved but not downgraded or activated [0.17ms]
+(pass) exact source lookup retains both snapshots and returns bounded coordinates, never domain authority [0.36ms]
+(pass) known legacy roundtrip retains constant behavior but never refreshes a host fact attestation [13.05ms]
+(pass) forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning [14.09ms]
+
+tests/security/protection/query-properties.test.ts:
+(pass) conditional properties exercise all five operators and never attest actual query lineage [6.18ms]
+(pass) mandatory requirements implied stability and original mode remain separate [0.94ms]
+(pass) random tokens cannot disclose join or group even with an authored equality claim [0.56ms]
+(pass) parameterized properties use exact scope and original typed literal equality without rewriting source [1.12ms]
+(pass) invalid dependencies source substitutions and indices refuse rather than issue a profile [0.91ms]
+(pass) typed parameters apply original literal semantics atomically and preserve unsupported values [0.73ms]
+(pass) private literal ledgers refuse expansion and cumulative work without caller limit widening [2.94ms]
+(pass) wire interpretation bounds refuse rather than trim and a known positive is checked [6.47ms]
+(pass) parameter and query stages share the private literal budget [0.97ms]
+
+tests/security/protection/disclosure.test.ts:
+(pass) typed transport retains six distinctions with exact JSON/YAML round trips and no authority [4.57ms]
+(pass) whole batch rejects malformed distinctions, substituted domains and hidden data [16.05ms]
+(pass) original stored token uses actual canonical output Field without reverse or implicit plaintext [2.01ms]
+(pass) all metadata is validated in empty/withheld batches and explicit dates do not imply temporal semantics [1.35ms]
+(pass) bounds and shared literal work refuse atomically, with no input accessor execution [15.83ms]
+
+ 342 pass
+ 0 fail
+ 3987 expect() calls
+Ran 342 tests across 56 files. [46.51s]

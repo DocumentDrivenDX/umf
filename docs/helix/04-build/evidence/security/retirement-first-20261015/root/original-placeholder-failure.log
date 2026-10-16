@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-retirement-first-probe.py", line 88, in <module>
+    authentication = scalar(assessor, "SELECT jsonb_agg(jsonb_build_object('type',type,'method',auth_method,'error',error) ORDER BY rule_number) FROM pg_hba_file_rules WHERE type LIKE 'host%'")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-retirement-first-probe.py", line 62, in scalar
+    return connection.execute(sql, parameters).fetchone()[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-clean-install-20261013/lib/python3.12/site-packages/psycopg/connection.py", line 304, in execute
+    raise ex.with_traceback(None)
+psycopg.ProgrammingError: only '%s', '%b', '%t' are allowed as placeholders, got '%''

@@ -15,3 +15,6 @@ native/smithy/browser/target/
 __pycache__/
 *.pyc
 .ddx/*.stale-break.lock
+
+# Stable POSIX coordination inode for native identity preflight attempts.
+/docs/helix/04-build/evidence/security/.databricks-actors.json.lock

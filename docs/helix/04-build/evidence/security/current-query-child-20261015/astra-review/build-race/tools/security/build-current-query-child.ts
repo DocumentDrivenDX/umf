@@ -1,0 +1,25 @@
+/** Build the private Bun child with original dependency notices. */
+import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
+import {resolve,join,isAbsolute} from 'node:path';
+import {createHash} from 'node:crypto';
+const root=resolve(import.meta.dir,'../..'),destination=process.argv[2];
+if(!destination||!isAbsolute(destination)||process.argv.length!==3)throw Error('One absolute fresh output directory required');
+await mkdir(destination);process.chdir(root);
+const built=await Bun.build({entrypoints:['tools/security/current-query-child-main.ts'],target:'bun',format:'esm',metafile:true});
+if(!built.success||!built.metafile||built.outputs.length!==1)throw Error('Private child build refused');
+const bundle=new Uint8Array(await built.outputs[0]!.arrayBuffer()),rawMeta:any=built.metafile,metadata=typeof rawMeta==='string'?JSON.parse(rawMeta):rawMeta,inputs=Object.keys(metadata.inputs).sort(),hash=(bytes:Uint8Array|string)=>createHash('sha256').update(bytes).digest('hex');
+const sourcePins:Record<string,string>={};for(const input of inputs)sourcePins[input]=hash(await readFile(resolve(root,input)));
+const packages=new Set<string>();for(const input of inputs)if(input.startsWith('node_modules/')){const p=input.split('/');packages.add(p.slice(0,p[1]!.startsWith('@')?3:2).join('/'));}
+await writeFile(join(destination,'current-query-child.mjs'),bundle);await writeFile(join(destination,'metafile.json'),JSON.stringify(metadata,null,2)+'\n');
+const notices=[];await mkdir(join(destination,'notices'));
+for(const path of [...packages].sort()){
+ const original=resolve(root,path),pkg=JSON.parse(await readFile(join(original,'package.json'),'utf8')),target=join(destination,'notices',pkg.name.replace('/','__'));await mkdir(target);
+ const files=(await readdir(original)).filter(name=>/^(licen[sc]e|notice|copying|copyright)([. _-]|$)/i.test(name));if(!files.length)throw Error('Original notice absent: '+pkg.name);
+ for(const name of ['package.json',...files])await writeFile(join(target,name),await readFile(join(original,name)));
+ notices.push({name:pkg.name,version:pkg.version,license:pkg.license,files});
+}
+await writeFile(join(destination,'umf-package.json'),await readFile(join(root,'package.json')));
+for(const input of inputs)if(hash(await readFile(resolve(root,input)))!==sourcePins[input])throw Error('Build source changed');
+const manifest={profile:'umf.security.private-query-child/0.1-candidate',bun:Bun.version,bundleSha256:hash(bundle),sourcePins,notices,scope:'Original private computation only; no database, native issuer, permission or guarded release'};
+await writeFile(join(destination,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
+console.log(JSON.stringify({directory:destination,bundleSha256:manifest.bundleSha256,inputs:inputs.length,notices:notices.length}));

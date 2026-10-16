@@ -317,3 +317,12 @@ validation, defaults or Key semantics. A caller must satisfy that profile's
 Field/value restrictions; parsing a token is not complete core/native admission.
 The security reference function must select the exact profile explicitly and
 retain its source. No implementation qualification follows from this link.
+
+
+### Proposed 0.9.0 literal extension
+
+CONTRACT-067 extends schema literals with bits128Hex and uuid in core0.9.0,
+including exact allowed-value equality, examples, defaults and value checking.
+The original0.8.0 surfaces above do not adopt these domains. Existing JavaScript
+numeric APIs retain their contract; UUID/bit conversion uses the separate codecs,
+never implicit number admission or integer/UUID coercion.

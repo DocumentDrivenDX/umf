@@ -1,0 +1,26 @@
+test_aliases_do_not_create_subjects (__main__.ActorPreflightTests.test_aliases_do_not_create_subjects) ... ok
+test_auth_failure_replaces_old_success_and_keeps_only_partial_metadata (__main__.ActorPreflightTests.test_auth_failure_replaces_old_success_and_keeps_only_partial_metadata) ... ok
+test_different_workspace_does_not_count (__main__.ActorPreflightTests.test_different_workspace_does_not_count) ... ok
+test_each_attempt_has_new_custody (__main__.ActorPreflightTests.test_each_attempt_has_new_custody) ... ok
+test_final_publication_is_at_most_once_for_current_pending_attempt (__main__.ActorPreflightTests.test_final_publication_is_at_most_once_for_current_pending_attempt) ... ok
+test_host_credentials_query_fragment_and_invalid_port_are_never_retained (__main__.ActorPreflightTests.test_host_credentials_query_fragment_and_invalid_port_are_never_retained) ... ok
+test_host_whitespace_controls_non_ascii_and_invalid_dns_are_not_retained (__main__.ActorPreflightTests.test_host_whitespace_controls_non_ascii_and_invalid_dns_are_not_retained) ... ok
+test_invalid_configuration_refuses_without_cli (__main__.ActorPreflightTests.test_invalid_configuration_refuses_without_cli) ... ok
+test_keyboard_interrupt_is_explicit_failure (__main__.ActorPreflightTests.test_keyboard_interrupt_is_explicit_failure) ... ok
+test_malformed_json_and_version_are_redacted (__main__.ActorPreflightTests.test_malformed_json_and_version_are_redacted) ... ok
+test_malformed_native_actor_never_becomes_zero_available_actors (__main__.ActorPreflightTests.test_malformed_native_actor_never_becomes_zero_available_actors) ... ok
+test_missing_or_duplicate_profile_context_refuses (__main__.ActorPreflightTests.test_missing_or_duplicate_profile_context_refuses) ... ok
+test_older_success_cannot_replace_a_newer_failure (__main__.ActorPreflightTests.test_older_success_cannot_replace_a_newer_failure) ... ok
+test_one_ordinary_actor_is_insufficient (__main__.ActorPreflightTests.test_one_ordinary_actor_is_insufficient) ... ok
+test_pending_is_published_before_first_cli_call (__main__.ActorPreflightTests.test_pending_is_published_before_first_cli_call) ... ok
+test_raw_cli_failures_and_timeouts_are_redacted (__main__.ActorPreflightTests.test_raw_cli_failures_and_timeouts_are_redacted) ... ok
+test_real_overlapping_processes_keep_the_newer_failure (__main__.ActorPreflightTests.test_real_overlapping_processes_keep_the_newer_failure) ... ok
+test_termination_cannot_leave_an_old_success_current (__main__.ActorPreflightTests.test_termination_cannot_leave_an_old_success_current) ... ok
+test_three_distinct_identities_are_only_observations (__main__.ActorPreflightTests.test_three_distinct_identities_are_only_observations) ... ok
+test_unknown_exception_text_is_not_an_error_code (__main__.ActorPreflightTests.test_unknown_exception_text_is_not_an_error_code) ... ok
+test_unretained_pending_prevents_native_attempt (__main__.ActorPreflightTests.test_unretained_pending_prevents_native_attempt) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.486s
+
+OK
