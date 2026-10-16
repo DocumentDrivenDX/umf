@@ -1,0 +1,32 @@
+{
+  "checks": [
+    "original core08 schema accepted through public API",
+    "instance created through public atomic group API",
+    "original public query remains usable with the explicitly selected SDK compiler cohort",
+    "identity derives from original complete native targets; absent or mixed sources refuse",
+    "original engine catalog roundtrip",
+    "typed native read",
+    "bound injection remains data",
+    "eager verify uses native read path",
+    "different valid compiler SQL refuses original correspondence",
+    "real CLI catalog/check and generated typed query through original Truss path",
+    "native owner pages retain complete authored Key without gaps",
+    "page continuation rejects parameter drift and typed/native Key disagreement",
+    "real CLI page catalog/check and generated typed continuation retain native bytes",
+    "owned RC cursor stream bound releases portal and native transaction",
+    "early generator close rolls back owned native cursor; huge max_rows has no API ceiling",
+    "active foreign transaction refused before SQL; unrelated work commits unchanged",
+    "generated stream yields exact2200of2500 in authored Key order; independent public writer after first page excluded",
+    "new native stream observes committed writer; huge bound does not truncate finite source",
+    "actual native role revocation during typed processing discards complete fetched page and terminates cursor",
+    "between-page native revocation raises after complete admitted prefix; terminal portal cleanup confirmed",
+    "typed DTO failure after native fetch yields no page and terminal native cleanup succeeds",
+    "real native exclusive lock times out first page; shared startup budget and complete rollback confirmed",
+    "physical disconnect before final cleanup withholds final page and closes quarantined connection",
+    "delayed successful native cleanup preserves original final-page deadline and withholds late final rows",
+    "native authorization revocation refuses SDK read"
+  ],
+  "ownedServerStopped": true,
+  "temporal": "HELD",
+  "scope": "Truss RC module ACL schema, instance and typed read; no protected current-policy/action qualification"
+}

@@ -18,3 +18,10 @@ export function licenseModules(inventory:string):LicenseModule[]{
 export function moduleNotice(modules:readonly LicenseModule[]):string{
  return 'Optional UMF Protobuf compiler. Built with Go 1.27.1.\nPinned modules:\n'+modules.map(m=>m.name+'|'+m.version).join('\n')+'\n\nSee licenses/ for license texts.';
 }
+
+/** Preserve the actual case from the downloaded module inventory. */
+export function dependencyLicenseBasename(entries:readonly string[]):string{
+ const candidates=entries.filter(name=>name.toUpperCase()==='LICENSE');
+ if(candidates.length!==1)throw Error('Missing or ambiguous dependency LICENSE basename');
+ return candidates[0]!;
+}

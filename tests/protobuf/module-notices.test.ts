@@ -1,5 +1,5 @@
 import {expect,test} from 'bun:test';
-import {licenseModules,moduleNotice} from '../../scripts/protobuf-module-notices';
+import {licenseModules,moduleNotice,dependencyLicenseBasename} from '../../scripts/protobuf-module-notices';
 
 test('module notices are identical across host paths and inventory order',()=>{
  const mac='umf.local/protobuf||/Users/a/repo/native/protobuf|true|false\nz/module|v2.0.0|/Users/a/go/z|false|false\na/module|v1.0.0|/Users/a/go/a|false|false\n';
@@ -16,4 +16,11 @@ test('uncached or ambiguous module license inventories refuse instead of omittin
 test('replacements and flattened license-name collisions refuse explicitly',()=>{
  expect(()=>licenseModules('example.org/a|v1.0.0|/replacement|false|true')).toThrow('replacements');
  expect(()=>licenseModules('example.org/a/b|v1.0.0|/cache/a|false|false\nexample.org/a-b|v1.0.0|/cache/b|false|false')).toThrow('filename');
+});
+
+test('license lookup preserves real filename case and refuses missing or ambiguous entries',()=>{
+ expect(dependencyLicenseBasename(['Readme','License','go.mod'])).toBe('License');
+ expect(dependencyLicenseBasename(['README.md','LICENSE','go.mod'])).toBe('LICENSE');
+ expect(()=>dependencyLicenseBasename(['README.md','LICENSE.txt'])).toThrow();
+ expect(()=>dependencyLicenseBasename(['LICENSE','License'])).toThrow();
 });
