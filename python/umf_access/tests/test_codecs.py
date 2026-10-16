@@ -1,4 +1,5 @@
 """Actual generated non-temporal codec checks; target carriers unqualified."""
+
 import ast
 import unittest
 from decimal import Decimal
@@ -14,8 +15,10 @@ class GeneratedCodecTests(unittest.TestCase):
     def test_non_temporal_decode_and_bypass(self):
         row = decode_OrderSummary(["amount", "orderId"], [Decimal("1.200"), "o-1"])
         self.assertEqual(row.amount.as_tuple(), Decimal("1.200").as_tuple())
-        for value in (OrderPatch.model_construct(amount="private-invalid"),
-                      OrderPatch().model_copy(update={"amount": Decimal("1.234")})):
+        for value in (
+            OrderPatch.model_construct(amount="private-invalid"),
+            OrderPatch().model_copy(update={"amount": Decimal("1.234")}),
+        ):
             with self.assertRaises(ValueError) as error:
                 encode_Order_patch(value)
             self.assertNotIn("private-invalid", str(error.exception))
@@ -28,7 +31,9 @@ class GeneratedCodecTests(unittest.TestCase):
         path = Path(commerce.__file__).parent / "codecs.py"
         tree = ast.parse(path.read_text())
         for node in ast.walk(tree):
-            self.assertNotIsInstance(node, (ast.If, ast.Raise, ast.Try, ast.For, ast.While, ast.Compare))
+            self.assertNotIsInstance(
+                node, (ast.If, ast.Raise, ast.Try, ast.For, ast.While, ast.Compare)
+            )
         functions = [node for node in tree.body if isinstance(node, ast.FunctionDef)]
         self.assertGreaterEqual(len(functions), 12)
         for node in functions:
@@ -39,7 +44,9 @@ class GeneratedCodecTests(unittest.TestCase):
         for node in tree.body:
             if isinstance(node, ast.AnnAssign):
                 # Literal metadata cannot execute an artifact-selected factory.
-                self.assertFalse(any(isinstance(child, ast.Call) for child in ast.walk(node.value)))
+                self.assertFalse(
+                    any(isinstance(child, ast.Call) for child in ast.walk(node.value))
+                )
 
 
 if __name__ == "__main__":

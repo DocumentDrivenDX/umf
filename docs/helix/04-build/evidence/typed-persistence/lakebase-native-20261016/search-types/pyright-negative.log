@@ -1,0 +1,30 @@
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/count.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/count.py:4:57 - error: Cannot access attribute "count" for class "RankedQuery[Doc, Doc]"
+    Attribute "count" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/exists.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/exists.py:4:57 - error: Cannot access attribute "exists" for class "RankedQuery[Doc, Doc]"
+    Attribute "exists" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/foreign_leg.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/foreign_leg.py:5:40 - error: Argument of type "SearchLeg[Other]" cannot be assigned to parameter "second" of type "SearchLeg[OutputT@hybrid]" in function "hybrid"
+    "SearchLeg[Other]" is not assignable to "SearchLeg[Doc]"
+      Type parameter "OutputT@SearchLeg" is invariant, but "Other" is not the same as "Doc" (reportArgumentType)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/order_by.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/order_by.py:4:57 - error: Cannot access attribute "order_by" for class "RankedQuery[Doc, Doc]"
+    Attribute "order_by" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/page.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/page.py:4:57 - error: Cannot access attribute "page" for class "RankedQuery[Doc, Doc]"
+    Attribute "page" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/update.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/update.py:4:57 - error: Cannot access attribute "update" for class "RankedQuery[Doc, Doc]"
+    Attribute "update" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/wrong_text.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/wrong_text.py:4:50 - error: Argument of type "Param[int]" cannot be assigned to parameter "text" of type "Param[str]" in function "matches"
+    "Param[int]" is not assignable to "Param[str]"
+      Type parameter "T_co@Param" is covariant, but "int" is not a subtype of "str"
+        "int" is not assignable to "str" (reportArgumentType)
+/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/wrong_vector.py
+  /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/search/negative/wrong_vector.py:4:58 - error: Argument of type "Param[str]" cannot be assigned to parameter "vector" of type "Param[Vector]" in function "near_vector"
+    "Param[str]" is not assignable to "Param[Vector]"
+      Type parameter "T_co@Param" is covariant, but "str" is not a subtype of "Vector"
+        "str" is not assignable to "tuple[float, ...]" (reportArgumentType)
+8 errors, 0 warnings, 0 informations

@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install ./python pytest ruff build
+      - run: python -m pip install ./python pytest ruff==0.17.1 build
       - run: python -m pytest python/tests -q
       - run: ruff check python
       - run: python -m build python
