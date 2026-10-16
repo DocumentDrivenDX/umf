@@ -41,3 +41,14 @@ establish the SDK's snapshot stream contract. Protected Truss action/current-pol
 and manifest bulk adoption, managed mutation authority/receipts and broader
 backend qualification remain open. B-TP-003/overall SDK acceptance is not closed.
 Temporal qualification remains **HELD**.
+
+## Final input bounds
+
+The final page API bounds native/Python request and original-program bytes to
+4MiB and continuation JSON to1MiB before parsing, matching the portable input
+boundary. The bounded-inputs packet retains Rust7, all four actual installed
+Python oversized-input refusals, Chromium32 and the focused installed native14
+replay with verified server cleanup. Its exact compiler wheel/source pins are
+separate from the earlier complete two-interpreter regression cohort. Original
+reports and compiler patches remain unchanged. Publication and all previously
+listed unqualified gates remain held.
