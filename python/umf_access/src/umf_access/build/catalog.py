@@ -304,7 +304,7 @@ def compile_catalog(configuration: dict[str,Any], root: Path, compiler: ReadComp
                 if engine:
                     if terminal=='page':raise CatalogBuildError('WEFT_BLOCKED: original engine page catalog required')
                     method=target.get('engineCompiler')
-                    if method not in ({'truss-runtime'} if kind=='truss' else {'registered','ashlar-spark4'}):
+                    if method not in ({'truss-runtime'} if kind=='truss' else {'registered','ashlar-spark4','ashlar-dbsql-20261016'}):
                         raise CatalogBuildError('explicit engine compiler selection required')
                     original=target.get('engineRequests',{}).get(name+':'+str(vi))
                     if type(original) is not dict or original.get('sql')!=logical:
