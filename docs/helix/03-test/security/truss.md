@@ -627,3 +627,43 @@ explicit installer/integrity exclusions and ordinary non-reachability remain
 binding. Admitted maintenance/host-extension and trigger paths still belong to
 the protected source closure and must preserve actual-effect/result conformance;
 privilege exclusion cannot justify omitting their effects or required checks.
+
+
+### Exact native scalar and ordered-Key correspondence
+
+Expand truss.B02/B07/B08/B09/B12/B13/B15 under US-056-AC2/AC6/AC7/AC10
+with independently authored native scalar expectations. These are prerequisites,
+not new case IDs or acceptance promotions. Exercise public writes, complete
+native capture, original semantic evaluation and whole-batch inspection using
+the same declared domains and ordered Keys.
+
+1. Preserve integer tokens beyond binary64 exact range and at both signed64
+   endpoints. Preserve decimal precision/scale boundaries, trailing zeros and
+   negative zero without a floating-point intermediary in the fixture.
+2. Include binary zero/high bytes, empty binary and a multi-component authored
+   Key whose second component is binary. Compare original component order and
+   exact bytes through native capture and semantic output; empty is not absent.
+3. Distinguish composed/decomposed Unicode, supplementary characters and empty
+   text. Require exact Boolean type. For an optional field, separately exercise
+   present-null, absent and present-empty-text in native facts and tagged cells.
+4. Inject integer overflow/underflow and decimal precision/scale violations into
+   a hidden or ownerless row while a different row otherwise qualifies. Require
+   the original global domain check to refuse before any resources, decisions
+   or batch; eligibility filtering must not hide invalid population members.
+5. Inject malformed native binary encoding, numeric Boolean and required-field
+   null separately. Require their intended capture-stage refusal, then restore
+   each savepoint and compare the complete original capture again.
+6. Exercise an unsupported native string such as U+0000 through the public write
+   API. Assert the actual structured refusal and diagnostic stage, settle the
+   caller transaction and independently compare canonical rows. A refusal must
+   not be described as normalization, replacement or successful round trip.
+
+Retain original tokens/bytes, selected source and runtime pins, domain facets,
+ordered Key receipts, exact rendered cells, hidden-row negatives, transaction
+outcomes and cleanup. Qualify each refusal by the stage actually observed;
+unrelated startup, SQL or decoder errors cannot establish a semantic refusal.
+A finite passing corpus does not discharge all codec/domain correspondence,
+query-operator equivalence, timestamps, collections, continuous authority or
+final guarded-release obligations. Diagnostic source substitution cannot
+qualify native source admission, and endpoint source hashes cannot establish
+continuous source custody.
