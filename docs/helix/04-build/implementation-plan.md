@@ -12514,3 +12514,34 @@ CONTRACT-062/TD-056/STP-056 compose the original fold's exact winning source occ
 ### Typed PostgreSQL atomic transport preparation — 2026-10-16
 
 [Retained source-only preflight and frozen runner/probe inputs](evidence/security/native-atomic-presence-20261016/README.md) pass 47 fresh actual producer/whole V2 operations and 1285 source/input pins without Docker or SQL. Six reviewed mixed/empty populations extend the 41 unchanged rendered handoff packets under their original coherent policies/headers. The independently reviewed typed Weft PostgreSQL transport is remote-verified on main 54a822ae. Final R5 runner/probe review is clean after resolving modeled cleanup qualification and complete-I/O deadline findings; exact earlier sources/failures and final independent controls remain retained. The subsequent actual PostgreSQL18.6 campaign passes 47 positive operations and five negative controls / 869 observations, with all 1285 source pins fresh and exact owned container/tmpfs cleanup verified. Original data, selected metadata, mixed/empty populations and private row bags survive actual SQL/driver/typed checker/whole V2 composition. Four negatives corrupt only captured checker frames; one changes actual staged metadata and proves whole V2 validation remains necessary after structural matching. Independent supplied-native-evidence audit is clean: all 901 retained artifacts, 7047 record/custody checks, 4666 provenance checks, 52 held-probe frame replays and fresh producer/V2/codecs pass. The reviewer executes no database; this qualifies supplied native observations and independent non-DB correspondence only. No independent second native campaign or backend case promotion is claimed. The next native campaign must capture complete eligible keys/cells independently, execute exact compiled SQL through the same live Rust context and retain whole V2 validation and verified cleanup. This preparation promotes no case; all 158 UMF required cases and native caller/source/current-cut/operator/release obligations remain open.
+
+### Separate disclosure process integration seam — 2026-10-16
+
+The separate private atomic disclosure child implements the process boundary
+needed by an explicit future Truss presence consumer. It fixes owner/selection
+at initialization and invokes the existing atomic WithinOperation producer once;
+legacy query child and scalar ABI2 enrollment remain unchanged. The combined
+new/legacy child suite passes11 tests/150 assertions, and tooling typechecking
+passes. Two initial test fixtures incorrectly combined byte and count refusal
+expectations; the retained failed run precedes corrected separate controls.
+The full security suite passes324 tests/5267 assertions. Independent Astra Ultra
+review passes144 actual process executions (72 original/mixed/empty packets in
+closed-stdin and held Truss-pipe modes),108 adversarial process controls,14 direct
+session controls,20 build/config controls and3867 custody checks. All749 review
+artifacts are verified and retained in
+[evidence](evidence/security/atomic-disclosure-child-20261016/README.md).
+CHILD-001 reproduced an executable change under unchanged source pins after an
+unpinned TypeScript config change; the repaired builder explicitly selects and
+pre/post-checks root TypeScript/Bun configs, refuses inherited config and retains
+254 current source/config pins. The repaired executable is byte-identical to the
+reviewed original; the counterexample remains immutable. The separately gated
+Weft Runtime/Python bridge is remote-verified on main b8c34c84, with all eight
+reviewed source files matching. No required backend case changes status:45/158
+implemented,113 missing. Next bind this exact separate profile to actual Truss caller/source/
+complete facts/held native context/result validation and guarded release, then
+execute independent ordinary-role identity and revocation cases. The child has
+no post-native whole V2 inspection operation yet; the separate Truss consumer must
+refuse publication until an exact UMF-owned inspector validates the reconstructed
+native batch. Weft owns the isolated Truss consumer/cohort patch; this workstream
+owns that inspector and native security fixtures. Supplied logical cuts and wire
+hashes cannot discharge that integration.

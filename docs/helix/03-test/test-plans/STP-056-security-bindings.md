@@ -2080,3 +2080,31 @@ Before native execution, independently review the exact separately feature-gated
 Use only an owned labelled PostgreSQL18.6 tmpfs fixture under the excluded administrator. Capture complete eligible keys and cell TEXT independently from the actual compiled SQL's driver rows, including explicit physical column order. Keep the original Rust parent/context/binding alive across those queries and the actual checker call. Exercise all 41 rendered original packets, the six reviewed mixed/empty producer populations, duplicate cell values under distinct keys, original null/absence/withheld/actual transformed null, and ineligible-row exclusion. Native unordered rows must retain the exact private resource-key bag before restoration to the original owner order. Retain untouched actual driver rows before deliberately corrupting checker frames with missing/extra rows, scalar-null collapse or a changed header; these are frame-corruption controls, not separately executed altered SQL statements. A self-consistent but source-invalid selected occurrence must demonstrate that a successful structural checker does not discharge required whole V2 source validation.
 
 Retain exact requests/bindings/preparations/artifacts/native captures/frames/reports/public inspection, source endpoint pins, engine/image/mount identity and verified owned cleanup. A source mismatch refuses before Docker creation. Cleanup uncertainty cannot receive a passing final status. This qualifies actual producer/SQL/driver/typed-checker/whole-inspector composition on supplied logical facts only; authenticated production source/caller/Subject/current cut, original operators, role/guard/release and all 158 required cases remain separate mandatory gates.
+
+### Separate atomic disclosure child controls — 2026-10-16
+
+`tests/security/current-disclosure-child.test.ts` supplements AC6/AC10 without
+promoting a required backend case. Exercise exact framed original String/null,
+absence, withholding and transformed-null provenance; complete private denied
+census with no output rows; unreported/stale atomic-cleared refusals; fixed owner
+and selection, exact receipt/version/closed shape, one evaluation and terminal
+failure; duplicate JSON keys, malformed UTF8, truncated/oversized frames,
+field/fact limits and required catalog. Exercise the actual process with fragmented
+and coalesced frames and no partial invalid response. Run unchanged legacy child
+tests alongside this separate profile. Replay all66 original handoff packets
+through the actual fresh bundle and compare entire results with retained original
+producer outputs; verify source pins before and after. Retain dependency notices,
+build/source manifest, original logs and failed test-setup attempts. These are
+supplied-cut process/producer checks, not native SQL, authenticated authority,
+guarded release or a Truss acceptance promotion.
+
+Build controls must reproduce the original unchanged-pins/changed-bundle config
+counterexample, then verify changed config changes recorded pins, all extends
+forms refuse, and missing/invalid config, pre/post-build config drift, executable
+source drift and discovered closure drift refuse without a final manifest.
+Preserve the R1 counterexample and separately frozen repaired source. A
+byte-identical repaired executable permits carrying the original process controls
+with the exact identity witness; it is not a new native campaign. The standalone
+Truss pipe replay does not qualify the installed Truss query API. Post-native
+whole V2 inspection, exact original batch/key/cell correspondence and closing
+native caller/source/protection checks remain required before publication.

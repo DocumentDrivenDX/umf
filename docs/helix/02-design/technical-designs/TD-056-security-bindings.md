@@ -2784,3 +2784,49 @@ the independent existing public0.2 inspector and JSON/YAML codec, plus real
 Chromium correspondence and prior API regression. Conditional algebra is relevant
 to selection/carrier invariants but does not prove this code's refinement. The
 full backend plans, operators, authenticated custody and release remain required.
+
+## Separate atomic disclosure computation child — 2026-10-16
+
+The private `umf.security.private-disclosure-child/0.1-candidate` process adapter
+is a separate projection-only composition seam. Initialization retains one locally
+compiled catalog program, its original owner and one selected Record/Field list.
+One subsequent request supplies the logical cut and calls the existing atomic
+WithinOperation producer once, with a shared bounded ledger. The protocol cannot
+replace the owner/selection after initialization or invoke the legacy route/action
+batch. Complete private decisions/resources and the original V2 batch travel
+together; no scalar conversion reconstructs missing provenance. A generic framing
+refusal contains no logical result. Semantic refusal retains the producer's exact
+cleared result. The existing query child and ABI2 consumer selection are unchanged.
+
+The framed input is limited to4MiB, output to16MiB, selected columns to256 and
+supplied facts/graphs to10000; the underlying producer additionally bounds rows,
+cells, literals and work. The parent owns the process deadline and lifetime.
+Hashes correlate original protocol bytes; they authenticate neither the sources
+nor the caller/cut. This is private host-side tooling outside the browser library.
+Its bounded native consumer must validate the prepared projection-only program,
+exact selected source/model/header correspondence, complete eligible physical
+population, all returned cells and the whole V2 batch before guarded release.
+
+Read-only inspection of Truss main ea9c3f080cecd5da2d3be42258c26c3d0dcab7bc
+locates reusable ordinary-caller/source/authority locks and final rechecks in
+`_current_query_runtime`, optional scalar fact capture in `_current_query_facts`,
+and required String/signed64 staging in `_current_query_stage`. Truss must adopt
+an explicit separate consumer cohort, original source registration, packaged child
+and disclosure-aware result API. The old scalar ABI2 wheel/bundle is not repinned
+by this adapter. Actual Truss integration, graph fact capture, caller/current-cut
+authentication, revocation drain and final release remain unfinished.
+
+The strict JSON reader additionally caps decoded text at4000000 UTF-16 code
+units, structural depth at128 and parsed values at100000. The wire cap is an
+upper bound, not a promise that every smaller frame is admissible. EOF may cancel
+after initialization; the host must require its complete expected operation and
+own deadline, cancellation and confirmed process cleanup. The Truss native source
+registration receipt and the different fixed-owner/selection child initializer
+receipt must remain distinct.
+
+The separately built bundle captures/checks root TypeScript and Bun configuration
+before discovery and after build, explicitly selects root tsconfig and refuses
+any inherited TypeScript configuration. This repairs reviewed CHILD-001; it makes
+no external-runtime or held-file/ABA proof. Post-native whole V2 inspection is a
+separate unfinished entrypoint. Native publication must remain refused until that
+exact owner inspection and the remaining native/guard obligations are composed.
