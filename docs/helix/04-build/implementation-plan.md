@@ -12646,3 +12646,12 @@ qualify the original9e328d91 engine/source cohort and explicitly substitute the
 accepted-source provider. Actual native binding and original host guard/release
 composition remain required before graph read admission. Existing206951/d333
 consumer assets are not implicitly repinned by either formal or native evidence.
+
+
+### Reviewed native source prerequisites on Truss main — 2026-10-16
+
+Truss31ce4449 adds the strict supplied-source descriptor0.1 and CONTRACT-013;984d6a65 adds the unexported stock-cursor observer0.2 with all four retained R1 findings resolved in a separate Astra R2 review. [Tracked component evidence](evidence/security/native-source-correspondence-20261016/README.md) checks every retention-manifest member at the immutable merged Truss commit. No old consumer, registration, ABI/default cohort or source assessor is repinned. Descriptor0.1 deliberately rejects observer0.2.
+
+Source/installed tests pass15 for descriptor and7 for observer; wheel correspondence is499/500 members at their separately retained epochs. Actual native observer4passes/8.156s apply only to the captured PostgreSQL18.6/native0.71 overlay; original59360445 differs at six paths. Later main source checks pass22 with4 native tests skipped and1485 boundary imports; no current-main native claim follows.
+
+The next correspondence boundary must use the actual borrowed Weft preparation and existing UMF resolution APIs. Its operation-specific report/hash cannot be embedded into the same persistent native descriptor that the preparation already contains: that would create a self-hash cycle. Persistent descriptors retain original model pins and explicit mappings; fresh witnesses join context-specific requirements after selection. No placeholder preparation, reconstructed context or Python policy/key interpreter establishes admission. Actual Field/ordered-Key/edge/codec mapping, native registration, authenticated source/Subject continuity and final guarded release remain open. No acceptance promotion; shared158/34 scope remains45implemented/113missing.
