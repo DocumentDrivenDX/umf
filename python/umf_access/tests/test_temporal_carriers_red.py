@@ -5,12 +5,15 @@ Only admitted source tokens are parsed here to construct Python test inputs.
 """
 import json
 import unittest
-from datetime import date, datetime, timedelta, timezone, tzinfo
+from datetime import UTC, date, datetime, timedelta, timezone, tzinfo
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from umf_access.values import (
-    validate_date, validate_instant, validate_local, temporal_token,
+    temporal_token,
+    validate_date,
+    validate_instant,
+    validate_local,
 )
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -83,7 +86,7 @@ class TemporalCarrierTests(unittest.TestCase):
             value = datetime(2024, 1, 2, 12, 0, 0, 123456, tzinfo=timezone(offset))
             with self.subTest(offset=offset):
                 self.assertIs(validate_instant(value), value)
-                utc = value.astimezone(timezone.utc)
+                utc = value.astimezone(UTC)
                 expected = (f"{utc.year:04d}-{utc.month:02d}-{utc.day:02d}T"
                             f"{utc.hour:02d}:{utc.minute:02d}:{utc.second:02d}."
                             f"{utc.microsecond:06d}Z")
@@ -95,7 +98,7 @@ class TemporalCarrierTests(unittest.TestCase):
         self.assertEqual(temporal_token("local", datetime(1, 1, 1)),
                          "0001-01-01T00:00:00.000000")
         self.assertEqual(temporal_token("instant", datetime(1969, 12, 31, 23, 59, 59, 500000,
-                                                           tzinfo=timezone.utc)),
+                                                           tzinfo=UTC)),
                          "1969-12-31T23:59:59.500000Z")
         for value in (datetime.min.replace(tzinfo=timezone(timedelta(microseconds=1))),
                       datetime.max.replace(tzinfo=timezone(timedelta(microseconds=-1)))):
@@ -108,19 +111,19 @@ class TemporalCarrierTests(unittest.TestCase):
     def test_fold_dynamic_zones_and_wrong_carriers_refuse_without_value_leak(self):
         invalid = [
             ("local", datetime(2024, 11, 3, 1, 30, fold=1)),
-            ("instant", datetime(2024, 11, 3, 1, 30, fold=1, tzinfo=timezone.utc)),
+            ("instant", datetime(2024, 11, 3, 1, 30, fold=1, tzinfo=UTC)),
             ("instant", datetime(2024, 1, 1, tzinfo=DynamicZone())),
             ("instant", datetime(2024, 1, 1, tzinfo=CustomFixedZone())),
-            ("instant", DatetimeSubclass(2024, 1, 1, tzinfo=timezone.utc)),
+            ("instant", DatetimeSubclass(2024, 1, 1, tzinfo=UTC)),
             ("local", DatetimeSubclass(2024, 1, 1)),
             ("date", DateSubclass(2024, 1, 1)),
             ("instant", datetime(2024, 1, 1, tzinfo=ZoneInfo("UTC"))),
             ("date", datetime(2024, 1, 1)),
-            ("local", datetime(2024, 1, 1, tzinfo=timezone.utc)),
+            ("local", datetime(2024, 1, 1, tzinfo=UTC)),
             ("instant", datetime(2024, 1, 1)),
         ]
         for kind, value in invalid:
-            with self.subTest(kind=kind, type=type(value).__name__):
+            with self.subTest(kind=kind, type=type(value).__name__):  # noqa: SIM117 -- Keep transaction and refusal/cleanup scopes explicit.
                 with self.assertRaises(ValueError):
                     temporal_token(kind, value)
         for kind, check in VALIDATORS.items():

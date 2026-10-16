@@ -1,13 +1,17 @@
 """Search capture -> original Weft owner programs. No execution or embedder calls."""
 from __future__ import annotations
+
+import hashlib
+import json
 from dataclasses import replace
-from typing import Any,cast
-import hashlib,json
-from ..capture import CapturedDeclaration,CapturedVariant,ProjectionRef
-from ..dsl import Node,FieldRef,SearchLeg,Fusion,render_logical
+from typing import Any, cast
+
+from ..capture import CapturedDeclaration, ProjectionRef
+from ..dsl import FieldRef, Node, SearchLeg, render_logical
 from ..native_program import NativeProgram
-from ..types import Vector,StrictModel
+from ..types import StrictModel
 from .commands import _carrier
+
 
 class SearchBuildError(ValueError):pass
 
@@ -25,9 +29,10 @@ def emit_search(compiler:Any,declaration:CapturedDeclaration,record:Any,targets:
         if fusion is not None and fusion.kind!='rrf':raise SearchBuildError('SEARCH_UNSUPPORTED: target-defined fusion requires a separately qualified native program')
         depth=(fusion.depth if fusion.depth is not None else min(1000,top*2)) if fusion else top
         params={};paths:list[tuple[str,str,str|None]]=[]
-        from pydantic import MISSING
-        from typing import get_args,get_origin,Union
         from types import UnionType
+        from typing import Union, get_args, get_origin
+
+        from pydantic import MISSING
         for parameter in declaration.parameters:
             if parameter.optional and parameter.name not in variant.presence:continue
             members=get_args(parameter.carrier) if get_origin(parameter.carrier) in (Union,UnionType) else (parameter.carrier,)
@@ -43,8 +48,8 @@ def emit_search(compiler:Any,declaration:CapturedDeclaration,record:Any,targets:
         used:set[str]=set()
         def visit(value:Any)->None:
             if isinstance(value,Node):
-                if value.op=='param':used.add(cast(str,value.args[0]))
-                elif value.op=='key_param':used.update(cast(str,value.args[0])+'__'+c for c in cast(tuple[str,...],value.args[1]))
+                if value.op=='param':used.add(cast(str,value.args[0]))  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
+                elif value.op=='key_param':used.update(cast(str,value.args[0])+'__'+c for c in cast(tuple[str,...],value.args[1]))  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
                 for child in value.args:visit(child)
             elif isinstance(value,tuple):
                 for child in value:visit(child)

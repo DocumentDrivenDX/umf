@@ -4,18 +4,22 @@ The host owns the Spark session and its single-tenant administrative deployment.
 No managed Unity Catalog, temporal, mutable page or mutation claim is implied.
 """
 from __future__ import annotations
+
+from collections.abc import Generator
 from dataclasses import dataclass
 from datetime import timedelta
-from collections.abc import Generator
-from typing import Any,TypeVar
-from threading import Timer,Event
+from threading import Event, Timer
+from typing import Any, TypeVar
 from uuid import uuid4
+
 from pydantic import BaseModel
+
 from .adoption import TargetIdentity
-from .targets import TargetMismatch,NotCompiledForTarget,binding_digest,_milliseconds
-from .reviewed import CatalogRead
-from .pages import ReadPage,ReadContinuation
+from .pages import ReadContinuation, ReadPage
 from .postgres_read import TimedOut
+from .reviewed import CatalogRead
+from .targets import NotCompiledForTarget, TargetMismatch, _milliseconds, binding_digest
+
 P=TypeVar('P',bound=BaseModel);R=TypeVar('R',bound=BaseModel)
 @dataclass(frozen=True)
 class DeltaSnapshot:

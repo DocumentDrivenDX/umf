@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Generic, TypeVar
+
 R = TypeVar("R")
 
 @dataclass(frozen=True)

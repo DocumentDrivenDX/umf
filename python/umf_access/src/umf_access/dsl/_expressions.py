@@ -1,11 +1,13 @@
 from __future__ import annotations
+
 """Typed, capture-only logical expressions."""
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, replace
 from datetime import date, datetime
 from decimal import Decimal
 from typing import Any, Generic, TypeVar, cast, overload
-from pydantic import BaseModel, MISSING
+
+from pydantic import MISSING, BaseModel
 
 from ._context import CaptureError, require_capture
 from ._nodes import FieldRef, Node, RecordRef, literal

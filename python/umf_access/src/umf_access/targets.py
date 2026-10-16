@@ -4,18 +4,31 @@ Every call uses the same checked catalog program and native admission boundary.
 Connections, credentials and application schema selection remain with the host.
 """
 from __future__ import annotations
-from collections.abc import AsyncGenerator, Generator
-from dataclasses import dataclass
-from datetime import timedelta
+
 import hashlib
 import json
 import math
-from typing import Any, Protocol, TypeVar, Generic
+from collections.abc import AsyncGenerator, Generator
+from dataclasses import dataclass
+from datetime import timedelta
+from typing import Any, TypeVar
+
 from pydantic import BaseModel
+
+from .postgres_read import (
+    ReadContinuation,
+    ReadPage,
+    TimedOut,
+    execute_page,
+    execute_page_async,
+    execute_read,
+    execute_read_async,
+    execute_stream,
+    execute_stream_async,
+    verify_read,
+    verify_read_async,
+)
 from .reviewed import CatalogRead
-from .postgres_read import (Connection, AsyncConnection, ReadPage, ReadContinuation,
-                            execute_read, execute_page, execute_stream,
-                            execute_read_async, execute_page_async, execute_stream_async, verify_read, verify_read_async, TimedOut)
 
 P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
@@ -24,7 +37,7 @@ class TargetMismatch(ValueError): pass
 class NotCompiledForTarget(ValueError): pass
 
 from .adoption import TargetIdentity
-from .protocols import ReadTarget, AsyncReadTarget
+
 
 @dataclass(frozen=True)
 class PostgresConfiguration:

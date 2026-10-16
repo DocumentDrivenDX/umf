@@ -1,13 +1,20 @@
 """Packaging harness controls; these do not establish runtime behavior."""
-from pathlib import Path
-import json
 import sys
 import tempfile
 import unittest
 import zipfile
-sys.path.insert(0, str(Path(__file__).parent / "packaging"))
-from replay_installed import check_runtime_pin, inspect_wheel, check_generated_inventory, verify_installed_files, classify_import_open, check_public_runtime_abi, isolated_environment
+from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent / "packaging"))
+from replay_installed import (
+    check_generated_inventory,
+    check_public_runtime_abi,
+    check_runtime_pin,
+    classify_import_open,
+    inspect_wheel,
+    isolated_environment,
+    verify_installed_files,
+)
 from snapshot_runtime import generated_snapshot_identity, reserve_generated_snapshot
 
 PIN = {"distribution":"umf_access", "version":"0.1.0.dev0", "abi":"umf-access-runtime/0.1"}

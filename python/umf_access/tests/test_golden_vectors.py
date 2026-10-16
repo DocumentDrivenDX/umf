@@ -5,8 +5,14 @@ from decimal import Decimal
 from pathlib import Path
 
 from umf_access.values import (
-    validate_boolean, validate_binary, validate_integer, validate_decimal,
-    validate_string, validate_length, validate_range, validate_allowed,
+    validate_allowed,
+    validate_binary,
+    validate_boolean,
+    validate_decimal,
+    validate_integer,
+    validate_length,
+    validate_range,
+    validate_string,
 )
 
 ROOT = Path(__file__).resolve().parents[3]

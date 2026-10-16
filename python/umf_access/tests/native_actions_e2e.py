@@ -1,17 +1,34 @@
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import time
 from pathlib import Path
-import os,sys,json,subprocess,tempfile,hashlib,time
+
 root=Path(__file__).resolve().parents[3]
 sys.path.insert(0,os.environ['UMF_NATIVE_GENERATED_ROOT'])
-import psycopg,weft
 from datetime import timedelta
-from umf_access.native_actions import NativeProgram,NativeScope,PostgresActionExecutor
-from umf_access.protocols import Committed,Rejected,Denied,ActionRefused
-from native_sales.actions import Approve,ApproveInput,Actions,Guarded,PostFail,CreateOrder,CreateOrderInput,FirstFalse
+
+import psycopg
+import weft
+from native_sales.actions import (
+ Actions,
+ Approve,
+ ApproveInput,
+ CreateOrderInput,
+ FirstFalse,
+ Guarded,
+ PostFail,
+)
 from native_sales.keys import OrderKey
+from umf_access.native_actions import NativeProgram, NativeScope, PostgresActionExecutor
+from umf_access.protocols import ActionRefused, Committed, Denied, Rejected
+
 pg=Path(tempfile.mkdtemp(prefix='umf-native-actions-',dir='/private/tmp'));(pg/'socket').mkdir()
 bin=Path('/opt/homebrew/opt/postgresql@18/bin');started=False;cases=[]
 def command(*args):
- p=subprocess.run(list(map(str,args)),text=True,capture_output=True)
+ p=subprocess.run(list(map(str,args)),text=True,capture_output=True, check=False)
  if p.returncode:raise RuntimeError(p.stdout+p.stderr)
  return p.stdout
 try:
@@ -123,8 +140,9 @@ try:
  cases.append('native primary-key violation confirms rollback')
  # Both real SERIALIZABLE transactions establish their snapshot before
  # either can update. The loser must report the native conflict without retry.
- from threading import Barrier
  from concurrent.futures import ThreadPoolExecutor
+ from threading import Barrier
+
  from umf_access.protocols import Conflict
  gate=Barrier(2)
  class ConcurrentAdmission(Admission):
@@ -188,6 +206,7 @@ try:
  assert isinstance(result,Indeterminate) and unknown.quarantined and lost.original.closed and result.original.receipt is not None
  cases.append('unavailable reconciliation retains original receipt and returns Indeterminate without retry')
  import asyncio
+
  from umf_access.native_actions import AsyncPostgresActionExecutor
  class AsyncAdmission:
   async def admit(self,conn,program,*,deadline):
@@ -252,8 +271,8 @@ try:
   cases.append('real async bulk preview and one atomic set-based write')
   await c.close()
  asyncio.run(async_bulk_cases())
- from umf_access.postgres_bulk import PostgresBulkTarget,AsyncPostgresBulkTarget
- from umf_access.targets import PostgresConfiguration,binding_digest
+ from umf_access.postgres_bulk import AsyncPostgresBulkTarget, PostgresBulkTarget
+ from umf_access.targets import PostgresConfiguration, binding_digest
  target_config=PostgresConfiguration('native_app',binding_digest(request['binding']),(180006,),timedelta(seconds=5))
  admin.execute("UPDATE native_app.orders SET status='draft'")
  generated_plan=queries.approve_drafts(PostgresBulkTarget(conn,target_config,Admission()),status='draft')
@@ -273,7 +292,8 @@ try:
 
  # Independent native deployment is constrained to a SECURITY DEFINER
  # operation that takes the exclusive counterpart of the admission fence.
- import threading,concurrent.futures
+ import concurrent.futures
+ import threading
  deployed=psycopg.connect(base+' user=deploy_actor',autocommit=True)
  try:deployed.execute('REVOKE native_approver FROM erik')
  except psycopg.errors.InsufficientPrivilege:pass

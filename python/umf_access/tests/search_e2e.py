@@ -1,16 +1,29 @@
-from pathlib import Path
-import sys,json,os,subprocess,tempfile,asyncio,hashlib
-from importlib.metadata import version
+import asyncio
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import tempfile
 from datetime import timedelta
+from importlib.metadata import version
+from pathlib import Path
+
 root=Path(__file__).resolve().parents[3];generated=Path(os.environ['UMF_SEARCH_GENERATED_ROOT'])
 sys.path.insert(0,str(generated))
 import psycopg
-from umf_access.postgres_search import PostgresSearchTarget,AsyncPostgresSearchTarget,EmbedderMismatch,SearchError
-from umf_access.targets import PostgresConfiguration,binding_digest,TargetMismatch
 from umf_access.postgres_read import TimedOut
+from umf_access.postgres_search import (
+ AsyncPostgresSearchTarget,
+ EmbedderMismatch,
+ PostgresSearchTarget,
+ SearchError,
+)
+from umf_access.targets import PostgresConfiguration, TargetMismatch, binding_digest
+
 pg=Path(tempfile.mkdtemp(prefix='umf-search-pg18-',dir='/private/tmp'));(pg/'socket').mkdir();bin=Path('/opt/homebrew/opt/postgresql@18/bin');started=False;cases=[]
 def command(*args):
- p=subprocess.run(list(map(str,args)),text=True,capture_output=True)
+ p=subprocess.run(list(map(str,args)),text=True,capture_output=True, check=False)
  if p.returncode:raise RuntimeError(p.stdout+p.stderr)
  return p.stdout
 (generated/'search_declarations.py').write_text('''from umf_access import query,Param,Vector
@@ -36,6 +49,7 @@ config['umf']={'documents':[{'path':'original-model.json','sha256':hashlib.sha25
 for extra in ([],['--check']):
  command(sys.executable,'-B','-m','umf_access.build.catalog','catalog','--config',generated/'search-config.json','--root',generated,*extra)
 from search_docs import queries
+
 control=Path(os.environ['UMF_PGVECTOR_CONTROL_ROOT']).resolve()
 if any(c.isspace() for c in str(control)):raise ValueError('owned fixture control path must have no whitespace')
 try:

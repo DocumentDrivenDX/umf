@@ -1,12 +1,15 @@
 """Captured scalar command -> original Weft native-bulk request, build only."""
 from __future__ import annotations
+
 from dataclasses import replace
 from decimal import Decimal
-from typing import Any, cast, get_args, get_origin, Union
 from types import UnionType
+from typing import Any, Union, cast, get_args, get_origin
+
 from ..capture import CapturedDeclaration, CapturedVariant, ProjectionRef
-from ..dsl import Node, FieldRef, Ordering, render_logical
+from ..dsl import FieldRef, Node, Ordering, render_logical
 from ..native_program import NativeProgram
+
 
 class CommandBuildError(ValueError): pass
 
@@ -80,8 +83,8 @@ def emit_command(compiler: Any, declaration: CapturedDeclaration, record: Any, t
                  action_requests: dict[Any,Any], action_refs: list[Any], manifest: dict[str,Any],
                  number: int, name: str, package: str, type_name: Any) -> tuple[list[str],list[dict[str,Any]]]:
     from pydantic import MISSING
+
     from ..types import StrictModel
-    from ..native_program import canonical_json
     reference=next((a for a in action_refs if (a.module,a.action)==declaration.action),None)
     if reference is None:raise CommandBuildError('command action was not selected at stage one')
     symbol=next(s['symbol'] for s in manifest['symbols'] if s['role']=='action-ref' and s['pointer']==reference.source.action_pointer)
@@ -112,7 +115,8 @@ def emit_command(compiler: Any, declaration: CapturedDeclaration, record: Any, t
         for target in targets:
             request=action_requests[(target['id'],reference.module,reference.action)]
             program=compile_command(compiler,declaration,variant,record,target,request,manifest['inputDigest'],parameters)
-            import hashlib,json
+            import hashlib
+            import json
             digest=hashlib.sha256(json.dumps(target['binding'],ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
             pin=(target['kind'],target['backendId'],target['backendVersion'],target['targetProfile'],digest,tuple((p['name'],tuple(str(v) for v in p['versions'])) for p in target['platform']))
             variants.append(f'CommandVariant({variant.presence!r}, TargetPin{pin!r}, NativeProgram({program.original_json!r}, {program.statements_json!r}, {program.bundle_input_digest!r}), {symbol}, {tuple(paths)!r})')
