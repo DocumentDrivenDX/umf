@@ -5,3 +5,10 @@ The clean rebuilt SDK wheel is exactly SHA256c2c3794d89277d644ca1198ff63fd076fae
 `truss/` is a fresh actual25-control adoption run against this changed SDK wheel, newly generated current0.3.0 native_sales models, installed Truss226 and final cursor compiler candidate. It uses public schema acceptance and2,500 public instance creations, exact generated read/page/stream calls, an independent writer, native revocation, blocked-query timeout and terminal/disconnect/delayed-cleanup/foreign-transaction controls. Its owned server stopped. `sdk-identity.json` verifies the complete installed SDK package payload against the archive.
 
 This ordinary module-ACL bounded cursor candidate does not qualify protected security/actions, scalable source wiring or managed adoption. Older Truss/Ashlar/managed receipts retain their original distinct wheels and pins. Temporal SDK qualification remains HELD.
+
+`ashlar/` independently replays the changed SDK cohort against actual local
+Spark4.0.1/Delta4.0.0 and owned PostgreSQL pins:17 controls pass, including
+original read/page/snapshot-stream, native Key integrity, continuation drift,
+publication/authority closure and cleanup. Spark and the owned PostgreSQL server
+stopped. This is local exact-cohort adoption only; the earlier managed-service
+R3 receipt remains attached to its original distinct SDK/compiler/native pins.
