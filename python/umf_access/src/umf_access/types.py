@@ -1,8 +1,11 @@
 """Shared generated-model ABI. Imports perform no host operations."""
 from dataclasses import dataclass
 from typing import ClassVar, Generic, TypeAlias, TypeVar, final
+import re
 
 from pydantic import BaseModel, ConfigDict, MISSING as MISSING
+
+RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
 
 Vector: TypeAlias = tuple[float, ...]
 
@@ -53,6 +56,30 @@ def _is_model_type(value: object, *, allow_none: bool = False) -> bool:
 
 @final
 @dataclass(frozen=True)
+class ActionSource:
+    """Exact original document/declaration identity, never an authority token."""
+    document_id: str
+    core_version: str
+    module: str
+    action: str
+    document_sha256: str
+    action_pointer: str
+    invocation_id: str
+    invocation_version: str
+
+    def __post_init__(self) -> None:
+        if any(type(value) is not str or not value for value in (
+                self.document_id, self.core_version, self.module, self.action,
+                self.action_pointer, self.invocation_id, self.invocation_version)):
+            raise ValueRuleError("complete original action source required")
+        if not re.fullmatch(r"[0-9a-f]{64}", self.document_sha256):
+            raise ValueRuleError("original document SHA-256 required")
+        if not self.action_pointer.startswith("/modules/"):
+            raise ValueRuleError("original action pointer required")
+
+
+@final
+@dataclass(frozen=True)
 class ActionRef(Generic[InputT, OutputT]):
     """Immutable generated action identity and value types; never an executor."""
 
@@ -60,10 +87,13 @@ class ActionRef(Generic[InputT, OutputT]):
     action: str
     input_type: type[InputT]
     output_type: type[OutputT]
+    source: ActionSource | None = None
 
     def __post_init__(self) -> None:
         if any(type(value) is not str or not value for value in (self.module, self.action)):
             raise ValueRuleError("action identity requires nonempty schema IDs")
+        if self.source is not None and (self.source.module != self.module or self.source.action != self.action):
+            raise ValueRuleError("action source identity differs")
         if not _is_model_type(self.input_type):
             raise TypeError("action input requires a strict generated model type")
         if not _is_model_type(self.output_type, allow_none=True):

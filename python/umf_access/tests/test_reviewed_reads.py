@@ -12,7 +12,7 @@ from typing import ClassVar
 from pydantic import ConfigDict
 from umf_access.types import StrictModel
 from umf_access.reviewed import ReviewedSQL, CatalogRead, ReadBuildError, build_query
-from umf_access.postgres_read import execute_read, execute_page, ReadObligationUnmet, TimedOut
+from umf_access.postgres_read import execute_read, execute_page, execute_stream, ReadObligationUnmet, TimedOut
 from umf_access.capture import capture
 from umf_access.dsl import Column, FieldRef, Join, JoinProjection, Query, RecordRef, query
 
@@ -208,6 +208,34 @@ class Native(unittest.TestCase):
     def tearDownClass(cls):
         cls.a.close(); cls.b.close(); cls.admin.close()
 
+    def test_stream_uses_one_snapshot_and_releases_connection(self):
+        entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(Compiler(), target="postgresql18", binding=binding())
+        stream = execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=1001)
+        try:
+            first = next(stream)
+            self.assertEqual(first.id, 1)
+            self.assertEqual(self.a.execute("SHOW transaction_isolation").fetchone()[0], "repeatable read")
+            self.assertEqual(self.a.execute("SHOW transaction_read_only").fetchone()[0], "on")
+            self.admin.execute("UPDATE praxis_test.orders SET owner_role='praxis_b' WHERE id=4")
+            self.assertEqual([first.id] + [row.id for row in stream], [1,2,4,5])
+            self.assertEqual(self.a.info.transaction_status, 0)
+        finally:
+            stream.close()
+            self.admin.execute("UPDATE praxis_test.orders SET owner_role='praxis_a' WHERE id=4")
+        early = execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3)
+        next(early)
+        self.assertEqual(self.a.info.transaction_status, 2)
+        early.close()
+        self.assertEqual(self.a.info.transaction_status, 0)
+        self.assertEqual(len(list(execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3))), 3)
+        for limit in (0, -1, True):
+            with self.assertRaises(ValueError):
+                execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=limit)
+        with self.a.transaction():
+            self.a.execute("SELECT 1")
+            with self.assertRaises(ReadObligationUnmet):
+                execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3)
+
     def test_two_roles_see_only_own_totals(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(Compiler(), target="postgresql18", binding=binding())
         a = execute_read(self.a, entry, Minimum(minimum=Decimal("0")), app_schema="praxis_test")
@@ -251,6 +279,22 @@ class Native(unittest.TestCase):
         def declaration():
             return Order.objects.join(Order.c.customer).order_by(Order.c.order_id.asc()).into(OrderCustomerProjection).limit(10).all()
         entry = build_query(capture(declaration), Compiler(), parameters=Empty, result=OrderCustomer, target="postgresql18", binding=bound, row_cap=10)
+        pins = entry.artifact()["stageOne"]
+        self.assertEqual(pins["inputDigest"], OrderCustomer.UMF_BUNDLE_INPUT_DIGEST)
+        class NoConnection:
+            @property
+            def info(self):
+                raise AssertionError("stale catalog touched the connection")
+        old_digest, old_abi = OrderCustomer.UMF_BUNDLE_INPUT_DIGEST, OrderCustomer.UMF_RUNTIME_ABI
+        try:
+            for name, value in (("UMF_BUNDLE_INPUT_DIGEST", "0" * 64), ("UMF_RUNTIME_ABI", ("umf_access", "different", "umf-access-runtime/0.1"))):
+                setattr(OrderCustomer, name, value)
+                with self.assertRaisesRegex(ReadBuildError, "CATALOG_STALE"):
+                    execute_read(NoConnection(), entry, Empty(), app_schema=schema)
+                OrderCustomer.UMF_BUNDLE_INPUT_DIGEST, OrderCustomer.UMF_RUNTIME_ABI = old_digest, old_abi
+        finally:
+            OrderCustomer.UMF_BUNDLE_INPUT_DIGEST, OrderCustomer.UMF_RUNTIME_ABI = old_digest, old_abi
+
         rows = execute_read(self.a, entry, Empty(), app_schema=schema)
         self.assertEqual([(r.order_id, r.name) for r in rows], [("a1", "Alpha"), ("a2", None)])
         from umf_access.dsl import Param

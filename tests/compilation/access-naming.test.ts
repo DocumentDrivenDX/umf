@@ -3,7 +3,7 @@ import {generateAccessPackage} from '../../src/compilation/index';
 import {profile,request,mutateSource} from './access-fixtures';
 // @covers US-080-AC4
  test('unsafe_names_and_limits_refuse',()=>{
- for(const name of ['c','objects','Join','JoinProjection','model_config','test_reserved','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS']){const req=request();req.names=[{sourceId:'logical',pointer:'/modules/0/elements/0',python:name}];const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='NAME')).toBe(true);expect(r.files).toEqual([]);}
+ for(const name of ['c','objects','Join','JoinProjection','Actions','ReplayingActions','ActionSource','ActionEndpoint','ActionExecutor','OriginalOutcome','model_config','test_reserved','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS']){const req=request();req.names=[{sourceId:'logical',pointer:'/modules/0/elements/0',python:name}];const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='NAME')).toBe(true);expect(r.files).toEqual([]);}
  for(const name of ['decimal','pydantic','umf_access']){const req=request();req.package=name;expect(generateAccessPackage(req,profile()).diagnostics.some(d=>d.code==='NAME')).toBe(true);}
  for(const name of ['../evil','NotAPackage']){const req=request();req.package=name;expect(()=>generateAccessPackage(req,profile())).toThrow();}
  const req=request();for(let i=1;i<33;i++)req.sources.push({id:`extra${i}`,format:'json',text:req.sources[0]!.text});const r=generateAccessPackage(req,profile());expect(r.outcome).toBe('refused');expect(r.diagnostics.some(d=>d.code==='LIMIT')).toBe(true);
@@ -38,4 +38,19 @@ import {profile,request,mutateSource} from './access-fixtures';
 test('joined projection descriptor names cannot shadow another projection model',()=>{
  const q=request();q.projections=[{name:'summary',record:q.records[0]!,fields:[{module:'commerce',element:'orderId'}]},{name:'summaryProjection',record:q.records[0]!,fields:[{module:'commerce',element:'amount'}]}];
  const result=generateAccessPackage(q,profile());expect(result.outcome).toBe('refused');expect(result.diagnostics.some(d=>d.code==='NAME')).toBe(true);
+});
+
+// Generated endpoint names must be legal even when their class name is legal.
+test('action endpoint keyword and case-fold collisions refuse before emission',()=>{
+ for(const collision of [false,true]){
+  const req=request();req.sources[0]!.text=JSON.stringify(require('../../fixtures/access/commerce/actions.json'));
+  req.actions=[{module:'commerce',action:'shipOrder'}];
+  if(!collision){req.names=[{sourceId:'logical',pointer:'/modules/0/extensions/umf.actions/actions/0',python:'Class'}];}
+  else {
+   mutateSource(req,d=>{const actions=(d.modules[0]!.extensions as any)['umf.actions'].actions;actions.push({...structuredClone(actions[0]),id:'otherAction'});});
+   req.actions.push({module:'commerce',action:'otherAction'});
+   req.names=[{sourceId:'logical',pointer:'/modules/0/extensions/umf.actions/actions/0',python:'SHIPOrder'},{sourceId:'logical',pointer:'/modules/0/extensions/umf.actions/actions/1',python:'Shiporder'}];
+  }
+  const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.diagnostics.some(d=>d.code==='NAME')).toBe(true);expect(result.files).toEqual([]);
+ }
 });

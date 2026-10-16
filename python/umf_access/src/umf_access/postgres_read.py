@@ -4,7 +4,8 @@ No pools, credentials, compiler imports, role switches or runtime query lowering
 The supplied connection must be idle; the read owns only its own transaction.
 """
 from __future__ import annotations
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, Sequence, Generator
+from contextlib import nullcontext
 from decimal import Decimal
 from typing import Any, Generic, Protocol, cast
 from dataclasses import dataclass
@@ -97,13 +98,13 @@ class ReadPage(Generic[R]):
 
 
 def _execute(connection: Connection, entry: CatalogRead[P, R], params: P, *,
-                 app_schema: str, target: str = "postgresql18", timeout_ms: int = 5000, after: ReadContinuation | None = None) -> ReadPage[R]:
+                 app_schema: str, target: str = "postgresql18", timeout_ms: int = 5000, after: ReadContinuation | None = None, _snapshot: bool = False) -> ReadPage[R]:
     artifact = entry.artifact()
     if type(timeout_ms) is not int or not 1 <= timeout_ms <= 2_147_483_647:
         raise ValueError("timeout_ms must be a positive PostgreSQL millisecond bound")
     if not app_schema or "\x00" in app_schema or app_schema in ("pg_catalog", "information_schema") or app_schema.startswith("pg_"):
         raise ReadObligationUnmet("app schema is outside the application profile")
-    if connection.info.transaction_status != 0:
+    if connection.info.transaction_status != (2 if _snapshot else 0):
         raise ReadObligationUnmet("caller connection must be idle; no nested read transaction")
     if not 180000 <= connection.info.server_version < 190000 or target != artifact["target"]:
         raise ReadObligationUnmet("catalog requires its exact PostgreSQL 18 target profile")
@@ -126,9 +127,10 @@ def _execute(connection: Connection, entry: CatalogRead[P, R], params: P, *,
     search_path = 'pg_catalog, "' + app_schema.replace('"', '""') + '", pg_temp'
     deadline = time.monotonic() + timeout_ms / 1000
     try:
-        with connection.transaction():
+        with nullcontext() if _snapshot else connection.transaction():
             with connection.cursor() as raw_cursor:
-                cast(Cursor, raw_cursor).execute("SET TRANSACTION READ ONLY")
+                if not _snapshot:
+                    cast(Cursor, raw_cursor).execute("SET TRANSACTION READ ONLY")
                 cursor = _DeadlineCursor(cast(Cursor, raw_cursor), deadline)
                 cursor.execute("SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('search_path', %s, true), pg_catalog.set_config('row_security', 'on', true)", (str(timeout_ms), search_path))
                 cursor.execute(_ROLE)
@@ -206,3 +208,48 @@ def execute_page(connection: Connection, entry: CatalogRead[P, R], params: P, *,
     if not entry.artifact().get("cursorOutputs"):
         raise ReadObligationUnmet("catalog was not built as a keyset page")
     return _execute(connection, entry, params, app_schema=app_schema, after=after, target=target, timeout_ms=timeout_ms)
+
+
+def execute_stream(connection: Connection, entry: CatalogRead[P, R], params: P, *,
+                   app_schema: str, max_rows: int, target: str = "postgresql18",
+                   timeout_ms: int = 5000) -> Generator[R, None, None]:
+    """Bounded export in one repeatable-read snapshot, using compiled keyset pages.
+
+    Close the iterator when abandoning an export to release its transaction.
+    Each page receives its own finite deadline; exceptions never signal a
+    successfully completed export. The host retains ownership of the connection.
+    """
+    if type(max_rows) is not int or max_rows < 1:
+        raise ValueError("max_rows must be a positive integer")
+    if connection.info.transaction_status != 0:
+        raise ReadObligationUnmet("caller connection must be idle")
+    if not entry.artifact().get("cursorOutputs"):
+        raise ReadObligationUnmet("stream requires a compiled keyset catalog")
+    if type(timeout_ms) is not int or not 1 <= timeout_ms <= 2_147_483_647:
+        raise ValueError("timeout_ms must be a positive PostgreSQL millisecond bound")
+    return _stream(connection, entry, params, app_schema=app_schema, max_rows=max_rows,
+                   target=target, timeout_ms=timeout_ms)
+
+
+def _stream(connection: Connection, entry: CatalogRead[P, R], params: P, *,
+            app_schema: str, max_rows: int, target: str, timeout_ms: int) -> Generator[R, None, None]:
+    # Recheck at first iteration: a host may have started a transaction since
+    # constructing the iterator. Never nest inside host-owned work.
+    if connection.info.transaction_status != 0:
+        raise ReadObligationUnmet("caller connection must remain idle")
+    with connection.transaction():
+        with connection.cursor() as cursor:
+            cursor.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
+        emitted = 0
+        after = None
+        while emitted < max_rows:
+            page = _execute(connection, entry, params, app_schema=app_schema, target=target,
+                            timeout_ms=timeout_ms, after=after, _snapshot=True)
+            for item in page.items:
+                if emitted == max_rows:
+                    return
+                emitted += 1
+                yield item
+            if page.next_after is None:
+                return
+            after = page.next_after

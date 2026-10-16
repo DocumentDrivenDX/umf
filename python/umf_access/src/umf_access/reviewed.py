@@ -11,6 +11,7 @@ import json
 import re
 from typing import Generic, Protocol, TypeVar, cast
 from pydantic import BaseModel
+from .types import RUNTIME_IDENTITY
 
 P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
@@ -105,6 +106,23 @@ def _fields(model: type[BaseModel]) -> list[dict[str, object]]:
     return result
 
 
+def _generation(*models: type[BaseModel]) -> dict[str, object] | None:
+    generations: list[dict[str, object]] = []
+    for model in models:
+        digest = getattr(model, "UMF_BUNDLE_INPUT_DIGEST", None)
+        abi = getattr(model, "UMF_RUNTIME_ABI", None)
+        if digest is None and abi is None:
+            continue  # Explicit standalone reviewed models have no stage one.
+        if type(digest) is not str or not re.fullmatch("[0-9a-f]{64}", digest) or type(abi) is not tuple or len(abi) != 3 or any(type(x) is not str or not x for x in abi):
+            raise ReadBuildError("CATALOG_STALE: invalid generated metadata")
+        if abi != RUNTIME_IDENTITY:
+            raise ReadBuildError("CATALOG_STALE: installed runtime differs")
+        generations.append({"inputDigest": digest, "runtimeAbi": list(abi)})
+    if generations and any(pin != generations[0] for pin in generations):
+        raise ReadBuildError("CATALOG_STALE: mixed generated model revisions")
+    return generations[0] if generations else None
+
+
 @dataclass(frozen=True)
 class ReviewedSQL(Generic[P, R]):
     """Fixed authored text, explicit generated parameter/result types, no execution."""
@@ -129,6 +147,7 @@ class ReviewedSQL(Generic[P, R]):
             raise ReadBuildError("compiled parameter/result types differ from declaration")
         artifact["dbapiSql"] = _dbapi(cast(str, artifact["sql"]))
         artifact["dbapiParameterOrder"] = _dbapi_order(cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"]))
+        artifact["stageOne"] = _generation(self.parameters, self.result)
         artifact["catalogDigest"] = hashlib.sha256(_json(artifact).encode()).hexdigest()
         return CatalogRead(_json(artifact), self.parameters, self.result)
 
@@ -145,11 +164,14 @@ class CatalogRead(Generic[P, R]):
         digest = artifact.pop("catalogDigest", None)
         if digest != hashlib.sha256(_json(artifact).encode()).hexdigest():
             raise ReadBuildError("catalog digest mismatch")
+        if artifact.get("stageOne") != _generation(self.parameters, self.result):
+            raise ReadBuildError("CATALOG_STALE: loaded generation differs")
         if artifact.get("version") != "weft.raw-read/0.1" or artifact.get("status") != "compiled" or artifact.get("target") not in ("postgresql18", "lakebase18"):
             raise ReadBuildError("unsupported catalog artifact")
         if not _compatible_outputs(artifact.get("outputs"), _fields(self.result)) or artifact.get("parameters") != _fields(self.parameters):
             raise ReadBuildError("catalog model signatures changed")
         structural = dict(artifact)
+        structural.pop("stageOne", None)
         structural.pop("dbapiSql", None)
         structural.pop("dbapiParameterOrder", None)
         compiler_digest = structural.pop("structuralDigest", None)

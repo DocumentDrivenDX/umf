@@ -16,7 +16,7 @@ class GeneratedActionTypes(unittest.TestCase):
         self.assertIs(ShipOrderInput.model_fields["order"].annotation, OrderKey)
         self.assertIs(ShipOrderInput.model_fields["memo"].default, MISSING)
         self.assertIn(MISSING, get_args(ShipOrderInput.model_fields["memo"].annotation))
-        self.assertEqual(get_type_hints(ShipOrderRejected)["code"], Literal["NOT_READY"])
+        self.assertEqual(get_type_hints(ShipOrderRejected)["code"], Literal["NOT_READY", "ENTITY_MISSING"])
         self.assertIs(ShipOrder.input_type, ShipOrderInput)
         self.assertIs(ShipOrder.output_type, ShipOrderOutput)
         value = ShipOrderInput(order=OrderKey(order_id="o-1"))
