@@ -1,0 +1,585 @@
+{
+  "status": "passed",
+  "nativeExecution": false,
+  "sourceSha256": "4ac26e4617d02da9f25d42eff51993d778adce9a6382159fcdab7276976c185d",
+  "coverage": "Mocked subprocess outcomes only; no daemon/crash recovery claim.",
+  "results": [
+    {
+      "id": "timeout-after-creation",
+      "passed": true,
+      "expectedCleanup": true,
+      "observedRemovedIds": [
+        "owned-id"
+      ],
+      "errorType": "TimeoutExpired",
+      "error": "Command '['docker', 'run', '-d', '--name', 'umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171', '--label', 'umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171', '--publish', '127.0.0.1::5432', '-e', 'POSTGRES_HOST_AUTH_METHOD=scram-sha-256', '-e', 'POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust', '-e', 'POSTGRES_PASSWORD', 'postgres:17.9']' timed out after 20 seconds",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "inspect",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "rm",
+          "-f",
+          "-v",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "volume",
+          "ls",
+          "--format",
+          "{{.Name}}"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--filter",
+          "label=umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--format",
+          "{{.ID}}"
+        ]
+      ]
+    },
+    {
+      "id": "nonzero-after-creation",
+      "passed": true,
+      "expectedCleanup": true,
+      "observedRemovedIds": [
+        "owned-id"
+      ],
+      "errorType": "RuntimeError",
+      "error": "Owned fixture command failed: simulated Docker client failure",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "inspect",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "rm",
+          "-f",
+          "-v",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "volume",
+          "ls",
+          "--format",
+          "{{.Name}}"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--filter",
+          "label=umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--format",
+          "{{.ID}}"
+        ]
+      ]
+    },
+    {
+      "id": "ownership-mismatch",
+      "passed": true,
+      "expectedCleanup": false,
+      "observedRemovedIds": [],
+      "errorType": "RuntimeError",
+      "error": "Fixture ownership changed",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ]
+      ]
+    },
+    {
+      "id": "preexisting-name",
+      "passed": true,
+      "expectedCleanup": false,
+      "observedRemovedIds": [],
+      "errorType": "RuntimeError",
+      "error": "Preexisting fixture refused",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ]
+      ]
+    },
+    {
+      "id": "unresolved-creation",
+      "passed": true,
+      "expectedCleanup": false,
+      "observedRemovedIds": [],
+      "errorType": "RuntimeError",
+      "error": "Unresolved fixture creation outcome for umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ]
+      ]
+    },
+    {
+      "id": "ambiguous-creation",
+      "passed": true,
+      "expectedCleanup": false,
+      "observedRemovedIds": [],
+      "errorType": "RuntimeError",
+      "error": "Ambiguous owned fixture creation outcome",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ]
+      ]
+    },
+    {
+      "id": "unexpected-mount",
+      "passed": true,
+      "expectedCleanup": false,
+      "observedRemovedIds": [],
+      "errorType": "RuntimeError",
+      "error": "Unexpected fixture volume ownership",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "inspect",
+          "owned-id"
+        ]
+      ]
+    },
+    {
+      "id": "unexpected-bind",
+      "passed": true,
+      "expectedCleanup": false,
+      "observedRemovedIds": [],
+      "errorType": "RuntimeError",
+      "error": "Unexpected fixture volume ownership",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "inspect",
+          "owned-id"
+        ]
+      ]
+    },
+    {
+      "id": "retained-volume",
+      "passed": true,
+      "expectedCleanup": true,
+      "observedRemovedIds": [
+        "owned-id"
+      ],
+      "errorType": "RuntimeError",
+      "error": "Owned fixture data volume remains",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "inspect",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "rm",
+          "-f",
+          "-v",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "volume",
+          "ls",
+          "--format",
+          "{{.Name}}"
+        ]
+      ]
+    },
+    {
+      "id": "volume-list-failure",
+      "passed": true,
+      "expectedCleanup": true,
+      "observedRemovedIds": [
+        "owned-id"
+      ],
+      "errorType": "RuntimeError",
+      "error": "Owned fixture command failed: simulated volume inventory failure",
+      "calls": [
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.Names}}"
+        ],
+        [
+          "docker",
+          "run",
+          "-d",
+          "--name",
+          "umf-retirement-first-a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--label",
+          "umf.security.run=a2fdde19-f281-4bc0-86bd-7756ec472171",
+          "--publish",
+          "127.0.0.1::5432",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=scram-sha-256",
+          "-e",
+          "POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust",
+          "-e",
+          "POSTGRES_PASSWORD",
+          "postgres:17.9"
+        ],
+        [
+          "docker",
+          "container",
+          "ls",
+          "-a",
+          "--format",
+          "{{.ID}} {{.Names}}"
+        ],
+        [
+          "docker",
+          "inspect",
+          "--format",
+          "{{index .Config.Labels \"umf.security.run\"}}",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "inspect",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "rm",
+          "-f",
+          "-v",
+          "owned-id"
+        ],
+        [
+          "docker",
+          "volume",
+          "ls",
+          "--format",
+          "{{.Name}}"
+        ]
+      ]
+    }
+  ]
+}

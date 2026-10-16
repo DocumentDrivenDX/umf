@@ -12401,3 +12401,11 @@ No native case promotion:45/158 accepted,113 unimplemented; original132 IDs/hash
 runner; Delta B04/B10 have no native runner and ordinary identity/deployment
 qualification remains missing. This transport implements no diagnostic provider.
 See [versioned source and evidence](evidence/security/projection-query-child-v2-20261015/README.md).
+
+### Raw retirement-first ordering component — 2026-10-15
+
+For US-057-AC2/5/7, the existing PG17.9 publisher routine now has an independent retirement-first native schedule. Forty matching observations cover commit/refusal, rollback/refusal and an unsafe claim-omission control that returns rows after terminal retirement. Exact native lock barriers precede release; the original routine is restored and the owned fixture removed. This closes a component test gap, not L03 or backend acceptance. The psycopg harness does not qualify the public decoder, host issuer, complete writer closure or final transport. [Source, native receipt and review evidence](evidence/security/retirement-first-20261015/README.md) retain the scope and failed exploratory attempt.45/158 cases remain accepted; all158 remain required.
+
+The accompanying broader evidence audit fails101/221 checks on existing source/cross-repository drift;31 of the45 retained accepted cases are source-current. The failing current report is preserved, not represented as full qualification. Resolving that drift remains required by the original goal.
+
+Independent Astra Ultra review found no remaining component finding after two cleanup corrections. Its ten fault-injection controls and original reports are retained verbatim in the packet. This is source/receipt inspection and modeled cleanup testing, not an independent replay of the native concurrency campaign.

@@ -1,0 +1,142 @@
+{
+  "version": "0.1.0",
+  "engine": "170009",
+  "lockKey": "10070019",
+  "reader": "umf_sec_alice",
+  "revoker": "umf_sec_revoker",
+  "bufferedIds": [
+    "RA",
+    "RAB"
+  ],
+  "afterIds": [],
+  "schedules": [
+    {
+      "id": "persistent-publish",
+      "protected": true,
+      "persistent": true,
+      "publishedIds": [
+        "RA",
+        "RAB"
+      ],
+      "identityChecks": true
+    },
+    {
+      "id": "persistent-backend-loss-discard",
+      "protected": false,
+      "persistent": true,
+      "backendLoss": true,
+      "publishedIds": []
+    },
+    {
+      "id": "persistent-rollback-replay-backend-loss-discard",
+      "protected": false,
+      "persistent": true,
+      "backendLoss": true,
+      "rollbackReplay": true,
+      "publishedIds": []
+    },
+    {
+      "id": "persistent-sibling-backend-loss-discard",
+      "protected": false,
+      "persistent": true,
+      "backendLoss": true,
+      "sibling": true,
+      "publishedIds": []
+    },
+    {
+      "id": "persistent-consumer-failure",
+      "protected": false,
+      "persistent": true,
+      "backendLoss": true,
+      "consumerFailure": true,
+      "publishedIds": [
+        "RA",
+        "RAB"
+      ]
+    }
+  ],
+  "scope": "Authored single-publisher raw realm with trusted excluded issuer enrollment and retirement, native actor/PID/backend_start-bound UUID, ordinary enrolled reader and revoker. Backend loss preserves pending durable custody; revocation refuses until actual consumer discard acknowledgment and explicit issuer retirement. Not public activation, general cleanup, complete read-path enrollment, full writer closure or L03 acceptance. Explicit rollback/replay schedule retains both first and replay buffers until one final discard acknowledgment; enrollment stays durable across rollback. Does not prove all rollback/savepoint/cancellation paths. Two independent native publisher sessions retain separate buffers; exact retirement of the first leaves the live sibling blocking until separate consumer discard and retirement. Three otherwise-valid enrollment controls independently mismatch actor, native PID or backend_start; exact original-runtime refusals precede excluded conservative claim/terminal retirement of those no-output control tokens. This test-only retirement does not establish a public cancellation or issuer protocol. Ordinary raw table/view/helper access is revoked; authored direct SELECT, COPY and cursor paths refuse. Fresh post-revocation reads also require a distinct durable enrollment and explicit terminal retirement. This fixed enrolled projection does not implement general relational query or disclosure compilation. The enrolled fixed projection now includes public values, authorized ownership context and typed field-disclosure cells; original null, absent, withheld and transformed states remain distinct. General query compilation is still required. Normal primary, sibling and fresh enrollment and retirement now execute as a dedicated SCRAM-authenticated NOSUPERUSER NOBYPASSRLS host issuer with only two private routine grants. The excluded fixture assessor still supplies native enrollment identity and administers malformed control injection; this does not establish a public broker or truthful retirement service. The actual runtime now routes primary/replay/sibling/fresh publication through the managed host custody component; only after owned buffer drain does its retirement callback emit the request and wait for issuer acknowledgment. Native evidence remains scoped to these routed buffers and the fixture consumer/issuer protocol, not arbitrary private journals/host copies, public broker authentication, process recovery or L03 acceptance. A final consumer-failure schedule receives actual payload but explicitly rejects release; host custody quarantines, emits no retirement request, and durable pending history continues refusing revocation even after owned child shutdown. Fixture teardown is excluded cleanup, not recovery or a drain acknowledgment.",
+  "bufferedRows": [
+    [
+      "RA",
+      "A-only",
+      [
+        "A"
+      ],
+      [
+        {
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "resourceId"
+          },
+          "disposition": "original",
+          "value": {
+            "string": "RA"
+          }
+        },
+        {
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "note"
+          },
+          "disposition": "original",
+          "value": null
+        },
+        {
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salary"
+          },
+          "disposition": "withheld"
+        }
+      ]
+    ],
+    [
+      "RAB",
+      "multiple-owners",
+      [
+        "A"
+      ],
+      [
+        {
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "resourceId"
+          },
+          "disposition": "original",
+          "value": {
+            "string": "RAB"
+          }
+        },
+        {
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "note"
+          },
+          "disposition": "absent"
+        },
+        {
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salary"
+          },
+          "disposition": "transformed",
+          "outputType": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "resourceId"
+          },
+          "value": {
+            "string": "restricted"
+          }
+        }
+      ]
+    ]
+  ]
+}
