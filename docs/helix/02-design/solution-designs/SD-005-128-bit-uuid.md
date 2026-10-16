@@ -19,7 +19,7 @@ ddx:
 
 **Feature:** [FEAT-005 IDEAL-09](../../01-frame/features/FEAT-005-core-ideals.md).
 **Authority:** owner direction, 2026-10-15; FR-3/8/20/21/28/39/41.
-**Shared interface:** [CONTRACT-067](../contracts/CONTRACT-067-128-bit-uuid.md).
+**Shared interface:** [CONTRACT-076](../contracts/CONTRACT-076-128-bit-uuid.md).
 **Status:** implementable design; no runtime/native qualification claimed.
 
 ## Scope
@@ -88,7 +88,7 @@ Native payloads and unknown content remain attached after classification.
 
 The [architecture module boundary](../architecture.md#proposed-128-bit-and-uuid-module-boundaries)
 is authoritative. Shared signatures, shapes, errors and versions belong only to
-CONTRACT-067.
+CONTRACT-076.
 
 | Component | Existing state → change | Ownership / dependency rule |
 | --- | --- | --- |
@@ -216,7 +216,7 @@ conversion inherits existing expansion limits.
 
 ## Migration and Rollback
 
-Use CONTRACT-067's new version profiles and collision-aware source-retaining
+Use CONTRACT-076's new version profiles and collision-aware source-retaining
 migration. Update every family switch and literal/key consumer before advertising
 0.9; unsupported generators/security/action domains must refuse. Physical database
 changes and key-index rebuilds are consumer migrations, with old carrier/value

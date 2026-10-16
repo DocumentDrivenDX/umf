@@ -89,7 +89,7 @@ FR-41 consumer classes from one authored mixed model; general consumers remain o
 
 ### Proposed 128-bit/UUID revision
 
-[CONTRACT-067](CONTRACT-067-128-bit-uuid.md) specifies core 0.9.0 with
+[CONTRACT-076](CONTRACT-076-128-bit-uuid.md) specifies core 0.9.0 with
 `bits128` and `uuid`, new typed literals and explicit migration from 0.8.0.
 The nine-family list below governs earlier implemented profiles; it is not a
 restriction on the new design. Older profile schemas and interpretation remain

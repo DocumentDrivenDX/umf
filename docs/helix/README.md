@@ -1295,7 +1295,7 @@ Security planning: [shared security feature](01-frame/features/FEAT-008-shared-s
 ## Proposed native 128-bit and UUID design — 2026-10-15
 
 [SD-005](02-design/solution-designs/SD-005-128-bit-uuid.md) and
-[CONTRACT-067](02-design/contracts/CONTRACT-067-128-bit-uuid.md) specify first-class
+[CONTRACT-076](02-design/contracts/CONTRACT-076-128-bit-uuid.md) specify first-class
 opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
 versioned keys and native/bytes/text/two64-bit physical carriers. This is an
 implementable design, not implemented core0.9.0 or qualified native support.

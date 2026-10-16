@@ -695,7 +695,7 @@ behavioral gates. B-TP-000 evidence qualifies enforcement, not SDK functionality
 ## Proposed 128-bit and UUID module boundaries
 
 [SD-005](solution-designs/SD-005-128-bit-uuid.md) and
-[CONTRACT-067](contracts/CONTRACT-067-128-bit-uuid.md) extend the portable core
+[CONTRACT-076](contracts/CONTRACT-076-128-bit-uuid.md) extend the portable core
 under FEAT-005 IDEAL-09. The proposed 0.9.0 profile adds bits128 and UUID meaning;
 integer width facets retain arithmetic meaning. This is a design boundary, not
 an implementation inventory update.

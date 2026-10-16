@@ -299,7 +299,7 @@ No physical storage or native relationship enforcement is claimed by this transi
 
 ### Proposed 128-bit scalar carrier profile
 
-[CONTRACT-067](CONTRACT-067-128-bit-uuid.md) defines the new independently
+[CONTRACT-076](CONTRACT-076-128-bit-uuid.md) defines the new independently
 versioned `umf.binding`0.3.0 / `umf-binding-3` scalar-carrier choice for
 core0.9.0 bits128/UUID Fields, including paired physical slots. Published0.1.0
 and0.2.0 shapes and evidence above remain unchanged. The new design preserves

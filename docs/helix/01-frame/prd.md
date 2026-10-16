@@ -775,4 +775,4 @@ may be optimal for a particular workload; no universal layout or performance
 claim follows. Native refinements and original representations remain recoverable.
 [FEAT-005 IDEAL-09](features/FEAT-005-core-ideals.md),
 [SD-005](../02-design/solution-designs/SD-005-128-bit-uuid.md) and
-[CONTRACT-067](../02-design/contracts/CONTRACT-067-128-bit-uuid.md) define the design.
+[CONTRACT-076](../02-design/contracts/CONTRACT-076-128-bit-uuid.md) define the design.
