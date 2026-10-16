@@ -1,5 +1,5 @@
 {
-  "inputDigest": "10628f1776b8feaea0a2de81eac436fb99952975bf413d1c756d7e660f995a2b",
+  "inputDigest": "02fa3a1e977262230110f9710af7d97c8ae06ce90c31829a22795251d45fe143",
   "inputs": [
     {
       "bytes": 10779,
@@ -17,9 +17,9 @@
       "sha256": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04"
     },
     {
-      "bytes": 1414,
+      "bytes": 918,
       "path": "dist/protobuf/NOTICE.txt",
-      "sha256": "e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99"
+      "sha256": "5e6d37bfc6797b8cab4901e52f36c7efb53aa2a8505cd1dadd765346565f2c91"
     },
     {
       "bytes": 13336348,
@@ -37,9 +37,29 @@
       "sha256": "ee28bce69da026b0b819816ef82f34248a98d6733f3f84aaee5292518c2d2484"
     },
     {
+      "bytes": 766,
+      "path": "dist/protobuf/licenses/github.com-davecgh-go-spew-LICENSE",
+      "sha256": "1b93a317849ee09d3d7e4f1d20c2b78ddb230b4becb12d7c224c927b9d470251"
+    },
+    {
       "bytes": 1480,
       "path": "dist/protobuf/licenses/github.com-golang-protobuf-LICENSE",
       "sha256": "8778a9fc1eaffb03ab873caae251df2d224f6b5502be8777d3cd573a4dd43903"
+    },
+    {
+      "bytes": 1479,
+      "path": "dist/protobuf/licenses/github.com-google-go-cmp-LICENSE",
+      "sha256": "17b5d209ba8f9684257ecfcff87df6ceda6194143a8fbd074f29727cff6f0c40"
+    },
+    {
+      "bytes": 11358,
+      "path": "dist/protobuf/licenses/github.com-jhump-gopoet-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "bytes": 11358,
+      "path": "dist/protobuf/licenses/github.com-jhump-goprotoc-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "bytes": 11347,
@@ -52,14 +72,69 @@
       "sha256": "b1da0716d546b386221283d08b32c3ca82f539f3b3abe740b7d8729e90aa3ac8"
     },
     {
+      "bytes": 1052,
+      "path": "dist/protobuf/licenses/github.com-kr-pretty-LICENSE",
+      "sha256": "283c28b781bc7487bd7bcaf453cbd811f5ee8d7ce625cfcf8dcacae6ba1f4bb5"
+    },
+    {
+      "bytes": 11325,
+      "path": "dist/protobuf/licenses/github.com-petermattis-goid-LICENSE",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+    },
+    {
+      "bytes": 1445,
+      "path": "dist/protobuf/licenses/github.com-pmezard-go-difflib-LICENSE",
+      "sha256": "2eb550be6801c1ea434feba53bf6d12e7c71c90253e0a9de4a4f46cf88b56477"
+    },
+    {
+      "bytes": 1479,
+      "path": "dist/protobuf/licenses/github.com-rogpeppe-go-internal-LICENSE",
+      "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
+    },
+    {
+      "bytes": 1103,
+      "path": "dist/protobuf/licenses/github.com-stretchr-testify-LICENSE",
+      "sha256": "f8e536c1c7b695810427095dc85f5f80d44ff7c10535e8a9486cf393e2599189"
+    },
+    {
+      "bytes": 1453,
+      "path": "dist/protobuf/licenses/golang.org-x-net-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
       "bytes": 1453,
       "path": "dist/protobuf/licenses/golang.org-x-sync-LICENSE",
       "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
     },
     {
+      "bytes": 1453,
+      "path": "dist/protobuf/licenses/golang.org-x-sys-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "bytes": 1453,
+      "path": "dist/protobuf/licenses/golang.org-x-text-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "bytes": 11358,
+      "path": "dist/protobuf/licenses/google.golang.org-genproto-googleapis-rpc-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "bytes": 11358,
+      "path": "dist/protobuf/licenses/google.golang.org-grpc-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
       "bytes": 1479,
       "path": "dist/protobuf/licenses/google.golang.org-protobuf-LICENSE",
       "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
+    },
+    {
+      "bytes": 1377,
+      "path": "dist/protobuf/licenses/gopkg.in-check.v1-LICENSE",
+      "sha256": "69ce77f2b1c9c608d27f2d749b0e7d0c13960ed3b0dc07b973ac940e362e5d9c"
     },
     {
       "bytes": 2151,
@@ -40602,9 +40677,9 @@
       "sha256": "236446e4b2d4f1d8c6709eab91ab842129a65d81ac6d4522ede64b8702d421dc"
     },
     {
-      "bytes": 3013,
+      "bytes": 3896,
       "path": "native/protobuf/go.sum",
-      "sha256": "6ccaa7e7848876aec5209713650553e728a269a10f2b8caf5c7b0e4a5691dad6"
+      "sha256": "7fb966c82084bc754f057150516d45a060f3bb1e9f62980643226eba4bba77ed"
     },
     {
       "bytes": 208,
@@ -42057,9 +42132,9 @@
       "sha256": "15827860f2ed377740bbcf124ffbbfdaad12f43320b75265e2d716278b78b10e"
     },
     {
-      "bytes": 2202,
+      "bytes": 2622,
       "path": "scripts/build-protobuf.ts",
-      "sha256": "6f5039ab29aa7c0442f7ebcae178c0d6475a1f95735b49b2f571b992108e2929"
+      "sha256": "d2560b967a0009535091d906e39587e723cffc8d7a26dd6387fb46aeff93409c"
     },
     {
       "bytes": 558,
@@ -46352,6 +46427,11 @@
       "sha256": "0130e72feeae24d8ba8a3ce1a946310645b723ea162f1a63237c3573aed57172"
     },
     {
+      "bytes": 1451,
+      "path": "scripts/protobuf-module-notices.ts",
+      "sha256": "38c02abf84cd9af12821fb7824636a05e1b15f1b76bd3c8089b2b3f3aeedc6f3"
+    },
+    {
       "bytes": 4123,
       "path": "scripts/protobuf-schema.ts",
       "sha256": "b175e8e955079451fd3c8e6af134a24b9cc650ad48b5d3e6b09794c423c7c168"
@@ -46517,9 +46597,9 @@
       "sha256": "497027e7f5232ab0a197261f0b7748ec22b0ec772fa314e64c22143c9ccbd0dc"
     },
     {
-      "bytes": 13168,
+      "bytes": 13205,
       "path": "scripts/reference/build.ts",
-      "sha256": "a9bd8f67237f14880433e338ad45c656942014b58c0b707113aba39bb81f1c61"
+      "sha256": "78d80d5f23e983dcc5f2d815866750c200a0b607bda490bc317f17bc7f0b1b38"
     },
     {
       "bytes": 2785,
@@ -56344,9 +56424,9 @@
       "sha256": "2b9eae5a5eec6cafbf409c9bd5fdefa7d19ca626ff9da0553c2edf359ade556a"
     },
     {
-      "bytes": 1414,
+      "bytes": 918,
       "path": "assets/NOTICE.txt",
-      "sha256": "e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99"
+      "sha256": "5e6d37bfc6797b8cab4901e52f36c7efb53aa2a8505cd1dadd765346565f2c91"
     },
     {
       "bytes": 13336348,
@@ -56369,9 +56449,29 @@
       "sha256": "ee28bce69da026b0b819816ef82f34248a98d6733f3f84aaee5292518c2d2484"
     },
     {
+      "bytes": 766,
+      "path": "assets/licenses/github.com-davecgh-go-spew-LICENSE",
+      "sha256": "1b93a317849ee09d3d7e4f1d20c2b78ddb230b4becb12d7c224c927b9d470251"
+    },
+    {
       "bytes": 1480,
       "path": "assets/licenses/github.com-golang-protobuf-LICENSE",
       "sha256": "8778a9fc1eaffb03ab873caae251df2d224f6b5502be8777d3cd573a4dd43903"
+    },
+    {
+      "bytes": 1479,
+      "path": "assets/licenses/github.com-google-go-cmp-LICENSE",
+      "sha256": "17b5d209ba8f9684257ecfcff87df6ceda6194143a8fbd074f29727cff6f0c40"
+    },
+    {
+      "bytes": 11358,
+      "path": "assets/licenses/github.com-jhump-gopoet-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "bytes": 11358,
+      "path": "assets/licenses/github.com-jhump-goprotoc-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "bytes": 11347,
@@ -56384,14 +56484,69 @@
       "sha256": "b1da0716d546b386221283d08b32c3ca82f539f3b3abe740b7d8729e90aa3ac8"
     },
     {
+      "bytes": 1052,
+      "path": "assets/licenses/github.com-kr-pretty-LICENSE",
+      "sha256": "283c28b781bc7487bd7bcaf453cbd811f5ee8d7ce625cfcf8dcacae6ba1f4bb5"
+    },
+    {
+      "bytes": 11325,
+      "path": "assets/licenses/github.com-petermattis-goid-LICENSE",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+    },
+    {
+      "bytes": 1445,
+      "path": "assets/licenses/github.com-pmezard-go-difflib-LICENSE",
+      "sha256": "2eb550be6801c1ea434feba53bf6d12e7c71c90253e0a9de4a4f46cf88b56477"
+    },
+    {
+      "bytes": 1479,
+      "path": "assets/licenses/github.com-rogpeppe-go-internal-LICENSE",
+      "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
+    },
+    {
+      "bytes": 1103,
+      "path": "assets/licenses/github.com-stretchr-testify-LICENSE",
+      "sha256": "f8e536c1c7b695810427095dc85f5f80d44ff7c10535e8a9486cf393e2599189"
+    },
+    {
+      "bytes": 1453,
+      "path": "assets/licenses/golang.org-x-net-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
       "bytes": 1453,
       "path": "assets/licenses/golang.org-x-sync-LICENSE",
       "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
     },
     {
+      "bytes": 1453,
+      "path": "assets/licenses/golang.org-x-sys-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "bytes": 1453,
+      "path": "assets/licenses/golang.org-x-text-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "bytes": 11358,
+      "path": "assets/licenses/google.golang.org-genproto-googleapis-rpc-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "bytes": 11358,
+      "path": "assets/licenses/google.golang.org-grpc-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
       "bytes": 1479,
       "path": "assets/licenses/google.golang.org-protobuf-LICENSE",
       "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
+    },
+    {
+      "bytes": 1377,
+      "path": "assets/licenses/gopkg.in-check.v1-LICENSE",
+      "sha256": "69ce77f2b1c9c608d27f2d749b0e7d0c13960ed3b0dc07b973ac940e362e5d9c"
     },
     {
       "bytes": 2151,
@@ -68926,7 +69081,7 @@
     {
       "bytes": 1073630,
       "path": "index.json",
-      "sha256": "d09d63807d63d4f5b10ef6646c5da137d48a44e9f8222edaad377f7b57752653"
+      "sha256": "d45d935fb71cf289508364b3660d6a86b1a9933d32cb0be77415f8a19970c509"
     },
     {
       "bytes": 931,
@@ -69404,6 +69559,11 @@
       "sha256": "1783bda55656bde624ed67640375640a2919a8608e2505e3a02c04cd139e2cdf"
     },
     {
+      "bytes": 1479,
+      "path": "sources/17b5d209ba8f9684257ecfcff87df6ceda6194143a8fbd074f29727cff6f0c40",
+      "sha256": "17b5d209ba8f9684257ecfcff87df6ceda6194143a8fbd074f29727cff6f0c40"
+    },
+    {
       "bytes": 4991,
       "path": "sources/17fa2d53947450942e7e67e5d3b4ec49030ea2cc9965d804f52ab9564332de27",
       "sha256": "17fa2d53947450942e7e67e5d3b4ec49030ea2cc9965d804f52ab9564332de27"
@@ -69452,6 +69612,11 @@
       "bytes": 1346,
       "path": "sources/1b7da3de04e3c9ed917b100fe68152add975336912a98c4ac808eb04c122670d",
       "sha256": "1b7da3de04e3c9ed917b100fe68152add975336912a98c4ac808eb04c122670d"
+    },
+    {
+      "bytes": 766,
+      "path": "sources/1b93a317849ee09d3d7e4f1d20c2b78ddb230b4becb12d7c224c927b9d470251",
+      "sha256": "1b93a317849ee09d3d7e4f1d20c2b78ddb230b4becb12d7c224c927b9d470251"
     },
     {
       "bytes": 18928,
@@ -69694,6 +69859,11 @@
       "sha256": "27e0a63019e60cdda2bb2f5f34c5d4a7d43d0e744da4d659909d3759773abede"
     },
     {
+      "bytes": 1052,
+      "path": "sources/283c28b781bc7487bd7bcaf453cbd811f5ee8d7ce625cfcf8dcacae6ba1f4bb5",
+      "sha256": "283c28b781bc7487bd7bcaf453cbd811f5ee8d7ce625cfcf8dcacae6ba1f4bb5"
+    },
+    {
       "bytes": 7422,
       "path": "sources/28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae",
       "sha256": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae"
@@ -69777,6 +69947,11 @@
       "bytes": 8724,
       "path": "sources/2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff",
       "sha256": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff"
+    },
+    {
+      "bytes": 1445,
+      "path": "sources/2eb550be6801c1ea434feba53bf6d12e7c71c90253e0a9de4a4f46cf88b56477",
+      "sha256": "2eb550be6801c1ea434feba53bf6d12e7c71c90253e0a9de4a4f46cf88b56477"
     },
     {
       "bytes": 1960,
@@ -70484,6 +70659,11 @@
       "sha256": "5cf1dfbeebe18a3c3c23e642135e4a7aafe7668e46a66a8e5b92086d6d63f651"
     },
     {
+      "bytes": 918,
+      "path": "sources/5e6d37bfc6797b8cab4901e52f36c7efb53aa2a8505cd1dadd765346565f2c91",
+      "sha256": "5e6d37bfc6797b8cab4901e52f36c7efb53aa2a8505cd1dadd765346565f2c91"
+    },
+    {
       "bytes": 12610,
       "path": "sources/5f0e8135a8137722441878a542a336916a8464e98c3e9afc882bf1a793d483a3",
       "sha256": "5f0e8135a8137722441878a542a336916a8464e98c3e9afc882bf1a793d483a3"
@@ -70682,6 +70862,11 @@
       "bytes": 6923,
       "path": "sources/6975e8827d941d5d893411f69f8fa4fcb324c3fc3c2dd78b43d1ad9aa02f9416",
       "sha256": "6975e8827d941d5d893411f69f8fa4fcb324c3fc3c2dd78b43d1ad9aa02f9416"
+    },
+    {
+      "bytes": 1377,
+      "path": "sources/69ce77f2b1c9c608d27f2d749b0e7d0c13960ed3b0dc07b973ac940e362e5d9c",
+      "sha256": "69ce77f2b1c9c608d27f2d749b0e7d0c13960ed3b0dc07b973ac940e362e5d9c"
     },
     {
       "bytes": 10602,
@@ -72329,6 +72514,11 @@
       "sha256": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1"
     },
     {
+      "bytes": 11325,
+      "path": "sources/cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+    },
+    {
       "bytes": 6108,
       "path": "sources/cb6ec648e27b671360fde466f495bec3c2b854c8263ce0e40ebbdfc74f996fda",
       "sha256": "cb6ec648e27b671360fde466f495bec3c2b854c8263ce0e40ebbdfc74f996fda"
@@ -72392,6 +72582,11 @@
       "bytes": 6586,
       "path": "sources/ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
       "sha256": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4"
+    },
+    {
+      "bytes": 11358,
+      "path": "sources/cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "bytes": 6303,
@@ -72804,11 +72999,6 @@
       "sha256": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420"
     },
     {
-      "bytes": 1414,
-      "path": "sources/e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99",
-      "sha256": "e6d1ce462a01ef05cb1182b49281f123cf554aed36e9a0afb9b5ce2237a9da99"
-    },
-    {
       "bytes": 726,
       "path": "sources/e71851bebf54e51f13d098e9afdbc2d4d9d17b8d93d43ad568c5b31b0036992b",
       "sha256": "e71851bebf54e51f13d098e9afdbc2d4d9d17b8d93d43ad568c5b31b0036992b"
@@ -73147,6 +73337,11 @@
       "bytes": 1409,
       "path": "sources/f8a0a22c72d83925ca7df4ac0aefe13a4fdc94d1128d2814f37da4c81a3527f5",
       "sha256": "f8a0a22c72d83925ca7df4ac0aefe13a4fdc94d1128d2814f37da4c81a3527f5"
+    },
+    {
+      "bytes": 1103,
+      "path": "sources/f8e536c1c7b695810427095dc85f5f80d44ff7c10535e8a9486cf393e2599189",
+      "sha256": "f8e536c1c7b695810427095dc85f5f80d44ff7c10535e8a9486cf393e2599189"
     },
     {
       "bytes": 8746,

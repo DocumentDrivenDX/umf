@@ -88,3 +88,12 @@ test('a second isolated generation matches; drift check refuses tampering withou
  try{await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
  finally{await Bun.write(path,original);}
 },120000);
+
+// @covers US-089-AC11 -- host-neutral compiler notices remain source-bound.
+test('reference manifest retains every Protobuf notice producer input',async()=>{
+ const manifest=await Bun.file(join(dist,'manifest.json')).json();
+ for(const path of ['scripts/build-protobuf.ts','scripts/protobuf-module-notices.ts','native/protobuf/go.mod','native/protobuf/go.sum']){
+  const record=manifest.inputs.find((i:any)=>i.path===path);expect(record).toBeDefined();
+  expect(record.sha256).toBe(sha(await Bun.file(join(root,path)).bytes()));
+ }
+});

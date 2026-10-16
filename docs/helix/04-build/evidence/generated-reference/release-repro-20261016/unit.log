@@ -1,0 +1,11 @@
+bun test v1.4.2 (744846f84)
+
+tests/protobuf/module-notices.test.ts:
+(pass) module notices are identical across host paths and inventory order [0.39ms]
+(pass) uncached or ambiguous module license inventories refuse instead of omitting a dependency [0.13ms]
+(pass) replacements and flattened license-name collisions refuse explicitly [0.03ms]
+
+ 3 pass
+ 0 fail
+ 10 expect() calls
+Ran 3 tests across 1 file. [56.00ms]
