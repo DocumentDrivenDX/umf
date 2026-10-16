@@ -1,0 +1,19 @@
+/** Atomic supplied mixed-operation browser correspondence; no compiler or native admission. */
+import {chromium} from 'playwright';
+import {createHash} from 'node:crypto';
+import {runCatalogRuleDutyBatchCorpus} from '../../tests/security/catalog-rule-duty-batch-corpus';
+const output=process.argv[2];if(!output)throw Error('Explicit output path required');
+const files=['src/extensions/security/catalog-operation-batch-candidate.ts','tests/security/protection/query-value-modes-source.json','tests/security/protection/current-query-source.json','tests/security/catalog-rule-duty-batch-corpus.ts','tests/security/catalog-rule-duty-batch.test.ts','tools/security/catalog-rule-duty-batch-browser.ts','src/extensions/security/catalog-program-candidate.ts','src/extensions/security/stored-query-candidate.ts','src/extensions/security/catalog-storage-candidate.ts','src/extensions/security/catalog-runtime-candidate.ts','src/extensions/security/operation-budget-candidate.ts','tests/security/catalog-runtime-fixture.ts','tests/security/evaluation-fixture.ts','tests/security/fixture.ts','tests/security/protection/current-query-read-scenarios.json','bun.lock','package.json'];
+const snapshot=async()=>Object.fromEntries(await Promise.all(files.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
+const before=await snapshot(),rows=runCatalogRuleDutyBatchCorpus();if(rows.some(row=>!row.passed))throw Error('Bun correspondence refused');
+const build=await Bun.build({entrypoints:['tests/security/catalog-rule-duty-batch-corpus.ts'],target:'browser',format:'esm'});if(!build.success)throw Error('Browser build refused');
+const js=await build.outputs[0]!.text(),server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/corpus.js'?new Response(js,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Atomic logical scan batch</title>');}});
+let browser;
+try{
+ browser=await chromium.launch({headless:true,...(Bun.env.UMF_CHROMIUM_PATH?{executablePath:Bun.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage(),pageErrors:string[]=[];let externalRequests=0;page.on('pageerror',error=>pageErrors.push(error.message));
+ await page.route('**/*',route=>{if(new URL(route.request().url()).origin!==server.url.origin){externalRequests++;return route.abort();}return route.continue();});await page.goto(server.url.href);
+ const actual=await page.evaluate(async()=>{const url='/corpus.js',m=await import(url);return {rows:m.runCatalogRuleDutyBatchCorpus(),globals:{Bun:typeof(globalThis as any).Bun,process:typeof(globalThis as any).process}};});
+ if(JSON.stringify(rows)!==JSON.stringify(actual.rows)||pageErrors.length||externalRequests||actual.globals.Bun!=='undefined'||actual.globals.process!=='undefined')throw Error('Browser correspondence or boundary failed');
+ const after=await snapshot();if(JSON.stringify(before)!==JSON.stringify(after))throw Error('Selected source drift');
+ const result={status:'passed',controls:rows.length,browser:browser.version(),bun:Bun.version,selectedSourceDigests:after,sourcesUnchanged:true,globals:actual.globals,pageErrors,externalRequests,observations:rows,scope:'Atomic ordered supplied original rule evidence/read rendering/action checks through the existing logical kernel in Bun/Chromium. Completed evaluations can retain deny/indeterminate/conflict decisions and never grant query permission. Selected source pins are not a hermetic closure. Trusted cut completeness remains a premise; no compiler readset attestation, native authority, query execution or backend qualification.'};await Bun.write(output,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({status:result.status,controls:rows.length,browser:result.browser}));
+}finally{await browser?.close();server.stop(true);}

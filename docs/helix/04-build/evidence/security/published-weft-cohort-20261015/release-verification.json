@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "command": [
+    "gh",
+    "release",
+    "view",
+    "v0.4.33",
+    "--repo",
+    "DocumentDrivenDX/weft",
+    "--json",
+    "tagName,isDraft,isPrerelease,url,assets,targetCommitish"
+  ],
+  "releaseUrl": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.33",
+  "assets": [
+    {
+      "name": "weft_sql-0.4.33-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "8ea8e06b7e8cf3623df69dd1e27c3bde3a1189f3adbd01c43f4a1519431b2b35",
+      "size": 2932540,
+      "apiUrl": "https://api.github.com/repos/DocumentDrivenDX/weft/releases/assets/645196486"
+    },
+    {
+      "name": "SHA256SUMS",
+      "sha256": "ae3cd784b21ff6cdffe251b23c2f403d60901ca1431853dde6bb036938b314c5",
+      "size": 616,
+      "apiUrl": "https://api.github.com/repos/DocumentDrivenDX/weft/releases/assets/645196458"
+    }
+  ],
+  "scope": "Current GitHub release API matches the two local artifact digests/sizes and uploaded state. Not a build attestation, publisher-signature or native backend qualification."
+}

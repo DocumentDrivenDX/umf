@@ -1,0 +1,138 @@
+{
+  "status": "finite-generated-guard-equivalence-passed",
+  "solverVersion": "4.15.4",
+  "checks": [
+    {
+      "id": "generated-withheld-matches-independent-fold",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "1368af2fccc9800f3ea42451ae598c40716f34deb8cbf779d74314b141d4b355",
+      "model": null
+    },
+    {
+      "id": "generated-mask-A-matches-independent-fold",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "a77f7b2c9ba60e7f2e04a528ee35c74737e9f8cc142a8dba30c162f5811cfdd0",
+      "model": null
+    },
+    {
+      "id": "generated-mask-B-matches-independent-fold",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "7ab15b4514de7b9ac7dfb6ee8dd2bb9ac00cd4f981b635a7426e24394af3a923",
+      "model": null
+    },
+    {
+      "id": "generated-original-matches-independent-fold",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "96ff26c6a2efe8c1e4efa9af1abab3d0fadf4b034fdfb3319e745a96d2c97c60",
+      "model": null
+    },
+    {
+      "id": "generated-missing-matches-independent-fold",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "4da168ab525e5c1883cbd243777008c02f1458c0b2779ac36b438821cde860f5",
+      "model": null
+    },
+    {
+      "id": "generated-guards-cover-every-nonconflicting-read-state",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "9efc412d98820c48f38dbcebd8458e32287beee7eaefd30f79785d31a5a08dcd",
+      "model": null
+    },
+    {
+      "id": "generated-guards-never-select-two-alternatives",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "663c2841f862e04b078bf562fb70f5ac60d215a079d655921e920b2fd66399f5",
+      "model": null
+    },
+    {
+      "id": "withholding-suppresses-competing-transform-branches",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "b70beb503679f74966a1d5cbcca1c8bb36b008243f64ccb6071551174d14acec",
+      "model": null
+    },
+    {
+      "id": "omit-withholding-exclusion",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "eeb55378b8371c3f0bc6d153cfd532926eca7af59a5855a71f5c0c3b4b32daa3",
+      "model": "[rule0 = True,\n rule4 = True,\n rule5 = False,\n rule3 = False,\n rule1 = False,\n rule2 = False]"
+    },
+    {
+      "id": "omit-other-transform-exclusion",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "71ed89ab7bb8456d74fa52f95e962053c7e676c1dd2205d982e78a903e6528f7",
+      "model": "[rule0 = True,\n rule4 = False,\n rule5 = False,\n rule3 = False,\n rule1 = False,\n rule2 = True]"
+    },
+    {
+      "id": "missing-disclosure-must-exclude-original",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "8f3c050ba9fb46c93092ed4c68f32057955ce3db89dc8e26a6fbfeea8d29bf8e",
+      "model": "[rule0 = False,\n rule4 = False,\n rule5 = True,\n rule3 = True,\n rule1 = False,\n rule2 = False]"
+    },
+    {
+      "id": "drop-equivalent-recipe-contributor",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "d57b440b5be49741f946614f88a3e4261c09ef2d3ca2cb0db657caf8718ca0db",
+      "model": "[rule4 = False,\n rule0 = False,\n rule5 = False,\n rule3 = False,\n rule2 = False,\n rule1 = True]"
+    },
+    {
+      "id": "diagnostic-inspection-is-not-permission",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "b4f0f3444c9a32b08c12de5ed06e8fd738b53772e8616b1e85051d98172fc3ae",
+      "model": "[rule0 = False,\n rule4 = False,\n rule5 = True,\n rule3 = False,\n current_original_action_permission = False,\n rule1 = False,\n rule2 = False]"
+    }
+  ],
+  "actualContextValuations": 64,
+  "actualApiResultsIndependentlyRechecked": 128,
+  "selectedSourceDigests": {
+    "tools/security/produce-query-value-route-guards.ts": "ebc79df3013ab7179ea5c1e7a4b87656fdc4418b4abb4bebef80bc56453cf88f",
+    "tools/security/prove-query-value-route-guards.py": "3d95abb05727f798662bb8b049ad18e9f4a7b3bed50b70207d0c94a23b27763a",
+    "src/extensions/security/query-value-routes-candidate.ts": "2eccc51f05a3e34280a1b1e5b44dbfdb9b43acd739e96d20236a649d02347f59",
+    "tests/security/query-value-route-guards-corpus.ts": "62aabd1e3902aeb837381384305dea07a10e0ff78eac05078532aba110f21e94",
+    "tests/security/protection/query-value-route-guards.json": "5f56d6730c6413bc45b565dfe0ec4b32c53c8452ffd222438d5bc2339b3b08cf",
+    "src/extensions/security/catalog-program-candidate.ts": "e8c2db84126e5ebf4dcf5bd33efe80c8a2235e7ab192d17105cda64ab8facc6d",
+    "src/extensions/security/catalog-runtime-candidate.ts": "d22af3c6a9fee17b69e529e73a7b2adf4138a23ac310d29f31d10901fac40e32",
+    "src/extensions/security/catalog-storage-candidate.ts": "4002872f2ce14b46a9320bfd388081df09c1d3efe7eea49b26ba8c8d3ce6b181",
+    "src/extensions/security/protection/queries.ts": "8a6ef6229120d68b55f003496a86f13a1d757eae88acc7ee6e553e90b1481b59",
+    "src/extensions/security/protection/parameters.ts": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4",
+    "src/extensions/security/protection/literals.ts": "5d271dfcdba2b837a4876eb3696732a79220f40e5740af3ce0a1c50027efe466",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
+    "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+    "docs/helix/02-design/technical-designs/TD-079-security-semantics.md": "216177bb0381157587d8c55a107b02ac605445ef1fe6ee36d4d06472ac84e205",
+    "docs/helix/03-test/test-plans/STP-079-security-semantics.md": "2dc285c422fbfc8af87bc78e38818bf8168c6057442a8d1ad93163cca450565a",
+    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
+    "docs/helix/04-build/evidence/security/query-value-routes-20261015/guard-model/input.json": "2af9f4713543ac3e1749065f09b5854e721857632a3527226183d2d9cde6819e",
+    "docs/helix/04-build/evidence/security/query-value-routes-20261015/guard-model/receipt.json": "6ad2763fcdba7fd5ab57c0b623274bf9a68a2a4e31cac544ac2a51ddfdcbd0e9"
+  },
+  "sourcesUnchanged": true,
+  "scope": "Exact generated guard metadata for the named six-Boolean-context fixture, equivalent to an independently expressed finite fold for all Boolean assignments; actual field-free/read API results independently rechecked for all64 assignments. Rule truth outside this fixture, arbitrary expressions, full source/custody completeness, mode/property scalar admission, exact Weft designations, native SQL/current authority and guarded release are not proved. SAT weakenings show necessary exclusions/contributors and the absence of permission from inspection.",
+  "acceptanceCasesPromoted": []
+}

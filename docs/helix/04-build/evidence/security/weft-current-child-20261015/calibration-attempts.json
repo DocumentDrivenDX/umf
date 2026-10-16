@@ -1,0 +1,25 @@
+{
+  "attempts": [
+    {
+      "directory": "/private/tmp/weft-current-child-interop-20261015",
+      "outcome": "failed before semantic call",
+      "reason": "Harness imported weft._native; actual wheel module is weft.weft"
+    },
+    {
+      "directory": "/private/tmp/weft-current-child-interop-20261015-r2",
+      "outcome": "mixed passed then self-join assertion failed",
+      "reason": "Incorrect harness assumption that all selected branches require original action"
+    },
+    {
+      "directory": "/private/tmp/weft-current-child-interop-20261015-r3",
+      "outcome": "mixed passed then self-join assertion failed",
+      "reason": "Incorrect guessed disclosed branch status; original enum is compatible-disclosed-properties"
+    },
+    {
+      "directory": "/private/tmp/weft-current-child-interop-20261015-r4",
+      "outcome": "five cases passed; superseded by review",
+      "reason": "Needed exact populations, Cells and empty-field COUNT scan"
+    }
+  ],
+  "scope": "Historical calibration summaries; only final retained run is evidence for strengthened assertions"
+}

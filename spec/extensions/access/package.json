@@ -1,0 +1,566 @@
+{
+  "id": "umf.access",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Authored typed access views over core 0.8.0; experimental metadata validation",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:access:0.1.0",
+    "type": "object",
+    "required": [
+      "views",
+      "columns",
+      "search",
+      "searchBindings"
+    ],
+    "properties": {
+      "views": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "record",
+            "fields",
+            "selectedKey"
+          ],
+          "properties": {
+            "record": {
+              "type": "object",
+              "required": [
+                "module",
+                "element"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "field",
+                  "row",
+                  "create",
+                  "mutable",
+                  "generated"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "object",
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "properties": {
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "element": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "row": {
+                    "type": "object",
+                    "required": [
+                      "missing",
+                      "null"
+                    ],
+                    "properties": {
+                      "missing": {
+                        "type": "boolean"
+                      },
+                      "null": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "create": {
+                    "type": "object",
+                    "required": [
+                      "missing",
+                      "null"
+                    ],
+                    "properties": {
+                      "missing": {
+                        "type": "boolean"
+                      },
+                      "null": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "mutable": {
+                    "type": "boolean"
+                  },
+                  "generated": {
+                    "type": "boolean"
+                  },
+                  "temporal": {
+                    "enum": [
+                      "instant",
+                      "local"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "selectedKey": {
+              "type": "object",
+              "required": [
+                "module",
+                "element",
+                "key"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "columns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "binding",
+            "target",
+            "columns"
+          ],
+          "properties": {
+            "binding": {
+              "type": "object",
+              "required": [
+                "sourceId",
+                "module"
+              ],
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            },
+            "target": {
+              "type": "object",
+              "required": [
+                "platform",
+                "majorVersion"
+              ],
+              "properties": {
+                "platform": {
+                  "enum": [
+                    "postgresql",
+                    "lakebase",
+                    "spark-delta",
+                    "unity-catalog"
+                  ]
+                },
+                "majorVersion": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "field",
+                  "type",
+                  "notNull",
+                  "generation"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "object",
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "properties": {
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "element": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "notNull": {
+                    "type": "boolean"
+                  },
+                  "generation": {
+                    "enum": [
+                      null,
+                      "identity",
+                      "stored-expression",
+                      "default"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "search": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "record",
+            "kind",
+            "exactness",
+            "filterable"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record": {
+              "type": "object",
+              "required": [
+                "module",
+                "element"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            },
+            "kind": {
+              "enum": [
+                "vector",
+                "keyword"
+              ]
+            },
+            "exactness": {
+              "enum": [
+                "exact",
+                "approximate"
+              ]
+            },
+            "filterable": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "vector": {
+              "type": "object",
+              "required": [
+                "field",
+                "model",
+                "dimensions",
+                "metric",
+                "computedBy"
+              ],
+              "properties": {
+                "field": {
+                  "type": "object",
+                  "required": [
+                    "module",
+                    "element"
+                  ],
+                  "properties": {
+                    "module": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "model": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "version": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "dimensions": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "metric": {
+                  "enum": [
+                    "cosine",
+                    "dot",
+                    "l2"
+                  ]
+                },
+                "computedBy": {
+                  "enum": [
+                    "host",
+                    "target"
+                  ]
+                },
+                "source": {
+                  "type": "object",
+                  "required": [
+                    "module",
+                    "element"
+                  ],
+                  "properties": {
+                    "module": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            },
+            "keyword": {
+              "type": "object",
+              "required": [
+                "source",
+                "ranking",
+                "analyzer",
+                "syntax"
+              ],
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "properties": {
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "element": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "ranking": {
+                  "type": "object",
+                  "required": [
+                    "family"
+                  ],
+                  "properties": {
+                    "family": {
+                      "enum": [
+                        "bm25",
+                        "implementation-defined"
+                      ]
+                    },
+                    "k1": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "analyzer": {
+                  "oneOf": [
+                    {
+                      "const": "implementation-defined"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "language",
+                        "stemming"
+                      ],
+                      "properties": {
+                        "language": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "stemming": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  ]
+                },
+                "syntax": {
+                  "const": "plain"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "searchBindings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "index",
+            "target",
+            "native",
+            "freshness",
+            "maxK",
+            "filtering"
+          ],
+          "properties": {
+            "index": {
+              "type": "string",
+              "minLength": 1
+            },
+            "target": {
+              "type": "object",
+              "required": [
+                "platform",
+                "majorVersion"
+              ],
+              "properties": {
+                "platform": {
+                  "enum": [
+                    "postgresql",
+                    "lakebase",
+                    "spark-delta",
+                    "unity-catalog"
+                  ]
+                },
+                "majorVersion": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": true
+            },
+            "native": {
+              "type": "string",
+              "minLength": 1
+            },
+            "freshness": {
+              "enum": [
+                "transactional",
+                "asynchronous"
+              ]
+            },
+            "maxK": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "filtering": {
+              "enum": [
+                "complete",
+                "partial"
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "semantics": "CONTRACT-070; contextual validation through the compilation admission API",
+  "scopes": [
+    "module"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [],
+    "evidence": [
+      "tests/compilation/access-extension.test.ts",
+      "tests/compilation/access-context.test.ts"
+    ]
+  }
+}

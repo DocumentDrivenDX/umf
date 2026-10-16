@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/private/tmp/umf-security-proof-venv/bin/python",
+    "-c",
+    "import sys; print(sys.version); import z3; print(z3.get_version_string())"
+  ],
+  "exitCode": 1,
+  "stdout": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]\n",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'z3'\n",
+  "scope": "Post-failure reproduction of missing Z3 in the runtime explicitly selected for the first full gate. The original formal runner masks child failure stderr; this is not that original child output."
+}

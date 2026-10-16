@@ -1,3 +1,4 @@
+import {uuidDocument,UUID,KEY} from './helpers/uuid-fixtures';
 import fixture from '../fixtures/actions/approve.json';
 import {tupleCases,tupleIdentity} from '../scripts/core-key-tuple-cases';
 import type * as owner from '../src/index';
@@ -7,6 +8,17 @@ const equal=(a:unknown,b:unknown,id:string)=>{if(JSON.stringify(a)!==JSON.string
 /** Shared corpus for the actual public ESM in Bun and Chromium. */
 export function runPreparedCorpus(api:Api){
  const rows:{id:string;passed:true}[]=[];
+ const original=tupleCases().find(row=>!row.error)!.document,prepared=api.prepareCoreKeyTuples(original);
+ for(const [name,document,values,profile] of [
+  ['string-v1',uuidDocument('string'),[{string:'foreign'}],'umf-key-tuple-v1'],
+  ['string-v2',uuidDocument('string'),[{string:'foreign'}],'umf-key-tuple-v2'],
+  ['uuid-v2',uuidDocument(),[{uuid:UUID}],'umf-key-tuple-v2'],
+ ] as const){
+  const receipt=api.encodeCoreKeyTuple(document,KEY,[...values],{profile});
+  equal(result(()=>prepared.verify(receipt)),result(()=>api.verifyCoreKeyTuple(receipt,original)),name+'-foreign-source');
+  rows.push({id:'foreign/'+name,passed:true});
+ }
+
  for(const row of tupleCases()){
   equal(result(()=>api.prepareCoreKeyTuples(row.document).encode(tupleIdentity,row.values)),result(()=>api.encodeCoreKeyTuple(row.document,tupleIdentity,row.values)),row.id);
   if(!row.error){const scope=api.prepareCoreKeyTuples(row.document),receipt=scope.encode(tupleIdentity,row.values);equal(result(()=>scope.verify(receipt)),result(()=>api.verifyCoreKeyTuple(receipt,row.document)),row.id+'-verify');}

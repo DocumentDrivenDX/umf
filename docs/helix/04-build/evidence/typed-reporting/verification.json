@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-15",
+  "sdkFoundationSnapshot": "8c9d0fb6",
+  "versions": {
+    "python": "3.11.17",
+    "postgresql": "18.6",
+    "pydantic": "2.14.1",
+    "psycopg": "3.3.3",
+    "ty": "0.0.88",
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "rust": "1.90.0",
+    "sqlparser": "0.63.0"
+  },
+  "scope": "experimental scalar/to-one raw read profile; no Lakebase service qualification",
+  "installedSdkMatchesSources": true,
+  "tests": {
+    "nativeInstalledWheels": 14,
+    "generatedPython": 7,
+    "dslPython": 40,
+    "weft": 5,
+    "fullCompilationCheckpoint": 841,
+    "finalGeneratorReplay": 19,
+    "negativeCasesPerChecker": 19,
+    "chromiumParityCases": 3
+  },
+  "lakebase": {
+    "compile": "passed",
+    "serviceExecution": "not-run: endpoint unavailable"
+  },
+  "wheels": [
+    {
+      "path": "/private/tmp/umf-praxis-joins/wheels/weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "23399ac55ca886587aa4762f5674adf24d40a1429d54cda8c10276846603aabf"
+    },
+    {
+      "path": "/private/tmp/umf-praxis-joins/sdk-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+      "sha256": "664aea6d1b5f1d754b095caa9be76b1b5cd4e377741a0e597890c5918dfa9a7f"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/pyproject.toml",
+      "sha256": "65f183359a3f3bc4b0089059bcc797db2564a75e11d163f477626653da76034a"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/__init__.py",
+      "sha256": "212bf6ee2392cd4eab01f2e102b35c44e4690e1132db7ac671d57a618f6a9063"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/capture.py",
+      "sha256": "d94c18d180e1a83c32b9df1fa2227b4a49db64a671608cc9d89118d249584df3"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/codec_support.py",
+      "sha256": "6a1e8e309969f4676fcb20ef759db6af2689dee18a63f6c022352de91f169748"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/dsl/__init__.py",
+      "sha256": "cf895ec760b78507d7dd35bc555d9103851003ea431ccc20106fc5475976910f"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/dsl/_context.py",
+      "sha256": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/dsl/_expressions.py",
+      "sha256": "495a3d5089a64b36688675ae701a88fc446da1be2ca624773ab554db2853ff97"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/dsl/_nodes.py",
+      "sha256": "acbe4049afebdedb7d8ab539a092265a17ebddee9002cbcc2566273074c18b18"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/dsl/_query.py",
+      "sha256": "fb20b6cdc5509bd2dbaa34ef1f57eb12d0f1b69184c0a053b058893de89b1f9a"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/dsl/render.py",
+      "sha256": "73d6b5529785fc6cf0c2f39b389f26520b8eddb7a607cb6f370a50c18140476e"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/postgres_read.py",
+      "sha256": "bcac8970f82c93ce24e6bb15c49c14d53ffb22aaaf5cb121be72055b4e94248b"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/reviewed.py",
+      "sha256": "9256ef5b9dbb293722c73f60b804ef623d899c7e58e9d2524de8bb8986cdda68"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/types.py",
+      "sha256": "8d150002bb4eaa3c82580912eaa7b01276db84e838ce7dbd20b0c7e661057ebd"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/python/umf_access/src/umf_access/values.py",
+      "sha256": "c4374e601f83cb5498d43f86b34711c3d52ea09f5d924b3e0f9dfecb717ce2f1"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/scripts/check-access-reporting-browser.ts",
+      "sha256": "e550145c5672914f165c08b4854c670feda1693271b93bf9e2b4b91a9ba43de0"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/scripts/generate-access-reporting-fixture.ts",
+      "sha256": "a3ed7d41e7af67127a6e33b682256236702bde7ac9be5757d1f9b5924d46b244"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/scripts/verify-access-reporting-types.py",
+      "sha256": "19229a4ffb5636466187a5af33b85b7bffa72f536a35a037d7c5bba125910d36"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/admission/access/index.ts",
+      "sha256": "972140ce876f083e9f6eff7e4044f052b8ca8d74d7feb5c0606fc15254fd4b2e"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/admission/diff.ts",
+      "sha256": "6a1dad4057f8a229f3013bada541a065882aeef3cd95e04c4700ac18194e7ffb"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/admission/index.ts",
+      "sha256": "7c23b4d171c330a74a6dcfe7bbfadb94b89361bea08e7f3a732b15fd46bd7297"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/bundle/hash.ts",
+      "sha256": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/bundle/index.ts",
+      "sha256": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/index.ts",
+      "sha256": "886f082aed8329de1cd127b5b0bdfb5d18d5fde7b32a9a609fc532c732d1f75c"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/ir/index.ts",
+      "sha256": "8f0196696a0768244bbd46ee494bd659ca230d74b2f7ee93c2a93179f2c35aad"
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/8155/umf/src/compilation/targets/python/index.ts",
+      "sha256": "e4ecb06b3d757181d519419c9a34345d27084e6c18fc629e83b86b28a654b6ac"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-core/Cargo.toml",
+      "sha256": "92816d4c1ce7ec0b33dcad5148b42e3b3ee6585e89ff28ab151ed67b50226792"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs",
+      "sha256": "303934d4ad345adfcda31dceb26d0bcb41044089d2aa0a3ee270acaba7999461"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-core/src/raw_read.rs",
+      "sha256": "0e6fb43e01ebe01e0965f2e3254ff4d532568c0476067c61ff647cc3bdea2c8e"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-postgresql/Cargo.toml",
+      "sha256": "83fe02cb520a48a52152707c3b0e16352fb7d845fbf0cc10bffc0c3d3d5c788c"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-postgresql/examples/compile_raw_read.rs",
+      "sha256": "0e40692fa627699e8a72e068ba6ae418f3e03073cdb62cecd6398c94cdd782fb"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-postgresql/src/lib.rs",
+      "sha256": "5780c16452784dc92b05518a85600b29c766a6c147b28448cb8ed495a68840d3"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-postgresql/src/raw_read.rs",
+      "sha256": "209db02ae84285bf0fd6eb06a3b6d7138d5da4e1eb2a7cacb694635269b0901f"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-postgresql/src/raw_read_tests.rs",
+      "sha256": "cf09005c319985865fe221ba350b2c272906e39960f3185dbc05aff94e31cc85"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-python/Cargo.toml",
+      "sha256": "47ae9e7a49e7a5d24b53126a3eb8c7cd60aae6df54a6376a0af0771eae43c585"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-python/src/lib.rs",
+      "sha256": "007c316b27c51f4555ed56c148af64a5978e1590621bb3395ec08228e73e20b3"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-runtime/Cargo.toml",
+      "sha256": "3198638b43b632caf64fd704aa2f902967b76833a657e413aec8364090679bd1"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-runtime/src/lib.rs",
+      "sha256": "8897e6cd115308929e675d571a1c7ff34d1803baa08ab02bcfad826a70fb4670"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-wasm/Cargo.toml",
+      "sha256": "007b21b4dade59b711c95489dda6ff8fc866711664a4b5672e3712f5e907f108"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/crates/weft-wasm/src/lib.rs",
+      "sha256": "f36b99ea326c91d35f3a0a46dfc3d9b29fb152ba0bca70f27ebd5f2bca4a35ee"
+    },
+    {
+      "path": "/Users/erik/Projects/weft/tests/raw-postgresql/read-request.json",
+      "sha256": "d09edf2a988818f011f779651890d5d1f6bb808a608a5dfb0510cef4ddbd68a5"
+    }
+  ]
+}

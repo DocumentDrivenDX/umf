@@ -1,3 +1,4 @@
+import {uuidDocument,UUID,KEY} from '../helpers/uuid-fixtures';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
 import {tupleCases,tupleDocument,tupleIdentity} from '../../scripts/core-key-tuple-cases';
@@ -64,4 +65,16 @@ test('reused declaration checks preserve optional absence, output checks and per
   for(const supplied of [{out:{integerToken:'-128'}},{out:{integerToken:'-129'}},{}])
    expect(outcome(()=>scope.admitInputs(supplied,true))).toEqual(outcome(()=>admitActionInputs(document,action,supplied,true)));
  }
+});
+
+test('prepared core0.8 verification preserves foreign core0.9 receipt refusals without admitting core0.9 scopes',()=>{
+ const document=tupleDocument([{id:'x',scalarType:'string'}]),scope=prepareCoreKeyTuples(document);
+ for(const profile of ['umf-key-tuple-v1','umf-key-tuple-v2'] as const){
+  const foreign=encodeCoreKeyTuple(uuidDocument('string'),KEY,[{string:'foreign'}],{profile});
+  expect(outcome(()=>scope.verify(foreign))).toEqual({code:'KEY_TUPLE_STALE',path:'/source'});
+  expect(outcome(()=>scope.verify(foreign))).toEqual(outcome(()=>verifyCoreKeyTuple(foreign,document)));
+ }
+ const foreign=encodeCoreKeyTuple(uuidDocument(),KEY,[{uuid:UUID}],{profile:'umf-key-tuple-v2'});
+ expect(outcome(()=>scope.verify(foreign))).toEqual(outcome(()=>verifyCoreKeyTuple(foreign,document)));
+ expect(()=>prepareCoreKeyTuples(uuidDocument())).toThrow();
 });

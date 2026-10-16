@@ -1,0 +1,280 @@
+{
+  "call_keyword.py": {
+    "line": 7,
+    "mypy": [
+      "call-arg"
+    ],
+    "pyright": [
+      "reportCallIssue",
+      "reportCallIssue"
+    ]
+  },
+  "call_missing.py": {
+    "line": 7,
+    "mypy": [
+      "call-arg"
+    ],
+    "pyright": [
+      "reportCallIssue"
+    ]
+  },
+  "call_type.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "count_iterated.py": {
+    "line": 7,
+    "mypy": [
+      "call-overload"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "first_optional.py": {
+    "line": 7,
+    "mypy": [
+      "union-attr"
+    ],
+    "pyright": [
+      "reportOptionalMemberAccess"
+    ]
+  },
+  "foreign_filter.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "foreign_projection.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "foreign_select.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "include_key.py": {
+    "line": 7,
+    "mypy": [
+      "assignment"
+    ],
+    "pyright": [
+      "reportAssignmentType"
+    ]
+  },
+  "ninth_select.py": {
+    "line": 7,
+    "mypy": [
+      "call-overload"
+    ],
+    "pyright": [
+      "reportCallIssue"
+    ]
+  },
+  "none_is_absent.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "nullable_nonnull.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "page_indexed.py": {
+    "line": 7,
+    "mypy": [
+      "index"
+    ],
+    "pyright": [
+      "reportIndexIssue"
+    ]
+  },
+  "page_key.py": {
+    "line": 7,
+    "mypy": [
+      "assignment"
+    ],
+    "pyright": [
+      "reportAssignmentType"
+    ]
+  },
+  "patch_keyword.py": {
+    "line": 7,
+    "mypy": [
+      "call-arg"
+    ],
+    "pyright": [
+      "reportCallIssue"
+    ]
+  },
+  "patch_null.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "ranked_count.py": {
+    "line": 7,
+    "mypy": [
+      "attr-defined"
+    ],
+    "pyright": [
+      "reportUnknownMemberType",
+      "reportAttributeAccessIssue"
+    ]
+  },
+  "ranked_page.py": {
+    "line": 7,
+    "mypy": [
+      "attr-defined"
+    ],
+    "pyright": [
+      "reportUnknownMemberType",
+      "reportAttributeAccessIssue"
+    ]
+  },
+  "ranked_update.py": {
+    "line": 7,
+    "mypy": [
+      "attr-defined"
+    ],
+    "pyright": [
+      "reportUnknownMemberType",
+      "reportAttributeAccessIssue"
+    ]
+  },
+  "replay_executor.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "unknown_column.py": {
+    "line": 7,
+    "mypy": [
+      "attr-defined"
+    ],
+    "pyright": [
+      "reportUnknownMemberType",
+      "reportAttributeAccessIssue"
+    ]
+  },
+  "update_generated.py": {
+    "line": 7,
+    "mypy": [
+      "call-arg"
+    ],
+    "pyright": [
+      "reportCallIssue"
+    ]
+  },
+  "update_immutable.py": {
+    "line": 7,
+    "mypy": [
+      "call-arg"
+    ],
+    "pyright": [
+      "reportCallIssue"
+    ]
+  },
+  "update_unknown.py": {
+    "line": 7,
+    "mypy": [
+      "call-arg"
+    ],
+    "pyright": [
+      "reportCallIssue"
+    ]
+  },
+  "update_value.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "when_reserved.py": {
+    "line": 7,
+    "mypy": [
+      "attr-defined"
+    ],
+    "pyright": [
+      "reportUnknownMemberType",
+      "reportAttributeAccessIssue"
+    ]
+  },
+  "wrong_eq.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "wrong_ne.py": {
+    "line": 7,
+    "mypy": [
+      "arg-type"
+    ],
+    "pyright": [
+      "reportArgumentType"
+    ]
+  },
+  "wrong_operand.py": {
+    "line": 7,
+    "mypy": [
+      "operator"
+    ],
+    "pyright": [
+      "reportOperatorIssue",
+      "reportUnusedExpression"
+    ]
+  },
+  "wrong_param.py": {
+    "line": 7,
+    "mypy": [
+      "operator"
+    ],
+    "pyright": [
+      "reportOperatorIssue",
+      "reportUnusedExpression"
+    ]
+  }
+}

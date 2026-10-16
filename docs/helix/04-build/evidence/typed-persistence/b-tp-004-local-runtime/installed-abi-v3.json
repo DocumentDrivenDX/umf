@@ -1,0 +1,161 @@
+{
+  "harnessSha256": "2aec7cbed03c7be726b6773bf01ca79db2e0b7a548dffb47cc82ef861d80b526",
+  "kind": "local-production-installed-wheel-replay",
+  "status": "refused",
+  "commands": [
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "venv",
+        "--without-pip",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/bin/python",
+        "/private/tmp/umf-btp004-wheel-v3/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "pydantic==2.14.1",
+        "pydantic-core==2.50.1",
+        "annotated-types==0.8.0",
+        "typing-extensions==4.16.0",
+        "typing-inspection==0.4.4"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Using Python 3.14.8 environment at: venv\nResolved 6 packages in 2ms\nInstalled 6 packages in 8ms\n + annotated-types==0.8.0\n + pydantic==2.14.1\n + pydantic-core==2.50.1\n + typing-extensions==4.16.0\n + typing-inspection==0.4.4\n + umf-access==0.1.0.dev0 (from file:///private/tmp/umf-btp004-wheel-v3/umf_access-0.1.0.dev0-py3-none-any.whl)\n"
+    },
+    {
+      "command": [
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/bin/python",
+        "-I",
+        "-B",
+        "/Users/erik/.codex/worktrees/39bf/umf/python/umf_access/tests/packaging/replay_installed.py",
+        "--child",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/replay.json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"status\": \"pass\", \"installedRuntime\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/umf_access/__init__.py\", \"generatedPackage\": \"/private/tmp/umf-btp004-installed-generated-v3/shop/__init__.py\", \"moduleReads\": 144, \"moduleLoaderMetadataReads\": [{\"path\": \"/System/Library/CoreServices/SystemVersion.plist\", \"classification\": \"stdlib-loader-platform-metadata\"}, {\"path\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/pydantic_core-2.50.1.dist-info/entry_points.txt\", \"classification\": \"installed-distribution-loader-metadata\"}, {\"path\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/umf_access-0.1.0.dev0.dist-info/entry_points.txt\", \"classification\": \"installed-distribution-loader-metadata\"}, {\"path\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/annotated_types-0.8.0.dist-info/entry_points.txt\", \"classification\": \"installed-distribution-loader-metadata\"}, {\"path\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/typing_inspection-0.4.4.dist-info/entry_points.txt\", \"classification\": \"installed-distribution-loader-metadata\"}, {\"path\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/typing_extensions-4.16.0.dist-info/entry_points.txt\", \"classification\": \"installed-distribution-loader-metadata\"}, {\"path\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/lib/python3.14/site-packages/pydantic-2.14.1.dist-info/entry_points.txt\", \"classification\": \"installed-distribution-loader-metadata\"}], \"ioScope\": \"Module reads plus explicitly recorded CPython platform-loader metadata only; not blanket cold-process zero-I/O acceptance\", \"runtimeAbi\": {\"distribution\": \"umf_access\", \"version\": \"0.1.0.dev0\", \"abi\": \"umf-access-runtime/0.1\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-c",
+        "import importlib.metadata as m; assert m.version(\"mypy\")=='2.4.0'; assert m.version(\"pyright\")=='1.1.414'"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "mypy",
+        "--python-executable",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/bin/python",
+        "--config-file",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/mypy.ini",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/__init__.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/actions.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/codecs.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/fields.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/keys.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/models.py"
+      ],
+      "exitCode": 0,
+      "stdout": "Success: no issues found in 6 source files\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "pyright",
+        "--pythonpath",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/venv/bin/python",
+        "--project",
+        "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-installed-a4wk4bke/pyrightconfig.json",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/__init__.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/actions.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/codecs.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/fields.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/keys.py",
+        "/private/tmp/umf-btp004-installed-generated-v3/shop/models.py"
+      ],
+      "exitCode": 1,
+      "stdout": "/private/tmp/umf-btp004-installed-generated-v3/shop/actions.py\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:9:21 - error: \"_v__modules_0_elements_0\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:10:21 - error: \"_v__modules_0_elements_1\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:11:21 - error: \"_v__modules_0_elements_2\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:12:21 - error: \"_v__modules_0_elements_3\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:13:21 - error: \"_v__modules_0_elements_4\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:14:21 - error: \"_v__modules_0_elements_9\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/actions.py:15:21 - error: \"_v__modules_0_elements_10\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n/private/tmp/umf-btp004-installed-generated-v3/shop/codecs.py\n  /private/tmp/umf-btp004-installed-generated-v3/shop/codecs.py:19:76 - error: Condition will always evaluate to True since the types \"datetime\" and \"None\" have no overlap (reportUnnecessaryComparison)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/codecs.py:45:5 - error: Variable \"checked\" is not accessed (reportUnusedVariable)\n/private/tmp/umf-btp004-installed-generated-v3/shop/keys.py\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:7:21 - error: \"_v__modules_0_elements_0\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:8:21 - error: \"_v__modules_0_elements_1\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:9:21 - error: \"_v__modules_0_elements_2\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:10:21 - error: \"_v__modules_0_elements_3\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:11:21 - error: \"_v__modules_0_elements_4\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:12:21 - error: \"_v__modules_0_elements_9\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n  /private/tmp/umf-btp004-installed-generated-v3/shop/keys.py:13:21 - error: \"_v__modules_0_elements_10\" is private and used outside of the module in which it is declared (reportPrivateUsage)\n16 errors, 0 warnings, 0 informations\n",
+      "stderr": ""
+    }
+  ],
+  "nativeTargets": "UNTESTED; no selected driver/platform",
+  "storyAcceptance": "Not B-TP-004 closure",
+  "buildReportSha256": "764b07e0c3931d116d632db8cb333dc5e2835a3f1ee6fd6e75cb6a4e26e3052c",
+  "runtimeSources": {
+    "pyproject.toml": "c2df9f590493620dbdfd8d35846d567b715f709902acd8fc088c226709e1eb8a",
+    "compatibility-profile.json": "03b8291666c0886f77a8892f72c89b60ac75a97e3028814ad1df9677bdde03e0",
+    "src/umf_access/__init__.py": "4d924a6cba4b47b844f0ed7ca3dbc0eb2fcaf66aef3582e459250d688b769259",
+    "src/umf_access/capture.py": "faafb74a1c1b1c8e4bbc354d9cdf4024b7071a65de6db9204cbd63fb61b2b4ce",
+    "src/umf_access/codec_support.py": "6a1e8e309969f4676fcb20ef759db6af2689dee18a63f6c022352de91f169748",
+    "src/umf_access/dsl/__init__.py": "44f441e0ac082b916b9ada9ed043e79946639d23513d9b4be4c25b12cd4b9783",
+    "src/umf_access/dsl/_context.py": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+    "src/umf_access/dsl/_expressions.py": "08f5cca5483969896c61dfa38995dc4510b5085625fbac21312850fbf10f8a42",
+    "src/umf_access/dsl/_nodes.py": "088cd3082497e5cbf0189dc26b253617e45214e60853ad766104597e9298619d",
+    "src/umf_access/dsl/_query.py": "fc5cd2bdeacc95d5b7cedd2a6db88b0924cefde625fcd5b7f999667d1d2e0fe6",
+    "src/umf_access/dsl/render.py": "8ddba68eb4a2812db6f9c17cf25243948e8d7d177a6ab8e2e6b9cfe4338922a9",
+    "src/umf_access/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/umf_access/types.py": "8d150002bb4eaa3c82580912eaa7b01276db84e838ce7dbd20b0c7e661057ebd",
+    "src/umf_access/values.py": "8deb1a50a085b9ff02717fdb32d4dfd341d005f10097f55d92062af7cdca4dcd"
+  },
+  "profileSha256": "03b8291666c0886f77a8892f72c89b60ac75a97e3028814ad1df9677bdde03e0",
+  "wheelSha256": "e4c780c7bfa9b2686c2e6f84da30eff7ad3fdbe324cb601b383481f580153899",
+  "manifestSha256": "eb65c8236f17046aa396cc3a6275f2cbab55baeb7366d25219f996c0081e6735",
+  "generatedInventory": [
+    {
+      "path": "shop/__init__.py",
+      "sha256": "2a1bc6d3a74bedc0ae93e35f37b1e72595877c140a4765953d91fcbc7cea15a2"
+    },
+    {
+      "path": "shop/_umf/sources.json",
+      "sha256": "b81b00becb783614333a25d4114ef3e4893ade8d2cb15a83a6039fd8a4d8bdb8"
+    },
+    {
+      "path": "shop/actions.py",
+      "sha256": "608369ce5c3d1b780876229314c4e0ef38c58a49595a4175b59c409ea2d2284e"
+    },
+    {
+      "path": "shop/codecs.py",
+      "sha256": "471f8f26c367eaad526b2069c46db272e110df2cfcca3b81331c2dbae9e53d2c"
+    },
+    {
+      "path": "shop/fields.py",
+      "sha256": "78c5478ab93abb5bd60939543849286cf684f47de0c7a32c57855ce0a449c567"
+    },
+    {
+      "path": "shop/keys.py",
+      "sha256": "56e79800adbac3b06bb3cf0675db9f407bf82dbaa56f77e04784e66369b3150b"
+    },
+    {
+      "path": "shop/models.py",
+      "sha256": "1d3ba83fe2fc4fbc5b47269dc2ce7a700f5338d45a69f8f4762c302fc8b1159a"
+    },
+    {
+      "path": "shop/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ],
+  "reason": "replay command failed; see retained command outcome"
+}

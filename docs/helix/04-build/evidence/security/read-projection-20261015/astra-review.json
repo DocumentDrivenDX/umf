@@ -1,0 +1,72 @@
+{
+  "status": "reviewed-no-remaining-blocker-within-conditional-metadata-scope",
+  "finalHelperSha256": "8481b4e2e7a3fbfce9d76e5ba57350739f0afd0fd3a0df6b7ec60acd4d912cd0",
+  "independentChecks": {
+    "semanticControlsPerRuntime": 39,
+    "runtimes": [
+      "Bun1.4.2",
+      "Chromium153.0.8010.12"
+    ],
+    "bunChromiumExactParity": true,
+    "wholeResultBoundaryControls": 5,
+    "privateMutationDetections": 7,
+    "selectedSourcePins": 18,
+    "pinsStableAtFinalization": true,
+    "databaseOrCloudCalls": 0
+  },
+  "resolvedFindings": [
+    {
+      "kind": "bounded-output-defect",
+      "status": "fixed-and-independently-retested",
+      "beforeHelperSha256": "d529c371e8fcd2fd32c4d8ac8451b3e9dc732aafd8ce248d10f0289b57d9332c",
+      "witness": "frame-before.json",
+      "detail": "Piece charging admitted an inspected result of4,000,435 serialized UTF-16 units at4,000,000 charged units. Final exact serialization check includes the whole envelope, diagnostics and array framing."
+    },
+    {
+      "kind": "parent-found-refusal-echo",
+      "status": "fixed-and-independently-retested",
+      "detail": "Refusal now clears unvalidated selection. An invalid selection containing more than8m text returns fixed233-unit refusal with selection:null and no alternatives/domains."
+    }
+  ],
+  "verifiedBoundaries": {
+    "acceptedSerializedUtf16Units": [
+      1000000,
+      3999999,
+      4000000
+    ],
+    "refusedAt4000001": true,
+    "refusalSerializedUtf16Units": 233,
+    "scope": "Serialization size bound only; not UTF-8 transport bytes, total heap/allocation, pre-snapshot CPU or whole-query shared work."
+  },
+  "semanticAssessment": [
+    "Uses only the original issued catalog-program handle and a detached closed owner/Type/Field selection. No caller operator/path/scan/action/queryValue is accepted; no new query compiler or designation is introduced.",
+    "Retains all applicable read require/forbid/permit conditions and context bindings, including literal-false contributors. Alternatives preserve every permit occurrence in source order without evaluating truth or collapsing typed-equivalent transforms.",
+    "Original/default-original, transformed output Field, withheld and missing protected disclosure remain distinct. Domain entries retain full original Field descriptors and document revisions; domain array order is not selected output.",
+    "Both tokenize and encrypt stored carriers with original read resolve to the live token Field and retain stored-transformed metadata, never the pre-storage clear Field. Complete unrelated storage-map corruption is refused.",
+    "Getter inputs are refused without invocation; copied program handles and caller override members refuse atomically. Successful nested results remain frozen and detached.",
+    "Actual policy/disclosure folding, eligibility, nonempty supported unanimous output projection, scalar presence, exact compiler descriptor correspondence, native current authority and guarded release remain consumer obligations. No alternative alone grants or implies any of them."
+  ],
+  "mutationSensitivity": [
+    "whole-owner-validation",
+    "drop-forbid-require-conditions",
+    "filter-false-contributors",
+    "stored-original-to-prestorage",
+    "withheld-to-original",
+    "omit-final-framing",
+    "echo-refused-selection"
+  ],
+  "documentation": "Final CONTRACT062/TD079/STP079 additions accurately qualify per-permit metadata, typed original runtime folding, live stored domains, non-scalar absence, exact UTF-16 result bound and unchanged r3 child protocol. TD effect name corrected to forbid.",
+  "rootEvidenceInspectedSeparately": {
+    "finalSuite": "312 tests/4776 assertions; parent-executed, not independently repeated",
+    "typecheck": "parent reported final pass",
+    "parentPortableCorpus": "25 Bun/Chromium checks, separate from39 independent checks",
+    "sourceReceipt": "/private/tmp/read-projection-final-security-20261015.json"
+  },
+  "limits": [
+    "Finite logical metadata/component review; no new native credential, permit, current authorization, installed owner authentication, uniform scalar-domain theorem, query execution or backend acceptance.",
+    "18 selected source pins and retained browser bundle are not a hermetic runtime/dependency closure.",
+    "No library root export, registered child bundle/protocol or case allocation was changed by this review. All158 case definitions match current HEAD.",
+    "Pre-fix witness and source, reviewer setup failures, final source, exact boundary results, original semantic expectations and each private mutant/log are retained."
+  ],
+  "findings": []
+}

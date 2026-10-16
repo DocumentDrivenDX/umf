@@ -1,0 +1,21 @@
+{
+  "kind": "B-TP-004 transport claim qualification",
+  "appliesToReplay": "b-tp-004-final/latest-replay.json",
+  "localRuntimeTests": "PASS27; unchanged source",
+  "targetCarrierAgreement": "UNTESTED",
+  "dependency": "W-0",
+  "contract": "CONTRACT-072 transport carriers",
+  "scope": {
+    "status": "UNTESTED; dependent on W-0 recognized named Weft entry carriers",
+    "observed": "Current generated encode/decode methods preserve Python carriers (Decimal, bytes, date/datetime); instant encoding normalizes datetime UTC. They do not select or interpret a Weft carrier descriptor.",
+    "notProven": [
+      "exact decimal text parameter/result interchange",
+      "epoch-microsecond text instant parameter/result interchange",
+      "named carrier inventory admission/refusal at catalog build",
+      "native target parameter binding and decoder interoperability"
+    ],
+    "qualification": "Local model/helper/codec revalidation and Python value preservation only. CONTRACT-075 canonical tokens are an oracle comparison, not a selected Weft/native transport carrier. No full transport/native support claim.",
+    "continuation": "W-0/catalog owner must define released recognized carrier descriptors and conversion seam; implement/test exact conversion and unknown-carrier refusal before target carrier agreement. No guessed transport or interim SQL lowering."
+  },
+  "sourceChanges": "None; limitation clarification only; do not mutate immutable passing snapshot records."
+}

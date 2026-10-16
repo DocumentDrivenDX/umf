@@ -1,0 +1,11 @@
+12 | if(!probes[0].validation.valid||!probes[1].validation.valid||!probes[2].validation.valid||probes[3].validation.valid)throw Error('Actual original Token logical-value semantics changed');
+13 | const missing=api.resolveCoreDefault(document,identity,{state:'missing'});
+14 | if(missing.applied||missing.result.state!=='missing')throw Error('Original missing state changed');
+15 | const checked=disclosure.inspectSecurityDisclosureV2(base.batch,base.policy,base.catalog,base.closure);
+16 | const rows=base.batch.rows;
+17 | if(!checked.validated)throw Error('Original declared disclosure batch does not validate');
+                                 ^
+error: Original declared disclosure batch does not validate
+      at /private/tmp/umf-original-token-presence-20261016.ts:17:29
+
+Bun v1.4.2 (macOS arm64)

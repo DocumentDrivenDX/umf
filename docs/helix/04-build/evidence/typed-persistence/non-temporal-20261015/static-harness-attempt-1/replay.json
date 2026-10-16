@@ -1,0 +1,160 @@
+{
+  "status": "fail",
+  "commands": [
+    {
+      "name": "installed-tests",
+      "command": [
+        "/private/tmp/umf-sdk-nontemporal/venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,zipfile,importlib.metadata as m\nfrom pathlib import Path\nassert sys.version.split()[0]=='3.14.8'\nassert m.version('pydantic')=='2.14.1'\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile('/private/tmp/umf-sdk-nontemporal/wheel/umf_access-0.1.0.dev0-py3-none-any.whl') as archive:\n for name in archive.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):\n   assert (site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,'/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests')\nsys.path.insert(0,'/private/tmp/umf-sdk-nontemporal/full')\nimport unittest\nsuite=unittest.TestSuite()\nfor name in ['test_values_red.py', 'test_codec_support_red.py', 'test_golden_vectors.py', 'test_generated_models.py', 'test_generated_actiontypes.py', 'test_generated_projections.py', 'test_codecs.py', 'test_runtime_driven_codecs.py', 'test_dsl_runtime.py', 'test_capture.py', 'test_dsl_render.py']:\n suite.addTests(unittest.defaultTestLoader.discover('/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests',pattern=name))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "installed-tests.log"
+    },
+    {
+      "name": "mypy-positive",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "mypy",
+        "--python-executable",
+        "/private/tmp/umf-sdk-nontemporal/venv/bin/python",
+        "--python-version",
+        "3.11",
+        "--check-untyped-defs",
+        "--show-error-codes",
+        "--cache-dir",
+        "/private/tmp/umf-sdk-nontemporal/mypy-cache",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/__init__.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/actions.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/codecs.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/fields.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/keys.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/models.py",
+        "/private/tmp/umf-sdk-nontemporal/corpus/positive.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "mypy-positive.log"
+    },
+    {
+      "name": "pyright-positive",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "pyright",
+        "--pythonpath",
+        "/private/tmp/umf-sdk-nontemporal/venv/bin/python",
+        "--project",
+        "/private/tmp/umf-sdk-nontemporal/pyright.json",
+        "--outputjson",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/__init__.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/actions.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/codecs.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/fields.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/keys.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/models.py",
+        "/private/tmp/umf-sdk-nontemporal/corpus/positive.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "pyright-positive.log"
+    },
+    {
+      "name": "ty-positive",
+      "command": [
+        "/opt/homebrew/bin/uvx",
+        "--offline",
+        "ty==0.0.88",
+        "check",
+        "--python",
+        "/private/tmp/umf-sdk-nontemporal/venv",
+        "--python-version",
+        "3.11",
+        "--extra-search-path",
+        "/private/tmp/umf-sdk-nontemporal/full",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/__init__.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/actions.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/codecs.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/fields.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/keys.py",
+        "/private/tmp/umf-sdk-nontemporal/full/commerce/models.py",
+        "/private/tmp/umf-sdk-nontemporal/corpus/positive.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal/full",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "log": "ty-positive.log"
+    },
+    {
+      "name": "mypy-negative",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "mypy",
+        "--python-executable",
+        "/private/tmp/umf-sdk-nontemporal/venv/bin/python",
+        "--python-version",
+        "3.11",
+        "--check-untyped-defs",
+        "--show-error-codes",
+        "--cache-dir",
+        "/private/tmp/umf-sdk-nontemporal/mypy-cache",
+        "/private/tmp/umf-sdk-nontemporal/corpus/negative.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "log": "mypy-negative.log"
+    },
+    {
+      "name": "pyright-negative",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-I",
+        "-m",
+        "pyright",
+        "--pythonpath",
+        "/private/tmp/umf-sdk-nontemporal/venv/bin/python",
+        "--project",
+        "/private/tmp/umf-sdk-nontemporal/pyright.json",
+        "--outputjson",
+        "/private/tmp/umf-sdk-nontemporal/corpus/negative.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "log": "pyright-negative.log"
+    },
+    {
+      "name": "ty-negative",
+      "command": [
+        "/opt/homebrew/bin/uvx",
+        "--offline",
+        "ty==0.0.88",
+        "check",
+        "--python",
+        "/private/tmp/umf-sdk-nontemporal/venv",
+        "--python-version",
+        "3.11",
+        "--extra-search-path",
+        "/private/tmp/umf-sdk-nontemporal/full",
+        "/private/tmp/umf-sdk-nontemporal/corpus/negative.py"
+      ],
+      "cwd": "/private/tmp/umf-sdk-nontemporal/full",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "log": "ty-negative.log"
+    }
+  ],
+  "error": "[(2, 'reportArgumentType'), (3, 'reportCallIssue'), (4, 'reportArgumentType'), (5, 'reportUnknownVariableType'), (5, 'reportCallIssue'), (6, 'reportUnknownVariableType'), (6, 'reportCallIssue'), (6, 'reportArgumentType')]"
+}

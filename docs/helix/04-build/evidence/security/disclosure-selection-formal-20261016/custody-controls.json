@@ -1,0 +1,12 @@
+{
+  "alternateSource": {
+    "exitCode": 1,
+    "stderr": "Traceback (most recent call last):\n  File \"/private/tmp/umf-disclosure-selection-formal-custody-20261016/alternate.py\", line 10, in <module>\n    raise RuntimeError('Execute the exact repository proof source from its root')\nRuntimeError: Execute the exact repository proof source from its root\n",
+    "receiptAbsent": true
+  },
+  "existingReceipt": {
+    "exitCode": 1,
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-disclosure-selection.py\", line 7, in <module>\n    if out.exists(): raise RuntimeError('Fresh receipt path required')\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Fresh receipt path required\n",
+    "bytesUnchanged": true
+  }
+}

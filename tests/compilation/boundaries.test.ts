@@ -1,0 +1,152 @@
+import { describe, expect, test } from "bun:test";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, copyFileSync, symlinkSync, chmodSync } from "node:fs";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
+
+const root = import.meta.dir + "/../..";
+function check(language: "ts" | "py", files: Record<string, string>, python = "python3") {
+  const fixture = mkdtempSync(join(tmpdir(), "umf-boundaries-"));
+  try {
+    for (const [path, source] of Object.entries(files)) {
+      mkdirSync(join(fixture, path, ".."), { recursive: true });
+      writeFileSync(join(fixture, path), source);
+    }
+    return Bun.spawnSync(language === "ts"
+      ? ["bun", join(root, "scripts/check-compilation-boundaries.ts"), "--root", fixture]
+      : [python, join(root, "scripts/check-access-python-boundaries.py"), "--root", fixture],
+      { cwd: root, env: process.env });
+  } finally { rmSync(fixture, { recursive: true, force: true }); }
+}
+function rejects(language: "ts" | "py", files: Record<string, string>, code: string) {
+  const result = check(language, files);
+  expect(result.exitCode).toBe(1);
+  expect(result.stderr.toString()).toContain(code);
+}
+
+describe("actual compilation boundary checker", () => {
+  test("allows public IR dependency", () => {
+    expect(check("ts", {
+      "src/compilation/targets/python/index.ts": 'import type { Node } from "../../ir/index"; export type Result = Node;',
+      "src/compilation/ir/index.ts": "export type Node = string;",
+    }).exitCode).toBe(0);
+  });
+  test("rejects forbidden direction and private reach-through", () => {
+    rejects("ts", { "src/compilation/ir/index.ts": 'import "../targets/python/index";', "src/compilation/targets/python/index.ts": "" }, "DEPENDENCY");
+    rejects("ts", { "src/compilation/targets/python/index.ts": 'import "../../ir/private";', "src/compilation/ir/private.ts": "" }, "PRIVATE");
+  });
+  test("rejects host imports, globals, dynamic loading and unresolved imports", () => {
+    for (const source of ['import "node:fs";', 'export const x = process.env;', 'export const x = globalThis["Bun"];', 'export const x = require("fs");', 'export const x = import(name);']) {
+      rejects("ts", { "src/compilation/ir/index.ts": source }, "HOST");
+    }
+    rejects("ts", { "src/compilation/ir/index.ts": 'import "./missing";' }, "UNRESOLVED");
+  });
+  test("rejects cycles including re-exports", () => {
+    rejects("ts", { "src/compilation/ir/index.ts": 'export * from "./node";', "src/compilation/ir/node.ts": 'import "./index";' }, "CYCLE");
+  });
+  test("IR external dependencies are type-only, including relative imports", () => {
+    rejects("ts", { "src/index.ts": "export const readDocument = () => {};", "src/compilation/ir/index.ts": 'import {readDocument} from "../../index";' }, "DEPENDENCY");
+    expect(check("ts", { "src/index.ts": "export interface Document {}", "src/compilation/ir/index.ts": 'import {type Document} from "../../index";' }).exitCode).toBe(0);
+  });
+  test("rejects network and runtime code execution in portable modules", () => {
+    for (const source of ['fetch("https://example.com")', 'new XMLHttpRequest()', 'new WebSocket("wss://example.com")', 'eval("1")', 'new Function("return 1")']) {
+      rejects("ts", { "src/compilation/ir/index.ts": source }, "HOST");
+    }
+  });
+});
+
+describe("actual Python boundary checker", () => {
+  for (const python of ["python3", "python3.14"]) {
+    test.skipIf(!Bun.which(python))(`stdlib extensions pass and third-party imports refuse under ${python}`, () => {
+      const path = "python/umf_access/src/umf_access/values.py";
+      const valid = check("py", { [path]: "import math\nimport struct\n" }, python);
+      expect(valid.exitCode).toBe(0);
+      expect(valid.stdout.toString()).toContain("1 modules");
+      const invalid = check("py", { [path]: "import numpy\n" }, python);
+      expect(invalid.exitCode).toBe(1);
+      expect(invalid.stderr.toString()).toContain("DEPENDENCY numpy");
+    });
+  }
+  test("allows runtime to DSL public boundary", () => {
+    expect(check("py", { "python/umf_access/runtime/__init__.py": "from umf_access.dsl import Column\n", "python/umf_access/dsl/__init__.py": "class Column: pass\n" }).exitCode).toBe(0);
+  });
+  test("rejects drivers and Weft outside owned integrations", () => {
+    for (const source of ["import psycopg", "import weft", "from umf_access.targets import postgresql"]) {
+      rejects("py", { "python/umf_access/dsl/__init__.py": source, "python/umf_access/targets/__init__.py": "" }, "DEPENDENCY");
+    }
+  });
+  test("rejects private access and relative-import cycles", () => {
+    rejects("py", { "python/umf_access/runtime/__init__.py": "from ..dsl.private import value", "python/umf_access/dsl/private.py": "value = 1" }, "PRIVATE");
+    rejects("py", { "python/umf_access/dsl/__init__.py": "from . import node", "python/umf_access/dsl/node.py": "from . import value" }, "CYCLE");
+  });
+  test("bulk exception is narrow; target cannot import generated packages or engines", () => {
+    expect(check("py", { "python/umf_access/runtime/bulk.py": "import weft" }).exitCode).toBe(0);
+    rejects("py", { "python/umf_access/runtime/read.py": "import weft" }, "DEPENDENCY");
+    for (const dependency of ["shop.models", "truss", "ashlar"]) rejects("py", { "python/umf_access/targets/postgresql.py": `import ${dependency}` }, "DEPENDENCY");
+  });
+  test("rejects dynamic imports and malformed syntax", () => {
+    rejects("py", { "python/umf_access/dsl/__init__.py": '__import__("psycopg")' }, "DYNAMIC");
+    rejects("py", { "python/umf_access/dsl/__init__.py": "from" }, "SYNTAX");
+  });
+  test("discovers src layout and rejects host I/O and dynamic import APIs", () => {
+    const path = "python/umf_access/src/umf_access/dsl/__init__.py";
+    for (const source of ['open("data")', 'input("prompt")', 'eval("1")', 'exec("x = 1")', 'import os\nx = os.environ', 'import socket', 'import importlib\nimportlib.import_module("psycopg")']) {
+      rejects("py", { [path]: source }, source.includes("importlib") || source.startsWith("eval") || source.startsWith("exec") ? "DYNAMIC" : "HOST");
+    }
+    const result = check("py", { [path]: "from decimal import Decimal\ndef invoke(input):\n    return input" });
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout.toString()).toContain("1 modules");
+  });
+  test("rejects empty scans and scans both source layouts", () => {
+    rejects("py", {}, "EMPTY");
+    const result = check("py", {
+      "python/umf_access/dsl/__init__.py": "from decimal import Decimal",
+      "python/umf_access/src/umf_access/runtime/__init__.py": "from umf_access.dsl import Decimal",
+    });
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout.toString()).toContain("2 modules");
+  });
+  test("named runtime foundations have explicit ownership; arbitrary helpers refuse", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    expect(check("py", {
+      [prefix + "types.py"]: "from pydantic import BaseModel",
+      [prefix + "values.py"]: "from decimal import Decimal",
+      [prefix + "codec_support.py"]: "from .types import BaseModel",
+      [prefix + "capture.py"]: "from .dsl import Query",
+      [prefix + "dsl/__init__.py"]: "from ..types import BaseModel\nclass Query: pass",
+      [prefix + "pages.py"]: "from .types import BaseModel",
+      [prefix + "protocols.py"]: "from .types import BaseModel",
+      [prefix + "adoption.py"]: "from .protocols import BaseModel",
+    }).exitCode).toBe(0);
+    rejects("py", { [prefix + "surprise.py"]: "" }, "MODULE");
+    rejects("py", { [prefix + "types.py"]: "from .dsl import Query", [prefix + "dsl/__init__.py"]: "class Query: pass" }, "DEPENDENCY");
+  });
+});
+
+test("local command and installed pre-commit hook reject real violations", () => {
+  const fixture = mkdtempSync(join(tmpdir(), "umf-boundary-hook-"));
+  const run = (command: string[]) => Bun.spawnSync(command, { cwd: fixture, env: process.env });
+  try {
+    for (const directory of ["scripts", ".githooks", "src/compilation/ir", "python/umf_access/dsl"]) mkdirSync(join(fixture, directory), { recursive: true });
+    for (const path of ["package.json", ".githooks/pre-commit", "scripts/check-compilation-boundaries.ts", "scripts/check-access-python-boundaries.py"]) copyFileSync(join(root, path), join(fixture, path));
+    symlinkSync(join(root, "node_modules"), join(fixture, "node_modules"));
+    chmodSync(join(fixture, ".githooks/pre-commit"), 0o755);
+    writeFileSync(join(fixture, "src/compilation/ir/index.ts"), "export type Value = string;");
+    writeFileSync(join(fixture, "python/umf_access/dsl/__init__.py"), "from decimal import Decimal\n");
+    expect(run(["git", "init", "-q"]).exitCode).toBe(0);
+    expect(run(["git", "config", "core.hooksPath", ".githooks"]).exitCode).toBe(0);
+    expect(run(["bun", "run", "check:access-boundaries"]).exitCode).toBe(0);
+    const commit = ["git", "-c", "user.name=Boundary Test", "-c", "user.email=boundary@example.invalid", "commit", "--allow-empty", "-m", "boundary control"];
+    expect(run(commit).exitCode).toBe(0);
+    for (const [path, source, reset] of [
+      ["src/compilation/ir/index.ts", 'fetch("https://example.invalid")', "export type Value = string;"],
+      ["python/umf_access/dsl/__init__.py", "import socket", "from decimal import Decimal\n"],
+    ] as const) {
+      writeFileSync(join(fixture, path), source);
+      expect(run(["bun", "run", "check:access-boundaries"]).exitCode).toBe(1);
+      const rejected = run(commit);
+      expect(rejected.exitCode).toBe(1);
+      expect(rejected.stderr.toString()).toContain("HOST");
+      writeFileSync(join(fixture, path), reset);
+    }
+  } finally { rmSync(fixture, { recursive: true, force: true }); }
+}, 15000);

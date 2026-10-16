@@ -141,7 +141,7 @@ accepted; another selector language needs separate qualification.
 
 ### Reusable declaration preparation
 
-`prepareCoreKeyTuples(source)` returns `{profile:"umf.core.key-tuples.prepared/1",source,encode(identity,values),verify(receipt)}`. `prepareActionIdentities(document,action)` returns `{profile:"umf.actions.keys.prepared/1",source,action,admitInputs(inputs,outputs=false),select(frameId,inputs)}`. These are pure library helpers for the existing Core Key and keys/1 meanings, not new executable profiles or portable capabilities.
+`prepareCoreKeyTuples(source)` returns `{profile:"umf.core.key-tuples.prepared/1",source,encode(identity,values),verify(receipt)}`. `prepareActionIdentities(document,action)` returns `{profile:"umf.actions.keys.prepared/1",source,action,admitInputs(inputs,outputs=false),select(frameId,inputs)}`. These are pure library helpers for the existing Core Key and keys/1 meanings, not new executable profiles or portable capabilities. This prepared profile accepts core 0.8.0 only; it does not select or qualify the separate core 0.9.0 tuple codecs.
 
 Each helper MUST own an immutable JSON copy of its admitted declarations. Its exposed source/action and nested data MUST be frozen; subsequent caller mutation and mutation of returned invocation results MUST NOT change that copy. Successful declaration checks MAY be reused only within that lifetime. Relevant unknown dependency closure MUST still refuse, including after prior successful calls. Missing optional inputs MUST retain their existing absence behavior; preparation MUST NOT force interpretation of an unused optional parameter merely to cache it.
 

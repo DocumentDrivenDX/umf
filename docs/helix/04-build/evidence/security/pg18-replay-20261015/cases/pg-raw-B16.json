@@ -2,7 +2,7 @@
   "status": "passed",
   "id": "pg-raw.B16",
   "backend": "pg-raw",
-  "runId": "d69f0f6b-ccb6-4c33-b841-13e12b36a39e",
+  "runId": "7a36eeb5-1847-4308-aa62-f4c5b8fc7d41",
   "command": [
     "python3",
     "tests/security/native/pg18-replay/scale.py"
@@ -966,7 +966,7 @@
         [
           {
             "state": "text",
-            "text": "382"
+            "text": "357"
           }
         ]
       ],
@@ -974,7 +974,7 @@
         [
           {
             "state": "text",
-            "text": "382"
+            "text": "357"
           }
         ]
       ]
@@ -1865,9 +1865,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.103,
+            "Planning Time": 0.094,
             "Triggers": [],
-            "Execution Time": 6.159
+            "Execution Time": 6.01
           }
         ],
         "excludedAssessorPlan": [
@@ -1935,7 +1935,7 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.089,
+            "Planning Time": 0.09,
             "Triggers": [],
             "Execution Time": 0.054
           }
@@ -2071,9 +2071,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.185,
+            "Planning Time": 0.094,
             "Triggers": [],
-            "Execution Time": 669.225
+            "Execution Time": 619.637
           }
         ],
         "excludedAssessorPlan": [
@@ -2141,9 +2141,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.097,
+            "Planning Time": 0.098,
             "Triggers": [],
-            "Execution Time": 3.065
+            "Execution Time": 2.889
           }
         ]
       },
@@ -2277,7 +2277,7 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.105,
+            "Planning Time": 0.106,
             "Triggers": [],
             "JIT": {
               "Functions": 4,
@@ -2288,7 +2288,7 @@
                 "Deforming": true
               }
             },
-            "Execution Time": 6808.467
+            "Execution Time": 6526.007
           }
         ],
         "excludedAssessorPlan": [
@@ -2413,9 +2413,9 @@
               "Temp Read Blocks": 0,
               "Temp Written Blocks": 0
             },
-            "Planning Time": 0.144,
+            "Planning Time": 0.124,
             "Triggers": [],
-            "Execution Time": 13.202
+            "Execution Time": 12.811
           }
         ]
       }
@@ -2657,7 +2657,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-9us4u0qw",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-cji24clo",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -2898,7 +2898,7 @@
         "journalEvidence": {
           "originalQueries": 54,
           "leases": 3,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-co5ndrma",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-rc23guvq",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3094,7 +3094,7 @@
               [
                 {
                   "state": "text",
-                  "text": "382"
+                  "text": "357"
                 }
               ]
             ],
@@ -3102,7 +3102,7 @@
               [
                 {
                   "state": "text",
-                  "text": "382"
+                  "text": "357"
                 }
               ]
             ]
@@ -3223,7 +3223,7 @@
         "journalEvidence": {
           "originalQueries": 76,
           "leases": 4,
-          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-m12zzijc",
+          "privateDirectory": "/private/tmp/umf-pgraw-B16-journal-jtw7fvqq",
           "structuralValidationNotAuthenticity": true
         },
         "scope": "Actual ordinary raw forced-RLS PostgreSQL18.6 million-row runtime aggregate and bounded native timeout with original journals, failed-transaction refusal and explicit same-session recovery; no full workload, streaming or publication qualification"
@@ -3369,13 +3369,13 @@
     "cleanup": {
       "containerAbsent": true,
       "volumesAbsent": true,
-      "containerId": "73ea81ed4580198b39d17e8bdea2a664fad3534e66a0f4bec851320db5328434",
+      "containerId": "61980c7d5b66c42a51e149c3d3aefe80d05d00c75d4f3603e2cfbf1d436ec580",
       "ownedAnonymousVolumes": [
-        "312880c4f1bc79d31ed0d569c9ee21979ddb5ed1fbb16395cd0a482f2a9d6f25"
+        "9325faadbc4f641a1ecb923c29b840214465d723b1407c4aaaed13a20bbe5da2"
       ],
       "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
     },
-    "digest": "edc162d78b51631c6c059e77e39c6b1b89595b48682adccb7ee7c6e2861f1672"
+    "digest": "90c846bf86685ae593d14c054ed9413b85b7f7eb81530e8887aa844a6b0b198d"
   },
   "scope": "Authored PostgreSQL18.6 forced-RLS raw profile at stable cut, exact total populations 1k/100k/1M, independent counts/samples, paired native plans and actual-driver text aggregate/native timeout/no partial output/failed transaction/explicit same-session recovery. No arbitrary workload SLA, streaming/final-publication, full diagnostic closure, graph or Delta qualification."
 }

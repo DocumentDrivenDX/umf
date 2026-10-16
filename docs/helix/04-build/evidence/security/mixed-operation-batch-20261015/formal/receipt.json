@@ -1,0 +1,119 @@
+{
+  "status": "conditional-mixed-operation-model-passed",
+  "solverVersion": "4.15.4",
+  "checks": [
+    {
+      "id": "late-refusal-releases-no-prefix",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "477bd92907674b0184e718039cd16e50d1a09107fa25d37a5a0fedfaaf4fe6fe",
+      "model": null
+    },
+    {
+      "id": "budget-refusal-releases-no-prefix",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "57e7652a0f911091ea54cc35f56cf76727e88fa64456d98ebd0c5371ebee43df",
+      "model": null
+    },
+    {
+      "id": "completed-releases-whole-ordered-list",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "b5a8d55e4a8d4b0176ff6796efdec6917f9a409a93b9c7558cd335e2091f1d7d",
+      "model": null
+    },
+    {
+      "id": "diagnostic-completion-does-not-imply-permission",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "8481339545f0247a97d2cc1c028aaa2c1238800ecfb741d2609c8722b8b3aba9",
+      "model": "[is_action = K(Int, True),\n leaf_actual_permission = K(Int, False),\n operation_count = 2,\n limit = 1796,\n leaf_structural_completion = K(Int, True),\n cumulative_cost = Store(Store(Store(Store(K(Int, 8),\n                                        1,\n                                        1458),\n                                     0,\n                                     282),\n                               2,\n                               1796),\n                         -1,\n                         5920),\n nonnegative_operation_cost = Store(Store(Store(K(Int, 8),\n                                        1,\n                                        338),\n                                        0,\n                                        1176),\n                                    -1,\n                                    5921),\n failing_index = 0,\n inventory_or_snapshot_base = 282,\n k!11 = [1 -> 338, 0 -> 1176, -1 -> 5921, else -> 8],\n Ext = [(as-array, as-array) -> -1, else -> 0],\n k!10 = [1 -> 1458,\n         0 -> 282,\n         2 -> 1796,\n         -1 -> 5920,\n         else -> 8]]"
+    },
+    {
+      "id": "denied-action-cannot-be-query-permission",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "e33fac3a9c36210f559d8de0df1d4957c26dd1f685180ec9a86083af49ba1236",
+      "model": null
+    },
+    {
+      "id": "independent-leaf-budget-reset-is-insufficient",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "744bbec71b1d75680d129dffd6b8f55114c582cd988f1eb584a1d8e4b03cadbd",
+      "model": "[nonnegative_operation_cost = Lambda(k!0,\n                                     If(1 <= k!0,\n                                        If(And(1 <= k!0,\n                                        Not(2 <= k!0)),\n                                        6,\n                                        7),\n                                        6)),\n cumulative_cost = Lambda(k!0,\n                          If(And(1 <= k!0, 2 <= k!0),\n                             12,\n                             If(1 <= k!0,\n                                If(And(1 <= k!0,\n                                       Not(2 <= k!0)),\n                                   6,\n                                   5),\n                                0))),\n inventory_or_snapshot_base = 0,\n limit = 10,\n operation_count = 2]"
+    },
+    {
+      "id": "nonnegative-next-step-cannot-recover-exhausted-budget",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "b5374ea5dbdc07ad28488be3c53ef24b26e8edcc1670ee4281c637ee0924f257",
+      "model": null
+    },
+    {
+      "id": "shared-inventory-plus-visits-not-per-leaf-max",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "a9afb7f15883a83188f4f5a7ebbc5174a9f6847f58c236af12f7d7413f4acec9",
+      "model": "[nonnegative_operation_cost = Lambda(k!0,\n                                     If(1 <= k!0,\n                                        If(And(1 <= k!0,\n                                        Not(2 <= k!0)),\n                                        1,\n                                        9),\n                                        1)),\n cumulative_cost = Lambda(k!0,\n                          If(And(1 <= k!0, 2 <= k!0),\n                             7,\n                             If(1 <= k!0,\n                                If(And(1 <= k!0,\n                                       Not(2 <= k!0)),\n                                   6,\n                                   8),\n                                5))),\n inventory_or_snapshot_base = 5,\n limit = 6,\n operation_count = 2]"
+    },
+    {
+      "id": "all-complete-and-in-budget-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "527a40e0fcd44e935e6d547fb341af774d198f164b3acd41e4d48d6ab7802548",
+      "model": "[leaf_structural_completion = K(Int, True),\n nonnegative_operation_cost = Lambda(k!0,\n                                     If(1 <= k!0,\n                                        If(And(1 <= k!0,\n                                        Not(2 <= k!0)),\n                                        3,\n                                        8),\n                                        2)),\n cumulative_cost = Lambda(k!0,\n                          If(And(1 <= k!0, 2 <= k!0),\n                             6,\n                             If(1 <= k!0,\n                                If(And(1 <= k!0,\n                                       Not(2 <= k!0)),\n                                   3,\n                                   7),\n                                1))),\n inventory_or_snapshot_base = 1,\n limit = 10,\n operation_count = 2]"
+    },
+    {
+      "id": "weak-prefix-release-exposes-earlier-result",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "747c38ce6256adafe1169c5dd06a8187daa4697d9aca46dc61f4459327972a0e",
+      "model": "[leaf_structural_completion = Store(K(Int, False), 0, True),\n limit = 7720,\n nonnegative_operation_cost = Store(Store(Store(K(Int, 4),\n                                        1,\n                                        6586),\n                                        0,\n                                        1),\n                                    -2,\n                                    449),\n cumulative_cost = Store(Store(Store(Store(Store(K(Int, 4),\n                                        -1,\n                                        897),\n                                        1,\n                                        1135),\n                                     0,\n                                     1134),\n                               2,\n                               7721),\n                         -2,\n                         448),\n failing_index = 1,\n inventory_or_snapshot_base = 1134,\n operation_count = 2,\n k!39 = [-1 -> 897,\n         1 -> 1135,\n         0 -> 1134,\n         2 -> 7721,\n         -2 -> 448,\n         else -> 4],\n k!41 = [1 -> 6586, 0 -> 1, -2 -> 449, else -> 4],\n Ext = [(as-array, as-array) -> -2, else -> 0]]"
+    },
+    {
+      "id": "single-snapshot-forbids-mixed-cuts",
+      "expected": "unsat",
+      "observed": "unsat",
+      "freshContextReplay": "unsat",
+      "formulaSha256": "3c239b9794c33f5284920411e20f8f8c15fc17500a25ecb3f501b66e12fbfe3a",
+      "model": null
+    },
+    {
+      "id": "weak-caller-cut-labels-do-not-prove-snapshot",
+      "expected": "sat",
+      "observed": "sat",
+      "freshContextReplay": "sat",
+      "formulaSha256": "adf80ca717638ec5ecce9cc221075374ab8d73491e7ca76a95fe5b85491918fd",
+      "model": "[nonnegative_operation_cost = Store(Store(Store(K(Int, -1),\n                                        1,\n                                        7719),\n                                        0,\n                                        0),\n                                    -1,\n                                    8855),\n limit = 1,\n operation_cut = Store(K(Int, 4), 0, 3),\n cumulative_cost = Store(Store(Store(Store(K(Int, -1), 1, 0),\n                                     0,\n                                     0),\n                               2,\n                               7719),\n                         -1,\n                         8856),\n inventory_or_snapshot_base = 0,\n operation_count = 2,\n k!48 = [1 -> 7719, 0 -> 0, -1 -> 8855, else -> -1],\n Ext = [(as-array, as-array) -> -1, else -> 0],\n k!46 = [1 -> 0, 0 -> 0, 2 -> 7719, -1 -> 8856, else -> -1]]"
+    }
+  ],
+  "selectedSourceDigestsBefore": {
+    "tools/security/prove-mixed-operation-batch.py": "9a25e8b809f109e86c3a1a4d95245cc22e5867522e12b691348de2d6b8ed6c46",
+    "src/extensions/security/catalog-operation-batch-candidate.ts": "3a17a918c15f1abf8e16662d53638fb6689ae1cdb65a567dc466991d465198b9",
+    "src/extensions/security/catalog-runtime-candidate.ts": "d22af3c6a9fee17b69e529e73a7b2adf4138a23ac310d29f31d10901fac40e32",
+    "docs/helix/02-design/technical-designs/TD-079-security-semantics.md": "e9368a8f0f5564a1c43fe0969702c177208c6066b4e698faed61a30118f36baa",
+    "docs/helix/03-test/test-plans/STP-079-security-semantics.md": "c8c0445b5fb74f64c31bd6e90c6ec93b1f393cc098fb2ba8fe6e9447a85973eb"
+  },
+  "selectedSourceDigests": {
+    "tools/security/prove-mixed-operation-batch.py": "9a25e8b809f109e86c3a1a4d95245cc22e5867522e12b691348de2d6b8ed6c46",
+    "src/extensions/security/catalog-operation-batch-candidate.ts": "3a17a918c15f1abf8e16662d53638fb6689ae1cdb65a567dc466991d465198b9",
+    "src/extensions/security/catalog-runtime-candidate.ts": "d22af3c6a9fee17b69e529e73a7b2adf4138a23ac310d29f31d10901fac40e32",
+    "docs/helix/02-design/technical-designs/TD-079-security-semantics.md": "e9368a8f0f5564a1c43fe0969702c177208c6066b4e698faed61a30118f36baa",
+    "docs/helix/03-test/test-plans/STP-079-security-semantics.md": "c8c0445b5fb74f64c31bd6e90c6ec93b1f393cc098fb2ba8fe6e9447a85973eb"
+  },
+  "sourcesUnchanged": true,
+  "scope": "Bounded operation count with integer cost/cut abstraction; nonnegative faithful costs, complete supplied duty enumeration, faithful leaf completion/permission and actual detached-cut provenance are external premises. Models atomic release and diagnostic completion distinct from permission. Does not prove TypeScript/kernel refinement, accounting completeness, Weft designation, native authentication, query admission or hold through release.",
+  "acceptanceCasesPromoted": []
+}

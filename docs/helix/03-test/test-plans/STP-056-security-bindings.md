@@ -1855,3 +1855,296 @@ closure and lifecycle admission remain outside this fixed archive result.
 Original P07's assertion, acceptance criterion and60s deadline are preserved;
 all other157 case definitions are exact. The fresh governed gate and final
 browser receipt are recorded in `evidence/security/pg18-native-archive-20261015/`.
+
+
+### Native actor preflight evidence integrity — 2026-10-15
+
+Exercise pending-before-CLI, preexisting-success invalidation, stage-specific partial failures, unknown counts, malformed response/configuration and redaction with synthetic non-credential fixtures. Check aliases, duplicate ordinary actors, one-actor insufficiency and mismatched contexts. Use actual owned subprocess termination and overlapping processes to verify pending visibility, working-directory-independent canonical output and latest-pending-attempt publication; older success must not overwrite newer failure, and a terminal attempt may not republish. Retain source-drift and evidence-write failure controls. Test malformed host text before URL normalization, including controls/space and credentials/query/fragment material. No synthetic actor supplies native identity/grant evidence.
+
+Independently retain one live native observation outcome using configured profiles, including sanitized failure; never reuse historical success after an incomplete attempt. Two independent non-installer principals, a dedicated disposable namespace/compute and real SQL/grant inventories remain required for original Delta/Ashlar backend cases. This POSIX host-tool work changes no semantic/browser kernel and closes no original native acceptance case.
+
+### Private computation-driver integration acceptance — 2026-10-15
+
+The TD-056 private computation child is implemented and tested through the actual
+Truss Python pipe. Native DB-derived current-Subject/fact capture and release
+integration remain unfinished. Preserve original B08/B12
+and lifecycle assertions; component tests cannot promote them.
+
+| Required check | Acceptance link | Evidence needed before native admission |
+| --- | --- | --- |
+| Locally issued extension semantics | US-056-AC1/AC2/AC7 | Original installed factory accepts only its closed selection; serialized/copied handles and unknown/extra packages refuse without staging |
+| Exact private original handle, source closure and caller/Subject cut | US-056-AC1/AC2/AC10 | Native capture plus genuine child compilation; fabricated source/hash/handle and alternate caller controls refuse |
+| Designated primary action equals original owner read action | US-056-AC1/AC6 | A different weaker read-purpose action with otherwise valid owner/cut pins refuses before planning or staging |
+| Source-derived provisional modes, independent of the mode-free Weft operand ledger | US-056-AC6/AC7 | Original inspector/base constraint drives the scan union; actual selected routes must agree; hidden-original-only Fields never require unselected public rendering |
+| Original read cells, eligible row identity/order and route/action association | US-056-AC6 | Actual Weft occurrences, full population before filters/LIMIT, typed cell/Key correspondence, wrong/unknown/missing action and mixed-domain controls |
+| Empty population dependencies | US-056-AC6/AC7 | No shortcut around original scoped rule/action/source validation, including field-free COUNT |
+| Practical input/output, deadline and process/staging limits | US-056-AC7 | Exact profile boundaries and failure cleanup; original batch ledger unchanged; independent route ledgers do not establish aggregate work or heap bounds |
+| Untouched refusal/unknown/absence/null/literal transport | US-056-AC6/AC10 | Byte/token and typed identity checks; no denial-to-empty or unknown-to-permit normalization |
+| Child loss, malformed/truncated/duplicate/reordered/late reply and replay | US-056-AC7/AC10 | No private staging consumption or ordinary output from incomplete/mismatched replies; next operation freshly admitted |
+| Authentic held context through SQL/decode/release and revocation | US-057-AC1/AC2/AC3/AC7 | Native concurrent schedules, actual driver/role identity, guard/capture/release and failure evidence |
+
+Require actual raw and graph capture fixtures and native source inventories;
+copying the raw fixture does not qualify graph storage. Databricks/Ashlar need
+independent principals, native compute/publication and current-authority evidence.
+No row is passed by this table; all named missing tests remain required.
+
+### Independent current-source native scalar edges — 2026-10-15
+
+The finite physical oracle passes17 actual current-query SQL cases and4 original-boundary refusals on PostgreSQL18.6. Require exact code/stage for negative inputs, original text/OID/domain checks, negative SQL sensitivity and owned container/volume absence. These conditional stage-value cases do not replace native action/issuer/sideband/release acceptance. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).
+
+### Private computation child implementation — 2026-10-15
+
+The private Bun child now implements original source compilation, route inspection
+and atomic batch plus route evaluation through the actual Truss Python pipe.
+The final ABI uses big-endian uint32 framing and nested `initialize.sources` with
+all six closed fields. `extensionSelection` is null or exactly the local actions
+0.1.0 selection; the original factory issues the opaque handle. `sourceReceipt`
+is SHA256 of the exact initialization header plus payload, solely correlation.
+Each child accepts exactly initialize, inspect-routes, evaluate, with unique
+bounded request IDs and identical owner/ordered routes. Failure is terminal;
+original semantic refusals remain untouched private results. No database
+credentials, public server, native issuer or guarded release is added.
+
+The builder discovers the original dependency closure, pins before the actual
+build, verifies the same closure and post-build pins, and retains original
+third-party license notices. Independent Astra controls and real pipe tests are
+retained in [the child packet](../../04-build/evidence/security/current-query-child-20261015/README.md).
+Native current-Subject/fact capture, primary-action correspondence, typed Weft
+contributor lineage and held-context release remain required integration work.
+No backend acceptance case is promoted.
+
+### Actual compiler packet and original child correspondence — 2026-10-15
+
+Five actual typed Weft packet cases pass original UMF source inspection, atomic
+read/action/scan evaluation and route selection over the supplied original
+fixture cut. Exact populations/Cells and empty-tuple COUNT scans are checked;
+inactive assignment denies without rendering. This is conditional computation
+evidence, not SQL/native authorization, contributor lineage or guarded release.
+All original backend cases remain required and acceptance stays 45/158.
+See [retained interop evidence](../../04-build/evidence/security/weft-current-child-20261015/README.md).
+
+### Separate live-original integer SUM source profile — 2026-10-15
+
+The new original fixture `live-original-integer-sum-source.json` selects aggregate
+original-authorized mode in its ontology and read-mask catalog, under distinct
+policy/ontology/catalog/owner/cut revisions. Its required signed64 salary remains
+a live original Field; ordinary read rendering stays the String `[private]`.
+The exact separate `query-original-salary-sum` action has original-authorized
+purpose and Project-membership requirements. The old prohibited SUM source and
+unsupported compiler factory remain unchanged. Fixture metadata never issues a
+compiler designation or action grant.
+
+`required: ['nullity']` is only a necessary scalar presence/null-vs-absence
+dependency. It proves neither additive transform preservation nor scalar/native
+admission. The selected profile also requires exact live original domain/codec,
+current independent action and read eligibility for every contributing resource,
+actual typed compiler provenance/contributor identities, exact arbitrary-precision
+integer accumulation, nullable scalar NULL on empty input, and guarded release.
+Source route selection alone cannot discharge those obligations. Disclosed or
+transformed SUM, Decimal and other domains remain required future work; this
+first live-original capability does not narrow the full objective.
+
+Semantic tests must retain active permit and String mask, inactive deny, missing
+action permit, missing dependency coverage even for empty resources, absent-live
+input and unchanged old-source refusal controls. Native acceptance additionally
+requires overflow beyond signed64 accumulation, negative/cancelling values, empty
+and grouped-empty NULL distinction, exact contributor bags and concurrent
+revocation/source changes. No backend acceptance case is promoted by this source.
+
+The corpus also renders salary to verify the independent read mask. A SUM-only
+query does not select that public Cell and must not require unselected rendering;
+its hidden original operand still requires exact read/action/presence admission.
+
+### Independent native fact-to-child component replay — 2026-10-15
+
+Original Truss37511eb8 tests pass from an isolated 1,124-file tracked snapshot on
+PG18.6: native six-object/five-type capture, original UMF Key receipts, original
+child, exact r1permit/r2deny and integerToken9007199254740993. Both original tests
+and owned runtime/PID/directory cleanup pass. This contributes component evidence
+to US-056-AC2/AC6/AC7; it closes no native query case. Installer capture and
+diagnostic owner/cut with a separately observed ordinary Subject do not prove
+authenticated same-held-context admission. Registered owner/Weft binding, original
+occurrence/action/projection checks, exact typed staging/contributor bags and
+current guard/revocation/release remain required, as do raw/graph and other
+backend/principal cases. Acceptance stays 45/158 accepted, 113 unimplemented.
+See [the original replay packet](../../04-build/evidence/security/truss-current-facts-replay-20261015/README.md).
+
+### Public guarded-query replay and alternate-read gap — 2026-10-15
+
+Original Truss9a495 public workflow passes with ordinary Subject, registered
+source, exact original child/CQP, masked projection, signed64 predicate, public
+budgets and final two-host checks. Independent native probing also confirms
+granted query_objects returns both permitted and denied raw Resource values
+to that ordinary actor. Registration is not global protected-source activation.
+CONTRACT-063 / US-056-AC5 remains unmet until alternate native/public reads are
+closed or equivalently guarded; raw-table SELECT denial alone is insufficient.
+No backend case promoted; 45/158 accepted,113 unimplemented unchanged.
+See [original replay, Astra review and exact reproduction](../../04-build/evidence/security/truss-current-query-replay-20261015/README.md).
+
+### Actual explicit SUM packet / original policy interoperability — 2026-10-15
+
+Five supplied-cut cases plus two producer controls pass with exact new Weft
+capability and unchanged original UMF child. Whole typed operations, independent
+SUM action, global/grouped nullability, live original salary origin, branch
+indices and raw-only rendering independence are checked. This contributes to
+US-056-AC2/AC6 semantic correspondence only; no native aggregate guard or
+backend case is promoted. Acceptance45/158,113 unimplemented unchanged.
+See [scoped evidence and review](../../04-build/evidence/security/weft-sum-child-20261015/README.md).
+
+### External delegation closure counterexample — 2026-10-15
+
+Independent native testing of in-progress activation confirms a pre-existing
+PUBLIC-callable outside-schema SECURITY DEFINER function owned by runtime owner
+can read all six objects after truss-only grant lockdown, while ordinary raw
+SELECT is false and the positive guarded query still passes. Denied Resource
+rawsalary and hidden Assignment facts escape. This keeps US-056-AC5/AC8 and
+B04/B05/B10/B14 open; CONTRACT-063 requires complete delegated authority closure.
+Truss is implementing external routine/view admission checks; no verified fix
+or backend promotion is inferred. See [exact counterexample](../../04-build/evidence/security/truss-external-delegation-20261015/README.md).
+
+### Independent explicit protected activation replays — 2026-10-15
+
+Exact committed Truss123cd2ec/privateABI2wheel and edebb67f/standardCI0.4.33ABI2
+cohorts each pass four native public workflows. Masked exact predicates and empty
+populations work; legacy data facades/regrant paths refuse. Privileged external
+definers, transitive column-granted views and unenrolled elevated roles refuse
+activation; finalCIcohort also rejects external internal-routine attachments.
+This closes exercised namespace-only paths under trusted activation/DDL
+quiescence, not complete native writer/effect/lifecycle or managed deployment
+qualification. Existing B04/B05/B06/B10/B11/B14/L12 procedures are expanded; all
+30 Truss cases remain required. No case promoted:45/158 accepted,113 unimplemented.
+See [separate exact source/wheel cohorts](../../04-build/evidence/security/truss-protected-query-replay-20261015/README.md).
+
+### Published compiler artifact correspondence — 2026-10-15
+
+Actual public Weft0.4.33ARM archive8ea8 differs from testedCIarchivedfe0, but all
+five member payloads are byte-identical. Original Trussad794577 selects its
+explicit published ABI2 manifest and refuses retained CI selection;467 tracked
+source files and original UMF assets correspond. Official release API asset
+digests/sizes match local public wheel and checksums. This is artifact/consumer
+correspondence only: no database rerun, Linux/aggregate/native authority or
+release-readiness promotion. Earlier CI native receipt remains immutable.
+Acceptance45/158,113 unimplemented unchanged. See [exact evidence](../../04-build/evidence/security/published-weft-cohort-20261015/README.md).
+
+## Native presence/provenance prerequisite controls — 2026-10-16
+
+These exercising component controls map to US-056-AC6 and supplement, never replace, pg-raw.P03/B07/B08. Keep all original required cases and operator/actor/bypass expectations unchanged.
+
+| Control | Exercising source | Required observation |
+| --- | --- | --- |
+| CP01 issued SQL and real driver data | `tools/security/pg18-current-presence-oracle.py` | Four actual issued bounded PostgreSQL programs match the Rust checker over complete captured fixture rows; actual NULL refuses even when FALSE/LIMIT0 hides results. |
+| CP02 native presence | same | Explicit native column presence distinguishes null/absence; scalar-only current frame cannot express the distinction. JSONB key existence independently distinguishes missing key from explicit JSON null. Neither codec is automatically admitted. |
+| CP03 disclosure provenance | same | Native original five declared outcomes retain column/revision, disposition, payload presence, selection, output domain and exact transform; original null and transformed null stay distinct. |
+| CP04 negative controls | same | Wrong original document/revision, inconsistent payload flag, missing/unexpected transform and invalid public null/domain/transform metadata refuse. Plain nullable payload collapses four distinct outcomes. |
+| CP05 closed producer | same | Derived optional Token source refuses the current required-only lineage producer before application SQL; no fallback or fabricated native permission. |
+| CP06 algebra | `tools/security/prove-disclosure-carrier.py` | Conditional left/right inverse, injectivity and malformed-record refusal have UNSAT violations; all four variants have SAT inhabitants and erasure controls yield SAT counterexamples. |
+| CP07 custody and cleanup | native source above | Pin actual engine/image, original fixture/packet/wheel/native module/shim and source bytes; retain failures; verify owned label, removal and subsequent absence. Never publish success when cleanup is unverified. |
+| CP08 explicit policy-selected presence | `tools/security/query-presence-policy-oracle.ts` | On the explicit optional queryable model, a separate Token disclosure preserves String/null/absence under the original project-membership requirement; undisclosed, unreported, incomplete and stale states refuse, and inactive assignment, mismatched subject/project links and complete absent associations return no eligible rows. Supplied logical cuts never confer native authority. |
+
+Use the pinned disposable PostgreSQL 18.6 image from the original P-cases and isolated explicit output paths. Excluded-admin execution tests a physical/codec boundary, not ordinary-principal authorization, native transformation execution or actual source/caller/current-cut admission. Preserve exact artifact/codec/fixture identities so supplied declared cells cannot be relabeled as actual policy decisions. Browser portability is unaffected: these tools remain outside the browser library.
+
+### Canonical disclosure-selection provenance component — 2026-10-16
+
+The private logical-disclosure-selection0.1 producer must preserve exact qualified resource identities, actual scoped rule truth, all winning source occurrences and the first selected transform occurrence in canonical policy order. Exercise both flat and graph witnesses, nonzero disclosure indices, duplicate contributors, conflicting transforms, withholding dominance without original-value projection, explicit unprotected fallback, missing protected directives, denied/empty populations, hostile/stale input and shared-budget exhaustion. Original action/render/rule-scan shapes must remain unchanged. Real Chromium must match Bun without host globals. Source-selection evidence never grants native authority, executes transforms or substitutes for original P03/B08 cases.
+
+
+### Atomic canonical disclosure batch controls — 2026-10-16
+
+`tests/security/catalog-disclosure-batch-corpus.ts` and
+`catalog-disclosure-batch.test.ts` cite `@covers US-056-AC6` and
+`@covers US-056-AC10`. Exercise actual canonical execution, then independently
+inspect and JSON/YAML round-trip every successful0.2 batch: exact source/resource
+correspondence; original/null/absence/withholding/transformed-null; all six pure
+function classes and exact signed/decimal/date/Unicode values; nonzero and
+duplicate source positions; differing transform conflict; inactive directives;
+flat and graph witnesses; stored-token original/output identity; denied rows in
+complete census but absent from released batch; empty and field-free populations;
+unsupported inline refusal with old behavior preserved; later invalid output and
+shared-budget exhaustion clearing every result field; stale/malformed sources
+and hostile getters refusing without invocation. Test transport counts and
+literal boundaries and prove produced metadata survives the original public
+codec. Real Chromium must match Bun without host globals or external requests.
+These component checks supplement original P03/B08 and do not promote a backend
+case or prove native custody/operator/release behavior.
+
+### Actual atomic producer presence handoff — 2026-10-16
+
+Supplement AC6/AC10 component evidence with the actual private WithinOperation producer on the explicitly authored optional Resource source. Preserve the original salary-only policy as a negative; separate original Token, withheld Token and null-presentation policies retain distinct content revisions. Exercise String, original null, absence, withholding, actual pure transformed null and unreported presence under project-membership permit, inactive/foreign/missing relationship denial, incomplete coverage and stale generation. Assert exact census versus permitted resources/rows, stored Token carrier, public V2 inspection and both original codecs. Retain input/source snapshots, exact source UTF-8, actual batch JSON, full inspection verdict and refused atomic-cleared outputs for compiler/native transport composition.
+
+These are supplied-cut producer controls, not authenticated native facts, physical compiler execution, query-operator permissions or guarded release. No existing required backend case changes status; native transport must independently preserve exact header, occurrences, resource correspondence and all five states before any admitted profile may use it.
+
+### Owned PostgreSQL atomic presence transport — 2026-10-16
+
+Before native execution, independently review the exact separately feature-gated Weft typed transport, held-context probe and native runner. Pin the probe binary/project/lock, reviewed lowerer overlay and independent source inventory, original actual-producer packets and supplemental reviewed mixed/empty cuts. Re-execute the actual WithinOperation producer for every operation before materializing its cells. Require exact whole V2 validation and stored-carrier/source/header correspondence; do not derive expected completeness from query result rows.
+
+Use only an owned labelled PostgreSQL18.6 tmpfs fixture under the excluded administrator. Capture complete eligible keys and cell TEXT independently from the actual compiled SQL's driver rows, including explicit physical column order. Keep the original Rust parent/context/binding alive across those queries and the actual checker call. Exercise all 41 rendered original packets, the six reviewed mixed/empty producer populations, duplicate cell values under distinct keys, original null/absence/withheld/actual transformed null, and ineligible-row exclusion. Native unordered rows must retain the exact private resource-key bag before restoration to the original owner order. Retain untouched actual driver rows before deliberately corrupting checker frames with missing/extra rows, scalar-null collapse or a changed header; these are frame-corruption controls, not separately executed altered SQL statements. A self-consistent but source-invalid selected occurrence must demonstrate that a successful structural checker does not discharge required whole V2 source validation.
+
+Retain exact requests/bindings/preparations/artifacts/native captures/frames/reports/public inspection, source endpoint pins, engine/image/mount identity and verified owned cleanup. A source mismatch refuses before Docker creation. Cleanup uncertainty cannot receive a passing final status. This qualifies actual producer/SQL/driver/typed-checker/whole-inspector composition on supplied logical facts only; authenticated production source/caller/Subject/current cut, original operators, role/guard/release and all 158 required cases remain separate mandatory gates.
+
+### Separate atomic disclosure child controls — 2026-10-16
+
+`tests/security/current-disclosure-child.test.ts` supplements AC6/AC10 without
+promoting a required backend case. Exercise exact framed original String/null,
+absence, withholding and transformed-null provenance; complete private denied
+census with no output rows; unreported/stale atomic-cleared refusals; fixed owner
+and selection, exact receipt/version/closed shape, one evaluation and terminal
+failure; duplicate JSON keys, malformed UTF8, truncated/oversized frames,
+field/fact limits and required catalog. Exercise the actual process with fragmented
+and coalesced frames and no partial invalid response. Run unchanged legacy child
+tests alongside this separate profile. Replay all66 original handoff packets
+through the actual fresh bundle and compare entire results with retained original
+producer outputs; verify source pins before and after. Retain dependency notices,
+build/source manifest, original logs and failed test-setup attempts. These are
+supplied-cut process/producer checks, not native SQL, authenticated authority,
+guarded release or a Truss acceptance promotion.
+
+Build controls must reproduce the original unchanged-pins/changed-bundle config
+counterexample, then verify changed config changes recorded pins, all extends
+forms refuse, and missing/invalid config, pre/post-build config drift, executable
+source drift and discovered closure drift refuse without a final manifest.
+Preserve the R1 counterexample and separately frozen repaired source. A
+byte-identical repaired executable permits carrying the original process controls
+with the exact identity witness; it is not a new native campaign. The standalone
+Truss pipe replay does not qualify the installed Truss query API. Post-native
+whole V2 inspection, exact original batch/key/cell correspondence and closing
+native caller/source/protection checks remain required before publication.
+
+### Held post-native whole V2 boundary — 2026-10-16
+
+`current-native-disclosure-child.test.ts` supplements AC6/AC10. Require all72
+original producer vectors (including six mixed/empty populations) to retain their
+entire original evaluation result. Rendered cases must complete one whole V2
+inspection of the identical original batch; refused cases cannot inspect later.
+Retain original provenance999/999 as a source-invalid structural-match negative.
+Separately prove that domain-valid substituted values/presence, row count/order,
+extra denied rows and changed source/header/column/domain/transform metadata
+cannot replace the held original. Keep exact private key-bag/native capture and
+whole V2 validation as distinct host obligations.
+
+Exercise strict Unicode/duplicate and escaped-duplicate keys, unsafe numbers,
+negative zero, overflow/underflow, malformed UTF8, depth/node/wire limits,
+truncation, wrong receipt/version, fixed owner/selection, duplicate IDs and all
+ordering/replay failures. Verify exact16MiB inspection input, one-byte-over refusal
+and unchanged4MiB source limits. Run actual process fragmentation/coalescing,
+clean three-exchange completion and incomplete/corrupt/truncated EOF refusal;
+retain legacy0.1 and old query-child regression. Repeat independent build/config
+mutation controls for the separate builder.
+
+Compose the actual reviewed Python bridge with the held child over all52 retained
+native records:47 complete data matches, four corrupted-checker-frame refusals
+that never invoke inspection, and one source-invalid native selected occurrence
+that structurally matches and then refuses whole V2 inspection. Reconstruct from
+untouched captured driver cells, verify exact original key bag/order, keep the
+real Python parent/typed runtime handle through final inspection, correlate all
+source/header/frame bytes and confirm every child cleanup. This is fresh bridge/
+process execution over supplied recorded native data, not a new SQL campaign or
+installed Truss caller/source/current-authority/release qualification. Existing
+required backend cases and criteria remain unchanged.
+
+For reproducible replay custody, execute the captured and hashed pipe source bytes
+without loading adjacent bytecode. Pin the wheel-manifest bytes before loading
+and compare both inputs at completion. Retain the original post-import drift
+and poisoned-cache counterexamples, then require drift to refuse without a
+success receipt and poisoned-cache execution to be ignored. The reused old pipe
+remains capped at4MiB; exact16MiB inspection coverage comes from the direct child
+process controls, not from that old pipe.

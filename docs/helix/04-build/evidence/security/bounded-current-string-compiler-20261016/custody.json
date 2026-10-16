@@ -1,0 +1,25 @@
+{
+  "component": "Weft bounded required Unicode String compiler/runtime bridges",
+  "sourceCommit": "a853a5bcfe2edc3a4c63c0cb8fcc01593fd4ec68",
+  "retentionCommit": "158e9560ed5390ee0aebc48104daefdce2590e9e",
+  "mainPromotion": "independently confirmed by git ls-remote",
+  "artifactPins": {
+    "weft-bridge-cohort.json": "64ad09143b2cac9cd77693a60093031ffc7dcc41b02f8c50182eb5bbf2ed8a81",
+    "r5-main-full-backends.json": "7bdc1ca7989484501cad2ba10a8866001d739947c8194e87ee2dc5c10c02620a",
+    "astra-r5-review.json": "c8d2c860dfd8ae943ea5f54a2b5b798d1f0de2be8bafea3e5bfb04f925309a9f"
+  },
+  "nativeAcceptancePromoted": false,
+  "requiredCases": 158,
+  "implementedPassingCases": 45,
+  "unimplementedCases": 113,
+  "criteria": 34,
+  "scope": "Cross-repository component evidence, not UMF full security or native backend acceptance.",
+  "remoteMain": "8e0f4cb069818b093f59f040b4255f5881876730",
+  "unchangedReleaseTag": "a14640f2bb288e58de0c9846fb10162e3e4030fc",
+  "retainedUmfCaseTestedSource": "84be0986769775f40cd1fd50d6bd8a8fbbfe7604",
+  "currentUmfSource": "0b2bf0c1dec886258df057c9f31c841c8780742a",
+  "currentUmfCaseFreshness": "Sixth gate:45 implementations pass, all selected case fingerprints match;113required implementations missing",
+  "initialCurrentUmfCaseFreshness": "30 of 45 retained case fingerprints stale; fresh full replay underway",
+  "currentUmfPlanDigest": "6a42e29e7b41ceec23bd4d0fe77ba53c7faf575944fda955d043264800302f4b",
+  "currentUmfGateWitness": "../gate-refresh-20261015/sixth-run-witness.json"
+}

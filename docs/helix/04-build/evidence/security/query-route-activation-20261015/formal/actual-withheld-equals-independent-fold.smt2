@@ -1,0 +1,18 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun context_4 () Bool)
+(declare-fun context_5 () Bool)
+(declare-fun context_3 () Bool)
+(declare-fun context_2 () Bool)
+(declare-fun context_1 () Bool)
+(declare-fun context_0 () Bool)
+(assert
+ (let (($x55 (and context_0 context_1 context_2 context_3 context_4 context_5)))
+(let (($x21 (not context_0)))
+(let (($x22 (not context_1)))
+(let (($x13 (not context_2)))
+(let (($x19 (not context_3)))
+(let (($x23 (not context_5)))
+(let (($x56 (or (and $x21 $x22 $x13 $x19 context_4 $x23) (and context_0 $x22 $x13 $x19 context_4 $x23) (and $x21 context_1 $x13 $x19 context_4 $x23) (and context_0 context_1 $x13 $x19 context_4 $x23) (and $x21 $x22 context_2 $x19 context_4 $x23) (and context_0 $x22 context_2 $x19 context_4 $x23) (and $x21 context_1 context_2 $x19 context_4 $x23) (and context_0 context_1 context_2 $x19 context_4 $x23) (and $x21 $x22 $x13 context_3 context_4 $x23) (and context_0 $x22 $x13 context_3 context_4 $x23) (and $x21 context_1 $x13 context_3 context_4 $x23) (and context_0 context_1 $x13 context_3 context_4 $x23) (and $x21 $x22 context_2 context_3 context_4 $x23) (and context_0 $x22 context_2 context_3 context_4 $x23) (and $x21 context_1 context_2 context_3 context_4 $x23) (and context_0 context_1 context_2 context_3 context_4 $x23) (and $x21 $x22 $x13 $x19 context_4 context_5) (and context_0 $x22 $x13 $x19 context_4 context_5) (and $x21 context_1 $x13 $x19 context_4 context_5) (and context_0 context_1 $x13 $x19 context_4 context_5) (and $x21 $x22 context_2 $x19 context_4 context_5) (and context_0 $x22 context_2 $x19 context_4 context_5) (and $x21 context_1 context_2 $x19 context_4 context_5) (and context_0 context_1 context_2 $x19 context_4 context_5) (and $x21 $x22 $x13 context_3 context_4 context_5) (and context_0 $x22 $x13 context_3 context_4 context_5) (and $x21 context_1 $x13 context_3 context_4 context_5) (and context_0 context_1 $x13 context_3 context_4 context_5) (and $x21 $x22 context_2 context_3 context_4 context_5) (and context_0 $x22 context_2 context_3 context_4 context_5) (and $x21 context_1 context_2 context_3 context_4 context_5) $x55)))
+(and (distinct $x56 context_4) true)))))))))
+(check-sat)

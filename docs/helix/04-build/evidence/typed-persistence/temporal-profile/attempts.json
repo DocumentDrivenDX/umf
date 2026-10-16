@@ -1,0 +1,7 @@
+[
+ {"command":"initial write red fixtures/test","result":"sandbox blocked worktree writes; no files created; scoped escalation authorized"},
+ {"command":"bun test tests/access-temporal-profile.test.ts before implementation","exitCode":1,"evidence":"red.txt","result":"Missing profile module; no behavioral assertions executed"},
+ {"command":"initial Chromium local server in sandbox","exitCode":1,"result":"Local listen blocked with EADDRINUSE; rerun with scoped escalation passed"},
+ {"command":"focused tsc without --ignoreConfig","exitCode":1,"result":"TS5112; corrected invocation adds --ignoreConfig"},
+ {"command":"initial independent Python token oracle","exitCode":1,"result":"Python parser accepted hour24; independent oracle corrected to enforce declared hour/minute/second bounds before host construction"}
+]

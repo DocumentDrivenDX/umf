@@ -1,3 +1,4 @@
+import bit128Schema from '../../spec/core/bit128-document.schema.json';
 import {snapshotSchema} from './internal-schema';
 import schema from '../../spec/core/schema-properties-document.schema.json';
 import {createValidator} from './schema';
@@ -8,15 +9,20 @@ import {copyJson} from '../model/json';
 import {type Document,type Diagnostic,type Validation,type Element,UmfError,pointer} from '../model/types';
 import {checkSchemaLiteral,literalIdentity,schemaCoefficient,type CoreLiteral,schemaPropertyNames,newFacetNames} from '../model/schema-literals';
 const validator=createValidator();
+export const checkBit128Properties=validator.compile(snapshotSchema(bit128Schema));
+export const checkBit128Literal=validator.compile(snapshotSchema({$defs:bit128Schema.$defs,$ref:'#/$defs/literal'}));
 export const checkSchemaProperties=validator.compile(snapshotSchema(schema));
 export const checkCoreLiteral=validator.compile(snapshotSchema({$defs:schema.$defs,$ref:'#/$defs/literal'}));
 export {default as coreSchemaPropertiesDocumentSchema} from '../../spec/core/schema-properties-document.schema.json';
-/** Private validation view only. It must never be used as a native downgrade. */
+/** Private structural/ownership view only. New128-bit domains use binary's existing
+ * byte-equality eligibility here; actual literals/equality use the original0.9
+ * source and codecs below. This view is never exported or sent to native adapters.
+ * It must never be used as a native downgrade. */
 export function schemaPropertiesLegacyView(input:Document):Document {
  const base=copyJson(input) as unknown as Document;base.umf='0.7.0';
  for(const node of [base,...base.modules])for(const key of ['title','aliases'])delete node[key];
  for(const node of base.modules.flatMap(m=>m.elements))for(const key of schemaPropertyNames)delete node[key];
- for(const m of base.modules)for(const e of m.elements){const f=e.facets as Record<string,any>|undefined;if(!f)continue;for(const key of newFacetNames)delete f[key];if(f.length){delete f.length.min;if(f.length.max===undefined||f.length.max===0)delete f.length;}if(['array','map'].includes(e.cardinality as string))delete e.facets;}
+ for(const m of base.modules)for(const e of m.elements){if(input.umf==='0.9.0'&&['bits128','uuid'].includes(e.scalarType??''))e.scalarType='binary';const f=e.facets as Record<string,any>|undefined;if(!f)continue;for(const key of newFacetNames)delete f[key];if(f.length){delete f.length.min;if(f.length.max===undefined||f.length.max===0)delete f.length;}if(['array','map'].includes(e.cardinality as string))delete e.facets;}
  return base;
 }
 /** Compare against declared domain extrema without expanding the width/precision. */
@@ -41,7 +47,8 @@ export function validateSchemaPropertiesDocument(input:unknown,registry=new Regi
  const diagnostics:Diagnostic[]=[];
  const add=(message:string,path:string,severity:'error'|'warning'='error',code='CORE_SCHEMA_PROPERTIES')=>diagnostics.push({code,path,message,severity});
  let doc:Document;try{doc=copyJson(input) as unknown as Document;}catch(error){if(!(error instanceof UmfError))throw error;add(error.message,error.path);return {valid:false,complete:false,diagnostics};}
- if(!checkSchemaProperties(doc)){for(const e of checkSchemaProperties.errors??[])add(e.message??'Invalid schema properties',e.instancePath);return {valid:false,complete:false,diagnostics};}
+ const check=doc.umf==='0.9.0'?checkBit128Properties:checkSchemaProperties;
+ if(!check(doc)){for(const e of check.errors??[])add(e.message??'Invalid schema properties',e.instancePath);return {valid:false,complete:false,diagnostics};}
  // Only core validation uses the compatibility view. Extension validators must
  // inspect an isolated copy of the complete document and its actual version.
  const extensionRegistry=new class extends Registry {
