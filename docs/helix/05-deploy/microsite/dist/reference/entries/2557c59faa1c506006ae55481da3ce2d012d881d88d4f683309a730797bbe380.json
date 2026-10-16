@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7089,
+        "line": 14,
+        "path": "src/core-ideals/relationship-parquet.ts",
+        "sha256": "0702feb1c9300c019909c1bfedf254c2983eecac8f0fe87f2820e6be83beb151"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRelationshipObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetRelationshipObservation {nativePath:string;index:number;path:string[];kind:'physical-leaf'|'physical-group';definitionLevel:number;repetitionLevel:number;nativeField:Json;enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'file-schema'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRelationshipObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7089,
+      "line": 14,
+      "path": "src/core-ideals/relationship-parquet.ts",
+      "sha256": "0702feb1c9300c019909c1bfedf254c2983eecac8f0fe87f2820e6be83beb151"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-parquet.ts",
+  "title": "ParquetRelationshipObservation"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3444,
+        "line": 27,
+        "path": "src/model/facet-transition.ts",
+        "sha256": "ece8b2c276c93177cdc45ee4cfd5a50517acf2e0af7f41847c0a488f78f1a3dc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "upgradeFacetEnvelope",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document): FacetUpgradeReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"upgradeFacetEnvelope\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3444,
+      "line": 27,
+      "path": "src/model/facet-transition.ts",
+      "sha256": "ece8b2c276c93177cdc45ee4cfd5a50517acf2e0af7f41847c0a488f78f1a3dc"
+    }
+  ],
+  "summary": "Explicit version opt-in. Every legacy facets member is archived, including known-looking values.",
+  "title": "upgradeFacetEnvelope"
+}

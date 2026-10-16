@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7336,
+        "line": 50,
+        "path": "src/core-ideals/field-parquet-projection.ts",
+        "sha256": "0f63e386f6fced5edce476badd85e40a4660497c0de3db75929ea27c90218b7f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFieldFromParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FieldParquetProjection, nativeBytes: Uint8Array<ArrayBufferLike>): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFieldFromParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7336,
+      "line": 50,
+      "path": "src/core-ideals/field-parquet-projection.ts",
+      "sha256": "0f63e386f6fced5edce476badd85e40a4660497c0de3db75929ea27c90218b7f"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverFieldFromParquet"
+}

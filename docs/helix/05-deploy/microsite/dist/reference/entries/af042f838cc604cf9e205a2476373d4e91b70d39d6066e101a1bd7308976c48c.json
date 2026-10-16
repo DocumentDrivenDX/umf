@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3663,
+        "line": 11,
+        "path": "src/model/cardinality-transition.ts",
+        "sha256": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CardinalityRollbackReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CardinalityRollbackReceipt {\n operation:'rollback-cardinality-envelope';version:'1.0.0';source:Document;target:Document;\n receipt:CardinalityUpgradeReceipt;reason:'Original envelope restored; all subsequent content retained in source, not applied to legacy target';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CardinalityRollbackReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3663,
+      "line": 11,
+      "path": "src/model/cardinality-transition.ts",
+      "sha256": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95"
+    }
+  ],
+  "summary": "Type declaration · src/model/cardinality-transition.ts",
+  "title": "CardinalityRollbackReceipt"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3838,
+        "line": 14,
+        "path": "src/model/scalar-type.ts",
+        "sha256": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreScalarTypeMeaning",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreScalarTypeMeaning={state:'known';scalarType:ScalarType}|{state:'unknown';value:string}|{state:'missing'}|{state:'inapplicable';authoredScalarType?:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreScalarTypeMeaning\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3838,
+      "line": 14,
+      "path": "src/model/scalar-type.ts",
+      "sha256": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d"
+    }
+  ],
+  "summary": "Type declaration · src/model/scalar-type.ts",
+  "title": "CoreScalarTypeMeaning"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11196,
+        "line": 6,
+        "path": "src/projections/json-schema-protobuf.ts",
+        "sha256": "9d9be776d52573bc53c3d21213634490346f84f2f9520cbc9c1bbe6552431883"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProjectionIssue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProjectionIssue {path:string;code:string;classification:'representation-change'|'not-enforced'|'unsupported'|'annotation-only';detail:string;retainedInSource:true;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProjectionIssue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11196,
+      "line": 6,
+      "path": "src/projections/json-schema-protobuf.ts",
+      "sha256": "9d9be776d52573bc53c3d21213634490346f84f2f9520cbc9c1bbe6552431883"
+    }
+  ],
+  "summary": "Type declaration · src/projections/json-schema-protobuf.ts",
+  "title": "ProjectionIssue"
+}

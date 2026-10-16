@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16945,
+        "line": 23,
+        "path": "src/core-ideals/facets-avro.ts",
+        "sha256": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroFacetClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroFacetClassification {\n operation:'classify-avro-facets';version:'1.0.0';status:'classified'|'blocked';outcome:Outcome;source:Document;target?:Document;request:AvroFacetRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;location:AvroTypeLocation;nativeFragment:NativeJson;facets:CoreFacetPatch;branches:Branch[];observations:Observation[]};\n residuals:{path:string;location:AvroTypeLocation;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16945,
+      "line": 23,
+      "path": "src/core-ideals/facets-avro.ts",
+      "sha256": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-avro.ts",
+  "title": "AvroFacetClassification"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24171,
+        "line": 25,
+        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+        "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipLayoutResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipLayoutResult {\n operation:'validate-sqlserver-relationship-layout';version:'1.0.0';status:'validated'|'reported'|'blocked';lossPolicy:'strict'|'report';\n logical:Document;binding:Document;policy:Json;diagnostics:Diagnostic[];\n residuals:{source:'logical'|'binding'|'policy';path:string;reason:string;value:Json}[];\n candidate?:SqlServerRelationshipLayoutPolicy;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipLayoutResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24171,
+      "line": 25,
+      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+      "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/relationship-layout.ts",
+  "title": "SqlServerRelationshipLayoutResult"
+}

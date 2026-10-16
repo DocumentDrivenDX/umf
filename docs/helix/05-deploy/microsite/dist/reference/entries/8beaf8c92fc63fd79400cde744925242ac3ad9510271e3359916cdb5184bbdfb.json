@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16571,
+        "line": 8,
+        "path": "src/projections/sqlserver-ddl.ts",
+        "sha256": "91e2065216d73b8c5b56feabb0beef5787fbbfe1c5d471696d25c1a4e8953056"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerDdlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerDdlProjection {status:'blocked'|'projected';source:Document;policy:SqlServerDdlPolicy;issues:ProjectionIssue[];statements:SqlServerDdlStatement[];nativeSource?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerDdlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16571,
+      "line": 8,
+      "path": "src/projections/sqlserver-ddl.ts",
+      "sha256": "91e2065216d73b8c5b56feabb0beef5787fbbfe1c5d471696d25c1a4e8953056"
+    }
+  ],
+  "summary": "Type declaration · src/projections/sqlserver-ddl.ts",
+  "title": "SqlServerDdlProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7573,
+        "line": 6,
+        "path": "src/adapters/typespec/semantic.ts",
+        "sha256": "e1f3f73386c4766d4575f1ddc4cb4945cdb33a1c35953b0c29788f4525c303ae"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TypeSpecSemanticNode",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TypeSpecSemanticNode {id:string;kind:string;label:string;attributes:Record<string,Json>;edges:{role:string;target:string;name?:string;index?:number}[];location?:{file:string;start:number;end:number};}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TypeSpecSemanticNode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7573,
+      "line": 6,
+      "path": "src/adapters/typespec/semantic.ts",
+      "sha256": "e1f3f73386c4766d4575f1ddc4cb4945cdb33a1c35953b0c29788f4525c303ae"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/typespec/semantic.ts",
+  "title": "TypeSpecSemanticNode"
+}

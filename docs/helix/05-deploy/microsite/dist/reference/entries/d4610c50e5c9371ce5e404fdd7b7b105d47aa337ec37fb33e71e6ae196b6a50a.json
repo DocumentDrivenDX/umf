@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2455,
+        "line": 9,
+        "path": "src/extensions/security/policy-v2-legacy-access.ts",
+        "sha256": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityPolicyV2LegacyAccess",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityPolicyV2LegacyAccess {\n source:Json;subset:'legacy-body-0.1';authority:false;\n result:SecurityAccessResult;diagnostics:readonly Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityPolicyV2LegacyAccess\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2455,
+      "line": 9,
+      "path": "src/extensions/security/policy-v2-legacy-access.ts",
+      "sha256": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/policy-v2-legacy-access.ts",
+  "title": "SecurityPolicyV2LegacyAccess"
+}

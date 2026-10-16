@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8824,
+        "line": 6,
+        "path": "src/adapters/linkml/slot-values.ts",
+        "sha256": "e6318fb13b125c64201cff515702336e7dd5b92e4d7f212ff07283543f8cbdd1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LINKML_SCALAR_SLOT_FIELDS",
+    "runtime": "unassessed",
+    "signatureText": [
+      "LINKML_SCALAR_SLOT_FIELDS={domain:'string',inherited:'boolean',readonly:'string',ifabsent:'string',list_elements_unique:'boolean',list_elements_ordered:'boolean',shared:'boolean',key:'boolean',identifier:'boolean',designates_type:'boolean',role:'string',relational_role:'string',range:'string',required:'boolean',recommended:'boolean',multivalued:'boolean',inlined:'boolean',inlined_as_list:'boolean',minimum_value:'number',maximum_value:'number',pattern:'string',value_presence:'string',equals_string:'string',equals_number:'number',equals_expression:'string',exact_cardinality:'number',minimum_cardinality:'number',maximum_cardinality:'number',description:'string'} as const"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LINKML_SCALAR_SLOT_FIELDS\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8824,
+      "line": 6,
+      "path": "src/adapters/linkml/slot-values.ts",
+      "sha256": "e6318fb13b125c64201cff515702336e7dd5b92e4d7f212ff07283543f8cbdd1"
+    }
+  ],
+  "summary": "Public export · src/adapters/linkml/slot-values.ts",
+  "title": "LINKML_SCALAR_SLOT_FIELDS"
+}

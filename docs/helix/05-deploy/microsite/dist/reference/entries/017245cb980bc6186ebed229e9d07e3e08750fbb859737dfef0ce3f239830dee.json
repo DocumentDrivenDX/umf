@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3846,
+        "line": 8,
+        "path": "src/adapters/parquet/physical.ts",
+        "sha256": "54b96c7f92a49a15b3b45c08a1f7e990ce955413f64a3da398d0f72e6f225bf0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetPhysicalPage",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetPhysicalPage {rowGroup:number;column:number;offset:number;kind:'dictionary'|'data';values:ParquetPhysicalValue[];levels?:ParquetPageLevels;dictionaryIndexes?:number[];dictionaryPadding?:number[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetPhysicalPage\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3846,
+      "line": 8,
+      "path": "src/adapters/parquet/physical.ts",
+      "sha256": "54b96c7f92a49a15b3b45c08a1f7e990ce955413f64a3da398d0f72e6f225bf0"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/physical.ts",
+  "title": "ParquetPhysicalPage"
+}

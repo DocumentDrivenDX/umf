@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "umf.reference.example/1"
+    },
+    "id": {
+      "type": "string"
+    },
+    "operationId": {
+      "type": "string"
+    },
+    "inputPaths": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "expectedPath": {
+      "type": "string"
+    },
+    "apiNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "guideIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "id",
+    "operationId",
+    "inputPaths",
+    "expectedPath",
+    "apiNames",
+    "guideIds"
+  ],
+  "additionalProperties": false
+}

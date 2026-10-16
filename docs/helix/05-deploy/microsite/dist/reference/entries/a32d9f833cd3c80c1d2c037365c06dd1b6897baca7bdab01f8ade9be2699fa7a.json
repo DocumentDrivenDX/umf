@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4410,
+        "line": 10,
+        "path": "src/extensions/actions/types.ts",
+        "sha256": "c74d6c1b59b235acc7b60068738b1ff1c009045b0ba185ee798b954962fcb3de"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionCondition",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionCondition {id:string;rule:ActionRule;failure:{code:string;message:string;[key:string]:unknown};[key:string]:unknown}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionCondition\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4410,
+      "line": 10,
+      "path": "src/extensions/actions/types.ts",
+      "sha256": "c74d6c1b59b235acc7b60068738b1ff1c009045b0ba185ee798b954962fcb3de"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/types.ts",
+  "title": "ActionCondition"
+}

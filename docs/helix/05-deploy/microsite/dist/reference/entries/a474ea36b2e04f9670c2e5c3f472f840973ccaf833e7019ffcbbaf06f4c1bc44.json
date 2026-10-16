@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9047,
+        "line": 21,
+        "path": "src/core-ideals/nullability-sqlserver-projection.ts",
+        "sha256": "28bf3e24af429b80539ec5039a333d69248682465beb9d3615bbdff5c4d8d042"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectNullabilityToSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreNullabilityDeclaration, options: NullabilitySqlServerRequest): NullabilitySqlServerProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectNullabilityToSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9047,
+      "line": 21,
+      "path": "src/core-ideals/nullability-sqlserver-projection.ts",
+      "sha256": "28bf3e24af429b80539ec5039a333d69248682465beb9d3615bbdff5c4d8d042"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/nullability-sqlserver-projection.ts",
+  "title": "projectNullabilityToSqlServer"
+}

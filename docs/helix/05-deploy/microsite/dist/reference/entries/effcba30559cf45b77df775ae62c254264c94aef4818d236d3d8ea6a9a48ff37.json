@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2860,
+        "line": 6,
+        "path": "src/adapters/smithy/selection.ts",
+        "sha256": "80d5f411a7c098a04e80244cf3009e5b6cb3ea2c5ac8542d84ad1b803db05cc6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SmithySelectionBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SmithySelectionBackend extends SmithyAssemblyBackend {select(modelJson:string,selector:string,control?:{signal?:AbortSignal}):string|Promise<string>;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SmithySelectionBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2860,
+      "line": 6,
+      "path": "src/adapters/smithy/selection.ts",
+      "sha256": "80d5f411a7c098a04e80244cf3009e5b6cb3ea2c5ac8542d84ad1b803db05cc6"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/smithy/selection.ts",
+  "title": "SmithySelectionBackend"
+}

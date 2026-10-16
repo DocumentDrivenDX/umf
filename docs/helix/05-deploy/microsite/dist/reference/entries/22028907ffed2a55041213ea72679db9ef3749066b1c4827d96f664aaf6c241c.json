@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5209,
+        "line": 9,
+        "path": "src/adapters/delta/sidecars.ts",
+        "sha256": "765fa7897cd2361332ec2879c71253363a96406ea17c5b0e1e32a487b63b994c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaSidecar",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaSidecar {path:string;source:Document}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaSidecar\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5209,
+      "line": 9,
+      "path": "src/adapters/delta/sidecars.ts",
+      "sha256": "765fa7897cd2361332ec2879c71253363a96406ea17c5b0e1e32a487b63b994c"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/sidecars.ts",
+  "title": "DeltaSidecar"
+}

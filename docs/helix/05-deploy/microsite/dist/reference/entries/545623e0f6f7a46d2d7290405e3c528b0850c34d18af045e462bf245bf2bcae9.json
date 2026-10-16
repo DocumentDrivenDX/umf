@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2394,
+        "line": 5,
+        "path": "src/adapters/parquet/footer.ts",
+        "sha256": "9d7f0077301cc2877fa46e12b515461d2333387af641f64e50dd30c2ff34ef07"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetWireValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ParquetWireValue=\n | {kind:'bool';value:boolean}\n | {kind:'i8'|'i16'|'i32'|'i64';value:string}\n | {kind:'double';bits:string}\n | {kind:'binary'|'uuid';hex:string}\n | {kind:'list'|'set';elementType:ParquetWireKind;items:ParquetWireValue[]}\n | {kind:'map';keyType?:ParquetWireKind;valueType?:ParquetWireKind;entries:{key:ParquetWireValue;value:ParquetWireValue}[]}\n | {kind:'struct';fields:{id:number;value:ParquetWireValue}[]};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetWireValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2394,
+      "line": 5,
+      "path": "src/adapters/parquet/footer.ts",
+      "sha256": "9d7f0077301cc2877fa46e12b515461d2333387af641f64e50dd30c2ff34ef07"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/footer.ts",
+  "title": "ParquetWireValue"
+}

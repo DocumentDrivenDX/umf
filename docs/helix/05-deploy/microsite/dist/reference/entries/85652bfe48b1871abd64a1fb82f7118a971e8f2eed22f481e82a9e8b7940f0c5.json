@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13697,
+        "line": 8,
+        "path": "src/projections/bit128.ts",
+        "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128ProjectionPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128ProjectionPolicy {lossPolicy:'strict'|'report';obligations:Bit128Obligation[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128ProjectionPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13697,
+      "line": 8,
+      "path": "src/projections/bit128.ts",
+      "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+    }
+  ],
+  "summary": "Type declaration · src/projections/bit128.ts",
+  "title": "Bit128ProjectionPolicy"
+}

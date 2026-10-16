@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11196,
+        "line": 13,
+        "path": "src/projections/json-schema-protobuf.ts",
+        "sha256": "9d9be776d52573bc53c3d21213634490346f84f2f9520cbc9c1bbe6552431883"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtobufProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtobufProjection {\n status:'blocked'|'projected';source:Document;policy:ProtobufProjectionOptions;issues:ProjectionIssue[];\n mappings:{sourcePath:string;targetMessage:string;targetField:string;number:number}[];\n nativeSource?:string;target?:Document;targetDiagnostics?:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtobufProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11196,
+      "line": 13,
+      "path": "src/projections/json-schema-protobuf.ts",
+      "sha256": "9d9be776d52573bc53c3d21213634490346f84f2f9520cbc9c1bbe6552431883"
+    }
+  ],
+  "summary": "Type declaration · src/projections/json-schema-protobuf.ts",
+  "title": "ProtobufProjection"
+}

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:ddd-json-schema:0.1.0",
+  "type": "object",
+  "required": [
+    "status",
+    "source",
+    "policy",
+    "issues",
+    "mappings"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "nativeSchema": {
+      "type": "string"
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "id",
+        "schemaId",
+        "root",
+        "closedObjects",
+        "integer",
+        "decimal",
+        "dateTime",
+        "bytes",
+        "collection",
+        "relations",
+        "lossPolicy"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root": {
+          "type": "object",
+          "required": [
+            "module",
+            "element"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "closedObjects": {
+          "type": "boolean"
+        },
+        "integer": {
+          "const": "json-integer"
+        },
+        "decimal": {
+          "const": "decimal-string"
+        },
+        "dateTime": {
+          "const": "string"
+        },
+        "bytes": {
+          "const": "hex-string"
+        },
+        "collection": {
+          "const": "array"
+        },
+        "relations": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "embed",
+              "identity"
+            ]
+          }
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "representation-change",
+              "not-enforced",
+              "unsupported",
+              "annotation-only"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "concept",
+          "mode",
+          "targetPointer"
+        ],
+        "properties": {
+          "concept": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
+          "mode": {
+            "enum": [
+              "embed",
+              "identity"
+            ]
+          },
+          "targetPointer": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSchema"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "target"
+          ]
+        }
+      }
+    }
+  ]
+}

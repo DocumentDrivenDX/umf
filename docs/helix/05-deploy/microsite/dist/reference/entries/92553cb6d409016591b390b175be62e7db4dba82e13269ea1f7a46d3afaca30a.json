@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5752,
+        "line": 13,
+        "path": "src/adapters/openapi/references.ts",
+        "sha256": "b9d8d03868c53912d5c01a2031adce94ab363a6cfe9fbb45e84ac5d31ddce37f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OpenapiReferenceResolution",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OpenapiReferenceResolution {\n kind:OpenapiReferenceKind;target:{uri:string;pointer:string;node:NativeJson};\n chain:{uri:string;pointer:string;reference:NativeJson}[];\n effectiveAnnotations:{summary?:string;description?:string};complete:false;limitations:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OpenapiReferenceResolution\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5752,
+      "line": 13,
+      "path": "src/adapters/openapi/references.ts",
+      "sha256": "b9d8d03868c53912d5c01a2031adce94ab363a6cfe9fbb45e84ac5d31ddce37f"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/openapi/references.ts",
+  "title": "OpenapiReferenceResolution"
+}

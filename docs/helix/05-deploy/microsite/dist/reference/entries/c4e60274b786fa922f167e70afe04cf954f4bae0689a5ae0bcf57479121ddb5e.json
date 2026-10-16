@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 36821,
+        "path": "spec/extensions/arrow-flatbuffer/package.json",
+        "sha256": "d8c0a340db654d4d9974bf32d376596de9f08aba7aab79ecb671e5a0e042cd18"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.arrow.flatbuffer@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.arrow.flatbuffer@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF logical Arrow FlatBuffer JSON profile · 0.1.0, Arrow apache-arrow-21.0.0 definitions",
+      "subset": "All 59 metadata declarations, 85 fields and 64 explicit enum/union members. Raw metadata decoding and guarded encoding preserve known values and physical field presence; unknown wire slots stay in source. No complete IPC dataset rewriting, full semantic validation or unknown enum interpretation.",
+      "targetSystem": "UMF",
+      "title": "umf.arrow.flatbuffer · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.arrow.flatbuffer@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.arrow.flatbuffer\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "All 59 metadata declarations, 85 fields and 64 explicit enum/union members. Raw metadata decoding and guarded encoding preserve known values and physical field presence; unknown wire slots stay in source. No complete IPC dataset rewriting, full semantic validation or unknown enum interpretation.",
+  "title": "umf.arrow.flatbuffer · import"
+}

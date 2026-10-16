@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4810,
+        "line": 20,
+        "path": "src/adapters/postgresql/key-catalog.ts",
+        "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlKeyComponent",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlKeyComponent {position:number;attribute:number;name:string|null;notNull:boolean|null;type:string|null;typeSchema:string|null;typeName:string|null;typeKind:string|null;operatorClass:string|null;collation:PostgresqlKeyCollation|null}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlKeyComponent\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4810,
+      "line": 20,
+      "path": "src/adapters/postgresql/key-catalog.ts",
+      "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/postgresql/key-catalog.ts",
+  "title": "PostgresqlKeyComponent"
+}

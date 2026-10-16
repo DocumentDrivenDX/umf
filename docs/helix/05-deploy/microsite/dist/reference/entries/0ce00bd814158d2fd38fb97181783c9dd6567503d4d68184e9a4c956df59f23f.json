@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 25118,
+        "line": 161,
+        "path": "src/core-ideals/relationship-postgresql.ts",
+        "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyRelationshipPostgresqlProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<RelationshipPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyRelationshipPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 25118,
+      "line": 161,
+      "path": "src/core-ideals/relationship-postgresql.ts",
+      "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/relationship-postgresql.ts",
+  "title": "verifyRelationshipPostgresqlProjection"
+}

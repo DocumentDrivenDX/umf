@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6863,
+        "line": 33,
+        "path": "src/core-ideals/structured-report.ts",
+        "sha256": "df386c3c90ba9b773746fad8c83e07ecc31a14e5bc3f2fcd9fdc96ee331864a7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyStructuredClassificationInspection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: StructuredClassificationInspection, backend?: PostgresqlBackend | undefined): Promise<StructuredClassificationInspection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyStructuredClassificationInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6863,
+      "line": 33,
+      "path": "src/core-ideals/structured-report.ts",
+      "sha256": "df386c3c90ba9b773746fad8c83e07ecc31a14e5bc3f2fcd9fdc96ee331864a7"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/structured-report.ts",
+  "title": "verifyStructuredClassificationInspection"
+}

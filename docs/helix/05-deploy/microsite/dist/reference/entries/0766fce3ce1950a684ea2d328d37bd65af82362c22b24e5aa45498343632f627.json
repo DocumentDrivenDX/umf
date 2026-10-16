@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18686,
+        "line": 19,
+        "path": "src/model/dataset-values.ts",
+        "sha256": "7c19229f3e238b37e05a14715db829d809ff37272e812eb04a50d3ad8ea2c308"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreDatasetInput",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreDatasetInput {scope:{id:string;closure:'supplied-dataset-only'};records:CoreDatasetRecord[];relationships:CoreDatasetRelationship[];context?:Json}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreDatasetInput\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18686,
+      "line": 19,
+      "path": "src/model/dataset-values.ts",
+      "sha256": "7c19229f3e238b37e05a14715db829d809ff37272e812eb04a50d3ad8ea2c308"
+    }
+  ],
+  "summary": "Type declaration · src/model/dataset-values.ts",
+  "title": "CoreDatasetInput"
+}

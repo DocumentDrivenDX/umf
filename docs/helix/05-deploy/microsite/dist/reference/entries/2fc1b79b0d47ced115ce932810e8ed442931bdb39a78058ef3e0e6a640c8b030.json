@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3039,
+        "line": 6,
+        "path": "src/model/schema-properties-transition.ts",
+        "sha256": "e8e4a567c2073c5cd07b66d13b970ec21c2cfc6e1725601cafbc8308967a4e56"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SchemaPropertiesUpgradeReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SchemaPropertiesUpgradeReceipt {operation:'upgrade-schema-properties-envelope';version:'1.0.0';source:Document;target:Document;residuals:{path:string;value:Json;reason:'Legacy content retained without reinterpretation'}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SchemaPropertiesUpgradeReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3039,
+      "line": 6,
+      "path": "src/model/schema-properties-transition.ts",
+      "sha256": "e8e4a567c2073c5cd07b66d13b970ec21c2cfc6e1725601cafbc8308967a4e56"
+    }
+  ],
+  "summary": "Type declaration · src/model/schema-properties-transition.ts",
+  "title": "SchemaPropertiesUpgradeReceipt"
+}

@@ -1,0 +1,458 @@
+{
+  "$defs": {
+    "receipt": {
+      "type": "object",
+      "properties": {
+        "store": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        },
+        "epoch": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        },
+        "version": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        }
+      },
+      "required": [
+        "store",
+        "epoch",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "committed": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "committed"
+        },
+        "revision": {
+          "type": "object",
+          "properties": {
+            "module": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            },
+            "action": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            },
+            "revision": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            }
+          },
+          "required": [
+            "module",
+            "action",
+            "revision"
+          ],
+          "additionalProperties": true
+        },
+        "outputs": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "$ref": "urn:umf:actions:plan:1#/$defs/key"
+                  },
+                  "components": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                    },
+                    "minItems": 1,
+                    "maxItems": 256
+                  }
+                },
+                "required": [
+                  "key",
+                  "components"
+                ],
+                "additionalProperties": true
+              }
+            ]
+          },
+          "maxProperties": 128,
+          "propertyNames": {
+            "$ref": "urn:umf:actions:plan:1#/$defs/id"
+          }
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "created",
+                      "updated",
+                      "deleted"
+                    ]
+                  },
+                  "entity": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/key"
+                      },
+                      "components": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                        },
+                        "minItems": 1,
+                        "maxItems": 256
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "components"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "kind",
+                  "entity"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "linked",
+                      "unlinked"
+                    ]
+                  },
+                  "relationship": {
+                    "type": "object",
+                    "properties": {
+                      "module": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                      },
+                      "relationship": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "relationship"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "source": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/key"
+                      },
+                      "components": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                        },
+                        "minItems": 1,
+                        "maxItems": 256
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "components"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "target": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/key"
+                      },
+                      "components": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                        },
+                        "minItems": 1,
+                        "maxItems": 256
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "components"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "association": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/key"
+                      },
+                      "components": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                        },
+                        "minItems": 1,
+                        "maxItems": 256
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "components"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "kind",
+                  "relationship",
+                  "source",
+                  "target"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 10000
+        },
+        "version": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        },
+        "receipt": {
+          "type": "object",
+          "properties": {
+            "store": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            },
+            "epoch": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            },
+            "version": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            }
+          },
+          "required": [
+            "store",
+            "epoch",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "noOp": {
+          "type": "boolean"
+        },
+        "verification": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "recipe"
+                },
+                "effects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "effect": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                      },
+                      "status": {
+                        "const": "verified"
+                      },
+                      "outcome": {
+                        "enum": [
+                          "changed",
+                          "no-op"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "effect",
+                      "status",
+                      "outcome"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 256
+                },
+                "postconditions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "condition": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                      },
+                      "status": {
+                        "const": "satisfied"
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 0,
+                  "maxItems": 128
+                },
+                "frames": {
+                  "const": "enforced"
+                },
+                "constraints": {
+                  "const": "verified"
+                }
+              },
+              "required": [
+                "kind",
+                "effects",
+                "postconditions",
+                "frames",
+                "constraints"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "handler"
+                },
+                "deployment": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                    },
+                    "version": {
+                      "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                    },
+                    "build": {
+                      "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version",
+                    "build"
+                  ],
+                  "additionalProperties": false
+                },
+                "postconditions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "condition": {
+                        "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                      },
+                      "status": {
+                        "const": "satisfied"
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 0,
+                  "maxItems": 128
+                },
+                "frames": {
+                  "const": "enforced"
+                },
+                "constraints": {
+                  "const": "verified"
+                },
+                "outputs": {
+                  "const": "verified"
+                }
+              },
+              "required": [
+                "kind",
+                "deployment",
+                "postconditions",
+                "frames",
+                "constraints",
+                "outputs"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "revision",
+        "outputs",
+        "changes",
+        "version",
+        "receipt",
+        "noOp",
+        "verification"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "noOp": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "changes": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "changes": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verification": {
+                "properties": {
+                  "kind": {
+                    "const": "recipe"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outputs": {
+                "maxProperties": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$ref": "urn:umf:actions:tx-results:1#/$defs/committed",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:tx-results:1"
+}

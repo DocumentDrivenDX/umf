@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11106,
+        "line": 17,
+        "path": "src/core-ideals/key-tablespec-projection.ts",
+        "sha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeyTableSpecProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeyTableSpecProjection {\n operation:'project-keys-tablespec';version:'1.0.0';status:'projected'|'blocked';source:Document;authors:CoreKeyDeclaration[];request:KeyTableSpecRequest;binding:typeof binding;target?:Document;\n mappings:{keyId:string;keyName:string;idealPath:string;nativePath:string;columns:string[];primary:boolean;outcome:'not-expressible'}[];\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeyTableSpecProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11106,
+      "line": 17,
+      "path": "src/core-ideals/key-tablespec-projection.ts",
+      "sha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-tablespec-projection.ts",
+  "title": "KeyTableSpecProjection"
+}

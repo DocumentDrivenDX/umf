@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24171,
+        "line": 53,
+        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+        "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateSqlServerRelationshipLayout",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logicalInput: Document, bindingInput: Document, policyInput: SqlServerRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\"): SqlServerRelationshipLayoutResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateSqlServerRelationshipLayout\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24171,
+      "line": 53,
+      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+      "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+    }
+  ],
+  "summary": "Validate retained metadata only. A candidate is a policy, never SQL or native enforcement.",
+  "title": "validateSqlServerRelationshipLayout"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7624,
+        "line": 21,
+        "path": "src/core-ideals/field-postgresql-projection.ts",
+        "sha256": "3aaefe512a44366abf601c4a6878c46f69ea0841082a70bdc88b415e6c4b2078"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFieldToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreKindDeclaration, options: FieldPostgresqlRequest, backend: PostgresqlBackend): Promise<FieldPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFieldToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7624,
+      "line": 21,
+      "path": "src/core-ideals/field-postgresql-projection.ts",
+      "sha256": "3aaefe512a44366abf601c4a6878c46f69ea0841082a70bdc88b415e6c4b2078"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/field-postgresql-projection.ts",
+  "title": "projectFieldToPostgresql"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11181,
+        "line": 11,
+        "path": "src/core-ideals/record-sqlserver-projection.ts",
+        "sha256": "8a9820108f7650df0651b8fefdfcbd85e92fa4374cb8cfe0b61815605e9e7657"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordSqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordSqlServerProjection {operation:'project-record-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordSqlServerRequest;binding:typeof binding;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldSqlServerProjection['residuals'];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordSqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11181,
+      "line": 11,
+      "path": "src/core-ideals/record-sqlserver-projection.ts",
+      "sha256": "8a9820108f7650df0651b8fefdfcbd85e92fa4374cb8cfe0b61815605e9e7657"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-sqlserver-projection.ts",
+  "title": "RecordSqlServerProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6422,
+        "line": 5,
+        "path": "src/adapters/postgresql/declarations.ts",
+        "sha256": "e47ebd6366fee86fb8ccaf1270555bcd338957bff511f30cdcae22a088c6d8d9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlDdlColumn",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlDdlColumn {path:string;element:Element;typeResolution:'builtin-syntax'|'unresolved';nativeColumn:NativeJson;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlDdlColumn\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6422,
+      "line": 5,
+      "path": "src/adapters/postgresql/declarations.ts",
+      "sha256": "e47ebd6366fee86fb8ccaf1270555bcd338957bff511f30cdcae22a088c6d8d9"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/postgresql/declarations.ts",
+  "title": "PostgresqlDdlColumn"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6026,
+        "line": 60,
+        "path": "src/model/bit128.ts",
+        "sha256": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "bits128FromInteger",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(literal: { integerToken: string; }, signed: boolean): Bit128Value"
+    ]
+  },
+  "id": "[\"api\",\".\",\"bits128FromInteger\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6026,
+      "line": 60,
+      "path": "src/model/bit128.ts",
+      "sha256": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91"
+    }
+  ],
+  "summary": "Bounded exact integral JSON token parser; deliberately independent of Field validation.",
+  "title": "bits128FromInteger"
+}

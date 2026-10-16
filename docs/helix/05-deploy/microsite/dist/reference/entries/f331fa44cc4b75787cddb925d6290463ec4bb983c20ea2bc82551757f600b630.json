@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9112,
+        "line": 7,
+        "path": "src/projections/spark-arrow.ts",
+        "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SparkArrowProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SparkArrowProjection {status:'blocked'|'projected';complete:false;source:Document;policy:SparkArrowPolicy;issues:SparkArrowIssue[];target?:Document}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SparkArrowProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9112,
+      "line": 7,
+      "path": "src/projections/spark-arrow.ts",
+      "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+    }
+  ],
+  "summary": "Type declaration · src/projections/spark-arrow.ts",
+  "title": "SparkArrowProjection"
+}

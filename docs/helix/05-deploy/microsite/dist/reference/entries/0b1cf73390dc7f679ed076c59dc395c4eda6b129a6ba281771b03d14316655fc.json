@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10962,
+        "line": 19,
+        "path": "src/core-ideals/cardinality-avro.ts",
+        "sha256": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroCardinalityRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroCardinalityRequest {column:string;nativeSource:string;dependencies?:{id:string;schema:string}[];identity:{module:string;element:string};profile:'present-non-null-schema'|'unresolved';mode:'strict'|'report';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroCardinalityRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10962,
+      "line": 19,
+      "path": "src/core-ideals/cardinality-avro.ts",
+      "sha256": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-avro.ts",
+  "title": "AvroCardinalityRequest"
+}

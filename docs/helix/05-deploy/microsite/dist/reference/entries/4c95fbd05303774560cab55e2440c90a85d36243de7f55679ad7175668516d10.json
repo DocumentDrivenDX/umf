@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12303,
+        "line": 14,
+        "path": "src/core-ideals/key-sqlserver.ts",
+        "sha256": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerKeyObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerKeyObservation {\n identity:{schema:string;table:string;indexId:number;name:string|null};nativePath:string;fields:{module:string;element:string}[];primary:boolean;\n enforcement:'immediate-unique-nonnull'|'conditional'|'nullable'|'not-unique'|'unavailable'|'unknown';equality:'exact-on-representable-values'|'incompatible'|'unknown';ignoreDuplicateKey:boolean;authorIntent:'unknown';provenance:'inferred';scope:'captured-table-stored-values';reasons:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerKeyObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12303,
+      "line": 14,
+      "path": "src/core-ideals/key-sqlserver.ts",
+      "sha256": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-sqlserver.ts",
+  "title": "SqlServerKeyObservation"
+}

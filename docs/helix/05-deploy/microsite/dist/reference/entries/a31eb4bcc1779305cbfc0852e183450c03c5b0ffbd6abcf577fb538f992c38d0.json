@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4810,
+        "line": 19,
+        "path": "src/adapters/postgresql/key-catalog.ts",
+        "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlKeyCollation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlKeyCollation {schema:string;name:string;provider:string;deterministic:boolean;locale:string|null;version:string|null}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlKeyCollation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4810,
+      "line": 19,
+      "path": "src/adapters/postgresql/key-catalog.ts",
+      "sha256": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/postgresql/key-catalog.ts",
+  "title": "PostgresqlKeyCollation"
+}

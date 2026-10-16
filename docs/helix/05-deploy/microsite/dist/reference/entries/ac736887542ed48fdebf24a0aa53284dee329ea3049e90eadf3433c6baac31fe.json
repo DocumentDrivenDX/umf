@@ -1,0 +1,504 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/sqlserver-nullability/native.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:sqlserver:nullability-evidence:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "alias_types": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "default_object_id": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "2147483647"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "is_nullable": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "name": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "rule_object_id": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "2147483647"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "schema": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "schema"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "name"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "is_nullable"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "default_object_id"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "rule_object_id"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "column_refinements": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "generated_always_type": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "2147483647"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "is_hidden": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "is_sparse": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "name": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "rule_object_id": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "2147483647"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "schema": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "table": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "schema"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "table"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "name"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "is_sparse"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "generated_always_type"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "is_hidden"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "rule_object_id"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "database_view_definition": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "boolean"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "null"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "umf-sqlserver-nullability-evidence-v2"
+                }
+              }
+            },
+            "query": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "sourceSql": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "triggers": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "definition": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "string"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "is_disabled": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "is_instead_of_trigger": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "name": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "schema": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "table": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "schema"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "table"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "name"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "is_disabled"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "is_instead_of_trigger"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "definition"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "query"
+            },
+            {
+              "kind": "string",
+              "value": "sourceSql"
+            },
+            {
+              "kind": "string",
+              "value": "database_view_definition"
+            },
+            {
+              "kind": "string",
+              "value": "triggers"
+            },
+            {
+              "kind": "string",
+              "value": "alias_types"
+            },
+            {
+              "kind": "string",
+              "value": "column_refinements"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Native SQL Server availability evidence supplement"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/sqlserver-nullability/native.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3286,
+      "path": "spec/extensions/sqlserver-nullability/native.schema.json",
+      "sha256": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0"
+    }
+  ],
+  "summary": "spec/extensions/sqlserver-nullability/native.schema.json",
+  "title": "Native SQL Server availability evidence supplement"
+}

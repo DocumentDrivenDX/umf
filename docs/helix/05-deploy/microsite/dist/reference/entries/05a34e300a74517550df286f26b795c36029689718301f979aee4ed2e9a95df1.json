@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2359,
+        "line": 1,
+        "path": "spec/projections/arrow-spark.schema.json",
+        "sha256": "bdef6014116b5c3c3207f6d95b541aea7fa7e08e8e67335c691e4b6cbb14afb5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "arrowSparkProjectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:projection:arrow-spark:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"blocked\",\n        \"projected\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"policy\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"id\",\n        \"preferTimestampNtz\",\n        \"variant\",\n        \"lossPolicy\"\n      ],\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"preferTimestampNtz\": {\n          \"type\": \"boolean\"\n        },\n        \"variant\": {\n          \"enum\": [\n            \"spark-tagged-struct\",\n            \"preserve-struct\"\n          ]\n        },\n        \"lossPolicy\": {\n          \"enum\": [\n            \"strict\",\n            \"allow-reported-loss\"\n          ]\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"classification\": {\n            \"enum\": [\n              \"loss\",\n              \"unsupported\",\n              \"representation-change\"\n            ]\n          },\n          \"detail\": {\n            \"type\": \"string\"\n          },\n          \"retainedInSource\": {\n            \"const\": true\n          }\n        },\n        \"required\": [\n          \"path\",\n          \"code\",\n          \"classification\",\n          \"detail\",\n          \"retainedInSource\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"complete\",\n    \"source\",\n    \"policy\",\n    \"issues\"\n  ],\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          }\n        }\n      },\n      \"then\": {\n        \"properties\": {\n          \"target\": {}\n        },\n        \"required\": [\n          \"target\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"properties\": {\n            \"target\": {}\n          },\n          \"required\": [\n            \"target\"\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"arrowSparkProjectionSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2359,
+      "line": 1,
+      "path": "spec/projections/arrow-spark.schema.json",
+      "sha256": "bdef6014116b5c3c3207f6d95b541aea7fa7e08e8e67335c691e4b6cbb14afb5"
+    }
+  ],
+  "summary": "Public export · spec/projections/arrow-spark.schema.json",
+  "title": "arrowSparkProjectionSchema"
+}

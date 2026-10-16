@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2393,
+        "line": 1,
+        "path": "spec/projections/spark-arrow.schema.json",
+        "sha256": "4329535d8ff9be9f4c65799a2a8a477dd5cb39ee8d5953df05cc659e1d1b54bd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "sparkArrowProjectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:projection:spark-arrow:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"blocked\",\n        \"projected\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    },\n    \"policy\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"timestampUtc\": {\n          \"type\": \"boolean\"\n        },\n        \"largeTypes\": {\n          \"type\": \"boolean\"\n        },\n        \"rejectNestedDuplicates\": {\n          \"type\": \"boolean\"\n        },\n        \"lossPolicy\": {\n          \"enum\": [\n            \"strict\",\n            \"allow-reported-loss\"\n          ]\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"timestampUtc\",\n        \"largeTypes\",\n        \"rejectNestedDuplicates\",\n        \"lossPolicy\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"classification\": {\n            \"enum\": [\n              \"loss\",\n              \"unsupported\",\n              \"representation-change\"\n            ]\n          },\n          \"detail\": {\n            \"type\": \"string\"\n          },\n          \"retainedInSource\": {\n            \"const\": true\n          }\n        },\n        \"required\": [\n          \"path\",\n          \"code\",\n          \"classification\",\n          \"detail\",\n          \"retainedInSource\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.1.0\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"complete\",\n    \"source\",\n    \"policy\",\n    \"issues\"\n  ],\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          }\n        }\n      },\n      \"then\": {\n        \"properties\": {\n          \"target\": {}\n        },\n        \"required\": [\n          \"target\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"properties\": {\n            \"target\": {}\n          },\n          \"required\": [\n            \"target\"\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"sparkArrowProjectionSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2393,
+      "line": 1,
+      "path": "spec/projections/spark-arrow.schema.json",
+      "sha256": "4329535d8ff9be9f4c65799a2a8a477dd5cb39ee8d5953df05cc659e1d1b54bd"
+    }
+  ],
+  "summary": "Public export · spec/projections/spark-arrow.schema.json",
+  "title": "sparkArrowProjectionSchema"
+}

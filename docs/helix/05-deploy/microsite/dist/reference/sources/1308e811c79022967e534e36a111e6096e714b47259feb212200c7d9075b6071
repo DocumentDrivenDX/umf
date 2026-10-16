@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:postgresql:key-binding:1.0.0",
+  "title": "PostgreSQL observed key enforcement, never authored identity",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "binding",
+    "profile",
+    "nativeSource",
+    "supplement",
+    "observations"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.postgresql.keys",
+        "version": "1.0.0",
+        "nativeVersion": "17.4",
+        "subset": "Correlated captured indexes over relations including descendants; observed enforcement/equality only, no authored identity, authentication, exact-input conversion or native equivalence"
+      }
+    },
+    "profile": {
+      "const": "captured-stored-values"
+    },
+    "nativeSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supplement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "identity",
+          "nativePath",
+          "fields",
+          "primary",
+          "enforcement",
+          "equality",
+          "authorIntent",
+          "provenance",
+          "scope",
+          "reasons"
+        ],
+        "properties": {
+          "identity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema",
+              "table",
+              "index"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "minLength": 1
+              },
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "index": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "module",
+                "element"
+              ],
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "enforcement": {
+            "enum": [
+              "immediate-unique-nonnull",
+              "conditional",
+              "deferred",
+              "nullable",
+              "not-unique",
+              "unavailable",
+              "unknown"
+            ]
+          },
+          "equality": {
+            "enum": [
+              "exact-on-representable-values",
+              "incompatible",
+              "unknown"
+            ]
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "provenance": {
+            "const": "inferred"
+          },
+          "scope": {
+            "const": "relation-with-descendants"
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

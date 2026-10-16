@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10472,
+        "line": 15,
+        "path": "src/extensions/binding/bit128.ts",
+        "sha256": "b65a0e09b9cba7ff98666c9326ac16c67f2fdf36bbefde363c367a450679e926"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128BindingPayload",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128BindingPayload {\n profile:'umf-binding-3';logical:{documentId:string;coreVersion:'0.9.0'};target:{system:string;version:string;subset:string};\n elements:{module:string;element:string;table?:string;partition?:string|null}[];\n fields:(Bit128FieldBinding|{module:string;element:string;field?:string;storage:'column'|'embedded';column?:string;documentColumn?:string;path?:string[]})[];\n relationships:unknown[];indexes:unknown[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128BindingPayload\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10472,
+      "line": 15,
+      "path": "src/extensions/binding/bit128.ts",
+      "sha256": "b65a0e09b9cba7ff98666c9326ac16c67f2fdf36bbefde363c367a450679e926"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/binding/bit128.ts",
+  "title": "Bit128BindingPayload"
+}

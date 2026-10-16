@@ -1,8 +1,10 @@
-import {mkdir,copyFile} from 'node:fs/promises';
+import {mkdir,copyFile as copySource,chmod} from 'node:fs/promises';
+// Go toolchain cache files can be read-only; repeated builds own their output copies.
+async function copyFile(source:string,target:string){try{await chmod(target,0o644);}catch(error:any){if(error.code!=='ENOENT')throw error;}await copySource(source,target);}
 const goVersion=Bun.spawn(['go','env','GOVERSION'],{stdout:'pipe'});
 if((await new Response(goVersion.stdout).text()).trim()!=='go1.27.1'||await goVersion.exited)throw new Error('Protobuf compiler build requires Go 1.27.1');
 await mkdir('dist/protobuf',{recursive:true});
-const build=Bun.spawn(['go','build','-trimpath','-o','../../dist/protobuf/compiler.wasm','.'],{cwd:'native/protobuf',env:{...process.env,GOOS:'js',GOARCH:'wasm'},stdout:'inherit',stderr:'inherit'});
+const build=Bun.spawn(['go','build','-trimpath','-buildvcs=false','-o','../../dist/protobuf/compiler.wasm','.'],{cwd:'native/protobuf',env:{...process.env,GOOS:'js',GOARCH:'wasm'},stdout:'inherit',stderr:'inherit'});
 if(await build.exited)process.exit(1);
 const root=Bun.spawn(['go','env','GOROOT'],{stdout:'pipe'});
 const path=(await new Response(root.stdout).text()).trim();if(await root.exited)process.exit(1);

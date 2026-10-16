@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4738,
+        "line": 8,
+        "path": "src/core-ideals/parquet-cardinality-carrier.ts",
+        "sha256": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetCardinalityCarrier",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ParquetCardinalityCarrier=Availability&(\n {kind:'scalar';nativeType:keyof typeof parquetCarriers}|\n {kind:'array';item:ParquetCardinalityCarrier}|\n {kind:'map';keyType:keyof typeof parquetCarriers;value:ParquetCardinalityCarrier}|\n {kind:'record';fields:{name:string;type:ParquetCardinalityCarrier}[]}\n);"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetCardinalityCarrier\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4738,
+      "line": 8,
+      "path": "src/core-ideals/parquet-cardinality-carrier.ts",
+      "sha256": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/parquet-cardinality-carrier.ts",
+  "title": "ParquetCardinalityCarrier"
+}

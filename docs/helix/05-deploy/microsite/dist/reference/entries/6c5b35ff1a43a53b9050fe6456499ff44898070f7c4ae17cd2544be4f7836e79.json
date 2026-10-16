@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24171,
+        "line": 11,
+        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+        "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerLayoutType",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerLayoutType {sqlType:string;nullable:boolean;collation:null|'Latin1_General_100_BIN2'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerLayoutType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24171,
+      "line": 11,
+      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+      "sha256": "63965cd3d1dd756bbfbf23bd0794cdc63c3b44e4b15b4a4415506c3b2531297f"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/relationship-layout.ts",
+  "title": "SqlServerLayoutType"
+}

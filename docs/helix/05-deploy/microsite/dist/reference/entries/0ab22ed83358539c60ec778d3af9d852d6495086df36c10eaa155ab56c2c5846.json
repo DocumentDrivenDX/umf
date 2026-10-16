@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8724,
+        "line": 13,
+        "path": "src/core-ideals/nullability-avro-projection.ts",
+        "sha256": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilityAvroRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilityAvroRequest {id:string;recordName:string;namespace:string;fieldName:string;nativeType:keyof typeof avroCarriers;mode:'strict'|'report';scope:'underlying-field-value'|'write-input'|'reader-resolution'|'unresolved';carrier:'avro-null'|'unresolved'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilityAvroRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8724,
+      "line": 13,
+      "path": "src/core-ideals/nullability-avro-projection.ts",
+      "sha256": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-avro-projection.ts",
+  "title": "NullabilityAvroRequest"
+}

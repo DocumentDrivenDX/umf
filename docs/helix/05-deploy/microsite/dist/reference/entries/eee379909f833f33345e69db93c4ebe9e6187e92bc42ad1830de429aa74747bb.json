@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12086,
+        "line": 94,
+        "path": "src/core-ideals/key-postgresql.ts",
+        "sha256": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverPostgresqlKeySource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend): Promise<{ nativeSource: string; supplement: string; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverPostgresqlKeySource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12086,
+      "line": 94,
+      "path": "src/core-ideals/key-postgresql.ts",
+      "sha256": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/key-postgresql.ts",
+  "title": "recoverPostgresqlKeySource"
+}

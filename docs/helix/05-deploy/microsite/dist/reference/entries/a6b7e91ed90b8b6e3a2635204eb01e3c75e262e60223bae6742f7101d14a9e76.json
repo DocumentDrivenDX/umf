@@ -1,0 +1,176 @@
+{
+  "data": {
+    "extensionId": "umf.dbt.manifest",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/dbt/manifest.test.ts",
+          "fixtures/dbt/oracle-results.json",
+          "fixtures/dbt/browser-results.json"
+        ],
+        "native": {
+          "subset": "Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity",
+          "system": "dbt manifest",
+          "version": "v12 grammar; dbt Core 1.10.0 fixture"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Exact dbt manifest JSON with pinned v12 shape inspection",
+      "id": "umf.dbt.manifest",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:dbt:manifest:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "dbt-manifest-json"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-022; native warnings never justify source loss; shape checks do not prove compilation or graph validity",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"dbtManifestRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/dbt-manifest/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.dbt.manifest\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"dbtManifestRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/dbt-manifest/schema.json\",\"\"]",
+    "[\"integration\",\"umf.dbt.manifest@0.1.0:import\"]",
+    "[\"integration\",\"umf.dbt.manifest@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3423,
+      "path": "spec/extensions/dbt-manifest/package.json",
+      "sha256": "4f2530a5e7f25399594e37dc9aa7f3c57b03cd434405c3b565a73ed85e3353a4"
+    }
+  ],
+  "summary": "Exact dbt manifest JSON with pinned v12 shape inspection",
+  "title": "umf.dbt.manifest · 0.1.0"
+}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Public action API reference · UMF</title><meta name="description" content="Learn UMF actions through real examples, readable diagrams and scoped evidence."><link rel="stylesheet" href="guide.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../index.html">UMF</a><a href="../docs.html">Developers</a><a href="index.html">Actions</a><a href="../explorer.html">Schema explorer</a><a href="../demo.html">Playground</a></header><div class="layout"><aside aria-label="Action guide"><nav><a href="index.html">Understand and use UMF actions</a>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Public action API reference · UMF</title><meta name="description" content="Learn UMF actions through real examples, readable diagrams and scoped evidence."><link rel="stylesheet" href="guide.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../index.html">UMF</a><a href="../docs.html">Developers</a><a href="../reference/index.html">Reference</a><a href="index.html">Actions</a><a href="../explorer.html">Schema explorer</a><a href="../demo.html">Playground</a></header><div class="layout"><aside aria-label="Action guide"><nav><a href="index.html">Understand and use UMF actions</a>
 <a href="concepts.html">Meet the model</a>
 <a href="getting-started.html">Inspect your first action</a>
 <a href="declarations.html">Describe a change precisely</a>
@@ -32,6 +32,17 @@
 <li>actionExpressionLimits — constants depth 32, nodes 512, text 65536; limits are profile bounds, not a throughput guarantee.</li>
 <li>actionsPackage — the exact extension registration package; it is not a general executor feature manifest.</li>
 </ul>
+<h2 id="portable-plans-manifests-and-bulk-outcomes">Portable plans, manifests and bulk outcomes</h2>
+<p>These public metadata operations are also listed in the generated reference. CONTRACT-902/903/904 govern their exact surfaces. Inspection and construction do not execute a database or establish current authority.</p>
+<ul>
+<li>inspectActionPlan — inspects a portable plan against its pinned model and reports unresolved obligations.</li>
+<li>assessActionPlan — compares a plan with explicitly supplied capability declarations; execution remains consumer-owned.</li>
+<li>prepareActionPlanModel — prepares the model context used by portable plan inspection.</li>
+<li>inspectActionManifest — checks a frozen action manifest and retains its source context.</li>
+<li>assessActionManifest — reports whether the supplied manifest meets the selected metadata profile.</li>
+<li>constructActionManifest — constructs a manifest from explicitly selected action rows and original model pins.</li>
+<li>validateBulkOutcome — validates the portable bulk outcome representation; it does not prove native atomicity.</li>
+</ul>
 <h2 id="public-types">Public types</h2>
 <ul>
 <li>Action</li>
@@ -53,9 +64,21 @@
 <li>ActionInputs</li>
 <li>ActionInspection</li>
 <li>ActionKeyReference</li>
+<li>ActionManifest</li>
+<li>ActionManifestConstruction</li>
+<li>ActionManifestInspection</li>
 <li>ActionObligation</li>
 <li>ActionObligationKind</li>
 <li>ActionParameter</li>
+<li>ActionPlanArtifact</li>
+<li>ActionPlanAssessment</li>
+<li>ActionPlanCapabilities</li>
+<li>ActionPlanCapability</li>
+<li>ActionPlanDiagnostic</li>
+<li>ActionPlanInspection</li>
+<li>ActionPlanInspectionContext</li>
+<li>ActionPlanModelPin</li>
+<li>ActionPlanSelectionInspector</li>
 <li>ActionReference</li>
 <li>ActionRelationshipReference</li>
 <li>ActionRule</li>
@@ -63,10 +86,16 @@
 <li>ActionRuleReference</li>
 <li>ActionRuleState</li>
 <li>ActionValueBinding</li>
+<li>BulkOutcomeValidation</li>
 <li>CompiledActionRule</li>
 <li>CompiledActionSelector</li>
+<li>ConstructedActionManifest</li>
 <li>InspectedAction</li>
+<li>PortableActionPin</li>
+<li>PortableActionPlan</li>
+<li>PreparedActionPlanModel</li>
 <li>SelectedActionIdentity</li>
+<li>SelectedActionRow</li>
 </ul>
 <p>The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-900/901 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.</p>
 <h2 id="errors-and-diagnostics">Errors and diagnostics</h2>
@@ -84,4 +113,4 @@
 <p>Existing core and Registry diagnostics propagate. Each action is bounded to 128 parameters, 128 combined pre/postconditions, 128 frames per list, 128 outputs, 128 failures, 256 effects, 256 assignments per effect and 64 roles. Rule text is limited to 65536 UTF-16 code units. Core document and value bounds also apply.</p>
 <h2 id="consumer-operations-are-not-portable-exports">Consumer operations are not portable exports</h2>
 <p>invoke, lookup, preview and readAtLeast belong to the separate trusted consumer. They are logical methods, not specified HTTP endpoints. Lookup never executes. Preview persists no business or terminal state. A committed result includes verified effects or handler checks, exact net changes, opaque version and receipt; runtime observations are not equivalent to declaration validation.</p>
-<p><a href="execution.html">Start with execution</a> for trusted setup. <a href="support-and-evidence.html">Check support</a> before applying a model to a native store.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"ae74990f8ad5e8346b6a8e9d18bc69bdad961a60edc5451be69baff1fabb6358"}</script></body></html>
+<p><a href="execution.html">Start with execution</a> for trusted setup. <a href="support-and-evidence.html">Check support</a> before applying a model to a native store.</p></main></div><footer>UMF · Action guide · <a href="https://github.com/DocumentDrivenDX/umf">Repository</a> · Experimental, versioned support</footer><script type="application/json" id="asset-integrity">{"guide.css":"92bad4dcf8583ed88903399269a368de67b38eeb1da8f6b8063ee7a77985c30d","example.js":"04dd2b411568b3dc0bf63551d81349cd7d53c110c0c3857cf9bc1cab95db002e"}</script></body></html>

@@ -1,0 +1,195 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/avro-nullability/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:avro:nullability-binding:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.avro.nullability"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "carrier": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "avro-null"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unresolved"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "dependencyId": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "interpretation": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "declared"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unsupported"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "nativePath": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "origin": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "classified"
+                }
+              }
+            },
+            "scope": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "underlying-field-value"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "write-input"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "reader-resolution"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unresolved"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "origin"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "scope"
+            },
+            {
+              "kind": "string",
+              "value": "carrier"
+            },
+            {
+              "kind": "string",
+              "value": "interpretation"
+            },
+            {
+              "kind": "string",
+              "value": "nativePath"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Retained Avro availability scope"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/avro-nullability/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 991,
+      "path": "spec/extensions/avro-nullability/schema.json",
+      "sha256": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26"
+    }
+  ],
+  "summary": "spec/extensions/avro-nullability/schema.json",
+  "title": "Retained Avro availability scope"
+}

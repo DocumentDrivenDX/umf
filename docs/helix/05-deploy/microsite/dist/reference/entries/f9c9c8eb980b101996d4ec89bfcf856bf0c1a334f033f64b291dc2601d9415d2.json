@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10059,
+        "line": 7,
+        "path": "src/projections/sqlserver-avro.ts",
+        "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerAvroPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerAvroPolicy {id:string;recordName:string;namespace:string;table:{schema:string;name:string};fields:Record<string,{name:string;representation:'value'|'sql-text'}>;lossPolicy:'strict'|'allow-reported-loss';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerAvroPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10059,
+      "line": 7,
+      "path": "src/projections/sqlserver-avro.ts",
+      "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+    }
+  ],
+  "summary": "Type declaration · src/projections/sqlserver-avro.ts",
+  "title": "SqlServerAvroPolicy"
+}

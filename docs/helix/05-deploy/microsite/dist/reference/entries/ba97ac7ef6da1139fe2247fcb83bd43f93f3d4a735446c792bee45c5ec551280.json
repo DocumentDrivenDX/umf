@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15010,
+        "line": 105,
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "sha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyKeysPostgresqlProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<KeyPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyKeysPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15010,
+      "line": 105,
+      "path": "src/core-ideals/key-postgresql-projection.ts",
+      "sha256": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8"
+    }
+  ],
+  "summary": "Recompute projection and match current native representation; not source authentication.",
+  "title": "verifyKeysPostgresqlProjection"
+}

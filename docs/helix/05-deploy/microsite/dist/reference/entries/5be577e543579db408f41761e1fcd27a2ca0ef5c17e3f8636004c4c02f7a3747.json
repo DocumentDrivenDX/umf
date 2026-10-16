@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13184,
+        "line": 125,
+        "path": "src/domain-packs/medical.ts",
+        "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectCdcMortality",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(textSource: string, sourceId: string): MedicalRow[]"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectCdcMortality\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13184,
+      "line": 125,
+      "path": "src/domain-packs/medical.ts",
+      "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+    }
+  ],
+  "summary": "The specific CDC leading-causes dataset has adjusted rates and no row denominators.",
+  "title": "projectCdcMortality"
+}

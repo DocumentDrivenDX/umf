@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5497,
+        "line": 21,
+        "path": "src/adapters/owl/axioms.ts",
+        "sha256": "d9d9b33772d673a2ba8d65f0bcea40199d6faf2c2a4821be5f6f0d4cd980e7ee"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getOwlSpecialAxioms",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): OwlSpecialAxiomView"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getOwlSpecialAxioms\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5497,
+      "line": 21,
+      "path": "src/adapters/owl/axioms.ts",
+      "sha256": "d9d9b33772d673a2ba8d65f0bcea40199d6faf2c2a4821be5f6f0d4cd980e7ee"
+    }
+  ],
+  "summary": "Exposes OWL RDF encodings that must not be lowered into positive storage edges.",
+  "title": "getOwlSpecialAxioms"
+}

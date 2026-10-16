@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22324,
+        "line": 154,
+        "path": "src/extensions/binding/index.ts",
+        "sha256": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "readBindingDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, logical: Document, format?: \"json\" | \"yaml\"): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"readBindingDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22324,
+      "line": 154,
+      "path": "src/extensions/binding/index.ts",
+      "sha256": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b"
+    }
+  ],
+  "summary": "Public export · src/extensions/binding/index.ts",
+  "title": "readBindingDocument"
+}

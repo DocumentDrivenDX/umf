@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 30505,
+        "line": 75,
+        "path": "src/adapters/jsonld/index.ts",
+        "sha256": "f1e27eebfa713f0a3df459f69447da4571605cef02678dc6d0b9fbb0368df2c2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "JsonLdFramingOptions",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface JsonLdFramingOptions {embed?:'@once'|'@always'|'@never'|'@first'|'@last';explicit?:boolean;requireAll?:boolean;omitDefault?:boolean;omitGraph?:boolean;pruneBlankNodeIdentifiers?:boolean;frameDefault?:boolean;ordered?:boolean;compactArrays?:boolean;compactToRelative?:boolean}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"JsonLdFramingOptions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 30505,
+      "line": 75,
+      "path": "src/adapters/jsonld/index.ts",
+      "sha256": "f1e27eebfa713f0a3df459f69447da4571605cef02678dc6d0b9fbb0368df2c2"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/jsonld/index.ts",
+  "title": "JsonLdFramingOptions"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9648,
+        "line": 27,
+        "path": "src/core-ideals/relationship-tablespec.ts",
+        "sha256": "0f14cfa43cfe85fe5b0b921860b0042f22b69d4fe707b5ca95f87a6e80e07d3f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecRelationshipClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecRelationshipClassification {\n operation:'classify-tablespec-relationships';version:'1.0.0';status:'classified'|'blocked';outcome:'exact'|'unknown'|'not-expressible';\n source:Document;target?:Document;request:TableSpecRelationshipRequest;binding:typeof binding;observations:TableSpecRelationshipObservation[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecRelationshipClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9648,
+      "line": 27,
+      "path": "src/core-ideals/relationship-tablespec.ts",
+      "sha256": "0f14cfa43cfe85fe5b0b921860b0042f22b69d4fe707b5ca95f87a6e80e07d3f"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-tablespec.ts",
+  "title": "TableSpecRelationshipClassification"
+}

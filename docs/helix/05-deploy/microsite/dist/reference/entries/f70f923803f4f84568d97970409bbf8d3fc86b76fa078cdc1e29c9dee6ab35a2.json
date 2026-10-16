@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11420,
+        "line": 99,
+        "path": "src/core-ideals/nullability-parquet.ts",
+        "sha256": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverParquetNullabilityBytes",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ParquetNullabilityClassification, current: Document): Uint8Array<ArrayBufferLike>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverParquetNullabilityBytes\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11420,
+      "line": 99,
+      "path": "src/core-ideals/nullability-parquet.ts",
+      "sha256": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc"
+    }
+  ],
+  "summary": "Recover original file bytes, including unclaimed pages and embedded metadata.",
+  "title": "recoverParquetNullabilityBytes"
+}

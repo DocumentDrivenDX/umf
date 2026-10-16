@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4623,
+        "line": 7,
+        "path": "src/adapters/iceberg/table-rename.ts",
+        "sha256": "08c9d6f436228d7a542479b9d982743ce69a20e9fb24b9e22d2b59a81e5f968a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "IcebergTableRenameReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergTableRenameReport {\n complete:false;\n previousSchemaId:number;\n nextSchemaId:number;\n fieldId:number;\n oldName:string;\n newName:string;\n appendedSchemaPath:string;\n bindings:IcebergTableTransforms;\n limitations:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"IcebergTableRenameReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4623,
+      "line": 7,
+      "path": "src/adapters/iceberg/table-rename.ts",
+      "sha256": "08c9d6f436228d7a542479b9d982743ce69a20e9fb24b9e22d2b59a81e5f968a"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/iceberg/table-rename.ts",
+  "title": "IcebergTableRenameReport"
+}

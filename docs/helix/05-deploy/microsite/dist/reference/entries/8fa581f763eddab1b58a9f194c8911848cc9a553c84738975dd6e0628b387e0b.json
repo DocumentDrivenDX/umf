@@ -1,0 +1,210 @@
+{
+  "data": {
+    "extensionId": "umf.tablespec",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/tablespec/roundtrip.test.ts",
+          "native/tablespec/sources.json",
+          "fixtures/tablespec/oracle.json",
+          "fixtures/tablespec/browser.json",
+          "tests/tablespec/split.test.ts",
+          "fixtures/tablespec/split-oracle.json",
+          "tests/tablespec/table-edits.test.ts",
+          "fixtures/tablespec/table-edits-oracle.json",
+          "tests/tablespec/table-metadata.test.ts",
+          "tests/tablespec/boundaries.test.ts",
+          "fixtures/tablespec/boundaries-oracle.json"
+        ],
+        "native": {
+          "subset": "Monolithic JSON/YAML ingestion and split file-bundle capture; copied table/column metadata access and edits, core scalar families and native recovery. Schema projections are separately qualified by CONTRACT-033, CONTRACT-038 and CONTRACT-039. Split loader migrations, split-to-monolithic lowering, native validation/coercion and general value transforms remain open.",
+          "system": "TableSpec",
+          "version": "source commit 647e8e566ad78b864282ec65c0b0b2237aa63084; table version 1.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "TableSpec native table schemas and derived core scalar metadata",
+      "id": "umf.tablespec",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:tablespec:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "originalFormat": {
+            "enum": [
+              "json",
+              "yaml"
+            ]
+          },
+          "originalSource": {
+            "maxLength": 4000000,
+            "type": "string"
+          },
+          "profile": {
+            "const": "tablespec-table-1"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          },
+          "splitFiles": {
+            "additionalProperties": {
+              "maxLength": 4000000,
+              "type": "string"
+            },
+            "maxProperties": 1000,
+            "minProperties": 2,
+            "properties": {
+              "table.yaml": {
+                "maxLength": 4000000,
+                "type": "string"
+              }
+            },
+            "required": [
+              "table.yaml"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "profile",
+          "root",
+          "originalSource",
+          "originalFormat"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-030; source preservation and scalar-family classification, not complete Pydantic validation or coercion",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/tablespec/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.tablespec\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/tablespec/schema.json\",\"\"]",
+    "[\"integration\",\"umf.tablespec@0.1.0:import\"]",
+    "[\"integration\",\"umf.tablespec@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4705,
+      "path": "spec/extensions/tablespec/package.json",
+      "sha256": "ebf054f19480a79b41c0b50e780af77865335f9722c45c8717284e2a94f97a5c"
+    }
+  ],
+  "summary": "TableSpec native table schemas and derived core scalar metadata",
+  "title": "umf.tablespec · 0.1.0"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15310,
+        "line": 39,
+        "path": "src/projections/ddd-graphql/index.ts",
+        "sha256": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectDddToGraphql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: DddGraphqlPolicy, lossPolicy: \"strict\" | \"report\"): DddGraphqlProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectDddToGraphql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15310,
+      "line": 39,
+      "path": "src/projections/ddd-graphql/index.ts",
+      "sha256": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276"
+    }
+  ],
+  "summary": "Complete schema-only projection. Endpoint identity is always explicitly paired.",
+  "title": "projectDddToGraphql"
+}

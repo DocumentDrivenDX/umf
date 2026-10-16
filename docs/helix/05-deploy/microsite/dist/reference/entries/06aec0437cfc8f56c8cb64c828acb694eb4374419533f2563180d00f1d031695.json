@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3936,
+        "line": 23,
+        "path": "src/adapters/owl/index.ts",
+        "sha256": "997e9f04685d5ea2ddc21cc19b5a53ae5f17b49dc714832f24662aabd3c86331"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importOwlTurtle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; baseIRI: string; blankNodeScope?: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importOwlTurtle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3936,
+      "line": 23,
+      "path": "src/adapters/owl/index.ts",
+      "sha256": "997e9f04685d5ea2ddc21cc19b5a53ae5f17b49dc714832f24662aabd3c86331"
+    }
+  ],
+  "summary": "Public export · src/adapters/owl/index.ts",
+  "title": "importOwlTurtle"
+}

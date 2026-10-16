@@ -26,6 +26,20 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - actionExpressionLimits — constants depth 32, nodes 512, text 65536; limits are profile bounds, not a throughput guarantee.
 - actionsPackage — the exact extension registration package; it is not a general executor feature manifest.
 
+## Portable plans, manifests and bulk outcomes
+
+These public metadata operations are also listed in the generated reference.
+CONTRACT-902/903/904 govern their exact surfaces. Inspection and construction do
+not execute a database or establish current authority.
+
+- inspectActionPlan — inspects a portable plan against its pinned model and reports unresolved obligations.
+- assessActionPlan — compares a plan with explicitly supplied capability declarations; execution remains consumer-owned.
+- prepareActionPlanModel — prepares the model context used by portable plan inspection.
+- inspectActionManifest — checks a frozen action manifest and retains its source context.
+- assessActionManifest — reports whether the supplied manifest meets the selected metadata profile.
+- constructActionManifest — constructs a manifest from explicitly selected action rows and original model pins.
+- validateBulkOutcome — validates the portable bulk outcome representation; it does not prove native atomicity.
+
 ## Public types
 
 <!-- generated:public-types:start -->
@@ -48,9 +62,21 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - ActionInputs
 - ActionInspection
 - ActionKeyReference
+- ActionManifest
+- ActionManifestConstruction
+- ActionManifestInspection
 - ActionObligation
 - ActionObligationKind
 - ActionParameter
+- ActionPlanArtifact
+- ActionPlanAssessment
+- ActionPlanCapabilities
+- ActionPlanCapability
+- ActionPlanDiagnostic
+- ActionPlanInspection
+- ActionPlanInspectionContext
+- ActionPlanModelPin
+- ActionPlanSelectionInspector
 - ActionReference
 - ActionRelationshipReference
 - ActionRule
@@ -58,10 +84,16 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - ActionRuleReference
 - ActionRuleState
 - ActionValueBinding
+- BulkOutcomeValidation
 - CompiledActionRule
 - CompiledActionSelector
+- ConstructedActionManifest
 - InspectedAction
+- PortableActionPin
+- PortableActionPlan
+- PreparedActionPlanModel
 - SelectedActionIdentity
+- SelectedActionRow
 <!-- generated:public-types:end -->
 
 The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-900/901 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.

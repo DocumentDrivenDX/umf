@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16571,
+        "line": 7,
+        "path": "src/projections/sqlserver-ddl.ts",
+        "sha256": "91e2065216d73b8c5b56feabb0beef5787fbbfe1c5d471696d25c1a4e8953056"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerDdlStatement",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerDdlStatement {sourcePath:string;kind:'schema'|'table'|'key'|'check'|'foreign-key'|'index'|'disable'|'description';sql:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerDdlStatement\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16571,
+      "line": 7,
+      "path": "src/projections/sqlserver-ddl.ts",
+      "sha256": "91e2065216d73b8c5b56feabb0beef5787fbbfe1c5d471696d25c1a4e8953056"
+    }
+  ],
+  "summary": "Type declaration · src/projections/sqlserver-ddl.ts",
+  "title": "SqlServerDdlStatement"
+}

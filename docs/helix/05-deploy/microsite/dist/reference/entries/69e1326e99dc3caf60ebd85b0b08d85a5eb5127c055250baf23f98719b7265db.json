@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 20534,
+        "line": 243,
+        "path": "src/extensions/security/evaluate.ts",
+        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "evaluateSecurityAccess",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact): SecurityAccessResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"evaluateSecurityAccess\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 20534,
+      "line": 243,
+      "path": "src/extensions/security/evaluate.ts",
+      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+    }
+  ],
+  "summary": "Pure semantic evaluation; host admission and native receipt enforcement remain separate.",
+  "title": "evaluateSecurityAccess"
+}

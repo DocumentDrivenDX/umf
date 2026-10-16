@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9143,
+        "line": 48,
+        "path": "src/extensions/actions/selector.ts",
+        "sha256": "23fc126498009da8e97a636af07f2e26b30c949f667dfe571c847bdb81f2eb53"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "compileActionSelector",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(documentInput: Document, actionInput: Action, frameInput: ActionFrame): CompiledActionSelector"
+    ]
+  },
+  "id": "[\"api\",\".\",\"compileActionSelector\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9143,
+      "line": 48,
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "23fc126498009da8e97a636af07f2e26b30c949f667dfe571c847bdb81f2eb53"
+    }
+  ],
+  "summary": "Public export · src/extensions/actions/selector.ts",
+  "title": "compileActionSelector"
+}

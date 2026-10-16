@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8824,
+        "line": 8,
+        "path": "src/adapters/linkml/slot-values.ts",
+        "sha256": "e6318fb13b125c64201cff515702336e7dd5b92e4d7f212ff07283543f8cbdd1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LinkmlSlotValuesReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LinkmlSlotValuesReport {\n source:Document;className:string;slotName:string;scope:'document-scalar-slot-values';status:'resolved'|'blocked';complete:false;\n fields:Partial<Record<LinkmlScalarSlotField,NativeJson>>;\n derivations:{field:LinkmlScalarSlotField;path:string;rule:'base'|'slot-inheritance'|'slot-usage'|'default-range'|'identifier-required'|'key-required'|'list-inlined';value:NativeJson}[];\n diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LinkmlSlotValuesReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8824,
+      "line": 8,
+      "path": "src/adapters/linkml/slot-values.ts",
+      "sha256": "e6318fb13b125c64201cff515702336e7dd5b92e4d7f212ff07283543f8cbdd1"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/linkml/slot-values.ts",
+  "title": "LinkmlSlotValuesReport"
+}

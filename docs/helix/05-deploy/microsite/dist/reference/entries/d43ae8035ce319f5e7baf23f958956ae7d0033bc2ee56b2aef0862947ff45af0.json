@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2854,
+        "line": 12,
+        "path": "src/model/types.ts",
+        "sha256": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NULLABILITIES",
+    "runtime": "unassessed",
+    "signatureText": [
+      "NULLABILITIES=['required','absent-allowed','unspecified'] as const"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NULLABILITIES\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2854,
+      "line": 12,
+      "path": "src/model/types.ts",
+      "sha256": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9"
+    }
+  ],
+  "summary": "Ideal availability only; native absence representations require explicit bindings.",
+  "title": "NULLABILITIES"
+}

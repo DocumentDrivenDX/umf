@@ -1,0 +1,107 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "historical",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "historical",
+        "id": "key-gate-record",
+        "inputHashes": [
+          {
+            "path": "scripts/core-ideals/key-conformance.ts",
+            "sha256": "b9195431d28b63c6df101ccd90db53a71f5835894f4d12e6ae03c2bd078e56ab"
+          },
+          {
+            "path": "scripts/core-ideals/key-evidence.ts",
+            "sha256": "8235a48cf64b0d2632f11794830b6d6e6a12f65d4de687b43c521289bd961da4"
+          },
+          {
+            "path": "scripts/core-ideals/key-roundtrips.ts",
+            "sha256": "fe9e0a146396b6905f102291b9129861ff95e6cf7945a78b7adb301557374e39"
+          },
+          {
+            "path": "scripts/core-ideals/key-native-roundtrips.ts",
+            "sha256": "651b2dcfd2f3f78cd5821645293643743ff80a902909e6bff407b92274fa9ce4"
+          },
+          {
+            "path": "tests/core-ideals/key-conformance.test.ts",
+            "sha256": "5bebfaa83af7f6f02bf843b3fe02c28a24c24bce6f3065b576994aa58fffc46f"
+          },
+          {
+            "path": "tests/core-ideals/key-evidence.test.ts",
+            "sha256": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7"
+          },
+          {
+            "path": "tests/core-ideals/key-authored-roundtrips.test.ts",
+            "sha256": "284cbc3514bc78b57ac59f6cc5325498e1259c4be1feb0713fafa5eb771356bc"
+          },
+          {
+            "path": "tests/core-ideals/key-native-roundtrips.test.ts",
+            "sha256": "1d292d7cd9f9f9716b12851b4bfaecd55bda0414350d5e57ed35fb858962499a"
+          },
+          {
+            "path": "fixtures/validation/key-gate-refresh-evidence.json",
+            "sha256": "46f92bc4ceefbad191eab354bb4ee5402f0fe7f258e28a1e04cacec29baad6ae"
+          }
+        ],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "SQL enforcement applies to the qualified required stored-value domains; conversion, session, index-size and scope restrictions remain residuals.",
+          "TableSpec declarations and Avro/Parquet encodings do not enforce collection identity.",
+          "SQL Server authored recovery retains explicit DDL; classification uses independent engine catalogs, not a DDL parser.",
+          "PostgreSQL native classification uses independent discovery catalogs; generated DDL enforcement is verified by separate native insertion controls.",
+          "Native-only imports cannot infer authored stable key IDs, names, primary intent or unknown qualifiers. Receipts establish consistency, not authentication.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "passed",
+        "readerId": "core-gate",
+        "scope": "Named Key ideal admission and qualified five-system delivery; retained author identity and native representations remain separate",
+        "selector": "",
+        "source": {
+          "bytes": 8470,
+          "path": "fixtures/validation/key-conformance.json",
+          "sha256": "bb2749d9d6700357a63308a76443775d543b464c518f769b65242a462ac8a813"
+        },
+        "supersedes": [],
+        "versions": {}
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "key-gate",
+      "kind": "classification",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "key-gate",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TableSpec / PostgreSQL / SQL Server / Avro / Parquet",
+      "subset": "Published key binding subsets; ideal admission and delivery are distinct.",
+      "targetSystem": "UMF",
+      "title": "Key · five-priority qualification"
+    }
+  },
+  "id": "[\"integration\",\"key-gate\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Published key binding subsets; ideal admission and delivery are distinct.",
+  "title": "Key · five-priority qualification"
+}

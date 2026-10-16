@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7820,
+        "line": 55,
+        "path": "src/core-ideals/field-sqlserver-projection.ts",
+        "sha256": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFieldFromSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FieldSqlServerProjection, nativeText: string): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFieldFromSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7820,
+      "line": 55,
+      "path": "src/core-ideals/field-sqlserver-projection.ts",
+      "sha256": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverFieldFromSqlServer"
+}

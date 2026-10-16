@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4772,
+        "line": 42,
+        "path": "src/projections/bit128-model.ts",
+        "sha256": "78ab0de201c73d4110dc9a2671716575c981dd708d7fad15443f28c1ad52906f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverBit128ModelProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Bit128ModelProjection, current: string): { logical: Document; binding: Document; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverBit128ModelProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4772,
+      "line": 42,
+      "path": "src/projections/bit128-model.ts",
+      "sha256": "78ab0de201c73d4110dc9a2671716575c981dd708d7fad15443f28c1ad52906f"
+    }
+  ],
+  "summary": "Public export · src/projections/bit128-model.ts",
+  "title": "recoverBit128ModelProjection"
+}

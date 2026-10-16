@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4949,
+        "path": "spec/extensions/smithy/package.json",
+        "sha256": "cc0c6a7de93ffa2b3aebbd9723bb5cbba658420ce0c355a9117910ca6c7f02c7"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.smithy@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.smithy@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Smithy JSON AST · 2.0; external smithy-model 1.73.0",
+      "subset": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned JavaScript assembly is explicit through a trusted backend; known reflection limitations and source normalization are reported.",
+      "targetSystem": "UMF",
+      "title": "umf.smithy · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.smithy@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.smithy\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned JavaScript assembly is explicit through a trusted backend; known reflection limitations and source normalization are reported.",
+  "title": "umf.smithy · import"
+}

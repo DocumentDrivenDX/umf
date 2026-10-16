@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1931,
+        "line": 9,
+        "path": "src/model/record-values.ts",
+        "sha256": "4d8dd932350b1727e5298676595d2062d57ab336408d9044f7e42362e6868841"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreRecordValueCheck",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreRecordValueCheck {\n operation:'validate-core-record-values';version:'1.0.0'|'2.0.0';source:Document;identity:CoreRecordValueIdentity;\n values:CoreRecordFieldValue[];documentValidation:Validation;validation:Validation;\n fields:{field:CoreRecordValueIdentity;state:'absent'|'present';validation:Validation}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreRecordValueCheck\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1931,
+      "line": 9,
+      "path": "src/model/record-values.ts",
+      "sha256": "4d8dd932350b1727e5298676595d2062d57ab336408d9044f7e42362e6868841"
+    }
+  ],
+  "summary": "Type declaration · src/model/record-values.ts",
+  "title": "CoreRecordValueCheck"
+}

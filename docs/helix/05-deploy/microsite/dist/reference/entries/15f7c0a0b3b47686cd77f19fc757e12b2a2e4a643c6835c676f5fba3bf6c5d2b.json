@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9303,
+        "line": 16,
+        "path": "src/core-ideals/parquet-record.ts",
+        "sha256": "ab58fa68e3dab1dce2cf48a61a84ee05276e8408e16acd75e4ca48bc0ed9b3af"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRecordClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetRecordClassification {\n operation:'classify-parquet-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetRecordRequest;binding:typeof binding;mappings:Mapping[];\n residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRecordClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9303,
+      "line": 16,
+      "path": "src/core-ideals/parquet-record.ts",
+      "sha256": "ab58fa68e3dab1dce2cf48a61a84ee05276e8408e16acd75e4ca48bc0ed9b3af"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/parquet-record.ts",
+  "title": "ParquetRecordClassification"
+}

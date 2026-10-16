@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2455,
+        "line": 19,
+        "path": "src/extensions/security/policy-v2-legacy-access.ts",
+        "sha256": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "evaluateSecurityPolicyV2LegacyAccess",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact): SecurityPolicyV2LegacyAccess"
+    ]
+  },
+  "id": "[\"api\",\".\",\"evaluateSecurityPolicyV2LegacyAccess\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2455,
+      "line": 19,
+      "path": "src/extensions/security/policy-v2-legacy-access.ts",
+      "sha256": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f"
+    }
+  ],
+  "summary": "Logical single-resource access evaluation only. Host cuts must name the original0.2 policy revision.\nNo catalog, new relationship grammar, unknown meaning or native authority is admitted.",
+  "title": "evaluateSecurityPolicyV2LegacyAccess"
+}

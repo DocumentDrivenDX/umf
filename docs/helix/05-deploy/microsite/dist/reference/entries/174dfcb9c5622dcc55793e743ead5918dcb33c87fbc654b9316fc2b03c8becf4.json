@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22644,
+        "line": 18,
+        "path": "src/core-ideals/relationship-extras.ts",
+        "sha256": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipExtraRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type RelationshipExtraRequest=CommonRequest&(\n {system:'graphql';root:{typeName:string;fieldName:string};field:string;inverseField?:string;forwardUnion?:string;inverseUnion?:string}|\n {system:'rdf';predicate:string;inversePredicate?:string;unionPolicy:'owl-union'}|\n {system:'linkml';schemaId:string;schemaName:string;slot:string;inverseSlot?:string}\n);"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipExtraRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22644,
+      "line": 18,
+      "path": "src/core-ideals/relationship-extras.ts",
+      "sha256": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-extras.ts",
+  "title": "RelationshipExtraRequest"
+}

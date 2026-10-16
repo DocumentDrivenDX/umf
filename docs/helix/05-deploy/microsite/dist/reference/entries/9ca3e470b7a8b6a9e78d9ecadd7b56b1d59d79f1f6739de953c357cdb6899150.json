@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7422,
+        "line": 11,
+        "path": "src/core-ideals/field-tablespec-projection.ts",
+        "sha256": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldTableSpecRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldTableSpecRequest {id:string;tableName:string;columnName:string;nativeType:'BOOLEAN'|'INTEGER'|'DECIMAL'|'FLOAT'|'TEXT'|'VARCHAR'|'CHAR'|'DATE'|'DATETIME'|'TIMESTAMP';mode:'strict'|'report'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldTableSpecRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7422,
+      "line": 11,
+      "path": "src/core-ideals/field-tablespec-projection.ts",
+      "sha256": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-tablespec-projection.ts",
+  "title": "FieldTableSpecRequest"
+}

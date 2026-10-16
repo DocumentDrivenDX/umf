@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 20188,
+        "path": "spec/extensions/security-protection/package.json",
+        "sha256": "df3dbb7faa2df45dc395caeb829340e84deb4dfd4f1940c2f6dd846aa9d55e1f"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.security.protection@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.security.protection@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF-authored protection catalog · 0.1.0",
+      "subset": "Catalog wire structure, exact identities and literal bounds only; no domain closure, function/query interpretation, verified custody or native enforcement",
+      "targetSystem": "UMF",
+      "title": "umf.security.protection · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.security.protection@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.security.protection\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Catalog wire structure, exact identities and literal bounds only; no domain closure, function/query interpretation, verified custody or native enforcement",
+  "title": "umf.security.protection · import"
+}

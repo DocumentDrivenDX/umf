@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8199,
+        "line": 6,
+        "path": "src/projections/avro-json-schema.ts",
+        "sha256": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroDocumentBindings",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroDocumentBindings {\n id:string;schemaId:string;long:'decimal-string';bytes:'hex-string';union:'untagged';lossPolicy:'strict'|'allow-reported-loss';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroDocumentBindings\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8199,
+      "line": 6,
+      "path": "src/projections/avro-json-schema.ts",
+      "sha256": "d26b4803a4a11e5bb309db76bb228dbff39f0f09ab31654644aad95d24646866"
+    }
+  ],
+  "summary": "Type declaration · src/projections/avro-json-schema.ts",
+  "title": "AvroDocumentBindings"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2384,
+        "line": 1,
+        "path": "spec/extensions/delta-table/context-schema.json",
+        "sha256": "d59f573eb78d87b04d35a943305abb5392e47b00489762656e2406406e5c1156"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "deltaTableContextSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:delta:table-context:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"protocol\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"minReaderVersion\": {\n          \"type\": \"integer\",\n          \"minimum\": 1\n        },\n        \"minWriterVersion\": {\n          \"type\": \"integer\",\n          \"minimum\": 1\n        },\n        \"readerFeatures\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"writerFeatures\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        }\n      },\n      \"required\": [\n        \"minReaderVersion\",\n        \"minWriterVersion\"\n      ],\n      \"additionalProperties\": true\n    },\n    \"metaData\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\"\n        },\n        \"name\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ]\n        },\n        \"description\": {\n          \"type\": [\n            \"string\",\n            \"null\"\n          ]\n        },\n        \"format\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"provider\": {\n              \"type\": \"string\"\n            },\n            \"options\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"type\": [\n                  \"string\",\n                  \"null\"\n                ]\n              }\n            }\n          },\n          \"required\": [\n            \"provider\"\n          ],\n          \"additionalProperties\": true\n        },\n        \"schemaString\": {\n          \"type\": \"string\"\n        },\n        \"partitionColumns\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"configuration\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          }\n        },\n        \"createdTime\": {\n          \"type\": [\n            \"integer\",\n            \"null\"\n          ]\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"format\",\n        \"schemaString\",\n        \"partitionColumns\",\n        \"configuration\"\n      ],\n      \"additionalProperties\": true\n    }\n  },\n  \"required\": [\n    \"protocol\",\n    \"metaData\"\n  ],\n  \"additionalProperties\": true\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"deltaTableContextSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2384,
+      "line": 1,
+      "path": "spec/extensions/delta-table/context-schema.json",
+      "sha256": "d59f573eb78d87b04d35a943305abb5392e47b00489762656e2406406e5c1156"
+    }
+  ],
+  "summary": "Public export · spec/extensions/delta-table/context-schema.json",
+  "title": "deltaTableContextSchema"
+}

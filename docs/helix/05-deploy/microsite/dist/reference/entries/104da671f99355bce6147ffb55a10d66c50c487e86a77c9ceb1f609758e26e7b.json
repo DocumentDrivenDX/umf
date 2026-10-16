@@ -1,0 +1,171 @@
+{
+  "data": {
+    "extensionId": "umf.tablespec.facets",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/facets-tablespec.test.ts",
+          "tests/core-ideals/facets-tablespec-suite.test.ts",
+          "tests/core-ideals/facets-tablespec-projection.test.ts",
+          "spec/core/facets-tablespec-projection.schema.json",
+          "fixtures/validation/facets-tablespec-native.json",
+          "fixtures/validation/facets-tablespec-browser.json"
+        ],
+        "native": {
+          "subset": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses explicit native scalar carriers and consumer profiles, with strict/report loss handling and retained ideal recovery",
+          "system": "TableSpec",
+          "version": "647e8e566ad78b864282ec65c0b0b2237aa63084"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Profile-qualified TableSpec facet classification and authored projection with retained source meaning",
+      "id": "umf.tablespec.facets",
+      "schema": {
+        "$id": "urn:umf:tablespec:facet-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.tablespec.facets",
+              "version": "1.0.0"
+            }
+          },
+          "input": {
+            "enum": [
+              "raw",
+              "model-normalized"
+            ]
+          },
+          "obligation": {
+            "enum": [
+              "value-domain",
+              "exact-input"
+            ]
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "concept": {
+                  "enum": [
+                    "length",
+                    "decimal",
+                    "integerWidth",
+                    "conversion",
+                    "native"
+                  ]
+                },
+                "idealPath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "interpretation": {
+                  "enum": [
+                    "declared",
+                    "inferred",
+                    "unknown",
+                    "unsupported"
+                  ]
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "outcome": {
+                  "enum": [
+                    "exact",
+                    "approximated",
+                    "not-expressible",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "concept",
+                "idealPath",
+                "nativePath",
+                "interpretation",
+                "outcome",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "profile": {
+            "enum": [
+              "declared-metadata",
+              "json-schema",
+              "pyspark-schema",
+              "gx-spark",
+              "gx-suite-spark",
+              "ingest-cast",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "input",
+          "obligation",
+          "outcome",
+          "observations"
+        ],
+        "title": "Retained TableSpec facet interpretation profile",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-043; core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/tablespec-facets/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.tablespec.facets\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/tablespec-facets/schema.json\",\"\"]",
+    "[\"integration\",\"umf.tablespec.facets@1.0.0:import\"]",
+    "[\"integration\",\"umf.tablespec.facets@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3922,
+      "path": "spec/extensions/tablespec-facets/package.json",
+      "sha256": "396215e5874f3f5ac15eea4db04e50828143c61786b361ccab64ef74301220d9"
+    }
+  ],
+  "summary": "Profile-qualified TableSpec facet classification and authored projection with retained source meaning",
+  "title": "umf.tablespec.facets · 1.0.0"
+}

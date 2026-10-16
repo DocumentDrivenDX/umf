@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12426,
+        "line": 11,
+        "path": "src/projections/parquet-avro.ts",
+        "sha256": "474628d9ff9ce2a94d88d1179b27c2439b4b82e79d9241fcaef890a74fdc559b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetAvroProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetAvroProjection {status:'blocked'|'projected';source:Document;policy:ParquetAvroPolicy;issues:ProjectionIssue[];mappings:{index:number;path:string[]}[];target?:Document;nativeSchema?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12426,
+      "line": 11,
+      "path": "src/projections/parquet-avro.ts",
+      "sha256": "474628d9ff9ce2a94d88d1179b27c2439b4b82e79d9241fcaef890a74fdc559b"
+    }
+  ],
+  "summary": "Type declaration · src/projections/parquet-avro.ts",
+  "title": "ParquetAvroProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15420,
+        "line": 27,
+        "path": "src/projections/ddd-graphql/entities.ts",
+        "sha256": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectDddEntitiesToGraphql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logical: Document, policy: DddGraphqlEntityPolicy, lossPolicy: \"strict\" | \"report\"): DddGraphqlEntityProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectDddEntitiesToGraphql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15420,
+      "line": 27,
+      "path": "src/projections/ddd-graphql/entities.ts",
+      "sha256": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87"
+    }
+  ],
+  "summary": "Relationship-independent DDD entity SDL with an explicit schema-only root.",
+  "title": "projectDddEntitiesToGraphql"
+}

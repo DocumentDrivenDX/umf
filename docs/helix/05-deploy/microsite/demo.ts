@@ -1,3 +1,5 @@
+import current from '../reference/examples/orders.json';
+import uuid from '../reference/examples/uuid.json';
 import {readDocument, writeDocument} from '../../../../src/model/document';
 import {writeJsonValue} from '../../../../src/model/serialization';
 import {validateDocument} from '../../../../src/validation/document';
@@ -11,7 +13,7 @@ const diagnostics=document.querySelector<HTMLElement>('#diagnostics')!;
 const preset=document.querySelector<HTMLSelectElement>('#preset')!;
 const format=document.querySelector<HTMLSelectElement>('#format')!;
 function clear(){output.textContent='Check the document to see its output.';status.textContent='Ready to check';diagnostics.textContent='';}
-function load(){input.value=writeJsonValue(preset.value==='unknown'?unknown:preset.value==='invalid'?{...base,umf:'99.0.0'}:base,'yaml');clear();}
+function load(){input.value=writeJsonValue(preset.value==='current'?current:preset.value==='uuid'?uuid:preset.value==='unknown'?unknown:preset.value==='invalid'?{...base,umf:'99.0.0'}:base,'yaml');clear();}
 function run(){
   try {
     const doc=readDocument(input.value,'yaml');

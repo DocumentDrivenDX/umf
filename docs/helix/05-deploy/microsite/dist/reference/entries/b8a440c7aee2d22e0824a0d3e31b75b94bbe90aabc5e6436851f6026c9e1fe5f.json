@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3777,
+        "line": 24,
+        "path": "src/adapters/parquet/index.ts",
+        "sha256": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetFraming",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetFraming {source:Document;status:'located'|'invalid';complete:false;byteLength:number;footerRegion?:{offset:number;length:number;mode:'plaintext-or-signed'|'encrypted'};diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetFraming\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3777,
+      "line": 24,
+      "path": "src/adapters/parquet/index.ts",
+      "sha256": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/index.ts",
+  "title": "ParquetFraming"
+}

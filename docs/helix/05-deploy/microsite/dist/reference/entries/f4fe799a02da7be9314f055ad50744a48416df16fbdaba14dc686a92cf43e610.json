@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7422,
+        "line": 20,
+        "path": "src/core-ideals/field-tablespec-projection.ts",
+        "sha256": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFieldToTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreKindDeclaration, options: FieldTableSpecRequest): FieldTableSpecProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFieldToTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7422,
+      "line": 20,
+      "path": "src/core-ideals/field-tablespec-projection.ts",
+      "sha256": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/field-tablespec-projection.ts",
+  "title": "projectFieldToTableSpec"
+}

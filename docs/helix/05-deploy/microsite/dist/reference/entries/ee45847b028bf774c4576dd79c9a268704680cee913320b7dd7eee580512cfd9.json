@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 1930,
+        "path": "spec/extensions/tablespec-cardinality/package.json",
+        "sha256": "5c8c7b1ad26231dfb056c07088e1d8aa8397129870bf2bd25028a4d3670c2626"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.tablespec.cardinality@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.tablespec.cardinality@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TableSpec · 647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.tablespec.cardinality · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.tablespec.cardinality@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.tablespec.cardinality\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+  "title": "umf.tablespec.cardinality · import"
+}

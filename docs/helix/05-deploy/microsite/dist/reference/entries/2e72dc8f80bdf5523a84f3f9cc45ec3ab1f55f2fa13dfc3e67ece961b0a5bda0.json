@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9143,
+        "line": 12,
+        "path": "src/extensions/actions/selector.ts",
+        "sha256": "23fc126498009da8e97a636af07f2e26b30c949f667dfe571c847bdb81f2eb53"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionInputs",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ActionInputs=Record<string,CoreLiteral|ActionEntityInput>;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionInputs\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9143,
+      "line": 12,
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "23fc126498009da8e97a636af07f2e26b30c949f667dfe571c847bdb81f2eb53"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/selector.ts",
+  "title": "ActionInputs"
+}

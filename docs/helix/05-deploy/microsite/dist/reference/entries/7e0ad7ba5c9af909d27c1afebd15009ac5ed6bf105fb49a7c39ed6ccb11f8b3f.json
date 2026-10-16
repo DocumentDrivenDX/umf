@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11478,
+        "line": 85,
+        "path": "src/adapters/shacl/index.ts",
+        "sha256": "93c6e1627421abc666084848d1a0f95fe5cbc60a0358be327ee2d6bb86c47c16"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getShaclTargetNodes",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(shapes: Document, shape: RdfNode, data: Document): Value[]"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getShaclTargetNodes\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11478,
+      "line": 85,
+      "path": "src/adapters/shacl/index.ts",
+      "sha256": "93c6e1627421abc666084848d1a0f95fe5cbc60a0358be327ee2d6bb86c47c16"
+    }
+  ],
+  "summary": "SHACL Core target union, before deactivation or constraint evaluation.",
+  "title": "getShaclTargetNodes"
+}

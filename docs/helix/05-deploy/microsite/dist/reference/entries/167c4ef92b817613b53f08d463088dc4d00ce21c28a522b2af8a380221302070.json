@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10606,
+        "line": 12,
+        "path": "src/core-ideals/record-postgresql-projection.ts",
+        "sha256": "5f3b267728d5efeac2adc33002f7b7b3ee72364841ab5a4b956b3f4722bcb05a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordPostgresqlProjection {operation:'project-record-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordPostgresqlRequest;binding:typeof binding;target?:Document;nativeSql?:string;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldPostgresqlProjection['residuals'];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10606,
+      "line": 12,
+      "path": "src/core-ideals/record-postgresql-projection.ts",
+      "sha256": "5f3b267728d5efeac2adc33002f7b7b3ee72364841ab5a4b956b3f4722bcb05a"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-postgresql-projection.ts",
+  "title": "RecordPostgresqlProjection"
+}

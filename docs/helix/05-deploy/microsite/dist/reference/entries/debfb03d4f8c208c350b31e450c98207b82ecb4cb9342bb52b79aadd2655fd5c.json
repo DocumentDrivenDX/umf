@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10406,
+        "line": 31,
+        "path": "src/core-ideals/key-parquet-projection.ts",
+        "sha256": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectKeysToParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, authorInput: CoreKeyDeclaration[], options: KeyParquetRequest): KeyParquetProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectKeysToParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10406,
+      "line": 31,
+      "path": "src/core-ideals/key-parquet-projection.ts",
+      "sha256": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c"
+    }
+  ],
+  "summary": "Consume verified declarations by stable ID. Native names never supply authored identity.",
+  "title": "projectKeysToParquet"
+}

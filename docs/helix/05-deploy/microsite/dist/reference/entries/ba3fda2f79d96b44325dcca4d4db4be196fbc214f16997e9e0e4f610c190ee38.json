@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1037,
+        "line": 4,
+        "path": "src/extensions/actions/manifest-types.ts",
+        "sha256": "d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionManifest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionManifest {\n protocol:'umf.actions.manifest/1';plan:ActionPlanArtifact;\n action:{target:{module:string;action:string;revision:string};documentSha256:string;invocation:ActionProfileIdentity};\n basis:{profile:ActionProfileIdentity;store:string;epoch:string;cut:string;selectionSha256:string};\n items:{ordinal:number;entity:ActionEntityInput;guard:{profile:ActionProfileIdentity;store:string;epoch:string;identity:string;version:string};inputs:ActionInputs;expectedVersions:{frame:string;version:string}[]}[];\n batches:{ordinal:number;start:number;count:number}[];annotations?:Record<string,unknown>;[key:string]:unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionManifest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1037,
+      "line": 4,
+      "path": "src/extensions/actions/manifest-types.ts",
+      "sha256": "d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/manifest-types.ts",
+  "title": "ActionManifest"
+}

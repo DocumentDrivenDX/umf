@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4337,
+        "line": 19,
+        "path": "src/adapters/delta/log.ts",
+        "sha256": "11bce5cfc538cbd7248131443aac334b69685062f44ea4911599c2afec4c58bf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectDeltaLog",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(doc: Document): { source: Document; complete: false; parsedAll: boolean; lines: DeltaLogLine[]; diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectDeltaLog\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4337,
+      "line": 19,
+      "path": "src/adapters/delta/log.ts",
+      "sha256": "11bce5cfc538cbd7248131443aac334b69685062f44ea4911599c2afec4c58bf"
+    }
+  ],
+  "summary": "Offsets are UTF-16 positions in source text; end excludes the line terminator.",
+  "title": "inspectDeltaLog"
+}

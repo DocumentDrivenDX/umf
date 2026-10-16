@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15310,
+        "line": 16,
+        "path": "src/projections/ddd-graphql/index.ts",
+        "sha256": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddGraphqlEndpoint",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddGraphqlEndpoint {record:RelationshipEndpoint;entity:{module:string;element:string}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddGraphqlEndpoint\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15310,
+      "line": 16,
+      "path": "src/projections/ddd-graphql/index.ts",
+      "sha256": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-graphql/index.ts",
+  "title": "DddGraphqlEndpoint"
+}

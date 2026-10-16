@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 1951,
+        "path": "spec/extensions/postgresql-nullability/package.json",
+        "sha256": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.postgresql.nullability@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.postgresql.nullability@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "PostgreSQL · 17.4",
+      "subset": "Captured PostgreSQL 17.4 stored-column declarations; excludes query results and input omission; not live enforcement verification",
+      "targetSystem": "UMF",
+      "title": "umf.postgresql.nullability · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.postgresql.nullability@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.postgresql.nullability\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Captured PostgreSQL 17.4 stored-column declarations; excludes query results and input omission; not live enforcement verification",
+  "title": "umf.postgresql.nullability · import"
+}

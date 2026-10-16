@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22324,
+        "line": 161,
+        "path": "src/extensions/binding/index.ts",
+        "sha256": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "writeBindingDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(binding: Document, logical: Document, format?: \"json\" | \"yaml\"): string"
+    ]
+  },
+  "id": "[\"api\",\".\",\"writeBindingDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22324,
+      "line": 161,
+      "path": "src/extensions/binding/index.ts",
+      "sha256": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b"
+    }
+  ],
+  "summary": "Public export · src/extensions/binding/index.ts",
+  "title": "writeBindingDocument"
+}

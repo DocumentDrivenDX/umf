@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13368,
+        "line": 14,
+        "path": "src/model/key-tuple.ts",
+        "sha256": "3b711a44c277e8ae2d2985356337b0a38efc3777fd47f2b0c41236b9d175826e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKeyIdentity",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreKeyIdentity {module:string;element:string;key:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKeyIdentity\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13368,
+      "line": 14,
+      "path": "src/model/key-tuple.ts",
+      "sha256": "3b711a44c277e8ae2d2985356337b0a38efc3777fd47f2b0c41236b9d175826e"
+    }
+  ],
+  "summary": "Type declaration · src/model/key-tuple.ts",
+  "title": "CoreKeyIdentity"
+}

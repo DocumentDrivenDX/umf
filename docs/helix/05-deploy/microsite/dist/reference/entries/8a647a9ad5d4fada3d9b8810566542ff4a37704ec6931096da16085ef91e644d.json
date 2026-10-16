@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9328,
+        "line": 6,
+        "path": "src/projections/ddd-json-schema.ts",
+        "sha256": "ee923cf5ddfefa7cf458b51b667f21d8ecb70361bc6fbf17ee74a76231fb2af5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddDocumentBindings",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddDocumentBindings {\n id:string;schemaId:string;root:DddReference;closedObjects:boolean;\n integer:'json-integer';decimal:'decimal-string';dateTime:'string';bytes:'hex-string';collection:'array';\n relations:Record<string,'embed'|'identity'>;lossPolicy:'strict'|'allow-reported-loss';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddDocumentBindings\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9328,
+      "line": 6,
+      "path": "src/projections/ddd-json-schema.ts",
+      "sha256": "ee923cf5ddfefa7cf458b51b667f21d8ecb70361bc6fbf17ee74a76231fb2af5"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-json-schema.ts",
+  "title": "DddDocumentBindings"
+}

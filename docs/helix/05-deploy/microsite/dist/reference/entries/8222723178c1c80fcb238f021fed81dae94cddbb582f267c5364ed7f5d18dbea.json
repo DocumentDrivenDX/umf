@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1931,
+        "line": 15,
+        "path": "src/model/record-values.ts",
+        "sha256": "4d8dd932350b1727e5298676595d2062d57ab336408d9044f7e42362e6868841"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateCoreRecordValues",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identityInput: CoreRecordValueIdentity, valuesInput: CoreRecordFieldValue[]): CoreRecordValueCheck"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateCoreRecordValues\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1931,
+      "line": 15,
+      "path": "src/model/record-values.ts",
+      "sha256": "4d8dd932350b1727e5298676595d2062d57ab336408d9044f7e42362e6868841"
+    }
+  ],
+  "summary": "Logical membership/presence/field checks, never native rows, defaults or dataset uniqueness.",
+  "title": "validateCoreRecordValues"
+}

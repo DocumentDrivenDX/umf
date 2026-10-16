@@ -1,0 +1,36 @@
+{
+  "data": {
+    "apiIds": [],
+    "expected": {
+      "bytes": 103,
+      "path": "docs/helix/05-deploy/reference/examples/expected.json",
+      "sha256": "7ea4708756f2ab539e0acf22175e625e65cd5ccd25c8fdbc1579b79472d1d821"
+    },
+    "guideIds": [
+      "[\"guide\",\"concepts\"]"
+    ],
+    "inputs": [
+      {
+        "bytes": 301,
+        "path": "docs/helix/05-deploy/reference/examples/native-schema.json",
+        "sha256": "a5cd0a8a1a266db74169d914cb6db44809916f1414ffc6d23cdf76d6bf2e75bb"
+      }
+    ],
+    "operationId": "json-schema-protobuf"
+  },
+  "id": "[\"example\",\"projection-loss\"]",
+  "kind": "example",
+  "links": [
+    "[\"guide\",\"concepts\"]",
+    "[\"integration\",\"json-schema-protobuf\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 301,
+      "path": "docs/helix/05-deploy/reference/examples/native-schema.json",
+      "sha256": "a5cd0a8a1a266db74169d914cb6db44809916f1414ffc6d23cdf76d6bf2e75bb"
+    }
+  ],
+  "summary": "Project JSON Schema to Protobuf",
+  "title": "projection loss"
+}

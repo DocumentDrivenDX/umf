@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4360,
+        "line": 6,
+        "path": "src/projections/typespec-json-schema.ts",
+        "sha256": "62fe7ec8e1f8472b1f377e92ce76bc956f1ca15f3185f9b8ecc641243c3929b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TypeSpecJsonSchemaPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TypeSpecJsonSchemaPolicy {\n id:string;rootFile:string;retrievalBase:string;options:JsonObject;\n usage:'native-emission';lossPolicy:'strict'|'allow-reported-loss';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TypeSpecJsonSchemaPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4360,
+      "line": 6,
+      "path": "src/projections/typespec-json-schema.ts",
+      "sha256": "62fe7ec8e1f8472b1f377e92ce76bc956f1ca15f3185f9b8ecc641243c3929b8"
+    }
+  ],
+  "summary": "Type declaration · src/projections/typespec-json-schema.ts",
+  "title": "TypeSpecJsonSchemaPolicy"
+}

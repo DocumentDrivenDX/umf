@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6465,
+        "line": 16,
+        "path": "src/core-ideals/key-parquet.ts",
+        "sha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetKeyClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetKeyClassification {operation:'classify-parquet-keys';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetKeyRequest;binding:typeof binding;observations:ParquetKeyObservation[];residuals:{path:string;value:Json;outcome:'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetKeyClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6465,
+      "line": 16,
+      "path": "src/core-ideals/key-parquet.ts",
+      "sha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-parquet.ts",
+  "title": "ParquetKeyClassification"
+}

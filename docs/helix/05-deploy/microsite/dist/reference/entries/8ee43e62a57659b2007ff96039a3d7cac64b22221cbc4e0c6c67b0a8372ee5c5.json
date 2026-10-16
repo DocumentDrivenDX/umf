@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4664,
+        "path": "spec/extensions/spark/package.json",
+        "sha256": "a4e2b3038191d0c2ea0a45313627a842f21f74b48a57c3343ec4e95f59bbc162"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.spark@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.spark@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Spark DataType schema JSON · 4.0.1 grammar baseline; Python and JVM evidence separately qualified",
+      "subset": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
+      "targetSystem": "Apache Spark DataType schema JSON · 4.0.1 grammar baseline; Python and JVM evidence separately qualified",
+      "title": "umf.spark · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.spark@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.spark\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
+  "title": "umf.spark · export"
+}

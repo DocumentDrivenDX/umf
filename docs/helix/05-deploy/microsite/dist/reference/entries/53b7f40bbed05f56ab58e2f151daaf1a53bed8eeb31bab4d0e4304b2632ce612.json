@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5937,
+        "line": 5,
+        "path": "src/extensions/security/logic.ts",
+        "sha256": "a143cbc1090b7bc187f139e05cd0c181872f4da8a6ce2c510073c0a9d70b5300"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityDecision",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type SecurityDecision = 'permit' | 'deny' | 'indeterminate' | 'conflict';"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityDecision\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5937,
+      "line": 5,
+      "path": "src/extensions/security/logic.ts",
+      "sha256": "a143cbc1090b7bc187f139e05cd0c181872f4da8a6ce2c510073c0a9d70b5300"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/logic.ts",
+  "title": "SecurityDecision"
+}

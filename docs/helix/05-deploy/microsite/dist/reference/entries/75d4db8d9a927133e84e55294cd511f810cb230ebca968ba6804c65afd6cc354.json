@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6166,
+        "line": 4,
+        "path": "src/extensions/security/dependencies.ts",
+        "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityDependencies",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityDependencies {fields:SecurityRef[];associations:SecurityRef[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityDependencies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6166,
+      "line": 4,
+      "path": "src/extensions/security/dependencies.ts",
+      "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/dependencies.ts",
+  "title": "SecurityDependencies"
+}

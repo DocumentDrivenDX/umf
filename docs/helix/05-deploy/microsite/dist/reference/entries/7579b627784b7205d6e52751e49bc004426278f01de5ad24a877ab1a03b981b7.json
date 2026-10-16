@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6166,
+        "line": 45,
+        "path": "src/extensions/security/dependencies.ts",
+        "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityIdentityTransportDependencies",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityIdentityTransportDependencies extends SecurityDependencies {\n  /** Keep policy reads distinct from extra key/endpoint transport requirements. */\n  policyFields:SecurityRef[];\n  records:{type:SecurityRef;keyId:string;keyFields:SecurityRef[];endpoints:{role:string;target:SecurityRef;fields:SecurityRef[]}[]}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityIdentityTransportDependencies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6166,
+      "line": 45,
+      "path": "src/extensions/security/dependencies.ts",
+      "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/dependencies.ts",
+  "title": "SecurityIdentityTransportDependencies"
+}

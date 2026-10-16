@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5497,
+        "line": 11,
+        "path": "src/adapters/owl/axioms.ts",
+        "sha256": "d9d9b33772d673a2ba8d65f0bcea40199d6faf2c2a4821be5f6f0d4cd980e7ee"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlSpecialAxiom",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type OwlSpecialAxiom =\n | {kind:'negativePropertyAssertion';node:RdfNode;sourceIndividual:RdfNode;assertionProperty:RdfNode;target:Term;targetKind:'individual'|'value';quadIndexes:number[]}\n | {kind:'allDifferent'|'allDisjointClasses'|'allDisjointProperties';node:RdfNode;members:Term[];memberPredicate:'members'|'distinctMembers';quadIndexes:number[]};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlSpecialAxiom\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5497,
+      "line": 11,
+      "path": "src/adapters/owl/axioms.ts",
+      "sha256": "d9d9b33772d673a2ba8d65f0bcea40199d6faf2c2a4821be5f6f0d4cd980e7ee"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/axioms.ts",
+  "title": "OwlSpecialAxiom"
+}

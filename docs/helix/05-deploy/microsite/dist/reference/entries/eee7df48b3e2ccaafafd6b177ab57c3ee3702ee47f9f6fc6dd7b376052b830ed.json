@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3091,
+        "line": 5,
+        "path": "src/extensions/security/protection/parameters.ts",
+        "sha256": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtectionParameterValidation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtectionParameterValidation extends Omit<SecurityProtectionDomainResolution,'status'|'domains'> {\n status:'validated-parameters'|'refused';validated:readonly {path:string;transformIndex:number}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtectionParameterValidation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3091,
+      "line": 5,
+      "path": "src/extensions/security/protection/parameters.ts",
+      "sha256": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/parameters.ts",
+  "title": "ProtectionParameterValidation"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5108,
+        "line": 13,
+        "path": "src/extensions/actions/manifest-construction.ts",
+        "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SelectedActionRow",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SelectedActionRow {\n entity:ActionManifest['items'][number]['entity'];\n guard:ActionManifest['items'][number]['guard'];\n keyReceipt:CoreKeyTupleReceipt;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SelectedActionRow\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5108,
+      "line": 13,
+      "path": "src/extensions/actions/manifest-construction.ts",
+      "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/manifest-construction.ts",
+  "title": "SelectedActionRow"
+}

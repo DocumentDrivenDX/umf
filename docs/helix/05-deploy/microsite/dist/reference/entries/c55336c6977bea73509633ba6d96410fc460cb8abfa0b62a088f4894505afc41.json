@@ -1,0 +1,18 @@
+{
+  "data": {
+    "body": "\nDomain-driven design adds authored entity/value distinctions, aggregates, domain events, services, repositories, bounded contexts and context maps through umf.ddd.\n\nThese declarations do not make DDD the governing worldview of UMF. Storage and compute vocabularies may express competing meanings without being rewritten into DDD terms. Opaque invariants and asserted equivalence remain retained declarations, not executed rules or proofs.\n\nUse the extension schema to inspect its cases and scopes. Directed DDD generators have target-specific limits and retained-source reports; their output does not execute a service or database migration.\n",
+    "relatedIds": []
+  },
+  "id": "[\"guide\",\"ddd\"]",
+  "kind": "guide",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 683,
+      "path": "docs/helix/05-deploy/reference/guides/ddd.md",
+      "sha256": "4d504df3e5a0b7056b33c89fed6979e6af799cfca084a9616c63f0c7a213fe16"
+    }
+  ],
+  "summary": "Domain-driven design adds authored entity/value distinctions, aggregates, domain events, services, repositories, bounded contexts and context maps through umf.ddd.",
+  "title": "DDD is an optional semantic extension"
+}

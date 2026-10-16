@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9143,
+        "line": 22,
+        "path": "src/extensions/actions/selector.ts",
+        "sha256": "23fc126498009da8e97a636af07f2e26b30c949f667dfe571c847bdb81f2eb53"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "admitActionInputs",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(documentInput: Document, actionInput: Action, inputsInput: ActionInputs, outputs?: boolean): ActionInputs"
+    ]
+  },
+  "id": "[\"api\",\".\",\"admitActionInputs\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9143,
+      "line": 22,
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "23fc126498009da8e97a636af07f2e26b30c949f667dfe571c847bdb81f2eb53"
+    }
+  ],
+  "summary": "Typed admission, without store lookup or entity existence checks.",
+  "title": "admitActionInputs"
+}

@@ -1,0 +1,106 @@
+{
+  "data": {
+    "extensionId": "umf.sqlserver.cardinality",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/cardinality-sqlserver.test.ts",
+          "fixtures/validation/cardinality-sqlserver-profile-native.json"
+        ],
+        "native": {
+          "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+          "system": "SQL Server",
+          "version": "16.0.4295.3"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Qualified SQL Server column shape observations with native refinements retained",
+      "id": "umf.sqlserver.cardinality",
+      "schema": {
+        "$id": "urn:umf:sqlserver:cardinality-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "basis": {
+            "const": "Explicit representation selection and pinned catalog constraint profile; physical column and logical Field remain distinct"
+          },
+          "binding": {
+            "const": {
+              "id": "umf.sqlserver.cardinality",
+              "version": "1.0.0"
+            }
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "physicalColumn": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "profile": {
+            "enum": [
+              "native-scalar",
+              "json-array",
+              "json-object",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "physicalColumn",
+          "binding",
+          "profile",
+          "interpretation",
+          "nativePath",
+          "basis"
+        ],
+        "title": "Retained SQL Server Cardinality scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-042; core 0.4.0 shape classification, not native replacement",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/sqlserver-cardinality/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.sqlserver.cardinality\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/sqlserver-cardinality/schema.json\",\"\"]",
+    "[\"integration\",\"umf.sqlserver.cardinality@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2030,
+      "path": "spec/extensions/sqlserver-cardinality/package.json",
+      "sha256": "417038f2c6d1618600780370027f53fd9316f6c8dd664c4c307c4674af97dd4e"
+    }
+  ],
+  "summary": "Qualified SQL Server column shape observations with native refinements retained",
+  "title": "umf.sqlserver.cardinality · 1.0.0"
+}

@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:rdf:merge:0.1.0",
+  "type": "object",
+  "properties": {
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "$ref": "urn:umf:core:0.1.0"
+      }
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "graphPolicy": {
+      "const": "union-by-name"
+    },
+    "blankNodePolicy": {
+      "const": "disjoint-inputs"
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "blankNodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "before": {
+            "type": "string"
+          },
+          "after": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "input",
+          "before",
+          "after"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "quadOrigins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sourceIndex": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "targetIndex": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "input",
+          "sourceIndex",
+          "targetIndex"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "candidate": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "sources",
+    "id",
+    "graphPolicy",
+    "blankNodePolicy",
+    "status",
+    "complete",
+    "blankNodes",
+    "quadOrigins",
+    "diagnostics"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "candidate"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "candidate"
+          ]
+        },
+        "properties": {
+          "blankNodes": {
+            "maxItems": 0
+          },
+          "quadOrigins": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

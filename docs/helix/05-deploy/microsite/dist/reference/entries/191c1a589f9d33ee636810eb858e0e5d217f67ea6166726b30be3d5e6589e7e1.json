@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5965,
+        "line": 17,
+        "path": "src/projections/binding-sqlserver/tables-indexes.ts",
+        "sha256": "fbf5b3c85305f10281ad12a6fcd0399336f361b4d311f0726a0f68180b34ab17"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectBindingTablesAndIndexesToSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logical: Document, binding: Document, policy: SqlServerTablePolicy, nativeSource: string, lossPolicy: \"strict\" | \"report\"): SqlServerTableProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectBindingTablesAndIndexesToSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5965,
+      "line": 17,
+      "path": "src/projections/binding-sqlserver/tables-indexes.ts",
+      "sha256": "fbf5b3c85305f10281ad12a6fcd0399336f361b4d311f0726a0f68180b34ab17"
+    }
+  ],
+  "summary": "Relationship-independent SQL Server table/index stage, checked against an explicit native catalog.",
+  "title": "projectBindingTablesAndIndexesToSqlServer"
+}

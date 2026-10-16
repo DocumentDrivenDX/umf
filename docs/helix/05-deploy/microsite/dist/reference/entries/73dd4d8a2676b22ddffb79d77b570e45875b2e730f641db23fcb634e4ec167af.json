@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3702,
+        "path": "spec/extensions/dbt-semantic/package.json",
+        "sha256": "7b34d83a94104395c635b1e6a3268a33b7c1d2ecfa7604997bdbbd7132d69b88"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.dbt.semantic@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.dbt.semantic@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "dbt semantic manifest · dbt-semantic-interfaces 0.8.5, dbt Core 1.10.0",
+      "subset": "Exact JSON preservation, copied candidate edits and derived nullable serialized shapes; no metric execution or semantic-validator equivalence",
+      "targetSystem": "dbt semantic manifest · dbt-semantic-interfaces 0.8.5, dbt Core 1.10.0",
+      "title": "umf.dbt.semantic · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.dbt.semantic@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.dbt.semantic\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Exact JSON preservation, copied candidate edits and derived nullable serialized shapes; no metric execution or semantic-validator equivalence",
+  "title": "umf.dbt.semantic · export"
+}

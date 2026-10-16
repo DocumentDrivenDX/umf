@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9953,
+        "line": 28,
+        "path": "src/model/cardinality.ts",
+        "sha256": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreCardinalityInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreCardinalityInspection {operation:'inspect-core-cardinality';version:'6.0.0'|'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0';source:Document;identity:CoreCardinalityIdentity;path:string;meaning:CoreCardinalityMeaning;provenance:'unverified'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreCardinalityInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9953,
+      "line": 28,
+      "path": "src/model/cardinality.ts",
+      "sha256": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651"
+    }
+  ],
+  "summary": "Type declaration · src/model/cardinality.ts",
+  "title": "CoreCardinalityInspection"
+}

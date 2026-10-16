@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4723,
+        "line": 4,
+        "path": "src/adapters/dbt/graph.ts",
+        "sha256": "12d3aa2396cfeff14480b83772d43436e81110c5a7719eb45328e3d677e58f34"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DbtManifestGraph",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DbtManifestGraph {\n status:'checked'|'blocked';complete:false;\n nodes:{id:string;collection:string;path:string}[];\n edges:{dependent:string;dependency:string;kind:'resource'|'macro';path:string;resolved:boolean}[];\n diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DbtManifestGraph\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4723,
+      "line": 4,
+      "path": "src/adapters/dbt/graph.ts",
+      "sha256": "12d3aa2396cfeff14480b83772d43436e81110c5a7719eb45328e3d677e58f34"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/dbt/graph.ts",
+  "title": "DbtManifestGraph"
+}

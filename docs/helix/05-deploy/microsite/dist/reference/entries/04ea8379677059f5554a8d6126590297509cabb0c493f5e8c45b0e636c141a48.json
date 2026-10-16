@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17791,
+        "line": 53,
+        "path": "src/extensions/actions/plans.ts",
+        "sha256": "2505633ab94816d91193595f61761305c0bb843a6db909543fe0fc30bf3d8458"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "prepareActionPlanModel",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(model: ActionPlanModelPin, action: PortableActionPin, context: ActionPlanInspectionContext): ActionPlanArtifact"
+    ]
+  },
+  "id": "[\"api\",\".\",\"prepareActionPlanModel\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17791,
+      "line": 53,
+      "path": "src/extensions/actions/plans.ts",
+      "sha256": "2505633ab94816d91193595f61761305c0bb843a6db909543fe0fc30bf3d8458"
+    }
+  ],
+  "summary": "Public export · src/extensions/actions/plans.ts",
+  "title": "prepareActionPlanModel"
+}

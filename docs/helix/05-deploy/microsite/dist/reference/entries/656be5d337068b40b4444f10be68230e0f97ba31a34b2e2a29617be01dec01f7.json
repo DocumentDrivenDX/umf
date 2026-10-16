@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16571,
+        "line": 6,
+        "path": "src/projections/sqlserver-ddl.ts",
+        "sha256": "91e2065216d73b8c5b56feabb0beef5787fbbfe1c5d471696d25c1a4e8953056"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerDdlPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerDdlPolicy {aliases:'reject'|'base-type';physicalLayout:'default-rowstore';nativeExpressions:'verbatim';sourceState:'captured-only'|'allow-candidate';lossPolicy:'strict'|'allow-reported-loss';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerDdlPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16571,
+      "line": 6,
+      "path": "src/projections/sqlserver-ddl.ts",
+      "sha256": "91e2065216d73b8c5b56feabb0beef5787fbbfe1c5d471696d25c1a4e8953056"
+    }
+  ],
+  "summary": "Type declaration · src/projections/sqlserver-ddl.ts",
+  "title": "SqlServerDdlPolicy"
+}

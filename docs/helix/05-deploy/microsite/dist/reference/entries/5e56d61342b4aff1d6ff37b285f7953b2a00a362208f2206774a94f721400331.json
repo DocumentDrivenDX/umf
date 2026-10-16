@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3297,
+        "line": 16,
+        "path": "src/extensions/binding/bit128-record.ts",
+        "sha256": "0f8b2278c337ca36d6aab129c99998e55f8bc171748fa6cf97aefb3bd818399b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "encodeBit128Record",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, input: Bit128RecordValue[]): Record<string, string | null>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"encodeBit128Record\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3297,
+      "line": 16,
+      "path": "src/extensions/binding/bit128-record.ts",
+      "sha256": "0f8b2278c337ca36d6aab129c99998e55f8bc171748fa6cf97aefb3bd818399b"
+    }
+  ],
+  "summary": "Full rows only: every Field explicitly supplied, all paired slots decoded together. No mutation execution.",
+  "title": "encodeBit128Record"
+}

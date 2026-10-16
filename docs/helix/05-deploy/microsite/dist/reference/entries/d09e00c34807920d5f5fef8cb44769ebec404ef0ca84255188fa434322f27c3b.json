@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6436,
+        "line": 97,
+        "path": "src/extensions/security/protection/catalog.ts",
+        "sha256": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "requireProtectionInterpretation",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown): never"
+    ]
+  },
+  "id": "[\"api\",\".\",\"requireProtectionInterpretation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6436,
+      "line": 97,
+      "path": "src/extensions/security/protection/catalog.ts",
+      "sha256": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3"
+    }
+  ],
+  "summary": "Fail closed until the complete catalog interpreter is implemented and qualified.",
+  "title": "requireProtectionInterpretation"
+}

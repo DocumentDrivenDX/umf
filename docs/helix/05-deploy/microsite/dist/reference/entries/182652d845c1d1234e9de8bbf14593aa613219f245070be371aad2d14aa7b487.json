@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5544,
+        "line": 6,
+        "path": "src/core-ideals/parquet-record-type.ts",
+        "sha256": "5bb556b3ca6e63ff04f7cfbf83a0396885476dcbbeb7d241f8f3f827d6dd0230"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRecordTypeClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetRecordTypeClassification extends Omit<ParquetRecordClassification,'operation'|'binding'|'request'|'mappings'>{operation:'classify-parquet-record-type';binding:typeof binding;request:ParquetRecordTypeRequest;mappings:(Omit<ParquetRecordClassification['mappings'][number],'kind'|'basis'>&{kind:'field'|'record'|'record-type';basis:'checked-record-field-membership'|'checked-record-declaration'|'checked-struct-valued-member'})[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRecordTypeClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5544,
+      "line": 6,
+      "path": "src/core-ideals/parquet-record-type.ts",
+      "sha256": "5bb556b3ca6e63ff04f7cfbf83a0396885476dcbbeb7d241f8f3f827d6dd0230"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/parquet-record-type.ts",
+  "title": "ParquetRecordTypeClassification"
+}

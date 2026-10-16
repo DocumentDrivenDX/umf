@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3407,
+        "line": 7,
+        "path": "src/model/field-transition.ts",
+        "sha256": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldUpgradeReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldUpgradeReceipt {\n operation:'upgrade-field-envelope';version:'1.0.0';source:Document;target:Document;\n residuals:{path:string;value:Json;reason:'Legacy kind is opaque; no core assertion inferred'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldUpgradeReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3407,
+      "line": 7,
+      "path": "src/model/field-transition.ts",
+      "sha256": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d"
+    }
+  ],
+  "summary": "Type declaration · src/model/field-transition.ts",
+  "title": "FieldUpgradeReceipt"
+}

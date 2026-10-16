@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2796,
+        "line": 12,
+        "path": "src/extensions/security/registration.ts",
+        "sha256": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityReadRegistration",
+    "runtime": "unassessed",
+    "signatureText": [
+      "export class SecurityReadRegistration {\n  #definitions=new WeakMap<SecurityReadHandle,Definition>();\n  #pins=new Map<string,string>();\n  #count=0;\n  #characters=0;\n  register(policy:unknown,resolution:SecurityResolution):SecurityReadHandle {\n    const admitted=requireSecurityInterpretation(policy,resolution);\n    const p=admitted.source as unknown as SecurityPolicy,r=admitted.resolution as unknown as SecurityResolution;\n    const candidates:[string,string][]=[\n      [JSON.stringify(['policy',p.id,p.revision]),canonicalSchemaJson(p)],\n      [JSON.stringify(['ontology',r.ontology.documentId,r.ontology.revision]),canonicalSchemaJson(r.ontology)],\n      ...r.documents.map(d=>[JSON.stringify(['document',d.document.id,d.revision]),canonicalSchemaJson(d.document)] as [string,string]),\n    ];\n    const pending=new Map<string,string>();\n    for(const [key,value] of candidates){\n      const existing=this.#pins.get(key)??pending.get(key);\n      if(existing!==undefined&&existing!==value)throw new UmfError('SECURITY_REVISION_REUSE','Registered source revision has different content');\n      if(existing===undefined)pending.set(key,value);\n    }\n    const added=[...pending].reduce((sum,[key,value])=>sum+key.length+value.length,0);\n    if(this.#count>=32||this.#pins.size+pending.size>512||this.#characters+added>16000000)\n      throw new UmfError('SECURITY_REGISTRATION_BOUND','Security registration bound exceeded');\n    // Commit all pins together; failed registration leaves prior bindings intact.\n    for(const [key,value] of pending)this.#pins.set(key,value);\n    this.#characters+=added;this.#count++;\n    const handle=Object.freeze({kind:'registered-security-read' as const});\n    this.#definitions.set(handle,{policy:p,resolution:r});\n    return handle;\n  }\n  evaluate(handle:SecurityReadHandle,cut:SecurityFactCut,request:SecurityEvaluationRequest):SecurityCollectionResult {\n    const definition=this.#definitions.get(handle);\n    if(!definition)return {status:'refused',rows:[]};\n    return evaluateSecurityCollection(definition.policy,definition.resolution,cut,request);\n  }\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityReadRegistration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2796,
+      "line": 12,
+      "path": "src/extensions/security/registration.ts",
+      "sha256": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f"
+    }
+  ],
+  "summary": "Trusted host registration boundary. This class does not authenticate its caller or facts.",
+  "title": "SecurityReadRegistration"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8903,
+        "line": 33,
+        "path": "src/model/field-kind.ts",
+        "sha256": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKindDeclaration",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreKindDeclaration {operation:'declare-core-kind';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0'|'6.0.0';source:Document;target:Document;identity:CoreKindIdentity;provenance:{origin:'authored';idealPath:string;kind:ElementKind;binding:{id:'umf.core.kind.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0'|'6.0.0'};basis:'explicit-author-declaration';nativePath:null}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKindDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8903,
+      "line": 33,
+      "path": "src/model/field-kind.ts",
+      "sha256": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292"
+    }
+  ],
+  "summary": "Type declaration · src/model/field-kind.ts",
+  "title": "CoreKindDeclaration"
+}
