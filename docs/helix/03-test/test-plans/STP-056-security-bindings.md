@@ -2066,3 +2066,9 @@ literal boundaries and prove produced metadata survives the original public
 codec. Real Chromium must match Bun without host globals or external requests.
 These component checks supplement original P03/B08 and do not promote a backend
 case or prove native custody/operator/release behavior.
+
+### Actual atomic producer presence handoff — 2026-10-16
+
+Supplement AC6/AC10 component evidence with the actual private WithinOperation producer on the explicitly authored optional Resource source. Preserve the original salary-only policy as a negative; separate original Token, withheld Token and null-presentation policies retain distinct content revisions. Exercise String, original null, absence, withholding, actual pure transformed null and unreported presence under project-membership permit, inactive/foreign/missing relationship denial, incomplete coverage and stale generation. Assert exact census versus permitted resources/rows, stored Token carrier, public V2 inspection and both original codecs. Retain input/source snapshots, exact source UTF-8, actual batch JSON, full inspection verdict and refused atomic-cleared outputs for compiler/native transport composition.
+
+These are supplied-cut producer controls, not authenticated native facts, physical compiler execution, query-operator permissions or guarded release. No existing required backend case changes status; native transport must independently preserve exact header, occurrences, resource correspondence and all five states before any admitted profile may use it.

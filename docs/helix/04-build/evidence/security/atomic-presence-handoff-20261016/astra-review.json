@@ -1,0 +1,117 @@
+{
+  "version": "independent-component-review/1",
+  "reviewer": "Astra Ultra",
+  "status": "passed-with-scope-qualifications",
+  "remainingFindings": [],
+  "subject": "Actual atomic disclosure producer presence handoff on explicit optional Resource.Token source",
+  "baseCommit": "f5e9acdef42e884e32a3fdafcbc8a4c9f2adfeba",
+  "frozenInputs": {
+    "archive": "/private/tmp/umf-atomic-presence-handoff-review-20261016.zip",
+    "archiveSha256": "123be2df9ef80b9a1a25904ea6b886924ac8d63b52de88b4c5a6b34fdc020acb",
+    "inputsSha256": "86068161ce7fffd824922646b4501909a616c611001749515e127d9c1418c840",
+    "receiptSha256": "df0e0df02894adcb4c06f3f469ebc18e1c3bfa0b88fbd12e29edd7e7b6fe958e",
+    "generatorSha256": "3b506b54416baaa0fbd54e410d248147852c72ad11b7ac95cd9be27f870db066",
+    "kernelSha256": "ba171ea423b9205f2e8c7d35addef22f311b2076503cbd4b559e2abaa46c9b78",
+    "governedTestPlanSha256": "7dbbdd6b1fcf7c19bf7851112d1b101554328b71c6538c7085f2f481b74e413a",
+    "selectedSourceCount": 102
+  },
+  "conclusion": "No actionable defect found in this frozen handoff component. The actual originally issued private WithinOperation producer, public V2 inspector and JSON/YAML codecs reproduce every supplied packet and receipt byte. Independent checks corroborate source/occurrence/storage/value and row correspondence. This is conditional logical component evidence, not native or full security acceptance.",
+  "independentlyExecuted": [
+    {
+      "check": "Exact frozen generator replay",
+      "result": "passed",
+      "scenarios": 66,
+      "controls": 546,
+      "rendered": 41,
+      "refused": 25,
+      "command": "bun tools/security/query-presence-disclosure-oracle.ts /private/tmp/umf-atomic-presence-handoff-astra-20261016/replay",
+      "cwd": "/private/tmp/umf-atomic-presence-handoff-astra-20261016/reconstructed",
+      "evidence": [
+        "replay.log",
+        "replay/inputs.json",
+        "replay/receipt.json"
+      ],
+      "byteIdenticalInputAndReceipt": true
+    },
+    {
+      "check": "Independent source and relational membership audit",
+      "result": "passed",
+      "controls": 1467,
+      "evidence": [
+        "audit.py",
+        "audit.json",
+        "audit.log"
+      ],
+      "details": "Checks raw source UTF-8/hash/parsed content, unique content per role/id/revision, unchanged original membership/ontology/domains/vault definition, valid foreign identities, independent nested Ownership/Assignment eligibility, exact rule truth, source correlations, canonical source and selected occurrences, inspector qualifications, and refusal outputs."
+    },
+    {
+      "check": "Actual mixed and empty supplied populations",
+      "result": "passed",
+      "controls": 59,
+      "evidence": [
+        "reconstructed/independent.ts",
+        "independent-controls.json",
+        "independent-controls.log"
+      ],
+      "details": "Five resources in non-key order, four permitted and one denied; duplicate String values remain a bag. Original null/String/absent and withheld, present-input null-out, reversed fact order, exact census versus permitted rows and source occurrences, JSON/YAML codecs, malformed denied-row and duplicate-resource atomic refusals, late missing/unreported transformed-input atomic refusals, three complete empty populations and stale empty-cut refusal."
+    },
+    {
+      "check": "Independent parsed runtime import closure",
+      "result": "passed",
+      "runtimeImportEdges": 296,
+      "missingPins": 0,
+      "evidence": [
+        "reconstructed/closure-audit.ts",
+        "closure-audit.json",
+        "closure-audit.log"
+      ],
+      "details": "Bun.Transpiler.scan parsed every captured TypeScript source. All relative runtime edges resolve to captured source pins. Type-only imports may be stripped by this parser; frozen source capture also includes its regex-selected type imports."
+    },
+    {
+      "check": "Final source and archive custody",
+      "result": "passed",
+      "controls": 116,
+      "evidence": [
+        "custody.json",
+        "final-custody.json"
+      ],
+      "details": "102 captured sources unchanged after reviewer executions; original archive and all nine named manifest members match; replay bytes exact. All captured repository inputs other than the new generator agree with exact base Git objects; installed Ajv metadata is external."
+    }
+  ],
+  "sourceAssessment": [
+    "The new host tool calls the actual private atomic producer with a compiler-issued catalog program and one operation budget. It does not emulate the producer or invoke a public per-cell evaluator.",
+    "The original salary-only policy remains byte-equivalent in the undisclosed controls. Original, withheld and presentation-null Token policies use distinct authored revisions; the original required membership rule and closure are unchanged.",
+    "The optional String Token domain and stored-transformed vault carrier remain exact. Original Token is not prestorage cleartext; presentation-null consumes present Token-domain input via the actual pure null-out definition and performs no vault operation.",
+    "Source/owner/ontology/catalog raw JSON bytes and hashes correlate with the source objects and result pins. Canonical provenance is rule 0/disclosure 1, with selectedOccurrence only for the actual transform. V2 columns retain the stored carrier and rows preserve permitted-resource order.",
+    "Denied resources remain only in the private census and produce no permitted rows. Denied/missing/foreign membership facts, coverage and generation controls use their stated semantics; foreign endpoints are actual complete facts, not dangling references.",
+    "The governed STP addition and separately retained README correctly limit this to supplied logical facts and private output. Source identity hashes, read purpose and complete supplied census do not authenticate actor, source or current cut."
+  ],
+  "investigatedNonFindings": [
+    {
+      "id": "REVIEWER-ABSENT-TRANSFORM-EXPECTATION",
+      "resolution": "The first mixed-population reviewer expectation incorrectly allowed an absent input to pass through a selected null-out recipe. CONTRACT-062 requires a present validated catalog recipe input, even for null-out; frozen runtime preflights all selected inputs before cells. Refusal is correct. Corrected positive uses present inputs; separate known-absent and unreported late-input controls both atomically refuse.",
+      "retained": [
+        "first-independent.ts",
+        "first-independent-failure.log",
+        "second-independent.ts",
+        "second-independent-controls.json",
+        "second-independent-failure.log",
+        "correct_probe.py"
+      ]
+    }
+  ],
+  "historicalEvidence": {
+    "authorFirstAttempt": "Original first-source.ts and first-failure.log are retained unchanged. The failure was the expected empty disclosureProfile property absent from the canonical V2 transformed cell; no complete failed packet exists. Final-source changes also distinguish policy revisions, preserve the undisclosed original catalog, and retain raw source/inspection/codec bytes. No retroactive passing claim is made for that attempt.",
+    "intermediateR2": "README records a separately retained earlier successful packet; reviewer did not independently replay or qualify it.",
+    "types": "Owner tools TypeScript success log is retained. This reviewer did not rerun typechecking; actual Bun source execution and source audit are independently reproduced."
+  },
+  "limitations": [
+    "The supplied 66 author scenarios each contain one Resource. Reviewer mixed and empty controls add finite examples, not an arbitrary population proof.",
+    "No native database, SQL compiler, typed carrier lowering, materialization, operator authorization, current-cut authentication, actor authentication, guarded release or backend admission was exercised or approved.",
+    "Every logical result and public inspector verdict remains complete:false and authority:false. The private denied-resource census must not be exposed as ordinary-reader output or public diagnostics.",
+    "Custody is endpoint comparison. Package metadata/lock and selected repository import closure are captured, but Bun and external package implementations are not a hermetic executable closure.",
+    "No new browser campaign was required for this host-only generator; the underlying atomic product source is unchanged from the separately reviewed component. No new acceptance case or criterion promotion is implied; P03/B08/B07 and broader native obligations remain open."
+  ],
+  "repositoryMutation": "None. Only reconstructed sources and reviewer harnesses under this review directory were executed; no owner product source or frozen packet was changed.",
+  "evidenceManifest": "manifest.json"
+}
