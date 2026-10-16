@@ -1,0 +1,1 @@
+{"type": "record", "name": "children", "namespace": "umf.model.r1", "fields": [{"name": "id", "type": {"type": "string", "logicalType": "uuid"}}, {"name": "parent", "type": ["null", {"type": "string", "logicalType": "uuid"}]}]}

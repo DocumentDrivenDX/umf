@@ -1,0 +1,172 @@
+{
+  "version": "independent-component-review/1",
+  "component": "UMF private atomic disclosure computation child, R1 plus separately frozen CHILD-001 correction",
+  "reviewerRole": "Retained independent Astra Ultra review",
+  "date": "2026-10-16",
+  "verdict": "passed-with-scope-qualifications",
+  "remainingFindings": [],
+  "historicalFindings": [
+    {
+      "id": "CHILD-001",
+      "severity": "P2",
+      "file": "tools/security/build-current-disclosure-child.ts",
+      "lines": [
+        8,
+        12,
+        34
+      ],
+      "title": "Implicit TypeScript configuration is outside claimed build inputs",
+      "evidence": "config-audit.json",
+      "description": "Changing only root tsconfig.json compilerOptions.useDefineForClassFields to false changes executable bundle SHA from 911955bf09c7a67003cab4c418a7f88753f00778c1e20aeaee77626c257bc281 to b080b7a20e1d00b3cf545cfeb87bdc6ba1af11eb436e7fce1137c3f6eb914f15 while sourcePins remains exactly the same 252 entries. Both builds succeed. Actual tested R1 bundle matches baseline+overlay; no observed functional mismatch.",
+      "requestedRepair": "Select explicit root tsconfig; pin/recheck configuration bytes and reject or resolve/capture extends; qualify external executable closure.",
+      "status": "resolved in separately frozen R2",
+      "resolution": "Builder explicitly selects root tsconfig.json, captures/pins root tsconfig.json and bunfig.toml, rejects root extends, rechecks config before actual build and after notices. Twenty independent actual-build/config failure controls pass; final bundle unchanged."
+    }
+  ],
+  "pinnedInputs": {
+    "frozen/review.zip": {
+      "sha256": "eb1129840852241c792e01789c73d1008aafe482a7a8e6edeee80844e99bd41e",
+      "bytes": 1394103
+    },
+    "frozen/manifest.json": {
+      "sha256": "bb8271655b0e72f2cec6af7298c063a274ae1cd5f82d1c3fb33e3d93e5ec0b99",
+      "bytes": 5344
+    },
+    "frozen-r2/review.zip": {
+      "sha256": "67cbcc5566bf2bd8b3d0fafb6d9f3dbba24016f4913942819e49245c26c08313",
+      "bytes": 222778
+    },
+    "frozen-r2/manifest.json": {
+      "sha256": "1b19b85ee01407c0461bb0887e69d8844932eca10074a6e3d90d9b49c115fad9",
+      "bytes": 3832
+    },
+    "reconstructed-source.zip": {
+      "sha256": "e0bd8c6c902f44ef1093d86b5349314ed96dcb3b7623a882139736e6cdb57636",
+      "bytes": 29319875
+    },
+    "frozen/overlay/tools/security/current-disclosure-child.ts": {
+      "sha256": "2449e47b655d29fac1cec76a8712b74b4eb0ecf69662ca857290b9b51f2bad36",
+      "bytes": 4409
+    },
+    "frozen/overlay/tools/security/current-disclosure-child-main.ts": {
+      "sha256": "5d61ff33d78566b1295df3a1fcadfdc0e51f7a5ebfa330b19e0afe05112e15db",
+      "bytes": 835
+    },
+    "frozen-r2/overlay/tools/security/build-current-disclosure-child.ts": {
+      "sha256": "e3c6956203f75214b00380aee8da2739a3eca6991247da88dfbb793f36956afd",
+      "bytes": 4461
+    },
+    "frozen-r2/overlay/tsconfig.json": {
+      "sha256": "fb5e87db29d610bb807d2be59e8c40700d9040532d918dfb7c3d8f51ad420918",
+      "bytes": 406
+    },
+    "frozen-r2/overlay/bunfig.toml": {
+      "sha256": "b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe",
+      "bytes": 22
+    },
+    "frozen-r2/bundle/current-disclosure-child.mjs": {
+      "sha256": "911955bf09c7a67003cab4c418a7f88753f00778c1e20aeaee77626c257bc281",
+      "bytes": 1049174
+    },
+    "frozen-r2/bundle/manifest.json": {
+      "sha256": "5ddcac8d635b8f2e3396198fdb8bcb34ee998416d94b8cce50d76ebdd09e3e65",
+      "bytes": 32003
+    },
+    "frozen/evidence/inputs.json": {
+      "sha256": "86068161ce7fffd824922646b4501909a616c611001749515e127d9c1418c840",
+      "bytes": 6139316
+    },
+    "supplemental/independent-controls.json": {
+      "sha256": "af88aa191f7f47a0c0b0e59c1b6a59354049055c031d37af7b051daf3c9c3c69",
+      "bytes": 717587
+    },
+    "supplemental/_current_query_pipe.py": {
+      "sha256": "39c7ab62660f64241f59008f5cb0b16b721f741657c44d321189237655031d7f",
+      "bytes": 8807
+    }
+  },
+  "independentlyExecuted": [
+    {
+      "evidence": "reconstruction.json",
+      "scope": "Exact Git-base source/schema/test reconstruction plus frozen overlays and matching original dependency source; 3045 R1 files captured."
+    },
+    {
+      "evidence": "build.log",
+      "scope": "Actual Bun build from independent reconstruction; executable byte-for-byte matches supplied bundle, 249 metafile inputs plus 3 initial extras."
+    },
+    {
+      "evidence": "child-legacy-tests.log",
+      "tests": 11,
+      "assertions": 150,
+      "failed": 0,
+      "scope": "Unchanged old child plus new child source tests under Bun 1.4.2."
+    },
+    {
+      "evidence": "replay.json",
+      "cases": 72,
+      "processExecutions": 144,
+      "scope": "66 original handoff packets plus 6 independent mixed/empty populations, each through one actual closed-stdin process and one actual sequential held-pipe process; complete results and exact stdout bytes match retained originals. Actual held child remains live between requests; kill/join/pipe cleanup asserted after every context."
+    },
+    {
+      "evidence": "adversarial.json",
+      "controls": 108,
+      "scope": "Actual rebuilt bundle; closed request/source/selection shapes, unknown versions/operations, receipt/ID/lifecycle, duplicate/escaped duplicate JSON, exact numeric parser refusal, malformed UTF8/BOM/truncation, text/byte/structural/fact/field limits, semantic atomic refusal, EOF and parent-owned lifecycle. Per-case exact stdin/stdout/stderr retained."
+    },
+    {
+      "evidence": "session-controls.json",
+      "controls": 14,
+      "scope": "Exact session byte offsets, snapshot independence after input buffer overwrite, terminal behavior; direct encoder exact 16MiB and plus-one UTF8 response endpoints. Not a maximal producer-output campaign."
+    },
+    {
+      "evidence": "config-audit.json",
+      "scope": "R1 counterexample: changing only unpinned useDefineForClassFields changes executable bundle while all 252 selected pins remain identical."
+    },
+    {
+      "evidence": "config-r2-audit.json",
+      "controls": 20,
+      "scope": "Actual corrected builder independently rebuilt, same bundle with 254 pins; changed config now changes pin, inherited/missing/invalid config refuses, injected config/source/closure drift refuses without success manifest. Fault controls deliberately wrap Bun.build in isolated scratch copies."
+    },
+    {
+      "evidence": "custody-audit.json",
+      "checks": 3867,
+      "scope": "Frozen members, manifests, exact selected closure/config domains, dependency notices, original 102 source bytes, 3045 reconstructed unchanged files, final 254 current owner endpoints, unchanged old APIs/public index/package/lock, supplied result/stdout correspondence."
+    }
+  ],
+  "sourceConclusions": [
+    "Initialization compiles the existing catalog program once and retains the parsed original owner and selected Record/Fields. The only evaluation dispatch calls evaluateCandidateCatalogReadDisclosureBatchWithinOperation once with its shared bounded operation ledger; no second policy interpreter, per-cell evaluator, scalar/result narrowing, route/action or operator permission is introduced.",
+    "The adapter preserves the entire private census, resource order, source occurrences, original V2 batch and atomic cleared refusal. Denied resources remain only in private census, not released rows/resources. Original String/null/absence/withheld/pure transformed-null, denied membership, unknown/stale/incomplete cuts, and mixed/empty populations match original producer results.",
+    "New request/source/selection envelopes and version are closed. Evaluation cannot replace owner/selection/sourceReceipt; failures are terminal. Protocol refusal carries no logical result; valid evaluation may carry exact semantic status refused, so envelope kind alone is not success.",
+    "The old child source/main/builder/tests, public src/index.ts, package.json and bun.lock are byte-identical to the reviewed Git base. Tooling config only adds the three private tool files. No public/default/library/ABI or native consumer routing changed.",
+    "The corrected builder records all 249 metafile inputs plus builder/package/lock/root tsconfig/root bunfig. It copies original dependency notices and explicitly selects standalone root tsconfig. Independent reconstruction reproduces exact final executable bytes."
+  ],
+  "suppliedEvidenceOnly": [
+    {
+      "evidence": "frozen/evidence/umf-disclosure-child-security-suite-20261016.log",
+      "reportedTests": 324,
+      "reportedAssertions": 5267,
+      "reportedFailed": 0,
+      "qualification": "Retained and inspected author-supplied full-security log; reviewer independently reran only new+legacy child tests, not all 324 tests."
+    },
+    {
+      "evidence": "frozen-r2/evidence/umf-current-disclosure-child-tsc-r3-20261016.log",
+      "qualification": "Retained author-reported successful tooling typecheck; empty log itself is not an independently reproduced exit receipt."
+    },
+    {
+      "evidence": "supplemental/umf-current-disclosure-child-truss-pipe-replay-20261016.json",
+      "qualification": "Supplied standalone transport replay independently reproduced and extended to all 72 packets. This is not installed Truss query API adoption or native admission."
+    }
+  ],
+  "qualifications": [
+    "Strictly private supplied-cut computation. Full census/rule truth and denied identities must remain internal host/owner data and must not be exposed as ordinary query output or diagnostics.",
+    "Input framing permits at most 4,194,304 UTF8 bytes; the unchanged parser additionally permits at most 4,000,000 UTF16 code units, depth128 and 100,000 values. The stricter parser bound can refuse an otherwise frame-sized request. Producer bounds remain additional constraints.",
+    "The child has no internal wall-clock watchdog and waits for EOF after responding. Empty or initialization-only EOF may exit0 without an evaluation. A malformed third frame can cause exit2 after a previously complete valid reply; it does not retract earlier bytes. Host must enforce exact expected replies, one evaluation, deadline and cleanup; exit0 or acknowledgement is not authority.",
+    "The new initialization frame includes version/fixed owner/selection and omits the old extensionSelection envelope. Its framed SHA differs from Truss native registration source_receipt. Retain original registration receipt and compose the new initializer from exact registered originals plus prepared projection; never equate/substitute the hashes or treat either as authenticated authority.",
+    "Actual Truss CurrentQueryPipe source at ea9c3f080cecd5da2d3be42258c26c3d0dcab7bc was byte-verified and used as a standalone transport only; no installed Truss semantic driver, registration, native caller, authority lock, current-cut or release integration was executed.",
+    "These finite source/process/build tests are not a formal refinement proof. No database/native campaign, native compiler/SQL permission, authenticated source/Subject/caller/current-cut, graph-fact admission, revocation drain, guarded release, public publication or backend acceptance promotion is established.",
+    "External Bun/Python/dependency executable closure remains non-hermetic; checks compare captured bytes/endpoints, not held-file or ABA protection. No broader case freshness or new complete required-case gate is inferred. Existing full UMF158/Weft132 allocations remain open as previously qualified."
+  ],
+  "attemptHistory": "attempts.json",
+  "restoration": "restoration.json",
+  "noOwnerSourceEdits": true,
+  "noNativeDatabaseExecution": true
+}

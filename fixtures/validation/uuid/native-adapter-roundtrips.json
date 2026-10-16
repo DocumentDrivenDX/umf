@@ -1,0 +1,339 @@
+{
+  "recoveries": 128,
+  "cases": [
+    {
+      "system": "postgresql",
+      "domain": "uuid",
+      "kind": "native-uuid",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "postgresql",
+      "domain": "uuid",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "postgresql",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "postgresql",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "postgresql",
+      "domain": "bits128",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "postgresql",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "postgresql",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "uuid",
+      "kind": "native-uuid",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "uuid",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "bits128",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "sqlserver",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "native-uuid",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": {
+        "source": {
+          "system": "avro",
+          "version": "1.12.0",
+          "definition": {
+            "type": "fixed",
+            "name": "umf_1_0_uuid",
+            "namespace": "umf.model.r1.values",
+            "size": 16,
+            "logicalType": "uuid"
+          }
+        },
+        "scalarType": "uuid",
+        "basis": "native-type-identity"
+      }
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": {
+        "source": {
+          "system": "avro",
+          "version": "1.12.0",
+          "definition": {
+            "type": "string",
+            "logicalType": "uuid"
+          }
+        },
+        "scalarType": "uuid",
+        "basis": "native-type-identity"
+      }
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "avro",
+      "domain": "bits128",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "avro",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "avro",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "native-uuid",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": {
+        "source": {
+          "system": "parquet",
+          "version": "2.11.0",
+          "definition": {
+            "physicalType": "FIXED_LEN_BYTE_ARRAY",
+            "length": 16,
+            "logicalType": "UUID",
+            "nativeField": {
+              "type": "7",
+              "type_length": "16",
+              "repetition_type": "0",
+              "name": "id",
+              "logicalType": {
+                "UUID": {}
+              }
+            }
+          }
+        },
+        "scalarType": "uuid",
+        "basis": "native-type-identity"
+      }
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": false,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "bytes16",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": true,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": false,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "tablespec",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    },
+    {
+      "system": "tablespec",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "authoredRecoveries": 2,
+      "nativeRecoveries": 2,
+      "classification": null
+    }
+  ]
+}

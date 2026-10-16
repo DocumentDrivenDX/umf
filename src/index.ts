@@ -503,3 +503,7 @@ export {default as coreRelationshipOperationV3Schema} from '../spec/core/relatio
 export {default as coreBit128SelectionSchema} from '../spec/core/bit128-selection.schema.json';
 export {default as coreBit128TransitionSchema} from '../spec/core/bit128-transition.schema.json';
 export {default as coreBit128RelationshipSelectionSchema} from '../spec/core/relationship-metadata-selection-v2.schema.json';
+export {projectBit128Model,recoverBit128ModelProjection,type Bit128ModelProjection} from './projections/bit128-model';
+export * from './extensions/binding/bit128-record';
+export * from './projections/bit128-file-values';
+export {default as bit128ModelProjectionSchema} from '../spec/projections/bit128-model.schema.json';

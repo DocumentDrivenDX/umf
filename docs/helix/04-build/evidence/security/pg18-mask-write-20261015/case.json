@@ -2,7 +2,7 @@
   "status": "passed",
   "acceptanceReceipt": true,
   "casePromoted": "pg-raw.P04",
-  "runId": "2cb853da-b261-429f-88f9-e11e3d7d7018",
+  "runId": "f4d02de5-8f65-497a-a4cc-94d258a7a761",
   "sourceDigests": {
     "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
     "package.json": "5f74e6af9e94b546a71ca88fe87a5f6bb02cb906902ca902d53ec697bb4b12a1",
@@ -63,7 +63,7 @@
     "src/extensions/security/association-expression.ts": "9fdb371beaf6e41674e7ae7e77a6f5f6ba8c49009811a606e99d033652d36e81",
     "src/extensions/security/association-witness.ts": "7ed4e679c6406b5d7337d3d974778109c1b744395889f53c232a8f4998282fcb",
     "src/extensions/security/catalog-program-candidate.ts": "e8c2db84126e5ebf4dcf5bd33efe80c8a2235e7ab192d17105cda64ab8facc6d",
-    "src/extensions/security/catalog-runtime-candidate.ts": "03b9bd3298443bfa4ac2306950e2e4b030c42e3708db0d7871724b248c74aab5",
+    "src/extensions/security/catalog-runtime-candidate.ts": "ba171ea423b9205f2e8c7d35addef22f311b2076503cbd4b559e2abaa46c9b78",
     "src/extensions/security/catalog-storage-candidate.ts": "4002872f2ce14b46a9320bfd388081df09c1d3efe7eea49b26ba8c8d3ce6b181",
     "src/extensions/security/catalog-write-candidate.ts": "116c3af1f4485c19e69ab09a297d6519cbdb655f212329e6675bff12a523c4ec",
     "src/extensions/security/core-extension-closure-candidate.ts": "849a5f7e5465f089b4e16c78ba1b569fd9441b447c0aee7f65a3275541842e35",
@@ -79,12 +79,14 @@
     "src/extensions/security/policy.ts": "111ff9253f8cba446a9d40cc6321050e2d4a7399c074e32cff288a5a343d253c",
     "src/extensions/security/protection/catalog.ts": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3",
     "src/extensions/security/protection/core-fields.ts": "87e28f4692eb1b7158d04a344f091a195695b3c5278fef676608af143d248cc5",
+    "src/extensions/security/protection/disclosure.ts": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238",
     "src/extensions/security/protection/domains.ts": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9",
     "src/extensions/security/protection/functions.ts": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db",
     "src/extensions/security/protection/literals.ts": "5d271dfcdba2b837a4876eb3696732a79220f40e5740af3ce0a1c50027efe466",
     "src/extensions/security/protection/obligations.ts": "0105db6c3fe19034fc7adb20a2d102b8fe463044a1323b0491a40d1d6c94bfec",
     "src/extensions/security/protection/parameters.ts": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4",
     "src/extensions/security/protection/references.ts": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9",
+    "src/extensions/security/protection/source.ts": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb",
     "src/extensions/security/relationship-candidate.ts": "c5ebc7a740afc689995bd09c035a03c12e6ee1d57bcde09f9986bb7c8807f084",
     "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
     "src/extensions/security/write.ts": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0",
@@ -24294,7 +24296,7 @@
       }
     ]
   },
-  "elapsedSeconds": 45.716818124999996,
+  "elapsedSeconds": 45.471833124999996,
   "runtimeSourceDigests": {
     "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
     "/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/.runkit_example.js": "e37e85bf1db5d53a6e4e38a9cac83db25208f28c09a2fa19e3971877c8a7b8cf",

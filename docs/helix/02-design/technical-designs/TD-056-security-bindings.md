@@ -2763,3 +2763,165 @@ US-056-AC6 requires actual policy selection provenance independently of physical
 Withholding dominates and retains only withholding contributors; it reveals no original value or presence. Distinct active transform identities conflict; identical contributors retain all exact source positions, with the first transform occurrence in original policy order recorded as the selected occurrence matching the existing fold. Original is fallback and retains explicit original contributors plus implicit original contributors only where the ontology explicitly marks the property unprotected. Denied, indeterminate and conflict decisions expose no winning dispositions. Missing protected disclosures remain indeterminate. No caller-supplied truth, branch, source position or rendered Cell can grant selection.
 
 This producer returns selection evidence, not executed/certified rendered values or DisclosureV2 wire admission. Retained policy directives may include their original authored constants; those remain source metadata, not computed native Cells. Source identity/revision correlations, including owner and generation, remain unauthenticated supplied-cut metadata; complete and authority stay false. Actual recipe execution, value/output-domain validation, compiler .4 composition, caller/source/current-cut custody and guarded release remain separate mandatory obligations. Regression must preserve old APIs, exercise duplicate contributors/conflicts/dominance and enforce bounded source/result work under the shared ledger, including empty populations and malformed/stale inputs.
+
+
+## Atomic provenance-bearing rendering — 2026-10-16
+
+CONTRACT-062's private disclosure-batch profile closes the gap between canonical
+selection and rendered Cells for US-056-AC6. Extend the original kernel with a
+private composed mode that retains its actual fold provenance through rendering,
+then constructs the existing0.2 transport directly. Keep the full decision census
+and a separate permitted-resource row index. Use the existing issued pure recipe
+context, owner storage map, Field checks and operation ledger; do not re-evaluate
+policy or revalidate whole source per Cell. Guard the additional transport bounds
+and exact source strings before publishing, including empty inputs.
+
+The implementation belongs beside the original catalog runtime, without a new
+public export, ontology vocabulary, native service or backend dependency. Remove
+the new private entry points/mode to roll back; existing profiles require no
+migration. Component verification must combine actual fold/render controls with
+the independent existing public0.2 inspector and JSON/YAML codec, plus real
+Chromium correspondence and prior API regression. Conditional algebra is relevant
+to selection/carrier invariants but does not prove this code's refinement. The
+full backend plans, operators, authenticated custody and release remain required.
+
+## Separate atomic disclosure computation child — 2026-10-16
+
+The private `umf.security.private-disclosure-child/0.1-candidate` process adapter
+is a separate projection-only composition seam. Initialization retains one locally
+compiled catalog program, its original owner and one selected Record/Field list.
+One subsequent request supplies the logical cut and calls the existing atomic
+WithinOperation producer once, with a shared bounded ledger. The protocol cannot
+replace the owner/selection after initialization or invoke the legacy route/action
+batch. Complete private decisions/resources and the original V2 batch travel
+together; no scalar conversion reconstructs missing provenance. A generic framing
+refusal contains no logical result. Semantic refusal retains the producer's exact
+cleared result. The existing query child and ABI2 consumer selection are unchanged.
+
+The framed input is limited to4MiB, output to16MiB, selected columns to256 and
+supplied facts/graphs to10000; the underlying producer additionally bounds rows,
+cells, literals and work. The parent owns the process deadline and lifetime.
+Hashes correlate original protocol bytes; they authenticate neither the sources
+nor the caller/cut. This is private host-side tooling outside the browser library.
+Its bounded native consumer must validate the prepared projection-only program,
+exact selected source/model/header correspondence, complete eligible physical
+population, all returned cells and the whole V2 batch before guarded release.
+
+Read-only inspection of Truss main ea9c3f080cecd5da2d3be42258c26c3d0dcab7bc
+locates reusable ordinary-caller/source/authority locks and final rechecks in
+`_current_query_runtime`, optional scalar fact capture in `_current_query_facts`,
+and required String/signed64 staging in `_current_query_stage`. Truss must adopt
+an explicit separate consumer cohort, original source registration, packaged child
+and disclosure-aware result API. The old scalar ABI2 wheel/bundle is not repinned
+by this adapter. Actual Truss integration, graph fact capture, caller/current-cut
+authentication, revocation drain and final release remain unfinished.
+
+The strict JSON reader additionally caps decoded text at4000000 UTF-16 code
+units, structural depth at128 and parsed values at100000. The wire cap is an
+upper bound, not a promise that every smaller frame is admissible. EOF may cancel
+after initialization; the host must require its complete expected operation and
+own deadline, cancellation and confirmed process cleanup. The Truss native source
+registration receipt and the different fixed-owner/selection child initializer
+receipt must remain distinct.
+
+The separately built bundle captures/checks root TypeScript and Bun configuration
+before discovery and after build, explicitly selects root tsconfig and refuses
+any inherited TypeScript configuration. This repairs reviewed CHILD-001; it makes
+no external-runtime or held-file/ABA proof. Post-native whole V2 inspection is a
+separate unfinished entrypoint. Native publication must remain refused until that
+exact owner inspection and the remaining native/guard obligations are composed.
+
+## Held post-native disclosure inspection — 2026-10-16
+
+The separate `umf.security.private-disclosure-child/0.2-candidate` profile retains
+one original source program, owner and selected Fields through initialization,
+one actual atomic evaluation and one post-native inspection. Protocol0.1 remains
+unchanged. A rendered evaluation retains its original batch; a refused evaluation
+terminates. The native consumer must capture the exact complete private resource
+key bag, check actual native rows with the original typed compiler handle, and
+restore original owner order before sending `inspect-native-disclosure` with the
+reconstructed batch. The process invokes the existing public whole V2 inspector
+against the same held sources, then requires canonical equality to its held
+original batch. This additionally refuses domain-valid substituted values,
+changed presence, missing/extra rows and changed order. It does not re-evaluate
+policy or infer native authorization from a matched data carrier.
+
+The closed inspection reply retains `complete:false` and `authority:false`, exact
+source receipt and SHA256 of the complete length-prefixed evaluation/inspection
+frames. These correlate the three private exchanges, not authenticated sources
+or callers. The reply carries no original or transformed values. Failure clears
+held program/source/batch state and returns only a generic refusal where request
+correlation is available. Duplicate IDs, reordered/repeated operations and wrong
+protocol/source receipt refuse. EOF before successful inspection is an incomplete
+operation, not a clean completion; the host owns deadline/cancellation and
+confirmed process cleanup. Successful inspection still needs native closing
+caller/source/protection checks and the release barrier before public handoff.
+
+Initialization/evaluation retain4MiB wire caps and the original strict reader.
+Inspection permits16MiB and reuses the original `scanPlanJson` duplicate-key,
+Unicode and exact-number scanner before JSON.parse, with100016 nodes and depth64.
+Whole V2's original bounds and exact-domain checks remain mandatory. The existing
+Truss pipe's4MiB request bound cannot silently advertise this wider profile;
+Truss must select an explicit compatible transport. This private tooling adds no
+library/browser vocabulary, native permission or second policy interpreter.
+
+### Bounded nested ontology condition evaluation — 2026-10-16
+
+The actual private206951/d333 process initializes a valid six-Record ontology
+with14 objects,13 directed core relationship occurrences (parallel:Alice) and a correlated
+ownership/Staff/Project/active-assignment policy, but its eager nested truth
+evaluation exhausts the unchanged100000-unit literal ledger. This is a reproduced
+logical component limitation, not native admission evidence. Retain the exact
+old executable refusal and supplied cut before optimization.
+
+Keep complete dependency preflight before all truth work: Record and graph
+coverage, endpoint presence, Field coverage and original literal/type validation
+must remain independent of later branch selection. After that preflight, pure
+strong-Kleene AND may stop at F, OR at T, and EXISTS at its first T. U never
+absorbs these operations. No rule, disclosure selection, source validation or
+recipe admission is skipped. All work, population and byte limits remain
+unchanged; this improves evaluation within the existing bounds.
+
+Conditional SMT establishes fold identities, associativity and absorbing-prefix
+properties for arbitrary finite complete truth relations with satisfiable
+premises and explicit weakened-rule countermodels. It is not a TypeScript
+translation/refinement or native proof. The actual kernel/browser regression
+must additionally exercise correlated graph populations and prove hidden branch
+dependencies still refuse when incomplete. Original core relationships, including
+parallel occurrences, preserve their own opaque witness IDs and ordered typed
+endpoint identities. Record-backed edge attributes/Keys need their own native
+realization and cannot be silently treated as opaque witnesses.
+
+The separate Truss graph fact collector is being developed in isolation. It
+will return original JSON byte arrays for graph facts and complete graph coverage
+alongside the existing Record facts and private native row custody. Native
+relationship declarations/endpoint alternatives and the unfiltered edge census
+must correspond to the original accepted model under held cuts. Supplied catalog
+or cursor fixtures cannot prove that native source/current-authority boundary.
+No backend criterion is promoted by these component controls.
+
+## Nested ontology truth correspondence — 2026-10-16
+
+The formal model now expands the actual four-relationship ownership/membership
+join: StaffAssignment and AssignmentProject share one Assignment identity;
+OwnershipResource and OwnershipProject share one Ownership identity; both paths
+meet at the same Project. Identities are abstract complete qualified type/key
+identities, and logical endpoint kinds and selected Staff/Resource kinds are
+explicit premises. Activity has F/U/T truth. A path with T dominates U across
+other complete witnesses; no T and at least one U yields U; an empty path yieldsF.
+
+`tools/security/prove-nested-ontology-refinement.py` proves conditional equality
+of logical/native nested truth and negation under complete sound incidence,
+exact directed endpoint identity and total activity-truth correspondence.
+Nonvacuous true/unknown/false, empty and mixedT/U populations are checked. SAT
+controls expose split Ownership witnesses, unrelated active Assignments,
+unknown-as-true, early unknown dominance and missing correspondence. Eighteen
+queries replay with Z34.15.4:5UNSAT/13SAT.
+
+These are first-order conditional correspondence claims. An observed U inside
+complete admitted facts is distinct from missing coverage, which must refuse
+under the original preflight. No codec or key injectivity, implementation
+translation, runtime limits/termination, source/caller/current authority or
+guarded release is proved. The native graph collector must establish the
+premises through actual source binding and held host guards before backend
+admission; supplied metadata cannot establish them.

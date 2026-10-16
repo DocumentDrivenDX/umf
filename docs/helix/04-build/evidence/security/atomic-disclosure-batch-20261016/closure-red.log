@@ -1,0 +1,11 @@
+31 | }
+32 | await visit(import.meta.path);
+33 | // These existing governing schemas/contracts and executable dependency metadata
+34 | // supplement the relative TypeScript/JSON import graph explicitly.
+35 | for(const path of [c.oracleSource,'package.json','bun.lock','docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md','docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md','docs/helix/02-design/contracts/CONTRACT-066-gregorian-date-operations.md','spec/extensions/security-protection/schema.json','spec/extensions/security-v0.2/schema.json'])await visit(path);
+36 | if(files.length!==closure.size||files.some(path=>!closure.has(path)))throw Error('Exact reviewed S24/S25 source closure required');
+                                                                                ^
+error: Exact reviewed S24/S25 source closure required
+      at /Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/write-acceptance.ts:36:76
+
+Bun v1.4.2 (macOS arm64)
