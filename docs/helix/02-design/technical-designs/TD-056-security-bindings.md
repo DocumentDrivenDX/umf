@@ -2864,3 +2864,38 @@ Whole V2's original bounds and exact-domain checks remain mandatory. The existin
 Truss pipe's4MiB request bound cannot silently advertise this wider profile;
 Truss must select an explicit compatible transport. This private tooling adds no
 library/browser vocabulary, native permission or second policy interpreter.
+
+### Bounded nested ontology condition evaluation — 2026-10-16
+
+The actual private206951/d333 process initializes a valid six-Record ontology
+with14 objects,13 directed core relationship occurrences (parallel:Alice) and a correlated
+ownership/Staff/Project/active-assignment policy, but its eager nested truth
+evaluation exhausts the unchanged100000-unit literal ledger. This is a reproduced
+logical component limitation, not native admission evidence. Retain the exact
+old executable refusal and supplied cut before optimization.
+
+Keep complete dependency preflight before all truth work: Record and graph
+coverage, endpoint presence, Field coverage and original literal/type validation
+must remain independent of later branch selection. After that preflight, pure
+strong-Kleene AND may stop at F, OR at T, and EXISTS at its first T. U never
+absorbs these operations. No rule, disclosure selection, source validation or
+recipe admission is skipped. All work, population and byte limits remain
+unchanged; this improves evaluation within the existing bounds.
+
+Conditional SMT establishes fold identities, associativity and absorbing-prefix
+properties for arbitrary finite complete truth relations with satisfiable
+premises and explicit weakened-rule countermodels. It is not a TypeScript
+translation/refinement or native proof. The actual kernel/browser regression
+must additionally exercise correlated graph populations and prove hidden branch
+dependencies still refuse when incomplete. Original core relationships, including
+parallel occurrences, preserve their own opaque witness IDs and ordered typed
+endpoint identities. Record-backed edge attributes/Keys need their own native
+realization and cannot be silently treated as opaque witnesses.
+
+The separate Truss graph fact collector is being developed in isolation. It
+will return original JSON byte arrays for graph facts and complete graph coverage
+alongside the existing Record facts and private native row custody. Native
+relationship declarations/endpoint alternatives and the unfiltered edge census
+must correspond to the original accepted model under held cuts. Supplied catalog
+or cursor fixtures cannot prove that native source/current-authority boundary.
+No backend criterion is promoted by these component controls.

@@ -12588,3 +12588,41 @@ R1/R2 snapshots. Accepted45 source correspondence remains570 exact pins and
 the158-case plan digest remains unchanged. Integrate this component directly
 to main; next complete the separately reviewed Truss consumer and actual
 ordinary-role/current-cut/closing-guard evidence.
+
+### Nested graph condition budget repair candidate — 2026-10-16
+
+The previous turn integrated the reviewed held inspector and all629 review
+artifacts directly to remote main206951ff. The current candidate addresses a
+separate reproduced limitation: the original d333 process accepts a valid
+14-object/13-core-edge parallel:Alice ontology but refuses its eager correlated condition fold
+at the unchanged100000-unit literal-work bound. Full dependency preflight is
+preserved; only pure AND/OR/EXISTS truth work now stops at an absorbing value.
+
+All15 independent incidence cases pass through the actual candidate held
+producer/inspector: three Staff identities across baseline, parallel-edge, empty,
+inactive-only and sibling-owner populations. Full security regression passes
+333 tests/6027 assertions; complete TypeScript checking passes. Chromium153.0.8010.12
+passes98 shared controls, including hidden dependency refusal. Conditional SMT
+passes30 replayed queries (12 UNSAT,18 SAT with separate nonvacuous premises);
+these algebraic claims do not prove TypeScript refinement or native authority.
+
+The only previously accepted cases fingerprinting the changed runtime are S24,
+S25 and pg-raw.P04. Original S24/S25 runners freshly pass296/124 observations
+with108 pins each. A bounded isolated PostgreSQL18.6 P04 campaign freshly passes
+807 observations/106 pins and confirms original fixture cleanup. No Truss shared
+worker or table was used. The42 other retained accepted case outputs have exact
+current source correspondence, yielding570 distinct current pins across all45.
+This is explicitly scoped revalidation, not a new full158-case canonical gate;
+the unchanged canonical acceptance receipt is historical for the changed kernel.
+No case is promoted and113 required cases remain unimplemented.
+
+The new browser harness initially failed its TypeScript regex capture annotation,
+then passed after correction; the first focused acceptance attempt lacked local
+listener permission and produced no receipt, then passed in the authorized
+local-browser execution context. Original failures remain retained. The separate
+Truss graph collector and its six simulated-cursor mapping tests remain an
+isolated draft, with opaque witnesses only and explicit Record-backed-witness
+refusal. They establish no native source/caller/current-cut/release qualification.
+Astra Ultra completed independent review with no open product findings. The retained [review and source evidence](evidence/security/condition-short-circuit-20261016/README.md) includes the separate labeling correction and scoped acceptance revalidation. Direct-main integration retains the candidate scope.
+The Truss consumer has a separate preliminary review and native qualification
+stream; no implicit cohort repin or activation is authorized by these results.
