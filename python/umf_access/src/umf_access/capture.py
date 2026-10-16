@@ -13,7 +13,7 @@ from pydantic import BaseModel, MISSING
 from .dsl import Join, Param, Terminal
 from .types import ActionRef, ActionSource
 from .dsl._context import CURRENT, CaptureContext, CaptureError as CaptureError
-from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, key_identity, ProjectionRef as ProjectionRef
+from .dsl._nodes import FieldRef, KeyLiteral, Node, RecordRef, GeneratedSource, key_identity, ProjectionRef as ProjectionRef
 from .dsl._nodes import Node as ExpressionNode, KeyLiteral as CapturedKey
 from .dsl.render import render_logical as render_logical
 
@@ -25,6 +25,7 @@ class CapturedParameter:
     optional: bool
     key_components: tuple[str, ...] = ()
     key_identity: tuple[tuple[str, str], ...] = ()
+    key_source: GeneratedSource | None = None
 
 
 @dataclass(frozen=True)
@@ -88,7 +89,7 @@ def _parameters(function: Callable[..., Any]) -> tuple[CapturedParameter, ...]:
         members = _members(carrier)
         key_models = [m for m in members if isinstance(m, type) and issubclass(m, BaseModel)]
         components = tuple(key_models[0].model_fields) if len(key_models) == 1 else ()
-        result.append(CapturedParameter(name, carrier, any(m is MISSING for m in members), components, key_identity(key_models[0]) if key_models else ()))
+        result.append(CapturedParameter(name, carrier, any(m is MISSING for m in members), components, key_identity(key_models[0]) if key_models else (), getattr(key_models[0], "UMF_SOURCE", None) if key_models else None))
     names = {p.name for p in result}
     expanded = [f"{p.name}__{c}" for p in result for c in p.key_components]
     if len(set(expanded)) != len(expanded) or names.intersection(expanded):

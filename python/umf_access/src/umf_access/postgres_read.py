@@ -13,6 +13,7 @@ import json
 import math
 import time
 from .reviewed import CatalogRead, P, R, ReadBuildError
+from .codec_support import revalidate_model, validate_graph
 
 class TimedOut(TimeoutError):
     pass
@@ -72,11 +73,35 @@ _COLUMNS = """SELECT a.attname, tn.nspname, t.typname, a.attnotnull
 FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
 WHERE a.attrelid = %s AND a.attnum > 0 AND NOT a.attisdropped"""
+# Equality and ordering must agree with the operators used by the compiled SQL.
+# Attribute-number coincidence alone does not prove a to-one/keyset Key.
 _KEYS = """SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
 WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
-FROM pg_catalog.pg_index i WHERE i.indrelid = %s AND i.indisunique AND i.indisvalid
-AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate"""
+FROM pg_catalog.pg_index i
+JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+WHERE i.indrelid = %s AND i.indisunique AND i.indisvalid AND i.indisready
+AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+AND NOT EXISTS (
+ SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+ JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+ JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+ JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+ LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+ LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+ LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+ WHERE k.pos <= i.indnkeyatts AND (
+  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+  AND op.opcmethod = ix.relam
+  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+  AND (a.attcollation = 0 OR co.collisdeterministic)
+ ) IS NOT TRUE
+)"""
+
 _TYPES = {"integer": {"int2", "int4", "int8"}, "decimal": {"numeric"},
           "string": {"text", "varchar"}, "boolean": {"bool"}}
 
@@ -94,6 +119,16 @@ class ReadContinuation:
 class ReadPage(Generic[R]):
     items: tuple[R, ...]
     next_after: ReadContinuation | None
+
+
+def _check_cursor_value(field: Mapping[str, object], value: object) -> None:
+    if value is None:
+        if field.get("nullable") is not True:
+            raise ReadObligationUnmet("non-null continuation component is null")
+        return
+    expected_type = {"integer": int, "decimal": Decimal, "string": str, "boolean": bool}.get(str(field.get("carrier")))
+    if expected_type is None or type(value) is not expected_type or isinstance(value, Decimal) and not value.is_finite():
+        raise ReadObligationUnmet("continuation carrier differs from ordering")
 
 
 def _execute(connection: Connection, entry: CatalogRead[P, R], params: P, *,
@@ -114,7 +149,7 @@ def _execute(connection: Connection, entry: CatalogRead[P, R], params: P, *,
     if type(params) is not entry.parameters:
         raise TypeError("parameters require the exact declared model")
     # Revalidate raw attributes: model_construct/model_copy never bypass codecs.
-    checked = entry.parameters.model_validate({name: getattr(params, name) for name in entry.parameters.model_fields}, strict=True)
+    checked = revalidate_model(entry.parameters, params)
     values = {name: getattr(checked, name) for name in entry.parameters.model_fields}
     if any(isinstance(value, Decimal) and not value.is_finite() for value in values.values()):
         raise ValueError("nonfinite decimal parameter")
@@ -170,10 +205,8 @@ def _execute(connection: Connection, entry: CatalogRead[P, R], params: P, *,
                     values["__umf_has_after"] = after is not None
                     for i, field in enumerate(cursor_fields):
                         value = after.values[i] if after is not None else None
-                        carrier = field["carrier"]
-                        expected_type = {"integer": int, "decimal": Decimal, "string": str, "boolean": bool}[cast(str, carrier)]
-                        if value is not None and (type(value) is not expected_type or isinstance(value, Decimal) and not value.is_finite()):
-                            raise ReadObligationUnmet("continuation carrier differs from ordering")
+                        if after is not None:
+                            _check_cursor_value(field, value)
                         values[f"__umf_after_{i}"] = value
                 elif after is not None:
                     raise ReadObligationUnmet("catalog is not a keyset page")
@@ -185,7 +218,13 @@ def _execute(connection: Connection, entry: CatalogRead[P, R], params: P, *,
                 rows = cursor.fetchmany(cap + 1)
                 if len(rows) > cap:
                     raise ReadObligationUnmet("target returned more than the catalog row cap")
-                result = [entry.result.model_validate(dict(zip(expected, row[:len(expected)], strict=True)), strict=True) for row in rows]
+                for row in rows:
+                    hidden = row[len(expected):]
+                    if len(hidden) != len(cursor_fields):
+                        raise ReadObligationUnmet("hidden sort inventory differs from catalog")
+                    for field, value in zip(cursor_fields, hidden, strict=True):
+                        _check_cursor_value(field, value)
+                result = [validate_graph(entry.result, dict(zip(expected, row[:len(expected)], strict=True))) for row in rows]
                 cursor.execute(_ROLE)
                 if cursor.fetchone() != before:
                     raise ReadObligationUnmet("caller role changed during read")

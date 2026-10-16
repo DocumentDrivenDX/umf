@@ -49,3 +49,11 @@ import {profile,request,mutateSource} from './access-fixtures';
   expect(result.diagnostics.some(d=>d.code==='NAME'&&d.pointer===`/modules/0/extensions/umf.actions/actions/0/${group}/1`)).toBe(true);
  }
  });
+
+// @covers US-080-AC4
+test('generated provenance and join imports cannot be shadowed',()=>{
+ for(const python of ['GeneratedSource','UMF_GENERATED_SOURCE','UMF_SOURCE','Join','JoinProjection']){
+  const req=request();req.names=[{sourceId:'logical',pointer:'/modules/0/elements/5',python}];
+  const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.diagnostics.some(d=>d.code==='NAME')).toBe(true);
+ }
+});

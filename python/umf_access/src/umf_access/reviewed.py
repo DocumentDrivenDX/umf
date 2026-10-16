@@ -4,13 +4,14 @@ The compiler is supplied explicitly at build time. Runtime never imports Weft.
 """
 from __future__ import annotations
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, fields, is_dataclass
 from decimal import Decimal
 import hashlib
 import json
 import re
 from typing import Generic, Protocol, TypeVar, cast
 from pydantic import BaseModel
+from .dsl._nodes import GeneratedSource, FieldRef, RecordRef, KeyLiteral
 
 P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
@@ -105,6 +106,29 @@ def _fields(model: type[BaseModel]) -> list[dict[str, object]]:
     return result
 
 
+def _check_source(source: GeneratedSource, binding: Mapping[str, object]) -> None:
+    from . import RUNTIME_ABI
+    model = binding.get("modelJson")
+    if (type(model) is not str or hashlib.sha256(model.encode()).hexdigest() != source.document_sha256
+            or binding.get("modelSha256") != source.document_sha256
+            or source.runtime_abi != RUNTIME_ABI):
+        raise ReadBuildError("CATALOG_STALE: generated source differs from bound model/runtime")
+    document = _load(model)
+    if document.get("id") != source.document_id or document.get("umf") != source.core_version:
+        raise ReadBuildError("CATALOG_STALE: generated document identity differs")
+
+
+def _model_sources(*models: type[BaseModel]) -> list[GeneratedSource]:
+    sources: list[GeneratedSource] = []
+    for model in models:
+        source = getattr(model, "UMF_SOURCE", None)
+        if source is not None:
+            if not isinstance(source, GeneratedSource):
+                raise ReadBuildError("CATALOG_STALE: malformed generated model source")
+            sources.append(source)
+    return sources
+
+
 @dataclass(frozen=True)
 class ReviewedSQL(Generic[P, R]):
     """Fixed authored text, explicit generated parameter/result types, no execution."""
@@ -129,8 +153,15 @@ class ReviewedSQL(Generic[P, R]):
             raise ReadBuildError("compiled parameter/result types differ from declaration")
         artifact["dbapiSql"] = _dbapi(cast(str, artifact["sql"]))
         artifact["dbapiParameterOrder"] = _dbapi_order(cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"]))
+        sources = _model_sources(self.parameters, self.result)
+        source = sources[0] if sources else None
+        if source is not None:
+            if any(item != source for item in sources):
+                raise ReadBuildError("CATALOG_STALE: mixed generated models")
+            _check_source(source, binding)
+            artifact["generatedSource"] = asdict(source)
         artifact["catalogDigest"] = hashlib.sha256(_json(artifact).encode()).hexdigest()
-        return CatalogRead(_json(artifact), self.parameters, self.result)
+        return CatalogRead(_json(artifact), self.parameters, self.result, source)
 
 
 @dataclass(frozen=True)
@@ -139,6 +170,7 @@ class CatalogRead(Generic[P, R]):
     artifact_json: str
     parameters: type[P]
     result: type[R]
+    expected_source: GeneratedSource | None = None
 
     def artifact(self) -> dict[str, object]:
         artifact = _load(self.artifact_json)
@@ -149,7 +181,23 @@ class CatalogRead(Generic[P, R]):
             raise ReadBuildError("unsupported catalog artifact")
         if not _compatible_outputs(artifact.get("outputs"), _fields(self.result)) or artifact.get("parameters") != _fields(self.parameters):
             raise ReadBuildError("catalog model signatures changed")
+        raw_source = artifact.get("generatedSource")
+        model_sources = _model_sources(self.parameters, self.result)
+        if raw_source is not None:
+            if not isinstance(raw_source, dict):
+                raise ReadBuildError("CATALOG_STALE: malformed generated source")
+            try:
+                source = GeneratedSource(**raw_source)
+            except (TypeError, ValueError):
+                raise ReadBuildError("CATALOG_STALE: malformed generated source") from None
+            expected = self.expected_source or (model_sources[0] if model_sources else None)
+            if expected != source or any(item != source for item in model_sources):
+                raise ReadBuildError("CATALOG_STALE: catalog and loaded generation differ")
+            _check_source(source, cast(Mapping[str, object], artifact["binding"]))
+        elif self.expected_source is not None or model_sources:
+            raise ReadBuildError("CATALOG_STALE: catalog lacks generated model provenance")
         structural = dict(artifact)
+        structural.pop("generatedSource", None)
         structural.pop("dbapiSql", None)
         structural.pop("dbapiParameterOrder", None)
         compiler_digest = structural.pop("structuralDigest", None)
@@ -171,10 +219,29 @@ def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type
     variant = declaration.variants[0]
     if variant.node.op == "update":
         raise ReadBuildError("read catalogs cannot contain mutations")
+    root = cast(RecordRef, variant.node.args[0])
+    source = root.source
+    if source is None:
+        raise ReadBuildError("CATALOG_STALE: query lacks generated source")
+    _check_source(source, binding)
+    def check_references(value: object) -> None:
+        if isinstance(value, (RecordRef, FieldRef, KeyLiteral)) and value.source != source:
+            raise ReadBuildError("CATALOG_STALE: mixed query generations")
+        if is_dataclass(value) and not isinstance(value, type):
+            for field in fields(value):
+                check_references(getattr(value, field.name))
+        elif isinstance(value, tuple):
+            for item in value:
+                check_references(item)
+    check_references(variant.node)
+    if any(parameter.key_components and parameter.key_source != source for parameter in variant.parameters):
+        raise ReadBuildError("CATALOG_STALE: query and Key parameter generations differ")
+    if any(item != source for item in _model_sources(parameters, result)):
+        raise ReadBuildError("CATALOG_STALE: query and generated models differ")
     keyset = variant.node.op == "page"
     cursor_name = None
     if keyset:
-        from .dsl import Node, RecordRef
+        from .dsl import Node
         record = cast(RecordRef, variant.node.args[0])
         cursor = cast(Node, variant.node.args[3])
         cursor_name = str(cursor.args[0])
@@ -186,4 +253,9 @@ def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type
     expected = [(f["name"], (f["carrier"], f["nullable"])) for f in _fields(parameters)]
     if declared != expected:
         raise ReadBuildError("captured signature differs from parameter model")
-    return ReviewedSQL(render_logical(variant, binding=binding), parameters, result, row_cap, keyset=keyset).build(compiler, target=target, binding=binding)
+    compiled = ReviewedSQL(render_logical(variant, binding=binding), parameters, result, row_cap, keyset=keyset).build(compiler, target=target, binding=binding)
+    artifact = compiled.artifact()
+    artifact.pop("catalogDigest", None)  # artifact() already excludes this local digest.
+    artifact["generatedSource"] = asdict(source)
+    artifact["catalogDigest"] = hashlib.sha256(_json(artifact).encode()).hexdigest()
+    return CatalogRead(_json(artifact), parameters, result, source)

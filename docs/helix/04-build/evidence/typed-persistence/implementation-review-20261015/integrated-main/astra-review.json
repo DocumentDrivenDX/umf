@@ -1,0 +1,94 @@
+{
+  "kind": "typed-sdk-integrated-main-review",
+  "date": "2026-10-15",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "task": "/root/astra_design_review"
+  },
+  "baseline": {
+    "repairedCheckpoint": "25382ec3",
+    "incomingMain": "1ba3a2a5",
+    "priorReview": "../astra-baseline-rereview.json"
+  },
+  "status": "five confirmed findings repaired; final integrated qualification and hash manifest pending",
+  "findings": [
+    {
+      "id": "IR01",
+      "severity": "P2",
+      "title": "Native read validation discarded extras and exposed input values",
+      "path": "python/umf_access/src/umf_access/postgres_read.py",
+      "section": "_execute parameter reconstruction and result validation",
+      "counterexample": "model_copy(update={unexpected: value}) extra was dropped by reconstruction from declared field names; direct model_validate on strict host models leaked invalid values/validator messages.",
+      "repair": "General BaseModel raw-graph revalidation and sanitized validation boundary for parameters/results; preserve exact parameter class check.",
+      "disposition": "fixed by parent; focused native/input redaction regressions observed"
+    },
+    {
+      "id": "IR02",
+      "severity": "P2",
+      "title": "Non-null hidden continuation components accepted null",
+      "path": "python/umf_access/src/umf_access/postgres_read.py",
+      "section": "continuation input/output carriers",
+      "counterexample": "Replace a non-null root Key component by None while retaining identity_digest: old input check skipped validation and next page could silently skip rows. Hidden sort outputs were also returned without carrier validation.",
+      "repair": "Validate every component against exact carrier and nullable flag both before dispatch and before issuing continuation; initial no-after placeholders remain distinct.",
+      "disposition": "fixed by parent; focused continuation controls observed"
+    },
+    {
+      "id": "IR03",
+      "severity": "P2",
+      "title": "Nested-only Fields admitted as projected row columns",
+      "path": "src/compilation/admission/index.ts",
+      "section": "request.projections ownership resolution",
+      "counterexample": "Add tags array with tagItem nested Field and select tagItem in root projection: old root.fields.find admitted it though it is not an owned row member.",
+      "repair": "Require owned members in admission and emitter projection resolution; regression refuses nested-only projection.",
+      "disposition": "fixed; generator regression passes",
+      "retractedHypothesis": "A separate suspected ambiguity from sharing one owned Field across two Records was disproved by core KEY_MEMBER_OWNER rejection; it is not a finding."
+    },
+    {
+      "id": "IR04",
+      "severity": "P1",
+      "title": "Native unique-index admission did not prove query equality",
+      "path": "python/umf_access/src/umf_access/postgres_read.py",
+      "section": "_KEYS catalog observation",
+      "counterexample": "A text Key column with nondeterministic case-insensitive collation and UNIQUE INDEX(id COLLATE C) stores a and A, while query equality treats both equal. Old attribute-only index check accepted it, breaking to-one joins and keyset progress.",
+      "repair": "Require ready/valid/immediate unpredicated btree unique index, NOT NULL Key fields, built-in qualified opclasses matching carrier, exact index/column collation and deterministic Key collation.",
+      "disposition": "fixed; real PG18.6 regression passes for default, alternate-opclass, alternate-collation and nondeterministic a/A controls",
+      "test": "python/umf_access/tests/test_native_key_admission.py"
+    },
+    {
+      "id": "IR05",
+      "severity": "P1",
+      "title": "Generated query could bind to a different model generation",
+      "path": "python/umf_access/src/umf_access/reviewed.py",
+      "section": "build_query, CatalogRead.artifact and generated reference metadata",
+      "counterexample": "Generated Record/Field metadata had only schema/logical names, allowing model A query to build against different model B with matching names/carriers, or mix roots, joined refs and Key carriers from different generation inputs.",
+      "repair": "Immutable GeneratedSource carries exact document ID/core version/document SHA/input digest/runtime ABI through generated models/references and captured Key parameters/literals. Build checks every referenced cohort and binding model bytes before Weft; catalog carries local source metadata and load checks generated or explicitly supplied expected source.",
+      "disposition": "fixed; four focused source tests pass including stale/mixed/unpinned refs, Key parameter/literal retention and catalog restoration",
+      "test": "python/umf_access/tests/test_reviewed_source.py"
+    }
+  ],
+  "qualificationLimits": [
+    "Experimental scalar/to-one raw read profile only; trusted authored ReviewedSQL artifacts are not signed authority or complete CONTRACT-071 catalogs.",
+    "Native Key equality refusal is a narrow profile; it does not establish all type typmods, source-presence or native schema semantics.",
+    "Restore/incarnation and complete session/collation continuation identity remain open; host/port/database name/table OIDs alone are not restore detection.",
+    "Full native action execution, engine adoption, async/streaming/snapshot/search and Lakebase service qualification remain open.",
+    "Historical original and repaired-baseline receipts qualify only their own bytes."
+  ],
+  "reviewerChecks": [
+    {
+      "check": "generator and naming",
+      "result": "29 tests, 204 assertions pass"
+    },
+    {
+      "check": "generated query source closure",
+      "result": "4 tests pass with actual Weft build round-trip"
+    },
+    {
+      "check": "native unique Key metadata",
+      "result": "1 test passes on dedicated PostgreSQL18.6, including actual a/A equality counterexample"
+    },
+    {
+      "check": "changed runtime modules mypy and TS typecheck",
+      "result": "pass"
+    }
+  ]
+}

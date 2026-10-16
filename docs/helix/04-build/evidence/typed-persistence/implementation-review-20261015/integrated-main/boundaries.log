@@ -1,0 +1,9 @@
+$ bun scripts/check-compilation-boundaries.ts && python3 scripts/check-access-python-boundaries.py
+compilation boundaries: 8 files, 0 violations
+python/umf_access/src/umf_access/__init__.py: CYCLE dependency cycle
+python/umf_access/src/umf_access/reviewed.py: DEPENDENCY runtime -> facade
+python/umf_access/src/umf_access/reviewed.py: PRIVATE use public boundary of dsl
+python/umf_access/src/umf_access/reviewed.py: PRIVATE use public boundary of facade
+scan roots: python/umf_access, python/umf_access/src/umf_access
+access Python boundaries: 13 modules, 7 violations
+error: script "check:access-boundaries" exited with code 1

@@ -6,7 +6,7 @@ from pydantic import BaseModel, ValidationError
 
 from .types import CodecError, StrictModel
 
-M = TypeVar("M", bound=StrictModel)
+M = TypeVar("M", bound=BaseModel)
 
 
 def _raw_graph(value: object, active: set[int], budget: list[int], depth: int = 0) -> object:

@@ -159,3 +159,15 @@ test('generated validators and codecs delegate to shared runtime algorithms',()=
   if(field==='memo')expect(result.diagnostics.some(d=>d.accessCode==='ACCESS_CONFLICT')).toBe(true);
  }
  });
+
+// @covers US-080-AC4
+test('nested-only item Fields cannot be selected as row projection columns',()=>{
+ const req=request();req.projections=[{name:'itemProjection',record:req.records[0]!,fields:[{module:'commerce',element:'tagItem'}]}];
+ mutateSource(req,d=>{
+  const m=d.modules[0]!;
+  m.elements.push({id:'tags',kind:'field',cardinality:'array',itemType:{module:'commerce',element:'tagItem'},nullability:'required',extensions:{}} as never,{id:'tagItem',kind:'field',cardinality:'one',scalarType:'string',nullability:'required',extensions:{}} as never);
+  (m.elements.find(e=>e.id==='Order')! as unknown as {members:unknown[]}).members.push({module:'commerce',element:'tags'});
+  m.extensions['umf.access'].views[0]!.fields.push({field:{module:'commerce',element:'tags'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:true,generated:false} as never,{field:{module:'commerce',element:'tagItem'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:false,generated:false} as never);
+ });
+ const result=generateAccessPackage(req,profile());expect(result.outcome).toBe('refused');expect(result.files).toEqual([]);expect(result.diagnostics.some(d=>d.code==='REFERENCE'&&d.pointer==='/projections')).toBe(true);
+});

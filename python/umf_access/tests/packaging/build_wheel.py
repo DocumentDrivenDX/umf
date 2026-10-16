@@ -11,6 +11,7 @@ import sys
 import tempfile
 import tomllib
 from replay_installed import inspect_wheel
+from packaging.specifiers import SpecifierSet
 
 
 def main() -> int:
@@ -31,7 +32,7 @@ def main() -> int:
         pin=profile['runtimeAbi']
         if project['name']!=pin['distribution'] or project['version']!=pin['version']:
             raise ValueError('package metadata differs from runtime profile')
-        if project['requires-python']!='=='+profile['python'] or project['dependencies']!=['pydantic=='+profile['runtimeDependencies']['pydantic']]:
+        if not SpecifierSet(project['requires-python']).contains(profile['python']) or project['dependencies']!=['pydantic=='+profile['runtimeDependencies']['pydantic']]:
             raise ValueError('Python/Pydantic metadata differs from local profile')
         def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
         source_paths=[package/'pyproject.toml',package/'compatibility-profile.json',*sorted((package/'src/umf_access').rglob('*'))]
