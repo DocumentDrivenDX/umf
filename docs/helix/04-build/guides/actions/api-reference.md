@@ -21,6 +21,8 @@ These are separate from inspection. Narrow rule/selector helpers do not prove an
 - compileActionSelector(document: Document, action: Action, frame: ActionFrame): CompiledActionSelector — checks keys/1 input-based selector syntax and exact Key/Field identities. No scans, joins or database lookup.
 - admitActionInputs(document: Document, action: Action, inputs: ActionInputs, outputs = false): ActionInputs — validates and copies typed input values or outputs under the declared model, preserving omission versus null.
 - selectActionIdentity(document: Document, action: Action, frame: ActionFrame, inputs: ActionInputs): SelectedActionIdentity — returns the selected entity Key tuple and tupleHex. Native canonical alias resolution is still consumer-owned.
+- prepareActionIdentities(document: Document, action: Action): PreparedActionIdentities — copies and freezes core 0.8.0 declarations once; admitInputs checks each supplied input/output and select(frameId, inputs) interprets an exact declared frame. It grants no store authority.
+- prepareCoreKeyTuples(source): PreparedCoreKeyTuples — prepares one immutable core 0.8.0 source for exact Key encoding and receipt verification. Every supplied value and receipt remains checked; current-store and authorization checks stay with the executor. This prepared profile does not select core 0.9.0 codecs.
 - evaluateActionRule(document: Document, action: Action, rule: ActionRule, phase: ActionRulePhase, state: ActionRuleState): boolean — compiles and evaluates against explicitly supplied pre/post state and input/output copies. It does not fetch a store, authenticate state or execute effects.
 - actionFieldValueKey(reference: ActionReference): string — encodes the module/Field pair for supplied state maps.
 - actionExpressionLimits — constants depth 32, nodes 512, text 65536; limits are profile bounds, not a throughput guarantee.
@@ -91,12 +93,13 @@ These operations inspect supplied artifacts and construct inert bytes. They do n
 - InspectedAction
 - PortableActionPin
 - PortableActionPlan
+- PreparedActionIdentities
 - PreparedActionPlanModel
 - SelectedActionIdentity
 - SelectedActionRow
 <!-- generated:public-types:end -->
 
-The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts and evaluation.ts for exact members; CONTRACT-900/901 own their semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
+The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts, evaluation.ts, plan-types.ts and manifest-types.ts for exact members; CONTRACT-900 through CONTRACT-904 own their respective semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.
 
 ## Errors and diagnostics
 

@@ -1302,7 +1302,7 @@ Security planning: [shared security feature](01-frame/features/FEAT-008-shared-s
 [CONTRACT-076](02-design/contracts/CONTRACT-076-128-bit-uuid.md) specify first-class
 opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
 versioned keys and native/bytes/text/two64-bit physical carriers. This is an
-implementable design, not implemented core0.9.0 or qualified native support.
+implemented core0.9.0 design; current qualified native support is recorded below.
 
 
 The initial [128-bit/UUID implementation](04-build/evidence/uuid-implementation.md)
@@ -1310,3 +1310,11 @@ now provides experimental core0.9 values, literals, keys, copied authoring,
 inspection/selection, retained migration and explicit carrier codecs/proposals.
 Native observations qualify specific schemas and datum paths; complete ideal,
 five-binding, relationship/index and consumer-execution gates remain separate.
+
+
+Qualified128-bit/UUID ideal admission and five-priority carrier/model delivery
+now pass under the explicit uuid-model1 profile. The [completion record](04-build/evidence/uuid-adapter-completion.md)
+records complete singular Record/Key/index/FK SQL layouts, native constraints and
+transaction observations, Avro/Parquet grouped pairs and actual TableSpec/Spark
+string fallback. Native equivalence, wider composition and deployed consumer
+adoption are separate; unsupported meanings still refuse or remain residuals.
