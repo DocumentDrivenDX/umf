@@ -1,0 +1,134 @@
+{"testProcess":"tests/binding-uuid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding-uuid.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/binding-uuid.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":62,"completeSummary":true,"logSha256":"6d80f0647b65b14b1ee56dfb4236a5c685a89ebbf68519d5ae33bd2880fa4419"}
+{"testProcess":"tests/bit128.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/bit128.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/bit128.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":4702,"completeSummary":true,"logSha256":"2fb6970f8b849fd964af5459566022c0e76e2e78f38eca56eaa2c01938da014c"}
+{"testProcess":"tests/core-uuid-key.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/core-uuid-key.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/core-uuid-key.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":397,"completeSummary":true,"logSha256":"5e3212c4e0ecd52099fa39dfa29971300478841a32e47621082f12aad2d8319c"}
+{"testProcess":"tests/core-uuid-transition.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/core-uuid-transition.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/core-uuid-transition.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":11,"completeSummary":true,"logSha256":"0a57e6ec9d41c0a881dc837370b39b600ac843045f5227c8d1eccf8c3920f497"}
+{"testProcess":"tests/core-uuid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/core-uuid.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/core-uuid.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":52,"completeSummary":true,"logSha256":"2b0b8526436cbd43bff9e330a62e1b988b9be9a4594fcd0545716ab1238d376a"}
+{"testProcess":"tests/uuid-file-model.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid-file-model.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/uuid-file-model.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":81,"completeSummary":true,"logSha256":"ce1f48bad3a9dd9661d13c3d8c9b9f084107d5406d58ac47036a0ebd668bbaab"}
+{"testProcess":"tests/uuid-model.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid-model.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/uuid-model.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":90,"completeSummary":true,"logSha256":"0df55aabd1e3e25771d92654604f471efa4f0a677eb432473736dd489da5ebbf"}
+{"testProcess":"tests/uuid-native-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid-native-projection.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/uuid-native-projection.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":61,"completeSummary":true,"logSha256":"d4f1e6ec18b2a1a4c16a4542844ba44d94f8ea6e8f1b3f7e7f258ed75a08a858"}
+{"testProcess":"tests/uuid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+{"testProcess":"tests/uuid.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":1564,"completeSummary":true,"logSha256":"80884c2bcd016523ba614264ad507cc1b6099baad19ba073306efef8bb9a81f9"}
+
+
+tests/binding-uuid.test.ts:
+(pass) explicit UUID carriers preserve bits; paired signed words retain exact native transport tokens [37.50ms]
+(pass) partial pairs, collisions, unknown carrier, domain conflicts, nulls and stale logical bindings [2.00ms]
+(pass) dispatch rejects getters before reading profile and relevant unknown logical facets block codecs [2.06ms]
+(pass) unqualified native index layouts remain serializable but cannot authorize generation or values [1.64ms]
+(pass) carrier validation and encoding use the same copied literal and binding snapshots [2.07ms]
+
+ 5 pass
+ 0 fail
+ 62 expect() calls
+Ran 5 tests across 1 file. [3.07s]
+
+tests/bit128.test.ts:
+(pass) all bit positions, sign boundaries and seeded values match independent Python oracle [4.21ms]
+(pass) strict grammar, bounds, two-complement ordering, forged snapshots and accessors [0.24ms]
+(pass) byte bridge checks intrinsic length before copying and never invokes user iterators [0.04ms]
+
+ 3 pass
+ 0 fail
+ 4702 expect() calls
+Ran 3 tests across 1 file. [3.01s]
+
+tests/core-uuid-key.test.ts:
+(pass) versioned tuples match independent oracle and reject old codec, stale or forged framing [62.95ms]
+
+ 1 pass
+ 0 fail
+ 397 expect() calls
+Ran 1 test across 1 file. [3.01s]
+
+tests/core-uuid-transition.test.ts:
+(pass) explicit collision adoption, exact rollback and unrelated unknown preservation [7.37ms]
+(pass) structural source with unknown UUID key equality can be adopted explicitly, without adopting unrelated errors [1.33ms]
+
+ 2 pass
+ 0 fail
+ 11 expect() calls
+Ran 2 tests across 1 file. [2.98s]
+
+tests/core-uuid.test.ts:
+(pass) version-scoped validation, copied authoring, allowed values, defaults and serialization [22.78ms]
+(pass) current metadata inspectors, selection, containers and unknown refinement boundaries [11.75ms]
+(pass) explicit Field-domain authoring preserves the source and validates collisions [0.92ms]
+(pass) extension validators receive actual0.9 UUID semantics, not the structural compatibility view [5.98ms]
+(pass) caller-visible schema mutations do not change internal0.9 validators or codec inventory [2.56ms]
+(pass) signed and unsigned integer128 keep mathematical equality and lossless bigint context [1.42ms]
+
+ 6 pass
+ 0 fail
+ 52 expect() calls
+Ran 6 tests across 1 file. [3.02s]
+
+tests/uuid-file-model.test.ts:
+(pass) file/model bundles retain unenforced Keys/relations and pair absence uses one nullable group [96.29ms]
+(pass) TableSpec refuses unqualified carriers; native pair group collisions and unsigned Avro refuse [1.38ms]
+(pass) native pair paths are explicit and named Avro types cannot collide with root Records [0.48ms]
+(pass) Parquet paired groups retain explicitly unsigned64 words without number conversion [3.38ms]
+(pass) TableSpec CSV requiredness remains an explicit residual and complete-row decode rejects native invalid data [2.28ms]
+
+ 5 pass
+ 0 fail
+ 81 expect() calls
+Ran 5 tests across 1 file. [3.07s]
+
+tests/uuid-model.test.ts:
+(pass) complete model expands Keys, indexes and foreign keys into every paired slot [61.53ms]
+(pass) no unbound meaning, carrier mismatch, index cross-owner or foreign layout can disappear [3.00ms]
+(pass) declared participation/lifecycle and NULL defaults are residuals, never implicit enforcement [4.78ms]
+(pass) empty allowed-value declarations refuse before native output [0.41ms]
+(pass) full-row codecs cannot bypass unsupported target/carrier or native name checks [1.30ms]
+(pass) SQL Server filtered-index session conditions are part of the public model result and DDL [0.50ms]
+
+ 6 pass
+ 0 fail
+ 90 expect() calls
+Ran 6 tests across 1 file. [3.40s]
+
+tests/uuid-native-projection.test.ts:
+(pass) explicit five-target carrier proposals and full retained-source recovery [17.14ms]
+(pass) unsupported pairs, text enforcement, external nulls, constraints and names cannot be silently omitted [2.31ms]
+(pass) native classification requires exact identity/annotation and retains unknown refinements [0.10ms]
+(pass) native identifier bounds and unknown qualifiers refuse before SQL generation [2.23ms]
+(pass) native name collisions and partition choices are explicit [0.90ms]
+(pass) expanded native output must fit the ordinary text bound before publication [20.01ms]
+(pass) known text and model limits remain visible even under a bits-only request [0.76ms]
+(pass) oversized retained source is refused before allocating its full JSON serialization [5.02ms]
+
+ 8 pass
+ 0 fail
+ 61 expect() calls
+Ran 8 tests across 1 file. [3.06s]
+
+tests/uuid.test.ts:
+(pass) UUID identity preserves every layout and original spelling without generation claims [2.03ms]
+(pass) no implicit syntax, truncation, rewriting or forged UUID snapshot [0.08ms]
+
+ 2 pass
+ 0 fail
+ 1564 expect() calls
+Ran 2 tests across 1 file. [3.03s]
+
+ 38 pass
+ 0 fail
+ 7020 expect() calls
+Ran 38 tests across 9 files. [27.78s]

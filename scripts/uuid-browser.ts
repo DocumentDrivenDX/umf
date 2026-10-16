@@ -59,5 +59,5 @@ try{
  const sources=['src/model/types.ts','src/model/bit128-field.ts','src/projections/bit128-output-budget.ts','src/model/schema-properties.ts','src/model/relationship-selection.ts','spec/extensions/binding-128/schema.json','src/model/bit128.ts','src/model/uuid.ts','src/model/bit128-transition.ts','src/model/key-tuple.ts','src/model/schema-literals.ts','src/validation/schema-properties.ts','src/extensions/binding/bit128.ts','src/projections/bit128.ts','spec/core/bit128-document.schema.json','scripts/uuid-browser.ts'];
  const sha256=Object.fromEntries(await Promise.all(sources.map(async p=>[p,createHash('sha256').update(await Bun.file(p).text()).digest('hex')])));
  const evidence={scope:'Portable UUID/core0.9/carrier-codec qualification only; no native execution or full core acceptance',browser:browser.version(),result,externalRequests,negativeRejected,layerRejected,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256};
- await Bun.write('fixtures/validation/uuid/browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(evidence);
+ await Bun.write(process.env.UMF_UUID_BROWSER_EVIDENCE??'fixtures/validation/uuid/browser.json',JSON.stringify(evidence,null,2)+'\n');console.log(evidence);
 }finally{await browser?.close();server.stop(true);}

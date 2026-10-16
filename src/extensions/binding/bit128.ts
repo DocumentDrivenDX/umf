@@ -1,3 +1,4 @@
+import {resolveBit128ModelLayout} from './bit128-layout';
 import manifest from '../../../spec/extensions/binding-128/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -65,7 +66,8 @@ export function inspectBit128Binding(bindingInput:Document,logicalInput:Document
    for(const col of columns){const slot=JSON.stringify([table,col]);if(slots.has(slot))add('BINDING_SLOT_COLLISION',path,'Physical slot reused');slots.add(slot);}
   }
   // Initial scalar-only profile must not silently certify unenforced index/relationship layouts.
-  if(payload.indexes.length||payload.relationships.length)add('BINDING_UNQUALIFIED_LAYOUT','/indexes','Index and relationship carrier execution is not admitted; declarations remain retained','warning');
+  if(payload.target.subset==='uuid-model1'){diagnostics.push(...logicalValidation.diagnostics.filter(d=>!diagnostics.some(x=>x.code===d.code&&x.path===d.path)));resolveBit128ModelLayout(payload,logical);}
+  else if(payload.indexes.length||payload.relationships.length)add('BINDING_UNQUALIFIED_LAYOUT','/indexes','Index and relationship carrier execution is not admitted; declarations remain retained','warning');
  }catch(error){if(!(error instanceof UmfError))throw error;add(error.code,error.path,error.message);}
  return {valid:!diagnostics.some(d=>d.severity==='error'),complete:diagnostics.length===0,diagnostics};
 }
