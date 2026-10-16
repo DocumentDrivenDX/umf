@@ -2046,3 +2046,23 @@ Use the pinned disposable PostgreSQL 18.6 image from the original P-cases and is
 ### Canonical disclosure-selection provenance component — 2026-10-16
 
 The private logical-disclosure-selection0.1 producer must preserve exact qualified resource identities, actual scoped rule truth, all winning source occurrences and the first selected transform occurrence in canonical policy order. Exercise both flat and graph witnesses, nonzero disclosure indices, duplicate contributors, conflicting transforms, withholding dominance without original-value projection, explicit unprotected fallback, missing protected directives, denied/empty populations, hostile/stale input and shared-budget exhaustion. Original action/render/rule-scan shapes must remain unchanged. Real Chromium must match Bun without host globals. Source-selection evidence never grants native authority, executes transforms or substitutes for original P03/B08 cases.
+
+
+### Atomic canonical disclosure batch controls — 2026-10-16
+
+`tests/security/catalog-disclosure-batch-corpus.ts` and
+`catalog-disclosure-batch.test.ts` cite `@covers US-056-AC6` and
+`@covers US-056-AC10`. Exercise actual canonical execution, then independently
+inspect and JSON/YAML round-trip every successful0.2 batch: exact source/resource
+correspondence; original/null/absence/withholding/transformed-null; all six pure
+function classes and exact signed/decimal/date/Unicode values; nonzero and
+duplicate source positions; differing transform conflict; inactive directives;
+flat and graph witnesses; stored-token original/output identity; denied rows in
+complete census but absent from released batch; empty and field-free populations;
+unsupported inline refusal with old behavior preserved; later invalid output and
+shared-budget exhaustion clearing every result field; stale/malformed sources
+and hostile getters refusing without invocation. Test transport counts and
+literal boundaries and prove produced metadata survives the original public
+codec. Real Chromium must match Bun without host globals or external requests.
+These component checks supplement original P03/B08 and do not promote a backend
+case or prove native custody/operator/release behavior.

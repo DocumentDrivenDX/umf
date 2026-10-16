@@ -2763,3 +2763,24 @@ US-056-AC6 requires actual policy selection provenance independently of physical
 Withholding dominates and retains only withholding contributors; it reveals no original value or presence. Distinct active transform identities conflict; identical contributors retain all exact source positions, with the first transform occurrence in original policy order recorded as the selected occurrence matching the existing fold. Original is fallback and retains explicit original contributors plus implicit original contributors only where the ontology explicitly marks the property unprotected. Denied, indeterminate and conflict decisions expose no winning dispositions. Missing protected disclosures remain indeterminate. No caller-supplied truth, branch, source position or rendered Cell can grant selection.
 
 This producer returns selection evidence, not executed/certified rendered values or DisclosureV2 wire admission. Retained policy directives may include their original authored constants; those remain source metadata, not computed native Cells. Source identity/revision correlations, including owner and generation, remain unauthenticated supplied-cut metadata; complete and authority stay false. Actual recipe execution, value/output-domain validation, compiler .4 composition, caller/source/current-cut custody and guarded release remain separate mandatory obligations. Regression must preserve old APIs, exercise duplicate contributors/conflicts/dominance and enforce bounded source/result work under the shared ledger, including empty populations and malformed/stale inputs.
+
+
+## Atomic provenance-bearing rendering — 2026-10-16
+
+CONTRACT-062's private disclosure-batch profile closes the gap between canonical
+selection and rendered Cells for US-056-AC6. Extend the original kernel with a
+private composed mode that retains its actual fold provenance through rendering,
+then constructs the existing0.2 transport directly. Keep the full decision census
+and a separate permitted-resource row index. Use the existing issued pure recipe
+context, owner storage map, Field checks and operation ledger; do not re-evaluate
+policy or revalidate whole source per Cell. Guard the additional transport bounds
+and exact source strings before publishing, including empty inputs.
+
+The implementation belongs beside the original catalog runtime, without a new
+public export, ontology vocabulary, native service or backend dependency. Remove
+the new private entry points/mode to roll back; existing profiles require no
+migration. Component verification must combine actual fold/render controls with
+the independent existing public0.2 inspector and JSON/YAML codec, plus real
+Chromium correspondence and prior API regression. Conditional algebra is relevant
+to selection/carrier invariants but does not prove this code's refinement. The
+full backend plans, operators, authenticated custody and release remain required.

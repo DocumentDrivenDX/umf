@@ -6,7 +6,9 @@ import {CandidateSecurityOperationBudget} from './operation-budget-candidate';
 import {GREGORIAN_DATE_PROFILE,parseGregorianDate} from '../../adapters/gregorian-date';
 import {securityAnd,securityOr,securityNot,type SecurityTruth,type SecurityDecision} from './logic';
 import {evaluateIssuedProtectionDefinition} from './protection/functions';
+import {checkProtectionParametersWithinBudget} from './protection/parameters';
 import type {SecurityOutput} from './evaluate';
+import type {SecurityDisclosureBatchV2} from './protection/disclosure';
 import {validateCandidateCatalogStorage} from './catalog-storage-candidate';
 import {readCandidateCatalogProgram} from './catalog-program-candidate';
 const fail=(message:string):never=>{throw Error('SECURITY_CATALOG_RUNTIME: '+message);};
@@ -52,6 +54,21 @@ export function evaluateCandidateCatalogReadDisclosureScan(handle:unknown,owner:
 export function evaluateCandidateCatalogReadDisclosureScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogDisclosureScanResult {
  return readDisclosureScan(handle,owner,cut,selection,operation);
 }
+export interface CandidateCatalogDisclosureBatchResult {
+ version:'umf.security.logical-disclosure-batch/0.1-candidate';status:'rendered'|'refused';complete:false;authority:false;
+ sources:unknown;decisions:CandidateCatalogDisclosureScanResult['rows'];resources:readonly unknown[];batch:SecurityDisclosureBatchV2|null;
+}
+function readDisclosureBatch(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation?:CandidateSecurityOperationBudget):CandidateCatalogDisclosureBatchResult {
+ try{return run(handle,owner,cut,selection,true,operation,true,false,true,true) as CandidateCatalogDisclosureBatchResult;}
+ catch{return freeze({version:'umf.security.logical-disclosure-batch/0.1-candidate',status:'refused',complete:false,authority:false,sources:null,decisions:[],resources:[],batch:null});}
+}
+/** One original fold and issued pure rendering operation. Supplied-cut computation, not authority. */
+export function evaluateCandidateCatalogReadDisclosureBatch(handle:unknown,owner:unknown,cut:unknown,selection:unknown):CandidateCatalogDisclosureBatchResult {
+ return readDisclosureBatch(handle,owner,cut,selection);
+}
+export function evaluateCandidateCatalogReadDisclosureBatchWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogDisclosureBatchResult {
+ return readDisclosureBatch(handle,owner,cut,selection,operation);
+}
 export interface CandidateCatalogCollectionResult {status:'rendered'|'refused';complete:false;authority:false;rows:readonly (readonly SecurityOutput[])[];valueProfiles:readonly {field:unknown;profile:string}[]}
 /** Atomic logical collection: denied rows are filtered; U/conflict/any rendering failure refuses the whole batch. */
 export function evaluateCandidateCatalogCollection(handle:unknown,owner:unknown,cut:unknown,request:unknown):CandidateCatalogCollectionResult {
@@ -91,8 +108,9 @@ export function evaluateCandidateCatalogScanBatch(handle:unknown,ownerInput:unkn
 export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown):CandidateCatalogActionResult{
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
-function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false,ruleTrace=false,disclosureTrace=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult|CandidateCatalogDisclosureScanResult{
+function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false,ruleTrace=false,disclosureTrace=false,disclosureBatch=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult|CandidateCatalogDisclosureScanResult|CandidateCatalogDisclosureBatchResult{
  const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut}=packet;
+ if(disclosureBatch&&!program.catalog)fail('Atomic V2 batch requires original protection catalog');
  let request:any=packet.request;
  if(scanPopulation){shape(request,['type','fields']);request={action:owner?.disclosure?.readAction,resources:[],targets:[request.type],fields:request.fields};}
  shape(owner,['version','id','revision','storage'],['disclosure']);shape(cut,['version','trusted','generation','expectedGeneration','policy','ontology','protection','domains','owner','subject','facts','graphs','coverage','graphCoverage','context','valueProfiles','maxFacts','maxSteps']);shape(request,['action','resources','targets','fields']);
@@ -116,6 +134,7 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  const field=(r:any)=>fields.get(ref(r))??fail('Missing source Field'),entity=(r:any)=>entities.get(ref(r))??fail('Missing source entity');
  const profiles=new Map<string,string>();for(const p of cut.valueProfiles){shape(p,['field','profile']);const key=ref(p.field),f=field(p.field).field;if(profiles.has(key)||p.profile!==GREGORIAN_DATE_PROFILE||f.scalarType!=='date'||f.cardinality!=='one'||!['required','absent-allowed'].includes(f.nullability)||f.itemType!==undefined||f.references?.length||Object.keys(f.facets??{}).length||Object.hasOwn(f,'allowedValues')||Object.hasOwn(f,'default'))fail('Unsupported value profile');profiles.set(key,p.profile);}
  const budget=ledger.literal;
+ if(disclosureBatch&&checkProtectionParametersWithinBudget(program.policy,program.catalog,program.closure,budget).status==='refused')fail('V2 catalog parameter budget refused');
  const literal=(r:any,v:any):string=>{step();const selected=field(r),f=selected.field;if(f.cardinality!=='one'||f.itemType!==undefined||f.references?.some((r:any)=>r.role==='record-type'))fail('Unsupported logical literal');
   if(f.scalarType==='date'){
    if(profiles.get(id(r))!==GREGORIAN_DATE_PROFILE)fail('Explicit Gregorian profile required');budget.step();if(v===null){if(f.nullability!=='absent-allowed')fail('Required date null');return 'null';}shape(v,['date']);if(typeof v.date!=='string')fail('Date literal');parseGregorianDate(v.date);return budget.retain('date:'+v.date);
@@ -220,7 +239,8 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   }
   rows.push({decision,dispositions:decision==='permit'?dispositions:[]});
  }
- if(disclosureTrace){
+ const disclosureSources=()=>({policy:{id:program.policy.id,revision:program.policy.revision},ontology:{documentId:ontology.documentId,revision:ontology.revision},protection:program.catalog?{id:program.catalog.id,revision:program.catalog.revision}:null,domains:program.closure.pins,owner:{id:owner.id,revision:owner.revision},generation:cut.generation,readAction:owner.disclosure.readAction});
+ if(disclosureTrace&&!disclosureBatch){
   const sources={policy:{id:program.policy.id,revision:program.policy.revision},ontology:{documentId:ontology.documentId,revision:ontology.revision},protection:program.catalog?{id:program.catalog.id,revision:program.catalog.revision}:null,domains:program.closure.pins,owner:{id:owner.id,revision:owner.revision},generation:cut.generation,readAction:owner.disclosure.readAction};
   const retained=JSON.stringify(sources);step(retained.length);budget.reserveText(retained.length);
   return freeze({version:'umf.security.logical-disclosure-selection/0.1-candidate',status:'evaluated',complete:false,authority:false,sources,rows:traces});
@@ -257,12 +277,38 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  for(const {row,resource} of selected){const cells:SecurityOutput[]=[];for(const {field:r,disposition:d} of row.dispositions){step();let cell:SecurityOutput;
    if(d.kind==='withheld')cell={field:r,disposition:'withheld'};
    else if(d.kind==='original'){const v=value(resource,r);cell=v===undefined?{field:r,disposition:'absent'}:{field:r,disposition:'original',value:v};}
-   else if(d.vocabulary!=='umf.security.protection')cell={field:r,disposition:'transformed',outputType:d.field,value:d.value};
+   else if(d.vocabulary!=='umf.security.protection'){if(disclosureBatch)fail('Inline transform has no V2 catalog representation');cell={field:r,disposition:'transformed',outputType:d.field,value:d.value};}
    else{const result=evaluateIssuedProtectionDefinition(program.functionDefinitions,recipe(d),value(resource,r),budget);if(result.status!=='transformed')fail('Pure recipe evaluation refused');cell={field:r,disposition:'transformed',outputType:d.field,value:result.value as CoreLiteral};}
    cells.push(retainCell(cell));
   }output.push(cells);
  }
- const valueProfiles=[...outputProfiles.values()];retainOutput(valueProfiles);return freeze({status:'rendered',complete:false,authority:false,rows:output,valueProfiles});
+ const valueProfiles=[...outputProfiles.values()];retainOutput(valueProfiles);
+ if(disclosureBatch){
+  // The old fold and renderer above own eligibility and values. This is only
+  // the original V2 representation: never a second policy/recipe evaluator.
+  if(request.fields.length>256||selected.length>4096||totalCells>16384)fail('V2 batch cardinality bound');
+  const wireText=(v:any)=>{step();if(typeof v!=='string'||!v.length||v.length>4096)fail('V2 bounded source string required');};
+  const wireRef=(r:any)=>{ref(r);Object.values(r).forEach(wireText);};
+  for(const pin of [program.policy,program.catalog]){wireText(pin.id);wireText(pin.revision);}
+  for(const pin of program.closure.pins){wireText(pin.documentId);wireText(pin.revision);}
+  const columns=request.fields.map((r:any)=>{step();wireRef(r);const own=storage.get(JSON.stringify([id(request.targets[0]),id(r)]))??fail('Missing selected storage declaration');
+   if(own.storageTransform){wireText(own.storageTransform.id);wireText(own.storageTransform.version);}
+   return {field:r,storageEffect:own.storageEffect,...(own.storageTransform?{storageTransform:own.storageTransform}:{}),...(profiles.has(id(r))?{valueProfile:profiles.get(id(r))}:{})};
+  });
+  const permitted=traces.filter(t=>t.decision==='permit');if(permitted.length!==output.length)fail('Original row correspondence failed');
+  const wireRows=output.map((cells,rowIndex)=>cells.map((cell,columnIndex)=>{step();
+   if(!('value' in cell))return {disposition:cell.disposition};
+   const encoded=canonicalSchemaJson(cell.value);step(encoded.length);budget.step(encoded.length);if(encoded.length>4096)fail('V2 canonical literal bound');
+   if(cell.disposition==='original')return {disposition:'original',value:cell.value};
+   const provenance=permitted[rowIndex].dispositions[columnIndex],d=provenance.disposition,occurrence=provenance.selectedOccurrence;
+   if(cell.disposition!=='transformed'||d.kind!=='transformed'||d.vocabulary!=='umf.security.protection'||!occurrence||!Number.isSafeInteger(occurrence.ruleIndex)||!Number.isSafeInteger(occurrence.disclosureIndex)||occurrence.ruleIndex<0||occurrence.disclosureIndex<0||id(cell.outputType)!==id(d.field))fail('V2 requires exact original selected catalog transform');
+   wireRef(d.field);wireText(d.transform);wireText(d.version);
+   return {disposition:'transformed',selection:occurrence,outputDomain:d.field,transform:{id:d.transform,version:d.version},value:cell.value,...(profiles.has(id(d.field))?{valueProfile:profiles.get(id(d.field))}:{})};
+  }));
+  const result={version:'umf.security.logical-disclosure-batch/0.1-candidate',status:'rendered',complete:false,authority:false,sources:disclosureSources(),decisions:traces,resources:permitted.map(t=>t.resource),batch:{version:'umf.security.disclosure/0.2.0',policy:{id:program.policy.id,revision:program.policy.revision},protection:{id:program.catalog.id,revision:program.catalog.revision},domains:program.closure.pins,columns,rows:wireRows}};
+  retainOutput(result);return freeze(result);
+ }
+ return freeze({status:'rendered',complete:false,authority:false,rows:output,valueProfiles});
 }
 
 /** Internal multi-action composition only. The public entry always creates its own ledger. */

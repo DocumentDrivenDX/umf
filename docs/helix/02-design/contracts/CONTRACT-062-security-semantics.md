@@ -1672,3 +1672,51 @@ consumer/source cohort, including the changed full initializer bytes/receipt;
 no old registration migrates automatically. Requests are bounded to4MiB, replies
 to16MiB UTF-8, projections256, routes4096, operations256, scans16 and facts10000.
 These transport bounds do not prove aggregate heap/time or native noninterference.
+
+
+### Private atomic provenance-bearing disclosure batch (2026-10-16)
+
+`evaluateCandidateCatalogReadDisclosureBatch(handle,owner,cut,selection)` and its
+`WithinOperation` variant with a final original shared operation ledger MUST use
+the original issued program and canonical fold/render path. Selection is the
+existing exact `{type,fields}` scan selection. This catalog-only profile requires
+an actual protection catalog; existing action, scan, render and selection-only
+APIs MUST retain their previous results. No package-root export is added.
+
+The immutable result is `{version,status,complete:false,authority:false,sources,
+decisions,resources,batch}` with version
+`umf.security.logical-disclosure-batch/0.1-candidate`. Success status is `rendered`.
+`sources` and the full ordered `decisions` census retain the selection-only
+producer's original metadata, resource keys, rule truths and winning occurrences.
+`resources` names only permitted rows in exactly the same order as `batch.rows`.
+`batch` MUST be an original `umf.security.disclosure/0.2.0` envelope: canonical
+column storage declarations come from the selected owner/type, values come from
+the same render operation, and transformed Cells carry the actual first selected
+policy occurrence, exact transform/version and output Field/profile. Equal
+transform contributors remain in decisions; no caller-authored occurrence is
+accepted. Original null, absence, withholding and transformed null remain distinct.
+
+All original rendering preflight and shared work/text/retention charges apply.
+The0.2 transport's column/row/cell/literal and source-string limits additionally
+apply, including empty populations and withheld-only columns. Catalog recipes
+execute only through the original issued pure definition context. Effective
+legacy inline transforms cannot be represented by0.2 and MUST refuse atomically;
+legacy API behavior remains unchanged. No second policy interpreter or per-Cell
+public transformation evaluator may supply the result. Any unresolved row, late
+recipe/refinement failure, invalid metadata or exhaustion returns exactly
+`{version,status:"refused",complete:false,authority:false,sources:null,decisions:[],
+resources:[],batch:null}`, with no accepted prefix.
+
+This is a supplied-cut logical computation and transport producer. It MUST NOT
+claim native/caller/source/current-cut authentication, compiler .4 admission,
+query operator permission or guarded release. Existing conditional occurrence
+and carrier algebra remain separate from implementation refinement evidence.
+
+The full census, source correlations and rule truths are private host/owner
+composition material. They MUST NOT be exposed directly to ordinary query
+readers or public diagnostics. The separately qualified native release boundary
+owns any permitted result disclosure; this private result is not that boundary.
+Catalog parameter literals MUST consume the same per-operation literal budget
+as rendered values, including unused transforms and empty/withheld batches.
+A single original parameter-validation pass per atomic operation is permitted;
+per-Cell whole-source revalidation remains prohibited.
