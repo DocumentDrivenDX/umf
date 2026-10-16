@@ -1,15 +1,36 @@
 """Native set-based bulk driver over the original action settlement machinery."""
 from __future__ import annotations
-from typing import Any, Mapping, cast
-from datetime import timedelta
+
 import json
+from collections.abc import Mapping
+from datetime import timedelta
+from typing import Any, cast
+
 from pydantic import TypeAdapter
-from .types import StrictModel, ActionRef
-from .native_program import NativeProgram, canonical_json
-from .native_actions import PostgresActionExecutor, NativeAdmission, _State, native_input_value
-from .protocols import (Committed, Receipt, Denied, ActionRefused, NativeOutcomeDetails,
-    ActionDenied, ActionTimedOut, ActionIndeterminate, ActionConflict, Conflict, TimedOut, Indeterminate, ActionFailed)
+
 from .bulk import AtomicBulkPlan, BulkOutcome, BulkPreview
+from .native_actions import (
+    NativeAdmission,
+    PostgresActionExecutor,
+    _State,
+    native_input_value,
+)
+from .native_program import NativeProgram, canonical_json
+from .protocols import (
+    ActionConflict,
+    ActionDenied,
+    ActionIndeterminate,
+    ActionRefused,
+    ActionTimedOut,
+    Committed,
+    Conflict,
+    Denied,
+    Indeterminate,
+    Receipt,
+    TimedOut,
+)
+from .types import ActionRef, StrictModel
+
 
 class _BulkState(_State):
     def __init__(self, action: ActionRef[Any,Any], program: NativeProgram, inputs: Mapping[str,object], preview: bool):
@@ -30,7 +51,7 @@ class _BulkState(_State):
             python_name=next(python for original,python in action.input_fields if original==source)
             field=action.input_type.model_fields[python_name]
             from typing import Annotated
-            TypeAdapter(cast(Any,Annotated[tuple([field.annotation,*field.metadata])] if field.metadata else field.annotation)).validate_python(inputs[name],strict=True)
+            TypeAdapter(cast(Any,Annotated[(field.annotation,*field.metadata)] if field.metadata else field.annotation)).validate_python(inputs[name],strict=True)
         self.statements=json.loads(program.statements_json);self.pre={};self.post={};self.scope=None;self.receipt=None
         self.markers=[];self.verification=[];self.changes=[];self.parameters=dict(inputs)
         self.request=canonical_json({'program':self.program,'inputDigest':program.bundle_input_digest,'parameters':{name:native_input_value(value) for name,value in self.inputs.items()}})
@@ -50,7 +71,7 @@ class _BulkState(_State):
         model=next(k.model for k in self.action.key_types if (k.module,k.element,k.key)==(ref['module'],ref['element'],ref['key']))
         fields=self.program['entity']['key']['fields']
         by_ref={(f['reference']['module'],f['reference']['element']):value for f,value in zip(fields,values,strict=True)}
-        return model.model_validate({name:by_ref[(module,element)] for module,element,name in getattr(model,'UMF_FIELDS')},strict=True)
+        return model.model_validate({name:by_ref[(module,element)] for module,element,name in model.UMF_FIELDS},strict=True)
 
     def execute(self, validate: bool):
         rows=yield ('query',*self.statement('/admission'))
@@ -122,8 +143,9 @@ class _Driver(PostgresActionExecutor):
 def native_bulk_plan(connection: Any, program: NativeProgram, action: ActionRef[Any,Any], inputs: Mapping[str,object], admission: NativeAdmission, *, default_timeout: timedelta, reconnect: Any=None) -> AtomicBulkPlan:
     return AtomicBulkPlan(_Driver(connection,program,action,inputs,admission,default_timeout,reconnect))
 
-from .native_actions import AsyncPostgresActionExecutor, AsyncNativeAdmission
 from .bulk import AsyncAtomicBulkPlan
+from .native_actions import AsyncNativeAdmission, AsyncPostgresActionExecutor
+
 
 class _AsyncDriver(AsyncPostgresActionExecutor):
     def __init__(self, connection: Any, program: NativeProgram, action: ActionRef[Any,Any], inputs: Mapping[str,object], admission: AsyncNativeAdmission, default_timeout: timedelta, reconnect: Any):
@@ -155,7 +177,8 @@ def native_bulk_plan_async(connection: Any, program: NativeProgram, action: Acti
     return AsyncAtomicBulkPlan(_AsyncDriver(connection,program,action,inputs,admission,default_timeout,reconnect))
 
 from .commands import CommandVariant
-from .targets import PostgresTarget, AsyncPostgresTarget, PostgresConfiguration
+from .targets import AsyncPostgresTarget, PostgresConfiguration, PostgresTarget
+
 
 class PostgresBulkTarget(PostgresTarget):
     def __init__(self, connection: Any, configuration: PostgresConfiguration, admission: NativeAdmission, *, reconnect: Any=None):

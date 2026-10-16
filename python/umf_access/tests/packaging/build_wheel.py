@@ -4,12 +4,13 @@ import hashlib
 import importlib.metadata
 import json
 import os
-from pathlib import Path
 import platform
 import subprocess
 import sys
 import tempfile
 import tomllib
+from pathlib import Path
+
 from replay_installed import inspect_wheel
 
 
@@ -44,7 +45,7 @@ def main() -> int:
         command=[sys.executable,'-I','-m','build','--wheel','--no-isolation','--outdir',str(args.out_dir.resolve()),str(package)]
         # Cwd outside checkout avoids accidental top-level module resolution.
         with tempfile.TemporaryDirectory(prefix='umf-access-wheel-build-') as temporary:
-            result=subprocess.run(command,cwd=temporary,env=env,text=True,capture_output=True)
+            result=subprocess.run(command,cwd=temporary,env=env,text=True,capture_output=True, check=False)
         report.update(command=command,exitCode=result.returncode,stdout=result.stdout,stderr=result.stderr,sources=sources,profile=profile)
         if result.returncode:
             raise ValueError('wheel build failed')
@@ -64,7 +65,7 @@ def main() -> int:
                 if member not in members or hashlib.sha256(members[member]).hexdigest()!=digest:
                     raise ValueError('wheel differs from source inventory: '+relative)
         report.update(status='pass',wheel=str(wheel.resolve()),wheelSha256=sha(wheel),inventory={name:hashlib.sha256(content).hexdigest() for name,content in members.items()})
-    except Exception as error:
+    except Exception as error:  # noqa: BLE001 -- Harness records every failure before returning a failing status.
         report.update(status='refused',reason=str(error))
     args.report.parent.mkdir(parents=True,exist_ok=True)
     args.report.write_text(json.dumps(report,indent=2)+'\n')

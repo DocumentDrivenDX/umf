@@ -1,20 +1,24 @@
 from __future__ import annotations
+
 """Canonical *logical Weft* text at build time; never native SQL lowering.
 
 Weft owns backend acceptance and execution artifacts. Page continuation stays in
 captured metadata, outside this grammar (S7). Logical existence uses WR-A7's
 LIMIT 1 probe, whose terminal kind is retained for catalog result decoding.
 """
-from typing import Protocol, cast
 from collections.abc import Mapping
 from contextvars import ContextVar
+from types import MappingProxyType
+from typing import Protocol, cast
+
 from ._expressions import Join
 
-_ALIASES: ContextVar[dict[tuple[str, str], str]] = ContextVar("join_aliases", default={})
+_ALIASES: ContextVar[Mapping[tuple[str, str], str]] = ContextVar("join_aliases", default=MappingProxyType({}))
 
 from ._context import CaptureError
 from ._expressions import Ordering
 from ._nodes import FieldRef, KeyLiteral, Node, ProjectionRef, RecordRef
+
 
 class LogicalVariant(Protocol):
     @property

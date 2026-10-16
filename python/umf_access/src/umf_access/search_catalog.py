@@ -1,15 +1,18 @@
 """Inert typed search catalog and bounded result assembly; no compiler imports."""
 from __future__ import annotations
-from collections.abc import Mapping, Awaitable
+
+from collections.abc import Awaitable, Mapping
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import Any, Protocol, TypeVar, cast
+from typing import Any, Protocol, TypeVar
+
 from pydantic import BaseModel
-from .types import StrictModel,MISSING
-from .catalog import Argument,TargetPin,CatalogError,NotCompiledForTarget
-from .native_program import NativeProgram
+
 from .adoption import TargetIdentity
-from .dsl import SearchResult,Fusion
+from .catalog import Argument, CatalogError, NotCompiledForTarget, TargetPin
+from .dsl import Fusion, SearchResult
+from .native_program import NativeProgram
+from .types import MISSING, StrictModel
 
 R=TypeVar('R')
 

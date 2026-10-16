@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 """Capture-only evaluation, isolated from host I/O and execution."""
 from contextvars import ContextVar
 from dataclasses import dataclass, field

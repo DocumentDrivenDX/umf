@@ -1,14 +1,14 @@
 """Red helper tests against a proposed ABI; generator integration still pending."""
 import unittest
-from decimal import Decimal
 from dataclasses import FrozenInstanceError
+from decimal import Decimal
 from typing import Annotated, ClassVar, final
 from unittest.mock import patch
 
 from pydantic import AfterValidator
-from umf_access.types import MISSING, StrictModel, ActionRef
+from umf_access.codec_support import checked_row, revalidate_model
+from umf_access.types import MISSING, ActionRef, StrictModel
 from umf_access.values import validate_decimal
-from umf_access.codec_support import revalidate_model, checked_row
 
 Amount = Annotated[Decimal, AfterValidator(
     lambda value: validate_decimal(value, precision=12, scale=2))]

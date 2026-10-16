@@ -1,10 +1,13 @@
 """Raw atomic bulk plans. No durable manifest, seal, submit or retry surface."""
 from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import Protocol, Any
-from .protocols import Receipt, NativeOutcomeDetails
+from typing import Protocol
+
+from .protocols import NativeOutcomeDetails, Receipt
 from .types import StrictModel
+
 
 @dataclass(frozen=True)
 class BulkPreview:

@@ -1,13 +1,12 @@
 """Local-only installed-wheel replay. No checkout runtime fallback or publishing."""
 from __future__ import annotations
+
 import argparse
-from email.parser import BytesParser
 import hashlib
 import importlib
 import importlib.metadata
 import json
 import os
-from pathlib import Path, PurePosixPath
 import platform
 import re
 import stat
@@ -15,6 +14,8 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+from email.parser import BytesParser
+from pathlib import Path, PurePosixPath
 
 
 def isolated_environment(environ: dict[str,str]) -> dict[str,str]:
@@ -56,7 +57,7 @@ def inspect_wheel(path: Path, pin: dict) -> dict[str, bytes]:
     if normalized(meta.get('Name',''))!=normalized(pin['distribution']) or meta.get('Version')!=pin['version']:
         raise ValueError('wheel distribution/version mismatch')
     dist_info=metadata[0].rsplit('/',1)[0]+'/'
-    if any(not (name.startswith('umf_access/') or name.startswith(dist_info)) for name in files):
+    if any(not (name.startswith(('umf_access/', dist_info))) for name in files):
         raise ValueError('unexpected wheel namespace')
     if 'umf_access/__init__.py' not in files or 'umf_access/py.typed' not in files:
         raise ValueError('wheel lacks runtime facade or typing marker')
@@ -199,7 +200,7 @@ def main() -> int:
             result=child(json.loads(config_path.read_text()),runtime_only=args.runtime_only_child is not None)
             print(json.dumps(result))
             return 0
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001 -- Harness records every failure before returning a failing status.
             print(json.dumps({'status':'refused','reason':str(error)}))
             return 1
     if not all((args.wheel,args.manifest,args.generated_root,args.package,args.profile,args.report,args.build_report)):
@@ -208,7 +209,7 @@ def main() -> int:
     env=isolated_environment(dict(os.environ))
     env['PYTHONDONTWRITEBYTECODE']='1'
     def execute(command: list[str], cwd: Path) -> subprocess.CompletedProcess:
-        result=subprocess.run(command,cwd=cwd,env=env,text=True,capture_output=True)
+        result=subprocess.run(command,cwd=cwd,env=env,text=True,capture_output=True, check=False)
         report['commands'].append({'command':command,'exitCode':result.returncode,'stdout':result.stdout,'stderr':result.stderr})
         if result.returncode:
             raise ValueError('replay command failed; see retained command outcome')
@@ -257,7 +258,7 @@ def main() -> int:
             if sha(args.wheel)!=report['wheelSha256'] or sha(args.manifest)!=report['manifestSha256']:
                 raise ValueError('wheel or manifest changed during replay')
             report['status']='pass'
-    except Exception as error:
+    except Exception as error:  # noqa: BLE001 -- Harness records every failure before returning a failing status.
         report.update(status='refused',reason=str(error))
     args.report.parent.mkdir(parents=True,exist_ok=True)
     args.report.write_text(json.dumps(report,indent=2)+'\n')

@@ -1,10 +1,16 @@
 """B-TP-005 unit contract; generated commerce acceptance is a separate gate."""
-from decimal import Decimal
 import unittest
+from decimal import Decimal
 
 from umf_access.capture import capture
 from umf_access.dsl import (
-    Column, FieldRef, Param, Predicate, Query, QueryOutsideCatalog, RecordRef, query,
+    Column,
+    FieldRef,
+    Param,
+    Query,
+    QueryOutsideCatalog,
+    RecordRef,
+    query,
 )
 
 
@@ -39,7 +45,7 @@ class RuntimeGuards(unittest.TestCase):
     # @covers US-082-AC5
     def test_field_evaluation_outside_capture_refuses(self):
         with self.assertRaises(QueryOutsideCatalog):
-            amount > Decimal("1")
+            _ = amount > Decimal(1)
 
     # @covers US-082-AC5
     def test_query_root_evaluation_outside_capture_refuses(self):
@@ -54,10 +60,10 @@ class RuntimeGuards(unittest.TestCase):
         ):
             @query
             def declaration(minimum: Param[Decimal]):
-                operation(amount > minimum)
+                operation(amount > minimum)  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
                 return objects.limit(1).all()
 
-            with self.subTest(operation=operation):
+            with self.subTest(operation=operation):  # noqa: SIM117 -- Keep transaction and refusal/cleanup scopes explicit.
                 with self.assertRaises(TypeError):
                     capture(declaration)
 
@@ -88,9 +94,9 @@ class RuntimeGuards(unittest.TestCase):
         ):
             @query
             def declaration():
-                return operation()
+                return operation()  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
 
-            with self.subTest(operation=operation):
+            with self.subTest(operation=operation):  # noqa: SIM117 -- Keep transaction and refusal/cleanup scopes explicit.
                 with self.assertRaises(TypeError):
                     capture(declaration)
 
@@ -139,6 +145,7 @@ class SchemaIdentityAndContinuations(unittest.TestCase):
     # @covers US-082-AC1
     def test_continuation_keeps_key_sort_states_and_target(self):
         from dataclasses import FrozenInstanceError
+
         from pydantic import MISSING
         from umf_access.dsl import Continuation
 
@@ -153,7 +160,9 @@ class SchemaIdentityAndContinuations(unittest.TestCase):
 
     # @covers US-082-AC5
     def test_root_reexports_are_exact_and_guarded(self):
-        from umf_access import Column as PublicColumn, query as public_query, Param as PublicParam
+        from umf_access import Column as PublicColumn
+        from umf_access import Param as PublicParam
+        from umf_access import query as public_query
         self.assertIs(PublicColumn, Column)
         self.assertIs(public_query, query)
         self.assertIs(PublicParam, Param)
@@ -163,6 +172,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
     # @covers US-082-AC1
     def test_projection_uses_explicit_fields_and_immutable_query(self):
         from typing import ClassVar
+
         from pydantic import BaseModel
         from umf_access.dsl.render import render_logical
 
@@ -205,9 +215,9 @@ class GeneratedDelegationHooks(unittest.TestCase):
     # @covers US-082-AC1
     def test_command_keeps_action_and_explicit_mutable_field_map(self):
         from collections.abc import Mapping
-        from dataclasses import dataclass
         from types import MappingProxyType
         from typing import ClassVar
+
         from umf_access.dsl import command
         from umf_access.dsl.render import render_logical
 
@@ -238,6 +248,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
     # @covers US-082-AC6
     def test_projection_and_repeated_hydration_do_not_lose_result_shape(self):
         from typing import ClassVar
+
         from pydantic import BaseModel
         from umf_access.capture import CaptureError
         from umf_access.dsl import Related
@@ -255,7 +266,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
         ):
             @query
             def declaration():
-                return change(objects.include_keys(relation, limit=5)).limit(10).all()
+                return change(objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023 -- The visitor/declaration is consumed synchronously in this loop.
 
             with self.subTest(change=change), self.assertRaises(CaptureError) as caught:
                 capture(declaration)
@@ -264,6 +275,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
     # @covers US-082-AC6
     def test_query_cannot_capture_a_write_terminal(self):
         from typing import ClassVar
+
         from umf_access.capture import CaptureError
 
         class UnitRoot(Query[Order, Order, str]):
@@ -271,7 +283,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
 
         @query
         def declaration():
-            return UnitRoot(RECORD)._update({"amount": Decimal("2")})
+            return UnitRoot(RECORD)._update({"amount": Decimal(2)})
 
         with self.assertRaises(CaptureError) as caught:
             capture(declaration)

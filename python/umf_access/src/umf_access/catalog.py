@@ -1,17 +1,21 @@
 """Inert precompiled read catalogs. No discovery, filesystem or compiler imports."""
 from __future__ import annotations
-from collections.abc import Mapping, Awaitable, Generator, AsyncGenerator
+
+from collections.abc import AsyncGenerator, Awaitable, Generator, Mapping
 from dataclasses import dataclass
 from typing import Any, cast
+
 from pydantic import BaseModel, TypeAdapter
+
+from .adoption import TargetIdentity
+from .codec_support import revalidate_model
+from .dsl import Continuation, Page, SortValue
+from .pages import ReadContinuation, ReadPage, StaleContinuation
+from .protocols import AsyncReadTarget, ReadTarget
+from .reviewed import CatalogRead
 from .types import MISSING, StrictModel, Vector
 from .values import validate_vector
-from .codec_support import revalidate_model
-from .reviewed import CatalogRead
-from .adoption import TargetIdentity
-from .protocols import ReadTarget, AsyncReadTarget
-from .pages import ReadContinuation, ReadPage, StaleContinuation
-from .dsl import Continuation, Page, SortValue
+
 
 class CatalogError(ValueError): pass
 class NotCompiledForTarget(CatalogError): pass

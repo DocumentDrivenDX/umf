@@ -1,9 +1,10 @@
 """Shared generated-model ABI. Imports perform no host operations."""
+import re
 from dataclasses import dataclass
 from typing import ClassVar, Generic, TypeAlias, TypeVar, final
-import re
 
-from pydantic import BaseModel, ConfigDict, MISSING as MISSING
+from pydantic import MISSING as MISSING  # noqa: PLC0414 -- Explicit typed public re-export.
+from pydantic import BaseModel, ConfigDict
 
 RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
 
@@ -45,8 +46,8 @@ class StrictModel(BaseModel):
     )
 
 
-InputT = TypeVar("InputT", bound=StrictModel, covariant=True)
-OutputT = TypeVar("OutputT", covariant=True)
+InputT_co = TypeVar("InputT_co", bound=StrictModel, covariant=True)
+OutputT_co = TypeVar("OutputT_co", covariant=True)
 
 
 def _is_model_type(value: object, *, allow_none: bool = False) -> bool:
@@ -95,13 +96,13 @@ class RecordTypeRef:
 
 @final
 @dataclass(frozen=True)
-class ActionRef(Generic[InputT, OutputT]):
+class ActionRef(Generic[InputT_co, OutputT_co]):
     """Immutable generated action identity and value types; never an executor."""
 
     module: str
     action: str
-    input_type: type[InputT]
-    output_type: type[OutputT]
+    input_type: type[InputT_co]
+    output_type: type[OutputT_co]
     source: ActionSource | None = None
     input_fields: tuple[tuple[str,str], ...] = ()
     key_types: tuple[KeyTypeRef, ...] = ()

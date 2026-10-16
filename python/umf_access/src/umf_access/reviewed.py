@@ -3,14 +3,17 @@
 The compiler is supplied explicitly at build time. Runtime never imports Weft.
 """
 from __future__ import annotations
-from collections.abc import Mapping
-from dataclasses import dataclass
-from decimal import Decimal
+
 import hashlib
 import json
 import re
+from collections.abc import Mapping
+from dataclasses import dataclass
+from decimal import Decimal
 from typing import Generic, Protocol, TypeVar, cast
+
 from pydantic import BaseModel
+
 from .types import RUNTIME_IDENTITY
 
 P = TypeVar("P", bound=BaseModel)

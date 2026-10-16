@@ -1,25 +1,36 @@
 from __future__ import annotations
+
 """Immutable declaration builders. Terminal values describe results, never execute."""
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, replace
 from datetime import date, datetime
 from decimal import Decimal
 from functools import wraps
-from typing import Literal, Any, Generic, ParamSpec, Self, TypeAlias, TypeVar, cast, overload
-from pydantic import BaseModel, MISSING
+from typing import (
+    Any,
+    Generic,
+    Literal,
+    ParamSpec,
+    Self,
+    TypeAlias,
+    TypeVar,
+    cast,
+    overload,
+)
+
+from pydantic import MISSING, BaseModel
 
 from ..types import ActionRef
-
 from ._context import CaptureError, require_capture
-from ._expressions import Join, Column, Ordering, Param, Predicate, Related, operand
-from ._nodes import FieldRef, Node, ProjectionRef, RecordRef, Terminal, JoinProjection
+from ._expressions import Column, Join, Ordering, Param, Predicate, Related, operand
+from ._nodes import FieldRef, JoinProjection, Node, ProjectionRef, RecordRef, Terminal
 from .search import RankedQuery, SearchLeg
 
 O = TypeVar("O")
 J = TypeVar("J")
 ProjectionModel = TypeVar("ProjectionModel", bound=BaseModel)
 R = TypeVar("R")
-G_co = TypeVar("G_co")
+G = TypeVar("G")
 K = TypeVar("K")
 T = TypeVar("T")
 T1 = TypeVar("T1")
@@ -70,10 +81,10 @@ class WithKeys(Generic[R, K]):
 
 
 @dataclass(frozen=True)
-class Grouped(Generic[O, G_co, K]):
+class Grouped(Generic[O, G, K]):
     query: Query[O, Any, K]
 
-    def count(self) -> Terminal[list[G_co]]:
+    def count(self) -> Terminal[list[G]]:
         require_capture()
         return Terminal(Node("group_count", (self.query.ref, self.query.steps)))
 
@@ -297,7 +308,7 @@ def query(function: Callable[P, R]) -> Callable[P, R]:
     def guarded(*args: P.args, **kwargs: P.kwargs) -> R:
         require_capture()
         return function(*args, **kwargs)
-    setattr(guarded, "__umf_kind__", "query")
+    guarded.__umf_kind__ = "query"
     return guarded
 
 
@@ -306,8 +317,8 @@ def command(*, action: ActionRef[Any, Any]) -> Callable[[Callable[P, R]], Callab
         raise TypeError("command requires a generated action reference")
     def decorate(function: Callable[P, R]) -> Callable[P, R]:
         guarded = query(function)
-        setattr(guarded, "__umf_kind__", "command")
-        setattr(guarded, "__umf_action__", action)
+        guarded.__umf_kind__ = "command"
+        guarded.__umf_action__ = action
         return guarded
     return decorate
 
