@@ -21,7 +21,7 @@ UTF-16 refusal.
 
 Installed Truss tests pass ten original schema/instance/ordinary-query/typed
 catalog controls. Ashlar local publication tests pass seven controls using real
-PostgreSQL pins and Delta UUID/version identity. Seventeen actual local Delta
+PostgreSQL pins and Delta UUID/version identity. Nineteen actual local Delta
 action/bulk controls include native human/service admission, independent role
 revocation blocked through commit, real optimistic conflict, and response loss
 after an actual commit with Indeterminate/quarantine. Five separate native
@@ -50,7 +50,12 @@ The CI repair packet also verifies final source-guarded wheels on both pinned
 Python versions, all runtime units, native suites and checker corpora. Repeated
 caller cancellation now awaits one finite original settlement and retains its
 original cause; an actual native row-lock test cancels five times during held
-rollback. Local Delta has eighteen installed controls after explicit original
+rollback. Local Delta has nineteen installed controls after explicit original
 commit/marker reconciliation, including a later independent commit and a strict
-inspection bound. This custody operation does not fabricate typed replay or
+inspection bound, plus full original-program byte admission. This custody operation does not fabricate typed replay or
 clear quarantine. Truss's tested ordinary-read iteration is merged via PR11.
+
+The `ruff017-final/` packet passes both final source-verified installed native
+replays and all pinned reporting/search positive and negative type controls.
+CI now pins Ruff 0.17.1; targeted native-custody and public-export exceptions
+retain documented semantics rather than changing them to satisfy a new rule.
