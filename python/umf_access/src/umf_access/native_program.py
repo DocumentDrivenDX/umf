@@ -61,7 +61,7 @@ class NativeProgram:
         def visit(value: Any, path: str) -> None:
             if isinstance(value, dict):
                 if set(value) == {'sql', 'parameters'}:
-                    sql, order = parameter_style(value['sql'], len(value['parameters']))
+                    sql, order = (value['sql'],tuple(range(len(value['parameters'])))) if program.get('profile') in ('umf.actions.native-delta/0.1','umf.actions.native-delta-bulk/0.1') else parameter_style(value['sql'], len(value['parameters']))
                     statements[path] = {'sql': sql, 'order': order}
                 else:
                     for key, child in value.items(): visit(child, path + '/' + key)
@@ -89,8 +89,14 @@ class NativeProgram:
         if self.runtime_abi != RUNTIME_IDENTITY or len(self.bundle_input_digest)!=64 or any(c not in '0123456789abcdef' for c in self.bundle_input_digest):
             raise ActionRefused('NATIVE_PROGRAM_ABI')
         program = program_json(self.original_json)
+        if program.get('version')=='weft.native-action/0.1':
+            if program.get('profile')=='umf.actions.native-delta/0.1':
+                if program.get('target')!='spark-delta4':raise ActionRefused('NATIVE_PROGRAM_PROFILE')
+            elif program.get('profile')!='umf.actions.native-sql/0.1' or program.get('target') not in ('postgresql18','lakebase18'):
+                raise ActionRefused('NATIVE_PROGRAM_PROFILE')
+        if program.get('profile')=='umf.actions.native-delta-bulk/0.1' and (program.get('version')!='weft.native-bulk/0.1' or program.get('target')!='spark-delta4'):raise ActionRefused('NATIVE_PROGRAM_PROFILE')
         pin = program.pop('structuralDigest', {})
-        if pin.get('owner') != {'weft.native-action/0.1':'weft-postgresql-native-action','weft.native-bulk/0.1':'weft-postgresql-native-bulk','weft.search/0.1':'weft-postgresql-search'}.get(program.get('version')) or pin.get('version') != '0.1' or hashlib.sha256(canonical_json(program).encode()).hexdigest() != pin.get('sha256'):
+        if pin.get('owner') != {'weft.native-action/0.1':('weft-databricks-native-action' if program.get('profile')=='umf.actions.native-delta/0.1' and program.get('target')=='spark-delta4' else 'weft-postgresql-native-action'),'weft.native-bulk/0.1':('weft-databricks-native-bulk' if program.get('profile')=='umf.actions.native-delta-bulk/0.1' and program.get('target')=='spark-delta4' else 'weft-postgresql-native-bulk'),'weft.search/0.1':'weft-postgresql-search'}.get(program.get('version')) or pin.get('version') != '0.1' or hashlib.sha256(canonical_json(program).encode()).hexdigest() != pin.get('sha256'):
             raise ActionRefused('NATIVE_PROGRAM_INTEGRITY')
         program['structuralDigest'] = pin
         if program.get('status') != 'compiled' or program.get('version') not in ('weft.native-action/0.1','weft.native-bulk/0.1','weft.search/0.1'):
@@ -100,7 +106,7 @@ class NativeProgram:
         def visit(value: Any, path: str) -> None:
             if isinstance(value, dict):
                 if set(value) == {'sql', 'parameters'}:
-                    sql, order = parameter_style(value['sql'], len(value['parameters']))
+                    sql, order = (value['sql'],tuple(range(len(value['parameters'])))) if program.get('profile') in ('umf.actions.native-delta/0.1','umf.actions.native-delta-bulk/0.1') else parameter_style(value['sql'], len(value['parameters']))
                     expected[path] = {'sql': sql, 'order': list(order)}
                 else:
                     for key, child in value.items(): visit(child, path + '/' + key)

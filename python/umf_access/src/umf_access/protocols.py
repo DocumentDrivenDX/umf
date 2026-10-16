@@ -65,7 +65,7 @@ class NativeOutcomeDetails:
     recovery: object = field(repr=False)
 
     def __post_init__(self) -> None:
-        if self.action.source is None or self.profile not in ("umf.actions.native-sql/0.1","umf.actions.native-bulk/0.1"):
+        if self.action.source is None or self.profile not in ("umf.actions.native-sql/0.1","umf.actions.native-bulk/0.1","umf.actions.native-delta/0.1","umf.actions.native-delta-bulk/0.1"):
             raise ValueError("original source-bound native profile required")
         for text in (self.markers_json,self.verification_json,self.changes_json,self.attribution_json,self.transaction_json,self.request_json):
             if text is not None:

@@ -25,6 +25,7 @@ from pydantic import BaseModel, MISSING, create_model
 from ..capture import capture, CapturedVariant, ProjectionRef
 from ..dsl import Node, FieldRef, RecordRef, render_logical
 from ..reviewed import ReviewedSQL, ReadCompiler
+from ..engine_catalog import EngineRead
 from ..types import StrictModel, RUNTIME_IDENTITY, ActionRef
 from ..native_program import NativeProgram, program_json
 from .commands import emit_command
@@ -113,6 +114,10 @@ def resolve_configuration(configuration: dict[str,Any], root: Path) -> tuple[dic
         if 'bindingSource' in target:
             if 'binding' in target:raise CatalogBuildError('duplicate binding source')
             target['binding']=program_json(source(target.pop('bindingSource')).decode('utf-8'))
+        if target.get('kind') in ('truss','ashlar'):
+            requests=target.get('engineRequests')
+            if type(requests) is not dict or not requests or any(type(r) is not dict or not r.get('modules') or any(m.get('documentJson') not in originals for m in r['modules']) for r in requests.values()):
+                raise CatalogBuildError('complete original pinned engine request source inventory required')
         if target.get('binding',{}).get('modelJson') not in originals:
             raise CatalogBuildError('binding model must equal one complete original pinned document')
     return resolved,provenance
@@ -161,7 +166,7 @@ def compile_catalog(configuration: dict[str,Any], root: Path, compiler: ReadComp
            'from datetime import timedelta','from decimal import Decimal',
            'from typing import ClassVar, cast, overload, TypeVar','from collections.abc import Awaitable, Generator, AsyncGenerator',
            'from pydantic import MISSING','from umf_access.types import StrictModel',
-           'from umf_access.reviewed import CatalogRead','from umf_access.pages import ReadPage, ReadContinuation','from umf_access.dsl import Page, Continuation',
+           'from umf_access.reviewed import CatalogRead','from umf_access.engine_catalog import EngineRead','from umf_access.pages import ReadPage, ReadContinuation','from umf_access.dsl import Page, Continuation',
            'from umf_access.protocols import ReadTarget, AsyncReadTarget',
            'from umf_access.catalog import Argument, ReadPlan, ReadVariant, TargetPin, run_query, run_stream',
            'from umf_access.codec_support import make_projection_model','from .models import *','from .keys import *','']
@@ -173,8 +178,10 @@ def compile_catalog(configuration: dict[str,Any], root: Path, compiler: ReadComp
     action_refs=[a for a in vars(action_module).values() if isinstance(a,ActionRef)] if action_module else []
     action_requests={}
     for target in targets:
-        if set(target)-{'id','kind','backendId','backendVersion','targetProfile','binding','platform','nativeActions','security','roleMappings','sessionPrincipal','maxItems','vectorBindings','snapshots'}:
+        if set(target)-{'id','kind','backendId','backendVersion','targetProfile','binding','platform','nativeActions','security','roleMappings','sessionPrincipal','maxItems','vectorBindings','snapshots','engineRequests','engineCompiler'}:
             raise CatalogBuildError('unknown target configuration member')
+        if target['kind'] in ('truss','ashlar') and action_refs:
+            raise CatalogBuildError('WEFT_BLOCKED: engine-owned original action executor catalog required')
         requests=target.get('nativeActions')
         if requests is None:
             requests=[]
@@ -183,11 +190,11 @@ def compile_catalog(configuration: dict[str,Any], root: Path, compiler: ReadComp
                     raise CatalogBuildError('WEFT_BLOCKED: selected actions require original target security, role mappings and principal profile')
                 action_source=reference.source
                 if action_source is None:raise CatalogBuildError('original selected action source required')
-                requests.append({'version':'weft.native-action/0.1','target':{'postgresql':'postgresql18','lakebase':'lakebase18'}.get(target['kind']),'binding':target['binding'],'source':{'documentId':action_source.document_id,'coreVersion':action_source.core_version,'module':action_source.module,'action':action_source.action,'documentSha256':action_source.document_sha256,'actionPointer':action_source.action_pointer,'invocation':{'id':action_source.invocation_id,'version':action_source.invocation_version}},'security':target['security'],'roleMappings':target['roleMappings'],'sessionPrincipal':target['sessionPrincipal']})
+                requests.append({'version':'weft.native-action/0.1','target':{'postgresql':'postgresql18','lakebase':'lakebase18','spark-delta':'spark-delta4'}.get(target['kind']),'binding':target['binding'],'source':{'documentId':action_source.document_id,'coreVersion':action_source.core_version,'module':action_source.module,'action':action_source.action,'documentSha256':action_source.document_sha256,'actionPointer':action_source.action_pointer,'invocation':{'id':action_source.invocation_id,'version':action_source.invocation_version}},'security':target['security'],'roleMappings':target['roleMappings'],'sessionPrincipal':target['sessionPrincipal']})
         if {(r['source']['module'],r['source']['action']) for r in requests}!={(a.module,a.action) for a in action_refs} or len(requests)!=len(action_refs):
             raise CatalogBuildError('every selected action must compile once for each raw target')
         for action_request in requests:
-            if action_request['binding']!=target['binding'] or action_request['target']!={'postgresql':'postgresql18','lakebase':'lakebase18'}.get(target['kind']):
+            if action_request['binding']!=target['binding'] or action_request['target']!={'postgresql':'postgresql18','lakebase':'lakebase18','spark-delta':'spark-delta4'}.get(target['kind']):
                 raise CatalogBuildError('native action target/binding differs')
             original=action_request['source']
             action_module=importlib.import_module(package+'.actions')
@@ -289,10 +296,28 @@ def compile_catalog(configuration: dict[str,Any], root: Path, compiler: ReadComp
                 current=replace(variant,node=Node(node.op,(variant.node.args[0],tuple(s for s in cast(tuple[Node,...],variant.node.args[1]) if s.op!='select')+(Node('into',(ProjectionRef(package+'.models',result.__name__,projection_fields,projection_names),)),),*variant.node.args[2:])))
             for target in targets:
                 kind=target['kind'];profile={'postgresql':'postgresql18','lakebase':'lakebase18','spark-delta':'spark-delta4'}.get(kind)
-                if profile is None: raise CatalogBuildError('WEFT_BLOCKED: target has no admitted read compiler')
+                engine=kind in ('truss','ashlar')
+                if profile is None and not engine: raise CatalogBuildError('WEFT_BLOCKED: target has no admitted read compiler')
                 binding=target['binding'];logical=render_logical(current,binding=binding)
                 if terminal=='count': logical=logical.replace('SELECT COUNT(*) FROM','SELECT COUNT(*) AS "count" FROM',1)
-                compiled=ReviewedSQL(logical,params,result,1000,keyset=terminal=='page').build(compiler,target=profile,binding=binding,snapshots=target.get('snapshots'))
+                entry_class='CatalogRead'
+                if engine:
+                    if terminal=='page':raise CatalogBuildError('WEFT_BLOCKED: original engine page catalog required')
+                    method=target.get('engineCompiler')
+                    if method not in ({'truss-runtime'} if kind=='truss' else {'registered','ashlar-spark4'}):
+                        raise CatalogBuildError('explicit engine compiler selection required')
+                    original=target.get('engineRequests',{}).get(name+':'+str(vi))
+                    if type(original) is not dict or original.get('sql')!=logical:
+                        raise CatalogBuildError('original admitted engine SQL must equal the captured declaration')
+                    native=original.get('target',{})
+                    if any(native.get(k)!=target[k] for k in ('backendId','backendVersion','targetProfile')):
+                        raise CatalogBuildError('original engine target differs')
+                    if not original.get('modules') or any(m.get('documentJson')!=binding['modelJson'] for m in original['modules']):
+                        raise CatalogBuildError('original engine model differs from selected logical binding')
+                    compiled=EngineRead.build(compiler,original,parameters=params,result=result,method=method)
+                    entry_class='EngineRead'
+                else:
+                    compiled=ReviewedSQL(logical,params,result,1000,keyset=terminal=='page').build(compiler,target=profile,binding=binding,snapshots=target.get('snapshots'))
                 context=_json({'inputDigest':manifest['inputDigest'],'entryName':name,'presence':variant.presence,'targetId':target['id'],'configurationSha256':_sha(_json(configuration).encode())})
                 compiled=replace(compiled,context_json=context)
                 if cursor_key is not None:
@@ -305,9 +330,9 @@ def compile_catalog(configuration: dict[str,Any], root: Path, compiler: ReadComp
                         if len(matches)!=1: raise CatalogBuildError('WEFT_BLOCKED: exact selected Key absent from ordering')
                         components.append((key_field,matches[0]))
                     key_components=tuple(components)
-                digest=_sha(_json(binding).encode());platform=tuple((p['name'],tuple(str(v) for v in p['versions'])) for p in target['platform'])
+                digest=original['target']['bindingSha256'] if engine else _sha(_json(binding).encode());platform=tuple((p['name'],tuple(str(v) for v in p['versions'])) for p in target['platform'])
                 pin=(kind,target['backendId'],target['backendVersion'],target['targetProfile'],digest,platform)
-                variants.append(f'ReadVariant({variant.presence!r}, TargetPin{pin!r}, CatalogRead({compiled.artifact_json!r}, {params_name}, {result_expr}, {context!r}), {tuple(paths)!r})')
+                variants.append(f'ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {result_expr}, {context!r}), {tuple(paths)!r})')
                 entries.append({'name':name,'kind':'query','targetId':target['id'],'presence':variant.presence,'artifact':json.loads(compiled.artifact_json),'pin':pin,'parameters':paths})
         plan=f'_Q{number}'
         argument_tuple='('+', '.join(argument_code)+(',' if argument_code else '')+')'

@@ -30,6 +30,7 @@ class NativeScope:
     authenticated: str
     effective: str
     custody: object
+    attribution_json: str | None = None
 
     def __post_init__(self) -> None:
         if any(type(v) is not str or not v for v in (self.store, self.epoch, self.authenticated, self.effective)):
@@ -117,7 +118,7 @@ class _State:
     def details(self, transaction: str) -> NativeOutcomeDetails:
         return NativeOutcomeDetails(self.action, self.program['profile'], _json(self.markers),
             not self.changes if transaction == 'committed' else None, _json(self.verification),
-            _json(self.changes), None if self.scope is None else _json({'authenticated': self.scope.authenticated, 'effective': self.scope.effective}),
+            _json(self.changes), None if self.scope is None else self.scope.attribution_json if self.scope.attribution_json is not None else _json({'authenticated': self.scope.authenticated, 'effective': self.scope.effective}),
             self.receipt, _json({'state': transaction}), self.request, self.scope)
 
     def key(self, entity: Any) -> StrictModel:
@@ -228,6 +229,7 @@ class PostgresActionExecutor:
         if self.quarantined: raise ActionRefused('NATIVE_CONNECTION_QUARANTINED')
         matching = [p for p in self.programs if p.checked()['source']['documentSha256']==getattr(action.source,'document_sha256',None) and p.checked()['source']['action']==action.action]
         if len(matching)!=1: raise ActionRefused('NATIVE_ACTION_NOT_COMPILED')
+        if matching[0].checked().get('profile')!='umf.actions.native-sql/0.1':raise ActionRefused('POSTGRESQL_NATIVE_PROFILE_REQUIRED')
         return _State(action,matching[0],inputs)
 
     def _quarantine(self, state: _State) -> Indeterminate:
@@ -312,6 +314,7 @@ class AsyncPostgresActionExecutor:
         if self.quarantined: raise ActionRefused('NATIVE_CONNECTION_QUARANTINED')
         matching=[p for p in self.programs if p.checked()['source']['documentSha256']==getattr(action.source,'document_sha256',None) and p.checked()['source']['action']==action.action]
         if len(matching)!=1:raise ActionRefused('NATIVE_ACTION_NOT_COMPILED')
+        if matching[0].checked().get('profile')!='umf.actions.native-sql/0.1':raise ActionRefused('POSTGRESQL_NATIVE_PROFILE_REQUIRED')
         return _State(action,matching[0],inputs)
 
     async def _quarantine(self, state: _State) -> Indeterminate:
