@@ -234,6 +234,18 @@ sees one consistent snapshot; on `unity-catalog` and `spark-delta` it uses
 snapshot pages. Each page still obeys the 1,000-row page bound; the timeout applies
 per page.
 
+The Truss engine equivalent is separately admitted by its owner: one exclusively
+leased READ COMMITTED READ ONLY transaction with a fixed insensitive native
+cursor data snapshot, plus complete fresh original binding/program/actor and
+native scope admission before and after every bounded fetch. READ COMMITTED is
+not called repeatable-read. Truss must refuse streams until this separate
+compiler/native/lifecycle profile has its own evidence; ordinary RC pages and
+`snapshot=True` page refusal remain unchanged. Native whole-source scan and
+materialization limits remain explicit, never relabeled as per-page limits or
+silently treated as exhaustion. A positive `max_rows` has no API ceiling; it
+does not waive native resource refusal. Client row buffering is bounded by page
+size; server processing and memory have separately reported native bounds.
+
 ### Async targets
 
 Each protocol has an async counterpart (`AsyncReadTarget`, `AsyncActionExecutor`,
@@ -433,6 +445,14 @@ The cheap resolution check runs on each connection checkout/use-boundary that ma
 
 On Spark/Unity Catalog a self-committing mutation statement or atomic-block dispatch is the commit-uncertainty boundary; there need not be a separate COMMIT RPC. Timer expiry, callback error or cancellation after dispatch never proves noncommit. Manifest control deadlines preserve the original control protocol unknown/recovery classifications rather than projecting business TimedOut onto uncertain control state.
 
-Streams require an idle host connection and own only their explicitly opened read-only repeatable-read unit, closing/rolling it back on exhaustion, bound, timeout, exception or async cancellation. An already-active transaction refuses unless the host supplies a separately qualified compatible snapshot wrapper with explicit cleanup ownership; the SDK never commits/rolls back unrelated host work. Stream memory is bounded by page size, not max_rows.
+Streams require an idle host connection and own only their explicitly opened
+read-only repeatable-read unit (or the separately qualified Truss fixed-cursor
+RC equivalent described above), closing/rolling it back on exhaustion, bound,
+timeout, exception or async cancellation. The connection and transaction are
+exclusively leased for the complete stream lifetime, including time between
+pages. Any page failure terminates and cleans up that stream; savepoint rollback
+alone cannot recover its cursor position. Final-page delivery and successful
+completion follow positive native cleanup. Reaching `max_rows` is a bound, not a
+claim of natural exhaustion. An already-active transaction refuses unless the host supplies a separately qualified compatible snapshot wrapper with explicit cleanup ownership; the SDK never commits/rolls back unrelated host work. Stream memory is bounded by page size, not max_rows.
 
 A pooled connection with unresolved cancellation/transaction cleanup is quarantined by the host and cannot be returned for reuse until original native settlement establishes a safe state; no new transaction is opened to mask that uncertainty.
