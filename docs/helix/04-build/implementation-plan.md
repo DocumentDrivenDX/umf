@@ -12472,3 +12472,47 @@ Reviewed catalogs now bind to participating generated stage-one digest/runtime A
 ### UUID implementation main integration — 2026-10-16
 
 Implementation commit `25a38767` integrates with the fourteen newer remote-main commits. The execution-log conflict retains both workstreams. On the combined source, both TypeScript configurations pass and the seven UUID/128-bit test files pass27 tests with6849 assertions; `git diff --check` is clean. This integration check does not refresh the earlier native or browser receipts or claim a full-repository replay.
+
+### Five-adapter128-bit completion execution — 2026-10-16
+
+Owner authorization: finish PostgreSQL and SQL Server end to end, then Avro,
+Parquet and TableSpec, including qualification gates. CONTRACT-076, SD-005 and
+FEAT-005 IDEAL-09 govern. Preserve the existing core0.9 and carrier1 profiles;
+introduce a separately selected model profile for composition rather than
+silently promoting old receipts. Portable modules own schema/value recipes;
+fixture-only host scripts own native execution. Consumer deployment remains
+outside UMF. Catalog: installed HELIX0.17.0 workflows/graph.yml.
+
+Execution sequence and exits:
+1. Resolve complete explicit carrier layouts; expand every pair into both slots
+   for SQL tables, Keys, indexes and foreign keys. Verify constraints, external
+   malformed writes, complete-row codecs, transaction rollback and actual native
+   catalog/read recovery on PostgreSQL17 and SQL Server2022.
+2. Compose Avro/Parquet records and paired presence, classify actual native output,
+   and retain native unsupported enforcement as explicit residuals.
+3. Qualify TableSpec canonical text through its actual Spark path; unsupported
+   exact64-bit carrier choices stay blocked, never narrowed to signed32-bit.
+4. Run current-source portable/browser/native matrix, negative controls and
+   two-system admission/five-system delivery checks. Native equivalence and
+   consumer-runtime adoption require their own evidence, not a schema receipt.
+
+Continuation evidence: `evidence/uuid-adapter-completion.md`. Initial probe ceiling
+is provisionally30000 model tokens including implementation, checks and review;
+no comparable metered baseline is available and this runtime exposes no per-turn
+usage meter or enforced cap. Reassess only at a meaningful checkpoint. Existing
+module boundaries and browser host-import negative controls remain mandatory.
+
+Five-adapter128-bit execution closeout — 2026-10-16: the explicit uuid-model1
+subset now passes separate qualified ideal admission and five-priority delivery.
+PostgreSQL17.9 and SQL Server2022 each recover2,709 native rows across seven
+carrier cases, with Key/FK/default/allowed-value controls, rollback and actual
+concurrent writer barriers. Avro/fastavro and signed/unsigned PyArrow paths pass
+8,978 checks; actual TableSpec/Spark4.0.1 recovers780 rows. Native-returned data
+passes9,750 portable decodes;32 adapter cases recover128 authored/native sources
+through JSON/YAML. Chromium model checks7038 plus the refreshed core codec/key/
+migration/import-boundary campaign pass. The scoped suites and legacy binding
+regression pass; source-bound gate tests refuse stale/missing/unsafe/falsified
+proofs. [Completion, exact scope, retries and limits](evidence/uuid-adapter-completion.md)
+record what is accepted. Native equivalence, wider mixed/container/association/
+partition composition, portable native-index order and consumer deployment are
+not promoted by these gates. No full-repository replay is asserted.

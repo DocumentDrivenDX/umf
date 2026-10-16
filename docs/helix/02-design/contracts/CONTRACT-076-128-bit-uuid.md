@@ -21,9 +21,10 @@ ddx:
 **Type:** schema/library and physical binding. **Version:** proposed core 0.9.0;
 `umf-128/1`, `umf-key-tuple-v2`, `umf.binding` 0.3.0 / `umf-binding-3`.
 **Status:** design complete for implementation; draft pending review and evidence.
-The initial experimental implementation has scoped Bun, browser and native carrier
-evidence; full ideal admission, five-system delivery and downstream adoption are
-not claimed. See the execution record below.
+The initial implementation has scoped Bun, browser and native carrier evidence.
+The later uuid-model1 profile passes separate qualified ideal-admission and
+five-priority delivery gates; native equivalence and downstream adoption remain
+separate. See [adapter qualification](../../04-build/evidence/uuid-adapter-completion.md).
 
 ## Purpose
 
@@ -435,3 +436,98 @@ uniqueidentifier/system-type36, Avro uuid annotation on string/fixed16, or Parqu
 UUID annotation on fixed16. Unknown native members remain in source. Unannotated
 bytes, strings, same-named domains and unrelated integer pairs remain unclassified.
 No descriptor-only result certifies native equality, coercion or write enforcement.
+
+## Model composition profile — uuid-model1
+
+The independently selected `target.subset:'uuid-model1'` retains binding3's
+version and carrier shapes. Carrier1 behavior and receipts remain unchanged.
+`projectBit128Model(binding,logical,lossPolicy)` takes copied validated core0.9
+and binding3 Documents and explicit strict/report policy. Its result schema is
+`spec/projections/bit128-model.schema.json`, exported as
+`bit128ModelProjectionSchema`. Result members are operation project-bit128-model,
+version1.0.0, complete source/binding, lossPolicy, status projected/reported/blocked,
+residuals `{path,reason}[]`, nativeRequirements, mappings and optional candidate `{format,text}`.
+Each mapping has record identity, table and Fields with exact identity, carrier
+slots and native segment-array paths; paired file paths include their group.
+Blocked results MUST omit candidates. Strict MUST block every retained residual.
+Recovery recomputes all inputs and exact native text; stale source, changed text
+or forged report MUST fail BIT128_MODEL_STALE. This is consistency, not custody
+or native schema equivalence.
+
+Every Record and member Field MUST have exactly one binding. This initial model
+subset accepts singular required/absent-allowed UUID/bits128 Fields, explicit
+unpartitioned Records and complete known Key declarations. Groups, containers,
+other scalar families, unknown relevant semantics and unbound Fields MUST refuse
+instead of disappearing. All full source content remains copied. Unsupported
+carriers or target versions MUST refuse without selecting a fallback.
+
+Relationship rows are exactly `{module,id,storage:'foreign_key',fields:ElementRef[]}`.
+They select an existing directed relationship with one source and one target
+Record and no associationRecord. Fields belong to the source in the target Key's
+component order; scalar domains, carrier kinds and signedness MUST agree.
+Every logical relationship needs exactly one layout. SQL foreign-key projection
+requires targetMultiplicity.max1. Independent/owned lifecycle, mandatory reverse
+participation and unimplemented finite bounds receive residuals. No lifecycle
+cascade is invented. File/model output retains relationships as residuals.
+
+Index rows are exactly `{name,kind:'btree'|'unique',on:{field:ElementRef}[],unique:boolean}`.
+All Fields MUST be distinct and in one Record. Kind unique requires unique true.
+Other index kinds, predicates, includes and document expressions MUST refuse.
+Both halves of a paired Field MUST be included in every Key/index/foreign key.
+Nullable unique indexes and reverse-uniqueness constraints enforce uniqueness
+only for present values, using an all-slots-nonnull filter; multiple absent
+values are distinct from a present Nil UUID under this explicit profile.
+Native model SQL identifiers use bounded ASCII letter/underscore followed by
+letters/digits/underscores. Case collisions and generated-object-name collisions
+MUST refuse. Keys/indexes have a conservative16-slot limit and SQL Server's
+900-byte budget. SQL Server word pairs MUST be signed bigint; unsigned refuses.
+
+SQL candidates are complete ordered table/Key/index/foreign-key DDL. `nativeRequirements` is an array of `{scope:'connection',statements:string[]}`.
+SQL Server declares and emits ANSI_NULLS ON, QUOTED_IDENTIFIER ON, ANSI_PADDING ON,
+ANSI_WARNINGS ON, ARITHABORT ON, CONCAT_NULL_YIELDS_NULL ON and NUMERIC_ROUNDABORT
+OFF. Every connection writing the generated filtered-index layout MUST apply
+these requirements; schema creation alone does not configure future connections.
+Other targets return an empty array. Requirement metadata does not authorize
+execution of a blocked result. Both-null
+or both-present checks protect nullable pairs and entire nullable foreign-key
+component groups. Text uses canonical lowercase grammar/length checks; SQL Server
+uses Unicode text with binary collation. Bytes have exact16-byte checks. SQL
+literal defaults implement on missing; on null/missing-or-null reports the
+unimplemented NULL substitution. Allowed values emit full-slot checks. Native
+UUID comparison and signed tuple index order do not become portable byte order;
+no ORDER BY or range-index equivalence follows from this schema projection.
+
+Avro/Parquet/TableSpec candidates are explicit JSON bundles
+`{profile:'umf-128-native-model/1',system,records}`. Each Avro record is a native
+schema; each Parquet record is a native-writer column layout, not file bytes;
+each TableSpec record is a native model document. Nullable word pairs use one
+group named highColumn plus `__pair`, with required high/low members bearing
+the authored slot names. Group absence represents logical absence. Names MUST
+be collision checked. Avro long only admits signed words; Parquet carries signed
+or unsigned integer64 annotations. Avro named types use unique per-record/Field
+namespaces. TableSpec admits only explicitly selected uuid-text/hex128-text and
+emits context-default nullability plus primary/alternate Key declarations.
+No native file/model uniqueness, FK/index enforcement, string grammar or
+unimplemented refinements/defaults may be represented as exact. Apache Avro's
+ignored fixed UUID annotation remains a residual.
+
+`encodeBit128Record(binding,logical,record,values)` and
+`decodeBit128Record(binding,logical,record,slots)` convert complete rows. Values
+are one `{field:ElementRef,value:CoreLiteral}` per member; slots contain every
+exact native slot once as string/null. Missing/extra/repeated Fields or slots,
+partial pairs, wrong domains and unsafe tokens MUST refuse atomically.
+`encodeBit128FileRecord` / `decodeBit128FileRecord` use the same arguments and
+constraints, with a nested JSON-safe native datum for file/model targets. Present
+pairs require two nonnull decimal strings; absent groups are null. Driver-owned
+conversion maps decimal strings to exact native64-bit values and hex tokens to
+network-order bytes. These functions do not execute a read or mutation and do
+not authorize independent half updates. A consumer MUST write/read the complete
+carrier in one statement or a qualified consistent transaction.
+
+The new APIs throw BIT128_MODEL_SOURCE/POLICY/TARGET/RESULT/STALE,
+BIT128_LAYOUT/IDENTIFIER/SLOT_COLLISION/KEY_WIDTH/KEY_NULL/SQL_UNSIGNED/SQL_VALUE,
+BIT128_RECORD_IDENTITY/SOURCE/VALUE, or BIT128_FILE_TARGET/VALUE and
+BIT128_AVRO_NAME/UNSIGNED/PARQUET_NAME/TABLESPEC_NAME/CARRIER as applicable.
+Failures publish no partial native candidate or row; they authorize no retry,
+implicit conversion or alternate layout. Versioned observations and qualification
+gate status live in the adapter completion execution record.

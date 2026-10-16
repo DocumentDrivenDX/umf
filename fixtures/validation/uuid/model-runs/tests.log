@@ -1,0 +1,133 @@
+{"testProcess":"tests/binding-uuid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding-uuid.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding-uuid.test.ts:
+(pass) explicit UUID carriers preserve bits; paired signed words retain exact native transport tokens [39.86ms]
+(pass) partial pairs, collisions, unknown carrier, domain conflicts, nulls and stale logical bindings [2.28ms]
+(pass) dispatch rejects getters before reading profile and relevant unknown logical facets block codecs [2.11ms]
+(pass) unqualified native index layouts remain serializable but cannot authorize generation or values [1.68ms]
+(pass) carrier validation and encoding use the same copied literal and binding snapshots [1.82ms]
+
+ 5 pass
+ 0 fail
+ 62 expect() calls
+Ran 5 tests across 1 file. [3.42s]
+{"testProcess":"tests/binding-uuid.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":62,"completeSummary":true,"logSha256":"416bb3899b951ce87228e13be859754ddd49af50cc508fe0b9097f2a2b82ad68"}
+{"testProcess":"tests/bit128.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/bit128.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/bit128.test.ts:
+(pass) all bit positions, sign boundaries and seeded values match independent Python oracle [4.69ms]
+(pass) strict grammar, bounds, two-complement ordering, forged snapshots and accessors [0.29ms]
+(pass) byte bridge checks intrinsic length before copying and never invokes user iterators [0.04ms]
+
+ 3 pass
+ 0 fail
+ 4702 expect() calls
+Ran 3 tests across 1 file. [3.30s]
+{"testProcess":"tests/bit128.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":4702,"completeSummary":true,"logSha256":"1421e0ee7b321a7ae2ed9b99e1732bc8b4f4d26b44bb5839ab10bef9ffe7063a"}
+{"testProcess":"tests/core-uuid-key.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/core-uuid-key.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/core-uuid-key.test.ts:
+(pass) versioned tuples match independent oracle and reject old codec, stale or forged framing [66.45ms]
+
+ 1 pass
+ 0 fail
+ 397 expect() calls
+Ran 1 test across 1 file. [3.37s]
+{"testProcess":"tests/core-uuid-key.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":397,"completeSummary":true,"logSha256":"6ef33a75451ee838652fd34e0a9f32041a821c7b6db0aa21ae6e6903cbe2d4de"}
+{"testProcess":"tests/core-uuid-transition.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/core-uuid-transition.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/core-uuid-transition.test.ts:
+(pass) explicit collision adoption, exact rollback and unrelated unknown preservation [7.73ms]
+(pass) structural source with unknown UUID key equality can be adopted explicitly, without adopting unrelated errors [1.67ms]
+
+ 2 pass
+ 0 fail
+ 11 expect() calls
+Ran 2 tests across 1 file. [3.31s]
+{"testProcess":"tests/core-uuid-transition.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":11,"completeSummary":true,"logSha256":"96d7c0ff206a00f677bf8500936375c6362dd9747344072737ff7f4f632900c1"}
+{"testProcess":"tests/core-uuid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/core-uuid.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/core-uuid.test.ts:
+(pass) version-scoped validation, copied authoring, allowed values, defaults and serialization [25.25ms]
+(pass) current metadata inspectors, selection, containers and unknown refinement boundaries [13.50ms]
+(pass) explicit Field-domain authoring preserves the source and validates collisions [0.99ms]
+(pass) extension validators receive actual0.9 UUID semantics, not the structural compatibility view [7.49ms]
+(pass) caller-visible schema mutations do not change internal0.9 validators or codec inventory [2.91ms]
+(pass) signed and unsigned integer128 keep mathematical equality and lossless bigint context [1.48ms]
+
+ 6 pass
+ 0 fail
+ 52 expect() calls
+Ran 6 tests across 1 file. [3.33s]
+{"testProcess":"tests/core-uuid.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":52,"completeSummary":true,"logSha256":"8140f152a13bd8897f79b856352ca07dd004b090ab81ef1d51c1f12cec155762"}
+{"testProcess":"tests/uuid-file-model.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid-file-model.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/uuid-file-model.test.ts:
+(pass) file/model bundles retain unenforced Keys/relations and pair absence uses one nullable group [102.52ms]
+(pass) TableSpec refuses unqualified carriers; native pair group collisions and unsigned Avro refuse [1.59ms]
+(pass) native pair paths are explicit and named Avro types cannot collide with root Records [0.56ms]
+(pass) Parquet paired groups retain explicitly unsigned64 words without number conversion [3.94ms]
+(pass) TableSpec CSV requiredness remains an explicit residual and complete-row decode rejects native invalid data [2.62ms]
+
+ 5 pass
+ 0 fail
+ 81 expect() calls
+Ran 5 tests across 1 file. [3.38s]
+{"testProcess":"tests/uuid-file-model.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":81,"completeSummary":true,"logSha256":"aef4ff9138e68e90ce63bf31b90c1a7e8c1398808b64a21ccfe064ebbbd38837"}
+{"testProcess":"tests/uuid-model.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid-model.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/uuid-model.test.ts:
+(pass) complete model expands Keys, indexes and foreign keys into every paired slot [67.65ms]
+(pass) no unbound meaning, carrier mismatch, index cross-owner or foreign layout can disappear [3.14ms]
+(pass) declared participation/lifecycle and NULL defaults are residuals, never implicit enforcement [4.24ms]
+(pass) empty allowed-value declarations refuse before native output [0.47ms]
+(pass) full-row codecs cannot bypass unsupported target/carrier or native name checks [1.43ms]
+(pass) SQL Server filtered-index session conditions are part of the public model result and DDL [0.57ms]
+
+ 6 pass
+ 0 fail
+ 90 expect() calls
+Ran 6 tests across 1 file. [3.19s]
+{"testProcess":"tests/uuid-model.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":90,"completeSummary":true,"logSha256":"a97899cbed8d9935b73e490967d38530f655df889509fb1a1ec7a0b47e0f4332"}
+{"testProcess":"tests/uuid-native-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid-native-projection.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/uuid-native-projection.test.ts:
+(pass) explicit five-target carrier proposals and full retained-source recovery [17.70ms]
+(pass) unsupported pairs, text enforcement, external nulls, constraints and names cannot be silently omitted [2.25ms]
+(pass) native classification requires exact identity/annotation and retains unknown refinements [0.11ms]
+(pass) native identifier bounds and unknown qualifiers refuse before SQL generation [2.24ms]
+(pass) native name collisions and partition choices are explicit [1.10ms]
+(pass) expanded native output must fit the ordinary text bound before publication [20.23ms]
+(pass) known text and model limits remain visible even under a bits-only request [0.76ms]
+(pass) oversized retained source is refused before allocating its full JSON serialization [5.16ms]
+
+ 8 pass
+ 0 fail
+ 61 expect() calls
+Ran 8 tests across 1 file. [3.16s]
+{"testProcess":"tests/uuid-native-projection.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":61,"completeSummary":true,"logSha256":"7830dea4f06fce90b885132455bfaae9fee106a0532f0cb013caf51ed1771f5c"}
+{"testProcess":"tests/uuid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/uuid.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/uuid.test.ts:
+(pass) UUID identity preserves every layout and original spelling without generation claims [2.25ms]
+(pass) no implicit syntax, truncation, rewriting or forged UUID snapshot [0.09ms]
+
+ 2 pass
+ 0 fail
+ 1564 expect() calls
+Ran 2 tests across 1 file. [3.10s]
+{"testProcess":"tests/uuid.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":1564,"completeSummary":true,"logSha256":"0848b42b1d7057ddc7e707ffc71650491c72332ef0eaa849921b3fd1fb795a26"}
+
+ 38 pass
+ 0 fail
+ 7020 expect() calls
+Ran 38 tests across 9 files. [29.72s]

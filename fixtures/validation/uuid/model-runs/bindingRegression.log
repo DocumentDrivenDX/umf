@@ -1,0 +1,210 @@
+{"testProcess":"tests/binding/consumer-migration.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/consumer-migration.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/consumer-migration.test.ts:
+(pass) @covers US-046-AC10 @covers US-047-AC2: consumer selects the binding and support report before exposing index access [127.33ms]
+(pass) @covers US-047-AC10 @covers US-046-AC9: index tuple order, predicate provenance and unknown content survive binding migration and edited rollback [161.85ms]
+
+ 2 pass
+ 0 fail
+ 51 expect() calls
+Ran 2 tests across 1 file. [3.89s]
+{"testProcess":"tests/binding/consumer-migration.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":51,"completeSummary":true,"logSha256":"00e71ab331d5a2ae1e018835a2c4a802adec502daf35a2e8303693719b3fb3de"}
+{"testProcess":"tests/binding/delta.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/delta.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/delta.test.ts:
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: clustering action uses exact physical columns and preserves native source [69.93ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-047-AC4 @covers US-047-AC5: strict blocks unsupported index and report retains it as residual [153.13ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: native partitioning and absent columns cannot silently become clustering [98.16ms]
+
+ 3 pass
+ 0 fail
+ 13 expect() calls
+Ran 3 tests across 1 file. [3.67s]
+{"testProcess":"tests/binding/delta.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":13,"completeSummary":true,"logSha256":"d0a0aabd976ea6af6d70ef9d37a95c2147128bb57d27095ed949fc23ad246a49"}
+{"testProcess":"tests/binding/iceberg.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/iceberg.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/iceberg.test.ts:
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-046-AC7 @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC7: sort order is an explicit approximation and native source recovers [311.74ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: unsupported index and missing storage column remain residuals [185.61ms]
+
+ 2 pass
+ 0 fail
+ 11 expect() calls
+Ran 2 tests across 1 file. [3.99s]
+{"testProcess":"tests/binding/iceberg.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":11,"completeSummary":true,"logSha256":"9cd49af9e0bf6fb19f5aa6f73e4e918b06186f6176a34ce2da66dc7457cde9ad"}
+{"testProcess":"tests/binding/indexes.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/indexes.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/indexes.test.ts:
+(pass) @covers US-047-AC1 @covers US-047-AC2: ordered index capability lives only in binding [39.09ms]
+(pass) @covers US-047-AC4 @covers US-047-AC5: strict blocks and report residualizes clustering [43.66ms]
+(pass) @covers US-047-AC9: invalid index kind combinations and paths fail [21.17ms]
+(pass) @covers US-047-AC8: target outcomes are qualified and never infer author intent [91.11ms]
+(pass) @covers US-047-AC5: unknown index refinements survive but block unsafe projection [23.55ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: storage alternatives and expression paths cannot be mixed [32.94ms]
+
+ 6 pass
+ 0 fail
+ 28 expect() calls
+Ran 6 tests across 1 file. [3.60s]
+{"testProcess":"tests/binding/indexes.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":28,"completeSummary":true,"logSha256":"95652c281b8ee2e26506ef122359522def7e2af5b2cc1d6a6975a190b34b4523"}
+{"testProcess":"tests/binding/multi-target.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/multi-target.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/multi-target.test.ts:
+(pass) @covers US-046-AC1 @covers US-047-AC1: one authored graph has independent physical target bindings [170.03ms]
+(pass) @covers US-046-AC2 @covers US-047-AC3: shared graph Delta clustering is native-readable and unsupported kinds retain residuals [161.79ms]
+
+ 2 pass
+ 0 fail
+ 30 expect() calls
+Ran 2 tests across 1 file. [3.65s]
+{"testProcess":"tests/binding/multi-target.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":30,"completeSummary":true,"logSha256":"bce8679943a08beb329d7c131659e97e18e6d4ea34d911d72bb57564b13b8220"}
+{"testProcess":"tests/binding/package.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/package.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/package.test.ts:
+(pass) @covers US-046-AC1 @covers US-046-AC2: separate binding preserves logical identity and copied choices [44.06ms]
+(pass) @covers US-046-AC7: independent document round-trips in both UMF formats [56.52ms]
+(pass) @covers US-046-AC3: stale model and duplicate or missing bindings fail with paths [44.20ms]
+(pass) @covers US-046-AC7: unknown binding content survives but remains incomplete [40.35ms]
+(pass) @covers US-046-AC2: nested DDD field resolves by owner ID and exact field key [21.93ms]
+
+ 5 pass
+ 0 fail
+ 18 expect() calls
+Ran 5 tests across 1 file. [3.25s]
+{"testProcess":"tests/binding/package.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":18,"completeSummary":true,"logSha256":"6712cdfe0265f372140104f9f26eca6b67166ab2ed22167c942e1f73870266ba"}
+{"testProcess":"tests/binding/parquet.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/parquet.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/parquet.test.ts:
+(pass) @covers US-046-AC4 @covers US-047-AC4: strict Parquet projection blocks every unsupported physical obligation [36.03ms]
+(pass) @covers US-046-AC5 @covers US-047-AC5: report retains every target-specific loss and source [27.32ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: both retained recovery directions [81.96ms]
+(pass) @covers US-046-AC8 @covers US-047-AC8: Parquet version is qualified and index intent is never invented from native file [55.16ms]
+(pass) @covers US-046-AC5: unknown physical refinement remains in source and blocks unsafe lowering [12.52ms]
+
+ 5 pass
+ 0 fail
+ 19 expect() calls
+Ran 5 tests across 1 file. [3.39s]
+{"testProcess":"tests/binding/parquet.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":19,"completeSummary":true,"logSha256":"ec58fb357ef9a25802ee161cad1584aa5be57654aa6749e8a12afb90077888ad"}
+{"testProcess":"tests/binding/postgresql-indexes.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/postgresql-indexes.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/postgresql-indexes.test.ts:
+(pass) @covers US-047-AC3 @covers US-047-AC4 @covers US-047-AC5: PostgreSQL kinds, document path and clustering residual [341.73ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: absent native column and unsafe predicate are not emitted [180.13ms]
+(pass) @covers US-047-AC9: identifiers that PostgreSQL would truncate are refused [27.38ms]
+
+ 3 pass
+ 0 fail
+ 13 expect() calls
+Ran 3 tests across 1 file. [3.81s]
+{"testProcess":"tests/binding/postgresql-indexes.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":13,"completeSummary":true,"logSha256":"be369b369275fe1aaaefe6eb1c3e4f62d8dc2ff9c3938aefa55ded1df6d282cd"}
+{"testProcess":"tests/binding/raw-profiles.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/raw-profiles.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/raw-profiles.test.ts:
+(pass) U-2: all three declarative profiles admit stable core Field bindings without native claims [353.26ms]
+(pass) U-2: opaque target identity compares exactly, without aliases or major inference [394.86ms]
+(pass) U-2: unsupported physical semantics refuse but generic binding retains the source [357.04ms]
+(pass) U-2: exact logical and module references, table and column collisions refuse [189.07ms]
+(pass) U-2: hostile accessors are rejected without invocation [25.41ms]
+(pass) U-2: partial declarations are admitted; selected ColumnSet coverage belongs to CONTRACT-070 [55.55ms]
+
+ 6 pass
+ 0 fail
+ 73 expect() calls
+Ran 6 tests across 1 file. [1.61s]
+{"testProcess":"tests/binding/raw-profiles.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":73,"completeSummary":true,"logSha256":"734e2442077e0ab57fe83143fbb40eacd42217ff3a19dc0d1a4a57667d4acf6e"}
+{"testProcess":"tests/binding/sqlserver-indexes.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/sqlserver-indexes.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/sqlserver-indexes.test.ts:
+(pass) @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC8: rowstore, unique and filtered candidates have residuals for other kinds [128.56ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: unsafe filtered predicate and unknown catalog column are residuals [105.79ms]
+(pass) @covers US-047-AC9: a filtered predicate must name an observed column [47.45ms]
+
+ 3 pass
+ 0 fail
+ 14 expect() calls
+Ran 3 tests across 1 file. [3.57s]
+{"testProcess":"tests/binding/sqlserver-indexes.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":14,"completeSummary":true,"logSha256":"e5040cc0314f3f80edf94002670535664cfbf5d17924a300a837baaf75f81807"}
+{"testProcess":"tests/binding/sqlserver-tables-indexes.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/sqlserver-tables-indexes.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/sqlserver-tables-indexes.test.ts:
+(pass) @covers US-046-AC2 @covers US-047-AC4: authored inputs alone generate the same native-valid DDL [382.44ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: planned columns and predicates must be safe before index emission [176.79ms]
+(pass) @covers US-046-AC2 @covers US-047-AC4: generated tables and indexes compose with explicit catalog evidence [211.48ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: stale column evidence and unknown binding block [112.29ms]
+
+ 4 pass
+ 0 fail
+ 29 expect() calls
+Ran 4 tests across 1 file. [3.91s]
+{"testProcess":"tests/binding/sqlserver-tables-indexes.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":29,"completeSummary":true,"logSha256":"91fa4cc213ec44f52cad22c7f8b8248377b1807bc977d33976be074df8308e9e"}
+{"testProcess":"tests/binding/sqlserver-tables.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/sqlserver-tables.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/sqlserver-tables.test.ts:
+(pass) @covers US-046-AC2 @covers US-046-AC4 @covers US-046-AC5: explicit tables, partition family and embedded residual [62.93ms]
+(pass) @covers US-046-AC3: stale model, unknown binding content and unsafe type policy block [86.76ms]
+(pass) @covers US-046-AC3: stale SQL Server table policies block before DDL emission [86.44ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5: missing partition policy and DDD identity remain residuals [52.48ms]
+(pass) @covers US-046-AC3: document-column type and path conflicts block before native DDL [61.15ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7: authored and native archives remain separate [60.76ms]
+
+ 6 pass
+ 0 fail
+ 33 expect() calls
+Ran 6 tests across 1 file. [3.60s]
+{"testProcess":"tests/binding/sqlserver-tables.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":33,"completeSummary":true,"logSha256":"82d1b8d039281c0482b5198c9f62f064ad4b09deb1c2ec90ffb1bc5d4333f313"}
+{"testProcess":"tests/binding/sqlserver.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/sqlserver.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/sqlserver.test.ts:
+(pass) full SQL Server physical binding keyed-association-and-fk [771.52ms]
+(pass) full SQL Server physical binding alternate-unique-target [756.84ms]
+(pass) full SQL Server physical binding nullable-composite [773.42ms]
+(pass) full SQL Server physical binding anonymous-junction [761.51ms]
+(pass) full SQL Server physical binding edge [762.77ms]
+(pass) full SQL Server physical binding inline-residual [775.26ms]
+(pass) full SQL Server physical binding shared-edge [802.71ms]
+(pass) exact mapping, association attributes, case collisions and unsupported Key widths refuse [3284.89ms]
+(pass) hostile getters and noncanonical filtered predicates never execute or normalize silently [938.49ms]
+(pass) optional original catalog archive recovers exact text and unrelated native content [1099.37ms]
+(pass) every retained residual and mapping resolves against its declared source [1816.48ms]
+
+ 11 pass
+ 0 fail
+ 4455 expect() calls
+Ran 11 tests across 1 file. [16.33s]
+{"testProcess":"tests/binding/sqlserver.test.ts","exitCode":0,"pass":11,"fail":0,"assertions":4455,"completeSummary":true,"logSha256":"b84c38d2907f859075e8b9cef44543ea5213db20753c771225b72e84efceb875"}
+{"testProcess":"tests/binding/stable-ids.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.2/bin/bun","test","--timeout","30000","./tests/binding/stable-ids.test.ts"]}
+bun test v1.4.2 (43848b5a7)
+
+tests/binding/stable-ids.test.ts:
+(pass) @covers US-046-AC3 @covers US-046-AC9: stable ID survives rename and copied receipts preserve old unknown content [161.05ms]
+(pass) @covers US-046-AC3 @covers US-046-AC9: duplicate, missing, stale and legacy opaque relationship references refuse [114.36ms]
+(pass) @covers US-046-AC9: rollback preserves new ID-only choices and all edits as copied residuals [57.79ms]
+(pass) @covers US-046-AC9: receipts are recomputed and unrelated bindings cannot roll back [98.42ms]
+(pass) public binding inspection refuses mismatched profiles and accessors without invoking them [10.56ms]
+(pass) published migration/receipt/rollback schema validates full retained representation and rejects missing content [100.49ms]
+(pass) legacy duplicate identity uses names even when unknown id members differ [21.98ms]
+
+ 7 pass
+ 0 fail
+ 45 expect() calls
+Ran 7 tests across 1 file. [3.68s]
+{"testProcess":"tests/binding/stable-ids.test.ts","exitCode":0,"pass":7,"fail":0,"assertions":45,"completeSummary":true,"logSha256":"068e9924754e4252ab5fcb67cb80dd5441b35303c92d347375fc845a5f29924c"}
+
+ 65 pass
+ 0 fail
+ 4832 expect() calls
+Ran 65 tests across 14 files. [62.19s]

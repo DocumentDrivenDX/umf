@@ -20,7 +20,7 @@ ddx:
 **Feature:** [FEAT-005 IDEAL-09](../../01-frame/features/FEAT-005-core-ideals.md).
 **Authority:** owner direction, 2026-10-15; FR-3/8/20/21/28/39/41.
 **Shared interface:** [CONTRACT-076](../contracts/CONTRACT-076-128-bit-uuid.md).
-**Status:** initial experimental implementation with scoped portable/native evidence.
+**Status:** implemented with qualified uuid-model1 ideal admission and five-priority delivery; native equivalence and consumer adoption remain separate.
 [Execution and remaining gates](../../04-build/evidence/uuid-implementation.md)
 separate working APIs from full ideal/binding acceptance.
 
@@ -239,3 +239,10 @@ committed native writes or reinterpret persisted v2 keys.
 No new runtime dependency, mandatory storage layout, UUID generator or cross-repo
 implementation is required to accept this design. Native evidence and optional
 benchmarks determine supported subsets and optimal layouts later.
+
+
+The [five-adapter completion record](../../04-build/evidence/uuid-adapter-completion.md)
+records PostgreSQL/SQL Server model constraints and transactions, grouped Avro/
+Parquet carriers, actual TableSpec/Spark fallback, both recoveries and the separate
+source-bound admission/delivery checks. Its declared subset and residuals govern
+the support claim; earlier proposed verification tables retain design context.
