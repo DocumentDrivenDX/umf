@@ -17,3 +17,9 @@ UMF_Z3_PYTHON=/private/tmp/umf-security-proof-current-20261015/bin/python bun do
 ```
 
 The full gate is expected to remain failed while required implementations are missing. Its per-case execution receipts, not a standalone component total, determine accepted cases.
+
+## Completed gate replays
+
+The second full replay passed all 45 implemented cases and retained 113 required missing implementations. Concurrent main changes to CONTRACT-049 then made seven semantic case fingerprints stale; second-full-gate.zip preserves that tested source cohort and its original contract. It does not qualify the merged source.
+
+A third full replay ran against merged main e3f3e1c28f6f01236632f22b79b0b7c9dba2c669 with plan SHA256 0e56c5d63ed4b11053822ddf4211141ac4d125b35109d07ab96b56cb74b82b80. All 45 implemented cases passed with current source fingerprints; all 113 unimplemented cases remain required failures. The gate remains failed across 158 required cases and 34 acceptance criteria. The committed case receipts and third-run-witness.json bind the resulting evidence. The broader phase audit reports 221 checks, 87 failed, and 45 passing fresh cases. Older component/compiler evidence remains stale or otherwise unqualified; this replay does not repair it or establish P03/L03 acceptance. No support scope is expanded.
