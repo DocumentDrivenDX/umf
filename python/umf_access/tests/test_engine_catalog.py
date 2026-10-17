@@ -58,6 +58,20 @@ class EngineCatalogTests(unittest.TestCase):
             method="truss-runtime",
         )
 
+    def test_transport_selection_uses_one_unchanged_original_compile(self):
+        class CountingCompiler(Compiler):
+            calls = 0
+            def compile_engine_read_json(self, original):
+                self.calls += 1
+                return super().compile_engine_read_json(original)
+        compiler = CountingCompiler()
+        request = {"parameters": {"name": {"family": "string", "value": "雪"}}}
+        original = EngineRead.compile_original(compiler, request, method="truss-runtime")
+        entry = EngineRead.from_original(original, parameters=Parameters, result=Result)
+        self.assertEqual(compiler.calls, 1)
+        self.assertEqual(entry.originals(), original)
+        self.assertEqual(entry.artifact_json, self.entry().artifact_json)
+
     def test_originals_roundtrip_and_result_signature_refusal(self):
         entry = self.entry()
         self.assertEqual(

@@ -39,6 +39,19 @@ class EngineRead(CatalogRead[P, R]):
         method: str,
         page_size: int | None = None,
     ) -> EngineRead[P, R]:
+        original = cls.compile_original(compiler, request, method=method, page_size=page_size)
+        return cls.from_original(original, parameters=parameters, result=result)
+
+    @classmethod
+    def compile_original(
+        cls,
+        compiler: Any,
+        request: Mapping[str, Any],
+        *,
+        method: str,
+        page_size: int | None = None,
+    ) -> str:
+        """Obtain one untouched owner program before choosing typed transport."""
         if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999 or method not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
             raise ReadBuildError("original engine page size must be in 1..999")
         compile_method = getattr(compiler, "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
@@ -61,6 +74,13 @@ class EngineRead(CatalogRead[P, R]):
             raise ProgramBuildError(original)
         if program.get("request") != dict(request) or program.get("compiler") != method or (page_size is not None and program.get("pageSize") != page_size):
             raise ReadBuildError("original engine request or page bound differs")
+        return original
+
+    @classmethod
+    def from_original(
+        cls, original: str, *, parameters: type[P], result: type[R]
+    ) -> EngineRead[P, R]:
+        """Wrap original bytes; artifact and native authority guards still apply."""
         wrapper = {
             "version": "umf.engine-catalog/0.1",
             "programJson": original,

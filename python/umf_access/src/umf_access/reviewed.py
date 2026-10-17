@@ -229,7 +229,7 @@ def _compatible_outputs(actual: object, expected: list[dict[str, object]]) -> bo
         return False
     for a, e in zip(actual, expected, strict=True):
         if e.get("carrier") == "related-keys":
-            if a != e:
+            if type(a) is not dict or a.get("nullable") is not False or a != e:
                 return False
             continue
         if (

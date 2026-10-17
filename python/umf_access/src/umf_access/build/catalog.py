@@ -39,7 +39,7 @@ from ..dsl import (
 )
 from ..engine_catalog import EngineRead
 from ..native_program import NativeProgram, program_json
-from ..related_keys import key_descriptor, make_related_result_model
+from ..related_keys import key_descriptor, make_related_result_model, validate_decoder
 from ..reviewed import ReadBuildError, ReadCompiler, ReviewedSQL, captured_source
 from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
 from .commands import emit_command
@@ -874,6 +874,7 @@ def _compile_catalog_owned(
             projection_names = tuple(a for a, _, _ in owner_fields)
         related_field = None
         related_row_expr = None
+        related_base_result = None
         includes = tuple(step for step in steps if step.op == "include_keys")
         if includes:
             if len(includes) != 1 or terminal not in ("all", "first", "one", "get", "page") or any(step.op in ("group", "having") for step in steps):
@@ -897,10 +898,12 @@ def _compile_catalog_owned(
             related_field = relation_ref.field + "_keys"
             decoder = {"profile": "pg-related-keys-json/0.1", "bound": bound, "relationship": {"module": relation_ref.field_module, "id": relation_ref.field, "direction": include.args[3] if len(include.args) == 4 else "forward"}, "key": key_descriptor(related_key_model)}
             related_row_expr = result_expr
-            related_expr = f"_Q{number}Related"
-            result = make_related_result_model(related_expr, result, related_key_model, related_field, decoder, record)
-            lines.append(f"{related_expr} = make_related_result_model({related_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {decoder!r}, {record.__name__})")
-            result_expr = related_expr
+            related_base_result = result
+            if any(target["kind"] in ("postgresql", "lakebase") for target in targets):
+                related_expr = f"_Q{number}Related"
+                result = make_related_result_model(related_expr, result, related_key_model, related_field, decoder, record)
+                lines.append(f"{related_expr} = make_related_result_model({related_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {decoder!r}, {record.__name__})")
+                result_expr = related_expr
             return_type = "WithKeys[" + return_type + ", " + related_key_model.__name__ + "]"
         item_return_type = return_type
         if terminal in ("all", "group_count"):
@@ -1044,9 +1047,11 @@ def _compile_catalog_owned(
                         ),
                     ),
                 )
-            for target in targets:
+            for target_index, target in enumerate(targets):
                 kind = target["kind"]
-                if related_field is not None and kind not in ("postgresql", "lakebase"):
+                entry_result = result
+                entry_result_expr = result_expr
+                if related_field is not None and kind not in ("postgresql", "lakebase", "ashlar"):
                     raise CatalogBuildError("WEFT_BLOCKED: WR-A6 target-specific bounded relationship-Key output profile required")
                 if snapshot and kind not in ("spark-delta", "unity-catalog", "ashlar"):
                     raise CatalogBuildError(
@@ -1123,16 +1128,33 @@ def _compile_catalog_owned(
                         raise CatalogBuildError(
                             "original engine model differs from selected logical binding"
                         )
-                    compiled = EngineRead.build(
-                        compiler,
-                        original,
-                        parameters=params,
-                        result=result,
-                        method=method,
-                        page_size=cast(int, node.args[2])
-                        if terminal == "page"
-                        else None,
-                    )
+                    if related_field is not None:
+                        original_program = EngineRead.compile_original(
+                            compiler, original, method=method,
+                            page_size=cast(int, node.args[2]) if terminal == "page" else None,
+                        )
+                        original_outputs = program_json(original_program).get("outputs")
+                        candidates = [output for output in original_outputs if type(output) is dict and output.get("name") == related_field] if type(original_outputs) is list else []
+                        if len(candidates) != 1 or candidates[0].get("carrier") != "related-keys" or candidates[0].get("nullable") is not False:
+                            raise CatalogBuildError("WEFT_BLOCKED: WR-A6 original engine related-Key output descriptor required")
+                        engine_decoder = validate_decoder(candidates[0].get("decoder"), related_key_model)
+                        if any(engine_decoder[key] != decoder[key] for key in ("bound", "relationship", "key")) or related_base_result is None:
+                            raise CatalogBuildError("CATALOG_STALE: original engine relationship or Key differs from captured declaration")
+                        entry_result_expr = f"_Q{number}RelatedE{vi}_{target_index}"
+                        entry_result = make_related_result_model(entry_result_expr, related_base_result, related_key_model, related_field, engine_decoder, record)
+                        lines.append(f"{entry_result_expr} = make_related_result_model({entry_result_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {engine_decoder!r}, {record.__name__})")
+                        compiled = EngineRead.from_original(original_program, parameters=params, result=entry_result)
+                    else:
+                        compiled = EngineRead.build(
+                            compiler,
+                            original,
+                            parameters=params,
+                            result=result,
+                            method=method,
+                            page_size=cast(int, node.args[2])
+                            if terminal == "page"
+                            else None,
+                        )
                     entry_class = "EngineRead"
                 else:
                     try:
@@ -1245,7 +1267,7 @@ def _compile_catalog_owned(
                     platform,
                 )
                 variants.append(
-                    f"ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {result_expr}, context_json={context!r}), {tuple(paths)!r})"
+                    f"ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {entry_result_expr}, context_json={context!r}), {tuple(paths)!r})"
                 )
                 entries.append(
                     {

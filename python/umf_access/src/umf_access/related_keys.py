@@ -49,7 +49,9 @@ def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str,
     if type(relation) is not dict or set(relation) != {"module","id","direction"} or any(type(relation[name]) is not str or not relation[name] for name in ("module","id")) or relation["direction"] not in ("forward","inverse"):
         raise CodecError("original directed relationship identity required")
     descriptor=key_descriptor(key_model)
-    if decoder["key"] != descriptor:
+    declared_key=decoder["key"]
+    components=declared_key.get("components") if type(declared_key) is dict else None
+    if declared_key != descriptor or type(components) is not list or any(type(c) is not dict or c.get("nullable") is not False for c in components):
         raise CodecError("original relationship Key descriptor differs from generated class")
     if profile=="ashlar-related-keys-string/0.1":
         _engine_metadata(decoder,key_model,descriptor)
@@ -84,7 +86,7 @@ def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], de
     components=cast(list[dict[str,object]],descriptor["components"])
     fields=[{**identity,**cast(dict[str,object],c["field"])} for c in components]
     types=[{"family":"string","facets":{},"nullable":False} for _ in components]
-    if any(c["carrier"]!="string" for c in components) or type(key) is not dict or set(key)!={"id","fields","types"} or key!={"id":descriptor["key"],"fields":fields,"types":types}:
+    if any(c["carrier"]!="string" for c in components) or type(key) is not dict or set(key)!={"id","fields","types"} or type(key["types"]) is not list or any(type(t) is not dict or t.get("nullable") is not False for t in key["types"]) or key!={"id":descriptor["key"],"fields":fields,"types":types}:
         raise CodecError("original Ashlar required String-Key profile differs")
 
 

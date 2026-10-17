@@ -421,6 +421,8 @@ class Query(Generic[OutputT, R, K]):
         self, rel: Related[OutputT, T], *, limit: int
     ) -> Query[OutputT, WithKeys[R, T], K]:
         self._bound(limit)
+        if any(step.op in ("group", "having") for step in self.steps):
+            raise CaptureError("WEFT_BLOCKED", "WR-A6 bounded relationship Keys require an original entity row")
         if not isinstance(cast(object, rel), Related):
             raise TypeError("include_keys requires a generated relationship")
         self._check_field(rel.ref)
@@ -710,6 +712,12 @@ class Joined(_JoinedBase[OutputT, R, K], Generic[OutputT, J1, R, K]):
             .steps,
         )
 
+    def include_keys(self, rel: Related[OutputT, T], *, limit: int) -> Joined[OutputT, J1, WithKeys[R, T], K]:
+        return cast(
+            "Joined[OutputT, J1, WithKeys[R, T], K]",
+            replace(self, steps=self._as_query().include_keys(rel, limit=limit).steps),
+        )
+
     def into(
         self, projection: JoinProjection[OutputT, ProjectionModel] | GeneratedProjection[OutputT, ProjectionModel]
     ) -> Joined[OutputT, J1, ProjectionModel, K]:
@@ -781,6 +789,12 @@ class Joined2(_JoinedBase[OutputT, R, K], Generic[OutputT, J1, J2, R, K]):
             steps=self._as_query()
             .order_by(*cast(tuple[Ordering[OutputT], ...], order))
             .steps,
+        )
+
+    def include_keys(self, rel: Related[OutputT, T], *, limit: int) -> Joined2[OutputT, J1, J2, WithKeys[R, T], K]:
+        return cast(
+            "Joined2[OutputT, J1, J2, WithKeys[R, T], K]",
+            replace(self, steps=self._as_query().include_keys(rel, limit=limit).steps),
         )
 
     def into(
@@ -882,6 +896,12 @@ class Joined3(_JoinedBase[OutputT, R, K], Generic[OutputT, J1, J2, J3, R, K]):
             steps=self._as_query()
             .order_by(*cast(tuple[Ordering[OutputT], ...], order))
             .steps,
+        )
+
+    def include_keys(self, rel: Related[OutputT, T], *, limit: int) -> Joined3[OutputT, J1, J2, J3, WithKeys[R, T], K]:
+        return cast(
+            "Joined3[OutputT, J1, J2, J3, WithKeys[R, T], K]",
+            replace(self, steps=self._as_query().include_keys(rel, limit=limit).steps),
         )
 
     def into(
@@ -1040,6 +1060,12 @@ class _Context(Generic[Root, Required, Optional, R, K]):
         if any(not isinstance(p, Predicate) for p in predicates):
             raise TypeError("having accepts predicates only")
         return replace(self, steps=self.steps + (Node("having", tuple(cast(Predicate[Any], p).node for p in predicates)),))
+    def include_keys(self, rel: Related[Root, T], *, limit: int) -> JoinedContext[Root, Required, Optional, WithKeys[R, T], K]:
+        return cast(
+            "JoinedContext[Root, Required, Optional, WithKeys[R, T], K]",
+            replace(self, steps=self._as_query().include_keys(rel, limit=limit).steps),
+        )
+
     def into(self, projection: JoinProjection[Root, M] | GeneratedProjection[Root, M]) -> JoinedContext[Root, Required, Optional, M, K]:
         return cast("JoinedContext[Root, Required, Optional, M, K]", replace(self, steps=self._as_query()._into(_projection_model(projection)).steps))
     @overload
@@ -5511,7 +5537,11 @@ class _TrackedSelection(Generic[Root, Required, Optional, R, K, StateT, PhaseT])
 # checkers; runtime metadata independently enforces the original join graph.
 @dataclass(frozen=True)
 class _TrackedJoined(_TrackedSelection[Root, Required, Optional, R, K, StateT, _ReadPhase], JoinedContext[Root, Required, Optional, R, K], Generic[Root, Required, Optional, R, K, StateT]):  # type: ignore[misc]
-    pass
+    def include_keys(self, rel: Related[Root, T], *, limit: int) -> _TrackedJoined[Root, Required, Optional, WithKeys[R, T], K, StateT]:
+        return cast(
+            "_TrackedJoined[Root, Required, Optional, WithKeys[R, T], K, StateT]",
+            replace(self, steps=self._as_query().include_keys(rel, limit=limit).steps),
+        )
 
 @dataclass(frozen=True)
 class _TrackedGrouped(_TrackedSelection[Root, Required, Optional, R, K, StateT, _GroupPhase], GroupedContext[Root, Required, Optional, R, K], Generic[Root, Required, Optional, R, K, StateT]):  # type: ignore[misc]

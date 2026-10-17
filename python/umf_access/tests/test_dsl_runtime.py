@@ -325,20 +325,18 @@ class GeneratedDelegationHooks(unittest.TestCase):
     def test_projection_and_repeated_hydration_do_not_lose_result_shape(self):
         from typing import ClassVar
 
+        from commerce import Order as GeneratedOrder
         from pydantic import BaseModel
         from umf_access.capture import CaptureError
-        from umf_access.dsl import Related
 
-        relation = Related[Order, str](
-            FieldRef(module="commerce", element="Order", field="customer")
-        )
+        relation = GeneratedOrder.c.customer
 
         class UnitProjection(BaseModel):
             amount: Decimal
-            UMF_PROJECTION_FIELDS: ClassVar[tuple[FieldRef, ...]] = (AMOUNT,)
+            UMF_PROJECTION_FIELDS: ClassVar[tuple[FieldRef, ...]] = (GeneratedOrder.c.amount.ref,)
 
         for change in (
-            lambda q: q.select(amount),
+            lambda q: q.select(GeneratedOrder.c.amount),
             lambda q: q._into(UnitProjection),
             lambda q: q.include_keys(relation, limit=5),
         ):
@@ -346,7 +344,7 @@ class GeneratedDelegationHooks(unittest.TestCase):
             @query
             def declaration():
                 # This refusal callback is invoked synchronously inside this iteration.
-                return change(objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023
+                return change(GeneratedOrder.objects.include_keys(relation, limit=5)).limit(10).all()  # noqa: B023
 
             with self.subTest(change=change), self.assertRaises(CaptureError) as caught:
                 capture(declaration)
