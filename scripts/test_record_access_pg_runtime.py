@@ -17,7 +17,16 @@ spec.loader.exec_module(capture)
 
 
 class CaptureTests(unittest.TestCase):
-    def run_capture(self, body, *, error=None, broken=False):
+    def run_capture(
+        self,
+        body,
+        *,
+        error=None,
+        broken=False,
+        cached=False,
+        conversion_count=1,
+        converted_none=False,
+    ):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             package = root / "umf_access"
@@ -38,7 +47,17 @@ class CaptureTests(unittest.TestCase):
                         params=(b"\x00\x07",),
                     )
 
+                    self.native = None if converted_none else self._query
+
+                def _convert_query(self, query, params):
+                    return self.native
+
                 def execute(self, query, params=None, **kwargs):
+                    for _ in range(conversion_count):
+                        native = self._convert_query(query, params)
+                        assert native is self.native
+                    if cached:
+                        self._query = None
                     seen.append((query, params, kwargs))
                     if error is not None:
                         raise error
@@ -46,13 +65,22 @@ class CaptureTests(unittest.TestCase):
 
             class AsyncCursor(Cursor):
                 async def execute(self, query, params=None, **kwargs):
-                    return super().execute(query, params, **kwargs)
+                    for _ in range(conversion_count):
+                        native = self._convert_query(query, params)
+                        assert native is self.native
+                    if cached:
+                        self._query = None
+                    seen.append((query, params, kwargs))
+                    if error is not None:
+                        raise error
+                    return sentinel
 
             fake = types.SimpleNamespace(
                 Cursor=Cursor, AsyncCursor=AsyncCursor, sentinel=sentinel, error=error
             )
             sync = Cursor.execute
             asynchronous = AsyncCursor.execute
+            conversion = Cursor._convert_query
             failure = None
             with (
                 patch.object(capture, "psycopg", fake),
@@ -65,6 +93,8 @@ class CaptureTests(unittest.TestCase):
                     failure = caught
             self.assertIs(Cursor.execute, sync)
             self.assertIs(AsyncCursor.execute, asynchronous)
+            self.assertIs(Cursor._convert_query, conversion)
+            self.assertNotIn("_convert_query", AsyncCursor.__dict__)
             return (
                 json.loads(out.read_text()) if out.exists() else None,
                 seen,
@@ -146,7 +176,45 @@ class CaptureTests(unittest.TestCase):
         )
         self.assertIsNone(error)
         self.assertEqual(seen, [("SELECT %s", (7,), {"binary": True})])
-        self.assertEqual(len(doc["calls"]), 2)
+        self.assertEqual(len(doc["calls"]), 1)
+
+    def test_prepared_driver_does_not_retain_query_sync_and_async(self):
+        doc, seen, error, _, _ = self.run_capture(
+            "import psycopg,asyncio\nc=psycopg.Cursor()\nfor _ in range(2): assert c.execute('SELECT %s',(7,)) is psycopg.sentinel\nasync def run():\n c=psycopg.AsyncCursor()\n for _ in range(2): assert await c.execute('SELECT %s',(7,)) is psycopg.sentinel\nasyncio.run(run())\n",
+            cached=True,
+        )
+        self.assertIsNone(error)
+        self.assertEqual(len(seen), 4)
+        self.assertEqual(len(doc["calls"]), 4)
+        self.assertTrue(
+            all(
+                call["protocol"]["observed"]
+                and call["protocol"]["parameterOids"] == [21]
+                for call in doc["calls"]
+            )
+        )
+        self.assertTrue(doc["driverConversionSourcesUnchanged"])
+        self.assertTrue(doc["driverConversionSources"])
+
+    def test_missing_or_multiple_conversions_fail_closed_after_native_return(self):
+        for count in (0, 2):
+            with self.subTest(count=count):
+                _, seen, error, receipts, _ = self.run_capture(
+                    "import psycopg\nassert psycopg.Cursor().execute('SELECT %s',(7,)) is psycopg.sentinel\n",
+                    conversion_count=count,
+                )
+                self.assertEqual(len(seen), 1)
+                self.assertIsInstance(error, RuntimeError)
+                self.assertEqual(len(receipts), 1)
+
+    def test_explicit_absent_conversion_never_reuses_stale_cursor_query(self):
+        _, seen, error, receipts, _ = self.run_capture(
+            "import psycopg\nassert psycopg.Cursor().execute('SELECT %s',(7,)) is psycopg.sentinel\n",
+            converted_none=True,
+        )
+        self.assertEqual(len(seen), 1)
+        self.assertIsInstance(error, RuntimeError)
+        self.assertEqual(len(receipts), 1)
 
     def test_original_failure_identity(self):
         original = RuntimeError("original")

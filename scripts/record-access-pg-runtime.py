@@ -32,8 +32,11 @@ RUNTIME_NAMES = frozenset(
 )
 
 
-def protocol(cursor):
-    query = getattr(cursor, "_query", None)
+_UNSET = object()
+
+
+def protocol(cursor, converted=_UNSET):
+    query = getattr(cursor, "_query", None) if converted is _UNSET else converted
     if query is None:
         return {"observed": False}
     native = query.query
@@ -81,6 +84,33 @@ def main():
     script_names = {str(args.script), str(args.script.resolve())}
     source_hashes = {}
     capture_errors = []
+    converted_calls = {}
+    converter_sources = {}
+    converters = {}
+    for cls in (psycopg.Cursor, psycopg.AsyncCursor):
+        original = cls._convert_query
+        converters[cls] = (original, "_convert_query" in cls.__dict__)
+        path = Path(original.__code__.co_filename).resolve()
+        converter_sources[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def converter(original):
+        def observe_conversion(cursor, *args, **kwargs):
+            value = original(cursor, *args, **kwargs)
+            active = converted_calls.get(id(cursor))
+            if active is not None:
+                try:
+                    observed = protocol(cursor, value)
+                    if observed.get("observed") is not True:
+                        raise ValueError("actual native conversion returned no query")
+                    active.append(observed)
+                except Exception as failure:  # noqa: BLE001 - preserve original adaptation return
+                    capture_errors.append(
+                        {"type": type(failure).__name__, "message": str(failure)}
+                    )
+            return value
+
+        return observe_conversion
+
     args.out.write_text(
         json.dumps(
             {
@@ -131,12 +161,17 @@ def main():
         if not isinstance(query, str):
             raise TypeError("selected runtime query must retain original SQL text")
         nonlocal count
+        observed = converted_calls.get(id(cursor), [])
+        if len(observed) != 1:
+            raise ValueError(
+                "exactly one actual converted native query required per execute"
+            )
         entry = {
             "sequence": count,
             "sql": query,
             "sqlSha256": hashlib.sha256(query.encode()).hexdigest(),
             "origin": origin,
-            "protocol": protocol(cursor),
+            "protocol": observed[0],
             "outcome": "returned" if error is None else "raised",
             "sqlstate": getattr(error, "sqlstate", None),
             "resultColumns": [
@@ -166,22 +201,28 @@ def main():
 
     def execute(self, query, params=None, **kwargs):
         origin = origins()
+        converted_calls[id(self)] = []
         try:
             result = sync(self, query, params, **kwargs)
         except BaseException as error:
             observe(self, query, origin, error)
+            converted_calls.pop(id(self), None)
             raise
         observe(self, query, origin, None)
+        converted_calls.pop(id(self), None)
         return result
 
     async def execute_async(self, query, params=None, **kwargs):
         origin = origins()
+        converted_calls[id(self)] = []
         try:
             result = await asynchronous(self, query, params, **kwargs)
         except BaseException as error:
             observe(self, query, origin, error)
+            converted_calls.pop(id(self), None)
             raise
         observe(self, query, origin, None)
+        converted_calls.pop(id(self), None)
         return result
 
     original_run = subprocess.run
@@ -207,6 +248,8 @@ def main():
         return original_run(changed, *positional, **kwargs)
 
     subprocess.run = recorded_subprocess
+    for cls, (original, _) in converters.items():
+        cls._convert_query = converter(original)
     psycopg.Cursor.execute = execute
     psycopg.AsyncCursor.execute = execute_async
     try:
@@ -219,6 +262,21 @@ def main():
             )
         psycopg.Cursor.execute = sync
         psycopg.AsyncCursor.execute = asynchronous
+        for cls, (original, owned) in converters.items():
+            if owned:
+                cls._convert_query = original
+            else:
+                del cls._convert_query
+        driver_changed = [
+            path
+            for path, sha in converter_sources.items()
+            if not Path(path).is_file()
+            or hashlib.sha256(Path(path).read_bytes()).hexdigest() != sha
+        ]
+        if driver_changed:
+            capture_errors.append(
+                {"type": "DriverSourceChanged", "paths": driver_changed}
+            )
         changed = {
             path: sha
             for path, sha in source_hashes.items()
@@ -244,6 +302,8 @@ def main():
                     "totalCalls": count,
                     "callsComplete": count == len(entries),
                     "snapshotMaximumCalls": 1000,
+                    "driverConversionSources": converter_sources,
+                    "driverConversionSourcesUnchanged": not driver_changed,
                     "sourceFiles": source_hashes,
                     "sourceFilesUnchanged": not changed,
                 },
