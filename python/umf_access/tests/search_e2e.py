@@ -67,7 +67,7 @@ def command(*args):
     generated / "search_declarations.py"
 ).write_text("""from umf_access import query,Param,Vector
 from umf_access.dsl import hybrid,rrf
-from search_docs.models import Doc
+from search_docs.models import Doc,DocSummary
 @query
 def keyword(term:Param[str]):return Doc.objects.search(Doc.s.text.matches(term)).top(3)
 @query
@@ -81,7 +81,7 @@ def filtered(q:Param[Vector],minimum:Param[str]):return Doc.objects.filter(Doc.c
 @query
 def selected(term:Param[str]):return Doc.objects.search(Doc.s.text.matches(term)).select(Doc.c.id,Doc.c.body).top(3)
 @query
-def modeled(term:Param[str]):return Doc.objects.search(Doc.s.text.matches(term)).into(Doc).top(3)
+def modeled(term:Param[str]):return Doc.objects.search(Doc.s.text.matches(term)).into(DocSummary).top(3)
 
 """)
 if partial_profile:
@@ -327,8 +327,8 @@ try:
     assert created.body == "cats"
     selected = queries.selected(target, term="cats")
     assert [h.item for h in selected] == [("a", "cats cats"), ("b", "dogs cats")]
-    assert [h.item for h in queries.modeled(target, term="cats")] == [
-        h.item for h in text
+    assert [(h.item.id, h.item.body) for h in queries.modeled(target, term="cats")] == [
+        h.item for h in selected
     ]
     cases.append(
         "actual generated instance, selected tuple and explicit generated-model ranked projection"
@@ -350,6 +350,29 @@ try:
     assert [h.item.id for h in vector] == ["a", "b", "c"]
     assert vector[0].score.kind == "cosine-distance" and vector[0].score.value == 0.0
     assert vector[1].item.embedding == (0.5, 0.5, 0.0)
+    from umf_access.postgres_search import _statement
+
+    vector_entry = next(
+        entry
+        for variant in all_variants
+        for entry in variant.entries
+        if entry.artifact().get("scoreKind") == "cosine-distance"
+        and not entry.artifact()["selectionTemplate"].get("parameters")
+    )
+    original_sql, original_params = _statement(
+        vector_entry, "/statement", {"__umf_search_query": "[1,0,0]"}, "search_app"
+    )
+    connection.execute("SET LOCAL enable_seqscan=off")
+    plan = connection.execute(
+        "EXPLAIN (FORMAT JSON) " + original_sql, original_params
+    ).fetchone()[0]
+    connection.rollback()
+    (generated / "exact-vector-explain.json").write_text(json.dumps(plan, indent=2))
+    assert '"Index Name": "doc_semantic"' not in json.dumps(plan)
+    assert "__umf_candidates" in json.dumps(plan)
+    cases.append(
+        "original materialized vector candidate plan cannot use HNSW even with sequential scans discouraged"
+    )
     filtered = queries.filtered(target, q=(1.0, 0.0, 0.0), minimum="b")
     assert [h.item.id for h in filtered] == ["b", "c"]
     cases.append(

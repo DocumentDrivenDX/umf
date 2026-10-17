@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/search_e2e.py", line 189, in <module>
+    command(
+    ~~~~~~~^
+        sys.executable,
+        ^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        *extra,
+        ^^^^^^^
+    )
+    ^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/search_e2e.py", line 62, in command
+    raise RuntimeError(p.stdout + p.stderr)
+RuntimeError: {"reason":"SEARCH_DECLARATION: search projection belongs to another Record","status":"refused"}
+
