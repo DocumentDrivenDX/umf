@@ -5,7 +5,7 @@ import hashlib
 import json
 import unittest
 
-from pg_owner_privilege_resolver import checked_packet
+from pg_owner_privilege_resolver import checked_packet, observe_original_protocol
 
 
 def packet():
@@ -37,6 +37,36 @@ def packet():
 
 
 class OwnerCustodyTests(unittest.TestCase):
+    def test_protocol_witness_refuses_unowned_or_writable_execution(self):
+        class Connection:
+            calls = 0
+
+            def execute(self, _query):
+                self.calls += 1
+                return self
+
+            def fetchone(self):
+                return (self.mode,)
+
+        sql = "SELECT 1"
+        statement = {
+            "role": "business-read",
+            "sql": sql,
+            "sqlSha256": hashlib.sha256(sql.encode()).hexdigest(),
+            "parameterOrder": [],
+        }
+        for mode, change, values in [
+            ("off", {}, []),
+            ("on", {"role": "business-write"}, []),
+            ("on", {"sqlSha256": "foreign"}, []),
+            ("on", {}, [1]),
+        ]:
+            connection = Connection()
+            connection.mode = mode
+            with self.subTest(mode=mode, change=change), self.assertRaises(ValueError):
+                observe_original_protocol(connection, dict(statement, **change), values)
+            self.assertEqual(connection.calls, 1)
+
     def test_exact_original_success_retains_copy(self):
         original = packet()
         actual = checked_packet(original, lambda text: text)

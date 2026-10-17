@@ -180,5 +180,58 @@ def main() -> None:
     args.output.write_text(json.dumps(report, indent=2, default=str) + "\n")
 
 
+def observe_original_protocol(
+    connection: Any, statement: Mapping[str, Any], values: list[object]
+) -> dict[str, Any]:
+    """Run explicitly selected original read SQL with its actual libpq parameters.
+
+    This is a qualification-harness operation, separate from parse-only probes.
+    The caller must supply its disposable read-only transaction and fixtures.
+    """
+    from psycopg import pq
+    from psycopg.adapt import PyFormat, Transformer
+
+    if connection.execute("SHOW transaction_read_only").fetchone() != ("on",):
+        raise ValueError(
+            "qualification business witness requires read-only transaction"
+        )
+    if statement.get("role") != "business-read" or digest(
+        statement["sql"]
+    ) != statement.get("sqlSha256"):
+        raise ValueError("only original hashed business-read witness supported")
+    if len(values) != len(statement["parameterOrder"]):
+        raise ValueError("exact original parameter order required")
+    transform = Transformer.from_context(connection)
+    buffers = transform.dump_sequence(values, [PyFormat.AUTO] * len(values))
+    result = connection.pgconn.exec_params(
+        statement["sql"].encode(), buffers, transform.types, transform.formats, 0
+    )
+    witness = {
+        "statementPath": statement["path"],
+        "sqlSha256": statement["sqlSha256"],
+        "nativeParameterOids": list(transform.types),
+        "nativeParameterFormats": list(transform.formats),
+        "status": int(result.status),
+        "rows": [
+            [
+                None
+                if result.get_value(row, col) is None
+                else result.get_value(row, col).decode()
+                for col in range(result.nfields)
+            ]
+            for row in range(result.ntuples)
+        ],
+        "nativeErrorSqlstate": None
+        if result.error_field(pq.DiagnosticField.SQLSTATE) is None
+        else result.error_field(pq.DiagnosticField.SQLSTATE).decode(),
+        "inferredTypesWitness": "UNQUALIFIED: owner inferred target identity must be independently checked",
+    }
+    if result.status != pq.ExecStatus.TUPLES_OK:
+        error = ValueError("original read native protocol execution refused")
+        error.witness = witness
+        raise error
+    return witness
+
+
 if __name__ == "__main__":
     main()
