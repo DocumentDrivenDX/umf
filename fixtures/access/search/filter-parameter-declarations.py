@@ -41,3 +41,13 @@ def literal_empty(term: Param[str]):
 @query
 def literal_nulls(term: Param[str]):
     return Doc.objects.filter(Doc.c.tag.is_in([None, 'é%\\'])).search(Doc.s.text.matches(term)).top(10)
+
+from search_docs.keys import DocKey
+
+@query
+def raw_terms(words: Param[str]):
+    return Doc.objects.filter(Doc.c.body.matches_all_terms(words)).select(Doc.c.id).order_by(Doc.c.id.asc()).limit(10).all()
+
+@query
+def raw_pages(words: Param[str], after: Param[DocKey | None]):
+    return Doc.objects.filter(Doc.c.body.matches_all_terms(words)).select(Doc.c.id).order_by(Doc.c.id.asc()).page(size=1, after=after)

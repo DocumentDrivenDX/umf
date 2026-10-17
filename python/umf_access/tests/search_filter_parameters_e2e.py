@@ -190,6 +190,8 @@ try:
             await async_connection.close()
     asyncio.run(async_controls())
     checks.append({'kind': 'actual-async-list-nullable-parity'})
+    from pg_search_fence_e2e import exercise_fence
+    checks.extend(exercise_fence(queries, configuration, admin, dsn))
     (OUT / 'result.json').write_text(json.dumps({'status': 'pass', 'checks': checks, 'temporal': 'HELD', 'nativeAuthority': False, 'scope': 'owned PostgreSQL18.6/pgvector0.8.7 actual generated search filters only'}, indent=2))
 finally:
     if connection is not None:
