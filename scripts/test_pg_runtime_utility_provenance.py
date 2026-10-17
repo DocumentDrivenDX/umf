@@ -5,7 +5,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from pg_runtime_utility_provenance import timeout_utility
+from pg_runtime_utility_provenance import search_path_utility, timeout_utility
 
 
 class UtilityControls(unittest.TestCase):
@@ -13,7 +13,7 @@ class UtilityControls(unittest.TestCase):
         package = root / 'umf_access'
         package.mkdir()
         source = package / 'postgres_read.py'
-        source.write_text('def _snapshot_free_timeout(deadline):\n    return "fixture-only"\n')
+        source.write_text('def _snapshot_free_timeout(deadline):\n    return "fixture-only"\ndef _snapshot_free_search_path(app_schema):\n    return "fixture-only"\n')
         caller = package / 'postgres_search.py'
         caller.write_text('def _run_search():\n    pass\n')
         archive = root / 'runtime.whl'
@@ -54,6 +54,48 @@ class UtilityControls(unittest.TestCase):
             with self.assertRaises(ValueError):
                 timeout_utility(obs, archive)
 
+
+    def context_observation(self, observation, schema):
+        result = copy.deepcopy(observation)
+        query = 'SET LOCAL search_path = pg_catalog, "' + schema.replace('"', '""') + '", pg_temp'
+        digest = hashlib.sha256(query.encode()).hexdigest()
+        result.update(sql=query, sqlSha256=digest)
+        result['protocol'].update(nativeSql=query, nativeSqlSha256=digest)
+        return result
+
+    def test_exact_quoted_context_preserves_identifier_bytes_without_authority(self):
+        with tempfile.TemporaryDirectory() as folder:
+            observation, archive = self.example(Path(folder))
+            for schema in ('app', 'é', 'a"b', 'a; SELECT true', 'x' * 63):
+                with self.subTest(schema=schema):
+                    proof = search_path_utility(self.context_observation(observation, schema), archive)
+                    self.assertEqual(proof['applicationSchema'], schema)
+                    self.assertEqual(proof['kind'], 'snapshot-free-legacy-search-path')
+                    self.assertFalse(proof['parseTreeAnalysisApplicable'])
+                    self.assertFalse(proof['nativeAuthority'])
+
+    def test_context_noncanonical_or_overlong_refuses(self):
+        with tempfile.TemporaryDirectory() as folder:
+            observation, archive = self.example(Path(folder))
+            for query in ('SET LOCAL search_path = app', 'SET LOCAL search_path = pg_catalog, "app", public', 'SET LOCAL search_path = pg_catalog, "a"b", pg_temp', 'SET LOCAL search_path = pg_catalog, "app", pg_temp; SELECT true'):
+                with self.subTest(query=query), self.assertRaises(ValueError):
+                    search_path_utility(dict(observation, sql=query), archive)
+            for schema in ('', 'é' * 32, 'a' * 64, 'a\x00b'):
+                with self.subTest(schema=schema), self.assertRaises(ValueError):
+                    search_path_utility(self.context_observation(observation, schema), archive)
+
+    def test_context_protocol_callsite_and_wheel_custody_required(self):
+        with tempfile.TemporaryDirectory() as folder:
+            observation, archive = self.example(Path(folder))
+            observation = self.context_observation(observation, 'app')
+            for mutate in (lambda x: x['protocol'].update(parameterOids=[0]), lambda x: x['protocol'].update(nativeSql='SELECT true'), lambda x: x.update(resultColumns=[{'native':'x'}]), lambda x: x.update(origin=[]), lambda x: x.update(outcome='raised')):
+                bad = copy.deepcopy(observation)
+                mutate(bad)
+                with self.assertRaises(ValueError):
+                    search_path_utility(bad, archive)
+            Path(observation['origin'][0]['path']).write_text('changed')
+            with self.assertRaises(ValueError):
+                search_path_utility(observation, archive)
 
 if __name__ == '__main__':
     unittest.main()

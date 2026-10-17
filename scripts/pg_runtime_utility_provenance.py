@@ -16,6 +16,28 @@ def timeout_utility(observation, source_archive):
     match = re.fullmatch(r"SET LOCAL statement_timeout = '([1-9][0-9]{0,9})ms'", query or "")
     if match is None or int(match[1]) > 2_147_483_647:
         raise ValueError("unsupported runtime utility or timeout domain")
+    return _utility_provenance(observation, source_archive, "_snapshot_free_timeout", "snapshot-free-statement-timeout", {"milliseconds": int(match[1])})
+
+
+def search_path_utility(observation, source_archive):
+    query = observation.get("sql")
+    if type(query) is not str:
+        raise ValueError("exact search-path utility required")
+    match = re.fullmatch(r'SET LOCAL search_path = pg_catalog, "((?:[^"]|"")*)", pg_temp', query)
+    if match is None:
+        raise ValueError("unsupported search-path utility grammar")
+    schema = match[1].replace('""', '"')
+    try:
+        valid = "\x00" not in schema and 1 <= len(schema.encode("utf-8")) <= 63
+    except UnicodeEncodeError:
+        valid = False
+    if not valid or query != 'SET LOCAL search_path = pg_catalog, "' + schema.replace('"', '""') + '", pg_temp':
+        raise ValueError("invalid canonical native schema identifier")
+    return _utility_provenance(observation, source_archive, "_snapshot_free_search_path", "snapshot-free-legacy-search-path", {"applicationSchema": schema})
+
+
+def _utility_provenance(observation, source_archive, helper_name, kind, details):
+    query = observation["sql"]
     digest = lambda data: hashlib.sha256(data).hexdigest()
     protocol = observation.get("protocol", {})
     if (
@@ -35,9 +57,9 @@ def timeout_utility(observation, source_archive):
         payload = "umf_access/postgres_read.py"
         data = wheel.read(payload)
         tree = ast.parse(data)
-        helpers = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "_snapshot_free_timeout"]
+        helpers = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == helper_name]
         if len(helpers) != 1:
-            raise ValueError("exact runtime timeout helper absent")
+            raise ValueError("exact runtime utility helper absent")
         helper = helpers[0]
         # Pin its complete implementation, independently of the validated emitted
         # utility value; no caller-provided digest can substitute for wheel bytes.
@@ -61,10 +83,10 @@ def timeout_utility(observation, source_archive):
             raise ValueError("original runtime utility execution callsite absent")
     return {
         "version": "umf.pg-runtime-utility-observation/0.1",
-        "kind": "snapshot-free-statement-timeout",
+        "kind": kind,
         "sql": query,
         "sqlSha256": observation["sqlSha256"],
-        "milliseconds": int(match[1]),
+        **details,
         "protocol": protocol,
         "sourceWheelSha256": source_archive["sha256"],
         "helperPayload": payload,
