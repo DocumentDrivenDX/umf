@@ -142,10 +142,12 @@ class UnityCatalogSearchTarget:
         self._seconds(timeout)
 
     @staticmethod
-    def _seconds(timeout: timedelta) -> float:
+    def _seconds(timeout: timedelta, *, call: bool = False) -> float:
         if type(timeout) is not timedelta:
             raise ValueError("finite search timedelta required")
         seconds = timeout.total_seconds()
+        if call and seconds == 0:
+            raise TimeoutError("Unity Catalog search deadline already expired")
         if not math.isfinite(seconds) or not 0 < seconds <= 120:
             raise ValueError("finite search timeout within 120 seconds required")
         return seconds
@@ -215,7 +217,7 @@ class UnityCatalogSearchTarget:
             self._platform(deadline)
 
     def search(self, variant: SearchVariant, parameters: Mapping[str, object], *, timeout: timedelta | None = None) -> SearchResult[Any]:
-        seconds = self._seconds(self.timeout if timeout is None else timeout)
+        seconds = self._seconds(self.timeout if timeout is None else timeout, call=True)
         deadline = time.monotonic() + seconds
         self._platform(deadline)
 

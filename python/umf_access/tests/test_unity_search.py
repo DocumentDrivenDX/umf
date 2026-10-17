@@ -149,6 +149,20 @@ class UnitySearchTests(unittest.TestCase):
         with self.assertRaisesRegex(TargetMismatch, "explicit catalog"):
             UnityCatalogSearchTarget(Transport(program), identity).verify()
 
+    def test_expired_call_refuses_before_any_native_operation(self):
+        program, identity, variant = fixture()
+        transport = Transport(program)
+        target = UnityCatalogSearchTarget(transport, identity)
+        with patch.object(transport, "platform") as platform, patch.object(transport, "principal") as principal:
+            with self.assertRaises(TimeoutError):
+                target.search(variant, {"vector": (1.0, 0.0, 0.0)}, timeout=timedelta(0))
+            for timeout in (0, timedelta(seconds=-1), timedelta(seconds=121)):
+                with self.subTest(timeout=timeout), self.assertRaises(ValueError):
+                    target.search(variant, {"vector": (1.0, 0.0, 0.0)}, timeout=timeout)
+            platform.assert_not_called()
+            principal.assert_not_called()
+        self.assertEqual(transport.calls, [])
+
     def test_native_exact_projection_carriers_never_round_or_invent_null(self):
         value = Decimal("1.2300")
         self.assertIs(_native_value({"carrier": "decimal"}, value), value)
