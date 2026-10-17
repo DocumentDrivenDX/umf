@@ -2,6 +2,8 @@ from manifest_sales import queries as manifest
 from mixed_sales import queries as mixed
 from umf_access.commands import BulkTarget
 from umf_access.manifest_commands import ManifestBulkTarget
+
+
 class Proof: pass
 
 def misuse(target: ManifestBulkTarget[Proof], raw: BulkTarget[Proof]) -> None:

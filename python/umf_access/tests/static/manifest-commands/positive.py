@@ -1,8 +1,12 @@
-from typing import Awaitable, assert_type
+from collections.abc import Awaitable
+from typing import assert_type
+
 from manifest_sales import queries as manifest
 from mixed_sales import queries as mixed
-from umf_access.commands import BulkTarget, AsyncBulkTarget
-from umf_access.manifest_commands import ManifestBulkTarget, AsyncManifestBulkTarget
+from umf_access.commands import AsyncBulkTarget, BulkTarget
+from umf_access.manifest_commands import AsyncManifestBulkTarget, ManifestBulkTarget
+
+
 class Proof: pass
 
 def calls(target: ManifestBulkTarget[Proof], async_target: AsyncManifestBulkTarget[Proof], raw: BulkTarget[Proof], async_raw: AsyncBulkTarget[Proof]) -> None:
