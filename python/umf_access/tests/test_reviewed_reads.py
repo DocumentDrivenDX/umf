@@ -419,6 +419,9 @@ class Native(unittest.TestCase):
             cls.admin.execute(
                 f"CREATE TABLE {schema}.customers (id bigint PRIMARY KEY, name text NOT NULL, owner_role text NOT NULL)"
             )
+            cls.admin.execute(
+                f"ALTER TABLE {schema}.orders ADD CONSTRAINT orders_customer_fk FOREIGN KEY (customer_id) REFERENCES {schema}.customers (id) NOT DEFERRABLE"
+            )
             cls.admin.execute(f"ALTER TABLE {schema}.orders ENABLE ROW LEVEL SECURITY")
             cls.admin.execute(
                 f"ALTER TABLE {schema}.customers ENABLE ROW LEVEL SECURITY"
@@ -696,6 +699,9 @@ class Native(unittest.TestCase):
             )
             self.admin.execute(
                 "INSERT INTO praxis_test.generated_customers VALUES ('a1','Alpha','praxis_a'),('a2','Hidden','praxis_b'),('b1','Beta','praxis_b')"
+            )
+            self.admin.execute(
+                "ALTER TABLE praxis_test.generated_orders ADD CONSTRAINT generated_orders_customer_fk FOREIGN KEY (order_id) REFERENCES praxis_test.generated_customers (customer_id) NOT DEFERRABLE"
             )
         request = json.loads(
             (
