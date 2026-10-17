@@ -48,6 +48,7 @@ if target_kind == "lakebase":
     from umf_access.postgres_search import PostgresSearchTarget as OtherSearchTarget
 else:
     from umf_access.postgres_search import LakebaseSearchTarget as OtherSearchTarget
+partial_profile = os.environ.get("UMF_SEARCH_PARTIAL_PROFILE") == "1"
 vector_version = os.environ.get("UMF_SEARCH_VECTOR_VERSION", "0.8.7")
 if vector_version not in ("0.8.6", "0.8.7"):
     raise ValueError("explicit pinned native vector test version required")
@@ -77,7 +78,18 @@ def embedded(term:Param[str]):return Doc.objects.search(Doc.s.semantic.near(term
 def combined(term:Param[str]):return Doc.objects.search(hybrid(Doc.s.text.matches(term),Doc.s.semantic.near(term),fusion=rrf(depth=6))).top(3)
 @query
 def filtered(q:Param[Vector],minimum:Param[str]):return Doc.objects.filter(Doc.c.id >= minimum).search(Doc.s.semantic.near_vector(q)).top(3)
+@query
+def selected(term:Param[str]):return Doc.objects.search(Doc.s.text.matches(term)).select(Doc.c.id,Doc.c.body).top(3)
+@query
+def modeled(term:Param[str]):return Doc.objects.search(Doc.s.text.matches(term)).into(Doc).top(3)
+
 """)
+if partial_profile:
+    declarations_path = generated / "search_declarations.py"
+    declarations_path.write_text(
+        declarations_path.read_text().replace(".top(3)", ".top(3,allow_partial=True)")
+    )
+
 model = json.loads((generated / "stage-one-request.json").read_text())["sources"][0][
     "text"
 ]
@@ -134,6 +146,45 @@ config["umf"] = {
     ]
 }
 (generated / "search-config.json").write_text(json.dumps(config))
+if partial_profile:
+    declarations_path = generated / "search_declarations.py"
+    original = declarations_path.read_text()
+    declarations_path.write_text(
+        original.replace(
+            "def filtered(q:Param[Vector],minimum:Param[str]):return Doc.objects.filter(Doc.c.id >= minimum).search(Doc.s.semantic.near_vector(q)).top(3,allow_partial=True)",
+            "def filtered(q:Param[Vector],minimum:Param[str]):return Doc.objects.filter(Doc.c.id >= minimum).search(Doc.s.semantic.near_vector(q)).top(3)",
+        )
+    )
+    try:
+        refused = subprocess.run(
+            [
+                sys.executable,
+                "-I",
+                "-B",
+                "-m",
+                "umf_access.build.catalog",
+                "catalog",
+                "--config",
+                str(generated / "search-config.json"),
+                "--root",
+                str(generated),
+            ],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        (generated / "partial-without-optin.log").write_text(
+            refused.stdout + refused.stderr
+        )
+        assert (
+            refused.returncode != 0
+            and "SEARCH_FILTER" in refused.stdout + refused.stderr
+        )
+        cases.append(
+            "partial original binding refuses filtered search without explicit opt-in"
+        )
+    finally:
+        declarations_path.write_text(original)
 for extra in ([], ["--check"]):
     command(
         sys.executable,
@@ -266,9 +317,30 @@ try:
     text = queries.keyword(target, term="cats")
     assert [h.item.id for h in text] == ["a", "b"]
     assert all(h.score.kind == "implementation-defined" for h in text)
-    assert text.stale == 0 and not text.partial and not text.approximate
+    assert text.stale == 0 and text.partial == partial_profile and not text.approximate
     cases.append(
         "actual native plain keyword ranking and RLS; whole-row vector decoding"
+    )
+    from search_docs.models import Doc
+
+    created = Doc(id="instance", body="cats", embedding=(1.0, 0.0, 0.0))
+    assert created.body == "cats"
+    selected = queries.selected(target, term="cats")
+    assert [h.item for h in selected] == [("a", "cats cats"), ("b", "dogs cats")]
+    assert [h.item for h in queries.modeled(target, term="cats")] == [
+        h.item for h in text
+    ]
+    cases.append(
+        "actual generated instance, selected tuple and explicit generated-model ranked projection"
+    )
+    native_keyword = connection.execute(
+        "SELECT id FROM search_app.docs WHERE pg_catalog.to_tsvector('pg_catalog.english',body) @@ pg_catalog.plainto_tsquery('pg_catalog.english',%s) ORDER BY pg_catalog.ts_rank_cd(pg_catalog.to_tsvector('pg_catalog.english',body),pg_catalog.plainto_tsquery('pg_catalog.english',%s)) DESC,id COLLATE \"C\" ASC LIMIT 3",
+        ("cats", "cats"),
+    ).fetchall()
+    connection.rollback()
+    assert [h.item.id for h in text] == [r[0] for r in native_keyword]
+    cases.append(
+        "independent native keyword ranking oracle under the constrained RLS principal"
     )
     plain = queries.keyword(target, term="cats | dogs")
     assert [h.item.id for h in plain] == ["b"]
@@ -282,6 +354,27 @@ try:
     assert [h.item.id for h in filtered] == ["b", "c"]
     cases.append(
         f"actual pgvector{vector_version} exact distance, complete pre-filtering and Key tie order"
+    )
+    native_vector = connection.execute(
+        'SELECT id FROM search_app.docs WHERE id >= %s ORDER BY embedding OPERATOR(public.<=>) %s::public.vector,id COLLATE "C" ASC LIMIT 3',
+        ("b", "[1,0,0]"),
+    ).fetchall()
+    connection.rollback()
+    assert [h.item.id for h in filtered] == [r[0] for r in native_vector]
+    cases.append(
+        "independent native exact vector prefilter oracle; no ANN recall claim"
+    )
+    admin.execute("UPDATE search_app.docs SET body='birds' WHERE id='a'")
+    changed = queries.keyword(target, term="cats")
+    assert (
+        [h.item.id for h in changed] == ["b"]
+        and changed.stale == 0
+        and changed.partial == partial_profile
+    )
+    admin.execute("UPDATE search_app.docs SET body='cats cats' WHERE id='a'")
+    assert [h.item.id for h in queries.keyword(target, term="cats")] == ["a", "b"]
+    cases.append(
+        "committed transactional keyword freshness and restoration without stale hydration"
     )
     embedded = queries.embedded(target, term="cats")
     assert [h.item.id for h in embedded] == ["a", "b", "c"] and embedder.calls == 1
