@@ -1,0 +1,12 @@
+{
+  "status": "REPRODUCED_ORIGINAL_SQL_ABA",
+  "scope": "Original immutable R20 raw readTemplate SQL and Boolean term guard algorithm, both RC/RR; old bulk embeds this raw meaning but no SDK bulk commit/native dispatch is claimed by this witness. Exact owner SQL executed with psycopg RawCursor native dollar placeholders.",
+  "compilerSource": "a6ca6fe63c94c8a0d65dd6e661d99b28381520ef",
+  "sdkWheelSha256": "5730b2deb8f5149abdbb0837f2e4a396193c6306a2fe4b360fbab428dc9be590",
+  "failures": {
+    "r1": "Sandbox initdb shared-memory denial before server start; escalated authorized replay.",
+    "r2": "Harness-only missing dbapiSql KeyError after actual guard true; original raw has native SQL, corrected to RawCursor without rewriting SQL; owned server stopped."
+  },
+  "r3": "NOSUPER/NOBYPASS caller. Same configuration identity. preGuard true, baseline running/run row, dictionary simple change gives empty original business rows, restore english_stem then postGuard true, map xmin/ctid differs. All configuration restored and owned server stopped.",
+  "meaning": "Standalone raw R20 deep dictionary correspondence is correct at both guard instants; it does not detect intermediate ABA. No new raw marker introduced."
+}
