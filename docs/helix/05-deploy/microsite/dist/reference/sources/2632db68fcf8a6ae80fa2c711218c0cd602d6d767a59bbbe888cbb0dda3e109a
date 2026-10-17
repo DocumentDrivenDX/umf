@@ -1,3 +1,4 @@
+import {keyMeaning} from './internal/inspection-meanings';
 import {snapshotSchema} from '../validation/internal-schema';
 import bit128Document from '../../spec/core/bit128-document.schema.json';
 import bit128Result from '../../spec/core/key-operation-v4.schema.json';
@@ -42,11 +43,7 @@ function record(located:ReturnType<typeof locate>,readOnly=false){
  if(located.element.kind!=='record')throw new UmfError('CORE_KEY_ROLE','Keys and membership apply only to explicit Records',located.path);
 }
 export function inspectCoreKeys(input:Document,identity:CoreRecordIdentity):CoreKeyInspection{
- const l=locate(input,identity),path=l.path+'/keys';let meaning:CoreKeyMeaning={state:'missing'};
- if(Object.hasOwn(l.element,'keys')){
-  if(l.source.umf!=='0.6.0'&&l.source.umf!=='0.7.0'&&l.source.umf!=='0.8.0'&&l.source.umf!=='0.9.0')meaning={state:'legacy',value:copyJson(l.element.keys)};
-  else{const uninterpretedPaths=unknown(l.validation.diagnostics,path);meaning={state:uninterpretedPaths.length?'partial':'known',keys:copyJson(l.element.keys) as unknown as CoreKeyDefinition[],uninterpretedPaths};}
- }else if((l.source.umf==='0.6.0'||l.source.umf==='0.7.0'||(l.source.umf==='0.8.0'||l.source.umf==='0.9.0'))&&l.element.kind!=='record')meaning={state:'inapplicable'};
+ const l=locate(input,identity),path=l.path+'/keys',meaning=keyMeaning(l);
  return finish({operation:'inspect-core-keys',version:l.source.umf==='0.9.0'?'4.0.0':l.source.umf==='0.8.0'?'3.0.0':l.source.umf==='0.7.0'?'2.0.0':'1.0.0',source:l.source,identity:l.identity,path,meaning,provenance:'unverified'});
 }
 export function lookupCoreKey(input:Document,identityInput:CoreKeyIdentity):CoreKeyLookup{

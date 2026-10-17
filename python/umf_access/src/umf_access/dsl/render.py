@@ -112,7 +112,7 @@ def _predicate(node: Node, mutation: bool = False) -> str | None:
     if node.op == "not":
         predicate = _predicate(cast(Node, node.args[0]), mutation)
         return None if predicate is None else "NOT (" + predicate + ")"
-    if node.op in ("=", "<>", "<", "<=", ">", ">="):
+    if node.op in ("=", "<>", "<", "<=", ">", ">=", "IS DISTINCT FROM", "IS NOT DISTINCT FROM"):
         left, right = (cast(Node, v) for v in node.args)
         return f"{_value(left, mutation)} {node.op} {_value(right, mutation)}"
     if node.op in ("IS NULL", "IS NOT NULL", "IS MISSING", "IS NOT MISSING"):
@@ -132,6 +132,9 @@ def _predicate(node: Node, mutation: bool = False) -> str | None:
     if node.op == "BETWEEN":
         left, lo, hi = (cast(Node, v) for v in node.args)
         return f"{_value(left, mutation)} BETWEEN {_value(lo, mutation)} AND {_value(hi, mutation)}"
+    if node.op == "STARTS_WITH":
+        left, right = (cast(Node, value) for value in node.args)
+        return f"STARTS_WITH({_value(left, mutation)}, {_value(right, mutation)})"
     if node.op == "HAS_RELATED":
         left, key = (cast(Node, v) for v in node.args)
         return f"HAS_RELATED({_value(left, mutation)}, KEY({', '.join(_key_values(key, mutation))}))"

@@ -90,4 +90,6 @@ capture tests pass, with evidence recorded.
 
 US-082-AC6 also asserts three runtime bindings (MISSING/null/non-null): only omission removes the filter; equality to null yields UNKNOWN, while explicit is_null() selects nulls. Count only presence variants. Retain exact trusted module source and build-tool pins; no sandbox claim.
 
-Join typing criteria additionally reject self/repeated/ambiguous Record paths and foreign RHS comparisons hidden under an otherwise valid owning predicate. Positive owner-set cases exercise one through four distinct to-one joins; optional-side projections must be nullable on all three checkers and match left-missing native rows.
+Join typing criteria additionally reject self/repeated/ambiguous Record paths and foreign RHS comparisons hidden under an otherwise valid owning predicate. Positive owner-set cases exercise one through three distinct to-one joins; optional-side projections must be nullable on all three checkers and match left-missing native rows.
+
+The three-edge acceptance bound follows the owner-selected FR-53 READ-JOIN refinement, superseding the earlier four-edge proposal for this slice. Repeated/self joins remain pending an explicit qualified alias-binding API; refusing them does not discharge the broader PRD requirement.

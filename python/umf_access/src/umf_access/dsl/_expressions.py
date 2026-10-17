@@ -150,6 +150,27 @@ class Column(Generic[OutputT, T]):
     def is_not_null(self) -> Predicate[OutputT]:
         return self._test("IS NOT NULL")
 
+    def starts_with(
+        self: Column[OutputT, str] | Column[OutputT, str | None],
+        prefix: str | Param[str],
+    ) -> Predicate[OutputT]:
+        """Binary Unicode prefix; %, _ and backslash are ordinary characters."""
+        if not isinstance(prefix, (str, Param)):
+            raise TypeError("prefix requires a string or named string parameter")
+        return self._cmp("STARTS_WITH", prefix)
+
+    def is_distinct_from(
+        self, other: T | None | Param[T | None] | Column[OutputT, T]
+    ) -> Predicate[OutputT]:
+        """Null-safe inequality; the owner compiler preserves two-valued semantics."""
+        return self._cmp("IS DISTINCT FROM", other)
+
+    def is_not_distinct_from(
+        self, other: T | None | Param[T | None] | Column[OutputT, T]
+    ) -> Predicate[OutputT]:
+        """Null-safe equality, including two SQL null operands."""
+        return self._cmp("IS NOT DISTINCT FROM", other)
+
     def is_missing(self) -> Predicate[OutputT]:
         return self._test("IS MISSING")
 
