@@ -1,0 +1,12 @@
+# Selected search privilege qualification: failed R24 attempts
+
+No grant qualification pass is claimed. All four attempts used immutable SDK R24 wheel5730b2deb8f5149abdbb0837f2e4a396193c6306a2fe4b360fbab428dc9be590 and Weft R20 wheele6eed3fbf345d33425db93f2e00b988ff318b6be78ae1aa0a8889d16a8dae932, exact49 installed payload custody, owned PostgreSQL18.6/pgvector0.8.7 and original source-exact schema/publicCLI search inputs. Every attempt stopped its owned server and retained unchanged payload/host receipts.
+
+- R1 closed-refused an unidentified source-exact metadata admission. The exact DBAPI form existed in original checked owner obligations and its original probe SQL/path; the harness was extended to verify this source correspondence without SQL parsing or rewriting.
+- R2 analyzed all7 selected original owner programs, then failed native prepared-statement cleanup: Psycopg rollback maintenance removed the raw native statement before later DEALLOCATE26000; RELEASE then raised25P02. Both errors are retained. Closing the owned native statement immediately after DESCRIBE and before Psycopg SQL was separately proven with8 native lifecycle controls.
+- R3 then closed-refused absent actual protocol metadata on repeated prepared calls; Psycopg does not retain Cursor._query on this path. The observation-only original _convert_query return seam was separately proven on21 real sync/async calls,18 of whose successful executions lacked _query. Native returns/errors and private driver source custody are retained.
+- R4 completed original-owner/fixed-runtime analysis and scoped grant proposals. Native verify passed, but the first keyword business statement genuinely failed42501 for texteqname. The native RLS policy owner(text)=current_user(name) is not present in the stored pre-rewrite business view tree. Exact native selected-table policy AST provenance and final collective-pruning source were added afterward and remain unqualified until a coherent successor campaign runs.
+
+The current compiler source also has a separate reproduced repeatable-read text-search configuration cache/correspondence blocker. Grant R5 is held for a coherent corrected SDK/compiler pair; these attempts do not qualify search/action/bulk/global least privilege. Current target/native authority/inventory completeness remain false. Temporal qualification remains HELD.
+
+All captured JSON/JSONL/logs and exact per-file historical host source are retained compressed with exact raw-byte reconstruction. No private compiler wheel/native binary is included.
