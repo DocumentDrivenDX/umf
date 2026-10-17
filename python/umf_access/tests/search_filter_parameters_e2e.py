@@ -40,6 +40,14 @@ def command(*args):
     return result.stdout
 
 
+class CountingConnection(psycopg.Connection):
+    executions = 0
+
+    def execute(self, *args, **kwargs):
+        self.executions += 1
+        return super().execute(*args, **kwargs)
+
+
 def s8(value, members):
     if not members:
         return False
@@ -127,7 +135,7 @@ try:
     admin.execute('ALTER TABLE search_app.docs ENABLE ROW LEVEL SECURITY')
     admin.execute('CREATE POLICY own_rows ON search_app.docs USING(owner=current_user)')
     admin.execute('GRANT SELECT ON search_app.docs TO search_user')
-    connection = psycopg.connect(dsn + ' user=search_user')
+    connection = CountingConnection.connect(dsn + ' user=search_user')
     configuration = PostgresConfiguration('search_app', binding_digest(binding), (180006,), timedelta(seconds=5))
     target = PostgresSearchTarget(connection, configuration, search_variants=variants)
     target.verify()
@@ -139,7 +147,7 @@ try:
     for function, offset, values in [
         ('string_list', 7, []), ('string_list', 7, [None]), ('string_list', 7, [None, 'é%\\']), ('string_list', 7, ['missing', None]),
         ('string_not_list', 7, []), ('string_not_list', 7, [None]), ('string_not_list', 7, [None, 'é%\\']),
-        ('integer_list', 4, [None, 9223372036854775807]), ('integer_list', 4, [-9223372036854775808, 0]),
+        ('integer_list', 4, [None, 9223372036854775807]), ('integer_list', 4, [-9223372036854775808, 0]), ('integer_list', 4, [10**80, None]),
         ('decimal_list', 5, [None, rows[0][5]]), ('decimal_list', 5, [rows[1][5], Decimal(0)]),
         ('boolean_list', 8, [None, True]), ('boolean_list', 8, [False]), ('string_list', 7, ['other'] * 1000),
     ]:
@@ -160,14 +168,15 @@ try:
         assert identities(getattr(queries, function)(target, term='cats', **arguments)) == expected
         checks.append({'kind': function, 'expected': expected})
     for function, values in [('string_list', ['other'] * 1001), ('integer_list', [True]), ('decimal_list', [1]), ('boolean_list', [1]), ('string_list', [1])]:
+        before_dispatch = connection.executions
         try:
             getattr(queries, function)(target, term='cats', values=values)
         except (TypeError, ValueError):
             pass
         else:
             raise AssertionError('invalid authored parameter domain accepted')
-        assert connection.info.transaction_status == 0
-        checks.append({'kind': 'invalid-domain-before-transaction', 'query': function})
+        assert connection.info.transaction_status == 0 and connection.executions == before_dispatch
+        checks.append({'kind': 'invalid-domain-before-transaction', 'query': function, 'nativeStatementsDispatched': 0})
 
     async def async_controls():
         async_connection = await psycopg.AsyncConnection.connect(dsn + ' user=search_user')
