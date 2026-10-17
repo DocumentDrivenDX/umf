@@ -55,10 +55,15 @@ class RelationshipAdmissionTests(unittest.TestCase):
             _native_relationship_admissions(obligations, "tenant")
 
     def test_only_original_repeatable_read_isolation_reaches_transaction_entry(self):
+        from test_reviewed_reads import Compiler, Empty, Name, binding
+        from umf_access.reviewed import ReviewedSQL
+
+        original = ReviewedSQL('SELECT c.name AS name FROM "commerce"."Customer" AS c LIMIT 1', Empty, Name, 1).build(
+            Compiler(), target="postgresql18", binding=binding("tenant")).artifact()
         connection = SimpleNamespace(info=SimpleNamespace(transaction_status=0, server_version=180006))
         for isolation in (None, "repeatable-read", "read-uncommitted", True):
-            artifact = {"target": "postgresql18", "binding": {"schema": "tenant"}, "dbapiParameterOrder": [],
-                        "obligations": {"transaction": "read-only", "rowCap": 1, "readIsolation": isolation}}
+            artifact = copy.deepcopy(original)
+            artifact["obligations"]["readIsolation"] = isolation
             entry = SimpleNamespace(artifact=lambda artifact=artifact: artifact)
             program = _program(connection, entry, None, app_schema="tenant", _verify_only=True)
             if isolation in (None, "repeatable-read"):

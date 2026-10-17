@@ -30,7 +30,7 @@ class ConfigurationTests(unittest.TestCase):
 
 
 class CapturedCatalogSources(unittest.TestCase):
- def fixture(self, root, function):
+ def fixture(self, root, function, target_binding):
   """Real capture/compiler/catalog path with a minimal generated package surface."""
   import types
 
@@ -48,7 +48,12 @@ class CapturedCatalogSources(unittest.TestCase):
   (root/'source_declarations.py').write_text('# explicit trusted test declaration\n')
   function.__module__='source_declarations';declaration.read=function
   directory=root/'source_catalog'/'_umf';directory.mkdir(parents=True)
-  (directory/'manifest.json').write_text(json.dumps({'runtimeAbi':dict(zip(('distribution','version','abi'),RUNTIME_IDENTITY,strict=True)),'inputDigest':SOURCE.input_digest,'inventory':[],'symbols':[]}))
+  # Retain the actual authored physical document in this explicit unit fixture;
+  # native source checking must run before capture even for the minimal package.
+  sources=[{'id':item['binding']['sourceId'],'text':item['binding']['documentJson']} for item in target_binding['nativeColumns']['sets']]
+  source_bytes=json.dumps(sources).encode();(directory/'sources.json').write_bytes(source_bytes)
+  inventory=[{'path':'source_catalog/_umf/sources.json','sha256':hashlib.sha256(source_bytes).hexdigest()}]
+  (directory/'manifest.json').write_text(json.dumps({'runtimeAbi':dict(zip(('distribution','version','abi'),RUNTIME_IDENTITY,strict=True)),'inputDigest':SOURCE.input_digest,'inventory':inventory,'symbols':[]}))
   return {'source_catalog':package,'source_catalog.models':models,'source_catalog.keys':keys,'source_declarations':declaration}
 
  def compile(self, root, function, compiler, target_binding=None):
@@ -57,7 +62,7 @@ class CapturedCatalogSources(unittest.TestCase):
   from test_reviewed_reads import binding
   from umf_access.build.catalog import compile_catalog
   config={'package':'source_catalog','modules':['source_declarations'],'targets':[{'id':'pg','kind':'postgresql','backendId':'pg','backendVersion':'18','targetProfile':'postgresql18','binding':target_binding or binding(),'platform':[],'nativeActions':[]}]}
-  modules=self.fixture(root,function)
+  modules=self.fixture(root,function,config['targets'][0]['binding'])
   old_path=list(sys.path)
   try:
    with patch.dict(sys.modules,modules):

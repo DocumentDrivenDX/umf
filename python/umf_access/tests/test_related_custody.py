@@ -25,13 +25,13 @@ class Compiler:
         return json.dumps({'version':'weft.raw-read/0.1','status':'compiled','target':target['target'],'binding':target['binding'],'sourceSql':target['sql'],'parameters':[],'outputs':[],'sql':'SELECT 1','parameterOrder':[],'relatedRequest':echo})
 
 class RelatedCustodyTests(unittest.TestCase):
-    def test_original_source_target_inventory_and_relationship_echo(self):
+    def test_original_inputs_reach_endpoint_but_legacy_mock_cannot_promote(self):
         compiler=Compiler()
-        result=ReviewedSQL('SELECT target',Empty,Empty).build(compiler,target='postgresql18',binding={},related_source='SELECT source ORDER BY id LIMIT 2',related_relationship={'module':'m','id':'r','direction':'inverse'})
+        with self.assertRaisesRegex(ReadBuildError, 'NATIVE_SCHEMA_SOURCE_EXACT_REQUIRED'):
+            ReviewedSQL('SELECT target',Empty,Empty).build(compiler,target='postgresql18',binding={},related_source='SELECT source ORDER BY id LIMIT 2',related_relationship={'module':'m','id':'r','direction':'inverse'})
         self.assertEqual(compiler.request['source']['sql'],'SELECT source ORDER BY id LIMIT 2')
         self.assertEqual(compiler.request['target']['sql'],'SELECT target')
         self.assertEqual(compiler.request['relationship'],{'module':'m','id':'r','direction':'inverse'})
-        self.assertEqual(json.loads(result.artifact_json)['relatedRequest'],compiler.request)
     def test_substituted_original_source_refuses(self):
         with self.assertRaisesRegex(ReadBuildError,'custody differs'):
             ReviewedSQL('SELECT target',Empty,Empty).build(Compiler(True),target='postgresql18',binding={},related_source='SELECT source',related_relationship={'module':'m','id':'r','direction':'forward'})

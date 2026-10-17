@@ -111,7 +111,7 @@ class Projection(StrictModel):
 projection = JoinProjection[Order, Projection](Projection)
 
 
-def binding(schema: str | None = None) -> dict[str, object]:
+def binding(schema: str | None = None, *, platform: str = "postgresql") -> dict[str, object]:
     def col(logical: str, carrier: str, nullable: bool = False) -> dict[str, object]:
         return {
             "logical": logical,
@@ -134,13 +134,14 @@ def binding(schema: str | None = None) -> dict[str, object]:
                     col("customer_id", "integer", True),
                     col("status", "string"),
                     col("amount", "decimal"),
+                    col("owner_role", "string"),
                 ],
             },
             {
                 "logical": ["commerce", "Customer"],
                 "native": "customers",
                 "key": ["id"],
-                "columns": [col("id", "integer"), col("name", "string")],
+                "columns": [col("id", "integer"), col("name", "string"), col("owner_role", "string")],
             },
         ],
         "relationships": [
@@ -230,14 +231,55 @@ def binding(schema: str | None = None) -> dict[str, object]:
                     }
                 )
         modules.append(module)
+    # Authored fixture facts precede compilation: every physical column is
+    # represented, including the RLS owner column. No compiler output is edited.
+    target = {"platform": platform, "majorVersion": "18"}
+    physical = {"umf": "0.8.0", "id": "praxis-read-binding",
+                "vocabularies": {"umf.binding": {"version": "0.2.0"}},
+                "modules": [], "extensions": {"umf.binding": {
+                    "profile": "umf-binding-2",
+                    "logical": {"documentId": "praxis-read-test", "coreVersion": "0.8.0"},
+                    "target": {"system": platform, "version": "18", "subset": "typed-access-columns/0.1"},
+                    "elements": [], "fields": [], "relationships": [], "indexes": []}}}
+    storage = physical["extensions"]["umf.binding"]
+    for module in modules:
+        views, columns = [], []
+        for table in result["tables"]:
+            namespace, rid = table["logical"]
+            if namespace != module["id"]:
+                continue
+            storage["elements"].append({"module": namespace, "element": rid, "table": table["native"]})
+            fields = []
+            for column in table["columns"]:
+                fid = rid + "_" + column["logical"]
+                ref = {"module": namespace, "element": fid}
+                fields.append({"field": ref, "row": {"missing": False, "null": column["nullable"]},
+                               "create": {"missing": False, "null": column["nullable"]},
+                               "mutable": column["logical"] not in table["key"], "generated": False})
+                columns.append({"field": ref, "type": {"integer": "bigint", "string": "text", "decimal": "numeric(28,6)"}[column["carrier"]],
+                                "notNull": not column["nullable"], "generation": None,
+                                "collation": {"schema": "pg_catalog", "name": "default"} if column["carrier"] == "string" else None})
+                storage["fields"].append({**ref, "storage": "column", "column": column["native"]})
+            views.append({"record": {"module": namespace, "element": rid},
+                          "selectedKey": {"module": namespace, "element": rid, "key": rid + "_key"}, "fields": fields})
+        module["extensions"] = {"umf.access": {"views": views, "columns": [{
+            "binding": {"sourceId": physical["id"], "module": module["id"]}, "target": target, "columns": columns}]}}
     document = {
         "umf": "0.8.0",
         "id": "praxis-read-test",
-        "vocabularies": {},
+        "vocabularies": {"umf.access": {"version": "0.1.0"}},
         "modules": modules,
     }
     result["modelJson"] = json.dumps(document, sort_keys=True, separators=(",", ":"))
     result["modelSha256"] = hashlib.sha256(result["modelJson"].encode()).hexdigest()
+    physical_json = json.dumps(physical, sort_keys=True, separators=(",", ":"))
+    result["nativeColumns"] = {"target": target, "sets": [{
+        "columnSet": {"documentId": document["id"], "coreVersion": document["umf"],
+                      "documentSha256": result["modelSha256"], "module": module["id"],
+                      "pointer": f"/modules/{index}/extensions/umf.access/columns/0"},
+        "binding": {"sourceId": physical["id"], "documentJson": physical_json,
+                    "documentSha256": hashlib.sha256(physical_json.encode()).hexdigest()}}
+        for index, module in enumerate(modules)]}
     return result
 
 # Handwritten DSL stand-ins explicitly carry the same pinned source as the binding.
@@ -354,7 +396,7 @@ class Compilation(unittest.TestCase):
 
     def test_lakebase18_compiles_without_claiming_a_service_execution(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(
-            Compiler(), target="lakebase18", binding=binding()
+            Compiler(), target="lakebase18", binding=binding(platform="lakebase")
         )
         self.assertEqual(entry.artifact()["target"], "lakebase18")
 
