@@ -8,6 +8,7 @@ import unittest
 from pg_owner_privilege_resolver import (
     analyzed_command_types,
     checked_packet,
+    native_relation_permissions,
     observe_original_protocol,
     rule_profile,
     setup_owner_input,
@@ -43,6 +44,71 @@ def packet():
 
 
 class OwnerCustodyTests(unittest.TestCase):
+    def test_native_relation_identity_preserves_raw_permission_bitmaps(self):
+        class Cursor:
+            def __init__(self, rows):
+                self.rows = rows
+
+            def fetchall(self):
+                return self.rows
+
+        class Connection:
+            def __init__(
+                self, schema="pg_temp_4", native="owned_input", persistence="t"
+            ):
+                self.calls = []
+                self.identity = [(42, schema, native, "r", persistence, 20, None)]
+
+            def execute(self, query, params):
+                self.calls.append((query, params))
+                return Cursor(
+                    self.identity
+                    if len(self.calls) % 2
+                    else [
+                        (-1, "ctid", 27, "pg_catalog", "tid", True, None),
+                        (1, "id", 25, "pg_catalog", "text", True, None),
+                    ]
+                )
+
+        operand = {
+            "relid": 42,
+            "requiredPerms": 7,
+            "checkAsUser": 20,
+            "selectedCols": ["b", 7, 8],
+            "insertedCols": ["b", 8],
+            "updatedCols": ["b", 8],
+        }
+        probe = {"inputRelation": {"native": "owned_input"}}
+        connection = Connection()
+        result = native_relation_permissions(
+            connection, {"relationPermissions": [operand]}, probe
+        )
+        self.assertEqual(result[0]["nativePermissionOperand"], operand)
+        self.assertTrue(result[0]["originalOwnerProbeOnly"])
+        self.assertEqual([a["attnum"] for a in result[0]["attributes"]], [-1, 1])
+        self.assertEqual(result[0]["relation"]["ownerOid"], 20)
+        self.assertEqual([args for _, args in connection.calls], [(42,), (42,)])
+        self.assertFalse(
+            native_relation_permissions(
+                Connection("business", "owned_input", "p"),
+                {"relationPermissions": [operand]},
+                probe,
+            )[0]["originalOwnerProbeOnly"]
+        )
+        missing = Connection()
+        missing.identity = []
+        with self.assertRaises(ValueError):
+            native_relation_permissions(
+                missing, {"relationPermissions": [operand]}, probe
+            )
+        for invalid in [True, 0, -1, "42"]:
+            with self.subTest(oid=invalid), self.assertRaises(ValueError):
+                native_relation_permissions(
+                    Connection(),
+                    {"relationPermissions": [dict(operand, relid=invalid)]},
+                    probe,
+                )
+
     def test_rule_profile_is_explicit_never_fired_and_preserves_native_command(self):
         probe = {
             "analysisKind": "pg-rewrite-rule/0.1",

@@ -15,6 +15,69 @@ from typing import Any
 from pg_runtime_privilege_resolver import analyze, node_tree, resolve
 
 
+def native_relation_permissions(connection, analysis, probe):
+    """Snapshot native analyzed permission operands before owned rollback.
+
+    Raw PostgreSQL permission masks/bitmaps remain uninterpreted. Native system
+    attributes are retained; no column grant is inferred from bitmap arithmetic.
+    """
+    support = (
+        {probe["inputRelation"]["native"]}
+        if probe["inputRelation"].get("native")
+        else set()
+    )
+    if probe.get("analysisRelation"):
+        support.add(probe["analysisRelation"]["native"])
+    observations = []
+    for operand in analysis["relationPermissions"]:
+        oid = operand["relid"]
+        if type(oid) is not int or oid <= 0:
+            raise ValueError("native permission relation OID malformed")
+        cursor = connection.execute(
+            "SELECT c.oid,n.nspname,c.relname,c.relkind,c.relpersistence,c.relowner,c.relacl FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE c.oid=%s::pg_catalog.oid",
+            (oid,),
+        )
+        found = cursor.fetchall()
+        if len(found) != 1 or found[0][0] != oid:
+            raise ValueError("native analyzed permission relation absent or ambiguous")
+        row = found[0]
+        columns = connection.execute(
+            "SELECT a.attnum,a.attname,a.atttypid,tn.nspname,t.typname,a.attnotnull,a.attacl FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid=a.atttypid JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace WHERE a.attrelid=%s::pg_catalog.oid AND NOT a.attisdropped ORDER BY a.attnum",
+            (oid,),
+        ).fetchall()
+        observations.append(
+            {
+                "nativePermissionOperand": dict(operand),
+                "relation": {
+                    "oid": row[0],
+                    "schema": row[1],
+                    "native": row[2],
+                    "kind": row[3],
+                    "persistence": row[4],
+                    "ownerOid": row[5],
+                    "acl": row[6],
+                },
+                "attributes": [
+                    {
+                        "attnum": c[0],
+                        "native": c[1],
+                        "typeOid": c[2],
+                        "typeSchema": c[3],
+                        "typeNative": c[4],
+                        "notNull": c[5],
+                        "acl": c[6],
+                    }
+                    for c in columns
+                ],
+                "originalOwnerProbeOnly": row[4] == "t"
+                and row[1].startswith("pg_temp_")
+                and row[2] in support,
+                "nativeAuthority": False,
+            }
+        )
+    return observations
+
+
 def digest(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
@@ -185,6 +248,7 @@ def resolve_owner_packet(
                         raise ValueError("native original write command tree differs")
                 analysis = analyze(text)
                 native = resolve(connection, analysis)
+                relations = native_relation_permissions(connection, analysis, probe)
                 inputs = []
                 for column in probe["inputRelation"]["columns"]:
                     # Native regtype resolves the original owner's type, not a host label.
@@ -216,6 +280,7 @@ def resolve_owner_packet(
                         "nativeNodeSha256": digest(text),
                         "analysis": analysis,
                         "resolved": native,
+                        "nativeRelationPermissions": relations,
                         "inputTypes": inputs,
                         "analysisKind": probe.get(
                             "analysisKind", "pg-rewrite-view/0.1"
