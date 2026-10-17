@@ -1,0 +1,11 @@
+{
+  "header": "/opt/homebrew/opt/postgresql@18/include/postgresql/server/nodes/parsenodes.h",
+  "headerSha256": "5ce9d9256f7272887b898a97f8772bbea94c0e22fedce21c81a7fffe3b57b6e8",
+  "diffSha256": "cf423453d58b51162fc9519d7db464e350c6f64d99393e30028c18e671c8e143",
+  "scope": "isolated pure candidate only; active parser unchanged, no SQL execution or grant authority",
+  "files": {
+    "pg_runtime_privilege_resolver.py": "bc97c63b0c94e3b9c40e7a9642f9c139b805c12a638a13015715dd7ce45c31ea",
+    "test_pg_runtime_privilege_resolver.py": "a9651e20634d7c342885de8df7c185e91550963839f3035903b3b1898513108d",
+    "pg_search_privilege_campaign.py": "f38193d2b5bb97f2ed7db43c9d157a0a22d62abb63af29f34440f86035632006"
+  }
+}
