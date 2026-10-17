@@ -32,3 +32,9 @@ The next useful native work remains the already prepared bounded discovery on th
 ## Original-owner follow-up (proposal; governance unchanged)
 
 Weftowner recommends that the committed-version domain contain only tables actually attributed to the nativeatomiccommit. Missing/skipped/read-only business tables must not be populated with prior/headversions. If their snapshotidentity is needed, a separately named original readVersions vector would need independent nativeprovenance. Complete expectedcomponents must derive from the originalprogram and allrequiredcomponents, including genuinelynoop/empty cases, must be established or refused. Explicit control participants prove only their own commits. This is a recorded ownerdesignproposal, not an implementedreceiptABI or normativecontract change; root owns disposition.
+
+## Bounded governing interpretation recorded by root
+
+Root reviewed CONTRACT073148–168 and accepts COMMIT-PARTICIPANT domain as the scoped meaning of ordered UUID/version pairs for this nativeatomiccommit. This is not an all-read/declared-table vector, newABI or qualification. Every supported originalprogram must supply a complete expectedparticipantdomain and exactnativeattribution; missing OR extra participants refuse. Any needed readVersions remain separate explicit nativeprovenance.
+
+Expectedparticipant derivation/attribution and genuine admittednoop evidence remain **OPEN**. Zeroactualparticipants/no material nativecommit cannot fabricate a prior/headversion or substitute a ledger. Every supportedprogram still must distinguish admittednoop inside the originalatomicunit. This interpretation does not resolve storeclosure, predispatch UUID/deployment/permissions, no-op nativebehavior or same-unit outputs. Runtime atomicABI stays held with no sourceenablement. No contractrewrite occurred.
