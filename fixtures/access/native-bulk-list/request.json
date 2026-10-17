@@ -53,13 +53,13 @@
   "security": {
     "policy": {
       "mediaType": "application/json",
-      "utf8": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"typed-native-public-fields\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"typed-native-ontology\",\"revision\":\"ontology-1\"},\"rules\":[]}",
-      "sha256": "156be023fd23ed8e6ed96778aee1fd85db40be8fb2fec4e8e375c9bf1350492f"
+      "utf8": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"typed-native-bulk-list-public-fields\",\"revision\":\"policy-bulk-list-1\",\"ontology\":{\"documentId\":\"typed-native-bulk-list-ontology\",\"revision\":\"ontology-bulk-list-1\"},\"rules\":[]}",
+      "sha256": "615bea21777ebff6164cc61df9b83ac15f5f9494aeac31592edb07541677e66d"
     },
     "ontology": {
       "mediaType": "application/json",
-      "utf8": "{\"version\":\"0.1.0\",\"documentId\":\"typed-native-ontology\",\"revision\":\"ontology-1\",\"documents\":[{\"documentId\":\"typed-native-actions-e2e\",\"revision\":\"eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff\"}],\"subject\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"order\"},\"entities\":[{\"type\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"order\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"id\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"status\"},\"protection\":\"unprotected\"}]}],\"associations\":[],\"context\":[],\"actions\":[\"approve\",\"guarded\",\"postFail\",\"createOrder\",\"firstFalse\"]}",
-      "sha256": "38aab153d74e078f8297b793fe93506a06e7eaa81db063509bd66a8b8e40d2c9"
+      "utf8": "{\"version\":\"0.1.0\",\"documentId\":\"typed-native-bulk-list-ontology\",\"revision\":\"ontology-bulk-list-1\",\"documents\":[{\"documentId\":\"typed-native-bulk-list-e2e\",\"revision\":\"f8a42646c3b94c704503f63e1baaff8f96d976b527e524c78a8680acd66c7987\"}],\"subject\":{\"documentId\":\"typed-native-bulk-list-e2e\",\"moduleId\":\"sales\",\"elementId\":\"order\"},\"entities\":[{\"type\":{\"documentId\":\"typed-native-bulk-list-e2e\",\"moduleId\":\"sales\",\"elementId\":\"order\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"typed-native-bulk-list-e2e\",\"moduleId\":\"sales\",\"elementId\":\"id\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"typed-native-bulk-list-e2e\",\"moduleId\":\"sales\",\"elementId\":\"status\"},\"protection\":\"unprotected\"}]}],\"associations\":[],\"context\":[],\"actions\":[\"approve\",\"guarded\",\"postFail\",\"createOrder\",\"firstFalse\",\"setStatus\"]}",
+      "sha256": "ac9d02177a74e2bebfe957894b1dee81c1990eeb5b5805b51698feda5f8767bd"
     }
   }
 }
