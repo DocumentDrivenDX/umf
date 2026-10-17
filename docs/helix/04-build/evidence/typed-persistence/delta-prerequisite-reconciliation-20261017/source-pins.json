@@ -1,0 +1,35 @@
+{
+  "kind": "OFFLINE_SOURCE_RECONCILIATION_NOT_QUALIFICATION",
+  "sourceFiles": {
+    "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md": "6b54852cb499e3bf6fe393152287878411d9153bc4b2b9ab449c92283c920c53",
+    "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md": "b9143e06b8aad39f9e70e78ca9f2c04480c98536086de77b0553862f0fab8ee8",
+    "python/umf_access/src/umf_access/managed_support.py": "c652f5afec7d9344af6f26cecd1be0ba09ae0e0788fd48a7e9fcf419ad325616",
+    "python/umf_access/src/umf_access/managed_delta.py": "4d46234e1b1e64fc92dbac89981a1fd3e652a24c6e5fdabff1c87836d6cb8617",
+    "python/umf_access/src/umf_access/managed_actions.py": "f9c05769d52786fb7e4c4756b7444c08017b1546d7ef9d1bf34901a06829e584",
+    "python/umf_access/src/umf_access/managed_bulk.py": "7b911affd616882806d133511d792bf74e75a3f0035a77e41b164d4df46c5bd6"
+  },
+  "privatePrototype": {
+    "archive": "/Users/erik/Projects/weft/.git/recovery-bundles/weft-delta-atomic-prototype-checkpoint-20261017.tar.gz",
+    "archiveSha256": "67898e8fe57cbc9ccfb8092285604a876d1bf68c4e61cf734c3e62dd89a96f89",
+    "member": "weft-delta-atomic-preservation-20261017/worktree-files/crates/weft-databricks/src/managed_atomic.rs",
+    "memberSha256": "0418e74182fec2d7a3fe3be8a2a24f1fd912d224e85d4aed8d828c8cec8aee39",
+    "publicSourceCopied": false,
+    "modified": false
+  },
+  "nativeCallsDuringReview": 0,
+  "uiCallsDuringReview": 0,
+  "r5ParserApplied": false,
+  "temporal": "HELD",
+  "disposition": "No production enablement justified; existing closed refusal retained",
+  "ownerComponentDomainDecision": "OWNER_PROPOSAL_PENDING_GOVERNANCE: actualnativecommitparticipants only; separate originalnative readVersions ifrequired; no head/prior filling",
+  "concreteNativeGaps": [
+    "final same-unit originalmarkers via actualStatementAPI resultset",
+    "complete exactnative StatementId/txnId/tableUUID/version attribution includingnoop/empty cases",
+    "explicitnative commitcomponentdomain vs read-only/skipped businesscomponents",
+    "predispatch identity/dependency/authority closure and helddeploymentfence, nottablelabels",
+    "uniqueness/serialized per-Key create path plus independentconcurrency",
+    "authenticated/effective actor andhumanmapping authority",
+    "at-least receipt consumer behavior/restoreepoch/retention",
+    "lostACK remainsIndeterminate in0.1 regardlesslatermetadata"
+  ]
+}
