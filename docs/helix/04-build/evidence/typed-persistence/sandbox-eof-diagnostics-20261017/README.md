@@ -1,0 +1,7 @@
+# Sandbox natural EOF cleanup diagnostics
+
+The historical push CI job117356845251/run39018998805 on387dcf6f fails at the exact FRAME_ACCESS expectation with LIMIT: Owned handler state could not be verified. It does not identify which early-exit source or inspection phase failed. Current CodeReview discovery succeeds; historical job fetch refuses409 because the PR revision changed. Previously retained historical log was inspected. A500ms initial inspection timeout is a hypothesis, not an established cause.
+
+Change is diagnostic only: bounded initial/settlement timeout/nonzero/malformed/error reasons and validated native three-field state copies; observer emits only after original removal/absence verification and owner release. Expected error codes, overall/inspection/settlement deadlines and retry behavior are unchanged. Trusted test source and observations are printed if the exact assertion fails. Pure controls cover both phases and exit137-vs-OOM evidence (2tests14assertions); tools TypeScript passes.
+
+Exactly three native Docker repetitions of the unchanged original natural EOF test were scheduled in advance. All pass (16assertions per attempt); return success, exit0/noresult and exit137/noresult all preserve existing expectations. Owned handler container inventory is empty after the terminal campaign. Root cause is not reproduced or claimed fixed. Temporal qualification remains held.

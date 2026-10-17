@@ -42,7 +42,7 @@ test('natural EOF preserves successful results and refuses an early exit without
   const observations:ReferenceHandlerObservation[]=[];
   const result=runReferenceHandler(program(source),{},()=>{},5000,value=>observations.push(value));
   if(source.startsWith('return'))await expect(result).resolves.toEqual({ok:true});
-  else await expect(result).rejects.toMatchObject({code:'FRAME_ACCESS'});
+  else{let failure:unknown;try{await result;}catch(error){failure=error;}expect({source,failure,observations}).toMatchObject({source,failure:{code:'FRAME_ACCESS'}});}
   const finished=observations.find(value=>value.stage==='finished');
   if(source==='process.exit(137);')expect(finished?.exitCode).toBe(137);
   expect(finished?.oomKilled).toBe(false);expect(finished?.cleanupConfirmed).toBe(true);await absent(finished!.container);

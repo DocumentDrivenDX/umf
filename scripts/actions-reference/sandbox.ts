@@ -1,3 +1,4 @@
+import {inspectHandlerState,inspectionFailure,type CleanupInspectionReason} from './sandbox-state';
 import {ReferenceHandlerLaunchOwner} from './launch-owner';
 import {createHash} from 'node:crypto';
 import {copyJson} from '../../src/model/json';
@@ -8,7 +9,7 @@ export const referenceHandlerImage='mcr.microsoft.com/playwright@sha256:eff16c30
 export type ReferenceHandlerOperation='read'|'exists'|'linked'|'create'|'set'|'delete'|'link'|'unlink';
 const confinement=['--pull=never','--network=none','--read-only','--user','65534:65534','--cap-drop=ALL','--security-opt=no-new-privileges','--pids-limit=32','--memory=128m','--memory-swap=128m','--cpus=1','--ipc=none','--log-driver=none','--entrypoint','/usr/bin/env'] as const;
 const runtime=['-i','HOME=/nonexistent','PATH=/usr/local/bin:/usr/bin:/bin','/usr/bin/timeout','--signal=KILL','10s','node','--max-old-space-size=64'] as const;
-export type ReferenceHandlerObservation={stage:'started';container:string}|{stage:'pending-cleanup';container:string;owner:string;cleanupConfirmed:false}|{stage:'finished';container:string;exitCode:number;oomKilled:boolean;cleanupConfirmed:true;initialState:{ExitCode:number;OOMKilled:boolean;Running:boolean}|null;attachExitCode:number|null;attachExitedBeforeInspect:boolean};
+export type ReferenceHandlerObservation={stage:'cleanup-diagnostic';container:string;reason:CleanupInspectionReason;initialState:{ExitCode:number;OOMKilled:boolean;Running:boolean}|null;finalState:{ExitCode:number;OOMKilled:boolean;Running:boolean}|null;elapsedMs:number;cleanupConfirmed:true}|{stage:'started';container:string}|{stage:'pending-cleanup';container:string;owner:string;cleanupConfirmed:false}|{stage:'finished';container:string;exitCode:number;oomKilled:boolean;cleanupConfirmed:true;initialState:{ExitCode:number;OOMKilled:boolean;Running:boolean}|null;attachExitCode:number|null;attachExitedBeforeInspect:boolean};
 const operations=new Set<ReferenceHandlerOperation>(['read','exists','linked','create','set','delete','link','unlink']);
 const bootstrap=String.raw`
 const readline=require('node:readline');
@@ -94,11 +95,11 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
    }finally{if(commandTimer)clearTimeout(commandTimer);clients.delete(client);client.kill();}
   };
   const cleanup=(async()=>{
-   let state:{ExitCode:number;OOMKilled:boolean;Running:boolean}|undefined,invalidState=false;
+   let state:{ExitCode:number;OOMKilled:boolean;Running:boolean}|undefined,invalidState=false,inspectionReason:CleanupInspectionReason|undefined;
    const attachExitedBeforeInspect=attachExitCode!==null;
    try{const inspected=await docker(['inspect','--format','{{json .State}}',containerId!],500);
-    if(inspected.exit===0){try{state=JSON.parse(inspected.stdout);if(!state||typeof state.ExitCode!=='number'||typeof state.OOMKilled!=='boolean'||typeof state.Running!=='boolean')invalidState=true;}catch{invalidState=true;}}else if(!failed)invalidState=true;
-   }catch{invalidState=true;}
+    const parsed=inspectHandlerState('initial',inspected);if('state'in parsed)state=parsed.state;else{inspectionReason=parsed.reason;if(inspected.exit===0||!failed)invalidState=true;}
+   }catch(error){inspectionReason=inspectionFailure('initial',error);invalidState=true;}
    const initialState=state?{ExitCode:state.ExitCode,OOMKilled:state.OOMKilled,Running:state.Running}:null;
    // EOF can precede Docker's terminal-state publication. Preserve the protocol
    // failure while allowing native OOM state to settle; reserve half the existing
@@ -112,14 +113,14 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
      await new Promise(resolve=>setTimeout(resolve,Math.min(10,Math.max(0,settleUntil-performance.now()))));
      const remaining=settleUntil-performance.now();if(remaining<=0)break;
      try{const inspected=await docker(['inspect','--format','{{json .State}}',containerId!],remaining);
-      const next=inspected.exit===0?JSON.parse(inspected.stdout):undefined;
-      if(!next||typeof next.ExitCode!=='number'||typeof next.OOMKilled!=='boolean'||typeof next.Running!=='boolean'){invalidState=true;break;}
-      state=next;
+      const parsed=inspectHandlerState('settlement',inspected);
+      if('reason'in parsed){inspectionReason=parsed.reason;invalidState=true;break;}
+      state=parsed.state;
      }catch(error){
       // An optional final poll may exhaust its own settlement window. Keep the
       // last validated state; other inspection failures still fail closed.
       if(error instanceof UmfError&&error.code==='LIMIT'&&error.message==='Owned handler cleanup command timed out'&&performance.now()>=settleUntil)break;
-      invalidState=true;break;
+      inspectionReason=inspectionFailure('settlement',error);invalidState=true;break;
      }
     }
    }
@@ -128,7 +129,7 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
    if(remaining.exit!==0||remaining.stdout)abort('LIMIT','Owned handler removal could not be confirmed');
    await Promise.allSettled([stderr,child?.exited,creator.exited]);guard();
    await owner.release();guard();
-   if(invalidState)abort('LIMIT','Owned handler state could not be verified');
+   if(invalidState){try{observe?.(Object.freeze({stage:'cleanup-diagnostic' as const,container:name,reason:inspectionReason??'initial-error',initialState,finalState:state??null,elapsedMs:2000-(cleanupDeadline-performance.now()),cleanupConfirmed:true as const}));}catch{}abort('LIMIT','Owned handler state could not be verified');}
    observation={stage:'finished',container:name,exitCode:state?.Running?-1:state?.ExitCode??-1,oomKilled:state?.Running===false&&state.OOMKilled,cleanupConfirmed:true,initialState,attachExitCode,attachExitedBeforeInspect};
   })();
   try{await Promise.race([cleanup,new Promise<never>((_,reject)=>{cleanupTimer=setTimeout(()=>{cancelled=true;for(const client of clients)client.kill();reject(new UmfError('LIMIT','Owned handler cleanup timed out'));},Math.max(1,cleanupDeadline-performance.now()));})]);}finally{cancelled=true;child?.kill();if(cleanupTimer)clearTimeout(cleanupTimer);}
