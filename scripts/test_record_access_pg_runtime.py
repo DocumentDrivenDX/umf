@@ -30,6 +30,7 @@ class CaptureTests(unittest.TestCase):
 
             class Cursor:
                 def __init__(self):
+                    self.description = [types.SimpleNamespace(name="id", type_code=25)]
                     self._query = types.SimpleNamespace(
                         query=None if broken else b"SELECT $1",
                         types=(21,),
@@ -124,6 +125,9 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(seen, [("SELECT %s", (7,), {"prepare": False})])
         self.assertEqual(doc["calls"][0]["protocol"]["parameterOids"], [21])
         self.assertEqual(doc["calls"][0]["protocol"]["parameterFormats"], [1])
+        self.assertEqual(
+            doc["calls"][0]["resultColumns"], [{"native": "id", "typeOid": 25}]
+        )
         self.assertFalse(doc["nativeAuthority"])
         self.assertFalse(doc["inventoryComplete"])
         self.assertFalse(doc["parameterValuesRetained"])

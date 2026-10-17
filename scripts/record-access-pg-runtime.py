@@ -113,6 +113,10 @@ def main():
                 "protocol": protocol(cursor),
                 "outcome": "returned" if error is None else "raised",
                 "sqlstate": getattr(error, "sqlstate", None),
+                "resultColumns": [
+                    {"native": column.name, "typeOid": column.type_code}
+                    for column in (getattr(cursor, "description", None) or ())
+                ],
                 "nativeAuthority": False,
             }
         )
