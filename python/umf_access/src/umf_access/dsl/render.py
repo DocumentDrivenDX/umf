@@ -85,13 +85,16 @@ def _scalar_sql(value: FieldRef | Node) -> str:
         if not isinstance(field, FieldRef) or type(width) not in (int, Decimal):
             raise CaptureError("CAPTURE_UNSUPPORTED", "bucket requires a numeric literal")
         if isinstance(width, Decimal):
-            if not width.is_finite() or abs(width.as_tuple().exponent) > 10000 or len(width.as_tuple().digits) > 10000:
+            exponent = width.as_tuple().exponent
+            if not width.is_finite() or type(exponent) is not int or abs(exponent) > 10000 or len(width.as_tuple().digits) > 10000:
                 raise CaptureError("CAPTURE_UNSUPPORTED", "bucket literal exceeds token profile")
             token = format(width, "f")
             if "." not in token:
                 token += ".0"
-        else:
+        elif isinstance(width, int):
             token = _value(Node("int", (width,)))
+        else:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "bucket requires a numeric literal")
         if width <= 0:
             raise CaptureError("CAPTURE_UNSUPPORTED", "bucket width must be positive")
         return f"BUCKET_WIDTH({_column(field)}, {token})"

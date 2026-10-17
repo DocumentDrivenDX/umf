@@ -40,7 +40,13 @@ from ..dsl import (
 from ..engine_catalog import EngineRead
 from ..native_program import NativeProgram, program_json
 from ..related_keys import key_descriptor, make_related_result_model, validate_decoder
-from ..reviewed import ReadBuildError, ReadCompiler, ReviewedSQL, captured_source
+from ..reviewed import (
+    CatalogRead,
+    ReadBuildError,
+    ReadCompiler,
+    ReviewedSQL,
+    captured_source,
+)
 from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
 from .commands import emit_command
 from .privileges import privilege_report
@@ -66,7 +72,7 @@ _destination_lock = Lock()
 
 
 @contextmanager
-def _own_destination(root: Path, package: str):
+def _own_destination(root: Path, package: object):
     if (
         type(package) is not str
         or not re.fullmatch(r"[a-z][a-z0-9_]*", package)
@@ -432,9 +438,9 @@ def _compile_catalog_owned(
         ):
             raise CatalogBuildError("explicit absolute Python module names required")
         module = importlib.import_module(name)
-        source = Path(inspect.getfile(module)).resolve()
+        source_path = Path(inspect.getfile(module)).resolve()
         provenance.append(
-            {"module": name, "path": str(source), "sha256": _sha(_read(source))}
+            {"module": name, "path": str(source_path), "sha256": _sha(_read(source_path))}
         )
         for symbol, function in vars(module).items():
             if (
@@ -839,7 +845,7 @@ def _compile_catalog_owned(
                 nullable_fields = tuple(
                     a
                     for index, (a, _owner, _field) in enumerate(owner_fields)
-                    if (refs[index].module, refs[index].element, refs[index].alias)
+                    if (cast(FieldRef, refs[index]).module, cast(FieldRef, refs[index]).element, cast(FieldRef, refs[index]).alias)
                     in nullable_owners
                 )
                 result = make_projection_model(
@@ -1147,7 +1153,7 @@ def _compile_catalog_owned(
                         entry_result_expr = f"_Q{number}RelatedE{vi}_{target_index}"
                         entry_result = make_related_result_model(entry_result_expr, related_base_result, related_key_model, related_field, engine_decoder, record)
                         lines.append(f"{entry_result_expr} = make_related_result_model({entry_result_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {engine_decoder!r}, {record.__name__})")
-                        compiled = EngineRead.from_original(original_program, parameters=params, result=entry_result)
+                        compiled: CatalogRead[Any, Any] = EngineRead.from_original(original_program, parameters=params, result=entry_result)
                     else:
                         compiled = EngineRead.build(
                             compiler,
@@ -1167,7 +1173,7 @@ def _compile_catalog_owned(
                             logical, params, result, 1000, keyset=terminal == "page"
                         ).build(
                             compiler,
-                            target=profile,
+                            target=cast(str, profile),
                             binding=binding,
                             snapshots=target.get("snapshots"),
                             snapshot=snapshot,
@@ -1199,7 +1205,7 @@ def _compile_catalog_owned(
                 if cursor_key is not None:
                     ordering = json.loads(compiled.artifact_json).get("cursorOrdering")
                     if engine:
-                        native_key = compiled.artifact()["artifact"]["logicalPlan"][
+                        native_key = cast(EngineRead[Any, Any], compiled).artifact()["artifact"]["logicalPlan"][
                             "pageKey"
                         ]
                         key_identity = dict(cursor_parameter.key_identity)
@@ -1561,7 +1567,7 @@ def main() -> int:
         print(_json({"status": "pass", "files": list(OWNED)}))
         return 0
     except (ValueError, KeyError, TypeError) as error:
-        details = {"status": "refused", "reason": str(error)}
+        details: dict[str, Any] = {"status": "refused", "reason": str(error)}
         if isinstance(error, CatalogBuildError) and error.code is not None:
             details.update(code=error.code, **error.metadata)
         print(_json(details), file=sys.stderr)
