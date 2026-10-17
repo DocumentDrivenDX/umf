@@ -12,7 +12,14 @@ are retained from `56d4ec89`: full native source facts replace legacy fixtures,
 and the old mock compiler is explicitly refused instead of labeled exact.
 The two successor search-decoder tests are excluded because that implementation
 is absent from R23. Original pre-migration failures are retained; no skips,
-assertions or production admission checks were weakened. Static generation and
-checker inputs are unchanged between these commits. Compiler source,
+assertions or production admission checks were weakened.
+
+Static custody correction: fixture migration was in progress during this run.
+The archived Git test inputs do not establish the exact then-dirty generation
+script/fixture bytes. The exact emitted packages, their retained source texts,
+positive/negative clients and checker outputs are preserved. The checker result
+qualifies those retained artifacts; this packet does **not** establish a fresh
+unchanged-source stage-one generation replay. That requires a separately frozen
+successor. Compiler source,
 wheel and native binary are not included. Native backend, authorization, release,
 signing, main merge and live deployment require their own evidence.
