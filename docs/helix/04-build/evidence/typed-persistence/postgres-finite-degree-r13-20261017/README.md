@@ -1,0 +1,9 @@
+# PostgreSQL finite-degree R13 actual SDK evidence
+
+Temporal qualification remains **HELD**. PostgreSQL **18.6**, installed SDK wheel `ce2943e7e8a838103888198b26c5dae07e9afe94b6eb66906642737271086705` (source freeze `a623b1fb553b1816f47cdd335d4c90b12b456acb`) and original Weft wheel `d1d1e3831f3490e0cce90bc6404834982df9ab1e4f15a72f6cc81eca6d191f7e` (source `6640db8f0ccdabd0e34206a136c5ae88a3e6b95d`) pass **13 named real SDK controls**. All 45 SDK/two Weft payloads remain unchanged.
+
+The authored Core0.8 relationship has inverse sourceMultiplicity 1..2, an optional native FK and an alternate relationship Key distinct from the Customer selected primary Key. Actual generator output feeds the installed public catalog CLI and drift check. Seven admitted original business statements execute under independently observed REPEATABLE READ and read-only transactions. Native rows equal an independently authored physical SQL oracle, including NULL FK as no edge.
+
+Zero/excess source-neighbor degree, forced native RLS, nondeterministic ICU code collation and custom target btree opclass each cause typed ReadObligationUnmet before business SQL. Restoring each condition recovers on the same original catalog, with no artifact or SQL rewriting. The custom opclass alone is created through the owned fixture admin connection; all SDK queries run as NOSUPERUSER/NOBYPASSRLS. All fixture schemas and the owned server are removed. Frozen harness/generator source hashes match before/after.
+
+First two generator-only ACCESS_CONFLICT attempts are retained: the unbound optional Field needed an explicitly missing row policy; authored declarations were corrected without changing runtime semantics. This packet does not qualify other engines, temporal behavior, broader generator/browser gates or release performance.
