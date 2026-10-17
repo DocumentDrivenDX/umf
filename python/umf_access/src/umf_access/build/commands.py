@@ -322,7 +322,7 @@ def emit_command(
             f"def {name}(target: AsyncBulkTarget[_PlanT]{tail}) -> Awaitable[_PlanT]: ...",
             "@overload",
             f"def {name}(target: BulkTarget[_PlanT]{tail}) -> _PlanT: ...",
-            f"def {name}(target: BulkTarget[_PlanT] | AsyncBulkTarget[_PlanT]{tail}) -> _PlanT | Awaitable[_PlanT]:",
+            f"def {name}(target: BulkTarget[object] | AsyncBulkTarget[object]{tail}) -> object:",
             f"    return {plan}.run(target, {values}, timeout=timeout)",
             "",
         ]
