@@ -21,9 +21,11 @@ from .postgres_read import (
     _ROLE,
     ReadObligationUnmet,
     TimedOut,
+    _catalog_fence_programs,
     _compiled_admissions,
     _output_value,
     _projection_admissions,
+    _snapshot_free_timeout,
     _term_admissions,
     native_read_admission,
 )
@@ -192,8 +194,10 @@ def _metadata_programs(
     program: Mapping[str, Any], app_schema: str
 ) -> tuple[tuple[str, dict[str, object], str], ...]:
     obligations = program["obligations"]
-    programs = [(sql, parameters, "native search source schema differs")
-                for sql, parameters in _projection_admissions(obligations, app_schema)]
+    fence = _catalog_fence_programs(program)
+    programs = [] if fence is None else [(sql, parameters, "native text-search catalog fence differs") for sql, parameters in fence[1]]
+    programs.extend([(sql, parameters, "native search source schema differs")
+                for sql, parameters in _projection_admissions(obligations, app_schema)])
     programs.extend((sql, parameters, "native search term configuration or index differs")
                     for sql, parameters in _term_admissions(obligations, app_schema))
     configuration = obligations.get("keywordConfiguration")
@@ -289,6 +293,12 @@ def _program(
         _metadata_programs(program, configuration.app_schema)
         prepared.append((entry, program, params))
     yield ("begin",)
+    locked = set()
+    for _, original, _ in prepared:
+        fence = _catalog_fence_programs(original)
+        if fence is not None and fence[0] not in locked:
+            yield ("catalog-fence", fence[0])
+            locked.add(fence[0])
     yield (
         "execute",
         "SELECT pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security','on',true)",
@@ -401,6 +411,10 @@ class PostgresSearchTarget(PostgresTarget):
                     )
                     began = True
                     result = None
+                elif kind == "catalog-fence":
+                    self.connection.execute(_snapshot_free_timeout(deadline))
+                    self.connection.execute(operation[1])
+                    result = None
                 elif kind == "execute":
                     self.connection.execute(
                         "SELECT pg_catalog.set_config('statement_timeout',%s,true)",
@@ -511,6 +525,10 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
                             "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"
                         )
                         began = True
+                        result = None
+                    elif kind == "catalog-fence":
+                        await self.connection.execute(_snapshot_free_timeout(deadline))
+                        await self.connection.execute(operation[1])
                         result = None
                     elif kind == "execute":
                         await self.connection.execute(

@@ -26,7 +26,14 @@ from .pages import (
     stream_page_size,
 )
 from .related_keys import decode_related_keys, transport_spec
-from .reviewed import CatalogRead, P, R, ReadBuildError, validate_list_parameters
+from .reviewed import (
+    CatalogRead,
+    P,
+    R,
+    ReadBuildError,
+    catalog_fence,
+    validate_list_parameters,
+)
 from .types import CodecError, StrictModel
 from .values import validate_vector
 from .verification import postgres_verification_cache
@@ -231,6 +238,29 @@ def _observe_resolution(binding: dict[str, object], app_schema: str, mode: str, 
     yield ("execute", _RESOLUTION, (names, mode == "qualified", app_schema))
     rows = yield ("many", len(names) + 1)
     return _resolution_context(rows, names, app_schema, mode, database)
+
+
+def _catalog_fence_programs(
+    artifact: Mapping[str, object],
+) -> tuple[str, tuple[tuple[str, dict[str, object]], ...]] | None:
+    """Bind only original owner fence programs; deployment remains inert."""
+    packet = catalog_fence(artifact)
+    if packet is None:
+        return None
+    admissions = _compiled_admissions([{"nativeAdmission": packet["nativeAdmission"]}], "")
+    return cast(str, packet["lockSql"]), admissions
+
+
+def _snapshot_free_timeout(deadline: float) -> str:
+    """Session-control utility with a validated integer, before any snapshot."""
+    if not math.isfinite(deadline):
+        raise ValueError("finite absolute deadline required")
+    milliseconds = math.ceil((deadline - time.monotonic()) * 1000)
+    if milliseconds <= 0:
+        raise TimedOut("deadline expired before native catalog fence")
+    if milliseconds > 2_147_483_647:
+        raise ValueError("deadline exceeds native PostgreSQL timeout bound")
+    return "SET LOCAL statement_timeout = '" + str(milliseconds) + "ms'"
 
 
 def _term_admissions(
@@ -590,6 +620,7 @@ def _program(
         or (schema_mode == "qualified") != (schema is not None)
     ):
         raise ReadBuildError("unsupported original schema binding obligation")
+    fence_programs = _catalog_fence_programs(artifact)
     term_admissions = _term_admissions(obligations, app_schema)
     projection_admissions = _projection_admissions(obligations, app_schema)
     relationship_admissions = _relationship_admissions(obligations, app_schema)
@@ -610,6 +641,11 @@ def _program(
     search_path = 'pg_catalog, "' + app_schema.replace('"', '""') + '", pg_temp'
     deadline = time.monotonic() + timeout_ms / 1000
     yield ("begin", deadline, isolation)
+    if fence_programs is not None:
+        lock_sql = fence_programs[0]
+        # Utility timeout and original LOCK precede every snapshot-taking query.
+        # A retained stream transaction keeps these locks across bounded pages.
+        yield ("catalog-fence", lock_sql)
     native_context = None
     if schema_mode is not None:
         yield ("execute", "SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('row_security', 'on', true)", (str(timeout_ms),))
@@ -619,6 +655,12 @@ def _program(
         "SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('search_path', %s, true), pg_catalog.set_config('row_security', 'on', true)",
         (str(timeout_ms), search_path),
     )
+    if fence_programs is not None:
+        # Preserve caller-resolution observations first; canonical view output
+        # is checked only under the established pg_catalog-first host context.
+        yield from _verify_admissions(
+            fence_programs[1], "native text-search catalog fence differs from deployment"
+        )
     shape_proof: list[str] = []
     before, native_ids = yield from native_read_admission(
         binding, app_schema, tuple(cast(list[str], artifact["lockSql"])),
@@ -680,6 +722,10 @@ def _program(
         name: _output_value(value, output, key_model=related[1] if related is not None and name == related[0] else None)
         for name, value, output in zip(expected, row[:len(expected)], outputs, strict=True)
     }) for row in rows]
+    if fence_programs is not None:
+        yield from _verify_admissions(
+            fence_programs[1], "native text-search catalog fence differs before release"
+        )
     yield from _verify_terms(term_admissions)
     yield from _verify_admissions(projection_admissions, "native projection column shape differs before release")
     yield from _verify_admissions(relationship_admissions, "native relationship Key differs before release")
@@ -713,7 +759,11 @@ def _drive(
             step = program.send(answer)
         except StopIteration as done:
             return cast(ReadPage[R], done.value)
-        if step[0] == "execute":
+        if step[0] == "catalog-fence":
+            cursor.raw.execute(_snapshot_free_timeout(cursor.deadline))
+            cursor.raw.execute(step[1])
+            answer = None
+        elif step[0] == "execute":
             cursor.execute(step[1], step[2] if len(step) > 2 else None)
             answer = None
         elif step[0] == "one":
@@ -796,7 +846,11 @@ async def _async_drive(
         remaining = math.ceil((deadline - time.monotonic()) * 1000)
         if remaining <= 0:
             raise TimedOut("catalog read exceeded its per-call timeout")
-        if step[0] == "execute":
+        if step[0] == "catalog-fence":
+            await raw.execute(_snapshot_free_timeout(deadline))
+            await raw.execute(step[1])
+            answer = None
+        elif step[0] == "execute":
             await raw.execute(
                 "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
                 (str(remaining),),

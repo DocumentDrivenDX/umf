@@ -9,6 +9,7 @@ from umf_access.native_actions import _State
 from umf_access.native_program import NativeProgram, _configuration_custody
 from umf_access.postgres_search import _schema_admissions
 from umf_access.protocols import ActionRefused
+from umf_access.reviewed import ReadBuildError
 from umf_access.targets import TargetMismatch
 
 
@@ -48,35 +49,23 @@ class TermConfigurationCustodyTests(unittest.TestCase):
         with self.assertRaisesRegex(ActionRefused, "NATIVE_TERM_FILTER_CUSTODY_REQUIRED"):
             program.checked()
 
-    def test_actual_successor_original_packets_pass_semantic_and_runtime_parser(self):
+    def test_previous_unfenced_composition_candidates_refuse_after_aba_witness(self):
         root = Path(__file__).resolve().parents[3] / "fixtures/access/term-configuration-custody"
         for name in ("bulk-qualified", "bulk-neutral", "keyword", "search-prefilter"):
             original = json.loads((root / ("successor-" + name + "-program.json")).read_text())
             with self.subTest(name=name):
+                # Their source semantic inventories remain correct. The native
+                # ABA witness later proved that unfenced Boolean guards alone
+                # cannot qualify release, so preserve these candidates as reds.
                 _configuration_custody(original)
                 if name.startswith("bulk"):
                     state = object.__new__(_State)
                     state.program = original
                     operation = state.schema_admissions()
-                    calls = 0
-                    event = next(operation)
-                    while True:
-                        self.assertEqual(event[0], "query")
-                        calls += 1
-                        try:
-                            event = operation.send([(True,)])
-                        except StopIteration:
-                            break
-                    self.assertEqual(calls, len(original["obligations"]["nativeProjection"]["columns"]) + len(original["obligations"]["termFilter"]["indexes"]))
                 else:
                     operation = _schema_admissions(original, "search_app")
+                with self.assertRaisesRegex(ReadBuildError, "NATIVE_TEXT_SEARCH_FENCE_REQUIRED"):
                     next(operation)
-                    while True:
-                        self.assertEqual(operation.send(None), ("many", 2))
-                        try:
-                            self.assertEqual(operation.send([(True,)])[0], "execute")
-                        except StopIteration:
-                            break
 
     def test_composition_requires_complete_original_semantics(self):
         for version in ("weft.native-bulk/0.1", "weft.search/0.1"):

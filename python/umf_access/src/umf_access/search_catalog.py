@@ -32,7 +32,7 @@ class SearchEntry:
 
     def artifact(self) -> dict[str, Any]:
         program = self.program.checked()
-        if program["version"] not in ("weft.search/0.1", "weft.unity-search/0.1"):
+        if program["version"] not in ("weft.search/0.1", "weft.search/0.2", "weft.unity-search/0.1"):
             raise CatalogError("search owner program required")
         if any(
             getattr(model, "UMF_BUNDLE_INPUT_DIGEST", None)

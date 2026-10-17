@@ -11,7 +11,7 @@ import re
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass, fields, is_dataclass
 from decimal import Decimal
-from typing import Generic, Protocol, TypeVar, cast
+from typing import Generic, NoReturn, Protocol, TypeVar, cast
 
 from pydantic import BaseModel
 
@@ -403,6 +403,7 @@ class ReviewedSQL(Generic[P, R]):
                 "compiled parameter/result types differ from declaration"
             )
         _require_source_exact(artifact)
+        catalog_fence(artifact)
         artifact["dbapiSql"] = _dbapi(cast(str, artifact["sql"]))
         artifact["dbapiParameterOrder"] = _dbapi_order(cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"]))
         sources = _model_sources(self.parameters, self.result)
@@ -415,6 +416,111 @@ class ReviewedSQL(Generic[P, R]):
         artifact["stageOne"] = _generation(self.parameters, self.result)
         artifact["catalogDigest"] = hashlib.sha256(_json(artifact).encode()).hexdigest()
         return CatalogRead(_json(artifact), self.parameters, self.result, source)
+
+
+def catalog_fence(artifact: Mapping[str, object]) -> dict[str, object] | None:
+    """Retain the original deployment and every selected configuration origin."""
+    def refuse() -> NoReturn:
+        raise ReadBuildError("NATIVE_TEXT_SEARCH_FENCE_REQUIRED")
+    fenced_version = artifact.get("version") in ("weft.raw-read/0.2", "weft.native-action/0.2", "weft.native-bulk/0.2", "weft.search/0.2")
+    if artifact.get("target") not in ("postgresql18", "lakebase18"):
+        if fenced_version:
+            refuse()
+        if any(isinstance(value, dict) and "nativeCatalogFence" in value for value in (artifact.get("binding"), artifact.get("obligations"))):
+            refuse()
+        return None
+    def name(value: object) -> bool:
+        if type(value) is not str or "\x00" in value:
+            return False
+        try:
+            return 1 <= len(value.encode("utf-8")) <= 63
+        except UnicodeEncodeError:
+            return False
+    obligations = artifact.get("obligations")
+    if not isinstance(obligations, dict):
+        refuse()
+    expected = set()
+    for member, entries_name in (("termFilter", "indexes"), ("keywordConfiguration", "configurations"), ("textSearchEffects", "indexes")):
+        selected = obligations.get(member)
+        if selected is None:
+            continue
+        if member == "textSearchEffects" and (not isinstance(selected, dict) or selected.get("version") != "umf.pg-ts-effects/0.1" or selected.get("nativeCatalogBeforeAfter") is not True):
+            refuse()
+        entries = selected.get(entries_name) if isinstance(selected, dict) else None
+        if not isinstance(entries, list) or not entries:
+            refuse()
+        for entry in entries:
+            if member == "textSearchEffects" and (not isinstance(entry, dict)
+                or set(entry) != {"source", "index", "nativeBinding", "logicalTable", "nativeTable", "nativeColumns", "configuration", "nativeAdmission"}
+                or not isinstance(entry.get("nativeColumns"), list) or not entry["nativeColumns"]
+                or any(type(column) is not str or not column for column in entry["nativeColumns"])):
+                refuse()
+            if not isinstance(entry, dict) or entry.get("configuration") not in ("pg_catalog.english", "pg_catalog.simple") or not isinstance(entry.get("source"), dict) or not isinstance(entry.get("index"), dict):
+                refuse()
+            expected.add(json.dumps({key: entry[key] for key in ("source", "index", "configuration")}, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
+    packet = obligations.get("nativeCatalogFence")
+    if not expected and packet is None and (not fenced_version or artifact.get("version") in ("weft.native-action/0.2", "weft.native-bulk/0.2")):
+        return None
+    if not fenced_version:
+        refuse()
+    if not isinstance(packet, dict) or set(packet) != {"version", "deployment", "origins", "lockSql", "lockPosition", "nativeCatalogBeforeAfter", "nativeAdmission", "deploymentProgram"}:
+        refuse()
+    binding = artifact.get("binding")
+    deployment = packet.get("deployment")
+    if (not isinstance(binding, dict) or not isinstance(deployment, dict)
+        or set(deployment) != {"version", "schema", "view", "owner", "ownerProfile"}
+        or deployment.get("version") != "umf.pg-ts-fence/0.1"
+        or deployment.get("ownerProfile") != "non-login-maintainer/0.1"
+        or any(not name(deployment.get(key)) for key in ("schema", "view", "owner"))
+        or binding.get("nativeCatalogFence") != deployment
+        or packet.get("version") != "umf.pg-ts-fence/0.1"
+        or packet.get("lockPosition") != "before-first-snapshot"
+        or packet.get("nativeCatalogBeforeAfter") is not True
+        or type(packet.get("lockSql")) is not str or not packet["lockSql"]
+        or not isinstance(packet.get("origins"), list)):
+        refuse()
+    actual = set()
+    for origin in packet["origins"]:
+        if not isinstance(origin, dict) or set(origin) != {"source", "index", "configuration"}:
+            refuse()
+        key = json.dumps(origin, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+        if key in actual:
+            refuse()
+        actual.add(key)
+    if not expected or actual != expected:
+        refuse()
+    admission = packet.get("nativeAdmission")
+    if not isinstance(admission, dict) or set(admission) != {"sql", "dbapiSql", "parameters", "dbapiParameterOrder"} or not isinstance(admission.get("parameters"), list):
+        refuse()
+    for parameter in admission["parameters"]:
+        source = parameter.get("source") if isinstance(parameter, dict) else None
+        if not isinstance(source, dict) or set(source) != {"literal"}:
+            refuse()
+    # Retain this original owner deployment program as inert source metadata.
+    # Runtime never executes CREATE VIEW/ALTER OWNER or grants privileges.
+    program = packet.get("deploymentProgram")
+    if (not isinstance(program, dict)
+        or set(program) != {"version", "createViewSql", "alterOwnerSql", "ownerPrerequisites", "readerPrerequisites"}
+        or program.get("version") != "weft.pg-ts-fence-deployment/0.1"
+        or any(type(program.get(key)) is not str or not program[key] for key in ("createViewSql", "alterOwnerSql"))
+        or not isinstance(program.get("ownerPrerequisites"), dict)
+        or not isinstance(program.get("readerPrerequisites"), dict)):
+        refuse()
+    owner_prerequisites = program["ownerPrerequisites"]
+    reader_prerequisites = program["readerPrerequisites"]
+    if (any(owner_prerequisites.get(key) is not False for key in ("superuser", "bypassRls", "login", "createRole", "createDb", "replication"))
+        or owner_prerequisites.get("schemaOwner") is not True
+        or reader_prerequisites.get("schemaUsage") is not True
+        or reader_prerequisites.get("viewMaintain") is not True
+        or reader_prerequisites.get("ownerMembership") is not False):
+        refuse()
+    if owner_prerequisites != {
+        "role": deployment["owner"], "superuser": False, "bypassRls": False,
+        "login": False, "createRole": False, "createDb": False, "replication": False,
+        "schemaOwner": True, "catalogMaintain": ["pg_catalog.pg_namespace", "pg_catalog.pg_proc", "pg_catalog.pg_ts_config", "pg_catalog.pg_ts_config_map", "pg_catalog.pg_ts_dict", "pg_catalog.pg_ts_parser", "pg_catalog.pg_ts_template"],
+    } or reader_prerequisites != {"schemaUsage": True, "viewMaintain": True, "ownerMembership": False}:
+        refuse()
+    return packet
 
 
 def _require_source_exact(artifact: Mapping[str, object]) -> None:
@@ -453,7 +559,7 @@ class CatalogRead(Generic[P, R]):
         if artifact.get("stageOne") != _generation(self.parameters, self.result):
             raise ReadBuildError("CATALOG_STALE: loaded generation differs")
         if (
-            artifact.get("version") != "weft.raw-read/0.1"
+            artifact.get("version") not in ("weft.raw-read/0.1", "weft.raw-read/0.2")
             or artifact.get("status") != "compiled"
             or artifact.get("target")
             not in ("postgresql18", "lakebase18", "spark-delta4")
@@ -493,6 +599,7 @@ class CatalogRead(Generic[P, R]):
         ):
             raise ReadBuildError("catalog parameter order mismatch")
         _require_source_exact(artifact)
+        catalog_fence(artifact)
         return artifact
 
 
