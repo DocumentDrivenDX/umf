@@ -1,9 +1,11 @@
+import hashlib
 import json
 import os
 import subprocess
 import sys
 import tempfile
 import time
+from importlib.metadata import version
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
@@ -38,8 +40,6 @@ from umf_access.protocols import (
     Rejected,
 )
 
-pg = Path(tempfile.mkdtemp(prefix="umf-native-actions-", dir="/private/tmp"))
-(pg / "socket").mkdir()
 bin = Path("/opt/homebrew/opt/postgresql@18/bin")
 started = False
 cases = []
@@ -53,6 +53,71 @@ def command(*args):
         raise RuntimeError(p.stdout + p.stderr)
     return p.stdout
 
+
+request = json.loads((root / "fixtures/access/native-actions/request.json").read_text())
+request["binding"]["schema"] = "native_app"
+generated = Path(os.environ["UMF_NATIVE_GENERATED_ROOT"])
+(generated / "native_declarations.py").write_text(
+    'from umf_access import query, command, Param\nfrom native_sales.models import Order\nfrom native_sales.actions import Approve\n@query\ndef orders():\n    return Order.objects.limit(10).all()\n@command(action=Approve)\ndef approve_drafts(status: Param[str]):\n    return Order.objects.filter(Order.c.status == status).update(status="approved")\n'
+)
+configuration = {
+    "package": "native_sales",
+    "modules": ["native_declarations"],
+    "targets": [
+        {
+            "id": "local",
+            "kind": "postgresql",
+            "backendId": "weft-postgresql",
+            "backendVersion": "raw-read/0.1",
+            "targetProfile": "weft.raw-read/0.1",
+            "binding": request["binding"],
+            "platform": [{"name": "postgresql", "versions": ["180006"]}],
+            "security": request["security"],
+            "roleMappings": request["roleMappings"],
+            "sessionPrincipal": "human",
+            "maxItems": 3,
+        }
+    ],
+}
+stage_one = json.loads((generated / "stage-one-request.json").read_text())
+documents = []
+for original in stage_one["sources"]:
+    path = "original-" + original["id"] + ".json"
+    (generated / path).write_text(original["text"])
+    documents.append(
+        {
+            "path": path,
+            "sha256": hashlib.sha256(original["text"].encode()).hexdigest(),
+        }
+    )
+configuration["umf"] = {"documents": documents}
+configuration["weft"] = {"distribution": "weft-sql", "version": version("weft-sql")}
+(generated / "native-catalog-config.json").write_text(json.dumps(configuration))
+for extra in ([], ["--check"]):
+    command(
+        sys.executable,
+        "-B",
+        "-m",
+        "umf_access.build.catalog",
+        "catalog",
+        "--config",
+        generated / "native-catalog-config.json",
+        "--root",
+        generated,
+        *extra,
+    )
+from native_sales import queries
+
+if os.environ.get("UMF_NATIVE_BUILD_ONLY") == "1":
+    print(
+        json.dumps(
+            {"publicCliStatus": "pass", "nativeExecuted": False, "temporal": "HELD"}
+        )
+    )
+    raise SystemExit(0)
+
+pg = Path(tempfile.mkdtemp(prefix="umf-native-actions-", dir="/private/tmp"))
+(pg / "socket").mkdir()
 
 try:
     command(
@@ -117,49 +182,6 @@ try:
     admin.execute(
         "GRANT EXECUTE ON FUNCTION native_app.revoke_approver() TO deploy_actor"
     )
-
-    request = json.loads(
-        (root / "fixtures/access/native-actions/request.json").read_text()
-    )
-    request["binding"]["schema"] = "native_app"
-    generated = Path(os.environ["UMF_NATIVE_GENERATED_ROOT"])
-    (generated / "native_declarations.py").write_text(
-        'from umf_access import query, command, Param\nfrom native_sales.models import Order\nfrom native_sales.actions import Approve\n@query\ndef orders():\n    return Order.objects.limit(10).all()\n@command(action=Approve)\ndef approve_drafts(status: Param[str]):\n    return Order.objects.filter(Order.c.status == status).update(status="approved")\n'
-    )
-    configuration = {
-        "package": "native_sales",
-        "modules": ["native_declarations"],
-        "targets": [
-            {
-                "id": "local",
-                "kind": "postgresql",
-                "backendId": "weft-postgresql",
-                "backendVersion": "raw-read/0.1",
-                "targetProfile": "weft.raw-read/0.1",
-                "binding": request["binding"],
-                "platform": [{"name": "postgresql", "versions": ["180006"]}],
-                "security": request["security"],
-                "roleMappings": request["roleMappings"],
-                "sessionPrincipal": "human",
-                "maxItems": 3,
-            }
-        ],
-    }
-    (generated / "native-catalog-config.json").write_text(json.dumps(configuration))
-    for extra in ([], ["--check"]):
-        command(
-            sys.executable,
-            "-B",
-            "-m",
-            "umf_access.build.catalog",
-            "catalog",
-            "--config",
-            generated / "native-catalog-config.json",
-            "--root",
-            generated,
-            *extra,
-        )
-    from native_sales import queries
 
     cases.append(
         "real catalog CLI publishes and checks all selected action programs and captured bulk command"

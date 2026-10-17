@@ -28,8 +28,6 @@ from umf_access.targets import (
     binding_digest,
 )
 
-pg = Path(tempfile.mkdtemp(prefix="umf-search-pg18-", dir="/private/tmp"))
-(pg / "socket").mkdir()
 bin = Path("/opt/homebrew/opt/postgresql@18/bin")
 started = False
 cases = []
@@ -90,9 +88,15 @@ if partial_profile:
         declarations_path.read_text().replace(".top(3)", ".top(3,allow_partial=True)")
     )
 
-model = json.loads((generated / "stage-one-request.json").read_text())["sources"][0][
-    "text"
-]
+stage_one = json.loads((generated / "stage-one-request.json").read_text())
+model = stage_one["sources"][0]["text"]
+logical = json.loads(model)
+access = logical["modules"][0]["extensions"]["umf.access"]
+if not access["columns"]:
+    raise ValueError(
+        "source-exact native search requires original authored ColumnSets; generate --source-exact"
+    )
+original_sources = {source["id"]: source["text"] for source in stage_one["sources"]}
 binding = {
     "version": "umf.raw-read-binding/0.1",
     "schema": "search_app",
@@ -105,11 +109,38 @@ binding = {
             "key": ["id"],
             "columns": [
                 {"logical": f, "native": f, "carrier": "string", "nullable": False}
-                for f in ["id", "body"]
+                for f in ["id", "body", "owner"]
             ],
         }
     ],
     "relationships": [],
+}
+column_sets = []
+for index, columns in enumerate(access["columns"]):
+    alias = columns["binding"]["sourceId"]
+    if alias not in original_sources:
+        raise ValueError("original physical search binding source absent")
+    physical_text = original_sources[alias]
+    column_sets.append(
+        {
+            "columnSet": {
+                "documentId": logical["id"],
+                "coreVersion": logical["umf"],
+                "documentSha256": hashlib.sha256(model.encode()).hexdigest(),
+                "module": logical["modules"][0]["id"],
+                "pointer": f"/modules/0/extensions/umf.access/columns/{index}",
+            },
+            "binding": {
+                "sourceId": alias,
+                "documentJson": physical_text,
+                "documentSha256": hashlib.sha256(physical_text.encode()).hexdigest(),
+            },
+        }
+    )
+binding["nativeColumns"] = {
+    "target": {"platform": target_kind, "majorVersion": "18"},
+    "sets": column_sets,
+    "vectorExtension": {"schema": "public", "version": vector_version},
 }
 config = {
     "package": "search_docs",
@@ -137,14 +168,14 @@ config = {
 }
 (generated / "original-model.json").write_text(model)
 config["weft"] = {"distribution": "weft-sql", "version": version("weft-sql")}
-config["umf"] = {
-    "documents": [
-        {
-            "path": "original-model.json",
-            "sha256": hashlib.sha256(model.encode()).hexdigest(),
-        }
-    ]
-}
+documents = []
+for alias, text in original_sources.items():
+    path = "original-" + alias + ".json"
+    (generated / path).write_text(text)
+    documents.append(
+        {"path": path, "sha256": hashlib.sha256(text.encode()).hexdigest()}
+    )
+config["umf"] = {"documents": documents}
 (generated / "search-config.json").write_text(json.dumps(config))
 if partial_profile:
     declarations_path = generated / "search_declarations.py"
@@ -201,6 +232,17 @@ for extra in ([], ["--check"]):
 from search_docs import (
     queries,
 )
+
+if os.environ.get("UMF_SEARCH_BUILD_ONLY") == "1":
+    print(
+        json.dumps(
+            {"publicCliStatus": "pass", "nativeExecuted": False, "temporal": "HELD"}
+        )
+    )
+    raise SystemExit(0)
+
+pg = Path(tempfile.mkdtemp(prefix="umf-search-pg18-", dir="/private/tmp"))
+(pg / "socket").mkdir()
 
 try:
     if remote_dsn is None:
@@ -323,7 +365,9 @@ try:
     )
     from search_docs.models import Doc
 
-    created = Doc(id="instance", body="cats", embedding=(1.0, 0.0, 0.0))
+    created = Doc(
+        id="instance", body="cats", embedding=(1.0, 0.0, 0.0), owner="search_user"
+    )
     assert created.body == "cats"
     selected = queries.selected(target, term="cats")
     assert [h.item for h in selected] == [("a", "cats cats"), ("b", "dogs cats")]

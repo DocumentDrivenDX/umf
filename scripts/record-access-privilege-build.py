@@ -1,6 +1,7 @@
 """Qualification-only pass-through recorder for original compile requests/results."""
 
 import hashlib
+import inspect
 import json
 import os
 import runpy
@@ -28,12 +29,49 @@ if not probe_apis <= originals.keys():
 calls = []
 
 
+def imported_source_custody():
+    import umf_access
+
+    root = Path(umf_access.__file__).resolve().parent
+    compiler = {}
+    for name in ("weft", "weft.weft"):
+        module = sys.modules.get(name)
+        path = (
+            Path(module.__file__).resolve()
+            if module is not None and getattr(module, "__file__", None)
+            else None
+        )
+        if path is None or not path.is_file():
+            raise ValueError("actual compiler module source absent")
+        compiler[name] = {
+            "path": str(path),
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        }
+    sources = {}
+    for frame in inspect.stack():
+        path = Path(frame.filename).resolve()
+        if path.is_relative_to(root) and path.is_file():
+            sources[str(path)] = {
+                "payload": "umf_access/" + str(path.relative_to(root)),
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            }
+    if not sources:
+        raise ValueError("actual SDK compiler callsite source absent")
+    return {
+        "runtimePackageRoot": str(root),
+        "compilerModules": compiler,
+        "actualRuntimeSources": sources,
+        "nativeAuthority": False,
+    }
+
+
 def observed(api_name, request):
     result = originals[api_name](request)
     exact = result.encode()
     program = json.loads(result)
     record = {
         "compilerApi": api_name,
+        "importedSourceCustody": imported_source_custody(),
         "requestText": request,
         "requestSha256": hashlib.sha256(request.encode()).hexdigest(),
         "programText": result,
