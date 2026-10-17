@@ -110,6 +110,7 @@ def node_tree(text):
 
 KNOWN_TAGS = {
     "QUERY",
+    "ROWMARKCLAUSE",
     "RANGETBLENTRY",
     "RTEPERMISSIONINFO",
     "ALIAS",
@@ -206,6 +207,7 @@ def analyze(text):
     permissions = []
     intrinsic = []
     tags = set()
+    row_locks = []
 
     def visit(value):
         if isinstance(value, list):
@@ -217,6 +219,20 @@ def analyze(text):
             tags.add(tag)
             if tag not in KNOWN_TAGS:
                 raise NodeError("unreviewed PG18 execution/structure node " + tag)
+            if tag == "ROWMARKCLAUSE":
+                # PostgreSQL18 parsenodes.h RowMarkClause + lockoptions.h enums.
+                if (
+                    set(f) != {"rti", "strength", "waitPolicy", "pushedDown"}
+                    or type(f["rti"]) is not int
+                    or f["rti"] < 1
+                    or type(f["strength"]) is not int
+                    or f["strength"] not in (1, 2, 3, 4)
+                    or type(f["waitPolicy"]) is not int
+                    or f["waitPolicy"] not in (0, 1, 2)
+                    or f["pushedDown"] not in ("true", "false")
+                ):
+                    raise NodeError("unreviewed PG18 row-lock clause")
+                row_locks.append({**f, "pushedDown": f["pushedDown"] == "true"})
             for key in TYPE_FIELDS:
                 if isinstance(f.get(key), int) and f[key] > 0:
                     types.add(f[key])
@@ -297,6 +313,7 @@ def analyze(text):
         "relationPermissions": permissions,
         "intrinsicNodes": intrinsic,
         "nodeTags": sorted(tags),
+        "rowLocks": row_locks,
     }
 
 

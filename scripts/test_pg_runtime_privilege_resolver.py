@@ -8,6 +8,22 @@ from pg_runtime_privilege_resolver import NodeError, analyze, node_tree, substit
 
 
 class NativeNodes(unittest.TestCase):
+    def test_pg18_row_lock_clause_retained_and_closed(self):
+        text = "{ROWMARKCLAUSE :rti 1 :strength 4 :waitPolicy 0 :pushedDown false}"
+        self.assertEqual(
+            analyze(text)["rowLocks"],
+            [{"rti": 1, "strength": 4, "waitPolicy": 0, "pushedDown": False}],
+        )
+        for wrong in [
+            text.replace(":rti 1", ":rti 0"),
+            text.replace(":strength 4", ":strength 5"),
+            text.replace(":waitPolicy 0", ":waitPolicy 3"),
+            text.replace(":pushedDown false", ":pushedDown 0"),
+            text.replace("}", " :unknown 1}"),
+        ]:
+            with self.subTest(wrong=wrong), self.assertRaises(NodeError):
+                analyze(wrong)
+
     def test_pg18_attribute_bitmap_contract(self):
         import re
         from pathlib import Path
@@ -51,7 +67,9 @@ class NativeNodes(unittest.TestCase):
         }
         column = {"attnum": 1, "attname": "oid", "atttypid": 26, "attacl": None}
         with (
-            patch("pg_runtime_privilege_resolver.rows", side_effect=[[relation], [column]]),
+            patch(
+                "pg_runtime_privilege_resolver.rows", side_effect=[[relation], [column]]
+            ),
             self.assertRaisesRegex(ValueError, "unreviewed native system column ACL"),
         ):
             relation_inventory(None, [probe], "probe_schema", -7)

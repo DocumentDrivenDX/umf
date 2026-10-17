@@ -124,7 +124,10 @@ def analyzed_command_types(text: str) -> list[int]:
 
 
 def resolve_owner_packet(
-    connection: Any, packet: Mapping[str, Any], owner_check: Callable[[str], object]
+    connection: Any,
+    packet: Mapping[str, Any],
+    owner_check: Callable[[str], object],
+    observe_native_tree: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     """Resolve exact native expression dependencies, without asserting grant closure."""
     from psycopg import sql
@@ -164,6 +167,15 @@ def resolve_owner_packet(
                 if row is None:
                     raise ValueError("original owner analysis relation/rule absent")
                 text = row[0]
+                if observe_native_tree is not None:
+                    observe_native_tree(
+                        {
+                            "statementPath": statement["path"],
+                            "probeOrdinal": variant,
+                            "nativeNodeText": text,
+                            "nativeNodeSha256": digest(text),
+                        }
+                    )
                 if is_rule:
                     commands = analyzed_command_types(text)
                     expected = probe["analysisRule"]["expectedBusinessCommandType"]
@@ -205,7 +217,9 @@ def resolve_owner_packet(
                         "analysis": analysis,
                         "resolved": native,
                         "inputTypes": inputs,
-                        "analysisKind": probe.get("analysisKind", "pg-rewrite-view/0.1"),
+                        "analysisKind": probe.get(
+                            "analysisKind", "pg-rewrite-view/0.1"
+                        ),
                         "analysisRule": probe.get("analysisRule"),
                         "businessDmlExecuted": False,
                         "probeSupportRelation": probe["inputRelation"],
