@@ -48,6 +48,23 @@ def report(t=None, e=None):
 
 
 class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
+    def test_fenced_response_requires_closed_validator_without_qualification_transfer(self):
+        candidate = entry(version="weft.raw-read/0.2")
+        with patch.object(pg_privileges, "catalog_fence", return_value={"test": "codec-only"}) as validate:
+            advisory = pg_privileges.postgres_runtime_advisory(target(), [candidate])
+        validate.assert_called_once_with(candidate["artifact"])
+        self.assertEqual(advisory["matchingEntryNames"], ["rows"])
+        self.assertFalse(advisory["inventoryComplete"])
+        self.assertEqual(advisory["qualification"]["leastPrivilege"], "UNQUALIFIED")
+        with patch.object(pg_privileges, "catalog_fence", return_value=None):
+            advisory = pg_privileges.postgres_runtime_advisory(target(), [candidate])
+        self.assertEqual(advisory["matchingEntryNames"], [])
+        self.assertEqual(advisory["entriesOutsideRuntimeSlice"], ["rows"])
+        with self.assertRaisesRegex(ValueError, "closed fence failure"), patch.object(
+            pg_privileges, "catalog_fence", side_effect=ValueError("closed fence failure")
+        ):
+            pg_privileges.postgres_runtime_advisory(target(), [candidate])
+
     def test_current_runtime_reference_cannot_qualify_current_target_or_other_operations(
         self,
     ):

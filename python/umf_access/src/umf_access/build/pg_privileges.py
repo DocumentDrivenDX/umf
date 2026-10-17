@@ -12,6 +12,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from ..reviewed import catalog_fence
+
 # Derived from the retained native resolver/revocation packet, never a host flag.
 _EVIDENCE: dict[str, Any] = json.loads(r"""{
   "version": "umf.sdk-pg-runtime-advisory/0.1",
@@ -1484,7 +1486,13 @@ def postgres_runtime_advisory(
         binding = artifact.get("binding", {})
         if (
             entry["kind"] == "query"
-            and artifact.get("version") == "weft.raw-read/0.1"
+            and (
+                artifact.get("version") == "weft.raw-read/0.1"
+                or (
+                    artifact.get("version") == "weft.raw-read/0.2"
+                    and catalog_fence(artifact) is not None
+                )
+            )
             and artifact.get("target") == "postgresql18"
             and isinstance(binding, dict)
             and binding.get("schemaBinding") == "qualified"
