@@ -1,0 +1,43 @@
+{
+  "status": "source and local build/adoption checks pass; configured signing and hosted aggregate CI pending",
+  "originalHeads": {
+    "pr21": "07255a4e6e241543c2f718858deca0771edd22ca",
+    "pr27": "8328a56233bd522f419daaee8a112254a1c84537",
+    "pr29": "1fd88761efeb91e22e8df490de7c256b50eec13d",
+    "pr30": "5d678a34bf0fda31b4ffb63db8da34157a1f1d2b"
+  },
+  "referenceChecks": 12,
+  "referenceAssertions": 9939,
+  "typecheck": "pass",
+  "licenseChecks": 4,
+  "guideMalformedControls": 7,
+  "nativeChangedSdk": {
+    "Truss": 25,
+    "AshlarLocal": 17
+  },
+  "referenceBrowserSha256": "af1d6deaa6dc3279b113baa4d507160409c803d6f26fccb36a3cf7c11c4f396e",
+  "signing": "1Password authorization timeout; no retry until human access restored",
+  "temporal": "HELD",
+  "pr30DuplicateCommands": [
+    {
+      "job": 117244293632,
+      "head": "5d678a34bf0fda31b4ffb63db8da34157a1f1d2b",
+      "conclusion": "failure",
+      "pass": 107,
+      "fail": 1,
+      "test": "natural EOF preserves successful results and refuses an early exit without a result",
+      "observed": "LIMIT: Owned handler state could not be verified"
+    },
+    {
+      "job": 117244280213,
+      "head": "5d678a34bf0fda31b4ffb63db8da34157a1f1d2b",
+      "conclusion": "success",
+      "pass": 121,
+      "fail": 0,
+      "files": 40,
+      "sandboxPass": 7,
+      "sandboxLogSha256": "36dc8c8e10c5699af8f7a07fba8656fb03de345c58f47f96a5d8438f3a9796ee"
+    }
+  ],
+  "sandboxNote": "No runtime/assertion change, no silent retry or race-fix claim; aggregate CI must run against final head"
+}

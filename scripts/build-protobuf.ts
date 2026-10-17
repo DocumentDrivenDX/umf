@@ -1,5 +1,5 @@
-import {licenseModules,moduleNotice} from './protobuf-module-notices';
-import {mkdir,rm,copyFile as copySource,chmod} from 'node:fs/promises';
+import {licenseModules,moduleNotice,dependencyLicenseBasename} from './protobuf-module-notices';
+import {mkdir,rm,copyFile as copySource,chmod,readdir} from 'node:fs/promises';
 // Go toolchain cache files can be read-only; repeated builds own their output copies.
 async function copyFile(source:string,target:string){try{await chmod(target,0o644);}catch(error:any){if(error.code!=='ENOENT')throw error;}await copySource(source,target);}
 // This profile is the pinned standalone module, never an ambient workspace.
@@ -25,7 +25,8 @@ const modules=Bun.spawn(['go','list','-m','-f','{{.Path}}|{{.Version}}|{{.Dir}}|
 const dependencies=await new Response(modules.stdout).text();if(await modules.exited)process.exit(1);
 const inventory=licenseModules(dependencies);
 for(const {name,directory} of inventory){
- const file=Bun.file(directory+'/LICENSE');
+ const basename=dependencyLicenseBasename(await readdir(directory));
+ const file=Bun.file(directory+'/'+basename);
  if(!await file.exists())throw new Error('Missing dependency license: '+name);
  await Bun.write('dist/protobuf/licenses/'+name.replaceAll('/','-')+'-LICENSE',await file.text());
 }
