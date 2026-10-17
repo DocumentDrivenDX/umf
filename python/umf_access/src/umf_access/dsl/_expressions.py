@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping, Sequence
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from datetime import date, datetime
 from decimal import Decimal
 from typing import Any, Generic, Never, TypeVar, cast, overload
@@ -11,7 +11,7 @@ from typing import Any, Generic, Never, TypeVar, cast, overload
 from pydantic import MISSING, BaseModel
 
 from ._context import CaptureError, require_capture
-from ._nodes import FieldRef, Node, RecordRef, literal, owner_identity
+from ._nodes import FieldRef, KeyLiteral, Node, RecordRef, literal, owner_identity
 
 OutputT = TypeVar("OutputT")
 T = TypeVar("T")
@@ -250,6 +250,7 @@ class Column(Generic[OutputT, T]):
 @dataclass(frozen=True)
 class Related(Generic[OutputT, K]):
     ref: FieldRef
+    key_target: RecordRef | None = field(default=None, kw_only=True)
 
     def __post_init__(self) -> None:
         if not isinstance(cast(object, self.ref), FieldRef):
@@ -257,9 +258,24 @@ class Related(Generic[OutputT, K]):
 
     def has(self, key: K | Param[K]) -> Predicate[OutputT]:
         require_capture()
-        return Predicate(
-            Node("HAS_RELATED", (Node("column", (self.ref,)), operand(key)))
-        )
+        value = operand(key)
+        if self.key_target is not None:
+            target = self.key_target
+            if target.source is None or target.key_id is None:
+                raise CaptureError("CAPTURE_SIGNATURE", "relationship Key target source is absent")
+            expected = {"documentId": target.source.document_id, "coreVersion": target.source.core_version, "module": target.module, "element": target.element, "key": target.key_id}
+            if value.op == "key_param":
+                identity = dict(cast(tuple[tuple[str, str], ...], value.args[2]))
+            elif value.op == "key":
+                literal_key = cast(KeyLiteral, value.args[0])
+                identity = dict(literal_key.identity)
+                if literal_key.source != target.source:
+                    raise CaptureError("CAPTURE_SIGNATURE", "relationship Key generation differs")
+            else:
+                raise CaptureError("CAPTURE_SIGNATURE", "relationship requires its declared generated Key")
+            if identity != expected:
+                raise CaptureError("CAPTURE_SIGNATURE", "relationship declared Key identity differs")
+        return Predicate(Node("HAS_RELATED", (Node("column", (self.ref,)), value)))
 
 
 NonMissing = TypeVar(
@@ -389,6 +405,8 @@ class Join(Related[OutputT, K], Generic[OutputT, J, K]):
         super().__post_init__()
         if not isinstance(self.target, RecordRef) or type(self.optional) is not bool:
             raise TypeError("join requires generated target metadata")
+        if self.key_target is None:
+            object.__setattr__(self, "key_target", self.target)
 
 
 @dataclass(frozen=True)

@@ -448,7 +448,7 @@ class AsyncPostgresBulkTarget(AsyncPostgresTarget):
         super().__init__(connection, configuration)
         self.admission, self.reconnect = admission, reconnect
 
-    def plan(
+    async def plan(
         self,
         entry: CommandVariant,
         params: Mapping[str, object],

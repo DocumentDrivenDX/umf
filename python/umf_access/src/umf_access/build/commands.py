@@ -310,7 +310,11 @@ def emit_command(
     values = "{" + ", ".join(repr(n) + ": " + n for n in names) + "}"
     lines.extend(
         [
-            f"def {name}(target: BulkTarget[_PlanT]{tail}) -> _PlanT:",
+            "@overload",
+            f"def {name}(target: AsyncBulkTarget[_PlanT]{tail}) -> Awaitable[_PlanT]: ...",
+            "@overload",
+            f"def {name}(target: BulkTarget[_PlanT]{tail}) -> _PlanT: ...",
+            f"def {name}(target: BulkTarget[_PlanT] | AsyncBulkTarget[_PlanT]{tail}) -> _PlanT | Awaitable[_PlanT]:",
             f"    return {plan}.run(target, {values}, timeout=timeout)",
             "",
         ]

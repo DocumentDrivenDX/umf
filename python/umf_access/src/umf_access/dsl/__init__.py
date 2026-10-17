@@ -97,6 +97,7 @@ from ._query import (
 )
 from ._selection import Agg as Agg
 from ._selection import Bucket as Bucket
+from ._selection import Selection as Selection
 from ._selection import approx_count_distinct as approx_count_distinct
 from ._selection import avg_ as avg_
 from ._selection import count as count

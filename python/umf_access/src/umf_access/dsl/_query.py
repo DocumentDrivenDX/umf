@@ -38,6 +38,7 @@ from ._nodes import (
 from ._selection import (
     Agg,
     AggregateSelection,
+    GeneratedProjection,
     GroupKey,
     NullableSelection,
     OptionalRelationship,
@@ -427,7 +428,7 @@ class Query(Generic[OutputT, R, K]):
                 "CAPTURE_UNSUPPORTED",
                 "multiple relationship hydrations are unspecified",
             )
-        return Query(self.ref, self.steps + (Node("include_keys", (rel.ref, limit)),))
+        return Query(self.ref, self.steps + (Node("include_keys", (rel.ref, limit, rel.key_target)),))
 
     @overload
     def group_by(
@@ -595,6 +596,9 @@ class Query(Generic[OutputT, R, K]):
     ) -> Query[OutputT, tuple[T1, T2, T3, T4, T5, T6, T7, T8], K]: ...
 
     def select(self, *columns: Selection[OutputT, Any]) -> Any:
+        return self._select(*columns)
+
+    def _select(self, *columns: object) -> Query[OutputT, object, K]:
         require_capture()
         if not 1 <= len(columns) <= 8:
             raise CaptureError("CAPTURE_UNSUPPORTED", "select requires one to eight scalar expressions")
@@ -603,7 +607,15 @@ class Query(Generic[OutputT, R, K]):
         values = tuple(scalar(c) for c in columns)
         for value in values:
             self._check_field(value)
-        return replace(self, steps=self.steps + (Node("select", values),))
+        return cast(Query[OutputT, object, K], replace(self, steps=self.steps + (Node("select", values),)))
+
+
+def _projection_model(value: JoinProjection[OutputT, M] | GeneratedProjection[OutputT, M]) -> type[M]:
+    if isinstance(value, JoinProjection):
+        return value.model
+    if isinstance(value, type) and issubclass(value, BaseModel):
+        return cast(type[M], value)
+    raise TypeError("projection requires a generated model class or original wrapper")
 
 
 def _related_query(source: RecordRef, steps: tuple[Node, ...], relationship: object) -> Query[object, object, object]:
@@ -696,11 +708,11 @@ class Joined(_JoinedBase[OutputT, R, K], Generic[OutputT, J1, R, K]):
         )
 
     def into(
-        self, projection: JoinProjection[OutputT, ProjectionModel]
+        self, projection: JoinProjection[OutputT, ProjectionModel] | GeneratedProjection[OutputT, ProjectionModel]
     ) -> Joined[OutputT, J1, ProjectionModel, K]:
         return cast(
             "Joined[OutputT, J1, ProjectionModel, K]",
-            replace(self, steps=self._as_query()._into(projection.model).steps),
+            replace(self, steps=self._as_query()._into(_projection_model(projection)).steps),
         )
 
     @overload
@@ -769,11 +781,11 @@ class Joined2(_JoinedBase[OutputT, R, K], Generic[OutputT, J1, J2, R, K]):
         )
 
     def into(
-        self, projection: JoinProjection[OutputT, ProjectionModel]
+        self, projection: JoinProjection[OutputT, ProjectionModel] | GeneratedProjection[OutputT, ProjectionModel]
     ) -> Joined2[OutputT, J1, J2, ProjectionModel, K]:
         return cast(
             "Joined2[OutputT, J1, J2, ProjectionModel, K]",
-            replace(self, steps=self._as_query()._into(projection.model).steps),
+            replace(self, steps=self._as_query()._into(_projection_model(projection)).steps),
         )
 
     @overload
@@ -870,11 +882,11 @@ class Joined3(_JoinedBase[OutputT, R, K], Generic[OutputT, J1, J2, J3, R, K]):
         )
 
     def into(
-        self, projection: JoinProjection[OutputT, ProjectionModel]
+        self, projection: JoinProjection[OutputT, ProjectionModel] | GeneratedProjection[OutputT, ProjectionModel]
     ) -> Joined3[OutputT, J1, J2, J3, ProjectionModel, K]:
         return cast(
             "Joined3[OutputT, J1, J2, J3, ProjectionModel, K]",
-            replace(self, steps=self._as_query()._into(projection.model).steps),
+            replace(self, steps=self._as_query()._into(_projection_model(projection)).steps),
         )
 
     @overload
@@ -1025,8 +1037,8 @@ class _Context(Generic[Root, Required, Optional, R, K]):
         if any(not isinstance(p, Predicate) for p in predicates):
             raise TypeError("having accepts predicates only")
         return replace(self, steps=self.steps + (Node("having", tuple(cast(Predicate[Any], p).node for p in predicates)),))
-    def into(self, projection: JoinProjection[Root, M]) -> JoinedContext[Root, Required, Optional, M, K]:
-        return cast("JoinedContext[Root, Required, Optional, M, K]", replace(self, steps=self._as_query()._into(projection.model).steps))
+    def into(self, projection: JoinProjection[Root, M] | GeneratedProjection[Root, M]) -> JoinedContext[Root, Required, Optional, M, K]:
+        return cast("JoinedContext[Root, Required, Optional, M, K]", replace(self, steps=self._as_query()._into(_projection_model(projection)).steps))
     @overload
     def join(self, relationship: RequiredRelationship[Required, J], *, how: Literal["inner"] | None = None) -> JoinedContext[Root, Required | J, Optional, R, K]: ...
     @overload

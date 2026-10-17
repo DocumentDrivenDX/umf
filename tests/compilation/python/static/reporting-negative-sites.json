@@ -1,6 +1,6 @@
 {
   "version": "umf-static-negative-sites/0.1",
-  "review": "Every source call site inspected; query carrier/record ownership, nullability, arity, action replay/input, ranked-search misuse and the five generated-model constructor/Key/update/projection misuse sites. Exact multiplicity retained (ty hybrid emits three diagnostics). Native/temporal support is not inferred. Prefix wrong literal and named parameter inspected at line7; both require string-carrier argument diagnostics, with exact source hashes. Same-carrier generated CustomerKey cannot replace ShipOrderInput selected OrderKey; line5 constructor argument must reject nominal Key identity on all three checkers. Required/optional relationship overloads preserve foreign-owner refusal; reviewed Pyright reports both call and argument errors and ty reports no matching overload at the same unchanged line5. Aggregate negative sites at line6 individually reviewed: SUM string carrier, AVG missing required exact scale, literal-only bucket refusing bound Param; exact checker rules and multiplicity retained. Both MATCHES_ALL_TERMS/ANY_TERM reject wrong literal, wrong Param carrier, and numeric Column receiver at reviewed lines6/10; exact rules retained on all three checkers. Covariant immutable Predicate composition preserves every referenced owner; owner-free COUNT mixed with foreign predicates remains refused by root filter at reviewed lines6/10. Concrete numeric SUM overload diagnostics reviewed at unchanged string misuse line6. Alias cases independently reviewed: distinct tag phantom owner cannot select an unjoined alias; to_alias requires the original relationship target Record and Key. Exact three-checker rule multiplicities retained. Related target-set navigation controls reviewed at line5 on all three checkers: source owner and selected target field remain distinct; exact Pyright wrong-source call/argument multiplicity retained. This does not qualify the native semijoin profile. Approximate-distinct original-node surface wrong operand line4 and foreign owner line5 each reject once on all3checkers; native algorithm/error-bound qualification remains explicitly unsupported.",
+  "review": "Every source call site inspected; query carrier/record ownership, nullability, arity, action replay/input, ranked-search misuse and the five generated-model constructor/Key/update/projection misuse sites. Exact multiplicity retained (ty hybrid emits three diagnostics). Native/temporal support is not inferred. Prefix wrong literal and named parameter inspected at line7; both require string-carrier argument diagnostics, with exact source hashes. Same-carrier generated CustomerKey cannot replace ShipOrderInput selected OrderKey; line5 constructor argument must reject nominal Key identity on all three checkers. Required/optional relationship overloads preserve foreign-owner refusal; reviewed Pyright reports both call and argument errors and ty reports no matching overload at the same unchanged line5. Aggregate negative sites at line6 individually reviewed: SUM string carrier, AVG missing required exact scale, literal-only bucket refusing bound Param; exact checker rules and multiplicity retained. Both MATCHES_ALL_TERMS/ANY_TERM reject wrong literal, wrong Param carrier, and numeric Column receiver at reviewed lines6/10; exact rules retained on all three checkers. Covariant immutable Predicate composition preserves every referenced owner; owner-free COUNT mixed with foreign predicates remains refused by root filter at reviewed lines6/10. Concrete numeric SUM overload diagnostics reviewed at unchanged string misuse line6. Alias cases independently reviewed: distinct tag phantom owner cannot select an unjoined alias; to_alias requires the original relationship target Record and Key. Exact three-checker rule multiplicities retained. Related target-set navigation controls reviewed at line5 on all three checkers: source owner and selected target field remain distinct; exact Pyright wrong-source call/argument multiplicity retained. This does not qualify the native semijoin profile. Approximate-distinct original-node surface wrong operand line4 and foreign owner line5 each reject once on all3checkers; native algorithm/error-bound qualification remains explicitly unsupported. Joined/grouped modelclass owner witness, preselected rankedmodel owner, and async bulk plan must-await controls reviewed on all3checkers; exact paths/line5 or6/rules/multiplicity retained. No native semantics inferred.",
   "checkers": {
     "mypy": "2.4.0",
     "pyright": "1.1.414",
@@ -1331,6 +1331,70 @@
             ],
             "ty": [
               "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/joined_foreign_model.py",
+      "sourceSha256": "23198542437a8e66ebeaf66ab4d989c9b3405899a8f0adc79051bd66d2bc117c",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.objects.join(Order.c.customer).into(CustomerSummary).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/preselected_foreign_model.py",
+      "sourceSha256": "5a06668c79e420ddf4d605c5822c3b103d297bd5eb0da26755af29475b261c21",
+      "sites": [
+        {
+          "line": 6,
+          "source": "return Doc.objects.select(Doc.c.id).search(Doc.s.text.matches(text)).into(OrderSummary).top(3)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/actions/negative/async_bulk_unawaited.py",
+      "sourceSha256": "60e114064bc24840fb7c2f395a9bc04f0627b8cd0d705f234df9718ef4a17fb5",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return command.run(target,{}).execute()",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ],
+            "ty": [
+              "unresolved-attribute"
             ]
           }
         }

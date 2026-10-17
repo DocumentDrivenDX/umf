@@ -20,7 +20,7 @@ negative+=sorted((root/'tests/compilation/python/static/models/negative').glob('
 positive=[root/'tests/compilation/python/static/actions/positive.py',generated/'commerce',root/'tests/compilation/python/static/joins/positive.py',root/'tests/compilation/python/static/joins/aggregate_positive.py',root/'tests/compilation/python/static/joins/related_positive.py',root/'tests/compilation/python/static/joins/alias_positive.py',generated/'refinement_shop',root/'tests/compilation/python/static/joins/refinement_positive.py',root/'tests/compilation/python/static/joins/refinement_matrix.py',root/'tests/compilation/python/static/queries/positive/runtime_types.py',root/'tests/compilation/python/static/queries/positive/terminals.py']
 search=str(generated) if args.installed_runtime else f'{runtime}:{generated}'
 env=dict(os.environ,PYTHONPATH=search,MYPYPATH=search)
-positive += [generated/'native_sales',root/'tests/compilation/python/static/native-actions/positive.py',generated/'search_docs',root/'tests/compilation/python/static/search/positive.py']
+positive += [generated/'native_sales',root/'tests/compilation/python/static/native-actions/positive.py',root/'tests/compilation/python/static/native-actions/async_bulk_positive.py',generated/'search_docs',root/'tests/compilation/python/static/search/positive.py']
 for file in (generated/'commerce').glob('*.py'):
  text=file.read_text()
  assert not any(s in text for s in ('type: ignore','pyright: ignore','ty: ignore')),file

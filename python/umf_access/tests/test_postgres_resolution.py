@@ -8,7 +8,7 @@ from umf_access.postgres_read import _resolution_context
 
 class PostgresResolutionTests(unittest.TestCase):
     def rows(self, schema="tenant", system="123456", oid=100):
-        return [["database", system, ["pg_catalog", schema], "docs", schema, oid, "reader", "reader"]]
+        return [["database", system, ["pg_catalog", schema], "docs", schema, oid, "reader", "reader", 5]]
 
     def test_store_schema_and_relation_partitions_are_native(self):
         first = _resolution_context(self.rows(), ["docs"], "tenant", "search-path", "database")
@@ -21,7 +21,7 @@ class PostgresResolutionTests(unittest.TestCase):
     def test_foreign_resolution_and_shadowing_refuse(self):
         changes = [(0, "foreign-database"), (1, "invented-label"),
                    (2, ["pg_temp_3", "pg_catalog", "tenant"]),
-                   (3, "other-table"), (4, "foreign-schema"), (5, None), (6, "")]
+                   (3, "other-table"), (4, "foreign-schema"), (5, None), (6, ""), (8, None)]
         for index, value in changes:
             rows = self.rows()
             rows[0][index] = value

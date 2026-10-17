@@ -129,3 +129,14 @@ from ._expressions import (
 from ._expressions import (
     sum_ as sum_,  # noqa: PLC0414
 )
+
+ProjectionResult_co = TypeVar("ProjectionResult_co", covariant=True)
+
+
+class GeneratedProjection(Protocol[Oc_co, ProjectionResult_co]):
+    """Inert generated class witnesses; runtime still validates pinned Fields."""
+
+    @property
+    def UMF_PROJECTION_OWNER(self) -> type[Oc_co]: ...
+
+    def _umf_projection_model(self) -> type[ProjectionResult_co]: ...

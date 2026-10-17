@@ -27,6 +27,7 @@ from .pages import (
 )
 from .reviewed import CatalogRead, P, R, ReadBuildError
 from .values import validate_vector
+from .verification import postgres_verification_cache
 
 
 class TimedOut(TimeoutError):
@@ -125,14 +126,65 @@ AND NOT EXISTS (
 _TYPES = {"integer": {"int2", "int4", "int8"}, "decimal": {"numeric"},
           "string": {"text", "varchar"}, "boolean": {"bool"}}
 
+# Native metadata only. Full rows here contain catalog scalars/arrays, never
+# application datums or a user-supplied expression to execute. Observe every
+# requested relation, including missing ones; a hash of a partial result is not
+# a verification proof. This fingerprint is not an authorization cache.
+_SHAPE = """SELECT c.oid, n.nspname, c.relname,
+pg_catalog.jsonb_build_object(
+ 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+ 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+   FROM pg_catalog.pg_attribute a
+   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+   WHERE a.attrelid=c.oid AND a.attnum>0),
+ 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+       pg_catalog.to_jsonb(family),fns.nspname,
+       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+ 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+   FROM pg_catalog.pg_extension e)
+)::pg_catalog.text
+FROM pg_catalog.unnest(%s::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos"""
+
+
+def _shape_fingerprint(native_ids: list[object], app_schema: str) -> Generator[tuple[Any, ...], Any, str]:
+    relations = cast(list[tuple[str, int]], native_ids)
+    yield ("execute", _SHAPE, ([oid for _, oid in relations],))
+    rows = yield ("many", len(relations) + 1)
+    if len(rows) != len(relations):
+        raise ReadObligationUnmet("native verification relation inventory differs")
+    for row, (name, oid) in zip(rows, relations, strict=True):
+        if (
+            not isinstance(row, (list, tuple)) or len(row) != 4
+            or row[:3] not in ((oid, app_schema, name), [oid, app_schema, name])
+            or type(row[3]) is not str or not row[3] or len(row[3]) > 8_388_608
+        ):
+            raise ReadObligationUnmet("native verification metadata is missing or differs")
+    return hashlib.sha256(json.dumps(rows, separators=(",", ":")).encode()).hexdigest()
+
 _RESOLUTION = """WITH context AS MATERIALIZED (
  SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
  (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
  pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
- session_user::pg_catalog.text AS session_actor
+ session_user::pg_catalog.text AS session_actor,
+ (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
 )
 SELECT context.database_name, context.system_id, context.schemas,
- wanted.name, n.nspname, c.oid, context.actor, context.session_actor
+ wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
 FROM context CROSS JOIN pg_catalog.unnest(%s::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
 LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
  CASE WHEN %s THEN pg_catalog.quote_ident(%s) || '.' || pg_catalog.quote_ident(wanted.name)
@@ -147,7 +199,7 @@ def _resolution_context(rows: list[Any], names: list[str], app_schema: str, mode
     identities = []
     for row, name in zip(rows, names, strict=True):
         if (
-            not isinstance(row, (list, tuple)) or len(row) != 8 or row[0] != database
+            not isinstance(row, (list, tuple)) or len(row) != 9 or row[0] != database
             or type(row[1]) is not str or not row[1].isascii() or not row[1].isdecimal()
             or type(row[2]) is not list or not row[2]
             or any(type(schema) is not str for schema in row[2])
@@ -155,9 +207,10 @@ def _resolution_context(rows: list[Any], names: list[str], app_schema: str, mode
             or row[3] != name or row[4] != app_schema
             or type(row[5]) is not int or row[5] < 1
             or any(type(row[i]) is not str or not row[i] for i in (6, 7))
+            or type(row[8]) is not int or row[8] < 1
         ):
             raise ReadObligationUnmet("native database, schema, path or relation differs from host binding")
-        current = (row[0], row[1], row[6], row[7])
+        current = (row[0], row[1], row[6], row[7], row[8])
         if context is not None and current != context:
             raise ReadObligationUnmet("native connection identity changed during resolution")
         context = current
@@ -361,7 +414,8 @@ def _checked_sort_values(fields: list[dict[str,object]], values: Sequence[object
 
 
 def native_read_admission(
-    binding: dict[str, object], app_schema: str, lock_sql: tuple[str, ...]
+    binding: dict[str, object], app_schema: str, lock_sql: tuple[str, ...],
+    *, cache_context: object | None = None, shape_proof: list[str] | None = None,
 ) -> Generator[tuple[Any, ...], Any, tuple[Any, list[object]]]:
     """Shared native role/table/key admission inside the caller's read snapshot."""
     yield ("execute", _ROLE)
@@ -394,7 +448,16 @@ def native_read_admission(
         )
         if (yield ("one",))[0] != native[0]:
             raise ReadObligationUnmet("search_path resolves table outside app schema")
-        yield ("execute", _COLUMNS, (native[0],))
+    cache_key = fingerprint = None
+    if cache_context is not None:
+        cache_key = hashlib.sha256(json.dumps([binding, cache_context, native_ids], sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        fingerprint = yield from _shape_fingerprint(native_ids, app_schema)
+        if shape_proof is not None:
+            shape_proof.append(fingerprint)
+        if postgres_verification_cache().matches(cache_key, fingerprint):
+            return before, native_ids
+    for table, (_, oid) in zip(cast(list[dict[str, object]], binding["tables"]), native_ids, strict=True):
+        yield ("execute", _COLUMNS, (oid,))
         facts = {row[0]: row[1:] for row in (yield ("many", 2000))}
         columns = cast(list[dict[str, object]], table["columns"])
         for column in columns:
@@ -407,11 +470,13 @@ def native_read_admission(
                 and not fact[2]
             ):
                 raise ReadObligationUnmet("native column differs from compiled type")
-        yield ("execute", _KEYS, (native[0],))
+        yield ("execute", _KEYS, (oid,))
         physical = {col["logical"]: col["native"] for col in columns}
         key = [physical[name] for name in cast(list[str], table["key"])]
         if not any(list(row[0]) == key for row in (yield ("many", 2000))):
             raise ReadObligationUnmet("compiled unique key has no native constraint")
+    if cache_key is not None and fingerprint is not None:
+        postgres_verification_cache().remember(cache_key, fingerprint)
     return before, native_ids
 
 
@@ -497,8 +562,11 @@ def _program(
         "SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('search_path', %s, true), pg_catalog.set_config('row_security', 'on', true)",
         (str(timeout_ms), search_path),
     )
+    shape_proof: list[str] = []
     before, native_ids = yield from native_read_admission(
-        binding, app_schema, tuple(cast(list[str], artifact["lockSql"]))
+        binding, app_schema, tuple(cast(list[str], artifact["lockSql"])),
+        cache_context=(target, connection.info.server_version, native_context) if native_context is not None else None,
+        shape_proof=shape_proof,
     )
     yield from _verify_terms(term_admissions)
     yield from _verify_admissions(projection_admissions, "native projection column shape differs from catalog")
@@ -558,6 +626,8 @@ def _program(
     yield from _verify_admissions(relationship_admissions, "native relationship Key differs before release")
     if native_context is not None and (yield from _observe_resolution(binding, app_schema, cast(str, schema_mode), connection.info.dbname)) != native_context:
         raise ReadObligationUnmet("native database or schema resolution changed before release")
+    if shape_proof and (yield from _shape_fingerprint(native_ids, app_schema)) != shape_proof[0]:
+        raise ReadObligationUnmet("native verified shape changed before release")
     yield ("execute", _ROLE)
     if (yield ("one",)) != before:
         raise ReadObligationUnmet("caller role changed during read")

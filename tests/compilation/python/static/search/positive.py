@@ -1,3 +1,4 @@
+from umf_access.dsl import query
 from typing import assert_type
 from umf_access import Param,Vector
 from umf_access.dsl import Terminal,SearchResult,hybrid,rrf
@@ -12,3 +13,15 @@ def declarations(text:Param[str],vector:Param[Vector])->None:
 
     assert_type(Doc.objects.search(Doc.s.text.matches(text)).into(DocSummary).top(3),Terminal[SearchResult[DocSummary]])
     assert_type(Doc.objects.search(Doc.s.text.matches(text)).select(Doc.c.id,Doc.c.body).into(DocSummary).top(3,allow_partial=True),Terminal[SearchResult[DocSummary]])
+
+@query
+def preselected_model(text: Param[str]):
+    result = Doc.objects.select(Doc.c.id).search(Doc.s.text.matches(text)).into(DocSummary).top(3)
+    assert_type(result, Terminal[SearchResult[DocSummary]])
+    return result
+
+@query
+def preprojected_model(text: Param[str]):
+    result = Doc.objects.into(DocSummary).search(Doc.s.text.matches(text)).into(DocSummary).top(3)
+    assert_type(result, Terminal[SearchResult[DocSummary]])
+    return result

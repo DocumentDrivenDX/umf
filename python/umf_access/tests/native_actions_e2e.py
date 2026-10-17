@@ -657,7 +657,7 @@ try:
     async def generated_async_command():
         c = await psycopg.AsyncConnection.connect(base + " user=erik")
         target = AsyncPostgresBulkTarget(c, target_config, AsyncAdmission())
-        plan = queries.approve_drafts(target, status="approved")
+        plan = await queries.approve_drafts(target, status="approved")
         preview = await plan.preview()
         assert len(preview.selected) == 3
         result = await plan.execute()

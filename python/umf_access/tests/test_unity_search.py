@@ -5,17 +5,21 @@ from __future__ import annotations
 import copy
 import json
 import unittest
+from datetime import timedelta
 from decimal import Decimal
 from pathlib import Path
 from typing import ClassVar
+from unittest.mock import patch
 
 from umf_access.adoption import TargetIdentity
 from umf_access.catalog import TargetPin
 from umf_access.native_program import NativeProgram, canonical_json
 from umf_access.search_catalog import SearchEntry, SearchVariant
+from umf_access.targets import TargetMismatch
 from umf_access.types import StrictModel
 from umf_access.unity_search import (
     NativeHydration,
+    NativeSearchVerification,
     UnityCatalogSearchTarget,
     UnitySearchError,
     _candidates,
@@ -42,8 +46,8 @@ def fixture():
     native = NativeProgram(raw, canonical_json({"/hydration/statement": {
         "sql": statement["sql"], "order": list(range(len(statement["parameters"])))
     }}), "a" * 64)
-    identity = TargetIdentity("unity-catalog", "weft-databricks", "0.1", "weft.unity-search/0.1", "b" * 64, (("fixture", "1"),))
-    pin = TargetPin(identity.kind, identity.backend_id, identity.backend_version, identity.target_profile, identity.binding_sha256, (("fixture", ("1",)),))
+    identity = TargetIdentity("unity-catalog", "weft-databricks", "0.1", "weft.unity-search/0.1", "b" * 64, (("databricks-sql", "fixture-version"),))
+    pin = TargetPin(identity.kind, identity.backend_id, identity.backend_version, identity.target_profile, identity.binding_sha256, (("databricks-sql", ("fixture-version",)),))
     variant = SearchVariant((), pin, (SearchEntry(native, Row, Key, "vector"),), (), 3)
     return program, identity, variant
 
@@ -67,6 +71,13 @@ class Transport:
         self.change_principal = False
         self.change_table = False
         self.duplicate = False
+        self.platform_version = "fixture-version"
+
+    def platform(self, *, deadline):
+        return (("databricks-sql", self.platform_version),)
+
+    def verify_current(self, table, *, deadline):
+        return NativeSearchVerification(table["id"], "repointed" if self.change_table else table["id"], self.subject, self.subject)
 
     def principal(self, *, deadline):
         return "changed@example.test" if self.change_principal and self.calls else self.subject
@@ -95,6 +106,49 @@ class Transport:
 
 
 class UnitySearchTests(unittest.TestCase):
+    def test_empty_candidates_still_require_current_native_table_admission(self):
+        program, identity, variant = fixture()
+        transport = Transport(program)
+        transport.change_table = True
+        target = UnityCatalogSearchTarget(transport, identity)
+        with patch.object(transport, "query_index") as query:
+            with self.assertRaises(UnitySearchError):
+                target.search(variant, {"vector": (1.0, 0.0, 0.0)})
+            query.assert_not_called()
+        transport.change_table = False
+        empty = {"manifest": {"column_count": 1, "columns": [{"name": "id"}]},
+                 "result": {"row_count": 0, "data_array": []}}
+        valid = NativeSearchVerification(program["obligations"]["currentTableId"], program["obligations"]["currentTableId"], transport.subject, transport.subject)
+        changed = NativeSearchVerification("changed", "changed", transport.subject, transport.subject)
+        with patch.object(transport, "query_index", return_value=empty), patch.object(transport, "verify_current", side_effect=[valid, changed]), self.assertRaises(UnitySearchError):
+            target.search(variant, {"vector": (1.0, 0.0, 0.0)})
+
+    def test_eager_verification_observes_native_platform_table_and_index(self):
+        program, identity, variant = fixture()
+        transport = Transport(program)
+        target = UnityCatalogSearchTarget(transport, identity, catalog_variants=(variant,))
+        self.assertEqual(target.identity(), identity)
+        target.verify()
+        self.assertEqual(transport.calls, [])
+        transport.change_table = True
+        with self.assertRaises(TargetMismatch):
+            target.verify()
+        transport.change_table = False
+        transport.platform_version = "changed"
+        for operation in (target.identity, target.verify):
+            with self.assertRaises(TargetMismatch):
+                operation()
+        with self.assertRaises(UnitySearchError):
+            target.search(variant, {"vector": (1.0, 0.0, 0.0)})
+
+    def test_default_deadline_and_eager_inventory_are_required(self):
+        program, identity, _ = fixture()
+        for timeout in (0, None, timedelta(0), timedelta(seconds=-1), timedelta(seconds=121)):
+            with self.subTest(timeout=timeout), self.assertRaises(ValueError):
+                UnityCatalogSearchTarget(Transport(program), identity, timeout=timeout)
+        with self.assertRaisesRegex(TargetMismatch, "explicit catalog"):
+            UnityCatalogSearchTarget(Transport(program), identity).verify()
+
     def test_native_exact_projection_carriers_never_round_or_invent_null(self):
         value = Decimal("1.2300")
         self.assertIs(_native_value({"carrier": "decimal"}, value), value)

@@ -21,6 +21,7 @@ from .codec_support import checked_row, validate_graph
 from .dsl import Score, Scored, SearchResult
 from .native_program import program_json
 from .search_catalog import SearchEntry, SearchVariant
+from .targets import TargetMismatch
 from .values import validate_vector
 
 
@@ -38,6 +39,14 @@ class NativeHydration:
     principal_after: str
 
 
+@dataclass(frozen=True)
+class NativeSearchVerification:
+    table_id_before: str
+    table_id_after: str
+    principal_before: str
+    principal_after: str
+
+
 class UnitySearchTransport(Protocol):
     """Owner-native ports, supplied explicitly; no default authority provider.
 
@@ -47,6 +56,8 @@ class UnitySearchTransport(Protocol):
     """
 
     def principal(self, *, deadline: float) -> str: ...
+    def platform(self, *, deadline: float) -> tuple[tuple[str, str], ...]: ...
+    def verify_current(self, table: Mapping[str, Any], *, deadline: float) -> NativeSearchVerification: ...
     def index_metadata(self, name: str, *, deadline: float) -> Mapping[str, Any]: ...
     def query_index(self, method: str, path: str, body: Mapping[str, object], *, deadline: float) -> Mapping[str, Any]: ...
     def read_current(self, table: Mapping[str, Any], statement: str, parameters: Mapping[str, object], *, deadline: float) -> NativeHydration: ...
@@ -122,20 +133,91 @@ def _native_value(output: Mapping[str, Any], value: object) -> object:
 
 
 class UnityCatalogSearchTarget:
-    def __init__(self, transport: UnitySearchTransport, identity: TargetIdentity, *, embedders: Mapping[str, Any] | None = None, timeout: timedelta = timedelta(seconds=30)):
+    def __init__(self, transport: UnitySearchTransport, identity: TargetIdentity, *, embedders: Mapping[str, Any] | None = None, timeout: timedelta = timedelta(seconds=30), catalog_variants: tuple[SearchVariant, ...] = ()):
         if identity.kind != "unity-catalog":
             raise UnitySearchError("explicit Unity Catalog target identity required")
         self.transport, self._identity = transport, identity
         self.embedders, self.timeout = dict(embedders or {}), timeout
+        self.catalog_variants = tuple(catalog_variants)
+        self._seconds(timeout)
 
-    def identity(self) -> TargetIdentity:
-        return self._identity
-
-    def search(self, variant: SearchVariant, parameters: Mapping[str, object], *, timeout: timedelta | None = None) -> SearchResult[Any]:
-        seconds = (self.timeout if timeout is None else timeout).total_seconds()
+    @staticmethod
+    def _seconds(timeout: timedelta) -> float:
+        if type(timeout) is not timedelta:
+            raise ValueError("finite search timedelta required")
+        seconds = timeout.total_seconds()
         if not math.isfinite(seconds) or not 0 < seconds <= 120:
             raise ValueError("finite search timeout within 120 seconds required")
+        return seconds
+
+    def _platform(self, deadline: float) -> None:
+        observed = self.transport.platform(deadline=deadline)
+        if (
+            type(observed) is not tuple or not observed
+            or any(type(item) is not tuple or len(item) != 2
+                   or any(type(value) is not str or not value for value in item) for item in observed)
+            or len(dict(observed)) != len(observed)
+            or not self._identity.platform
+            or not {"databricks-sql", "databricks-runtime"}.intersection(dict(self._identity.platform))
+            or len(dict(self._identity.platform)) != len(self._identity.platform)
+            or any(dict(observed).get(name) != version for name, version in self._identity.platform)
+        ):
+            raise UnitySearchError("native platform differs from qualified target versions")
+        if time.monotonic() >= deadline:
+            raise TimeoutError("native target verification exceeded whole-call deadline")
+
+    def identity(self) -> TargetIdentity:
+        try:
+            self._platform(time.monotonic() + self._seconds(self.timeout))
+        except UnitySearchError as error:
+            raise TargetMismatch(str(error)) from error
+        return self._identity
+
+    def _verify_table(self, obligations: Mapping[str, Any], principal: str, deadline: float) -> None:
+        native = self.transport.verify_current(obligations["currentTable"], deadline=deadline)
+        if (
+            not isinstance(native, NativeSearchVerification)
+            or native.table_id_before != obligations["currentTableId"]
+            or native.table_id_after != native.table_id_before
+            or native.principal_before != principal or native.principal_after != principal
+        ):
+            raise UnitySearchError("native table verification differs from original target")
+
+    def verify(self) -> None:
+        try:
+            self._verify_owned()
+        except UnitySearchError as error:
+            raise TargetMismatch(str(error)) from error
+
+    def _verify_owned(self) -> None:
+        if not self.catalog_variants:
+            raise UnitySearchError("explicit catalog search variants required for eager verification")
+        deadline = time.monotonic() + self._seconds(self.timeout)
+        self._platform(deadline)
+        for variant in self.catalog_variants:
+            if not variant.pin.matches(self._identity) or len(variant.entries) != 1:
+                raise UnitySearchError("one original native search program for this target required")
+            program = variant.entries[0].artifact()
+            if program.get("version") != "weft.unity-search/0.1":
+                raise UnitySearchError("foreign search owner program")
+            obligations = program["obligations"]
+            principal = self.transport.principal(deadline=deadline)
+            if type(principal) is not str or not principal:
+                raise UnitySearchError("native authenticated principal required")
+            expected = obligations["nativeIndex"]
+            before = _index_identity(self.transport.index_metadata(expected["name"], deadline=deadline), expected)
+            self._verify_table(obligations, principal, deadline)
+            if (
+                _index_identity(self.transport.index_metadata(expected["name"], deadline=deadline), expected) != before
+                or self.transport.principal(deadline=deadline) != principal
+            ):
+                raise UnitySearchError("native target verification changed before release")
+            self._platform(deadline)
+
+    def search(self, variant: SearchVariant, parameters: Mapping[str, object], *, timeout: timedelta | None = None) -> SearchResult[Any]:
+        seconds = self._seconds(self.timeout if timeout is None else timeout)
         deadline = time.monotonic() + seconds
+        self._platform(deadline)
 
         def check() -> None:
             if time.monotonic() >= deadline:
@@ -155,6 +237,7 @@ class UnityCatalogSearchTarget:
             raise UnitySearchError("native authenticated principal required")
         expected_index = obligations["nativeIndex"]
         before = _index_identity(self.transport.index_metadata(expected_index["name"], deadline=deadline), expected_index)
+        self._verify_table(obligations, principal, deadline)
         values = dict(parameters)
         for destination, source in entry.parameter_aliases:
             if destination in values or source not in values:
@@ -218,7 +301,9 @@ class UnityCatalogSearchTarget:
             item = tuple(getattr(decoded, name) for name in entry.tuple_fields) if entry.tuple_fields else decoded
             items.append(Scored(item, rank, score))
         check()
+        self._verify_table(obligations, principal, deadline)
         if _index_identity(self.transport.index_metadata(expected_index["name"], deadline=deadline), expected_index) != before or self.transport.principal(deadline=deadline) != principal:
             raise UnitySearchError("native search identity changed before release")
         check()
+        self._platform(deadline)
         return SearchResult(tuple(items), stale, True, True)

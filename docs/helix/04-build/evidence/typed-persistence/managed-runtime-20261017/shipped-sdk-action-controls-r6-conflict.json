@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "checks": [
+    "none",
+    "validate",
+    "missing-capability",
+    "invalid-receipt",
+    "lost-ack",
+    "query-loss",
+    "conflict",
+    "unconfirmed-conflict"
+  ],
+  "scope": "actual compiler and generated ActionRef, faulty transport controls only; no native authority qualification",
+  "temporal": "HELD"
+}

@@ -102,12 +102,21 @@ def main():
         from search_docs.models import DocCreate
         from umf_access import StreamLimitReached
         from umf_access.pages import ReadObligationUnmet, StaleContinuation
+        from umf_access.postgres_read import _COLUMNS, _KEYS, _SHAPE
         from umf_access.targets import (
             AsyncPostgresTarget,
             PostgresConfiguration,
             PostgresTarget,
             binding_digest,
         )
+        from umf_access.verification import configure_postgres_verification_cache
+
+        native_sql = []
+
+        class ObservedCursor(psycopg.Cursor):
+            def execute(self, query, params=None, **kwargs):
+                native_sql.append(query)
+                return super().execute(query, params, **kwargs)
 
         assert 'weft' not in sys.modules
         amount = Decimal('1234567890123456789012345678.1234567890')
@@ -138,7 +147,7 @@ def main():
                     cursor.executemany(f'INSERT INTO {schema}.docs VALUES (%s,%s,%s::public.vector(3),%s,%s,%s)', [
                         (f'{prefix}{i:04}', f'e\u0301 and \u00e9 {i}', '[0.1,-0,1]', 2**63-1-i, amount, b'\x00\xff'+i.to_bytes(2, 'big')) for i in range(120)])
             try:
-                with psycopg.connect(dsn, user='projection_reader', autocommit=True) as connection:
+                with psycopg.connect(dsn, user='projection_reader', autocommit=True, cursor_factory=ObservedCursor) as connection:
                     def target(schema, cls=PostgresTarget, conn=connection):
                         return cls(conn, PostgresConfiguration(schema, binding_digest(original['binding']), (180006,), timedelta(seconds=30)), tuple(getattr(queries, f'_Q{i}').variants[0].entry for i in range(3)))
 
@@ -153,6 +162,39 @@ def main():
                         raise AssertionError('expected original native LOCK table privilege prerequisite')
                     for schema in schemas:
                         admin.execute(f'GRANT SELECT ON {schema}.docs TO projection_reader')
+                    configure_postgres_verification_cache()
+                    native_sql.clear()
+                    assert len(queries.rows(target('sdk_projection_a'))) == 120
+                    assert _COLUMNS in native_sql and _KEYS in native_sql and _SHAPE in native_sql
+                    native_sql.clear()
+                    assert len(queries.rows(target('sdk_projection_a'))) == 120
+                    assert _COLUMNS not in native_sql and _KEYS not in native_sql and native_sql.count(_SHAPE) == 2
+                    with psycopg.connect(dsn, user='projection_reader', autocommit=True, cursor_factory=ObservedCursor) as pooled:
+                        pooled.execute('SET search_path TO pg_catalog,sdk_projection_a,pg_temp')
+                        native_sql.clear()
+                        assert len(queries.rows(target('sdk_projection_a', conn=pooled))) == 120
+                        assert _COLUMNS not in native_sql and _KEYS not in native_sql and native_sql.count(_SHAPE) == 2
+                    passed('native-process-cache-reuses-only-unchanged-shape-across-connections')
+                    admin.execute('ALTER TABLE sdk_projection_a.docs ALTER COLUMN body DROP NOT NULL')
+                    native_sql.clear()
+                    try:
+                        queries.rows(target('sdk_projection_a'))
+                    except ReadObligationUnmet:
+                        assert _COLUMNS in native_sql
+                    else:
+                        raise AssertionError('cached pre-DDL shape admitted nullable native column')
+                    admin.execute('ALTER TABLE sdk_projection_a.docs ALTER COLUMN body SET NOT NULL')
+                    assert len(queries.rows(target('sdk_projection_a'))) == 120
+                    admin.execute('REVOKE SELECT ON sdk_projection_a.docs FROM projection_reader')
+                    try:
+                        queries.rows(target('sdk_projection_a'))
+                    except psycopg.errors.InsufficientPrivilege:
+                        assert connection.info.transaction_status == 0
+                    else:
+                        raise AssertionError('shape cache conferred a revoked native table grant')
+                    admin.execute('GRANT SELECT ON sdk_projection_a.docs TO projection_reader')
+                    assert len(queries.rows(target('sdk_projection_a'))) == 120
+                    passed('native-shape-cache-DDL-invalidation-and-current-grant-refusal')
                     for schema in schemas[:2]:
                         connection.execute(f'SET search_path TO pg_catalog,{schema},pg_temp')
                         selected = target(schema)

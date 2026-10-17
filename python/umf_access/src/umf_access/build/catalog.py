@@ -491,7 +491,7 @@ def _compile_catalog_owned(
     ]
     lines.extend(
         [
-            "from umf_access.commands import BulkTarget, CommandVariant, CommandPlan",
+            "from umf_access.commands import BulkTarget, AsyncBulkTarget, CommandVariant, CommandPlan",
             "from umf_access.native_program import NativeProgram",
             "_PlanT = TypeVar('_PlanT')",
             "",

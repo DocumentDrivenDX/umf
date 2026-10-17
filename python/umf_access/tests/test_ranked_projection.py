@@ -59,3 +59,16 @@ class RankedProjectionTests(unittest.TestCase):
 
         with self.assertRaises(CaptureError):
             capture(invalid)
+
+    def test_presearch_selection_and_projection_keep_generated_model_surface(self):
+        @query
+        def selected(text: Param[str]):
+            return Doc.objects.select(Doc.c.id).search(Doc.s.text.matches(text)).into(DocSummary).top(3)
+        @query
+        def projected(text: Param[str]):
+            return Doc.objects.into(DocSummary).search(Doc.s.text.matches(text)).into(DocSummary).top(3)
+        for declaration in (selected, projected):
+            node = capture(declaration).variants[0].node
+            self.assertEqual(node.op, "search_top")
+            self.assertEqual(node.args[1][-1].op, "into")
+            self.assertEqual(node.args[1][-1].args[0].name, "DocSummary")

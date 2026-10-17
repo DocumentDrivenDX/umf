@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-pg-cache-native-preflight.py", line 10, in <module>
+    run([pg/'initdb','-D',out/'data','-A','trust','-U','sdk_test','--no-sync'])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-pg-cache-native-preflight.py", line 8, in run
+    p=subprocess.run(list(map(str,args)),text=True,capture_output=True);(out/'lifecycle.log').open('a').write(p.stdout+p.stderr);p.check_returncode()
+                                                                                                                                 ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 509, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+                             self.stderr)
+subprocess.CalledProcessError: Command '['/opt/homebrew/opt/postgresql@18/bin/initdb', '-D', '/private/tmp/sdk-pg-cache-native-preflight-r11/data', '-A', 'trust', '-U', 'sdk_test', '--no-sync']' returned non-zero exit status 1.

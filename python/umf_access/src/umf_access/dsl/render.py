@@ -310,7 +310,7 @@ def _render_logical(
             if (node.op != "page" and not owner_bound) or step.args != (True,):
                 raise CaptureError("CAPTURE_UNSUPPORTED", "snapshot requires a page declaration")
         elif step.op == "include_keys":
-            field, bound = cast(tuple[FieldRef, int], step.args)
+            field, bound = cast(tuple[FieldRef, int], step.args[:2])
             includes.append(
                 f"RELATED_KEYS({_column(field)}, {bound}) AS {_quote(field.field + '_keys')}"
             )

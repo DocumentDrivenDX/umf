@@ -1,0 +1,7 @@
+# Managed runtime prerequisite controls
+
+The current shipped `managed_delta.UnityCatalogTarget` constructor retains a caller-owned connection and mutation catalog dispatch. Every action invoke/validate and bulk preview/execute **refuses before native owner admission** for the actual historical managed compiler artifacts. Those artifacts declare an interactive transaction and ledger/CDF receipt; CONTRACT-073 permits single-statement or compiler-owned `BEGIN ATOMIC` dispatch and exact native commit-result metadata. Relabeling the preserved sequential candidate does not enable execution.
+
+`current-closed-verification.json` records four actual compiler/generated ActionRef refusal controls against the current source. The earlier action/bulk transport control receipts and `verification.json` pin the preceding local candidate source; they are retained for recovery and do not qualify current execution or native atomicity. The runtime's receipt ABI and cleanup controls are also local controls, never native capability evidence.
+
+The original atomic dispatch/result ABI is an active compiler prerequisite. Native cloud compute/owner permission, independent constrained human/lifecycle fencing and exact native commit metadata gates remain held. The target creates no connection, closes no caller connection, retries no request, and offers no replay capability. Temporal qualification remains held.

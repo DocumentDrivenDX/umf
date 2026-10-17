@@ -1,0 +1,32 @@
+{
+  "qualification": "source-only native metadata syntax and drift preflight; not installed SDK campaign",
+  "temporal": "HELD",
+  "checks": [
+    "native complete shape fingerprint SQL and key/opclass metadata",
+    "native database OID and system/schema/actor relation observation",
+    "actual added-column DDL changes complete native fingerprint"
+  ],
+  "shapeSqlSha256": "b2ae8e1da669e446d2f6b8d9c59f14aa12c5cee8f208666db34ac0cc1c9a59ce",
+  "beforeSha256": "1a701965cbaf80892b1b8980d305b004d56e28e7abadb1411babb1af44cf2cbc",
+  "afterSha256": "207bbf8b42b49d84d4e738370af4ae28b6893e8d4d296c21c0ab073c334c1a17",
+  "context": [
+    "search-path",
+    "cache_owned",
+    [
+      "postgres",
+      "7697522903605209719",
+      "sdk_test",
+      "sdk_test",
+      5
+    ],
+    [
+      [
+        "rows",
+        "cache_owned",
+        16385
+      ]
+    ]
+  ],
+  "fixtureCleanupComplete": true,
+  "serverStopped": true
+}
