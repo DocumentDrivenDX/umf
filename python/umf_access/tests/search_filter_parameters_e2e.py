@@ -26,6 +26,7 @@ GENERATED = Path(os.environ['UMF_FILTER_GENERATED_ROOT']).resolve()
 OUT = Path(os.environ['UMF_FILTER_RECEIPTS']).resolve()
 OUT.mkdir(parents=True, exist_ok=False)
 sys.path.insert(0, str(GENERATED))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 PG = Path('/opt/homebrew/opt/postgresql@18/bin')
 checks = []
 started = False

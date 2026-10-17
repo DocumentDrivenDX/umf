@@ -13,6 +13,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[3]
 generated = Path(os.environ["UMF_SEARCH_GENERATED_ROOT"])
 sys.path.insert(0, str(generated))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 import psycopg
 from umf_access.postgres_read import (
     TimedOut,
