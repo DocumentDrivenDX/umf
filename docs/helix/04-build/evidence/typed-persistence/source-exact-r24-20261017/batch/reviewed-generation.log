@@ -1,0 +1,11 @@
+23 | if(process.argv.includes('--reads-only'))req.actions=[];
+24 | const pinned=profile();pinned.python.version='3.11.17';pinned.compilerVersion='local-reporting-0.1';pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);pinned.checkers=[{name:'mypy',version:'2.4.0',configuration:{check_untyped_defs:true,explicit_package_bases:true,follow_imports:'silent',python_version:'3.11'}},{name:'pyright',version:'1.1.414',configuration:{typeCheckingMode:'basic',pythonVersion:'3.11',environment:'explicit-reporting-test-environment'}},{name:'ty',version:'0.0.88',configuration:{pythonVersion:'3.11'}}];pinned.subset='Local reporting fixture; see installed-wheel and native evidence; no release claim';
+25 | const codeInputs:{path:string;sha256:string}[]=[];
+26 | for(const pattern of ['src/**/*.ts','spec/**/*.json'])for(const path of new Bun.Glob(pattern).scanSync({cwd:process.cwd(),onlyFiles:true}))codeInputs.push({path,sha256:new Bun.CryptoHasher('sha256').update(await Bun.file(path).arrayBuffer()).digest('hex')});
+27 | codeInputs.sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0);pinned.codeSha256=new Bun.CryptoHasher('sha256').update(JSON.stringify(codeInputs)).digest('hex');
+28 | const out=generateAccessPackage(req,pinned);if(out.outcome!=='candidate')throw new Error(JSON.stringify(out.diagnostics));
+                                                                                        ^
+error: [{"code":"ACCESS","accessCode":"ACCESS_COVERAGE","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/columns/0/columns","message":"Authored access declaration violates ACCESS_COVERAGE"},{"code":"ACCESS","accessCode":"ACCESS_REFERENCE","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/columns/1","message":"Authored access declaration violates ACCESS_REFERENCE"},{"code":"ACCESS","accessCode":"ACCESS_COVERAGE","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/columns/1/columns","message":"Authored access declaration violates ACCESS_COVERAGE"}]
+      at /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/generate-access-reporting-fixture.ts:28:84
+
+Bun v1.4.2 (macOS arm64)
