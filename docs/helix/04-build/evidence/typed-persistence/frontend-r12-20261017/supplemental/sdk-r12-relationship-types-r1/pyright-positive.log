@@ -1,0 +1,734 @@
+{
+    "version": "1.1.414",
+    "time": "1792221634199",
+    "generalDiagnostics": [
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/__init__.py",
+            "severity": "error",
+            "message": "Import \"MISSING\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 2,
+                    "character": 21
+                },
+                "end": {
+                    "line": 2,
+                    "character": 28
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/__init__.py",
+            "severity": "error",
+            "message": "Import \"UMF_GENERATED_SOURCE\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 20
+                },
+                "end": {
+                    "line": 4,
+                    "character": 40
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/__init__.py",
+            "severity": "error",
+            "message": "Import \"_fields\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 24
+                },
+                "end": {
+                    "line": 6,
+                    "character": 31
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"date\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 2,
+                    "character": 21
+                },
+                "end": {
+                    "line": 2,
+                    "character": 25
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"datetime\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 2,
+                    "character": 27
+                },
+                "end": {
+                    "line": 2,
+                    "character": 35
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"overload\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 30
+                },
+                "end": {
+                    "line": 4,
+                    "character": 38
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"cast\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 77
+                },
+                "end": {
+                    "line": 4,
+                    "character": 81
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"Never\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 83
+                },
+                "end": {
+                    "line": 4,
+                    "character": 88
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"Join\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 7,
+                    "character": 27
+                },
+                "end": {
+                    "line": 7,
+                    "character": 31
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"JoinProjection\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 7,
+                    "character": 101
+                },
+                "end": {
+                    "line": 7,
+                    "character": 115
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"Related\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 7,
+                    "character": 163
+                },
+                "end": {
+                    "line": 7,
+                    "character": 170
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"Selection\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 7,
+                    "character": 179
+                },
+                "end": {
+                    "line": 7,
+                    "character": 188
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"KeywordIndex\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 11,
+                    "character": 34
+                },
+                "end": {
+                    "line": 11,
+                    "character": 46
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"VectorIndex\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 11,
+                    "character": 48
+                },
+                "end": {
+                    "line": 11,
+                    "character": 59
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"RankedQuery\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 11,
+                    "character": 61
+                },
+                "end": {
+                    "line": 11,
+                    "character": 72
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"SearchLeg\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 11,
+                    "character": 74
+                },
+                "end": {
+                    "line": 11,
+                    "character": 83
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/fields.py",
+            "severity": "error",
+            "message": "Import \"Vector\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 12,
+                    "character": 29
+                },
+                "end": {
+                    "line": 12,
+                    "character": 35
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"TypeVar\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 49
+                },
+                "end": {
+                    "line": 3,
+                    "character": 56
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"date\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 21
+                },
+                "end": {
+                    "line": 4,
+                    "character": 25
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"datetime\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 27
+                },
+                "end": {
+                    "line": 4,
+                    "character": 35
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"validate_field__modules_0_extensions_umf_access_views_0_fields_5\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 15,
+                    "character": 20
+                },
+                "end": {
+                    "line": 15,
+                    "character": 84
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"validate_field__modules_0_extensions_umf_access_views_0_fields_6\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 16,
+                    "character": 20
+                },
+                "end": {
+                    "line": 16,
+                    "character": 84
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"validate_field__modules_0_extensions_umf_access_views_0_fields_7\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 17,
+                    "character": 20
+                },
+                "end": {
+                    "line": 17,
+                    "character": 84
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"validate_field__modules_0_extensions_umf_access_views_0_fields_8\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 18,
+                    "character": 20
+                },
+                "end": {
+                    "line": 18,
+                    "character": 84
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"validate_field__modules_0_extensions_umf_access_views_0_fields_9\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 19,
+                    "character": 20
+                },
+                "end": {
+                    "line": 19,
+                    "character": 84
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"validate_field__modules_0_extensions_umf_access_views_0_fields_10\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 20,
+                    "character": 20
+                },
+                "end": {
+                    "line": 20,
+                    "character": 85
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/keys.py",
+            "severity": "error",
+            "message": "Import \"Vector\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 21,
+                    "character": 42
+                },
+                "end": {
+                    "line": 21,
+                    "character": 48
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"date\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 2,
+                    "character": 21
+                },
+                "end": {
+                    "line": 2,
+                    "character": 25
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"datetime\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 2,
+                    "character": 27
+                },
+                "end": {
+                    "line": 2,
+                    "character": 35
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"TypeAdapter\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 5,
+                    "character": 47
+                },
+                "end": {
+                    "line": 5,
+                    "character": 58
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"FieldRef\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 27
+                },
+                "end": {
+                    "line": 6,
+                    "character": 35
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"Vector\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 7,
+                    "character": 42
+                },
+                "end": {
+                    "line": 7,
+                    "character": 48
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_integer\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 30
+                },
+                "end": {
+                    "line": 8,
+                    "character": 46
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_decimal\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 48
+                },
+                "end": {
+                    "line": 8,
+                    "character": 64
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_string\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 66
+                },
+                "end": {
+                    "line": 8,
+                    "character": 81
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_date\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 83
+                },
+                "end": {
+                    "line": 8,
+                    "character": 96
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_instant\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 98
+                },
+                "end": {
+                    "line": 8,
+                    "character": 114
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_local\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 116
+                },
+                "end": {
+                    "line": 8,
+                    "character": 130
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_boolean\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 132
+                },
+                "end": {
+                    "line": 8,
+                    "character": 148
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_binary\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 150
+                },
+                "end": {
+                    "line": 8,
+                    "character": 165
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_length\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 167
+                },
+                "end": {
+                    "line": 8,
+                    "character": 182
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_range\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 184
+                },
+                "end": {
+                    "line": 8,
+                    "character": 198
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_allowed\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 200
+                },
+                "end": {
+                    "line": 8,
+                    "character": 216
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_vector\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 218
+                },
+                "end": {
+                    "line": 8,
+                    "character": 233
+                }
+            },
+            "rule": "reportUnusedImport"
+        },
+        {
+            "file": "/private/tmp/sdk-r12-relationship-preflight-r3/relationship_shop/models.py",
+            "severity": "error",
+            "message": "Import \"validate_float32\" is not accessed",
+            "range": {
+                "start": {
+                    "line": 8,
+                    "character": 235
+                },
+                "end": {
+                    "line": 8,
+                    "character": 251
+                }
+            },
+            "rule": "reportUnusedImport"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 6,
+        "errorCount": 45,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.721
+    }
+}
+

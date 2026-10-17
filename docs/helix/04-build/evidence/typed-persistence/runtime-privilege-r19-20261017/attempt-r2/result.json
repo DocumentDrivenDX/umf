@@ -1,0 +1,50 @@
+{
+  "status": "FAILED",
+  "checks": [
+    {
+      "name": "init",
+      "exitCode": 0
+    },
+    {
+      "name": "start",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-build",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-check",
+      "exitCode": 0
+    },
+    {
+      "name": "stop",
+      "exitCode": 0
+    }
+  ],
+  "sourceStart": {
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/verify-access-pg-privileges.py": "9af6599efb6085c2ddca2e20d86f5c32ab7a83078feac3c650fe5a555afe76a3",
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py": "235261ae07bf60e00e8d9c38b0c358804175909e448385054ca6020c3d1662e9",
+    "/private/tmp/sdk-privilege-r19-weft-r16-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "8b073f7851c43442cc720dea701f5fad1f1d4b529b4effb0e6cb9e842e450ef6",
+    "/opt/homebrew/opt/postgresql@18/include/postgresql/server/access/sysattr.h": "4aa58d88410c12dae97dde485506b32d870e9ffe38862b5b379f1811cbf51c90"
+  },
+  "sourceEnd": {
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/verify-access-pg-privileges.py": "9af6599efb6085c2ddca2e20d86f5c32ab7a83078feac3c650fe5a555afe76a3",
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py": "235261ae07bf60e00e8d9c38b0c358804175909e448385054ca6020c3d1662e9",
+    "/private/tmp/sdk-privilege-r19-weft-r16-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "8b073f7851c43442cc720dea701f5fad1f1d4b529b4effb0e6cb9e842e450ef6",
+    "/opt/homebrew/opt/postgresql@18/include/postgresql/server/access/sysattr.h": "4aa58d88410c12dae97dde485506b32d870e9ffe38862b5b379f1811cbf51c90"
+  },
+  "serverStopped": true,
+  "fixtureCleanupComplete": true,
+  "cleanupError": null,
+  "payloadError": null,
+  "runtimeSnapshot": {
+    "wheelSha256": "b1acf1978672c1f1ba7af0593d33bbbbc8c34f65a715839eed8b58f4dff5556c"
+  },
+  "installedPayloadsUnchanged": true,
+  "sdkPayloadCount": 47,
+  "weftPayloadCount": 2,
+  "inventoryComplete": false,
+  "compilerOwnerComplete": false,
+  "temporal": "HELD"
+}

@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "init",
+      "exitCode": 0
+    },
+    {
+      "name": "start",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-build",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-check",
+      "exitCode": 0
+    },
+    {
+      "name": "actual-runtime-and-original-business-native-analyzed-identities",
+      "probes": 20,
+      "metadataRelations": 14
+    },
+    {
+      "name": "independent-principal-cold-warm-verify-read-page-stream-with-only-inventory-grants"
+    },
+    {
+      "name": "individual-function-revoke-controls",
+      "necessary": 27,
+      "internalNotRequired": 136
+    },
+    {
+      "name": "individual-runtime-metadata-relation-revoke-and-recovery",
+      "relations": 14
+    },
+    {
+      "name": "original-LOCK-requires-table-SELECT-column-only-refusal-and-recovery"
+    },
+    {
+      "name": "async-verify-read-stream-cancel-and-session-reuse-under-same-grants"
+    },
+    {
+      "name": "owned-fixture-and-probe-cleanup"
+    },
+    {
+      "name": "stop",
+      "exitCode": 0
+    }
+  ],
+  "sourceStart": {
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/verify-access-pg-privileges.py": "421462f32dcb40f6a8d0c478cd3246a20d0a710102152d4591bdf2a0d2a3181a",
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py": "235261ae07bf60e00e8d9c38b0c358804175909e448385054ca6020c3d1662e9",
+    "/private/tmp/sdk-privilege-r19-weft-r16-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "8b073f7851c43442cc720dea701f5fad1f1d4b529b4effb0e6cb9e842e450ef6",
+    "/opt/homebrew/opt/postgresql@18/include/postgresql/server/access/sysattr.h": "4aa58d88410c12dae97dde485506b32d870e9ffe38862b5b379f1811cbf51c90"
+  },
+  "sourceEnd": {
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/verify-access-pg-privileges.py": "421462f32dcb40f6a8d0c478cd3246a20d0a710102152d4591bdf2a0d2a3181a",
+    "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py": "235261ae07bf60e00e8d9c38b0c358804175909e448385054ca6020c3d1662e9",
+    "/private/tmp/sdk-privilege-r19-weft-r16-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "8b073f7851c43442cc720dea701f5fad1f1d4b529b4effb0e6cb9e842e450ef6",
+    "/opt/homebrew/opt/postgresql@18/include/postgresql/server/access/sysattr.h": "4aa58d88410c12dae97dde485506b32d870e9ffe38862b5b379f1811cbf51c90"
+  },
+  "serverStopped": true,
+  "fixtureCleanupComplete": true,
+  "cleanupError": null,
+  "payloadError": null,
+  "runtimeSnapshot": {
+    "wheelSha256": "b1acf1978672c1f1ba7af0593d33bbbbc8c34f65a715839eed8b58f4dff5556c"
+  },
+  "installedPayloadsUnchanged": true,
+  "sdkPayloadCount": 47,
+  "weftPayloadCount": 2,
+  "inventoryComplete": false,
+  "compilerOwnerComplete": false,
+  "temporal": "HELD"
+}

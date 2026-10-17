@@ -12813,3 +12813,222 @@ retains its experimental0.1.0.dev0 version and scoped qualification. Open PR27
 reference and PR29 guide signatures will be consolidated before final signing,
 remote CI, main deployment and release. None of those publication steps is
 claimed complete by the local source evidence.
+
+
+### Typed SDK exact non-temporal runtime cohorts — 2026-10-17
+
+Temporal qualification remains **HELD**. CONTRACT-067 through CONTRACT-075 and
+[the existing typed SDK build handoff](typed-persistence-design.md) govern this
+continuation. The owner approved the initial exact-only generator profile and
+explicit hypothetical-row qualification without changing core nullability.
+These decisions do not admit approximate or temporal behavior implicitly.
+
+The immutable R12 SDK production freeze is `3a8ba171`; its exact installed
+[frontend packet](evidence/typed-persistence/frontend-r12-20261017/README.md)
+records all three pinned checkers and269 unit tests. Real PostgreSQL18.6
+[full projection checks](evidence/typed-persistence/postgres-full-projection-r12-20261017/README.md)
+pass16 controls, including exact Binary/Vector/Decimal/integer values, metadata
+cache invalidation, grants, inheritance, unbound columns, pagination and async
+session reuse. Real Spark4.0.1/Delta4.0.0
+[numeric predicates](evidence/typed-persistence/spark-exact-numeric-r12-20261017/README.md)
+pass57 checks with48 independent exact comparisons. Each packet retains its own
+source/wheel hashes, native versions, failed attempts and cleanup; evidence is
+not transferred to later source cuts.
+
+The immutable R13 SDK production freeze is `a623b1fb`, paired with Weft source
+`6640db8f`. The [installed frontend packet](evidence/typed-persistence/frontend-r13-20261017/README.md)
+records45 exact SDK payloads, all three pinned checkers,66 negative files/74
+sites,152 graph-state cases,277 units with no skips and actual public catalog
+build/check. [Real Spark bounded lists](evidence/typed-persistence/spark-bound-lists-r13-20261017/README.md)
+pass53 checks/40 independent S8 comparisons across String/Boolean/Integer/Decimal,
+including mixed scalar/list parameters, original pages and snapshot streams.
+[Real PostgreSQL joined hydration](evidence/typed-persistence/postgres-joined-r13-20261017/README.md)
+passes14 checks across24 declarations, including generated tuple/model/alias
+results and original composite-versus-selected Key correspondence.
+[Actual SDK finite-degree admission](evidence/typed-persistence/postgres-finite-degree-r13-20261017/README.md)
+passes13 controls: seven admitted executions observe native repeatable-read and
+read-only transactions; zero/excess degree, forced RLS, nondeterministic
+collation and custom operator classes refuse before business dispatch and recover
+after restoration. Owned native sessions stop and installed bytes remain unchanged.
+
+The current source additionally fixes the full hosted Python lint gate and adds
+an original-owner-confirmed Truss related-Key metadata profile with source
+controls. Those changes require a fresh final wheel; they do not relabel R13
+receipts. Engine RelatedKeys paging's observed original Core compiler refusal is
+retained; the R14 original compiler source now passes read/page/export controls,
+while fresh native engine replay remains an owner prerequisite.
+Truss release-blocking hosted capacity/full-small failures, original protected
+action/manifest adoption, Ashlar primitive Field binding, broader engine/query
+forms and exact native managed commit-result custody remain open where their
+original evidence does not close them. Native statement-linked history metadata
+is observational evidence, not a substitute for the required commit result.
+
+Recovery branch commits and packets are preserved independently of public main.
+Final current-source/browser/refactor/inventory gates, independent privilege
+qualification, compatible compiler publication, configured signing, remote CI,
+main merge/deployment and live-main parity require their own terminal evidence.
+The seven stale site attestations have not been bypassed; the configured
+1Password account currently reports that it is not signed in.
+
+The fresh [installed R14 frontend](evidence/typed-persistence/frontend-r14-20261017/README.md)
+freezes SDK source `dc66acfb` with46 exact installed payloads and original
+compiler source `a3090204` with two exact installed payloads. All three pinned
+checkers pass the positive corpus and66 negative files;291 installed unit tests
+pass without skips.
+
+Fresh [public schema-to-instance E2Es](evidence/typed-persistence/schema-instance-r14-20261017/README.md)
+pass three fixture families against this exact installed SDK wheel. Actual
+[PostgreSQL R14 native replays](evidence/typed-persistence/postgres-native-r14-20261017/README.md)
+pass16 full-projection and14 joined controls, with generated public catalogs,
+unchanged installed runtime bytes, fixture cleanup and stopped owned servers.
+
+Original engine navigation requests and page bounds retain
+source/target/compiler custody, with source controls retained
+[separately](evidence/typed-persistence/navigation-source-r14-20261017/README.md).
+The [whole-source typing triage](evidence/typed-persistence/source-type-triage-r14-20261017/README.md)
+records85 diagnostics across45 source files; earlier nine-error receipts were
+single-file correlated-state audits, not whole-library qualification. Narrow
+public alias, command, numeric bucket and optional-filter probes pass all three
+checkers and their misuse cases refuse. This does not erase implementation
+typing debt or promote untested backend behavior.
+
+Truss hosted diagnostic `39017085354` remains a failed diagnostic: Linux fails
+capacity and macOS passes capacity but times out during1,000-edge loading.
+Completed stock-counter observations are perturbed measurements, not clean
+performance acceptance. Original budgets and native validation remain intact.
+Temporal qualification remains **HELD**; release/main/deployment acceptance
+requires all remaining original gates rather than this scoped frontend result.
+
+### Coherent R16 native replay and release continuation — 2026-10-17
+
+The immutable SDK source `b51c8773` and original compiler source `3f64056`
+have a coherent [installed R16 packet](evidence/typed-persistence/frontend-r16-20261017/README.md):
+47 SDK payloads plus two compiler payloads match their exact wheels;293 installed
+unit tests pass without skips and all three pinned checkers pass positive clients
+and66 negative files. The [public schema/instance replay](evidence/typed-persistence/schema-instance-r16-20261017/README.md)
+passes three independently generated fixture families against these installed
+bytes. Later working-tree navigation changes do not inherit these results.
+
+[Real PostgreSQL search](evidence/typed-persistence/postgres-search-r16-20261017/README.md)
+passes15 complete-profile and16 explicitly partial-profile controls. Native
+keyword/vector comparisons, generated projections, transactional freshness,
+async execution and index drift are covered. The original exact materialized
+candidate path does not claim ANN execution or an asynchronous external index.
+[Real PostgreSQL actions and bulk](evidence/typed-persistence/postgres-actions-bulk-r16-20261017/README.md)
+pass27 controls covering commit/no-op receipts, rollback, rule order,
+serialization conflicts, native authorization, reconciliation, cancellation,
+preview and atomic reselect. Owned clusters stop and all49 installed payloads
+remain unchanged. These base-table receipts do not qualify Truss or managed
+Delta mutations.
+
+The separate [Spark HLL R15 packet](evidence/typed-persistence/spark-hll-r15-20261017/README.md)
+passes26 controls with seven independent native comparisons. Admission preserves
+the exact original Spark4.0.1 HyperLogLog++ descriptor, including relative standard
+deviation0.05 and `hardBound:false`; no deterministic error bound is asserted.
+This explicit approximate query intent does not change the exact-only initial
+generator profile. Temporal qualification remains **HELD**.
+
+Remaining execution is the current many-navigation successor's generator,
+pinned checker, real-browser and native target-set proof; original Truss
+RelatedKeys/protected action/bulk adoption; current-source native privilege
+closure; and original managed authority/commit-result gates. Truss main
+`4ddad044` has local correctness/capacity and original full-small evidence;
+the earlier clean hosted failures remain unresolved by that local result.
+New disabled compiler candidates do not establish runtime or native support.
+
+Completed changes and evidence are committed and pushed on the recovery branch.
+Final consolidation must also retain the reference release change, pass remote
+CI, produce valid configured attestations, merge normally, and verify deployed
+bytes against the accepted main revision. The signing account still reports
+not signed in after reopening the installed 1Password app. No attestation gate
+has been bypassed and no final deployment or full SDK acceptance is claimed.
+
+### R19 real Truss correction and remaining adoption — 2026-10-17
+
+The [R19 installed frontend](evidence/typed-persistence/frontend-r19-20261017/README.md)
+passes304 tests without skips and all three pinned checkers pass positive clients
+and74 negative files. Its [public schema/instance E2Es](evidence/typed-persistence/schema-instance-r19-20261017/README.md)
+pass three families, and [isolated real regeneration](evidence/typed-persistence/refactor-installed-r19-20261017/README.md)
+passes three tests without overwriting historical receipts. Each packet names
+its exact frozen source, wheel and original compiler pair.
+
+The [genuine Truss SDK workflow](evidence/typed-persistence/truss-related-r19-20261017/README.md)
+exposed a projected stream shape defect: reads and pages returned `WithKeys`,
+but streams leaked the transport row. The correction preserves the original
+relationship Keys, duplicates, truncation, empty relationships and stream cleanup.
+The full original public generator/compiler/catalog workflow now passes native
+read, page and stream calls against SDK R19 and Weft R16. This is scoped read
+adoption; protected action admission and native manifest control remain unfinished.
+
+`bulk.py` now exposes sync/async generic `ManifestBulkPlan` delegation with
+original host attempt, sealed artifact, recovery and complete result types.
+It has no `execute` or authority constructor. Three custody/unknown/cancellation
+controls, Ruff and all three pinned checkers pass the source module. Native
+Truss providers and their E2Es are still required. The existing
+`ReplayingActionExecutor` is the contracted action interface; protected admission
+is the Truss implementation obligation, not a separately named SDK protocol.
+
+Current bulk-list and original search/action/bulk privilege work has separate
+successor cohorts. A real14-packet compiler replay caught an explicit
+`vectorBinding:null` keyword-search refusal before native qualification; that
+failed immutable precursor is preserved and requires a corrected compiler build.
+No failed precursor or host-only completeness flag grants native qualification.
+
+Latest pushed SDK command/Python/boundary CI passes; the microsite build still
+refuses seven stale reference attestations. Truss's clean hosted Linux capacity
+and full-small run passes124.163s, while macOS CREATE times out in the original
+row validation path. A measured conversion experiment was rejected as too small
+a benefit; no timeout, validation or authority gate is weakened. Temporal
+qualification remains **HELD** throughout continued implementation and release.
+
+### Source-exact initial schema correction — 2026-10-17
+
+Fresh empty-table testing reproduced seven incompatible initial shapes accepted
+by the earlier scalar admission path. The original compiler now emits the
+explicit source-exact initial profile from complete authored ColumnSets,
+RowViews and physical binding documents, including qualified native collation
+identity. The SDK requires and executes these original pre/post programs;
+a first-observed catalog fingerprint does not establish source agreement.
+Legacy serialized catalogs refuse before business SQL.
+
+The [R23 native packet](evidence/typed-persistence/source-exact-r23-20261017/README.md)
+passes eleven fresh-table initial-verification cases, ten qualified action/bulk
+controls and eleven unqualified controls with a real pg_catalog-first path.
+Incompatible first schemas execute no original data SQL. A deliberate fixture
+post-write schema fault rolls back both data and DDL. The packet explicitly
+retains the constructor-only failed precursor and the qualified generated-tree
+capture limitation; isolated successor captures and bulk post-effect testing
+remain separate. Every owned server stops and all49 installed payloads remain
+unchanged. These observations do not qualify managed or Truss mutations.
+
+The [installed R23 frontend](evidence/typed-persistence/frontend-r23-20261017/README.md)
+passes317 unit tests without skips plus all three pinned checkers and74 negative
+clients. Test fixtures now retain complete original authored native sources;
+the old mock compiler is refused rather than given invented qualification
+metadata. Runtime and test source freezes are recorded separately. Two later
+search decoder tests belong to a successor runtime and are excluded from this
+predecessor cohort. Actual search replay also identified vector version
+inconsistency and incomplete full-record projection support; their correction
+and native qualification continue independently.
+
+The completed generic manifest bulk interface merged normally in public PR34,
+main `b40e9a130cd6e6617d762da809efe673bc864246`. This supplies the SDK interface;
+it does not supply the remaining native Truss providers or close Truss's original
+macOS capacity/performance failure. Current native privilege, managed authority
+and commit-result, configured signing, final integration and live-byte deployment
+checks remain open. Temporal qualification remains **HELD**.
+
+
+### B-TP-003 bounded stage-one closure — 2026-10-17
+
+[B-TP-003 verification](evidence/typed-persistence/b-tp-003/verification.json)
+closes the implementation/test row for the exact archived STP-080 AC1–6
+conformance cut:864 Bun tests,14 real Chromium cases with complete repeated
+package parity and independent digest perturbations, exact source custody and
+installed/static replay. The synthetic `test.access` profile remains explicitly
+`test fixture, not qualified`; production profile registration/release is not
+inferred. Owner-approved exact-only modes and the explicit hypothetical allow
+row remain part of this scoped result. Broader SDK, protected Truss action and
+manifest adoption, selected privilege closure, native configuration concurrency,
+managed prerequisites, exact Delta attribution and release/deployment remain
+OPEN. Temporal qualification stays **HELD**.

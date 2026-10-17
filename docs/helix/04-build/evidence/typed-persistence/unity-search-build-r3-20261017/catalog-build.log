@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/src/umf_access/build/catalog.py", line 1120, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/src/umf_access/build/catalog.py", line 1110, in main
+    outputs = compile_catalog(config, root, weft)
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/src/umf_access/build/catalog.py", line 279, in compile_catalog
+    module = importlib.import_module(name)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1406, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 763, in exec_module
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/private/tmp/sdk-unity-public-cli-r3/search_declarations.py", line 1, in <module>
+    from umf_access.dsl import query, Param, Vector, hybrid, target_defined
+ImportError: cannot import name 'Vector' from 'umf_access.dsl' (/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/src/umf_access/dsl/__init__.py)

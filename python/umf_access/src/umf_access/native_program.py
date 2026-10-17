@@ -6,10 +6,15 @@ import hashlib
 import json
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, NoReturn
 
 from .protocols import ActionRefused
-from .reviewed import parameter_style
+from .reviewed import (
+    ReadBuildError,
+    _require_source_exact,
+    catalog_fence,
+    parameter_style,
+)
 from .types import RUNTIME_IDENTITY, ActionRef
 
 
@@ -51,6 +56,300 @@ def canonical_json(value: Any) -> str:
     )
 
 
+def _bulk_list_custody(
+    program: Mapping[str, Any], request: Mapping[str, Any] | None = None
+) -> None:
+    """Require original list facets on every bound original bulk-input slot."""
+    if program.get("version") not in ("weft.native-bulk/0.1", "weft.native-bulk/0.2"):
+        return
+    parameters = program.get("parameters", [])
+    candidates = [parameter for parameter in parameters if type(parameter) is dict and parameter.get("container") == "list"]
+    requested = request.get("parameters", []) if request is not None else parameters
+    selection = request.get("selection", {}).get("parameters", []) if request is not None else []
+    if not candidates and not any(
+        type(parameter) is dict and parameter.get("container") == "list"
+        for parameter in [*requested, *selection]
+    ):
+        return  # Preserve the established scalar program path byte-for-byte.
+
+    def refuse() -> None:
+        raise ActionRefused("NATIVE_BULK_LIST_SLOT_METADATA_REQUIRED")
+
+    if request is not None and canonical_json(parameters) != canonical_json(requested):
+        refuse()
+    declared = {}
+    expected = {}
+    for parameter in candidates:
+        name = parameter.get("name")
+        if (
+            set(parameter) != {"name", "carrier", "nullable", "container", "elementNullable", "maxItems"}
+            or type(name) is not str or not name or name in declared
+            or parameter["carrier"] not in ("string", "integer", "decimal", "boolean")
+            or parameter["nullable"] is not False
+            or type(parameter["elementNullable"]) is not bool
+            or type(parameter["maxItems"]) is not int
+            or not 1 <= parameter["maxItems"] <= 1000
+        ):
+            refuse()
+        declared[name] = parameter
+        expected[name] = {"source": {"bulkInput": name}, **{key: value for key, value in parameter.items() if key != "name"}}
+    for parameter in selection:
+        if type(parameter) is dict:
+            name = parameter.get("name")
+            if (parameter.get("container") == "list" or type(name) is str and name in declared) and (type(name) is not str or canonical_json(parameter) != canonical_json(declared.get(name))):
+                refuse()
+
+    def visit(value: Any) -> None:
+        if type(value) is dict:
+            if set(value) == {"sql", "parameters"}:
+                if type(value["parameters"]) is not list:
+                    refuse()
+                for slot in value["parameters"]:
+                    source = slot.get("source") if type(slot) is dict else None
+                    name = source.get("bulkInput") if type(source) is dict else None
+                    if type(name) is str and name in declared and canonical_json(slot) != canonical_json(expected[name]):
+                        refuse()
+            else:
+                for child in value.values():
+                    visit(child)
+        elif type(value) is list:
+            for child in value:
+                visit(child)
+
+    # A declared parameter may be unused or folded away by its original owner.
+    # Validate actual slots only; do not derive parameter use from native SQL.
+    visit(program)
+
+
+def _search_parameter_custody(
+    program: Mapping[str, Any], request: Mapping[str, Any] | None = None
+) -> None:
+    """Preserve original selection facets on executed native input slots."""
+    if program.get("version") not in ("weft.search/0.1", "weft.search/0.2"):
+        return
+    def refuse() -> None:
+        raise ActionRefused("NATIVE_SEARCH_PARAMETER_FACETS_REQUIRED")
+    def declarations(original: Any) -> list[Any]:
+        if not isinstance(original, dict) or not isinstance(original.get("selection"), dict):
+            refuse()
+        parameters = original["selection"].get("parameters", [])
+        if not isinstance(parameters, list):
+            refuse()
+        names = set()
+        for parameter in parameters:
+            if not isinstance(parameter, dict):
+                refuse()
+            name = parameter.get("name")
+            is_list = parameter.get("container") == "list"
+            fields = {"name", "carrier", "nullable"} | ({"container", "elementNullable", "maxItems"} if is_list else set())
+            if (set(parameter) != fields or type(name) is not str or not name or name in names
+                or parameter.get("carrier") not in ("string", "integer", "decimal", "boolean")
+                or type(parameter.get("nullable")) is not bool
+                or is_list and (parameter["nullable"] is not False or type(parameter["elementNullable"]) is not bool or type(parameter["maxItems"]) is not int or not 1 <= parameter["maxItems"] <= 1000)):
+                refuse()
+            names.add(name)
+        return parameters
+    declared = declarations(program.get("request"))
+    requested = declarations(request) if request is not None else declared
+    nondefault = {p["name"] for p in [*declared, *requested] if p.get("container") == "list" or p["nullable"] is True}
+    if not nondefault:
+        return  # Valid established non-null scalar packets retain identical bytes.
+    if canonical_json(declared) != canonical_json(requested):
+        refuse()
+    expected = {}
+    for parameter in declared:
+        slot = {"source": {"input": parameter["name"]}, **{key:value for key,value in parameter.items() if key != "name"}}
+        if parameter.get("container") != "list" and parameter["nullable"] is False:
+            slot.pop("nullable")  # Original scalar slot ABI omits the default false.
+        expected[parameter["name"]] = slot
+    preflights = program.get("preflights", [])
+    if not isinstance(preflights, list):
+        refuse()
+    seen = set()
+    # These are the original statements actually executed by the search port;
+    # selectionTemplate inventories alone do not establish an executable slot.
+    for statement in [program.get("statement"), *preflights]:
+        if not isinstance(statement, dict) or not isinstance(statement.get("parameters"), list):
+            refuse()
+        for slot in statement["parameters"]:
+            source = slot.get("source") if isinstance(slot, dict) else None
+            name = source.get("input") if isinstance(source, dict) else None
+            if isinstance(name, str) and name in expected:
+                if canonical_json(slot) != canonical_json(expected[name]):
+                    refuse()
+                seen.add(name)
+    if not nondefault <= seen:
+        refuse()
+
+
+def _mutation_index_custody(program: Mapping[str, Any]) -> None:
+    """Every original mutation-index guard is in the mandatory executed packet."""
+    if program.get("target") not in ("postgresql18", "lakebase18") or program.get("version") not in ("weft.native-action/0.1", "weft.native-action/0.2", "weft.native-bulk/0.1", "weft.native-bulk/0.2"):
+        return
+    def refuse() -> NoReturn:
+        raise ActionRefused("NATIVE_MUTATION_INDEX_EFFECTS_REQUIRED")
+    obligations = program.get("obligations", {})
+    marker = obligations.get("mutationIndexEffects") if isinstance(obligations, dict) else None
+    projection = obligations.get("nativeProjection") if isinstance(obligations, dict) else None
+    columns = projection.get("columns") if isinstance(projection, dict) else None
+    if (not isinstance(marker, dict) or set(marker) != {"version", "nativeCatalogBeforeAfter", "tables", "lockPosition", "lockSql"}
+        or marker.get("version") != "umf.pg-index-effects/0.1" or marker.get("nativeCatalogBeforeAfter") is not True
+        or not isinstance(marker.get("tables"), list) or not marker["tables"] or not isinstance(columns, list)
+        or program.get("version") not in ("weft.native-action/0.2", "weft.native-bulk/0.2")
+        or marker.get("lockPosition") != "before-first-snapshot"
+        or not isinstance(marker.get("lockSql"), list) or len(marker["lockSql"]) != len(marker["tables"])
+        or any(type(sql) is not str or not sql or "\x00" in sql for sql in marker["lockSql"])
+        or len(set(marker["lockSql"])) != len(marker["lockSql"])):
+        refuse()
+    action = program.get("actionTemplate") if program.get("version") in ("weft.native-bulk/0.1", "weft.native-bulk/0.2") else program
+    if not isinstance(action, dict):
+        refuse()
+    if action is not program:
+        action_obligations = action.get("obligations")
+        if not isinstance(action_obligations, dict) or canonical_json(action_obligations.get("mutationIndexEffects")) != canonical_json(marker):
+            refuse()
+    entities, fields = action.get("entities"), action.get("fields")
+    if not isinstance(entities, dict) or not isinstance(fields, dict):
+        refuse()
+    required = set()
+    for item in entities.values():
+        key = item.get("key") if isinstance(item, dict) else None
+        table = key.get("table") if isinstance(key, dict) else None
+        if not isinstance(table, list) or len(table) != 2 or any(type(part) is not str or not part for part in table):
+            refuse()
+        required.add(canonical_json(table))
+    for item in fields.values():
+        table = item.get("table") if isinstance(item, dict) else None
+        if not isinstance(table, list) or len(table) != 2 or any(type(part) is not str or not part for part in table):
+            refuse()
+        required.add(canonical_json(table))
+    action_obligations = action.get("obligations")
+    if not isinstance(action_obligations, dict):
+        refuse()
+    effect_packet = action_obligations.get("textSearchEffects")
+    if effect_packet is None:
+        effects = []
+    elif isinstance(effect_packet, dict) and effect_packet.get("version") == "umf.pg-ts-effects/0.1" and effect_packet.get("nativeCatalogBeforeAfter") is True and isinstance(effect_packet.get("indexes"), list):
+        effects = effect_packet["indexes"]
+    else:
+        refuse()
+    admitted: dict[str, set[str]] = {}
+    for effect in effects:
+        binding = effect.get("nativeBinding") if isinstance(effect, dict) else None
+        native = binding.get("native") if isinstance(binding, dict) else None
+        logical_table = effect.get("logicalTable") if isinstance(effect, dict) else None
+        if type(native) is not str or not native or not isinstance(logical_table, list) or len(logical_table) != 2 or any(type(part) is not str or not part for part in logical_table) or canonical_json(logical_table) not in required:
+            refuse()
+        admitted.setdefault(canonical_json(logical_table), set()).add(native)
+    executed = {canonical_json(column) for column in columns}
+    covered = set()
+    for table in marker["tables"]:
+        if not isinstance(table, dict) or set(table) != {"logicalTable", "nativeTable", "allowedIndexes", "originalKeys", "nativeAdmission"}:
+            refuse()
+        logical, native, allowed = table.get("logicalTable"), table.get("nativeTable"), table.get("allowedIndexes")
+        if (not isinstance(logical, list) or len(logical) != 2 or any(type(part) is not str or not part for part in logical)
+            or type(native) is not str or not native or not isinstance(allowed, list)
+            or any(type(name) is not str or not name for name in allowed) or len(allowed) != len(set(allowed))):
+            refuse()
+        original_keys = table.get("originalKeys")
+        if (not isinstance(original_keys, list) or not original_keys
+            or any(not isinstance(key, list) or not key or any(type(name) is not str or not name for name in key)
+                   or len(key) != len(set(key)) for key in original_keys)
+            or len(original_keys) != len({canonical_json(key) for key in original_keys})):
+            refuse()
+        logical_id = canonical_json(logical)
+        if set(allowed) != admitted.get(logical_id, set()):
+            refuse()
+        if logical_id in covered or canonical_json({"nativeAdmission": table["nativeAdmission"]}) not in executed:
+            refuse()
+        covered.add(logical_id)
+        _literal_admission_sources([table], "NATIVE_MUTATION_INDEX_EFFECTS_REQUIRED")
+    if covered != required:
+        refuse()
+
+
+def mutation_locks(program: Mapping[str, Any]) -> tuple[str, ...]:
+    """Return only the validated original early mutation-lock statements."""
+    if program.get("target") not in ("postgresql18", "lakebase18") or program.get("version") not in ("weft.native-action/0.1", "weft.native-action/0.2", "weft.native-bulk/0.1", "weft.native-bulk/0.2"):
+        return ()
+    _mutation_index_custody(program)
+    return tuple(program["obligations"]["mutationIndexEffects"]["lockSql"])
+
+
+def _literal_admission_sources(descriptors: list[Any], code: str) -> None:
+    for descriptor in descriptors:
+        admission = descriptor.get("nativeAdmission") if isinstance(descriptor, dict) else None
+        if not isinstance(admission, dict) or not isinstance(admission.get("parameters"), list):
+            raise ActionRefused(code)
+        for parameter in admission["parameters"]:
+            source = parameter.get("source") if isinstance(parameter, dict) else None
+            if not isinstance(source, dict) or set(source) != {"literal"}:
+                raise ActionRefused(code)
+
+
+def _configuration_custody(program: Mapping[str, Any]) -> None:
+    if program.get("target") not in ("postgresql18", "lakebase18"):
+        return
+    version = program.get("version")
+    if version not in ("weft.native-bulk/0.1", "weft.native-bulk/0.2", "weft.search/0.1", "weft.search/0.2"):
+        return
+    obligations = program.get("obligations", {})
+    template = program.get("readTemplate" if version in ("weft.native-bulk/0.1", "weft.native-bulk/0.2") else "selectionTemplate", {})
+    original_obligations = template.get("obligations", {}) if isinstance(template, dict) else {}
+    if not isinstance(obligations, dict) or not isinstance(original_obligations, dict):
+        raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+    expected = original_obligations.get("termFilter")
+    actual = obligations.get("termFilter")
+    if expected is not None or actual is not None:
+        if not isinstance(expected, dict) or not isinstance(actual, dict):
+            raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+        for packet in (expected, actual):
+            if (
+                not isinstance(packet, dict)
+                or packet.get("version") != "umf.raw-term-filter/0.1"
+                or packet.get("nativeCatalogBeforeAfter") is not True
+                or not isinstance(packet.get("indexes"), list)
+                or not 1 <= len(packet["indexes"]) <= 2000
+            ):
+                raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+        if version in ("weft.search/0.1", "weft.search/0.2"):
+            same = canonical_json(actual) == canonical_json(expected)
+        else:
+            def semantics(packet: Any) -> Any:
+                if any(not isinstance(entry, dict) for entry in packet["indexes"]):
+                    raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+                return {**packet, "indexes": [{key: value for key, value in entry.items() if key != "nativeAdmission"} for entry in packet["indexes"]]}
+            same = canonical_json(semantics(actual)) == canonical_json(semantics(expected))
+            _literal_admission_sources(actual["indexes"], "NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+        if not same:
+            raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+    index = program.get("index")
+    if version not in ("weft.search/0.1", "weft.search/0.2") or not isinstance(index, dict) or index.get("kind") != "keyword":
+        return
+    keyword_packet = obligations.get("keywordConfiguration")
+    if (
+        not isinstance(keyword_packet, dict)
+        or keyword_packet.get("version") != "umf.keyword-configuration/0.1"
+        or keyword_packet.get("nativeCatalogBeforeAfter") is not True
+        or not isinstance(keyword_packet.get("configurations"), list)
+        or len(keyword_packet["configurations"]) != 1
+    ):
+        raise ActionRefused("NATIVE_KEYWORD_CONFIGURATION_REQUIRED")
+    entry = keyword_packet["configurations"][0]
+    keyword = index.get("keyword", {})
+    analyzer = keyword.get("analyzer", {}) if isinstance(keyword, dict) else {}
+    language = analyzer.get("language") if isinstance(analyzer, dict) else None
+    if (
+        language not in ("english", "simple")
+        or not isinstance(entry, dict)
+        or canonical_json(entry.get("source")) != canonical_json(program.get("source"))
+        or canonical_json(entry.get("index")) != canonical_json(index)
+        or entry.get("configuration") != "pg_catalog." + language
+    ):
+        raise ActionRefused("NATIVE_KEYWORD_CONFIGURATION_REQUIRED")
+    _literal_admission_sources(keyword_packet["configurations"], "NATIVE_KEYWORD_CONFIGURATION_REQUIRED")
+
+
 @dataclass(frozen=True)
 class NativeProgram:
     original_json: str
@@ -63,13 +362,36 @@ class NativeProgram:
         cls, compiler: Any, request: Mapping[str, Any], *, bundle_input_digest: str
     ) -> NativeProgram:
         """Explicit build-time compiler call; runtime never loads a compiler."""
+        request = dict(program_json(canonical_json(dict(request))))
         version = request.get("version")
-        if version == "weft.native-action/0.1":
+        if version == "weft.native-action/0.1" and request.get("target") in ("postgresql18", "lakebase18"):
+            request["verificationProfile"] = "source-exact/0.1"
+        elif (
+            version == "weft.native-bulk/0.1"
+            and isinstance(request.get("action"), dict)
+            and isinstance(request.get("selection"), dict)
+            and request["action"].get("target") in ("postgresql18", "lakebase18")
+        ):
+            request["action"]["verificationProfile"] = "source-exact/0.1"
+            request["selection"]["verificationProfile"] = "source-exact/0.1"
+        elif (
+            version == "weft.search/0.1"
+            and isinstance(request.get("selection"), dict)
+            and request["selection"].get("target") in ("postgresql18", "lakebase18")
+        ):
+            request["selection"]["verificationProfile"] = "source-exact/0.1"
+        if version == "weft.managed-action/0.1":
+            method = getattr(compiler, "compile_managed_action_json", None)
+        elif version == "weft.managed-bulk/0.1":
+            method = getattr(compiler, "compile_managed_bulk_json", None)
+        elif version == "weft.native-action/0.1":
             method = compiler.compile_native_action_json
         elif version == "weft.native-bulk/0.1":
             method = compiler.compile_native_bulk_json
         elif version == "weft.search/0.1":
             method = compiler.compile_search_json
+        elif version == "weft.unity-search/0.1":
+            method = compiler.compile_unity_search_json
         else:
             method = None
         if method is None:
@@ -78,6 +400,11 @@ class NativeProgram:
         program = program_json(original)
         if program.get("status") != "compiled":
             raise ProgramBuildError(original)
+        try:
+            _bulk_list_custody(program, request)
+            _search_parameter_custody(program, request)
+        except ActionRefused as error:
+            raise ValueError("WEFT_BLOCKED: " + error.code) from error
         statements: dict[str, Any] = {}
 
         def visit(value: Any, path: str) -> None:
@@ -88,7 +415,10 @@ class NativeProgram:
                         if program.get("profile")
                         in (
                             "umf.actions.native-delta/0.1",
+                            "umf.actions.managed-delta/0.1",
+                            "umf.actions.managed-delta-bulk/0.1",
                             "umf.actions.native-delta-bulk/0.1",
+                            "unity-catalog-current/0.1",
                         )
                         else parameter_style(value["sql"], len(value["parameters"]))
                     )
@@ -143,8 +473,19 @@ class NativeProgram:
         ):
             raise ActionRefused("NATIVE_PROGRAM_ABI")
         program = program_json(self.original_json)
-        if program.get("version") == "weft.native-action/0.1":
-            if program.get("profile") == "umf.actions.native-delta/0.1":
+        version = program.get("version")
+        if type(version) is not str:
+            raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+        if version == "weft.unity-search/0.1" and (
+            program.get("profile") != "unity-catalog-current/0.1"
+            or program.get("request", {}).get("managed", {}).get("indexType") != "DIRECT_ACCESS"
+        ):
+            raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+        if version in ("weft.native-action/0.1", "weft.native-action/0.2"):
+            if program.get("profile") == "umf.actions.managed-delta/0.1":
+                if program.get("target") != "databricks-managed-delta" or not isinstance(program.get("catalog"),str) or not program["catalog"]:
+                    raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+            elif program.get("profile") == "umf.actions.native-delta/0.1":
                 if program.get("target") != "spark-delta4":
                     raise ActionRefused("NATIVE_PROGRAM_PROFILE")
             elif program.get("profile") != "umf.actions.native-sql/0.1" or program.get(
@@ -152,8 +493,15 @@ class NativeProgram:
             ) not in ("postgresql18", "lakebase18"):
                 raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         if program.get("profile") == "umf.actions.native-delta-bulk/0.1" and (
-            program.get("version") != "weft.native-bulk/0.1"
+            version != "weft.native-bulk/0.1"
             or program.get("target") != "spark-delta4"
+        ):
+            raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+        if program.get("profile") == "umf.actions.managed-delta-bulk/0.1" and (
+            version != "weft.native-bulk/0.1"
+            or program.get("target") != "databricks-managed-delta"
+            or not isinstance(program.get("catalog"), str)
+            or not program["catalog"]
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         pin = program.pop("structuralDigest", {})
@@ -162,30 +510,49 @@ class NativeProgram:
             != {
                 "weft.native-action/0.1": (
                     "weft-databricks-native-action"
-                    if program.get("profile") == "umf.actions.native-delta/0.1"
-                    and program.get("target") == "spark-delta4"
+                    if (program.get("profile"),program.get("target")) in (("umf.actions.native-delta/0.1","spark-delta4"),("umf.actions.managed-delta/0.1","databricks-managed-delta"))
                     else "weft-postgresql-native-action"
                 ),
                 "weft.native-bulk/0.1": (
                     "weft-databricks-native-bulk"
-                    if program.get("profile") == "umf.actions.native-delta-bulk/0.1"
-                    and program.get("target") == "spark-delta4"
+                    if (program.get("profile"), program.get("target")) in (
+                        ("umf.actions.native-delta-bulk/0.1", "spark-delta4"),
+                        ("umf.actions.managed-delta-bulk/0.1", "databricks-managed-delta"),
+                    )
                     else "weft-postgresql-native-bulk"
                 ),
+                "weft.native-action/0.2": "weft-postgresql-native-action",
+                "weft.native-bulk/0.2": "weft-postgresql-native-bulk",
                 "weft.search/0.1": "weft-postgresql-search",
-            }.get(program.get("version"))
+                "weft.search/0.2": "weft-postgresql-search",
+                "weft.unity-search/0.1": "weft-databricks-search",
+            }.get(version)
             or pin.get("version") != "0.1"
             or hashlib.sha256(canonical_json(program).encode()).hexdigest()
             != pin.get("sha256")
         ):
             raise ActionRefused("NATIVE_PROGRAM_INTEGRITY")
         program["structuralDigest"] = pin
-        if program.get("status") != "compiled" or program.get("version") not in (
-            "weft.native-action/0.1",
-            "weft.native-bulk/0.1",
-            "weft.search/0.1",
+        if program.get("status") != "compiled" or version not in (
+            "weft.native-action/0.1", "weft.native-action/0.2",
+            "weft.native-bulk/0.1", "weft.native-bulk/0.2",
+            "weft.search/0.1", "weft.search/0.2",
+            "weft.unity-search/0.1",
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+        _bulk_list_custody(program)
+        _search_parameter_custody(program)
+        if version in ("weft.native-action/0.1", "weft.native-action/0.2", "weft.native-bulk/0.1", "weft.native-bulk/0.2", "weft.search/0.1", "weft.search/0.2"):
+            try:
+                _require_source_exact(program)
+            except ReadBuildError as error:
+                raise ActionRefused("NATIVE_SCHEMA_SOURCE_EXACT_REQUIRED") from error
+        _configuration_custody(program)
+        _mutation_index_custody(program)
+        try:
+            catalog_fence(program)
+        except ReadBuildError as error:
+            raise ActionRefused("NATIVE_TEXT_SEARCH_FENCE_REQUIRED") from error
         # Re-derive only parameter style, never SQL structure or semantics.
         expected: dict[str, Any] = {}
 
@@ -197,7 +564,10 @@ class NativeProgram:
                         if program.get("profile")
                         in (
                             "umf.actions.native-delta/0.1",
+                            "umf.actions.managed-delta/0.1",
+                            "umf.actions.managed-delta-bulk/0.1",
                             "umf.actions.native-delta-bulk/0.1",
+                            "unity-catalog-current/0.1",
                         )
                         else parameter_style(value["sql"], len(value["parameters"]))
                     )

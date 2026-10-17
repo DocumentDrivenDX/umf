@@ -1,0 +1,285 @@
+{
+  "status": "pass",
+  "nativeAuthority": false,
+  "temporal": "HELD",
+  "ddl": "CREATE VIEW native_fence.ts_catalog_lock AS SELECT cfg.oid AS config_oid,m.mapcfg,d.oid AS dict_oid,t.oid AS template_oid,p.oid AS parser_oid,n.oid AS namespace_oid,proc.oid AS procedure_oid FROM pg_catalog.pg_ts_config cfg LEFT JOIN pg_catalog.pg_ts_config_map m ON m.mapcfg=cfg.oid LEFT JOIN pg_catalog.pg_ts_dict d ON d.oid=m.mapdict LEFT JOIN pg_catalog.pg_ts_template t ON t.oid=d.dicttemplate LEFT JOIN pg_catalog.pg_ts_parser p ON p.oid=cfg.cfgparser LEFT JOIN pg_catalog.pg_namespace n ON n.oid=cfg.cfgnamespace LEFT JOIN pg_catalog.pg_proc proc ON proc.oid=p.prsstart",
+  "ddlSha256": "7918bb9aed9ec81e7c1d6bec5f1c58e09f67f04e0de294935fd6d23655fd112a",
+  "withoutOwnerMaintain": {
+    "sqlstate": "42501",
+    "message": "permission denied for table pg_ts_config"
+  },
+  "ownerRole": [
+    "fence_owner",
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "ownerCatalogMaintain": [
+    [
+      "pg_namespace",
+      true
+    ],
+    [
+      "pg_proc",
+      true
+    ],
+    [
+      "pg_ts_config",
+      true
+    ],
+    [
+      "pg_ts_config_map",
+      true
+    ],
+    [
+      "pg_ts_dict",
+      true
+    ],
+    [
+      "pg_ts_parser",
+      true
+    ],
+    [
+      "pg_ts_template",
+      true
+    ]
+  ],
+  "readerPrivileges": [
+    true,
+    false,
+    false,
+    false
+  ],
+  "view": [
+    16387,
+    "v",
+    null,
+    false,
+    false,
+    " SELECT cfg.oid AS config_oid,\n    m.mapcfg,\n    d.oid AS dict_oid,\n    t.oid AS template_oid,\n    p.oid AS parser_oid,\n    n.oid AS namespace_oid,\n    proc.oid AS procedure_oid\n   FROM ((((((pg_ts_config cfg\n     LEFT JOIN pg_ts_config_map m ON ((m.mapcfg = cfg.oid)))\n     LEFT JOIN pg_ts_dict d ON ((d.oid = m.mapdict)))\n     LEFT JOIN pg_ts_template t ON ((t.oid = d.dicttemplate)))\n     LEFT JOIN pg_ts_parser p ON ((p.oid = cfg.cfgparser)))\n     LEFT JOIN pg_namespace n ON ((n.oid = cfg.cfgnamespace)))\n     LEFT JOIN pg_proc proc ON ((proc.oid = (p.prsstart)::oid)));",
+    " SELECT cfg.oid AS config_oid,\n    m.mapcfg,\n    d.oid AS dict_oid,\n    t.oid AS template_oid,\n    p.oid AS parser_oid,\n    n.oid AS namespace_oid,\n    proc.oid AS procedure_oid\n   FROM pg_ts_config cfg\n     LEFT JOIN pg_ts_config_map m ON m.mapcfg = cfg.oid\n     LEFT JOIN pg_ts_dict d ON d.oid = m.mapdict\n     LEFT JOIN pg_ts_template t ON t.oid = d.dicttemplate\n     LEFT JOIN pg_ts_parser p ON p.oid = cfg.cfgparser\n     LEFT JOIN pg_namespace n ON n.oid = cfg.cfgnamespace\n     LEFT JOIN pg_proc proc ON proc.oid = p.prsstart::oid;",
+    "fence_owner"
+  ],
+  "columns": [
+    [
+      1,
+      "config_oid",
+      26,
+      -1,
+      0,
+      false
+    ],
+    [
+      2,
+      "mapcfg",
+      26,
+      -1,
+      0,
+      false
+    ],
+    [
+      3,
+      "dict_oid",
+      26,
+      -1,
+      0,
+      false
+    ],
+    [
+      4,
+      "template_oid",
+      26,
+      -1,
+      0,
+      false
+    ],
+    [
+      5,
+      "parser_oid",
+      26,
+      -1,
+      0,
+      false
+    ],
+    [
+      6,
+      "namespace_oid",
+      26,
+      -1,
+      0,
+      false
+    ],
+    [
+      7,
+      "procedure_oid",
+      26,
+      -1,
+      0,
+      false
+    ]
+  ],
+  "dependencies": [
+    [
+      2618,
+      16390,
+      0,
+      1259,
+      16387,
+      0,
+      "i",
+      "view native_fence.ts_catalog_lock"
+    ]
+  ],
+  "inheritance": [],
+  "transactions": [
+    {
+      "isolation": "REPEATABLE READ",
+      "beforeXmin": null,
+      "afterTimeoutXmin": null,
+      "afterLockXmin": null,
+      "heldLocks": [
+        [
+          "native_fence",
+          "ts_catalog_lock",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_namespace",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_proc",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_config",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_config_map",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_dict",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_parser",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_template",
+          "ShareLock",
+          true
+        ]
+      ],
+      "alterWaiting": [
+        [
+          "pg_ts_config_map",
+          "RowExclusiveLock",
+          false,
+          "Lock",
+          "relation"
+        ]
+      ],
+      "alterOutcome": {
+        "sqlstate": "57014",
+        "message": "canceling statement due to statement timeout"
+      },
+      "firstSelectAssignsSnapshot": true
+    },
+    {
+      "isolation": "SERIALIZABLE",
+      "beforeXmin": null,
+      "afterTimeoutXmin": null,
+      "afterLockXmin": null,
+      "heldLocks": [
+        [
+          "native_fence",
+          "ts_catalog_lock",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_namespace",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_proc",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_config",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_config_map",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_dict",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_parser",
+          "ShareLock",
+          true
+        ],
+        [
+          "pg_catalog",
+          "pg_ts_template",
+          "ShareLock",
+          true
+        ]
+      ],
+      "alterWaiting": [
+        [
+          "pg_ts_config_map",
+          "RowExclusiveLock",
+          false,
+          "Lock",
+          "relation"
+        ]
+      ],
+      "alterOutcome": {
+        "sqlstate": "57014",
+        "message": "canceling statement due to statement timeout"
+      },
+      "firstSelectAssignsSnapshot": true
+    }
+  ],
+  "writerFirstRefusal": {
+    "sqlstate": "55P03",
+    "message": "could not obtain lock on relation \"pg_ts_config_map\""
+  },
+  "ownedServerStopped": true,
+  "harnessSha256": "0d5ccc251c5d979bca5cfabcf4f97b90c16b0c9013ac59a396ed0fafdadb8cee"
+}

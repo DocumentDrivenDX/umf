@@ -16,8 +16,9 @@ from datetime import timedelta
 from decimal import Decimal
 from typing import Any, Protocol, cast
 
-from .native_program import NativeProgram
+from .native_program import NativeProgram, mutation_locks
 from .native_program import canonical_json as _json
+from .postgres_read import _catalog_fence_programs, _snapshot_free_timeout
 from .protocols import (
     ActionDenied,
     ActionFailed,
@@ -363,6 +364,40 @@ class _State:
                     break
         return failures
 
+    def schema_admissions(self) -> Generator[Any, Any, None]:
+        # The original action owner binds qualified schemas literally or resolves
+        # its exact unqualified relation with to_regclass. This port has no read-target schema
+        # configuration and cannot reinterpret an appSchema placeholder.
+        from .postgres_read import _compiled_admissions
+
+        fence = _catalog_fence_programs(self.program)
+        if fence is not None:
+            for sql, parameters in fence[1]:
+                rows = yield ("query", sql, parameters)
+                if len(rows) != 1 or len(rows[0]) != 1 or rows[0][0] is not True:
+                    raise ActionRefused("NATIVE_TEXT_SEARCH_FENCE_MISMATCH")
+        obligations = self.program["obligations"]
+        groups = [("NATIVE_SCHEMA_MISMATCH", "NATIVE_SCHEMA_BINDING_SOURCE", obligations["nativeProjection"]["columns"])]
+        if "termFilter" in obligations:
+            groups.append(("NATIVE_TERM_MISMATCH", "NATIVE_TERM_BINDING_SOURCE", obligations["termFilter"]["indexes"]))
+        if "textSearchEffects" in obligations:
+            groups.append(("NATIVE_TEXT_SEARCH_EFFECT_MISMATCH", "NATIVE_TEXT_SEARCH_EFFECT_BINDING_SOURCE", obligations["textSearchEffects"]["indexes"]))
+        for mismatch, binding_error, descriptors in groups:
+            for descriptor in descriptors:
+                admission = descriptor.get("nativeAdmission") if isinstance(descriptor, dict) else None
+                parameters = admission.get("parameters") if isinstance(admission, dict) else None
+                if not isinstance(parameters, list) or any(
+                    not isinstance(parameter, dict)
+                    or not isinstance(parameter.get("source"), dict)
+                    or set(parameter["source"]) != {"literal"}
+                    for parameter in parameters
+                ):
+                    raise ActionRefused(binding_error)
+            for sql, parameters in _compiled_admissions(descriptors, ""):
+                rows = yield ("query", sql, parameters)
+                if len(rows) != 1 or len(rows[0]) != 1 or rows[0][0] is not True:
+                    raise ActionRefused(mismatch)
+
     def execute(
         self, validate: bool
     ) -> Generator[Any, Any, ActionOutcome | ValidationResult]:
@@ -387,6 +422,7 @@ class _State:
             )
         for sql in self.program["lockSql"]:
             yield ("query", sql, None)
+        yield from self.schema_admissions()
         yield from self.images("pre")
         missing = [
             name
@@ -399,6 +435,7 @@ class _State:
             else (yield from self.conditions("pre", collect_all=validate))
         )
         if failures or validate:
+            yield from self.schema_admissions()
             yield ("rollback",)
             if validate:
                 return ValidationResult(
@@ -513,6 +550,7 @@ class _State:
             tuple(changed),
             self.details("committed"),
         )
+        yield from self.schema_admissions()
         yield ("commit", result)
         return result
 
@@ -583,6 +621,8 @@ class PostgresActionExecutor:
         ):
             raise ActionRefused("DEADLINE_EXPIRED")
         deadline = time.monotonic() + duration.total_seconds()
+        fence = _catalog_fence_programs(state.program)
+        table_locks = mutation_locks(state.program)
         began = False
         committed: Committed[Any] | None = None
         if self.connection.info.transaction_status != 0:
@@ -593,9 +633,17 @@ class PostgresActionExecutor:
                 + (" READ ONLY" if getattr(state, "read_only", False) else "")
             )
             began = True
+            if fence is not None:
+                self.connection.execute(_snapshot_free_timeout(deadline))
+                self.connection.execute(fence[0])
+            for lock_sql in table_locks:
+                self.connection.execute(_snapshot_free_timeout(deadline))
+                self.connection.execute(lock_sql)
+            if time.monotonic() >= deadline:
+                raise TimeoutError("native deadline")
             self.connection.execute(
                 "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
-                (str(math.ceil(duration.total_seconds() * 1000)),),
+                (str(max(1, math.ceil((deadline - time.monotonic()) * 1000))),),
             )
             state.scope = self.admission.admit(
                 self.connection, state.program, deadline=deadline
@@ -792,6 +840,8 @@ class AsyncPostgresActionExecutor:
         ):
             raise ActionRefused("DEADLINE_EXPIRED")
         deadline = time.monotonic() + duration.total_seconds()
+        fence = _catalog_fence_programs(state.program)
+        table_locks = mutation_locks(state.program)
         began = False
         committed: Committed[Any] | None = None
         if self.connection.info.transaction_status != 0:
@@ -803,9 +853,17 @@ class AsyncPostgresActionExecutor:
                     + (" READ ONLY" if getattr(state, "read_only", False) else "")
                 )
                 began = True
+                if fence is not None:
+                    await self.connection.execute(_snapshot_free_timeout(deadline))
+                    await self.connection.execute(fence[0])
+                for lock_sql in table_locks:
+                    await self.connection.execute(_snapshot_free_timeout(deadline))
+                    await self.connection.execute(lock_sql)
+                if time.monotonic() >= deadline:
+                    raise TimeoutError("native deadline")
                 await self.connection.execute(
                     "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
-                    (str(math.ceil(duration.total_seconds() * 1000)),),
+                    (str(max(1, math.ceil((deadline - time.monotonic()) * 1000))),),
                 )
                 state.scope = await self.admission.admit(
                     self.connection, state.program, deadline=deadline

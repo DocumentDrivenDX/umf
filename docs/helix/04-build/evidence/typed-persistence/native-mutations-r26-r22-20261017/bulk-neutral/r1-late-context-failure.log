@@ -1,0 +1,23 @@
+ownedServerStopped=true
+Traceback (most recent call last):
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/native_actions.py", line 641, in _run
+    self.connection.execute(lock_sql)
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/psycopg/connection.py", line 304, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "orders" does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/bulk_list_native_e2e.py", line 339, in <module>
+    assert selected.preview().selected == (OrderKey(id="o-1"),) and rows() == baseline
+           ^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/bulk.py", line 37, in preview
+    return self.executor.preview(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/postgres_bulk.py", line 298, in preview
+    result = self._run(self.action, {}, timeout, True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/native_actions.py", line 734, in _run
+    raise ActionFailed(
+umf_access.protocols.ActionFailed: action result: NATIVE_ACTION_FAILED

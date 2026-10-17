@@ -31,9 +31,20 @@ def exists():
     return Order.objects.exists()
 
 @query
+def null_safe_comparison(value: Param[str | None]):
+    return Order.objects.filter(
+        Order.c.order_id.is_distinct_from(value)
+        | Order.c.order_id.is_not_distinct_from(None)
+    ).limit(10).all()
+
+@query
 def relationship(customer: Param[CustomerKey]):
     return Order.objects.filter(Order.c.customer.has(customer)).limit(10).all()
 
 @query
 def relationship_keys():
     return Order.objects.include_keys(Order.c.customer, limit=5).limit(10).all()
+
+@query
+def binary_prefix(prefix: Param[str]):
+    return Order.objects.filter(Order.c.order_id.starts_with(prefix)).limit(10).all()

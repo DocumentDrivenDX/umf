@@ -43,8 +43,8 @@ def main() -> int:
             raise ValueError("package metadata differs from runtime profile")
         if (project["requires-python"] != profile["requiresPython"] or not SpecifierSet(project["requires-python"]).contains(profile["python"])) or project[
             "dependencies"
-        ] != ["pydantic==" + profile["runtimeDependencies"]["pydantic"]]:
-            raise ValueError("Python/Pydantic metadata differs from local profile")
+        ] != [name + "==" + profile["runtimeDependencies"][name] for name in ("pydantic", "typing-extensions")]:
+            raise ValueError("Python/runtime dependency metadata differs from local profile")
 
         def sha(path):
             return hashlib.sha256(path.read_bytes()).hexdigest()

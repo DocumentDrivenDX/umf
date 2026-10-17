@@ -1,9 +1,9 @@
 import {afterEach,expect,test} from 'bun:test';
-import {mkdtemp,readFile,readdir,writeFile,rm,symlink,mkdir,realpath} from 'node:fs/promises';
+import {mkdtemp,readFile,readdir,writeFile,rm,symlink,mkdir,realpath,lstat} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {writeAccessPackage,checkAccessPackage} from '../../scripts/umf-access-generate';
+import {writeAccessPackage,checkAccessPackage,runAccessCli} from '../../scripts/umf-access-generate';
 // Explicit files-as-data fixture: does not qualify the source generator.
 function generateAccessPackage(){const path='shop/models.py',text='fixture models\n';const digest=(s:string)=>createHash('sha256').update(s).digest('hex');const manifest=JSON.stringify({inventory:[{path,sha256:digest(text)}]});return {outcome:'candidate' as const,files:[{path,text,sha256:digest(text)},{path:'shop/_umf/manifest.json',text:manifest,sha256:digest(manifest)}]};}
 const roots:string[]=[];
@@ -79,3 +79,61 @@ test('stage-two privilege bytes survive regeneration and are excluded from drift
  await writeAccessPackage(destination,r);
  expect(await readFile(path,'utf8')).toBe(bytes);
 });
+
+// @covers US-080-AC5 -- preserve both complete trees if restoration also fails.
+test('failed replacement and failed restoration report recoverable old tree',async()=>{
+ const {destination,r}=await setup(),before=await snapshot(destination);
+ let error:unknown;
+ try{await writeAccessPackage(destination,r,{fault:stage=>{if(stage==='before-install-rename'||stage==='before-restore-rename')throw Error('injected '+stage);}});}catch(e){error=e;}
+ expect(error).toMatchObject({code:'WRITE_UNRESOLVED',written:false,unresolved:true,destination});
+ const state=error as {backup:string;staging:string};
+ await expect(lstat(destination)).rejects.toMatchObject({code:'ENOENT'});
+ expect(await snapshot(state.backup)).toEqual(before);
+ expect(await snapshot(join(state.staging,'next'))).toEqual(before);
+ expect((await lstat(state.staging)).isDirectory()).toBe(true);
+});
+
+// @covers US-080-AC5 -- process-local ownership; no cross-process atomicity.
+test('normalized output ownership excludes concurrent write check and CLI before reads',async()=>{
+ const {destination,r}=await setup();
+ let entered!:()=>void,release!:()=>void;
+ const staged=new Promise<void>(resolve=>{entered=resolve;}),resume=new Promise<void>(resolve=>{release=resolve;});
+ const first=writeAccessPackage(destination,r,{fault:async stage=>{if(stage==='before-swap'){entered();await resume;}}});
+ await staged;
+ try{
+  const alias=join(destination,'..','output');
+  await expect(writeAccessPackage(alias,r)).rejects.toMatchObject({code:'OUTPUT_BUSY'});
+  await expect(checkAccessPackage(alias,r)).rejects.toMatchObject({code:'OUTPUT_BUSY'});
+  const messages:string[]=[],original=console.error;console.error=(message:unknown)=>messages.push(String(message));
+  try{expect(await runAccessCli(['check','--request','/missing-request','--profile','/missing-profile','--output',alias])).toBe(1);}finally{console.error=original;}
+  expect(messages.map(message=>JSON.parse(message).code)).toEqual(['OUTPUT_BUSY']);
+ }finally{release();await first;}
+ expect(await checkAccessPackage(destination,r)).toEqual([]);
+ await writeAccessPackage(destination,r);
+});
+
+test('CLI owns complete read diff write interval and retains unresolved metadata',async()=>{
+ const {profile,request}=await import('./access-fixtures');
+ const root=await mkdtemp(join(await realpath(tmpdir()),'umf-access-owned-cli-'));roots.push(root);
+ const requestPath=join(root,'request.json'),profilePath=join(root,'profile.json'),destination=join(root,'output');
+ await writeFile(requestPath,JSON.stringify(request()));await writeFile(profilePath,JSON.stringify(profile()));
+ const args=['generate','--request',requestPath,'--profile',profilePath,'--output',destination];
+ const messages:string[]=[],originalError=console.error,originalLog=console.log;
+ console.error=(message:unknown)=>messages.push(String(message));console.log=()=>{};
+ try{
+  expect(await runAccessCli(args)).toBe(0);
+  const before=await snapshot(destination);
+  let entered!:()=>void,release!:()=>void;
+  const staged=new Promise<void>(resolve=>{entered=resolve;}),resume=new Promise<void>(resolve=>{release=resolve;});
+  const first=runAccessCli(args,{fault:async stage=>{if(stage==='before-swap'){entered();await resume;}}});
+  await staged;
+  try{expect(await runAccessCli(args)).toBe(1);}finally{release();expect(await first).toBe(0);}
+  expect(JSON.parse(messages.pop()!).code).toBe('OUTPUT_BUSY');
+  expect(await runAccessCli(args,{fault:stage=>{if(stage==='before-install-rename'||stage==='before-restore-rename')throw Error('CLI injected');}})).toBe(1);
+  const failure=JSON.parse(messages.pop()!);
+  expect(failure).toMatchObject({code:'WRITE_UNRESOLVED',written:false,unresolved:true,destination});
+  expect(await snapshot(failure.backup)).toEqual(before);
+  expect(await snapshot(join(failure.staging,'next'))).toEqual(before);
+  await expect(lstat(destination)).rejects.toMatchObject({code:'ENOENT'});
+ }finally{console.error=originalError;console.log=originalLog;}
+},60000);

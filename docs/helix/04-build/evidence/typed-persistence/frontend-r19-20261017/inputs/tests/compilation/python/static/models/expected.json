@@ -1,0 +1,74 @@
+{
+  "file": "negative/negative.py",
+  "lineBase": 1,
+  "checkers": {
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "ty": "0.0.88"
+  },
+  "expected": {
+    "mypy": [
+      [
+        "2",
+        "arg-type"
+      ],
+      [
+        "3",
+        "call-arg"
+      ],
+      [
+        "4",
+        "arg-type"
+      ],
+      [
+        "5",
+        "call-arg"
+      ],
+      [
+        "6",
+        "arg-type"
+      ]
+    ],
+    "pyright": [
+      [
+        2,
+        "reportArgumentType"
+      ],
+      [
+        3,
+        "reportCallIssue"
+      ],
+      [
+        4,
+        "reportArgumentType"
+      ],
+      [
+        5,
+        "reportUnknownVariableType"
+      ],
+      [
+        5,
+        "reportCallIssue"
+      ],
+      [
+        6,
+        "reportUnknownVariableType"
+      ],
+      [
+        6,
+        "reportCallIssue"
+      ],
+      [
+        6,
+        "reportArgumentType"
+      ]
+    ],
+    "ty": [
+      "invalid-argument-type",
+      "unknown-argument",
+      "invalid-argument-type",
+      "unknown-argument",
+      "no-matching-overload"
+    ]
+  }
+}

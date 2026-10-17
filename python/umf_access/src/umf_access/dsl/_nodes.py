@@ -39,8 +39,11 @@ class FieldRef:
     field_module: str | None = None
     logical_name: str | None = None
     source: GeneratedSource | None = None
+    alias: str | None = None
 
     def __post_init__(self) -> None:
+        if self.alias is not None and (type(self.alias) is not str or not self.alias or "\x00" in self.alias):
+            raise TypeError("alias requires a stable nonempty owner token")
         if any(
             type(v) is not str or not v for v in (self.module, self.element, self.field)
         ):
@@ -62,8 +65,11 @@ class RecordRef:
     logical_name: str | None = None
     source: GeneratedSource | None = None
     key_id: str | None = None
+    alias: str | None = None
 
     def __post_init__(self) -> None:
+        if self.alias is not None and (type(self.alias) is not str or not self.alias or "\x00" in self.alias):
+            raise TypeError("alias requires a stable nonempty owner token")
         if self.key_id is not None and (type(self.key_id) is not str or not self.key_id):
             raise TypeError("selected Key identity requires a nonempty schema ID")
         if type(self.module) is not str or not self.module or type(self.element) is not str or not self.element:
@@ -74,7 +80,7 @@ class RecordRef:
             or any(not isinstance(cast(object, f), FieldRef) for f in self.key)
         ):
             raise TypeError("record identity requires an immutable complete Key")
-        if any((f.module, f.element) != (self.module, self.element) for f in self.key):
+        if any((f.module, f.element, f.alias) != (self.module, self.element, self.alias) for f in self.key):
             raise TypeError("Key fields must belong to the record")
         if len(set(self.key)) != len(self.key):
             raise TypeError("duplicate Key fields")
@@ -86,7 +92,7 @@ class RecordRef:
 class ProjectionRef:
     module: str
     name: str
-    fields: tuple[FieldRef, ...]
+    fields: tuple[FieldRef | Node, ...]
     names: tuple[str, ...] = ()
 
 
@@ -191,3 +197,8 @@ class JoinProjection(Generic[OutputT, ProjectionModel]):
     def __post_init__(self) -> None:
         if not isinstance(self.model, type) or not issubclass(self.model, BaseModel):
             raise TypeError("joined projection requires a model class")
+
+
+def owner_identity(ref: FieldRef | RecordRef) -> tuple[str, str, str | None]:
+    """Query-local owner identity, distinct from original schema identity."""
+    return ref.module, ref.element, ref.alias

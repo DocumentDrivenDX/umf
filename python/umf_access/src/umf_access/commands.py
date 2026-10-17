@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Awaitable, Mapping
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import Any, Protocol, TypeVar
+from typing import Any, Protocol, TypeVar, overload
 
 from .adoption import TargetIdentity
 from .catalog import Argument, CatalogError, NotCompiledForTarget, TargetPin
@@ -36,19 +36,31 @@ class BulkTarget(Protocol[PlanT]):
     ) -> PlanT: ...
 
 
+class AsyncBulkTarget(Protocol[PlanT]):
+    def identity(self) -> TargetIdentity: ...
+    async def plan(
+        self, entry: CommandVariant, params: Mapping[str, object], *,
+        timeout: timedelta | None = None,
+    ) -> PlanT: ...
+
+
 @dataclass(frozen=True)
 class CommandPlan:
     name: str
     arguments: tuple[Argument, ...]
     variants: tuple[CommandVariant, ...]
 
+    @overload
+    def run(self, target: AsyncBulkTarget[PlanT], values: Mapping[str, object], *, timeout: timedelta | None = None) -> Awaitable[PlanT]: ...
+    @overload
+    def run(self, target: BulkTarget[PlanT], values: Mapping[str, object], *, timeout: timedelta | None = None) -> PlanT: ...
     def run(
         self,
-        target: BulkTarget[PlanT],
+        target: BulkTarget[PlanT] | AsyncBulkTarget[PlanT],
         values: Mapping[str, object],
         *,
         timeout: timedelta | None = None,
-    ) -> PlanT:
+    ) -> PlanT | Awaitable[PlanT]:
         if set(values) != {a.name for a in self.arguments}:
             raise CatalogError("exact command argument inventory required")
         checked = {a.name: a.validate(values[a.name]) for a in self.arguments}

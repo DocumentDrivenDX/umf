@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "exact original schema, objects and parallel edges through public APIs and caller commits",
+    "genuine CLI-generated read/page/stream preserve Key identity, parallel occurrences, truncation and empty bags",
+    "ordinary SQL remains usable and a different valid original program refuses"
+  ],
+  "schemaSha256": "b98ba2d8f66d8e2a6c14e8a137f8c0eb2e8527d918ca21a3ea983551ca8a68e4",
+  "weftVersion": "0.4.42-dev.0",
+  "serverStopped": true,
+  "scope": "ordinary module ACL RelatedKeys; no navigation IR, Graph, temporal or protected actions"
+}

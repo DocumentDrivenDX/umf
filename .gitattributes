@@ -17,3 +17,9 @@ spec/domain-packs/medical-imaging/sources/*.dcm binary
 # Generated bundles may contain literal trailing spaces in dependency strings.
 docs/helix/05-deploy/microsite/dist/*.js whitespace=-blank-at-eol
 docs/helix/05-deploy/microsite/dist/actions/*.js whitespace=-blank-at-eol
+# Qualification receipt hashes cover exact checker stdout, including final blank lines.
+docs/helix/04-build/evidence/typed-persistence/foundation-r5-20261016/**/*.log -text whitespace=-blank-at-eof
+docs/helix/04-build/evidence/typed-persistence/foundation-r5b-20261016/**/*.log -text whitespace=-blank-at-eof
+# Release diagnostic hashes retain exact compiler code frames and patch context.
+docs/helix/04-build/evidence/generated-reference/release-r2/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+docs/helix/04-build/evidence/generated-reference/release-r2/*.diff -text whitespace=-blank-at-eol

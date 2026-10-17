@@ -1,0 +1,7 @@
+# PostgreSQL action and bulk R16 coherent replay
+
+Actual PostgreSQL18.6 campaign passes27 named checks with freshly generated native_sales and real public catalog CLI action/bulk command publication/check. Fresh SDK R16 and original Weft R15: all47 SDK plus2 compiler payloads match wheel bytes and remain unchanged start/end. Frozen harness SHA start/end matches; owned unix-socket cluster is stopped and independent process inspection finds no owned PostgreSQL/harness process.
+
+Coverage retains original generated model/Key creation, native commit receipt/xid8, no-op, validation rollback, business rule ordering, postcondition rollback, native uniqueness, concurrent SERIALIZABLE conflict, native membership/UPDATE denial, native lock timeout, lost commit acknowledgement reconciliation/quarantine, indeterminate settlement, async validation/cancellation/repeated cancellation, advisory preview/atomic reselect, bulk changed-vs-selected counts/limits, async plans, captured public commands, constrained deployment revocation and native closure drift refusal. Caller is actual non-owner NOSUPERUSER/NOBYPASSRLS peer identity. No runtime/harness semantic changes were needed for this fresh replay.
+
+Scope is the owned local scalar PostgreSQL base-table profile. It does not qualify managed Delta atomic dispatch or Truss/Ashlar mutations. Temporal qualification remains HELD. Database storage is excluded; generated modules, original compiler catalog programs, configs, frozen source, complete log, wrapper and byte receipts are retained.

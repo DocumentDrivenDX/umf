@@ -1,0 +1,143 @@
+{
+  "version": "umf-static-negative-sites/0.1",
+  "review": "Six independently inspected line5 calls: wrong Boolean/String/Decimal list element, scalar in list slot, forbidden null list container, and integer replacing nullable String scalar. Exact mypy list-item versus call-overload categories, two Pyright overload/argument diagnostics per call, and one ty overload diagnostic per call are retained. This separate generated search_docs fixture does not replace the baseline74 corpus or qualify native semantics.",
+  "checkers": {
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "ty": "0.0.88"
+  },
+  "cases": [
+    {
+      "path": "tests/compilation/python/static/search-filter-parameters/negative/boolean_integer_element.py",
+      "sourceSha256": "bbc28a151a08012b89228afa6f98a3e5e64cc91627dde7651322d9367c0d8741",
+      "sites": [
+        {
+          "line": 5,
+          "source": "queries.boolean_list(target, term=\"cats\", values=[1])",
+          "rules": {
+            "mypy": [
+              "list-item"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search-filter-parameters/negative/decimal_float_element.py",
+      "sourceSha256": "9c004248065f37f0b85b7466e89d83efe94458a31ee4c46e7ef79de290391de3",
+      "sites": [
+        {
+          "line": 5,
+          "source": "queries.decimal_list(target, term=\"cats\", values=[1.5])",
+          "rules": {
+            "mypy": [
+              "list-item"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search-filter-parameters/negative/null_container.py",
+      "sourceSha256": "47d72ae8374ae239c276ed123c2f71a8cda71b15f54183c5d0f8ba189eec1dda",
+      "sites": [
+        {
+          "line": 5,
+          "source": "queries.string_list(target, term=\"cats\", values=None)",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search-filter-parameters/negative/nullable_scalar_integer.py",
+      "sourceSha256": "1d1a1bdfe9d3b3b92fdb6a2c2f8b90d3d08b8fa226bfa8295a025b22b64a2817",
+      "sites": [
+        {
+          "line": 5,
+          "source": "queries.nullable_scalar(target, term=\"cats\", value=1)",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search-filter-parameters/negative/scalar_in_list_slot.py",
+      "sourceSha256": "bc29df779d9d8e6a18bd412e75cef422f3a49a15a0b1754309ef744ddd67f7e0",
+      "sites": [
+        {
+          "line": 5,
+          "source": "queries.string_list(target, term=\"cats\", values=\"x\")",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search-filter-parameters/negative/string_integer_element.py",
+      "sourceSha256": "44baf755772c2e9b2d2189ab816c706033b4acbbf963e71294554eb99d4093cb",
+      "sites": [
+        {
+          "line": 5,
+          "source": "queries.string_list(target, term=\"cats\", values=[1])",
+          "rules": {
+            "mypy": [
+              "list-item"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

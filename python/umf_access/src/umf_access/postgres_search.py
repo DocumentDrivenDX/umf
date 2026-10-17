@@ -6,7 +6,6 @@ import asyncio
 import inspect
 import json
 import math
-import struct
 import time
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -14,9 +13,25 @@ from datetime import timedelta
 from decimal import Decimal
 from typing import Any, Protocol, cast
 
+from pydantic import TypeAdapter
+
 from .codec_support import checked_row
 from .dsl import Score, Scored, SearchResult
-from .postgres_read import _ROLE, ReadObligationUnmet, TimedOut, native_read_admission
+from .postgres_read import (
+    _ROLE,
+    ReadObligationUnmet,
+    TimedOut,
+    _catalog_fence_programs,
+    _compiled_admissions,
+    _early_relation_locks,
+    _observe_resolution,
+    _output_value,
+    _projection_admissions,
+    _snapshot_free_timeout,
+    _term_admissions,
+    native_read_admission,
+)
+from .reviewed import validate_list_parameters
 from .search_catalog import SearchEntry, SearchVariant
 from .targets import (
     AsyncPostgresTarget,
@@ -81,28 +96,12 @@ def _decode(value: object, output: Mapping[str, Any]) -> object:
             raise SearchError("native non-null search output is null")
         return None
     carrier = output["carrier"]
-    if carrier == "vector":
-        decoder = output["decoder"]
-        if (
-            decoder.get("profile")
-            not in ("pgvector-text-float32/0.8.6", "pgvector-text-float32/0.8.7")
-            or type(value) is not str
-            or len(value) > 500_000
-        ):
-            raise SearchError("native vector decoder profile mismatch")
-        items = json.loads(value, parse_int=float, parse_float=float)
-        if (
-            not isinstance(items, list)
-            or len(items) != decoder["dimensions"]
-            or any(type(v) not in (int, float) for v in items)
-        ):
-            raise SearchError("native vector output inventory mismatch")
-        # Native pgvector text uses shortest float32 spelling. This explicitly
-        # reconstructs its native float32 value; input vectors are never rounded.
-        result = tuple(
-            struct.unpack("!f", struct.pack("!f", float(v)))[0] for v in items
-        )
-        return validate_vector(result, dimensions=decoder["dimensions"])
+    try:
+        value = _output_value(value, dict(output))
+    except ReadObligationUnmet as error:
+        raise SearchError(str(error)) from error
+    if carrier in ("binary", "vector"):
+        return value
     expected = {"string": str, "boolean": bool, "integer": int, "decimal": Decimal}.get(
         carrier
     )
@@ -193,6 +192,51 @@ def _finish(variant: SearchVariant, legs: list[list[_Hit]]) -> SearchResult[Any]
     )
 
 
+def _metadata_programs(
+    program: Mapping[str, Any], app_schema: str
+) -> tuple[tuple[str, dict[str, object], str], ...]:
+    obligations = program["obligations"]
+    fence = _catalog_fence_programs(program)
+    programs = [] if fence is None else [(sql, parameters, "native text-search catalog fence differs") for sql, parameters in fence[1]]
+    programs.extend([(sql, parameters, "native search source schema differs")
+                for sql, parameters in _projection_admissions(obligations, app_schema)])
+    programs.extend((sql, parameters, "native search term configuration or index differs")
+                    for sql, parameters in _term_admissions(obligations, app_schema))
+    configuration = obligations.get("keywordConfiguration")
+    if configuration is not None:
+        if (
+            not isinstance(configuration, dict)
+            or configuration.get("version") != "umf.keyword-configuration/0.1"
+            or configuration.get("nativeCatalogBeforeAfter") is not True
+            or not isinstance(configuration.get("configurations"), list)
+            or len(configuration["configurations"]) != 1
+        ):
+            raise TargetMismatch("native keyword configuration packet required")
+        programs.extend((sql, parameters, "native keyword configuration differs")
+                        for sql, parameters in _compiled_admissions(configuration["configurations"], app_schema))
+    return tuple(programs)
+
+
+def _schema_admissions(program: Mapping[str, Any], app_schema: str):
+    for sql, parameters, mismatch in _metadata_programs(program, app_schema):
+        yield ("execute", sql, parameters)
+        observed = yield ("many", 2)
+        if len(observed) != 1 or len(observed[0]) != 1 or observed[0][0] is not True:
+            raise TargetMismatch(mismatch)
+
+
+def _filter_parameters(program: Mapping[str, Any], values: Mapping[str, object]) -> None:
+    """Validate retained source selection descriptors before native binding."""
+    descriptors = program["request"]["selection"].get("parameters", [])
+    validate_list_parameters(descriptors, values)
+    carriers = {"string": str, "integer": int, "decimal": Decimal, "boolean": bool}
+    for descriptor in descriptors:
+        if descriptor.get("container") == "list":
+            continue
+        annotation = carriers[descriptor["carrier"]]
+        TypeAdapter(cast(Any, annotation | None if descriptor["nullable"] else annotation)).validate_python(values[descriptor["name"]], strict=True)
+
+
 def _program(
     variant: SearchVariant,
     parameters: Mapping[str, object],
@@ -202,6 +246,7 @@ def _program(
     *,
     verify_only: bool = False,
     target_profile: str,
+    database: str,
 ):
     prepared = []
     for entry in variant.entries:
@@ -215,6 +260,7 @@ def _program(
             raise TargetMismatch("native search schema differs")
         params = dict(parameters)
         if not verify_only:
+            _filter_parameters(program, params)
             value = params[entry.query_argument]
             if program["index"]["kind"] == "vector":
                 vector = program["index"]["vector"]
@@ -246,8 +292,36 @@ def _program(
                 if type(value) is not str:
                     raise SearchError("plain keyword text required")
                 params[program["queryParameter"]] = value
+        # Parse the original packet before BEGIN or native search SQL.
+        _metadata_programs(program, configuration.app_schema)
+        binding = program["binding"]
+        selection = program["selectionTemplate"]
+        mode = binding.get("schemaBinding")
+        if (selection["binding"] != binding
+            or selection["obligations"].get("schemaBinding") != mode
+            or mode not in (None, "qualified", "search-path")
+            or mode is not None and ((mode == "qualified") != (binding["schema"] is not None))):
+            raise TargetMismatch("native search original schema binding context differs")
         prepared.append((entry, program, params))
     yield ("begin",)
+    locked = set()
+    for _, original, _ in prepared:
+        fence = _catalog_fence_programs(original)
+        if fence is not None and fence[0] not in locked:
+            yield ("catalog-fence", fence[0])
+            locked.add(fence[0])
+    relation_locks: set[str] = set()
+    for _, original, _ in prepared:
+        locks = tuple(sql for sql in original["selectionTemplate"]["lockSql"] if sql not in relation_locks)
+        yield from _early_relation_locks(original["binding"], locks, configuration.app_schema)
+        relation_locks.update(locks)
+    native_contexts = []
+    for _, original, _ in prepared:
+        mode = original["binding"].get("schemaBinding")
+        context = None
+        if mode is not None:
+            context = yield from _observe_resolution(original["binding"], configuration.app_schema, mode, database)
+        native_contexts.append(context)
     yield (
         "execute",
         "SELECT pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security','on',true)",
@@ -259,9 +333,10 @@ def _program(
         role, _ = yield from native_read_admission(
             program["binding"],
             configuration.app_schema,
-            tuple(program["selectionTemplate"]["lockSql"]),
+            (),
         )
         original_roles.append(role)
+        yield from _schema_admissions(program, configuration.app_schema)
         yield (
             "execute",
             *_statement(entry, "/nativeAdmission", params, configuration.app_schema),
@@ -272,6 +347,7 @@ def _program(
                 "native search index/expression/extension correspondence refused"
             )
         if verify_only:
+            yield from _schema_admissions(program, configuration.app_schema)
             continue
         for index in range(len(program["preflights"])):
             yield (
@@ -289,7 +365,13 @@ def _program(
         )
         columns = yield ("columns",)
         rows = yield ("many", program["topK"] + 1)
+        yield from _schema_admissions(program, configuration.app_schema)
         results.append(_hits(entry, columns, rows))
+    for (_, original, _), context in zip(prepared, native_contexts, strict=True):
+        if context is not None:
+            observed = yield from _observe_resolution(original["binding"], configuration.app_schema, original["binding"]["schemaBinding"], database)
+            if observed != context:
+                raise ReadObligationUnmet("native search binding context changed inside snapshot")
     yield ("execute", _ROLE)
     after = yield ("one",)
     if any(role != after for role in original_roles):
@@ -332,6 +414,7 @@ class PostgresSearchTarget(PostgresTarget):
             deadline,
             verify_only=verify,
             target_profile=self.profile,
+            database=self.connection.info.dbname,
         )
         result: Any = None
         began = False
@@ -356,6 +439,10 @@ class PostgresSearchTarget(PostgresTarget):
                         "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"
                     )
                     began = True
+                    result = None
+                elif kind in ("catalog-fence", "snapshot-free"):
+                    self.connection.execute(_snapshot_free_timeout(deadline))
+                    self.connection.execute(operation[1])
                     result = None
                 elif kind == "execute":
                     self.connection.execute(
@@ -444,6 +531,7 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
             deadline,
             verify_only=verify,
             target_profile=self.profile,
+            database=self.connection.info.dbname,
         )
         result: Any = None
         began = False
@@ -467,6 +555,10 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
                             "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"
                         )
                         began = True
+                        result = None
+                    elif kind in ("catalog-fence", "snapshot-free"):
+                        await self.connection.execute(_snapshot_free_timeout(deadline))
+                        await self.connection.execute(operation[1])
                         result = None
                     elif kind == "execute":
                         await self.connection.execute(

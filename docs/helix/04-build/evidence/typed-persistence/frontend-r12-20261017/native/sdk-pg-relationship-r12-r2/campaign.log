@@ -1,0 +1,15 @@
+PASS actual-public-cli-and-drift-check
+PASS original-packet-and-related-target-custody
+PASS native-columns-keys-and-real-foreign-keys-admitted
+PASS forward-alternate-key-and-inverse-original-composite-primary
+PASS distinct-self-relationship-canonical-id-and-exact-bound-not-truncated
+PASS bounded-lookahead-exact-original-key-class-and-numeric-extrema
+PASS actual-original-artifact-rejects-valid-wrong-key-descriptor-substitution
+Traceback (most recent call last):
+  File "/private/tmp/sdk-pg-relationship-r12-r2/python/umf_access/tests/relationship_native_e2e.py", line 262, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/sdk-pg-relationship-r12-r2/python/umf_access/tests/relationship_native_e2e.py", line 213, in main
+    assert queries.strings_not(target,values=values)==wanted
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

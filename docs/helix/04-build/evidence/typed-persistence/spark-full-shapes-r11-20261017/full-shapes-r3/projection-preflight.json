@@ -1,0 +1,56 @@
+{
+  "tupleFields": [
+    "id",
+    "tiny",
+    "small",
+    "count",
+    "big",
+    "amount",
+    "payload",
+    "embedding"
+  ],
+  "tupleCarrierInventory": [
+    "string",
+    "integer",
+    "integer",
+    "integer",
+    "integer",
+    "decimal",
+    "binary",
+    "vector"
+  ],
+  "modelFields": [
+    "id",
+    "name",
+    "tiny",
+    "small",
+    "count",
+    "big",
+    "amount",
+    "payload",
+    "embedding"
+  ],
+  "modelCarrierInventory": [
+    "string",
+    "string",
+    "integer",
+    "integer",
+    "integer",
+    "integer",
+    "decimal",
+    "binary",
+    "vector"
+  ],
+  "rawNativeOracleFields": [
+    "id",
+    "customer",
+    "tiny",
+    "small",
+    "count",
+    "big",
+    "amount",
+    "payload",
+    "embedding"
+  ],
+  "allInventoryLengthsExact": true
+}

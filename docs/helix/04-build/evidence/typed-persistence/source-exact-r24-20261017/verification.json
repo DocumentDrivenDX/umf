@@ -1,0 +1,29 @@
+{
+  "scope": "Non-temporal PostgreSQL18.6 source-exact read/action/bulk and native key qualification. Temporal HELD. No managed Delta or English configuration-composition qualification.",
+  "sdk": {
+    "source": "8b52b7ab501225c1d02eb8f4e0213b37a95c871a",
+    "wheelSha256": "5730b2deb8f5149abdbb0837f2e4a396193c6306a2fe4b360fbab428dc9be590",
+    "payloads": 47
+  },
+  "compiler": {
+    "source": "a6ca6fe63c94c8a0d65dd6e661d99b28381520ef",
+    "wheelSha256": "e6eed3fbf345d33425db93f2e00b988ff318b6be78ae1aa0a8889d16a8dae932",
+    "payloads": 2
+  },
+  "terminal": {
+    "qualifiedBulkAction": 11,
+    "unqualifiedBulkAction": 12,
+    "fullReviewedAndNativeKey": 14,
+    "freshFirstReadAdmission": 11,
+    "vectorMembershipFinal": "PASS"
+  },
+  "cleanup": "All five final batch servers stopped; vector extension membership restored; 49 wheel/install payload hashes identical before/after.",
+  "retainedFailures": [
+    "reviewed-generation.log: stock reporting fixture reached temporal/unrealized members and duplicate ColumnSet mapping; replaced with genuine separately authored native-reviewed fixture before PostgreSQL.",
+    "reviewed-native-r1: 14 tests, one test-oracle failure at full page bound4; original protocol correctly raised StreamLimitReached(truncated=None). Test corrected, max5 proves natural exhaustion; no runtime change.",
+    "vector-legacy-r1: fixture schema search_app did not match native_vector and refused before detachment; cleanup membershipRestored=false means never detached.",
+    "vector-legacy-r2: expected old R23/R19 red accepts detached native vector type and performs data SQL once; type still supports native IO; restored afterward.",
+    "vector-first-green: first R24/R20 green captured no full49 start manifest; repeated under final batch native-vector-membership-r2 with complete before/after proof."
+  ],
+  "custody": "Each qualified/unqualified run owns a distinct generated root and captured tree. Native tests are current harness source snapshots against frozen runtime wheels, not runtime overlays. Byte-exact original generated source may contain historical trailing blank lines."
+}

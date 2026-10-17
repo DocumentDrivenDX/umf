@@ -1,4 +1,4 @@
-"""Captured scalar command -> original Weft native-bulk request, build only."""
+"""Captured command -> original Weft native-bulk request, build only."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from typing import Any, Union, cast, get_args, get_origin
 from ..capture import CapturedDeclaration, CapturedVariant, ProjectionRef
 from ..dsl import FieldRef, Node, Ordering, render_logical
 from ..native_program import NativeProgram
+from ..reviewed import ReadBuildError, parameter_signature
 
 
 class CommandBuildError(ValueError):
@@ -136,8 +137,15 @@ def compile_command(
         visit(step)
     params = []
     for name, (annotation, _) in parameters.items():
-        carrier, nullable = _carrier(annotation)
-        params.append({"name": name, "carrier": carrier, "nullable": nullable})
+        # Selection membership may use the original bounded-list descriptor.
+        # Assignment inputs retain the scalar action/Field contract.
+        if name in action_inputs.values():
+            _carrier(annotation)
+        try:
+            signature = parameter_signature(annotation)
+        except ReadBuildError as error:
+            raise CommandBuildError(str(error)) from error
+        params.append({"name": name, **signature})
     bound = target.get("maxItems")
     if type(bound) is not int or not 1 <= bound <= 999:
         raise CommandBuildError("explicit native maxItems in 1..999 required")
@@ -310,7 +318,11 @@ def emit_command(
     values = "{" + ", ".join(repr(n) + ": " + n for n in names) + "}"
     lines.extend(
         [
-            f"def {name}(target: BulkTarget[_PlanT]{tail}) -> _PlanT:",
+            "@overload",
+            f"def {name}(target: AsyncBulkTarget[_PlanT]{tail}) -> Awaitable[_PlanT]: ...",
+            "@overload",
+            f"def {name}(target: BulkTarget[_PlanT]{tail}) -> _PlanT: ...",
+            f"def {name}(target: BulkTarget[object] | AsyncBulkTarget[object]{tail}) -> object:",
             f"    return {plan}.run(target, {values}, timeout=timeout)",
             "",
         ]

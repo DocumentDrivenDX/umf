@@ -130,7 +130,9 @@ class CursorDispatch(unittest.TestCase):
                                                           dbname="test", host="local", port=5432))
         identity = hashlib.sha256(json.dumps([entry.artifact_json, entry.context_json, "app", [],
                                              "reader", "test", "local", 5432, []], separators=(",", ":")).encode()).hexdigest()
-        def admission(*args):
+        def admission(*args, cache_context=None, shape_proof=None):
+            self.assertIsNone(cache_context)
+            self.assertEqual(shape_proof, [])
             yield from ()
             return ("reader",), []
         for values, permitted in (((None, None), False), ((None, True), False),
@@ -139,9 +141,17 @@ class CursorDispatch(unittest.TestCase):
                 after = None if values is None else ReadContinuation(values, identity)
                 program = _program(connection, entry, Empty(), app_schema="app", after=after)
                 dispatched = False
+                admitted = 0
                 try:
+                    response = None
                     while True:
-                        step = next(program)
+                        step = program.send(response)
+                        response = None
+                        if step[0] == "many":
+                            # This unit drives the original compiler-owned
+                            # Boolean admission programs before cursor dispatch.
+                            response = [(True,)]
+                            admitted += 1
                         if step[:2] == ("execute", entry.artifact()["dbapiSql"]):
                             dispatched = True
                             break
@@ -149,4 +159,5 @@ class CursorDispatch(unittest.TestCase):
                     self.assertFalse(permitted)
                 finally:
                     program.close()
+                self.assertGreater(admitted, 0)
                 self.assertEqual(dispatched, permitted)

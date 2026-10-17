@@ -1,0 +1,127 @@
+{
+  "mypy": {
+    "positive": {
+      "passed": true,
+      "version": "mypy 2.4.0 (compiled: yes)",
+      "exitCode": 0,
+      "diagnostics": []
+    },
+    "negative": {
+      "passed": true,
+      "version": "mypy 2.4.0 (compiled: yes)",
+      "exitCode": 1,
+      "diagnostics": [
+        {
+          "path": "action_list_negative.py",
+          "line": 4,
+          "rule": "call-overload"
+        },
+        {
+          "path": "element_negative.py",
+          "line": 4,
+          "rule": "list-item"
+        },
+        {
+          "path": "outer_none_negative.py",
+          "line": 4,
+          "rule": "call-overload"
+        },
+        {
+          "path": "scalar_filter_list_negative.py",
+          "line": 4,
+          "rule": "call-overload"
+        }
+      ]
+    }
+  },
+  "pyright": {
+    "positive": {
+      "passed": true,
+      "version": "pyright 1.1.414",
+      "exitCode": 0,
+      "diagnostics": []
+    },
+    "negative": {
+      "passed": true,
+      "version": "pyright 1.1.414",
+      "exitCode": 1,
+      "diagnostics": [
+        {
+          "path": "action_list_negative.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "action_list_negative.py",
+          "line": 4,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "element_negative.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "element_negative.py",
+          "line": 4,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "outer_none_negative.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "outer_none_negative.py",
+          "line": 4,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "scalar_filter_list_negative.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "scalar_filter_list_negative.py",
+          "line": 4,
+          "rule": "reportCallIssue"
+        }
+      ]
+    }
+  },
+  "ty": {
+    "positive": {
+      "passed": true,
+      "version": "ty 0.0.88 (64e7f1860 2026-10-15)",
+      "exitCode": 0,
+      "diagnostics": []
+    },
+    "negative": {
+      "passed": true,
+      "version": "ty 0.0.88 (64e7f1860 2026-10-15)",
+      "exitCode": 1,
+      "diagnostics": [
+        {
+          "path": "action_list_negative.py",
+          "line": 4,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "element_negative.py",
+          "line": 4,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "outer_none_negative.py",
+          "line": 4,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "scalar_filter_list_negative.py",
+          "line": 4,
+          "rule": "no-matching-overload"
+        }
+      ]
+    }
+  }
+}

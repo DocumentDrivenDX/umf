@@ -17,6 +17,7 @@ from typing import Any, TypeVar
 from pydantic import BaseModel
 
 from .adoption import TargetIdentity
+from .pages import ReadObligationUnmet
 from .postgres_read import (
     ReadContinuation,
     ReadPage,
@@ -160,13 +161,16 @@ class PostgresTarget(_PostgresBase):
                 "explicit catalog entries required for eager verification"
             )
         for entry in self.catalog_entries:
-            verify_read(
-                self.connection,
-                entry,
-                app_schema=self.configuration.app_schema,
-                target=self.profile,
-                timeout_ms=self._admit(entry, None),
-            )
+            try:
+                verify_read(
+                    self.connection,
+                    entry,
+                    app_schema=self.configuration.app_schema,
+                    target=self.profile,
+                    timeout_ms=self._admit(entry, None),
+                )
+            except ReadObligationUnmet as error:
+                raise TargetMismatch(str(error)) from error
 
     def read(
         self,
@@ -208,6 +212,7 @@ class PostgresTarget(_PostgresBase):
         parameters: P,
         *,
         max_rows: int,
+        page_size: int | None = None,
         timeout: timedelta | None = None,
     ) -> Generator[R, None, None]:
         return execute_stream(
@@ -217,6 +222,7 @@ class PostgresTarget(_PostgresBase):
             app_schema=self.configuration.app_schema,
             target=self.profile,
             max_rows=max_rows,
+            page_size=page_size,
             timeout_ms=self._admit(entry, timeout),
         )
 
@@ -234,13 +240,16 @@ class AsyncPostgresTarget(_PostgresBase):
                 "explicit catalog entries required for eager verification"
             )
         for entry in self.catalog_entries:
-            await verify_read_async(
-                self.connection,
-                entry,
-                app_schema=self.configuration.app_schema,
-                target=self.profile,
-                timeout_ms=self._admit(entry, None),
-            )
+            try:
+                await verify_read_async(
+                    self.connection,
+                    entry,
+                    app_schema=self.configuration.app_schema,
+                    target=self.profile,
+                    timeout_ms=self._admit(entry, None),
+                )
+            except ReadObligationUnmet as error:
+                raise TargetMismatch(str(error)) from error
 
     async def read(
         self,
@@ -282,6 +291,7 @@ class AsyncPostgresTarget(_PostgresBase):
         parameters: P,
         *,
         max_rows: int,
+        page_size: int | None = None,
         timeout: timedelta | None = None,
     ) -> AsyncGenerator[R, None]:
         return execute_stream_async(
@@ -291,6 +301,7 @@ class AsyncPostgresTarget(_PostgresBase):
             app_schema=self.configuration.app_schema,
             target=self.profile,
             max_rows=max_rows,
+            page_size=page_size,
             timeout_ms=self._admit(entry, timeout),
         )
 

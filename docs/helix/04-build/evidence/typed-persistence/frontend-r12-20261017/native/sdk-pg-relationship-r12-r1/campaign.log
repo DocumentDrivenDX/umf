@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-pg-relationship-r12-r1/frozen-harness.py", line 262, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/sdk-pg-relationship-r12-r1/frozen-harness.py", line 101, in main
+    start = snapshot()
+  File "/private/tmp/sdk-pg-relationship-r12-r1/frozen-harness.py", line 96, in snapshot
+    'generator': hashlib.sha256(generator.read_bytes()).hexdigest(),
+                                ~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/scripts/generate-access-relationship-fixture.ts'

@@ -1,0 +1,11 @@
+32 | const binding=JSON.parse(await Bun.file(new URL('../fixtures/access/commerce/postgresql18-binding.json',import.meta.url)).text());
+33 | binding.extensions['umf.binding'].fields=names.map(element=>({module:'commerce',element,storage:'column',column:element}));
+34 | req.sources.push({id:'orders-binding',format:'json',text:JSON.stringify(binding)});
+35 | const pinned=profile();pinned.python.version='3.11.17';pinned.compilerVersion='local-relationship-0.1';pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);
+36 | await Bun.write(output+'/stage-one-request.json',JSON.stringify(req,null,2)+'\n');
+37 | const result=generateAccessPackage(req,pinned);if(result.outcome!=='candidate')throw Error(JSON.stringify(result.diagnostics));
+                                                                                          ^
+error: [{"code":"ACCESS","accessCode":"ACCESS_CONFLICT","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/views/0/fields/1","message":"Authored access declaration violates ACCESS_CONFLICT"},{"code":"ACCESS","accessCode":"ACCESS_CONFLICT","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/views/0/fields/2","message":"Authored access declaration violates ACCESS_CONFLICT"},{"code":"ACCESS","accessCode":"ACCESS_CONFLICT","sourceId":"logical","pointer":"/modules/0/extensions/umf.access/views/0/fields/3","message":"Authored access declaration violates ACCESS_CONFLICT"}]
+      at /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/generate-access-relationship-fixture.ts:37:86
+
+Bun v1.4.2 (macOS arm64)

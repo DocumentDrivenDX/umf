@@ -1,0 +1,108 @@
+{
+  "postgres_search.py": {
+    "sourceSha256": "551fb7432a177d7f92ea232bd0dd64e5764670f46294b43932fdf4e88fbd7b06",
+    "fixedSqlLiterals": [
+      {
+        "line": 241,
+        "sql": "SELECT pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security','on',true)",
+        "sha256": "b6b3acaf2f0ea97ede445373fa7622cefcee80f26398eeecb4d24deca89eb57d"
+      },
+      {
+        "line": 344,
+        "sql": "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY",
+        "sha256": "884b307eaf68c26c0ee2c95bfebc014c633d0d00e03a5e60391e7b2efc4dcd48"
+      },
+      {
+        "line": 350,
+        "sql": "SELECT pg_catalog.set_config('statement_timeout',%s,true)",
+        "sha256": "5b82263a83b7dd088218c1946a5a41e593cef21cf8f2c4d8abbc232ba54ea115"
+      },
+      {
+        "line": 455,
+        "sql": "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY",
+        "sha256": "884b307eaf68c26c0ee2c95bfebc014c633d0d00e03a5e60391e7b2efc4dcd48"
+      },
+      {
+        "line": 461,
+        "sql": "SELECT pg_catalog.set_config('statement_timeout',%s,true)",
+        "sha256": "5b82263a83b7dd088218c1946a5a41e593cef21cf8f2c4d8abbc232ba54ea115"
+      }
+    ],
+    "originalStatementPaths": [],
+    "complete": false,
+    "unresolved": [
+      "dynamic owner statement branches and imports require original-owner inventory",
+      "actual native branch/protocol/grant qualification required"
+    ]
+  },
+  "native_actions.py": {
+    "sourceSha256": "1abca7c496470968e5d8872850e62af27652b5bcea2a03f76d195eeb83036d15",
+    "fixedSqlLiterals": [
+      {
+        "line": 597,
+        "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+        "sha256": "a24f29197f6a349ae81e10693b97a062195fa5027ed2976e3758fb2e03392849"
+      },
+      {
+        "line": 592,
+        "sql": "BEGIN ISOLATION LEVEL SERIALIZABLE",
+        "sha256": "547004d6c33e887b6fe478e1d23004ef14c3fa1c8c4756ec52aea4a3933e7fb0"
+      },
+      {
+        "line": 614,
+        "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+        "sha256": "a24f29197f6a349ae81e10693b97a062195fa5027ed2976e3758fb2e03392849"
+      },
+      {
+        "line": 807,
+        "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+        "sha256": "a24f29197f6a349ae81e10693b97a062195fa5027ed2976e3758fb2e03392849"
+      },
+      {
+        "line": 802,
+        "sql": "BEGIN ISOLATION LEVEL SERIALIZABLE",
+        "sha256": "547004d6c33e887b6fe478e1d23004ef14c3fa1c8c4756ec52aea4a3933e7fb0"
+      },
+      {
+        "line": 860,
+        "sql": "SELECT pg_catalog.pg_xact_status(%s::pg_catalog.xid8)",
+        "sha256": "b327da309dcedce6fd8c894e912b0b53f6b5c6e74df67d2951794d89ad11f1e9"
+      },
+      {
+        "line": 647,
+        "sql": "SELECT pg_catalog.pg_xact_status(%s::pg_catalog.xid8)",
+        "sha256": "b327da309dcedce6fd8c894e912b0b53f6b5c6e74df67d2951794d89ad11f1e9"
+      }
+    ],
+    "originalStatementPaths": [
+      {
+        "line": 369,
+        "originalProgramPath": "/admission"
+      }
+    ],
+    "complete": false,
+    "unresolved": [
+      "dynamic owner statement branches and imports require original-owner inventory",
+      "actual native branch/protocol/grant qualification required"
+    ]
+  },
+  "postgres_bulk.py": {
+    "sourceSha256": "be51d4a258a63297e021408a6d4086b9b9ed7df9078a1cb49c2f7d3888c9680b",
+    "fixedSqlLiterals": [],
+    "originalStatementPaths": [
+      {
+        "line": 171,
+        "originalProgramPath": "/admission"
+      },
+      {
+        "line": 234,
+        "originalProgramPath": "/update"
+      }
+    ],
+    "complete": false,
+    "unresolved": [
+      "dynamic owner statement branches and imports require original-owner inventory",
+      "actual native branch/protocol/grant qualification required"
+    ]
+  }
+}

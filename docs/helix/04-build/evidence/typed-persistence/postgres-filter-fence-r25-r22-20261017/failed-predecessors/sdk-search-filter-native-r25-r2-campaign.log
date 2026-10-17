@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-r25-frozen-frontend-inputs/scripts/record-access-pg-runtime.py", line 353, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/sdk-r25-frozen-frontend-inputs/scripts/record-access-pg-runtime.py", line 282, in main
+    runpy.run_path(str(args.script), run_name="__main__")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/private/tmp/sdk-r25-frozen-frontend-inputs/python/umf_access/tests/search_filter_parameters_e2e.py", line 78, in <module>
+    (OUT / 'public-cli.log').write_text(command(sys.executable, '-B', '-m', 'umf_access.build.catalog', 'catalog', '--config', GENERATED / 'search-filter-config.json', '--root', GENERATED))
+                                        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-r25-frozen-frontend-inputs/python/umf_access/tests/search_filter_parameters_e2e.py", line 39, in command
+    raise RuntimeError(result.stdout + result.stderr)
+RuntimeError: /opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python: can't open file '/private/tmp/sdk-r25-frozen-frontend-inputs/scripts/record-access-privilege-build.py': [Errno 2] No such file or directory
+

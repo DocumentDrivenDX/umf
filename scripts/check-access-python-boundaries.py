@@ -37,7 +37,7 @@ def check(root: Path) -> int:
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation",
-               "delta_read": "targets", "postgres_search": "targets", "search_catalog": "runtime", "commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime"}
+               "related_keys": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime"}
     extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"}}
 
     def fail(path: Path, code: str, message: str) -> None:
@@ -88,7 +88,13 @@ def check(root: Path) -> int:
         permitted = stdlib | {"pydantic"} | extras.get(source_owner, set())
         if name == "umf_access.runtime.bulk":
             permitted.add("weft")
-        if package not in permitted:
+        # The optional Spark target needs the real driver exception classes to
+        # inspect structured native retention failures, never message matching.
+        spark_error = name in {"umf_access.delta_read", "umf_access.targets.delta_read"} and source_owner == "targets" and target == "py4j.protocol" and member in {"Py4JError", "Py4JJavaError"}
+        # Defaulted navigation phantoms preserve the old five-argument ABI on
+        # Python3.11; this exact pinned typing backport performs no host I/O.
+        typing_backport = name == "umf_access.dsl.navigation" and target == "typing_extensions" and member == "TypeVar"
+        if package not in permitted and not spark_error and not typing_backport:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
             fail(path, "DYNAMIC", "dynamic loading module")

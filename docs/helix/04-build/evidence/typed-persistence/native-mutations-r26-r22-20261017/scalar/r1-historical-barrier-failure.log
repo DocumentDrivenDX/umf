@@ -1,0 +1,39 @@
+ownedServerStopped=true
+Traceback (most recent call last):
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/native_actions.py", line 648, in _run
+    state.scope = self.admission.admit(
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/native_actions_e2e.py", line 344, in admit
+    gate.wait(timeout=4)
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/threading.py", line 697, in wait
+    self._wait(timeout)
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/threading.py", line 735, in _wait
+    raise BrokenBarrierError
+threading.BrokenBarrierError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/native_actions_e2e.py", line 362, in <module>
+    outcomes = [future.result(timeout=10) for future in futures]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/native_actions_e2e.py", line 362, in <listcomp>
+    outcomes = [future.result(timeout=10) for future in futures]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/native_actions_e2e.py", line 355, in concurrent_action
+    answer = current.invoke(Approve, {"order": OrderKey(id="o-1")})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/native_actions.py", line 745, in invoke
+    return cast(ActionOutcome, self._run(action, input, timeout, False))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/native_actions.py", line 734, in _run
+    raise ActionFailed(
+umf_access.protocols.ActionFailed: action result: NATIVE_ACTION_FAILED

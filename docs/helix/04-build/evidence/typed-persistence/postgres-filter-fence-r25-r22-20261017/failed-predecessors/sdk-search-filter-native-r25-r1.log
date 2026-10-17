@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/private/tmp/run-r25-filter-native.py", line 28, in <module>
+    before=snapshot();(OUT/'before.json').write_text(json.dumps(before,indent=2));shutil.copyfile(PROOF,OUT/'pair-proof.json');shutil.copyfile(MANIFEST,OUT/'source-input-manifest.json')
+  File "/private/tmp/run-r25-filter-native.py", line 21, in snapshot
+    source=ROOT/'python/umf_access/src'/name;assert source.read_bytes()==archive.read(name),str(source)
+                                                    ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/sdk-r25-frozen-frontend-inputs/python/umf_access/src/umf_access/__init__.py'

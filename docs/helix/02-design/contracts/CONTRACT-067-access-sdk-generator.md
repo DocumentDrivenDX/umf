@@ -157,11 +157,18 @@ staging directory on the same filesystem and swaps it in with directory renames.
 A failure before the swap leaves the previous package intact; a failure after
 the swap reports the new package as written. No lock files, digest directories
 or selection pointers are used; version control supplies review and history.
-Only one cooperating build invocation may own an output directory; the build runner
-must serialize generate/catalog/check operations. Concurrent writers and hot
-runtime imports during replacement are unsupported and must not be claimed atomic.
+Only one cooperating build invocation may own an output directory. The host
+writer, checker and the CLI's complete read/diff/write interval enforce process-local
+exclusive ownership using the resolved fixed destination; a competing call refuses
+with `OUTPUT_BUSY` before reading or writing output. No lock files or cross-process
+ownership are introduced. The build runner must still serialize separate processes
+and catalog operations. Concurrent external writers and hot runtime imports during
+replacement are unsupported and must not be claimed atomic.
 The writer retains a recoverable backup until the replacement succeeds, restores
-it on a failed second rename, and reports any unresolved filesystem state. It
+it on a failed second rename. If restoration also fails, `WRITE_UNRESOLVED`
+reports `written:false`, `unresolved:true` and the exact `destination`, `backup`
+and `staging` paths; the CLI retains these fields and both complete trees remain
+available for explicit recovery. It
 never removes the only complete old package on failure. Stage one copies the
 existing four reserved stage-two files byte-for-byte into staging; ignoring them
 for ownership checks MUST NOT delete them. Their unchanged old stage-one digest

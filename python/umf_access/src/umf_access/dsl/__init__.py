@@ -8,6 +8,7 @@ from ._context import (
 from ._context import (
     QueryOutsideCatalog as QueryOutsideCatalog,
 )
+from ._expressions import AliasOwner as AliasOwner
 from ._expressions import (
     Column as Column,
 )
@@ -17,6 +18,7 @@ from ._expressions import (
 from ._expressions import (
     Join as Join,
 )
+from ._expressions import OptionalJoin as OptionalJoin
 from ._expressions import (
     Ordering as Ordering,
 )
@@ -26,9 +28,14 @@ from ._expressions import (
 from ._expressions import (
     Predicate as Predicate,
 )
+from ._expressions import RecordAlias as RecordAlias
 from ._expressions import (
     Related as Related,
 )
+from ._expressions import RequiredJoin as RequiredJoin
+from ._expressions import alias_column as alias_column
+from ._expressions import alias_record as alias_record
+from ._expressions import alias_relationship as alias_relationship
 from ._expressions import (
     and_ as and_,
 )
@@ -38,9 +45,12 @@ from ._expressions import (
 from ._expressions import (
     not_ as not_,
 )
+from ._expressions import nullable_join_owners as nullable_join_owners
 from ._expressions import (
     or_ as or_,
 )
+from ._joined import GroupedContext as GroupedContext
+from ._joined import JoinedContext as JoinedContext
 from ._nodes import FieldRef as FieldRef
 from ._nodes import GeneratedSource as GeneratedSource
 from ._nodes import KeyLiteral as KeyLiteral
@@ -85,7 +95,23 @@ from ._query import (
 from ._query import (
     query as query,
 )
+from ._selection import Agg as Agg
+from ._selection import Bucket as Bucket
+from ._selection import Selection as Selection
+from ._selection import approx_count_distinct as approx_count_distinct
+from ._selection import avg_ as avg_
+from ._selection import count as count
+from ._selection import count_distinct as count_distinct
+from ._selection import max_ as max_
+from ._selection import min_ as min_
+from ._selection import sum_ as sum_
+from .navigation import InverseManyNavigation as InverseManyNavigation
+from .navigation import InverseNavigation as InverseNavigation
+from .navigation import ManyNavigation as ManyNavigation
+from .navigation import OptionalNavigation as OptionalNavigation
+from .navigation import RequiredNavigation as RequiredNavigation
 from .render import render_logical as render_logical
+from .render import render_related_logical as render_related_logical
 from .search import (
     Fusion as Fusion,
 )

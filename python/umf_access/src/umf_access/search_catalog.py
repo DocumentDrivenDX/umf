@@ -15,6 +15,8 @@ from .dsl import Fusion, SearchResult
 from .native_program import NativeProgram
 from .types import MISSING, StrictModel
 
+SEARCH_FILTER_PARAMETER_ABI = "umf.search-filter-parameters/0.1"
+
 R = TypeVar("R")
 
 
@@ -26,10 +28,11 @@ class SearchEntry:
     query_argument: str
     embed: bool = False
     tuple_fields: tuple[str, ...] = ()
+    parameter_aliases: tuple[tuple[str, str], ...] = ()
 
     def artifact(self) -> dict[str, Any]:
         program = self.program.checked()
-        if program["version"] != "weft.search/0.1":
+        if program["version"] not in ("weft.search/0.1", "weft.search/0.2", "weft.unity-search/0.1"):
             raise CatalogError("search owner program required")
         if any(
             getattr(model, "UMF_BUNDLE_INPUT_DIGEST", None)

@@ -9,8 +9,9 @@ from typing import Any, cast
 from pydantic import BaseModel, TypeAdapter
 
 from .adoption import TargetIdentity
-from .codec_support import revalidate_model
-from .dsl import Continuation, Page, SortValue
+from .codec_support import revalidate_model, validate_graph
+from .dsl import Continuation, RelatedKeys, SortValue, WithKeys
+from .dsl import Page as Page  # noqa: PLC0414 -- explicit public ABI re-export
 from .pages import ReadContinuation, ReadPage, StaleContinuation
 from .protocols import AsyncReadTarget, ReadTarget
 from .reviewed import CatalogRead
@@ -109,6 +110,8 @@ class ReadPlan:
     cursor_argument: str | None = None
     cursor_key_model: type[StrictModel] | None = None
     key_components: tuple[tuple[str, int], ...] = ()
+    related_field: str | None = None
+    related_row_model: type[BaseModel] | None = None
 
     def bind(
         self, target: ReadTarget | AsyncReadTarget, values: Mapping[str, object]
@@ -142,7 +145,12 @@ class ReadPlan:
                 raise StaleContinuation(
                     "continuation Key differs from its complete sort context"
                 )
-            after = ReadContinuation(after.sort_values, after.identity_digest, after.owner_cursor)
+            after = ReadContinuation(
+                after.sort_values,
+                after.identity_digest,
+                after.owner_cursor,
+                after.snapshot_versions,
+            )
         presence = tuple(
             a.name
             for a in self.arguments
@@ -178,11 +186,21 @@ class ReadPlan:
 
 
 def _row(plan: ReadPlan, row: object) -> object:
-    return (
-        tuple(getattr(row, name) for name in plan.tuple_fields)
-        if plan.tuple_fields
-        else row
-    )
+    result: object
+    if plan.tuple_fields:
+        result = tuple(getattr(row, name) for name in plan.tuple_fields)
+    elif plan.related_field is not None:
+        if plan.related_row_model is None:
+            raise CatalogError("original related row model required")
+        result = validate_graph(plan.related_row_model, {name: getattr(row, name) for name in plan.related_row_model.model_fields})
+    else:
+        result = row
+    if plan.related_field is not None:
+        keys = getattr(row, plan.related_field)
+        if not isinstance(keys, RelatedKeys):
+            raise CatalogError("original decoded related-Key collection required")
+        return WithKeys(result, keys)
+    return result
 
 
 def _finish(plan: ReadPlan, rows: list[Any]) -> object:
@@ -218,7 +236,11 @@ def _page(plan: ReadPlan, page: ReadPage[Any]) -> Page[Any, Any]:
             strict=True,
         )
         after = Continuation(
-            key, cast(tuple[SortValue, ...], original.values), original.identity_digest, original.owner_cursor
+            key,
+            cast(tuple[SortValue, ...], original.values),
+            original.identity_digest,
+            original.owner_cursor,
+            original.snapshot_versions,
         )
     return Page(tuple(_row(plan, row) for row in page.items), after)
 
@@ -256,15 +278,24 @@ def run_stream(
     arguments: Mapping[str, object],
     *,
     max_rows: int,
+    page_size: int | None = None,
     timeout: Any = None,
 ) -> object:
     variant, parameters, after = plan.bind(target, arguments)
     if plan.terminal != "page" or after is not None:
         raise CatalogError("exports require an initial catalog page declaration")
+    if page_size is not None and (
+        type(page_size) is not int or not 1 <= page_size <= 1000
+    ):
+        raise ValueError("page_size must be an integer from 1 through 1000")
     stream = target.stream(
-        variant.entry, parameters, max_rows=max_rows, timeout=timeout
+        variant.entry,
+        parameters,
+        max_rows=max_rows,
+        timeout=timeout,
+        **({"page_size": page_size} if page_size is not None else {}),
     )
-    if not plan.tuple_fields:
+    if not plan.tuple_fields and plan.related_field is None:
         return stream
     return (
         _async_tuple_stream(plan, cast(AsyncGenerator[Any, None], stream))

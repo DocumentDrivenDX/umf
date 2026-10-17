@@ -512,3 +512,5 @@ export {default as bit128ModelProjectionSchema} from '../spec/projections/bit128
 
 export {validateBit128Dataset,type Bit128DatasetRecord} from './extensions/binding/model-dataset';
 export type {ModelLiteral} from './extensions/binding/model-shape-values';
+
+export {prepareCoreInspection} from './model/prepared-inspection';

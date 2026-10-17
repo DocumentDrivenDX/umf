@@ -1,0 +1,75 @@
+{
+  "status": "FAILED",
+  "checks": [
+    {
+      "name": "init",
+      "exitCode": 0
+    },
+    {
+      "name": "start",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-build",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-check",
+      "exitCode": 0
+    },
+    {
+      "name": "actual-runtime-and-original-business-native-analyzed-identities",
+      "probes": 20,
+      "metadataRelations": 14
+    },
+    {
+      "name": "independent-principal-cold-warm-verify-read-page-stream-with-only-inventory-grants"
+    },
+    {
+      "name": "individual-function-revoke-controls",
+      "necessary": 26,
+      "internalNotRequired": 137
+    },
+    {
+      "name": "individual-runtime-metadata-relation-revoke-and-recovery",
+      "relations": 14
+    },
+    {
+      "name": "original-LOCK-requires-table-SELECT-column-only-refusal-and-recovery"
+    },
+    {
+      "name": "stop",
+      "exitCode": 0
+    }
+  ],
+  "sourceStart": {
+    "/private/tmp/pg_runtime_privilege_native.py": "fe1b5a6715fa719d7f06a9e0c063287fb5e9e2c29a3cd701c318ab47e393b997",
+    "/private/tmp/pg_runtime_privilege_resolver.py": "235261ae07bf60e00e8d9c38b0c358804175909e448385054ca6020c3d1662e9",
+    "/private/tmp/sdk-r13-314-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "1d32b92015cfb3eacf5f2caa08f152a60d1c6bc99508895f4da856642ba76010",
+    "/opt/homebrew/opt/postgresql@18/include/postgresql/server/access/sysattr.h": "4aa58d88410c12dae97dde485506b32d870e9ffe38862b5b379f1811cbf51c90"
+  },
+  "sourceEnd": {
+    "/private/tmp/pg_runtime_privilege_native.py": "fe1b5a6715fa719d7f06a9e0c063287fb5e9e2c29a3cd701c318ab47e393b997",
+    "/private/tmp/pg_runtime_privilege_resolver.py": "235261ae07bf60e00e8d9c38b0c358804175909e448385054ca6020c3d1662e9",
+    "/private/tmp/sdk-r13-314-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "1d32b92015cfb3eacf5f2caa08f152a60d1c6bc99508895f4da856642ba76010",
+    "/opt/homebrew/opt/postgresql@18/include/postgresql/server/access/sysattr.h": "4aa58d88410c12dae97dde485506b32d870e9ffe38862b5b379f1811cbf51c90"
+  },
+  "serverStopped": true,
+  "fixtureCleanupComplete": true,
+  "cleanupError": null,
+  "payloadError": null,
+  "runtimeSnapshot": {
+    "wheel": "/private/tmp/sdk-completion-runtime-r13-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+    "wheelSha256": "ce2943e7e8a838103888198b26c5dae07e9afe94b6eb66906642737271086705",
+    "python": "/private/tmp/sdk-r13-314-env/bin/python",
+    "sourceCommit": "a623b1fb553b1816f47cdd335d4c90b12b456acb",
+    "scope": "R13 installed candidate; native qualification separate",
+    "temporal": "HELD"
+  },
+  "installedPayloadsUnchanged": true,
+  "sdkPayloadCount": 45,
+  "weftPayloadCount": 2,
+  "inventoryComplete": false,
+  "compilerOwnerComplete": false,
+  "temporal": "HELD"
+}

@@ -185,3 +185,26 @@ class ActionRef(Generic[InputT, OutputT]):
 
     def __init_subclass__(cls, **kwargs: object) -> None:
         raise TypeError("action references are final")
+
+
+SnapshotVersions = tuple[tuple[str, str, int], ...]
+
+
+def validate_snapshot_versions(value: SnapshotVersions) -> None:
+    """Validate inert, canonical native snapshot metadata; never authority."""
+    if type(value) is not tuple:
+        raise TypeError("immutable original snapshot version vector required")
+    names = set()
+    for item in value:
+        if (
+            type(item) is not tuple or len(item) != 3
+            or type(item[0]) is not str or not item[0] or "\x00" in item[0]
+            or type(item[1]) is not str or not item[1] or "\x00" in item[1]
+            or type(item[2]) is not int or item[2] < 0
+            or item[0] in names
+        ):
+            raise TypeError("distinct native table/UUID/nonnegative version records required")
+        names.add(item[0])
+    if value != tuple(sorted(value)):
+        raise TypeError("canonical native snapshot version ordering required")
+

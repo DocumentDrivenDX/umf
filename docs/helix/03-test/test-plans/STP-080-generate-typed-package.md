@@ -26,7 +26,7 @@ ddx:
 Prove that stage-one generation is deterministic and portable, reports every
 selected assertion, refuses unsafe or uninterpreted input, and that the host
 writer and drift check protect the checked-in package. Every test, fixture and
-command below is planned and **UNTESTED**; none exists yet.
+command below defines the acceptance intent. The source-pinned execution below records the implemented subset; temporal qualification remains **HELD**.
 
 ## Acceptance Criteria Test Mapping
 
@@ -41,22 +41,37 @@ command below is planned and **UNTESTED**; none exists yet.
 
 ## Executable Proof
 
-Planned commands (not implemented):
+Implemented source-pinned replay:
 
 ```sh
-bun test tests/compilation/access-extension.test.ts tests/compilation/access-generator.test.ts tests/compilation/access-naming.test.ts tests/compilation/access-writer.test.ts
-bun scripts/compilation-browser.ts --suite access-generator
+bun test tests/compilation/access-*.test.ts
+bun scripts/check-access-reporting-browser.ts "$(mktemp -d /tmp/umf-access-browser.XXXXXX)"
 ```
 
-Planned files: `tests/compilation/access-extension.test.ts`, `tests/compilation/access-generator.test.ts`,
-`tests/compilation/access-naming.test.ts`, `tests/compilation/access-writer.test.ts`,
-and a Chromium parity entry in `scripts/compilation-browser.ts`. The runner
-invokes each command separately and keeps each exit status; a later success does
-not hide an earlier failure.
+The retained run selected the17 files listed in its Bun log; it did not run
+unrelated test suites. [R24 frontend execution](../../04-build/evidence/typed-persistence/frontend-r24-20261017/README.md)
+retains the exact Git input cuts, per-file before/after hashes, all results,
+generated packages, checker output, browser bundle and browser receipt. Bun1.4.2
+passes864 tests/4906 assertions. Chromium153.0.8010.12 passes14 package cases,
+two runs per host and three independent digest perturbations, with complete
+byte-equivalent packages. The installed generated package additionally passes
+all three pinned type checkers and319 unit tests on each supported interpreter.
+These totals include adjacent generation controls and are not individual AC counts.
 
-Record results under `docs/helix/04-build/evidence/typed-persistence/` with exact
-inputs, profile metadata, Bun and Chromium versions, commands, statuses and
-observed digests. No acceptance evidence exists yet.
+| Acceptance intent | Implemented cited coverage in that cut |
+| --- | --- |
+| US-080-AC1 | `access-generator.test.ts`, `access-digest.test.ts`; the real browser harness compares complete emitted packages and independent source/profile/code identity changes. |
+| US-080-AC2 | `access-extension.test.ts`, `access-context.test.ts`, `access-generator.test.ts` and the matrix tests retain real reachable documents, exact selected Keys and complete native column facts; the unrepresentable no-null row remains explicitly hypothetical below. |
+| US-080-AC3 | `access-generator.test.ts` and `access-census-completeness.test.ts` exercise selected unknown refusal, unselected preservation, complete census and both owner-approved initial exact-only modes. |
+| US-080-AC4 | `access-naming.test.ts`, `access-package-limits.test.ts`, `access-generator.test.ts` and `access-digest.test.ts` exercise hostile literals, names, closed profile metadata and bounded refusal. |
+| US-080-AC5 | `access-writer.test.ts` exercises original-output refusal, symlinks, both rename faults, backup recovery, serialized operations and byte-preserved stage-two files. |
+| US-080-AC6 | `access-diff.test.ts`, `access-generator.test.ts` and `access-writer.test.ts` exercise unchanged/changed check, exact symbol classification and stage-two stale identity. |
+
+The named tests retain `@covers US-080-AC1` through `@covers US-080-AC6`
+citations. This execution qualifies the pinned candidate generation profile;
+it closes the bounded [B-TP-003 implementation gate](../../04-build/evidence/typed-persistence/b-tp-003/README.md). The conformance profile remains explicitly unqualified test data; it does not qualify a production profile, catalog/backend adoption, native search
+configuration concurrency or release/deployment gates. Temporal candidate
+examples do not establish temporal qualification. Draft status is retained.
 
 ## Data and Setup
 

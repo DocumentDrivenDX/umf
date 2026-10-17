@@ -14,3 +14,15 @@ def selected() -> Terminal[list[tuple[str, str | None]]]:
     value = Order.objects.join(Order.c.customer).select(Order.c.order_id, Customer.c.name).limit(10).all()
     assert_type(value, Terminal[list[tuple[str, str | None]]])
     return value
+
+@query
+def joined_model() -> Terminal[list[OrderCustomer]]:
+    result = Order.objects.join(Order.c.customer).into(OrderCustomer).limit(10).all()
+    assert_type(result, Terminal[list[OrderCustomer]])
+    return result
+
+@query
+def grouped_model() -> Terminal[list[OrderCustomer]]:
+    result = Order.objects.join(Order.c.customer).group_by(Order.c.order_id, Customer.c.name).into(OrderCustomer).limit(10).all()
+    assert_type(result, Terminal[list[OrderCustomer]])
+    return result

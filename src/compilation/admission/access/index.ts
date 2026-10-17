@@ -24,11 +24,13 @@ import {inspectCoreElementKind,inspectCoreNullability,inspectCoreCardinality,ins
 import type {AccessDiagnostic,Ref,ResolvedField,ResolvedRecord} from '../../ir/index';
 export interface SuppliedBinding {sourceId:string;document:Document}
 interface View {record:Ref;selectedKey:Ref&{key:string};fields:(FieldView&{field:Ref})[]}
-interface NativeColumn {field:Ref;type:string;notNull:boolean;generation:null|'identity'|'stored-expression'|'default'}
+interface NativeColumn {field:Ref;type:string;notNull:boolean;generation:null|'identity'|'stored-expression'|'default';collation?:null|{schema:string;name:string}}
 interface ColumnSet {binding:{sourceId:string;module:string};target:{platform:string;majorVersion:string};columns:NativeColumn[]}
 const identity=(r:Ref)=>JSON.stringify([r.module,r.element]);
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 const reference=(v:unknown):v is Ref=>object(v)&&typeof v.module==='string'&&!!v.module&&typeof v.element==='string'&&!!v.element&&Object.keys(v).every(k=>k==='module'||k==='element');
+const nativeName=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&!v.includes('\0')&&new TextEncoder().encode(v).length<=63;
+const collation=(v:unknown):boolean=>v===null||object(v)&&nativeName(v.schema)&&nativeName(v.name);
 const presence=(v:unknown):v is Presence=>object(v)&&typeof v.missing==='boolean'&&typeof v.null==='boolean';
 /** Contextual read-only declaration checks. Native execution is never implied. */
 export function inspectAccessViews(document:Document,selected:readonly Ref[],bindings:readonly SuppliedBinding[]=[],sourceId='logical'):{records:ResolvedRecord[];diagnostics:AccessDiagnostic[]} {
@@ -37,6 +39,8 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
  const unknown=(pointer:string)=>diagnostics.push({code:'UNKNOWN_RELEVANT',sourceId,pointer,message:'Selected access meaning is uninterpreted'});
  if(document.umf!=='0.8.0'||!validateDocument(document).valid){add('ACCESS_SHAPE','');return {records,diagnostics};}
  if(document.vocabularies['umf.access']?.version!=='0.1.0'){add('ACCESS_SHAPE','/vocabularies/umf.access');return {records,diagnostics};}
+ const vectorDimensions=new Map<string,number>();
+ for(const indexedModule of document.modules){const access=indexedModule.extensions?.['umf.access'];if(object(access)&&Array.isArray(access.search))for(const index of access.search)if(object(index)&&index.kind==='vector'&&object(index.vector)&&reference(index.vector.field)&&Number.isSafeInteger(index.vector.dimensions)&&Number(index.vector.dimensions)>0){const id=identity(index.vector.field),dimensions=Number(index.vector.dimensions),previous=vectorDimensions.get(id);vectorDimensions.set(id,previous===undefined||previous===dimensions?dimensions:0);}}
  const locate=(r:Ref)=>{const mi=document.modules.findIndex(m=>m.id===r.module),ei=document.modules[mi]?.elements.findIndex(e=>e.id===r.element)??-1;return {element:document.modules[mi]?.elements[ei],path:`/modules/${mi}/elements/${ei}`};};
  const allViews:{view:View;path:string}[]=[],allColumns:{set:ColumnSet;path:string}[]=[];
  for(const [mi,authoredModule] of document.modules.entries()){
@@ -56,7 +60,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   (payload.columns as unknown[]).forEach((entry,i)=>{
    const path=base+`/columns/${i}`;
    if(!object(entry)||!object(entry.binding)||typeof entry.binding.sourceId!=='string'||typeof entry.binding.module!=='string'||!object(entry.target)||typeof entry.target.platform!=='string'||typeof entry.target.majorVersion!=='string'||!Array.isArray(entry.columns)){add('ACCESS_SHAPE',path);return;}
-   if(entry.columns.some(c=>!object(c)||!reference(c.field)||typeof c.type!=='string'||typeof c.notNull!=='boolean'||![null,'identity','stored-expression','default'].includes(c.generation as null))){add('ACCESS_SHAPE',path+'/columns');return;}
+   if(entry.columns.some(c=>!object(c)||!reference(c.field)||typeof c.type!=='string'||typeof c.notNull!=='boolean'||![null,'identity','stored-expression','default'].includes(c.generation as null)||Object.hasOwn(c,'collation')&&!collation(c.collation))){add('ACCESS_SHAPE',path+'/columns');return;}
    allColumns.push({set:entry as unknown as ColumnSet,path});
   });
  }
@@ -72,7 +76,13 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const selectedSet=set.columns.some(c=>selected.some(r=>{const e=locate(r).element;return Array.isArray(e?.members)&&(e.members as Ref[]).some(f=>identity(f)===identity(c.field));}));
    const unchecked=(value:object,allowed:string[],pointer:string)=>{if(selectedSet)for(const key of Object.keys(value))if(!allowed.includes(key))unknown(pointer+'/'+key.replace(/~/g,'~0').replace(/\//g,'~1'));};
    unchecked(set,['binding','target','columns'],path);unchecked(set.binding,['sourceId','module'],path+'/binding');unchecked(set.target,['platform','majorVersion'],path+'/target');
-   for(const [ci,column] of set.columns.entries())unchecked(column,['field','type','notNull','generation'],path+'/columns/'+ci);
+   for(const [ci,column] of set.columns.entries()){
+    const cp=path+'/columns/'+ci;unchecked(column,['field','type','notNull','generation','collation'],cp);
+    if(column.collation!==undefined){
+     if(!['postgresql','lakebase'].includes(set.target.platform))add('ACCESS_NATIVE',cp+'/collation');
+     if(column.collation!==null)unchecked(column.collation,['schema','name'],cp+'/collation');
+    }
+   }
    if(['lakebase','spark-delta','unity-catalog'].includes(set.target.platform)){
     if(binding.target.subset!==RAW_TABLE_BINDING_SUBSET||!inspectRawTableBinding(supplied[0]!.document,document,set.target,set.binding.module).complete)add('ACCESS_REFERENCE',path+'/target');
    }else if(set.target.platform!=='postgresql'||binding.target.system!=='postgresql'||binding.target.version.split('.')[0]!==set.target.majorVersion)add('ACCESS_REFERENCE',path+'/target');
@@ -136,7 +146,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const valid=(!memberIds.has(identity(fv.field))||checkAccessPresence(facts,fv))&&(!expectedField.nested||checkAccessPresence({...facts,key:false,nested:true},fv));
    if(!valid||key&&['date','timestamp'].includes(field.scalarType??'')||(field.scalarType==='timestamp')!==(fv.temporal!==undefined)||fv.generated&&columns.some(c=>c.column.generation===null))add('ACCESS_CONFLICT',fp);
    const interpreted=facets.state==='known'||facets.state==='partial'?facets.interpreted:{};
-   for(const c of columns)if(!nativeDeclarationCompatible(field,fv,c.column,c.set,{...interpreted}))add('ACCESS_NATIVE',c.path+'/columns');
+   for(const c of columns)if(!nativeDeclarationCompatible(field,fv,c.column,c.set,{...interpreted},vectorDimensions))add('ACCESS_NATIVE',c.path+'/columns');
    const card=inspectCoreCardinality(document,fv.field).meaning;
    resolved.push({ref:{...fv.field},pointer:locate(fv.field).path,owned:memberIds.has(identity(fv.field)),viewPointer:fp,python:'',logicalName:typeof field.name==='string'?field.name:null,scalarType:field.scalarType??null,cardinality:card.state==='known'?card.cardinality:'unspecified',row:{...fv.row},create:{...fv.create},mutable:fv.mutable,generated:fv.generated,...(fv.temporal?{temporal:fv.temporal}:{}),facets:{...interpreted},properties,...(card.state==='known'&&card.itemType?{item:card.itemType}:{} )});
   }
@@ -144,10 +154,23 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
  }
  return {records,diagnostics};
 }
-function nativeDeclarationCompatible(field:Element,view:FieldView,column:NativeColumn,set:ColumnSet,facets:Record<string,unknown>):boolean {
+function nativeDeclarationCompatible(field:Element,view:FieldView,column:NativeColumn,set:ColumnSet,facets:Record<string,unknown>,vectors:ReadonlyMap<string,number>):boolean {
  // Declarative spellings only, not native equivalence or execution qualification.
- if(set.target.platform!=='postgresql'||set.target.majorVersion!=='18')return false;
+ const dimensions=vectors.get(identity(column.field)),size=facets.collectionSize;
+ const vector=field.cardinality==='array'&&dimensions!==undefined&&dimensions>0&&object(size)&&size.min===dimensions&&size.max===dimensions;
+ if(field.cardinality!=='one'&&!vector)return false;
+ if(['unity-catalog','spark-delta'].includes(set.target.platform)){
+  const type=column.type.toUpperCase();
+  if(field.scalarType==='integer'){const width=facets.integerWidth;return object(width)&&width.signed===true&&({8:'TINYINT',16:'SMALLINT',32:'INT',64:'BIGINT'} as Record<number,string>)[Number(width.bits)]===type;}
+  if(field.scalarType==='decimal')return typeof facets.precision==='number'&&typeof facets.scale==='number'&&facets.precision>=1&&facets.precision<=38&&type===`DECIMAL(${facets.precision},${facets.scale})`;
+  // Only a declared search embedding has the float32 vector interpretation;
+  // inspectSelectedSearch independently checks its complete original meaning.
+  if(vector)return type==='ARRAY<FLOAT>';
+  return ({string:'STRING',boolean:'BOOLEAN',binary:'BINARY'} as Record<string,string>)[field.scalarType??'']===type;
+ }
+ if(!(set.target.platform==='postgresql'&&set.target.majorVersion==='18'||set.target.platform==='lakebase'&&['17','18'].includes(set.target.majorVersion)))return false;
  const type=column.type;
+ if(vector)return type===`vector(${dimensions})`;
  if(field.scalarType==='integer'){
   const width=facets.integerWidth;
   return object(width)&&width.signed===true&&({16:['smallint','int2'],32:['integer','int','int4'],64:['bigint','int8']} as Record<number,string[]>)[Number(width.bits)]?.includes(type)===true;

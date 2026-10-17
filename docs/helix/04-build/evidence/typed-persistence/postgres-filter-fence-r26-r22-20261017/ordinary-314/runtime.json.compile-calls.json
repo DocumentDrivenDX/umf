@@ -1,0 +1,26 @@
+[
+  {
+    "originalCommand": [
+      "/private/tmp/sdk-r26-r22-314-env/bin/python",
+      "-B",
+      "-m",
+      "umf_access.build.catalog",
+      "catalog",
+      "--config",
+      "/private/tmp/sdk-filter-native-r26-generated-314-r1/search-filter-config.json",
+      "--root",
+      "/private/tmp/sdk-filter-native-r26-generated-314-r1"
+    ],
+    "recordingCommand": [
+      "/private/tmp/sdk-r26-r22-314-env/bin/python",
+      "-B",
+      "/private/tmp/sdk-r26-native-input-root-34c-314-r1/scripts/record-access-privilege-build.py",
+      "/private/tmp/sdk-filter-native-r26-314-r1/runtime-compile-0",
+      "catalog",
+      "--config",
+      "/private/tmp/sdk-filter-native-r26-generated-314-r1/search-filter-config.json",
+      "--root",
+      "/private/tmp/sdk-filter-native-r26-generated-314-r1"
+    ]
+  }
+]

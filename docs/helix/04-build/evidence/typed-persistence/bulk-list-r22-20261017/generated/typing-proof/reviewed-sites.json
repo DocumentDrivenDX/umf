@@ -1,0 +1,98 @@
+{
+  "version": "umf-static-negative-sites/0.1",
+  "checkers": {
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "ty": "0.0.88"
+  },
+  "cases": [
+    {
+      "path": "action_list_negative.py",
+      "sourceSha256": "b0a76d407eda0f6ca931d1f8cb2e00b2d0081e92df63cbbe51c5419a1d2bd6bd",
+      "sites": [
+        {
+          "line": 4,
+          "source": "queries.set_selected(target, ids=[], before=\"draft\", after=[\"ready\"])",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "element_negative.py",
+      "sourceSha256": "e2c2f0eb14f93b37b86040ee7b0693df35158ffae40edfafb6a78d05ba8f0ad9",
+      "sites": [
+        {
+          "line": 4,
+          "source": "queries.set_selected(target, ids=[1], before=\"draft\", after=\"ready\")",
+          "rules": {
+            "mypy": [
+              "list-item"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "outer_none_negative.py",
+      "sourceSha256": "a7812a22380abbcd840688e3da35189989dedf488f8cf66de5f6b769d1869a6e",
+      "sites": [
+        {
+          "line": 4,
+          "source": "queries.set_selected(target, ids=None, before=\"draft\", after=\"ready\")",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "scalar_filter_list_negative.py",
+      "sourceSha256": "e993a0c98bd4b98c102e6b02ebd06082d36b970b3296c9cfdf2fbc94adf5fdfc",
+      "sites": [
+        {
+          "line": 4,
+          "source": "queries.set_selected(target, ids=[], before=[\"draft\"], after=\"ready\")",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

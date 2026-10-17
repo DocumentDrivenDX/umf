@@ -1,0 +1,7 @@
+# Scoped PostgreSQL runtime privilege advisory
+
+The production report now exposes the native-tested PostgreSQL 18.6 qualified-schema read/page/stream reference slice: 23 exact routine overloads and column SELECT inventories for 14 metadata relations, tied to twelve fixed SQL hashes. It retains four selected fixture compiler routines separately and preserves the original compiler inventory unchanged. No grants execute automatically; no blanket catalog grants are proposed.
+
+Native evidence is the separately inventoried `../postgres-runtime-privilege-native-r13-20261017` packet, including failed attempts and the final independent-principal grant/revoke campaign. That R13 qualification is immutable. The current R14 source differs: all 45 native-tested SDK payload hashes are compared, so matching SQL alone cannot qualify changed runtime code. Current-source native qualification, complete compiler/runtime closure, search, actions/bulk, Lakebase and other versions remain unqualified. Temporal qualification remains HELD.
+
+Focused checks: 12 privilege tests passed, Ruff passed, mypy passed for both production modules (Python 3.11 profile, silent imported-module checking), and the architecture scan found 50 modules with zero violations. The nine new tests cover native provenance, precise scopes, source/dependency drift, unsupported profiles, owner separation and mutation isolation. No new native run was performed for this integration.

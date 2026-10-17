@@ -1,0 +1,16 @@
+25 |  }catch(error){failures.push(String(error));}
+26 |  rows.push({path,id:manifest?.id??null,version:manifest?.version??null,native:manifest?.capabilities?.native??null,evidenceCount:manifest?.capabilities?.evidence?.length??0,passed:failures.length===0,failures});
+27 | }
+28 | if(!rows.length)throw Error('No extension packages found');
+29 | const result={scope:'Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim',packages:rows.length,passed:rows.filter(r=>r.passed).length,results:rows};
+30 | await Bun.write('fixtures/extension-package-audit.json',JSON.stringify(result,null,2)+'\n');
+               ^
+EPERM: operation not permitted, open 'fixtures/extension-package-audit.json'
+    path: "fixtures/extension-package-audit.json",
+ syscall: "open",
+   errno: -1,
+    code: "EPERM"
+
+      at /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/audit-extension-packages.ts:30:11
+
+Bun v1.4.2 (macOS arm64)

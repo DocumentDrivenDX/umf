@@ -1,0 +1,7 @@
+# Original engine navigation source controls — 2026-10-17
+
+Temporal qualification remains **HELD**. Source cut `ea0f4ab7` retains complete original source/target requests, directed relationship identity and shared parameters. Read/page composition stays in the original compiler. Page rendering changes the captured outer page terminal through the logical AST and delegates its bound to the owner; the source query stays intact.
+
+All three pinned checkers pass the positive corpus and all66 negative files with exact expected diagnostics. Retained logs refer to current source, not an installed release. Seven engine catalog source controls and four generated-model navigation controls pass, including original request/page custody, explicit source LIMIT preservation and context/parameter corruption refusal. The broader generated relationship controls pass13 tests before the fourth navigation control was added. An initial invocation omitted the generated commerce fixture search path and failed import; rerunning with actual public generator output resolves that harness setup error.
+
+Native replay remains required against fresh coherent compiler/SDK wheels. The raw engine_catalog.py mypy check passes. A broader three-file raw mypy invocation reports11 additional diagnostics in build/catalog.py and dsl/render.py; it is not whole-library clean. Public positive/negative checker gates above pass. Inventory covers every retained file except itself.

@@ -1,0 +1,15 @@
+E
+======================================================================
+ERROR: setUpClass (test_refactor_regeneration.RefactorByRegeneration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/sdk-r14-refactor-source/python/umf_access/tests/test_refactor_regeneration.py", line 120, in setUpClass
+    raise AssertionError(
+        "real generator refused fixture; not a typing-negative pass"
+    )
+AssertionError: real generator refused fixture; not a typing-negative pass
+
+----------------------------------------------------------------------
+Ran 0 tests in 9.973s
+
+FAILED (errors=1)

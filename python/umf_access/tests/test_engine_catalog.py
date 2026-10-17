@@ -49,6 +49,70 @@ class Compiler:
 
 
 class EngineCatalogTests(unittest.TestCase):
+    def test_related_transport_preserves_whole_original_requests(self):
+        class RelatedCompiler(Compiler):
+            def compile_engine_related_page_json(self, original):
+                value = json.loads(self.compile_engine_related_read_json(original))
+                value.pop("structuralDigest")
+                value.update(version="weft.engine-page/0.1", pageSize=self.packet["pageSize"], after=None)
+                value["structuralDigest"] = {
+                    "owner": "weft-runtime-engine-page", "version": "0.1",
+                    "sha256": hashlib.sha256(canonical_json(value).encode()).hexdigest(),
+                }
+                return canonical_json(value)
+
+            def compile_engine_related_read_json(self, original):
+                self.packet = json.loads(original)
+                value = json.loads(super().compile_engine_read_json(canonical_json({
+                    "compiler": self.packet["compiler"], "request": self.packet["target"],
+                })))
+                value.pop("structuralDigest")
+                value["relatedRequest"] = self.packet
+                value["structuralDigest"] = {
+                    "owner": "weft-runtime-engine-read", "version": "0.1",
+                    "sha256": hashlib.sha256(canonical_json(value).encode()).hexdigest(),
+                }
+                return canonical_json(value)
+
+        compiler = RelatedCompiler()
+        target = {"sql": "SELECT value FROM Target LIMIT 3", "parameters": {"name": {"family": "string", "value": "雪"}}, "context": {"revision": 1}}
+        source = {**target, "sql": "SELECT id FROM Source WHERE name = :name"}
+        relationship = {"module": "domain", "id": "owns", "direction": "inverse"}
+        entry = EngineRead.build(compiler, target, parameters=Parameters, result=Result,
+                                 method="truss-runtime", related_source=source, relationship=relationship)
+        self.assertEqual(compiler.packet["source"], source)
+        self.assertEqual(compiler.packet["target"], target)
+        self.assertEqual(entry.artifact()["relatedRequest"], compiler.packet)
+        self.assertEqual(json.loads(entry.originals())["request"], target)
+        page = EngineRead.build(compiler, target, parameters=Parameters, result=Result,
+                                method="truss-runtime", page_size=2,
+                                related_source=source, relationship=relationship)
+        self.assertEqual(page.artifact()["relatedRequest"]["version"], "weft.engine-related-page/0.1")
+        self.assertEqual(page.artifact()["relatedRequest"]["source"], source)
+        self.assertEqual(page.artifact()["pageSize"], 2)
+        for method in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"):
+            compiled = EngineRead.compile_original(
+                compiler, target, method=method,
+                related_source=source, relationship=relationship,
+            )
+            self.assertEqual(json.loads(compiled)["compiler"], method)
+            self.assertEqual(compiler.packet["compiler"], method)
+            self.assertEqual(compiler.packet["target"], target)
+            self.assertEqual(compiler.packet["source"], source)
+        with self.assertRaises(ReadBuildError):
+            EngineRead.compile_original(
+                compiler, target, method="ashlar-spark4-fields",
+                related_source=source, relationship=relationship,
+            )
+        for changed in ({**source, "context": {"revision": True}},
+                        {**source, "parameters": {}}, {**source, "extra": "unowned"}):
+            with self.assertRaises(ReadBuildError):
+                EngineRead.compile_original(compiler, target, method="truss-runtime",
+                                            related_source=changed, relationship=relationship)
+        with self.assertRaises(ReadBuildError):
+            EngineRead.compile_original(compiler, target, method="truss-runtime",
+                                        related_source=source, relationship={**relationship, "extra": "unowned"})
+
     def entry(self):
         return EngineRead.build(
             Compiler(),
@@ -57,6 +121,20 @@ class EngineCatalogTests(unittest.TestCase):
             result=Result,
             method="truss-runtime",
         )
+
+    def test_transport_selection_uses_one_unchanged_original_compile(self):
+        class CountingCompiler(Compiler):
+            calls = 0
+            def compile_engine_read_json(self, original):
+                self.calls += 1
+                return super().compile_engine_read_json(original)
+        compiler = CountingCompiler()
+        request = {"parameters": {"name": {"family": "string", "value": "雪"}}}
+        original = EngineRead.compile_original(compiler, request, method="truss-runtime")
+        entry = EngineRead.from_original(original, parameters=Parameters, result=Result)
+        self.assertEqual(compiler.calls, 1)
+        self.assertEqual(entry.originals(), original)
+        self.assertEqual(entry.artifact_json, self.entry().artifact_json)
 
     def test_originals_roundtrip_and_result_signature_refusal(self):
         entry = self.entry()

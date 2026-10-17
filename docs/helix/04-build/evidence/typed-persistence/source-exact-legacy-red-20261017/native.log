@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/source_exact_native_e2e.py", line 157, in <module>
+    assert not gaps, gaps
+           ^^^^^^^^
+AssertionError: ['string_width', 'numeric_typmod', 'nullable_tightening', 'extra_column', 'default_expression', 'stored_generation', 'collation']

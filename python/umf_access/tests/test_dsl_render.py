@@ -57,6 +57,39 @@ PREFIX = 'SELECT "r"."order_id" FROM "commerce"."Order" AS "r"'
 
 
 class LogicalWeftRendering(unittest.TestCase):
+    # @covers US-082-AC8 -- WR-A11 logical grammar; compiler/native proof separate.
+    def test_prefix_preserves_parameter_and_literal_characters(self):
+        @query
+        def parameter(prefix: Param[str]):
+            return objects.filter(memo.starts_with(prefix)).select(order_id).limit(10).all()
+        self.assertIn('STARTS_WITH("r"."memo", :prefix)', render_logical(capture(parameter).variants[0]))
+        for prefix in ("", "%_\\", "A'B", "é", "e\u0301"):
+            @query
+            def literal_prefix():
+                return objects.filter(order_id.starts_with(prefix)).select(order_id).limit(10).all()  # noqa: B023
+            self.assertIn("STARTS_WITH(\"r\".\"order_id\", '" + prefix.replace("'", "''") + "')",
+                          render_logical(capture(literal_prefix).variants[0]))
+        @query
+        def wrong_literal():
+            return objects.filter(order_id.starts_with(3)).select(order_id).limit(10).all()
+        with self.assertRaises(TypeError):
+            capture(wrong_literal)
+
+    # @covers US-082-AC8
+    def test_null_safe_distinctness_preserves_owner_operators_and_nulls(self):
+        for method, operator in (("is_distinct_from", "IS DISTINCT FROM"),
+                                 ("is_not_distinct_from", "IS NOT DISTINCT FROM")):
+            @query
+            def declaration(value: Param[str | None]):
+                return objects.filter(getattr(memo, method)(value)).select(order_id).limit(10).all()  # noqa: B023
+            sql = render_logical(capture(declaration).variants[0])
+            self.assertIn(f'"r"."memo" {operator} :value', sql)
+
+            @query
+            def null_literal():
+                return objects.filter(getattr(memo, method)(None)).select(order_id).limit(10).all()  # noqa: B023
+            self.assertIn(f'"r"."memo" {operator} NULL', render_logical(capture(null_literal).variants[0]))
+
     # @covers US-082-AC6
     def test_unbounded_group_count_refuses_but_global_count_is_one_row(self):
         @query
@@ -410,25 +443,18 @@ class KeyAndRelationshipRendering(unittest.TestCase):
 
     # @covers US-082-AC1
     def test_literal_and_parameter_keys_retain_same_exact_identity(self):
-        from umf_access.dsl import Related
-
-        relation = Related[Order, UnitCompositeKey](
-            FieldRef(
-                module="commerce", element="Order", field="rel", logical_name="Related"
-            )
-        )
+        from commerce import CustomerKey
+        from commerce import Order as GeneratedOrder
 
         @query
         def literal_declaration():
-            return (
-                objects.filter(relation.has(UnitCompositeKey(region="x", identifier=1)))
-                .limit(10)
-                .all()
-            )
+            return GeneratedOrder.objects.filter(
+                GeneratedOrder.c.customer.has(CustomerKey(customer_id="x"))
+            ).limit(10).all()
 
         @query
-        def parameter_declaration(key: Param[UnitCompositeKey]):
-            return objects.filter(relation.has(key)).limit(10).all()
+        def parameter_declaration(key: Param[CustomerKey]):
+            return GeneratedOrder.objects.filter(GeneratedOrder.c.customer.has(key)).limit(10).all()
 
         literal_capture = capture(literal_declaration)
         parameter_capture = capture(parameter_declaration)
@@ -439,7 +465,7 @@ class KeyAndRelationshipRendering(unittest.TestCase):
             literal_key.identity, parameter_capture.parameters[0].key_identity
         )
         self.assertEqual(
-            dict(literal_key.identity), dict(UnitCompositeKey.KEY_IDENTITY)
+            dict(literal_key.identity), dict(CustomerKey.KEY_IDENTITY)
         )
 
     # @covers US-082-AC6
@@ -510,10 +536,13 @@ class KeyAndRelationshipRendering(unittest.TestCase):
                 .all()
             )
 
-        self.assertEqual(
-            render_logical(capture(declaration).variants[0]),
-            'SELECT "r".*, RELATED_KEYS("r"."customer", 5) AS "related-id_keys" FROM "commerce"."Order" AS "r" WHERE HAS_RELATED("r"."customer", KEY(:key__region, :key__identifier)) LIMIT 10',
-        )
+        from umf_access.dsl import CaptureError
+        # This historical handwritten relationship has no source/Key target.
+        # The qualified native profile must require regeneration, not infer a
+        # same-shaped composite Key from the value presented by its caller.
+        with self.assertRaisesRegex(CaptureError, "WR-A6 regenerate"):
+            capture(declaration)
+
 
     # @covers US-082-AC6
     def test_component_marker_collision_refuses(self):

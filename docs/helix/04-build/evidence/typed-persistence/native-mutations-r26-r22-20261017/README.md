@@ -1,0 +1,11 @@
+# R26/R22 constrained native mutation acceptance
+
+57 named case controls pass: scalar27, qualified bounded-list bulk11, schema-neutral bulk13, term/effect bulk6. Immutable installed SDK R26 and unchanged Weft R22 execute original owner programs on owned PostgreSQL18.6, genuine non-owner NOSUPER/NOBYPASS application roles, original owner dependency/authority fences and independent readbacks. All owned servers stop and all49 installed payloads remain exact.
+
+Historical scalar Barrier R1 is preserved: the required early SRE NOWAIT prevents both transactions reaching post-admission. The reviewed Event control instead proves one commit, actual55P03 rollback before any second observation/business SQL and no retry. No native40001 claim is transferred from the unreachable historical barrier.
+
+Bulk-list R1 correctly refused its old missing physical source facts. The reviewed original fixture now authors complete two-field TEXT/C/NOTNULL/generationnull ColumnSet+binding, repinning model/source/security ontology hashes while preserving actions, list semantics and policy. No compiled obligations were spliced. Neutral R1 correctly failed before admission under default public path; R2 explicitly initializes the host-owned idle caller context before original early locks. Wrong initial shadow table fails original held-OID guards before selection/update; late owner-context shadow refusal remains.
+
+Bulk preview/commit, exact nullable-element/list bounds, empty/null membership, facet conflicts, role revocation, schema/collation guards and explicit test-only post-write DDL rollback are exercised. The separate term/effect profile applies the original inert deploymentProgram through the owned deployer, rejects permanent dictionary drift with same configuration identity, blocks concurrent mapping ALTER under the actual native fence, and refuses undeclared expression indexes.
+
+The term/effect generated type predecessor is retained as unchanged authored source; its original request/program is freshly compiled by R22 and executed through R26, with no inference of a refreshed generated-catalog campaign. Database data directories, wheels, binaries, credentials and private engine implementation are excluded. Native Lakebase, remote managed commits and temporal operations are not qualified here.

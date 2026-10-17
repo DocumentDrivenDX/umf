@@ -1,0 +1,53 @@
+{
+  "status": "FAILED",
+  "checks": [
+    {
+      "name": "init",
+      "exitCode": 0
+    },
+    {
+      "name": "start",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-build",
+      "exitCode": 0
+    },
+    {
+      "name": "catalog-check",
+      "exitCode": 0
+    },
+    {
+      "name": "stop",
+      "exitCode": 0
+    }
+  ],
+  "sourceStart": {
+    "/private/tmp/pg_runtime_privilege_native.py": "36df0eaabf6dcd0661e740ec02dd3eebe7728308a74a68ee1c291cd4a70bd816",
+    "/private/tmp/pg_runtime_privilege_resolver.py": "4112af88d13f0447f7d8aa8df31a819f8830cc3336bd7c9ac7312c40640a2804",
+    "/private/tmp/sdk-r13-314-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "1d32b92015cfb3eacf5f2caa08f152a60d1c6bc99508895f4da856642ba76010"
+  },
+  "sourceEnd": {
+    "/private/tmp/pg_runtime_privilege_native.py": "36df0eaabf6dcd0661e740ec02dd3eebe7728308a74a68ee1c291cd4a70bd816",
+    "/private/tmp/pg_runtime_privilege_resolver.py": "4112af88d13f0447f7d8aa8df31a819f8830cc3336bd7c9ac7312c40640a2804",
+    "/private/tmp/sdk-r13-314-env/lib/python3.14/site-packages/umf_access/postgres_read.py": "1d32b92015cfb3eacf5f2caa08f152a60d1c6bc99508895f4da856642ba76010"
+  },
+  "serverStopped": true,
+  "fixtureCleanupComplete": true,
+  "cleanupError": null,
+  "payloadError": null,
+  "runtimeSnapshot": {
+    "wheel": "/private/tmp/sdk-completion-runtime-r13-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+    "wheelSha256": "ce2943e7e8a838103888198b26c5dae07e9afe94b6eb66906642737271086705",
+    "python": "/private/tmp/sdk-r13-314-env/bin/python",
+    "sourceCommit": "a623b1fb553b1816f47cdd335d4c90b12b456acb",
+    "scope": "R13 installed candidate; native qualification separate",
+    "temporal": "HELD"
+  },
+  "installedPayloadsUnchanged": true,
+  "sdkPayloadCount": 45,
+  "weftPayloadCount": 2,
+  "inventoryComplete": false,
+  "compilerOwnerComplete": false,
+  "temporal": "HELD"
+}

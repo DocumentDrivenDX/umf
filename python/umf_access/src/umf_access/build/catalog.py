@@ -18,21 +18,39 @@ import re
 import shutil
 import sys
 import tempfile
+from contextlib import contextmanager
 from dataclasses import replace
 from pathlib import Path
+from threading import Lock
 from types import UnionType
-from typing import Any, Union, cast, get_args, get_origin
+from typing import Annotated, Any, Union, cast, get_args, get_origin
 
 from pydantic import MISSING, create_model
 
 from ..capture import ProjectionRef, capture
-from ..codec_support import make_projection_model
-from ..dsl import FieldRef, Node, RecordRef, render_logical
+from ..codec_support import make_projection_model, make_scalar_projection_model
+from ..dsl import (
+    FieldRef,
+    Node,
+    RecordRef,
+    nullable_join_owners,
+    render_logical,
+    render_related_logical,
+)
 from ..engine_catalog import EngineRead
 from ..native_program import NativeProgram, program_json
-from ..reviewed import ReadBuildError, ReadCompiler, ReviewedSQL, captured_source
+from ..related_keys import key_descriptor, make_related_result_model, validate_decoder
+from ..reviewed import (
+    CatalogRead,
+    ReadBuildError,
+    ReadCompiler,
+    ReviewedSQL,
+    captured_source,
+)
 from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
+from .approximate import require_approximate_profile
 from .commands import emit_command
+from .privileges import privilege_report
 from .search import emit_search
 
 OWNED = (
@@ -44,7 +62,36 @@ OWNED = (
 
 
 class CatalogBuildError(ValueError):
-    pass
+    def __init__(self, message: str, *, code: str | None = None, **metadata: object):
+        super().__init__(message)
+        self.code = code
+        self.metadata = metadata
+
+
+_owned_destinations: set[Path] = set()
+_destination_lock = Lock()
+
+
+@contextmanager
+def _own_destination(root: Path, package: object):
+    if (
+        type(package) is not str
+        or not re.fullmatch(r"[a-z][a-z0-9_]*", package)
+        or keyword.iskeyword(package)
+    ):
+        raise CatalogBuildError("explicit generated package required")
+    destination = (root / package).resolve()
+    with _destination_lock:
+        if destination in _owned_destinations:
+            raise CatalogBuildError(
+                "output already has a cooperating operation", code="OUTPUT_BUSY"
+            )
+        _owned_destinations.add(destination)
+    try:
+        yield
+    finally:
+        with _destination_lock:
+            _owned_destinations.remove(destination)
 
 
 def _json(value: object) -> str:
@@ -87,6 +134,10 @@ def _type(annotation: object, package: str) -> str:
     if annotation in (date, datetime):
         raise CatalogBuildError("temporal catalog qualification held")
     origin = get_origin(annotation)
+    if origin is Annotated:
+        return _type(get_args(annotation)[0], package)
+    if origin is list and len(get_args(annotation)) == 1:
+        return "list[" + _type(get_args(annotation)[0], package) + "]"
     if origin in (UnionType, Union):
         return " | ".join(_type(a, package) for a in get_args(annotation))
     if (
@@ -109,6 +160,107 @@ def _without_missing(annotation: object) -> object:
     return result
 
 
+def _engine_selected_key(ref: RecordRef) -> dict[str, str]:
+    if type(ref.key_id) is not str or not ref.key_id:
+        raise CatalogBuildError("WEFT_BLOCKED: original selected Record Key required")
+    return {"module": ref.module, "record": ref.element, "key": ref.key_id}
+
+
+def _native_binding_source(columns: Any) -> dict[str, str]:
+    binding = columns.get("binding") if type(columns) is dict else None
+    if (
+        type(binding) is not dict
+        or set(binding) != {"sourceId", "documentJson", "documentSha256"}
+        or any(type(binding[k]) is not str or not binding[k] for k in binding)
+    ):
+        raise CatalogBuildError("native columns require an original binding source")
+    try:
+        digest = _sha(binding["documentJson"].encode("utf-8"))
+    except UnicodeEncodeError as error:
+        raise CatalogBuildError("native binding source must be UTF-8") from error
+    if digest != binding["documentSha256"]:
+        raise CatalogBuildError("native binding source digest differs")
+    return binding
+
+
+def _native_column_bindings(target: dict[str, Any]) -> tuple[dict[str, str], ...]:
+    """Collect original byte references only; native owners admit their meaning."""
+    if target.get("version") == "weft.related-read/0.1":
+        source, destination = target.get("source"), target.get("target")
+        if (
+            type(source) is not dict or type(destination) is not dict
+            or source.get("version") == "weft.related-read/0.1"
+            or destination.get("version") == "weft.related-read/0.1"
+            or type(source.get("binding")) is not dict
+            or source["binding"] != destination.get("binding")
+        ):
+            raise CatalogBuildError("related reads require one identical original native binding")
+        return _native_column_bindings(source) + _native_column_bindings(destination)
+    bindings = []
+    unity = target.get("unitySearch")
+    if type(unity) is dict and "nativeColumns" in unity:
+        bindings.append(_native_binding_source(unity["nativeColumns"]))
+    logical = target.get("binding")
+    if type(logical) is dict and "nativeColumns" in logical:
+        columns = logical["nativeColumns"]
+        sets = columns.get("sets") if type(columns) is dict else None
+        if type(sets) is not list or not 1 <= len(sets) <= 64:
+            raise CatalogBuildError(
+                "bounded original native ColumnSet sources required"
+            )
+        bindings.extend(_native_binding_source(item) for item in sets)
+    return tuple(bindings)
+
+
+def _check_native_column_sources(
+    targets: list[dict[str, Any]], manifest: dict[str, Any], root: Path, package: str
+) -> None:
+    bindings = [
+        binding for target in targets for binding in _native_column_bindings(target)
+    ]
+    if not bindings:
+        return
+    path = f"{package}/_umf/sources.json"
+    entries = [item for item in manifest["inventory"] if item["path"] == path]
+    if len(entries) != 1:
+        raise CatalogBuildError("native binding requires inventoried stage-one sources")
+    data = _read(root / path)
+    if _sha(data) != entries[0]["sha256"]:
+        raise CatalogBuildError("stage-one source drift")
+    sources = json.loads(data)
+    if type(sources) is not list:
+        raise CatalogBuildError("invalid stage-one source inventory")
+    for binding in bindings:
+        matches = [
+            s for s in sources if type(s) is dict and s.get("id") == binding["sourceId"]
+        ]
+        if len(matches) != 1 or matches[0].get("text") != binding["documentJson"]:
+            raise CatalogBuildError(
+                "native binding differs from retained stage-one source"
+            )
+
+
+def _resolve_schema_binding(target: dict[str, Any]) -> None:
+    if "schemaBinding" not in target:
+        return
+    mode, binding = target["schemaBinding"], target.get("binding")
+    if (
+        target.get("kind") not in ("postgresql", "lakebase")
+        or mode not in ("qualified", "search-path")
+        or type(binding) is not dict
+        or "schemaBinding" in binding
+        and binding["schemaBinding"] != mode
+        or mode == "qualified"
+        and (type(binding.get("schema")) is not str or not binding["schema"])
+        or mode == "search-path"
+        and binding.get("schema") is not None
+    ):
+        raise CatalogBuildError(
+            "schemaBinding differs from the explicit native binding"
+        )
+    binding["schemaBinding"] = mode
+
+
 def resolve_configuration(
     configuration: dict[str, Any], root: Path
 ) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -125,6 +277,8 @@ def resolve_configuration(
     provenance: dict[str, Any] = {"configuration": configuration, "sources": []}
     if "weft" not in configuration:
         provenance["profile"] = "experimental-inline/0.1"
+        for target in resolved.get("targets", []):
+            _resolve_schema_binding(target)
         return resolved, provenance
     pin = configuration["weft"]
     if (
@@ -179,6 +333,7 @@ def resolve_configuration(
             target["binding"] = program_json(
                 source(target.pop("bindingSource")).decode("utf-8")
             )
+        _resolve_schema_binding(target)
         if target.get("kind") in ("truss", "ashlar"):
             requests = target.get("engineRequests")
             if (
@@ -198,10 +353,24 @@ def resolve_configuration(
             raise CatalogBuildError(
                 "binding model must equal one complete original pinned document"
             )
+        if any(
+            binding["documentJson"] not in originals
+            for binding in _native_column_bindings(target)
+        ):
+            raise CatalogBuildError(
+                "native binding must equal one complete original pinned document"
+            )
     return resolved, provenance
 
 
 def compile_catalog(
+    configuration: dict[str, Any], root: Path, compiler: ReadCompiler
+) -> dict[str, bytes]:
+    with _own_destination(root, configuration.get("package")):
+        return _compile_catalog_owned(configuration, root, compiler)
+
+
+def _compile_catalog_owned(
     configuration: dict[str, Any], root: Path, compiler: ReadCompiler
 ) -> dict[str, bytes]:
     configuration, configuration_provenance = resolve_configuration(configuration, root)
@@ -248,6 +417,7 @@ def compile_catalog(
         or len({t["id"] for t in targets}) != len(targets)
     ):
         raise CatalogBuildError("catalog bound or duplicate target")
+    _check_native_column_sources(targets, manifest, root, package)
     sys.path.insert(0, str(root))
     generated = importlib.import_module(package)
     imported_digest = getattr(
@@ -275,9 +445,9 @@ def compile_catalog(
         ):
             raise CatalogBuildError("explicit absolute Python module names required")
         module = importlib.import_module(name)
-        source = Path(inspect.getfile(module)).resolve()
+        source_path = Path(inspect.getfile(module)).resolve()
         provenance.append(
-            {"module": name, "path": str(source), "sha256": _sha(_read(source))}
+            {"module": name, "path": str(source_path), "sha256": _sha(_read(source_path))}
         )
         for symbol, function in vars(module).items():
             if (
@@ -294,11 +464,23 @@ def compile_catalog(
     for _, declaration in declarations:
         for variant in declaration.variants:
             for target in targets:
-                source = captured_source(variant, binding=target['binding'])
+                source = captured_source(variant, binding=target["binding"])
                 root_ref = cast(RecordRef, variant.node.args[0])
                 record = records.get((root_ref.module, root_ref.element))
-                if source.input_digest != manifest['inputDigest'] or record is None or getattr(record, 'UMF_SOURCE', None) != source or record.objects.ref != root_ref:
-                    raise ReadBuildError('CATALOG_STALE: captured root differs from selected stage-one generation')
+                original_root = replace(
+                    root_ref,
+                    alias=None,
+                    key=tuple(replace(field, alias=None) for field in root_ref.key),
+                )
+                if (
+                    source.input_digest != manifest["inputDigest"]
+                    or record is None
+                    or getattr(record, "UMF_SOURCE", None) != source
+                    or record.objects.ref != original_root
+                ):
+                    raise ReadBuildError(
+                        "CATALOG_STALE: captured root differs from selected stage-one generation"
+                    )
     if (not declarations and not any(t.get("nativeActions") for t in targets)) or len(
         declarations
     ) > 1000:
@@ -315,17 +497,18 @@ def compile_catalog(
         "from umf_access.reviewed import CatalogRead",
         "from umf_access.engine_catalog import EngineRead",
         "from umf_access.pages import ReadPage, ReadContinuation",
-        "from umf_access.dsl import Page, Continuation",
+        "from umf_access.dsl import Page, Continuation, WithKeys",
+        "from umf_access.related_keys import make_related_result_model",
         "from umf_access.protocols import ReadTarget, AsyncReadTarget",
         "from umf_access.catalog import Argument, ReadPlan, ReadVariant, TargetPin, run_query, run_stream",
-        "from umf_access.codec_support import make_projection_model",
+        "from umf_access.codec_support import make_projection_model, make_scalar_projection_model",
         "from .models import *",
         "from .keys import *",
         "",
     ]
     lines.extend(
         [
-            "from umf_access.commands import BulkTarget, CommandVariant, CommandPlan",
+            "from umf_access.commands import BulkTarget, AsyncBulkTarget, CommandVariant, CommandPlan",
             "from umf_access.native_program import NativeProgram",
             "_PlanT = TypeVar('_PlanT')",
             "",
@@ -359,6 +542,7 @@ def compile_catalog(
             "backendId",
             "backendVersion",
             "targetProfile",
+            "schemaBinding",
             "binding",
             "platform",
             "nativeActions",
@@ -367,15 +551,18 @@ def compile_catalog(
             "sessionPrincipal",
             "maxItems",
             "vectorBindings",
+            "unitySearch",
             "snapshots",
             "engineRequests",
             "engineCompiler",
         }:
             raise CatalogBuildError("unknown target configuration member")
-        if target["kind"] in ("truss", "ashlar") and action_refs:
-            raise CatalogBuildError(
-                "WEFT_BLOCKED: engine-owned original action executor catalog required"
-            )
+        if target["kind"] in ("truss", "ashlar"):
+            # CONTRACT-071: engine action dispatch stays in the engine SDK;
+            # shared generated packages may still retain selected ActionRefs.
+            if target.get("nativeActions"):
+                raise CatalogBuildError("engine targets have no native action catalog entries")
+            continue
         requests = target.get("nativeActions")
         if requests is None:
             requests = []
@@ -482,6 +669,10 @@ def compile_catalog(
         )
     for number, (name, declaration) in enumerate(declarations):
         if declaration.kind == "command":
+            if any(target["kind"] == "ashlar" for target in targets):
+                raise CatalogBuildError("ASHLAR_COMMAND_UNSUPPORTED: Ashlar has no SDK BulkTarget")
+            if any(target["kind"] == "truss" for target in targets):
+                raise CatalogBuildError("WEFT_BLOCKED: original Truss mutation manifest compiler required")
             command_ref = cast(RecordRef, declaration.variants[0].node.args[0])
             command_record = records[(command_ref.module, command_ref.element)]
             command_lines, command_entries = emit_command(
@@ -504,13 +695,14 @@ def compile_catalog(
         node = first.node
         terminal = node.op
         steps = cast(tuple[Node, ...], node.args[1])
+        snapshot = any(step.op == "snapshot" for step in steps)
         record_ref = cast(RecordRef, node.args[0])
         record = records[(record_ref.module, record_ref.element)]
         projection = next(
             (cast(ProjectionRef, s.args[0]) for s in steps if s.op == "into"), None
         )
         selected = cast(
-            tuple[FieldRef, ...] | None,
+            tuple[FieldRef | Node, ...] | None,
             next((s.args for s in steps if s.op == "select"), None),
         )
         cursor_name = (
@@ -530,7 +722,85 @@ def compile_catalog(
         key_components: tuple[tuple[str, int], ...] = ()
         tuple_names: tuple[str, ...] = ()
         nullable_fields: tuple[str, ...] = ()
-        if projection is not None:
+        nullable_owners = nullable_join_owners(steps)
+        if terminal == "group_count":
+            grouped_fields = cast(
+                tuple[FieldRef | Node, ...],
+                next((s.args for s in steps if s.op == "group"), ()),
+            )
+            selected = (*grouped_fields, Node("aggregate", ("count", None, None)))
+        scalar_result = selected is not None and any(
+            isinstance(value, Node) for value in selected
+        )
+        if scalar_result and projection is None:
+            assert selected is not None
+            specs = []
+            expressions = []
+            for ordinal, value in enumerate(selected):
+                alias = f"col_{ordinal}"
+                field_ref: object
+                operation: str
+                argument: object
+                if isinstance(value, FieldRef):
+                    field_ref, operation, argument = value, "field", None
+                elif value.op == "aggregate":
+                    raw_operation, field_ref, argument = value.args
+                    operation = cast(str, raw_operation)
+                elif value.op == "bucket_width":
+                    field_ref, argument = value.args
+                    operation = "bucket_width"
+                else:
+                    raise CatalogBuildError(
+                        "WEFT_BLOCKED: unsupported selected scalar expression"
+                    )
+                if field_ref is None and operation == "count":
+                    owner, field_name, nullable = record, "", False
+                elif isinstance(field_ref, FieldRef):
+                    owner = records[(field_ref.module, field_ref.element)]
+                    matches = [
+                        n
+                        for n in owner.model_fields
+                        if getattr(owner.c, n).ref == replace(field_ref, alias=None)
+                    ]
+                    if len(matches) != 1:
+                        raise CatalogBuildError(
+                            "CATALOG_STALE: scalar field differs from original generated source"
+                        )
+                    field_name = matches[0]
+                    nullable = (
+                        field_ref.module,
+                        field_ref.element,
+                        field_ref.alias,
+                    ) in nullable_owners
+                else:
+                    raise CatalogBuildError(
+                        "WEFT_BLOCKED: scalar source metadata is absent"
+                    )
+                if operation in ("sum", "min", "max", "avg"):
+                    nullable = True
+                if operation in ("count", "count_distinct", "approx_count_distinct"):
+                    nullable = False
+                specs.append((alias, owner, field_name, operation, argument, nullable))
+                expressions.append(
+                    f"({alias!r}, {owner.__name__}, {field_name!r}, {operation!r}, {argument!r}, {nullable!r})"
+                )
+            result_expr = f"_Q{number}Result"
+            result = make_scalar_projection_model(result_expr, tuple(specs))
+            lines.append(
+                f"{result_expr} = make_scalar_projection_model({result_expr!r}, ({', '.join(expressions)},))"
+            )
+            projection_fields = tuple(selected)
+            projection_names = tuple(spec[0] for spec in specs)
+            tuple_names = projection_names
+            return_type = (
+                "tuple["
+                + ", ".join(
+                    _type(result.model_fields[n].annotation, package)
+                    for n in tuple_names
+                )
+                + "]"
+            )
+        elif projection is not None:
             result = models[projection.name]
             result_expr = result.__name__
             return_type = result.__name__
@@ -547,15 +817,24 @@ def compile_catalog(
             refs = (
                 selected
                 if selected is not None
-                else tuple(getattr(record.c, n).ref for n in record.model_fields)
+                else tuple(
+                    replace(getattr(record.c, n).ref, alias=record_ref.alias)
+                    for n in record.model_fields
+                )
             )
             if terminal == "exists":
-                refs = record.objects.ref.key
+                refs = record_ref.key
             owner_fields = []
             for ordinal, ref in enumerate(refs):
+                if not isinstance(ref, FieldRef):
+                    raise CatalogBuildError(
+                        "WEFT_BLOCKED: non-field projection metadata requires scalar result"
+                    )
                 owner = records[(ref.module, ref.element)]
                 field = next(
-                    n for n in owner.model_fields if getattr(owner.c, n).ref == ref
+                    n
+                    for n in owner.model_fields
+                    if getattr(owner.c, n).ref == replace(ref, alias=None)
                 )
                 alias = (
                     f"_col_{ordinal}"
@@ -571,7 +850,10 @@ def compile_catalog(
                 # Field names must be public Pydantic identifiers; preserve tuple order independently.
                 owner_fields = [(a.removeprefix("_"), o, f) for a, o, f in owner_fields]
                 nullable_fields = tuple(
-                    a for a, o, _ in owner_fields if o is not record
+                    a
+                    for index, (a, _owner, _field) in enumerate(owner_fields)
+                    if (cast(FieldRef, refs[index]).module, cast(FieldRef, refs[index]).element, cast(FieldRef, refs[index]).alias)
+                    in nullable_owners
                 )
                 result = make_projection_model(
                     f"_Q{number}Result",
@@ -603,6 +885,39 @@ def compile_catalog(
                 )
             projection_fields = tuple(refs)
             projection_names = tuple(a for a, _, _ in owner_fields)
+        related_field = None
+        related_row_expr = None
+        related_base_result = None
+        includes = tuple(step for step in steps if step.op == "include_keys")
+        if includes:
+            if len(includes) != 1 or terminal not in ("all", "first", "one", "get", "page") or any(step.op in ("group", "having") for step in steps):
+                raise CatalogBuildError("WEFT_BLOCKED: WR-A6 bounded relationship Keys require an entity-row terminal")
+            include = includes[0]
+            if len(include.args) not in (3, 4) or not isinstance(include.args[0], FieldRef) or not isinstance(include.args[2], RecordRef):
+                raise CatalogBuildError("CATALOG_STALE: regenerate original relationship Key metadata")
+            relation_ref = cast(FieldRef, include.args[0])
+            bound = include.args[1]
+            key_target = cast(RecordRef, include.args[2])
+            if type(bound) is not int or not 1 <= bound <= 1000:
+                raise CatalogBuildError("WEFT_BLOCKED: WR-A6 bounded relationship Key limit required")
+            if key_target.source is None or key_target.key_id is None:
+                raise CatalogBuildError("CATALOG_STALE: original relationship Key source missing")
+            identity = {"documentId": key_target.source.document_id, "coreVersion": key_target.source.core_version, "module": key_target.module, "element": key_target.element, "key": key_target.key_id}
+            key_module = importlib.import_module(package + ".keys")
+            keys = [value for value in vars(key_module).values() if isinstance(value, type) and issubclass(value, StrictModel) and getattr(value, "UMF_KEY", False) and dict(getattr(value, "KEY_IDENTITY", {})) == identity and getattr(value, "UMF_SOURCE", None) == key_target.source]
+            if len(keys) != 1:
+                raise CatalogBuildError("CATALOG_STALE: exact original relationship Key class required")
+            related_key_model = keys[0]
+            related_field = relation_ref.field + "_keys"
+            decoder = {"profile": "pg-related-keys-json/0.1", "bound": bound, "relationship": {"module": relation_ref.field_module, "id": relation_ref.field, "direction": include.args[3] if len(include.args) == 4 else "forward"}, "key": key_descriptor(related_key_model)}
+            related_row_expr = result_expr
+            related_base_result = result
+            if any(target["kind"] in ("postgresql", "lakebase") for target in targets):
+                related_expr = f"_Q{number}Related"
+                result = make_related_result_model(related_expr, result, related_key_model, related_field, decoder, record)
+                lines.append(f"{related_expr} = make_related_result_model({related_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {decoder!r}, {record.__name__})")
+                result_expr = related_expr
+            return_type = "WithKeys[" + return_type + ", " + related_key_model.__name__ + "]"
         item_return_type = return_type
         if terminal in ("all", "group_count"):
             return_type = "list[" + return_type + "]"
@@ -655,7 +970,7 @@ def compile_catalog(
                 number,
                 name,
                 result_expr,
-                projection_fields,
+                cast(tuple[FieldRef, ...], projection_fields),
                 projection_names,
                 tuple_names,
                 signature,
@@ -694,13 +1009,26 @@ def compile_catalog(
                             f"    {flat}: {_type(key.model_fields[component].annotation, package)}"
                         )
                 else:
-                    parameters[parameter.name]=(carrier,...);paths.append((parameter.name,parameter.name,None));parameter_lines.append(f'    {parameter.name}: {_type(carrier,package)}')
-            params_name=f'_Q{number}P{vi}'
-            params=create_model(params_name,__base__=StrictModel,**parameters)
-            type.__setattr__(params,'UMF_BUNDLE_INPUT_DIGEST',manifest['inputDigest'])
-            type.__setattr__(params,'UMF_RUNTIME_ABI',RUNTIME_IDENTITY)
-            type.__setattr__(params,'UMF_SOURCE',record.UMF_SOURCE)
-            lines.extend([f'class {params_name}(StrictModel):',*(parameter_lines or ['    pass']),f'    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = {manifest["inputDigest"]!r}',f'    UMF_RUNTIME_ABI: ClassVar[tuple[str,str,str]] = {RUNTIME_IDENTITY!r}',f'    UMF_SOURCE: ClassVar[object] = {record.__name__}.UMF_SOURCE',''])
+                    parameters[parameter.name] = (carrier, ...)
+                    paths.append((parameter.name, parameter.name, None))
+                    parameter_lines.append(
+                        f"    {parameter.name}: {_type(carrier, package)}"
+                    )
+            params_name = f"_Q{number}P{vi}"
+            params = create_model(params_name, __base__=StrictModel, **parameters)
+            type.__setattr__(params, "UMF_BUNDLE_INPUT_DIGEST", manifest["inputDigest"])
+            type.__setattr__(params, "UMF_RUNTIME_ABI", RUNTIME_IDENTITY)
+            type.__setattr__(params, "UMF_SOURCE", record.UMF_SOURCE)
+            lines.extend(
+                [
+                    f"class {params_name}(StrictModel):",
+                    *(parameter_lines or ["    pass"]),
+                    f"    UMF_BUNDLE_INPUT_DIGEST: ClassVar[str] = {manifest['inputDigest']!r}",
+                    f"    UMF_RUNTIME_ABI: ClassVar[tuple[str,str,str]] = {RUNTIME_IDENTITY!r}",
+                    f"    UMF_SOURCE: ClassVar[object] = {record.__name__}.UMF_SOURCE",
+                    "",
+                ]
+            )
             # Every variant carries identical projections; only explicit presence changes predicates.
             current = variant
             if projection is None and terminal != "count":
@@ -732,8 +1060,16 @@ def compile_catalog(
                         ),
                     ),
                 )
-            for target in targets:
+            for target_index, target in enumerate(targets):
                 kind = target["kind"]
+                entry_result = result
+                entry_result_expr = result_expr
+                if related_field is not None and kind not in ("postgresql", "lakebase", "truss", "ashlar"):
+                    raise CatalogBuildError("WEFT_BLOCKED: WR-A6 target-specific bounded relationship-Key output profile required")
+                if snapshot and kind not in ("spark-delta", "unity-catalog", "ashlar"):
+                    raise CatalogBuildError(
+                        "SNAPSHOT_UNSUPPORTED: selected target has no admitted snapshot pages"
+                    )
                 profile = {
                     "postgresql": "postgresql18",
                     "lakebase": "lakebase18",
@@ -745,26 +1081,48 @@ def compile_catalog(
                         "WEFT_BLOCKED: target has no admitted read compiler"
                     )
                 binding = target["binding"]
-                logical = render_logical(current, binding=binding)
+                engine_page = replace(current, node=Node("all", current.node.args[:2])) if engine and terminal == "page" else None
+                related = render_related_logical(engine_page or current, binding=binding, owner_bound=engine_page is not None)
+                logical = related.target_sql if related is not None else render_logical(current, binding=binding)
                 if terminal == "count":
                     logical = logical.replace(
                         "SELECT COUNT(*) FROM", 'SELECT COUNT(*) AS "count" FROM', 1
                     )
                 entry_class = "CatalogRead"
                 if engine:
-                    if terminal == "page":
-                        logical = render_logical(replace(current, node=Node("all", current.node.args[:2])), binding=binding, owner_bound=True)
+                    if terminal == "page" and related is None:
+                        logical = render_logical(
+                            replace(current, node=Node("all", current.node.args[:2])),
+                            binding=binding,
+                            owner_bound=True,
+                        )
                     method = target.get("engineCompiler")
                     if method not in (
-                        {"truss-runtime"}
+                        {"truss-runtime", "truss-runtime-binary"}
                         if kind == "truss"
-                        else {"registered", "ashlar-spark4", "ashlar-dbsql-20261016", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"}
+                        else {
+                            "registered",
+                            "ashlar-spark4",
+                            "ashlar-spark4-fields",
+                            "ashlar-spark4-sdk",
+                            "ashlar-spark4-sdk-pages",
+                            "ashlar-dbsql-20261016",
+                            "ashlar-spark4-pages",
+                            "ashlar-dbsql-20261016-pages",
+                        }
                     ):
                         raise CatalogBuildError(
                             "explicit engine compiler selection required"
                         )
-                    if terminal == "page" and kind == "ashlar" and method not in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"):
-                        raise CatalogBuildError("WEFT_BLOCKED: separately registered original Ashlar page compiler required")
+                    if (
+                        terminal == "page"
+                        and kind == "ashlar"
+                        and method
+                        not in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages", "ashlar-spark4-sdk-pages")
+                    ):
+                        raise CatalogBuildError(
+                            "WEFT_BLOCKED: separately registered original Ashlar page compiler required"
+                        )
                     original = target.get("engineRequests", {}).get(
                         name + ":" + str(vi)
                     )
@@ -785,24 +1143,75 @@ def compile_catalog(
                         raise CatalogBuildError(
                             "original engine model differs from selected logical binding"
                         )
-                    compiled = EngineRead.build(
-                        compiler,
-                        original,
-                        parameters=params,
-                        result=result,
-                        method=method,
-                        page_size=cast(int, node.args[2]) if terminal == "page" else None,
-                    )
+                    navigation: dict[str, Any] = {
+                        "related_source": {**original, "sql": related.source_sql},
+                        "relationship": related.relationship,
+                    } if related is not None else {}
+                    if method == "truss-runtime-binary" and related is not None:
+                        raise CatalogBuildError("WEFT_BLOCKED: explicit Truss binary profile does not admit navigation")
+                    successor_engine = method in ("ashlar-spark4-sdk", "ashlar-spark4-sdk-pages", "truss-runtime-binary")
+                    if successor_engine:
+                        if terminal == "page":
+                            navigation["selected_key"] = _engine_selected_key(record_ref)
+                        if method != "truss-runtime-binary" and terminal != "page" and any(step.op == "order" for step in current.node.args[1]):
+                            navigation["order_key"] = _engine_selected_key(record_ref)
+                        if related is not None:
+                            source_step = next(step for step in current.node.args[1] if step.op == "related")
+                            source_ref = source_step.args[0]
+                            navigation["source_selected_key"] = _engine_selected_key(cast(RecordRef, source_ref))
+                    if related_field is not None:
+                        original_program = EngineRead.compile_original(
+                            compiler, original, method=method,
+                            page_size=cast(int, node.args[2]) if terminal == "page" else None,
+                            **navigation,
+                        )
+                        original_outputs = program_json(original_program).get("outputs")
+                        candidates = [output for output in original_outputs if type(output) is dict and output.get("name") == related_field] if type(original_outputs) is list else []
+                        if len(candidates) != 1 or candidates[0].get("carrier") != "related-keys" or candidates[0].get("nullable") is not False:
+                            raise CatalogBuildError("WEFT_BLOCKED: WR-A6 original engine related-Key output descriptor required")
+                        engine_decoder = validate_decoder(candidates[0].get("decoder"), related_key_model)
+                        if any(engine_decoder[key] != decoder[key] for key in ("bound", "relationship", "key")) or related_base_result is None:
+                            raise CatalogBuildError("CATALOG_STALE: original engine relationship or Key differs from captured declaration")
+                        entry_result_expr = f"_Q{number}RelatedE{vi}_{target_index}"
+                        entry_result = make_related_result_model(entry_result_expr, related_base_result, related_key_model, related_field, engine_decoder, record)
+                        lines.append(f"{entry_result_expr} = make_related_result_model({entry_result_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {engine_decoder!r}, {record.__name__})")
+                        compiled: CatalogRead[Any, Any] = EngineRead.from_original(original_program, parameters=params, result=entry_result)
+                    else:
+                        compiled = EngineRead.build(
+                            compiler,
+                            original,
+                            parameters=params,
+                            result=result,
+                            method=method,
+                            page_size=cast(int, node.args[2])
+                            if terminal == "page"
+                            else None,
+                            **navigation,
+                        )
                     entry_class = "EngineRead"
                 else:
-                    compiled = ReviewedSQL(
-                        logical, params, result, 1000, keyset=terminal == "page"
-                    ).build(
-                        compiler,
-                        target=profile,
-                        binding=binding,
-                        snapshots=target.get("snapshots"),
-                    )
+                    try:
+                        compiled = ReviewedSQL(
+                            logical, params, result, 1000, keyset=terminal == "page"
+                        ).build(
+                            compiler,
+                            target=cast(str, profile),
+                            binding=binding,
+                            snapshots=target.get("snapshots"),
+                            snapshot=snapshot,
+                            stream_page_size=terminal == "page",
+                            related_source=related.source_sql if related is not None else None,
+                            related_relationship=related.relationship if related is not None else None,
+                        )
+                    except ReadBuildError as error:
+                        if _requests_approximate_distinct(node):
+                            raise CatalogBuildError(
+                                "WEFT_BLOCKED: WR-A10 approximate distinct; "
+                                + str(error)
+                            ) from error
+                        raise
+                if _requests_approximate_distinct(node):
+                    require_approximate_profile(compiled.artifact(), profile)
                 context = _json(
                     {
                         "inputDigest": manifest["inputDigest"],
@@ -810,24 +1219,56 @@ def compile_catalog(
                         "presence": variant.presence,
                         "targetId": target["id"],
                         "configurationSha256": _sha(_json(configuration).encode()),
+                        **({"selectedKey": navigation["selected_key"]} if engine and successor_engine and terminal == "page" else {}),
+                        **({"sourceSelectedKey": navigation["source_selected_key"]} if engine and successor_engine and related is not None else {}),
+                        **({"orderKey": navigation["order_key"]} if engine and successor_engine and "order_key" in navigation else {}),
                     }
                 )
                 compiled = replace(compiled, context_json=context)
                 if cursor_key is not None:
                     ordering = json.loads(compiled.artifact_json).get("cursorOrdering")
                     if engine:
-                        native_key = compiled.artifact()["artifact"]["logicalPlan"]["pageKey"]
+                        engine_program = cast(EngineRead[Any, Any], compiled).artifact()
+                        ordered_page = engine_program.get("page") if engine_program["version"] == "weft.engine-page/0.2" and engine_program["compiler"] == "ashlar-spark4-sdk-pages" else None
+                        native_key = ordered_page["key"] if ordered_page is not None else engine_program["artifact"]["logicalPlan"]["pageKey"]
                         key_identity = dict(cursor_parameter.key_identity)
                         fields = getattr(cursor_key, "UMF_FIELDS", ())
-                        if native_key["id"] != key_identity["key"] or key_identity["module"] != record_ref.module or key_identity["element"] != record_ref.element or [(f["documentId"], f["module"], f["element"]) for f in native_key["fields"]] != [(key_identity["documentId"], m, e) for m,e,_ in fields]:
-                            raise CatalogBuildError("WEFT_BLOCKED: native authored page Key differs from declared Key")
-                        ordering = [{"table": [record_ref.logical_namespace, record_ref.logical_name], "field": getattr(record.c, python_name).ref.logical_name} for _,_,python_name in fields]
+                        if (
+                            native_key["id"] != key_identity["key"]
+                            or key_identity["module"] != record_ref.module
+                            or key_identity["element"] != record_ref.element
+                            or [
+                                (f["documentId"], f["module"], f["element"])
+                                for f in native_key["fields"]
+                            ]
+                            != [
+                                (key_identity["documentId"], m, e) for m, e, _ in fields
+                            ]
+                        ):
+                            raise CatalogBuildError(
+                                "WEFT_BLOCKED: native authored page Key differs from declared Key"
+                            )
+                        ordering = [
+                            {
+                                "table": [
+                                    record_ref.logical_namespace,
+                                    record_ref.logical_name,
+                                ],
+                                "field": getattr(
+                                    record.c, python_name
+                                ).ref.logical_name,
+                            }
+                            for _, _, python_name in fields
+                        ]
                     if not isinstance(ordering, list):
                         raise CatalogBuildError(
                             "WEFT_BLOCKED: complete ordering provenance required"
                         )
                     components = []
-                    for key_field in cursor_key.model_fields:
+                    for key_ordinal, key_field in enumerate(cursor_key.model_fields):
+                        if engine and ordered_page is not None:
+                            components.append((key_field, ordered_page["keySlots"][key_ordinal]))
+                            continue
                         logical = getattr(record.c, key_field).ref.logical_name
                         matches = [
                             i
@@ -863,7 +1304,7 @@ def compile_catalog(
                     platform,
                 )
                 variants.append(
-                    f"ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {result_expr}, context_json={context!r}), {tuple(paths)!r})"
+                    f"ReadVariant({variant.presence!r}, TargetPin{pin!r}, {entry_class}({compiled.artifact_json!r}, {params_name}, {entry_result_expr}, context_json={context!r}), {tuple(paths)!r})"
                 )
                 entries.append(
                     {
@@ -882,7 +1323,7 @@ def compile_catalog(
         )
         lines.extend(
             [
-                f"{plan} = ReadPlan({name!r}, {terminal!r}, {argument_tuple}, ({', '.join(variants)},), {tuple_names!r}, {cursor_name!r}, {cursor_key.__name__ if cursor_key else 'None'}, {key_components!r})",
+                f"{plan} = ReadPlan({name!r}, {terminal!r}, {argument_tuple}, ({', '.join(variants)},), {tuple_names!r}, {cursor_name!r}, {cursor_key.__name__ if cursor_key else 'None'}, {key_components!r}" + (f", related_field={related_field!r}, related_row_model={related_row_expr}" if related_field is not None else "") + ")",
                 "",
             ]
         )
@@ -913,7 +1354,12 @@ def compile_catalog(
         if terminal == "page":
             item_type = item_return_type
             stream_tail = ", *, " + ", ".join(
-                ordered + ["max_rows: int", "timeout: timedelta | None = None"]
+                ordered
+                + [
+                    "max_rows: int",
+                    "page_size: int | None = None",
+                    "timeout: timedelta | None = None",
+                ]
             )
             for target_type, returned in [
                 ("ReadTarget", f"Generator[{item_type},None,None]"),
@@ -928,7 +1374,7 @@ def compile_catalog(
             lines.extend(
                 [
                     f"def {name}_stream(target: ReadTarget | AsyncReadTarget{stream_tail}) -> Generator[{item_type},None,None] | AsyncGenerator[{item_type},None]:",
-                    f"    return cast(Generator[{item_type},None,None] | AsyncGenerator[{item_type},None], run_stream({plan},target,{arguments},max_rows=max_rows,timeout=timeout))",
+                    f"    return cast(Generator[{item_type},None,None] | AsyncGenerator[{item_type},None], run_stream({plan},target,{arguments},max_rows=max_rows,page_size=page_size,timeout=timeout))",
                     "",
                 ]
             )
@@ -945,33 +1391,7 @@ def compile_catalog(
         "queries.py": ("\n".join(lines) + "\n").encode(),
         "_umf/catalog.json": (_json(catalog) + "\n").encode(),
         "_umf/privileges.json": (
-            _json(
-                {
-                    "contract": "umf-access-privileges/0.1",
-                    "targets": [
-                        {
-                            "id": t["id"],
-                            "entries": [
-                                {
-                                    "name": e["name"],
-                                    "kind": e["kind"],
-                                    "referencedTables": e["artifact"].get(
-                                        "referencedTables"
-                                    ),
-                                    "nativeObligations": e["artifact"].get(
-                                        "obligations"
-                                    ),
-                                }
-                                for e in entries
-                                if e["targetId"] == t["id"]
-                            ],
-                            "catalog": ["pg_catalog shape/role/key observations"],
-                        }
-                        for t in targets
-                    ],
-                }
-            )
-            + "\n"
+            _json(privilege_report(targets, entries)) + "\n"
         ).encode(),
     }
     stage = {
@@ -990,14 +1410,119 @@ def compile_catalog(
 def publish_catalog(
     root: Path, package: str, outputs: dict[str, bytes], *, check: bool = False
 ) -> None:
+    with _own_destination(root, package):
+        _publish_catalog_owned(root, package, outputs, check=check)
+
+
+def _requests_approximate_distinct(value: object) -> bool:
+    if isinstance(value, Node):
+        return (
+            value.op == "aggregate"
+            and len(value.args) == 3
+            and value.args[0] == "approx_count_distinct"
+        ) or any(_requests_approximate_distinct(child) for child in value.args)
+    if isinstance(value, tuple):
+        return any(_requests_approximate_distinct(child) for child in value)
+    return False
+
+
+def _check_publication_generation(
+    root: Path, package: str, outputs: dict[str, bytes]
+) -> None:
+    if set(outputs) != set(OWNED):
+        raise CatalogBuildError("exact owned stage-two paths required")
+    manifest = json.loads(_read(root / package / "_umf/manifest.json"))
+    identity = {key: manifest.get(key) for key in ("inputDigest", "runtimeAbi")}
+    if (
+        identity["runtimeAbi"]
+        != dict(zip(("distribution", "version", "abi"), RUNTIME_IDENTITY, strict=True))
+        or type(identity["inputDigest"]) is not str
+    ):
+        raise CatalogBuildError(
+            "CATALOG_STALE: stage-one identity differs", code="CATALOG_STALE"
+        )
+    for name in ("_umf/catalog.json", "_umf/catalog-manifest.json"):
+        candidate = json.loads(outputs[name])
+        if any(candidate.get(key) != value for key, value in identity.items()):
+            raise CatalogBuildError(
+                "CATALOG_STALE: candidate belongs to another stage-one generation",
+                code="CATALOG_STALE",
+            )
+    inventory = manifest.get("inventory")
+    if type(inventory) is not list:
+        raise CatalogBuildError(
+            "CATALOG_STALE: stage-one inventory required", code="CATALOG_STALE"
+        )
+    seen: set[str] = set()
+    for item in inventory:
+        if (
+            type(item) is not dict
+            or set(item) != {"path", "sha256"}
+            or type(item["path"]) is not str
+        ):
+            raise CatalogBuildError(
+                "CATALOG_STALE: invalid stage-one inventory", code="CATALOG_STALE"
+            )
+        relative = Path(item["path"])
+        if (
+            relative.is_absolute()
+            or ".." in relative.parts
+            or not relative.parts
+            or str(relative) != item["path"]
+            or "\\" in item["path"]
+            or relative.parts[0] != package
+            or str(relative.relative_to(package)) in OWNED
+            or item["path"] in seen
+        ):
+            raise CatalogBuildError(
+                "CATALOG_STALE: unsafe stage-one inventory", code="CATALOG_STALE"
+            )
+        seen.add(item["path"])
+        path = root / relative
+        if (
+            any(parent.is_symlink() for parent in (path, *path.parents))
+            or _sha(_read(path)) != item["sha256"]
+        ):
+            raise CatalogBuildError(
+                "CATALOG_STALE: stage-one source drift", code="CATALOG_STALE"
+            )
+
+
+def _publication_tree(destination: Path) -> dict[str, bytes]:
+    files: dict[str, bytes] = {}
+    for path in sorted(destination.rglob("*")):
+        if path.is_symlink():
+            raise CatalogBuildError("package symlinks refuse publication")
+        if path.is_file():
+            files[str(path.relative_to(destination))] = _read(path)
+    return files
+
+
+def _publish_catalog_owned(
+    root: Path, package: str, outputs: dict[str, bytes], *, check: bool = False
+) -> None:
     destination = root / package
+    if any(path.is_symlink() for path in (destination, *destination.parents)):
+        raise CatalogBuildError("package symlinks refuse publication")
+    _check_publication_generation(root, package, outputs)
     previous = destination / "_umf/catalog-manifest.json"
     if previous.exists():
         inventory = json.loads(_read(previous))["inventory"]
-        if any(
-            item["path"] not in OWNED
-            or _sha(_read(destination / item["path"])) != item["sha256"]
-            for item in inventory
+        expected = set(OWNED) - {"_umf/catalog-manifest.json"}
+        if (
+            type(inventory) is not list
+            or len(inventory) != len(expected)
+            or any(
+                type(item) is not dict
+                or set(item) != {"path", "sha256"}
+                or type(item["path"]) is not str
+                for item in inventory
+            )
+            or {item["path"] for item in inventory} != expected
+            or any(
+                _sha(_read(destination / item["path"])) != item["sha256"]
+                for item in inventory
+            )
         ):
             raise CatalogBuildError("catalog hand edit or unsafe inventory")
     elif any((destination / path).exists() for path in OWNED):
@@ -1011,26 +1536,44 @@ def publish_catalog(
         return
     if set(outputs) != set(OWNED) or destination.is_symlink():
         raise CatalogBuildError("exact owned stage-two paths required")
-    for path in destination.rglob("*"):
-        if path.is_symlink():
-            raise CatalogBuildError("package symlinks refuse publication")
+    before = _publication_tree(destination)
     stage = Path(tempfile.mkdtemp(prefix=".umf-catalog-", dir=root))
     candidate = stage / package
     backup = stage / "original"
+    moved = False
+    installed = False
     try:
         shutil.copytree(destination, candidate)
         for name, data in outputs.items():
             path = candidate / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)
+        if _publication_tree(destination) != before:
+            raise CatalogBuildError(
+                "output changed while staging", code="OUTPUT_CHANGED"
+            )
         os.replace(destination, backup)
+        moved = True
         try:
             os.replace(candidate, destination)
+            installed = True
         except BaseException:
-            os.replace(backup, destination)
+            try:
+                os.replace(backup, destination)
+                moved = False
+            except BaseException as restore_error:
+                raise CatalogBuildError(
+                    "replacement and restoration failed; original package retained",
+                    code="WRITE_UNRESOLVED",
+                    destination=str(destination.resolve()),
+                    backup=str(backup.resolve()),
+                    staging=str(stage.resolve()),
+                    unresolved=True,
+                ) from restore_error
             raise
     finally:
-        shutil.rmtree(stage)
+        if not moved or installed:
+            shutil.rmtree(stage)
 
 
 def main() -> int:
@@ -1044,12 +1587,16 @@ def main() -> int:
         weft = cast(ReadCompiler, importlib.import_module("weft"))
         root = args.root.resolve()
         config = program_json(_read(args.config).decode("utf-8"))
-        outputs = compile_catalog(config, root, weft)
-        publish_catalog(root, config["package"], outputs, check=args.check)
+        with _own_destination(root, config.get("package")):
+            outputs = _compile_catalog_owned(config, root, weft)
+            _publish_catalog_owned(root, config["package"], outputs, check=args.check)
         print(_json({"status": "pass", "files": list(OWNED)}))
         return 0
     except (ValueError, KeyError, TypeError) as error:
-        print(_json({"status": "refused", "reason": str(error)}), file=sys.stderr)
+        details: dict[str, Any] = {"status": "refused", "reason": str(error)}
+        if isinstance(error, CatalogBuildError) and error.code is not None:
+            details.update(code=error.code, **error.metadata)
+        print(_json(details), file=sys.stderr)
         return 1
 
 

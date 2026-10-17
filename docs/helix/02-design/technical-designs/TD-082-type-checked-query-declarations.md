@@ -76,7 +76,7 @@ to-one relationship attributes and returns `Joined[O1, O2, R]`. Its `filter`
 accepts `Predicate[O1] | Predicate[O2]`, so a predicate on any other Record has no
 match. A join along an optional relationship marks the joined Record's columns as
 nullable, so `.select` yields `T | None` for them. Further joins add Records up to
-the S17 limit of four. `is_distinct_from` and `is_not_distinct_from` take
+the current owner-selected FR-53 READ-JOIN limit of three, superseding the earlier S17 four-edge proposal for this slice. `is_distinct_from` and `is_not_distinct_from` take
 `T | None | Param[T | None]` and return `Predicate[O]` (US-082-AC8).
 
 **Checker configuration.** The spike shows mypy 2.4.0 reports only 2 of the 9

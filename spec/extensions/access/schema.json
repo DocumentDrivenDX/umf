@@ -228,6 +228,20 @@
                 "notNull": {
                   "type": "boolean"
                 },
+                "collation": {
+                  "anyOf": [
+                    { "type": "null" },
+                    {
+                      "type": "object",
+                      "required": ["schema", "name"],
+                      "properties": {
+                        "schema": { "type": "string", "minLength": 1, "maxLength": 63 },
+                        "name": { "type": "string", "minLength": 1, "maxLength": 63 }
+                      },
+                      "additionalProperties": true
+                    }
+                  ]
+                },
                 "generation": {
                   "enum": [
                     null,

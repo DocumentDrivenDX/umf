@@ -1,0 +1,105 @@
+[
+  {
+    "Plan": {
+      "Node Type": "Limit",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 2.19,
+      "Total Cost": 2.19,
+      "Plan Rows": 1,
+      "Plan Width": 168,
+      "Disabled": false,
+      "Plans": [
+        {
+          "Node Type": "Seq Scan",
+          "Parent Relationship": "InitPlan",
+          "Subplan Name": "CTE __umf_match",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Relation Name": "docs",
+          "Alias": "r",
+          "Startup Cost": 0.0,
+          "Total Cost": 1.06,
+          "Plan Rows": 1,
+          "Plan Width": 32,
+          "Disabled": true,
+          "Filter": "(owner = CURRENT_USER)"
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Parent Relationship": "InitPlan",
+          "Subplan Name": "CTE __umf_candidates",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Join Type": "Inner",
+          "Startup Cost": 0.0,
+          "Total Cost": 1.09,
+          "Plan Rows": 1,
+          "Plan Width": 96,
+          "Disabled": false,
+          "Inner Unique": false,
+          "Join Filter": "(NOT (t.id IS DISTINCT FROM m.id))",
+          "Plans": [
+            {
+              "Node Type": "Seq Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "docs",
+              "Alias": "t",
+              "Startup Cost": 0.0,
+              "Total Cost": 1.06,
+              "Plan Rows": 1,
+              "Plan Width": 96,
+              "Disabled": true,
+              "Filter": "(owner = CURRENT_USER)"
+            },
+            {
+              "Node Type": "CTE Scan",
+              "Parent Relationship": "Inner",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "CTE Name": "__umf_match",
+              "Alias": "m",
+              "Startup Cost": 0.0,
+              "Total Cost": 0.02,
+              "Plan Rows": 1,
+              "Plan Width": 32,
+              "Disabled": false
+            }
+          ]
+        },
+        {
+          "Node Type": "Sort",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 0.04,
+          "Total Cost": 0.04,
+          "Plan Rows": 1,
+          "Plan Width": 168,
+          "Disabled": false,
+          "Sort Key": [
+            "((c.f2 <=> '[1,0,0]'::vector(3)))",
+            "c.f0 COLLATE \"C\""
+          ],
+          "Plans": [
+            {
+              "Node Type": "CTE Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "CTE Name": "__umf_candidates",
+              "Alias": "c",
+              "Startup Cost": 0.0,
+              "Total Cost": 0.03,
+              "Plan Rows": 1,
+              "Plan Width": 168,
+              "Disabled": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

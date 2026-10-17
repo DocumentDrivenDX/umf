@@ -1,9 +1,11 @@
+import hashlib
 import json
 import os
 import subprocess
 import sys
 import tempfile
 import time
+from importlib.metadata import version
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
@@ -38,8 +40,6 @@ from umf_access.protocols import (
     Rejected,
 )
 
-pg = Path(tempfile.mkdtemp(prefix="umf-native-actions-", dir="/private/tmp"))
-(pg / "socket").mkdir()
 bin = Path("/opt/homebrew/opt/postgresql@18/bin")
 started = False
 cases = []
@@ -53,6 +53,71 @@ def command(*args):
         raise RuntimeError(p.stdout + p.stderr)
     return p.stdout
 
+
+request = json.loads((root / "fixtures/access/native-actions/request.json").read_text())
+request["binding"]["schema"] = "native_app"
+generated = Path(os.environ["UMF_NATIVE_GENERATED_ROOT"])
+(generated / "native_declarations.py").write_text(
+    'from umf_access import query, command, Param\nfrom native_sales.models import Order\nfrom native_sales.actions import Approve\n@query\ndef orders():\n    return Order.objects.limit(10).all()\n@command(action=Approve)\ndef approve_drafts(status: Param[str]):\n    return Order.objects.filter(Order.c.status == status).update(status="approved")\n'
+)
+configuration = {
+    "package": "native_sales",
+    "modules": ["native_declarations"],
+    "targets": [
+        {
+            "id": "local",
+            "kind": "postgresql",
+            "backendId": "weft-postgresql",
+            "backendVersion": "raw-read/0.1",
+            "targetProfile": "weft.raw-read/0.1",
+            "binding": request["binding"],
+            "platform": [{"name": "postgresql", "versions": ["180006"]}],
+            "security": request["security"],
+            "roleMappings": request["roleMappings"],
+            "sessionPrincipal": "human",
+            "maxItems": 3,
+        }
+    ],
+}
+stage_one = json.loads((generated / "stage-one-request.json").read_text())
+documents = []
+for original in stage_one["sources"]:
+    path = "original-" + original["id"] + ".json"
+    (generated / path).write_text(original["text"])
+    documents.append(
+        {
+            "path": path,
+            "sha256": hashlib.sha256(original["text"].encode()).hexdigest(),
+        }
+    )
+configuration["umf"] = {"documents": documents}
+configuration["weft"] = {"distribution": "weft-sql", "version": version("weft-sql")}
+(generated / "native-catalog-config.json").write_text(json.dumps(configuration))
+for extra in ([], ["--check"]):
+    command(
+        sys.executable,
+        "-B",
+        "-m",
+        "umf_access.build.catalog",
+        "catalog",
+        "--config",
+        generated / "native-catalog-config.json",
+        "--root",
+        generated,
+        *extra,
+    )
+from native_sales import queries
+
+if os.environ.get("UMF_NATIVE_BUILD_ONLY") == "1":
+    print(
+        json.dumps(
+            {"publicCliStatus": "pass", "nativeExecuted": False, "temporal": "HELD"}
+        )
+    )
+    raise SystemExit(0)
+
+pg = Path(tempfile.mkdtemp(prefix="umf-native-actions-", dir="/private/tmp"))
+(pg / "socket").mkdir()
 
 try:
     command(
@@ -117,49 +182,6 @@ try:
     admin.execute(
         "GRANT EXECUTE ON FUNCTION native_app.revoke_approver() TO deploy_actor"
     )
-
-    request = json.loads(
-        (root / "fixtures/access/native-actions/request.json").read_text()
-    )
-    request["binding"]["schema"] = "native_app"
-    generated = Path(os.environ["UMF_NATIVE_GENERATED_ROOT"])
-    (generated / "native_declarations.py").write_text(
-        'from umf_access import query, command, Param\nfrom native_sales.models import Order\nfrom native_sales.actions import Approve\n@query\ndef orders():\n    return Order.objects.limit(10).all()\n@command(action=Approve)\ndef approve_drafts(status: Param[str]):\n    return Order.objects.filter(Order.c.status == status).update(status="approved")\n'
-    )
-    configuration = {
-        "package": "native_sales",
-        "modules": ["native_declarations"],
-        "targets": [
-            {
-                "id": "local",
-                "kind": "postgresql",
-                "backendId": "weft-postgresql",
-                "backendVersion": "raw-read/0.1",
-                "targetProfile": "weft.raw-read/0.1",
-                "binding": request["binding"],
-                "platform": [{"name": "postgresql", "versions": ["180006"]}],
-                "security": request["security"],
-                "roleMappings": request["roleMappings"],
-                "sessionPrincipal": "human",
-                "maxItems": 3,
-            }
-        ],
-    }
-    (generated / "native-catalog-config.json").write_text(json.dumps(configuration))
-    for extra in ([], ["--check"]):
-        command(
-            sys.executable,
-            "-B",
-            "-m",
-            "umf_access.build.catalog",
-            "catalog",
-            "--config",
-            generated / "native-catalog-config.json",
-            "--root",
-            generated,
-            *extra,
-        )
-    from native_sales import queries
 
     cases.append(
         "real catalog CLI publishes and checks all selected action programs and captured bulk command"
@@ -307,51 +329,51 @@ try:
         "SELECT status FROM native_app.orders WHERE id='o-2'"
     ).fetchone() == ("draft",)
     cases.append("native primary-key violation confirms rollback")
-    # Both real SERIALIZABLE transactions establish their snapshot before
-    # either can update. The loser must report the native conflict without retry.
+    # Original early SRE NOWAIT makes the historical post-admission barrier
+    # unreachable. Retain SERIALIZABLE and prove first-lock contention instead.
     from concurrent.futures import ThreadPoolExecutor
-    from threading import Barrier
-
-    from umf_access.protocols import Conflict
-
-    gate = Barrier(2)
-
-    class ConcurrentAdmission(Admission):
+    from threading import Event
+    entered, release = Event(), Event()
+    class HeldAdmission(Admission):
         def admit(self, connection, program, *, deadline):
             original = super().admit(connection, program, deadline=deadline)
-            gate.wait(timeout=4)
+            entered.set()
+            assert release.wait(timeout=8)
             return original
-
-    def concurrent_action():
+    class ObservedConnection:
+        def __init__(self, connection): self.connection, self.sql = connection, []
+        def __getattr__(self, name): return getattr(self.connection, name)
+        def execute(self, sql, *args, **kwargs):
+            self.sql.append(sql)
+            return self.connection.execute(sql, *args, **kwargs)
+    def held_action():
         with psycopg.connect(base + " user=erik") as connection:
-            current = PostgresActionExecutor(
-                connection,
-                tuple(programs),
-                ConcurrentAdmission(),
-                default_timeout=timedelta(seconds=5),
-            )
-            answer = current.invoke(Approve, {"order": OrderKey(id="o-1")})
+            current = PostgresActionExecutor(connection, tuple(programs), HeldAdmission(), default_timeout=timedelta(seconds=10))
+            result = current.invoke(Approve, {"order": OrderKey(id="o-1")})
             assert connection.info.transaction_status == 0
-            return answer
-
+            return result
     admin.execute("UPDATE native_app.orders SET status='draft' WHERE id='o-1'")
-    with ThreadPoolExecutor(max_workers=2) as workers:
-        futures = [workers.submit(concurrent_action) for _ in range(2)]
-        outcomes = [future.result(timeout=10) for future in futures]
-    assert sum(isinstance(o, Committed) for o in outcomes) == 1, outcomes
-    assert (
-        sum(
-            isinstance(o, Conflict) and o.code == "40001" and not o.retained
-            for o in outcomes
-        )
-        == 1
-    ), outcomes
-    assert admin.execute(
-        "SELECT status FROM native_app.orders WHERE id='o-1'"
-    ).fetchone() == ("approved",)
-    cases.append(
-        "actual concurrent SERIALIZABLE writes yield one commit and one native conflict without retry"
-    )
+    with ThreadPoolExecutor(max_workers=1) as workers:
+        first = workers.submit(held_action)
+        try:
+            assert entered.wait(timeout=5)
+            with psycopg.connect(base + " user=erik") as raw:
+                second = ObservedConnection(raw)
+                current = PostgresActionExecutor(second, tuple(programs), Admission(), default_timeout=timedelta(seconds=5))
+                try:
+                    current.invoke(Approve, {"order": OrderKey(id="o-1")})
+                except ActionFailed as error:
+                    assert getattr(error.cause, "sqlstate", None) == "55P03", error
+                    assert second.info.transaction_status == 0
+                    assert not any(statement.lstrip().upper().startswith(("SELECT", "INSERT", "UPDATE", "DELETE")) for statement in second.sql), second.sql
+                else:
+                    raise AssertionError("contending original early mutation fence accepted")
+        finally:
+            release.set()
+        winner = first.result(timeout=10)
+    assert isinstance(winner, Committed), winner
+    assert admin.execute("SELECT status FROM native_app.orders WHERE id='o-1'").fetchone() == ("approved",)
+    cases.append("original SERIALIZABLE early SRE NOWAIT contention yields55P03 rollback before observation/data SQL, one commit, no retry; historical post-admission40001 barrier superseded")
     admin.execute("REVOKE native_approver FROM erik")
     result = executor.invoke(Approve, {"order": OrderKey(id="o-1")})
     assert isinstance(result, Denied)
@@ -657,7 +679,7 @@ try:
     async def generated_async_command():
         c = await psycopg.AsyncConnection.connect(base + " user=erik")
         target = AsyncPostgresBulkTarget(c, target_config, AsyncAdmission())
-        plan = queries.approve_drafts(target, status="approved")
+        plan = await queries.approve_drafts(target, status="approved")
         preview = await plan.preview()
         assert len(preview.selected) == 3
         result = await plan.execute()
