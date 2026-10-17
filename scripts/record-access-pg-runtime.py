@@ -87,8 +87,10 @@ def main():
             if p.name in RUNTIME_NAMES and p.parent.name == "umf_access":
                 runtime = True
             if (
-                p.name in RUNTIME_NAMES and p.parent.name == "umf_access"
-            ) or p.resolve() == args.script.resolve():
+                (p.name in RUNTIME_NAMES and p.parent.name == "umf_access")
+                or (p.parent.name == "tests" and p.parent.parent.name == "umf_access")
+                or p.resolve() == args.script.resolve()
+            ):
                 result.append(
                     {
                         "path": str(p),
