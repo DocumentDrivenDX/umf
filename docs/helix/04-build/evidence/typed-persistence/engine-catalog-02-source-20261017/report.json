@@ -1,0 +1,75 @@
+{
+  "scope": "Source-only inert engine0.2 transport controls. No new wheel or native qualification. R26 env installed payloads not changed; source tests use explicit recovery-source PYTHONPATH.",
+  "checks": [
+    {
+      "name": "presence-311",
+      "command": [
+        "/private/tmp/sdk-r26-r22-311-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "python/umf_access/tests",
+        "-p",
+        "test_engine_presence_signatures.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "presence-314",
+      "command": [
+        "/private/tmp/sdk-r26-r22-314-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "python/umf_access/tests",
+        "-p",
+        "test_engine_presence_signatures.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "legacy-engine",
+      "command": [
+        "/private/tmp/sdk-r26-r22-311-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "python/umf_access/tests",
+        "-p",
+        "test_engine_catalog.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/ruff",
+        "check",
+        "--no-cache",
+        "python/umf_access/src/umf_access/engine_catalog.py",
+        "python/umf_access/src/umf_access/build/catalog.py",
+        "python/umf_access/tests/test_engine_presence_signatures.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "boundaries",
+      "command": [
+        "/private/tmp/sdk-r26-r22-311-env/bin/python",
+        "-B",
+        "scripts/check-access-python-boundaries.py"
+      ],
+      "exit": 0
+    }
+  ],
+  "allPassed": true,
+  "originalCompilerSource": "8bb6ded42e1f19349f688dd9e55dc432c9ff086b (precursor; owner final ordered JOIN refusal successor pending)",
+  "legacyCorrespondence": "Four exact original0.1 wrapper/program hashes checked within presence suite",
+  "publicCLIScope": "Stage-one/capture source precursor; original R22 refuses new version/closed request. Final compiler CLI/native replay pending."
+}

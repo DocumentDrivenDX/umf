@@ -160,6 +160,12 @@ def _without_missing(annotation: object) -> object:
     return result
 
 
+def _engine_selected_key(ref: RecordRef) -> dict[str, str]:
+    if type(ref.key_id) is not str or not ref.key_id:
+        raise CatalogBuildError("WEFT_BLOCKED: original selected Record Key required")
+    return {"module": ref.module, "record": ref.element, "key": ref.key_id}
+
+
 def _native_binding_source(columns: Any) -> dict[str, str]:
     binding = columns.get("binding") if type(columns) is dict else None
     if (
@@ -1092,12 +1098,14 @@ def _compile_catalog_owned(
                         )
                     method = target.get("engineCompiler")
                     if method not in (
-                        {"truss-runtime"}
+                        {"truss-runtime", "truss-runtime-binary"}
                         if kind == "truss"
                         else {
                             "registered",
                             "ashlar-spark4",
                             "ashlar-spark4-fields",
+                            "ashlar-spark4-sdk",
+                            "ashlar-spark4-sdk-pages",
                             "ashlar-dbsql-20261016",
                             "ashlar-spark4-pages",
                             "ashlar-dbsql-20261016-pages",
@@ -1110,7 +1118,7 @@ def _compile_catalog_owned(
                         terminal == "page"
                         and kind == "ashlar"
                         and method
-                        not in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")
+                        not in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages", "ashlar-spark4-sdk-pages")
                     ):
                         raise CatalogBuildError(
                             "WEFT_BLOCKED: separately registered original Ashlar page compiler required"
@@ -1135,10 +1143,22 @@ def _compile_catalog_owned(
                         raise CatalogBuildError(
                             "original engine model differs from selected logical binding"
                         )
-                    navigation = {
+                    navigation: dict[str, Any] = {
                         "related_source": {**original, "sql": related.source_sql},
                         "relationship": related.relationship,
                     } if related is not None else {}
+                    if method == "truss-runtime-binary" and related is not None:
+                        raise CatalogBuildError("WEFT_BLOCKED: explicit Truss binary profile does not admit navigation")
+                    successor_engine = method in ("ashlar-spark4-sdk", "ashlar-spark4-sdk-pages", "truss-runtime-binary")
+                    if successor_engine:
+                        if terminal == "page":
+                            navigation["selected_key"] = _engine_selected_key(record_ref)
+                        if method != "truss-runtime-binary" and terminal != "page" and any(step.op == "order" for step in current.node.args[1]):
+                            navigation["order_key"] = _engine_selected_key(record_ref)
+                        if related is not None:
+                            source_step = next(step for step in current.node.args[1] if step.op == "related")
+                            source_ref = source_step.args[0]
+                            navigation["source_selected_key"] = _engine_selected_key(cast(RecordRef, source_ref))
                     if related_field is not None:
                         original_program = EngineRead.compile_original(
                             compiler, original, method=method,
@@ -1199,15 +1219,18 @@ def _compile_catalog_owned(
                         "presence": variant.presence,
                         "targetId": target["id"],
                         "configurationSha256": _sha(_json(configuration).encode()),
+                        **({"selectedKey": navigation["selected_key"]} if engine and successor_engine and terminal == "page" else {}),
+                        **({"sourceSelectedKey": navigation["source_selected_key"]} if engine and successor_engine and related is not None else {}),
+                        **({"orderKey": navigation["order_key"]} if engine and successor_engine and "order_key" in navigation else {}),
                     }
                 )
                 compiled = replace(compiled, context_json=context)
                 if cursor_key is not None:
                     ordering = json.loads(compiled.artifact_json).get("cursorOrdering")
                     if engine:
-                        native_key = cast(EngineRead[Any, Any], compiled).artifact()["artifact"]["logicalPlan"][
-                            "pageKey"
-                        ]
+                        engine_program = cast(EngineRead[Any, Any], compiled).artifact()
+                        ordered_page = engine_program.get("page") if engine_program["version"] == "weft.engine-page/0.2" and engine_program["compiler"] == "ashlar-spark4-sdk-pages" else None
+                        native_key = ordered_page["key"] if ordered_page is not None else engine_program["artifact"]["logicalPlan"]["pageKey"]
                         key_identity = dict(cursor_parameter.key_identity)
                         fields = getattr(cursor_key, "UMF_FIELDS", ())
                         if (
@@ -1242,7 +1265,10 @@ def _compile_catalog_owned(
                             "WEFT_BLOCKED: complete ordering provenance required"
                         )
                     components = []
-                    for key_field in cursor_key.model_fields:
+                    for key_ordinal, key_field in enumerate(cursor_key.model_fields):
+                        if engine and ordered_page is not None:
+                            components.append((key_field, ordered_page["keySlots"][key_ordinal]))
+                            continue
                         logical = getattr(record.c, key_field).ref.logical_name
                         matches = [
                             i

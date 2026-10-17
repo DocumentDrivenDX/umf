@@ -1,0 +1,1329 @@
+{
+  "artifact": {
+    "backend": {
+      "backendId": "truss.postgresql.runtime",
+      "backendVersion": "0.4.41",
+      "interfaceVersion": "weft-backend/0.2.7",
+      "targetProfile": "truss-runtime-pg18.6/0.5"
+    },
+    "bindingSha256": "78dc49ba69900f9cc6201a2fd2f4a488d6bc7e913a2bc430e541a6594da48ee9",
+    "columns": [
+      {
+        "nullable": false,
+        "outputName": "label",
+        "position": 1,
+        "representation": {
+          "carrier": "text",
+          "decoder": "text",
+          "kind": "scalar",
+          "logicalType": {
+            "facets": {},
+            "family": "string",
+            "nullable": false
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "adoc",
+            "element": "A-label",
+            "module": "m",
+            "revision": "r1"
+          }
+        ]
+      },
+      {
+        "nullable": false,
+        "outputName": "blob",
+        "position": 2,
+        "representation": {
+          "descriptor": {
+            "documentId": "adoc",
+            "element": "A-blob",
+            "module": "m",
+            "revision": "r1"
+          },
+          "kind": "value",
+          "nativeNull": true
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "adoc",
+            "element": "A-blob",
+            "module": "m",
+            "revision": "r1"
+          }
+        ]
+      },
+      {
+        "nullable": false,
+        "outputName": "optional_blob",
+        "position": 3,
+        "representation": {
+          "descriptor": {
+            "documentId": "adoc",
+            "element": "A-optional",
+            "module": "m",
+            "revision": "r1"
+          },
+          "kind": "value",
+          "nativeNull": true
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "adoc",
+            "element": "A-optional",
+            "module": "m",
+            "revision": "r1"
+          }
+        ]
+      }
+    ],
+    "compilerVersion": "weft/0.1.0",
+    "diagnostics": [],
+    "dialect": "weft-sql/0.2.0",
+    "interfaceVersion": "weft-compile/0.2.7",
+    "logicalPlan": {
+      "aggregate": false,
+      "filters": [],
+      "groups": [],
+      "irVersion": "weft-ir/0.2.7",
+      "joins": [],
+      "limit": 10,
+      "modulePins": [
+        {
+          "documentId": "adoc",
+          "revision": "r1",
+          "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "order": [
+        {
+          "identity": {
+            "documentId": "adoc",
+            "element": "A-label",
+            "module": "m",
+            "revision": "r1"
+          },
+          "scan": "s0",
+          "span": {
+            "end": 107,
+            "start": 96
+          },
+          "type": {
+            "facets": {},
+            "family": "string",
+            "nullable": false
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "expression": {
+            "identity": {
+              "documentId": "adoc",
+              "element": "A-label",
+              "module": "m",
+              "revision": "r1"
+            },
+            "op": "field",
+            "scan": "s0"
+          },
+          "name": "label"
+        },
+        {
+          "expression": {
+            "identity": {
+              "documentId": "adoc",
+              "element": "A-blob",
+              "module": "m",
+              "revision": "r1"
+            },
+            "op": "field",
+            "scan": "s0"
+          },
+          "name": "blob"
+        },
+        {
+          "expression": {
+            "identity": {
+              "documentId": "adoc",
+              "element": "A-optional",
+              "module": "m",
+              "revision": "r1"
+            },
+            "op": "field",
+            "scan": "s0"
+          },
+          "name": "optional_blob"
+        }
+      ],
+      "pageKey": null,
+      "readProfile": null,
+      "requiredCapabilities": [
+        "limit",
+        "order.asc",
+        "project",
+        "scan",
+        "type.binary",
+        "type.string",
+        "value.presence"
+      ],
+      "source": {
+        "occurrence": "s0",
+        "pin": {
+          "documentId": "adoc",
+          "revision": "r1",
+          "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+          "umfVersion": "0.8.0"
+        },
+        "record": {
+          "documentId": "adoc",
+          "element": "A",
+          "module": "m",
+          "revision": "r1"
+        }
+      },
+      "typeGraph": [
+        {
+          "availability": "required",
+          "identity": {
+            "documentId": "adoc",
+            "element": "A-label",
+            "module": "m",
+            "revision": "r1"
+          },
+          "kind": "scalar",
+          "type": {
+            "facets": {},
+            "family": "string",
+            "nullable": false
+          }
+        },
+        {
+          "availability": "required",
+          "identity": {
+            "documentId": "adoc",
+            "element": "A-blob",
+            "module": "m",
+            "revision": "r1"
+          },
+          "kind": "exactScalar",
+          "scalarType": "binary"
+        },
+        {
+          "availability": "absent-allowed",
+          "identity": {
+            "documentId": "adoc",
+            "element": "A-optional",
+            "module": "m",
+            "revision": "r1"
+          },
+          "kind": "exactScalar",
+          "scalarType": "binary"
+        }
+      ]
+    },
+    "modelPins": [
+      {
+        "documentId": "adoc",
+        "revision": "r1",
+        "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "obligations": [
+      {
+        "failureCode": "WFT-OBLIGATION",
+        "id": "truss.runtime.context/0.1",
+        "owner": "host",
+        "parameters": {
+          "requirements": [
+            "original accepted catalog mapping and release",
+            "complete selected owner and property authority",
+            "bounded validated scalar source before predicates",
+            "same caller transaction",
+            "search_path=pg_catalog,pg_temp",
+            "final authority/catalog/release recheck",
+            "exact buffered decoding"
+          ]
+        }
+      }
+    ],
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "runtime-binding"
+        },
+        "position": 1,
+        "value": "{\"schema\": \"truss\", \"records\": [{\"keys\": [{\"keyId\": \"a-primary\", \"propertyIds\": [\"4\", \"2\"]}, {\"keyId\": \"z-alt\", \"propertyIds\": [\"2\"]}], \"fields\": [{\"identity\": {\"module\": \"m\", \"element\": \"A-blob\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"1\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-label\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"2\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-optional\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"3\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-value\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"4\"}], \"typeId\": \"1\", \"identity\": {\"module\": \"m\", \"element\": \"A\", \"revision\": \"r1\", \"documentId\": \"adoc\"}}, {\"keys\": [{\"keyId\": \"a-primary\", \"propertyIds\": [\"6\", \"5\"]}, {\"keyId\": \"z-alt\", \"propertyIds\": [\"5\"]}], \"fields\": [{\"identity\": {\"module\": \"m\", \"element\": \"B-label\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"5\"}, {\"identity\": {\"module\": \"m\", \"element\": \"B-value\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"6\"}], \"typeId\": \"2\", \"identity\": {\"module\": \"m\", \"element\": \"B\", \"revision\": \"r1\", \"documentId\": \"adoc\"}}], \"queryAbi\": {\"sha256\": \"9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f\", \"version\": \"1.1\", \"identity\": \"truss-postgresql-logical-query\"}, \"documents\": [{\"sha256\": \"8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831\", \"revision\": \"r1\", \"documentId\": \"adoc\"}], \"releaseId\": \"truss-catalog-runtime/0.71-candidate\", \"maximumBytes\": 1048576, \"relationships\": [{\"identity\": {\"module\": \"m\", \"revision\": \"r1\", \"documentId\": \"adoc\", \"relationship\": \"A-B\"}, \"sourceTypeId\": \"1\", \"targetTypeId\": \"2\", \"relationshipTypeId\": \"1\"}], \"releaseSha256\": \"c40730cfbfdc20e9a4f145d0ac80becfb9444dea75e8d623addb55a15dfdd95d\", \"installationId\": \"dfaaacad-4e56-400a-89d5-77de965caefd\", \"catalogRevision\": 1, \"maximumScanRows\": 10000, \"interfaceVersion\": \"truss-runtime-binding/0.5\", \"maximumResultRows\": 1000}"
+      }
+    ],
+    "qualification": {
+      "assumptions": [],
+      "evidence": [],
+      "operations": [
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "limit",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "limit",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "order.asc",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "order.asc",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "project",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "project",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "scan",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "scan",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.binary",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "type.binary",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.decimal.unbounded",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "type.decimal.unbounded",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.integer.unbounded",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "type.integer.unbounded",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.string",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "type.string",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "value.map",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "value.map",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "value.nativeNull",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "value.nativeNull",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "value.presence",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "value.presence",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "value.sequence",
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record-valued property cells or composed values; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0",
+              "Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only",
+              "Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required",
+              "Explicit Truss query ABI1.1; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",
+              "Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed"
+            ],
+            "evidence": [],
+            "id": "value.sequence",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.7"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/engine-navigation/0.1"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"
+            },
+            "obligations": [
+              {
+                "failureCode": "WFT-OBLIGATION",
+                "id": "truss.runtime.context/0.1",
+                "owner": "host",
+                "parameters": {
+                  "requirements": [
+                    "original accepted catalog mapping and release",
+                    "complete selected owner and property authority",
+                    "bounded validated scalar source before predicates",
+                    "same caller transaction",
+                    "search_path=pg_catalog,pg_temp",
+                    "final authority/catalog/release recheck",
+                    "exact buffered decoding"
+                  ]
+                }
+              }
+            ],
+            "resultDomain": {
+              "transport": "exact text and presence envelopes"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "truss-runtime-pg18.6/0.5"
+            ]
+          }
+        }
+      ],
+      "status": "candidate"
+    },
+    "sql": "SELECT ((\"s0\".props->'2'->>'text') COLLATE pg_catalog.\"C\")::pg_catalog.text AS \"label\",(pg_catalog.to_jsonb(\"s0\".props->'1'->>'text'))::pg_catalog.text AS \"blob\",(CASE WHEN NOT (\"s0\".props ? '3') THEN pg_catalog.jsonb_build_object('state','absent') WHEN \"s0\".props->'3'->>'kind'='null' THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb(\"s0\".props->'3'->>'text')) END)::pg_catalog.text AS \"optional_blob\" FROM \"truss\".\"query_objects\"($1::pg_catalog.jsonb,1::pg_catalog.int4) AS \"s0\" ORDER BY (\"s0\".props->'2'->>'text') COLLATE pg_catalog.\"C\" ASC LIMIT 10",
+    "status": "compiled",
+    "targetContext": {
+      "engine": "postgresql",
+      "engineVersion": "18.6",
+      "id": "truss-runtime-pg18.6/0.5",
+      "publicationRevision": "caller-transaction/0.1",
+      "sessionSettings": {
+        "read_context": "live",
+        "search_path": "pg_catalog,pg_temp",
+        "server_encoding": "UTF8"
+      },
+      "storageLayoutRevision": "truss-runtime-query-abi/1.1"
+    }
+  },
+  "compiler": "truss-runtime-binary",
+  "outputs": [
+    {
+      "carrier": "string",
+      "missing": false,
+      "modelPins": [
+        {
+          "documentId": "adoc",
+          "revision": "r1",
+          "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "name": "label",
+      "nullable": false,
+      "representation": {
+        "carrier": "text",
+        "decoder": "text",
+        "kind": "scalar",
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        }
+      },
+      "source": {
+        "documentId": "adoc",
+        "element": "A-label",
+        "module": "m",
+        "revision": "r1"
+      }
+    },
+    {
+      "carrier": "binary",
+      "decoder": {
+        "profile": "truss-binary/0.1"
+      },
+      "missing": false,
+      "modelPins": [
+        {
+          "documentId": "adoc",
+          "revision": "r1",
+          "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "name": "blob",
+      "nullable": false,
+      "representation": {
+        "descriptor": {
+          "documentId": "adoc",
+          "element": "A-blob",
+          "module": "m",
+          "revision": "r1"
+        },
+        "kind": "value",
+        "nativeNull": true
+      },
+      "source": {
+        "documentId": "adoc",
+        "element": "A-blob",
+        "module": "m",
+        "revision": "r1"
+      },
+      "stateDomain": {
+        "states": [
+          "value"
+        ],
+        "version": "umf.core08-binary/0.1"
+      }
+    },
+    {
+      "carrier": "binary",
+      "decoder": {
+        "profile": "truss-binary/0.1"
+      },
+      "missing": true,
+      "modelPins": [
+        {
+          "documentId": "adoc",
+          "revision": "r1",
+          "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "name": "optional_blob",
+      "nullable": true,
+      "representation": {
+        "descriptor": {
+          "documentId": "adoc",
+          "element": "A-optional",
+          "module": "m",
+          "revision": "r1"
+        },
+        "kind": "value",
+        "nativeNull": true
+      },
+      "source": {
+        "documentId": "adoc",
+        "element": "A-optional",
+        "module": "m",
+        "revision": "r1"
+      },
+      "stateDomain": {
+        "states": [
+          "missing",
+          "null",
+          "value"
+        ],
+        "version": "umf.core08-binary/0.1"
+      }
+    }
+  ],
+  "request": {
+    "dialect": "weft-sql/0.2.0",
+    "exactParameters": {},
+    "interfaceVersion": "weft-compile/0.2.7",
+    "modules": [
+      {
+        "documentJson": "{\n  \"umf\": \"0.8.0\",\n  \"id\": \"adoc\",\n  \"vocabularies\": {},\n  \"extensions\": {},\n  \"modules\": [\n    {\n      \"id\": \"m\",\n      \"namespace\": \"m\",\n      \"extensions\": {},\n      \"elements\": [\n        {\n          \"id\": \"A\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"A-label\"\n            },\n            {\n              \"module\": \"m\",\n              \"element\": \"A-value\"\n            },\n            {\n              \"module\": \"m\",\n              \"element\": \"A-blob\"\n            },\n            {\n              \"module\": \"m\",\n              \"element\": \"A-optional\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"z-alt\",\n              \"name\": \"alt\",\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"A-label\"\n                }\n              ]\n            },\n            {\n              \"id\": \"a-primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"A-value\"\n                },\n                {\n                  \"module\": \"m\",\n                  \"element\": \"A-label\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {},\n          \"name\": \"A\"\n        },\n        {\n          \"id\": \"B\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"B-label\"\n            },\n            {\n              \"module\": \"m\",\n              \"element\": \"B-value\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"z-alt\",\n              \"name\": \"alt\",\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"B-label\"\n                }\n              ]\n            },\n            {\n              \"id\": \"a-primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"B-value\"\n                },\n                {\n                  \"module\": \"m\",\n                  \"element\": \"B-label\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {},\n          \"name\": \"B\"\n        },\n        {\n          \"id\": \"A-label\",\n          \"name\": \"A-label\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"A-value\",\n          \"name\": \"A-value\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"B-label\",\n          \"name\": \"B-label\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"B-value\",\n          \"name\": \"B-value\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"A-blob\",\n          \"name\": \"blob\",\n          \"kind\": \"field\",\n          \"scalarType\": \"binary\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"A-optional\",\n          \"name\": \"optional_blob\",\n          \"kind\": \"field\",\n          \"scalarType\": \"binary\",\n          \"nullability\": \"absent-allowed\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        }\n      ],\n      \"relationships\": [\n        {\n          \"id\": \"A-B\",\n          \"name\": \"A-B\",\n          \"source\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"A\"\n            }\n          ],\n          \"target\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"B\",\n              \"key\": \"a-primary\"\n            }\n          ],\n          \"sourceMultiplicity\": {\n            \"min\": 0,\n            \"max\": 1\n          },\n          \"targetMultiplicity\": {\n            \"min\": 0,\n            \"max\": 2\n          },\n          \"targetLifecycle\": \"independent\",\n          \"directed\": true\n        }\n      ]\n    }\n  ]\n}",
+        "pin": {
+          "documentId": "adoc",
+          "revision": "r1",
+          "sha256": "8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831",
+          "umfVersion": "0.8.0"
+        },
+        "selectedModuleIds": [
+          "m"
+        ]
+      }
+    ],
+    "options": {
+      "allowCandidate": true
+    },
+    "parameters": {},
+    "sql": "SELECT a.\"A-label\" AS label,a.blob AS blob,a.optional_blob AS optional_blob FROM \"A\" a ORDER BY a.\"A-label\" ASC LIMIT 10",
+    "target": {
+      "backendId": "truss.postgresql.runtime",
+      "backendVersion": "0.4.41",
+      "bindingJson": "{\"schema\": \"truss\", \"records\": [{\"keys\": [{\"keyId\": \"a-primary\", \"propertyIds\": [\"4\", \"2\"]}, {\"keyId\": \"z-alt\", \"propertyIds\": [\"2\"]}], \"fields\": [{\"identity\": {\"module\": \"m\", \"element\": \"A-blob\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"1\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-label\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"2\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-optional\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"3\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-value\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"4\"}], \"typeId\": \"1\", \"identity\": {\"module\": \"m\", \"element\": \"A\", \"revision\": \"r1\", \"documentId\": \"adoc\"}}, {\"keys\": [{\"keyId\": \"a-primary\", \"propertyIds\": [\"6\", \"5\"]}, {\"keyId\": \"z-alt\", \"propertyIds\": [\"5\"]}], \"fields\": [{\"identity\": {\"module\": \"m\", \"element\": \"B-label\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"5\"}, {\"identity\": {\"module\": \"m\", \"element\": \"B-value\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"6\"}], \"typeId\": \"2\", \"identity\": {\"module\": \"m\", \"element\": \"B\", \"revision\": \"r1\", \"documentId\": \"adoc\"}}], \"queryAbi\": {\"sha256\": \"9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f\", \"version\": \"1.1\", \"identity\": \"truss-postgresql-logical-query\"}, \"documents\": [{\"sha256\": \"8375908e9095b29a19705149ef1c2831067847fb7838fc049603c8b90ee11831\", \"revision\": \"r1\", \"documentId\": \"adoc\"}], \"releaseId\": \"truss-catalog-runtime/0.71-candidate\", \"maximumBytes\": 1048576, \"relationships\": [{\"identity\": {\"module\": \"m\", \"revision\": \"r1\", \"documentId\": \"adoc\", \"relationship\": \"A-B\"}, \"sourceTypeId\": \"1\", \"targetTypeId\": \"2\", \"relationshipTypeId\": \"1\"}], \"releaseSha256\": \"c40730cfbfdc20e9a4f145d0ac80becfb9444dea75e8d623addb55a15dfdd95d\", \"installationId\": \"dfaaacad-4e56-400a-89d5-77de965caefd\", \"catalogRevision\": 1, \"maximumScanRows\": 10000, \"interfaceVersion\": \"truss-runtime-binding/0.5\", \"maximumResultRows\": 1000}",
+      "bindingSha256": "78dc49ba69900f9cc6201a2fd2f4a488d6bc7e913a2bc430e541a6594da48ee9",
+      "targetProfile": "truss-runtime-pg18.6/0.5"
+    },
+    "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0"
+  },
+  "status": "compiled",
+  "structuralDigest": {
+    "owner": "weft-runtime-engine-read",
+    "sha256": "36a89d33cc63ede05cb9c567b1f7c251b1c734a644f2912310a0dee0fd47c4f0",
+    "version": "0.2"
+  },
+  "version": "weft.engine-read/0.2"
+}

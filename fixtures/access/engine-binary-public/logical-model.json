@@ -1,0 +1,281 @@
+{
+  "umf": "0.8.0",
+  "id": "adoc",
+  "vocabularies": {
+    "umf.access": {
+      "version": "0.1.0"
+    }
+  },
+  "extensions": {},
+  "modules": [
+    {
+      "id": "m",
+      "namespace": "m",
+      "extensions": {
+        "umf.access": {
+          "views": [
+            {
+              "record": {
+                "module": "m",
+                "element": "A"
+              },
+              "selectedKey": {
+                "module": "m",
+                "element": "A",
+                "key": "a-primary"
+              },
+              "fields": [
+                {
+                  "field": {
+                    "module": "m",
+                    "element": "A-label"
+                  },
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "mutable": false,
+                  "generated": false
+                },
+                {
+                  "field": {
+                    "module": "m",
+                    "element": "A-value"
+                  },
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "mutable": false,
+                  "generated": false
+                },
+                {
+                  "field": {
+                    "module": "m",
+                    "element": "A-blob"
+                  },
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "mutable": false,
+                  "generated": false
+                },
+                {
+                  "field": {
+                    "module": "m",
+                    "element": "A-optional"
+                  },
+                  "row": {
+                    "missing": true,
+                    "null": true
+                  },
+                  "create": {
+                    "missing": true,
+                    "null": true
+                  },
+                  "mutable": false,
+                  "generated": false
+                }
+              ]
+            }
+          ],
+          "columns": [],
+          "search": [],
+          "searchBindings": []
+        }
+      },
+      "elements": [
+        {
+          "id": "A",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "A-label"
+            },
+            {
+              "module": "m",
+              "element": "A-value"
+            },
+            {
+              "module": "m",
+              "element": "A-blob"
+            },
+            {
+              "module": "m",
+              "element": "A-optional"
+            }
+          ],
+          "keys": [
+            {
+              "id": "z-alt",
+              "name": "alt",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "A-label"
+                }
+              ]
+            },
+            {
+              "id": "a-primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "A-value"
+                },
+                {
+                  "module": "m",
+                  "element": "A-label"
+                }
+              ]
+            }
+          ],
+          "extensions": {},
+          "name": "A"
+        },
+        {
+          "id": "B",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "B-label"
+            },
+            {
+              "module": "m",
+              "element": "B-value"
+            }
+          ],
+          "keys": [
+            {
+              "id": "z-alt",
+              "name": "alt",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "B-label"
+                }
+              ]
+            },
+            {
+              "id": "a-primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "B-value"
+                },
+                {
+                  "module": "m",
+                  "element": "B-label"
+                }
+              ]
+            }
+          ],
+          "extensions": {},
+          "name": "B"
+        },
+        {
+          "id": "A-label",
+          "name": "A-label",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "A-value",
+          "name": "A-value",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "B-label",
+          "name": "B-label",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "B-value",
+          "name": "B-value",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "A-blob",
+          "name": "blob",
+          "kind": "field",
+          "scalarType": "binary",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "A-optional",
+          "name": "optional_blob",
+          "kind": "field",
+          "scalarType": "binary",
+          "nullability": "absent-allowed",
+          "cardinality": "one",
+          "extensions": {}
+        }
+      ],
+      "relationships": [
+        {
+          "id": "A-B",
+          "name": "A-B",
+          "source": [
+            {
+              "module": "m",
+              "element": "A"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "B",
+              "key": "a-primary"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}
