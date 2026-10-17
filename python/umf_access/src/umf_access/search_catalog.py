@@ -15,6 +15,8 @@ from .dsl import Fusion, SearchResult
 from .native_program import NativeProgram
 from .types import MISSING, StrictModel
 
+SEARCH_FILTER_PARAMETER_ABI = "umf.search-filter-parameters/0.1"
+
 R = TypeVar("R")
 
 

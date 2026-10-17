@@ -10,8 +10,8 @@ from typing import Any, cast
 from ..capture import CapturedDeclaration, ProjectionRef
 from ..dsl import FieldRef, Node, SearchLeg, render_logical
 from ..native_program import NativeProgram
+from ..reviewed import parameter_signature
 from ..types import StrictModel
-from .commands import _carrier
 from .unity_search import compile_unity_search
 
 
@@ -142,11 +142,15 @@ def emit_search(
         )
         native_parameters: list[dict[str, Any]] = []
         for used_name in used:
-            carrier, nullable = _carrier(params[used_name])
-            native_parameters.append(
-                {"name": used_name, "carrier": carrier, "nullable": nullable}
-            )
+            native_parameters.append({"name": used_name, **parameter_signature(params[used_name])})
         native_parameters.sort(key=lambda p: p["name"])
+        if any(p.get("container") == "list" or p.get("nullable") is True for p in native_parameters):
+            lines.extend([
+                "from umf_access.search_catalog import SEARCH_FILTER_PARAMETER_ABI",
+                "if SEARCH_FILTER_PARAMETER_ABI != 'umf.search-filter-parameters/0.1':",
+                "    raise RuntimeError('SEARCH_FILTER_PARAMETER_ABI_MISMATCH')",
+                "",
+            ])
         for target in targets:
             if target["kind"] not in ("postgresql", "lakebase", "unity-catalog"):
                 raise SearchBuildError(

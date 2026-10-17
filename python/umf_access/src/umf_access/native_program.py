@@ -116,6 +116,67 @@ def _bulk_list_custody(
     visit(program)
 
 
+def _search_parameter_custody(
+    program: Mapping[str, Any], request: Mapping[str, Any] | None = None
+) -> None:
+    """Preserve original selection facets on executed native input slots."""
+    if program.get("version") != "weft.search/0.1":
+        return
+    def refuse() -> None:
+        raise ActionRefused("NATIVE_SEARCH_PARAMETER_FACETS_REQUIRED")
+    def declarations(original: Any) -> list[Any]:
+        if not isinstance(original, dict) or not isinstance(original.get("selection"), dict):
+            refuse()
+        parameters = original["selection"].get("parameters", [])
+        if not isinstance(parameters, list):
+            refuse()
+        names = set()
+        for parameter in parameters:
+            if not isinstance(parameter, dict):
+                refuse()
+            name = parameter.get("name")
+            is_list = parameter.get("container") == "list"
+            fields = {"name", "carrier", "nullable"} | ({"container", "elementNullable", "maxItems"} if is_list else set())
+            if (set(parameter) != fields or type(name) is not str or not name or name in names
+                or parameter.get("carrier") not in ("string", "integer", "decimal", "boolean")
+                or type(parameter.get("nullable")) is not bool
+                or is_list and (parameter["nullable"] is not False or type(parameter["elementNullable"]) is not bool or type(parameter["maxItems"]) is not int or not 1 <= parameter["maxItems"] <= 1000)):
+                refuse()
+            names.add(name)
+        return parameters
+    declared = declarations(program.get("request"))
+    requested = declarations(request) if request is not None else declared
+    nondefault = {p["name"] for p in [*declared, *requested] if p.get("container") == "list" or p["nullable"] is True}
+    if not nondefault:
+        return  # Valid established non-null scalar packets retain identical bytes.
+    if canonical_json(declared) != canonical_json(requested):
+        refuse()
+    expected = {}
+    for parameter in declared:
+        slot = {"source": {"input": parameter["name"]}, **{key:value for key,value in parameter.items() if key != "name"}}
+        if parameter.get("container") != "list" and parameter["nullable"] is False:
+            slot.pop("nullable")  # Original scalar slot ABI omits the default false.
+        expected[parameter["name"]] = slot
+    preflights = program.get("preflights", [])
+    if not isinstance(preflights, list):
+        refuse()
+    seen = set()
+    # These are the original statements actually executed by the search port;
+    # selectionTemplate inventories alone do not establish an executable slot.
+    for statement in [program.get("statement"), *preflights]:
+        if not isinstance(statement, dict) or not isinstance(statement.get("parameters"), list):
+            refuse()
+        for slot in statement["parameters"]:
+            source = slot.get("source") if isinstance(slot, dict) else None
+            name = source.get("input") if isinstance(source, dict) else None
+            if isinstance(name, str) and name in expected:
+                if canonical_json(slot) != canonical_json(expected[name]):
+                    refuse()
+                seen.add(name)
+    if not nondefault <= seen:
+        refuse()
+
+
 def _literal_admission_sources(descriptors: list[Any], code: str) -> None:
     for descriptor in descriptors:
         admission = descriptor.get("nativeAdmission") if isinstance(descriptor, dict) else None
@@ -242,6 +303,7 @@ class NativeProgram:
             raise ProgramBuildError(original)
         try:
             _bulk_list_custody(program, request)
+            _search_parameter_custody(program, request)
         except ActionRefused as error:
             raise ValueError("WEFT_BLOCKED: " + error.code) from error
         statements: dict[str, Any] = {}
@@ -374,6 +436,7 @@ class NativeProgram:
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         _bulk_list_custody(program)
+        _search_parameter_custody(program)
         if program.get("version") in ("weft.native-action/0.1", "weft.native-bulk/0.1", "weft.search/0.1"):
             try:
                 _require_source_exact(program)

@@ -13,6 +13,8 @@ from datetime import timedelta
 from decimal import Decimal
 from typing import Any, Protocol, cast
 
+from pydantic import TypeAdapter
+
 from .codec_support import checked_row
 from .dsl import Score, Scored, SearchResult
 from .postgres_read import (
@@ -25,6 +27,7 @@ from .postgres_read import (
     _term_admissions,
     native_read_admission,
 )
+from .reviewed import validate_list_parameters
 from .search_catalog import SearchEntry, SearchVariant
 from .targets import (
     AsyncPostgresTarget,
@@ -216,6 +219,18 @@ def _schema_admissions(program: Mapping[str, Any], app_schema: str):
             raise TargetMismatch(mismatch)
 
 
+def _filter_parameters(program: Mapping[str, Any], values: Mapping[str, object]) -> None:
+    """Validate retained source selection descriptors before native binding."""
+    descriptors = program["request"]["selection"].get("parameters", [])
+    validate_list_parameters(descriptors, values)
+    carriers = {"string": str, "integer": int, "decimal": Decimal, "boolean": bool}
+    for descriptor in descriptors:
+        if descriptor.get("container") == "list":
+            continue
+        annotation = carriers[descriptor["carrier"]]
+        TypeAdapter(cast(Any, annotation | None if descriptor["nullable"] else annotation)).validate_python(values[descriptor["name"]], strict=True)
+
+
 def _program(
     variant: SearchVariant,
     parameters: Mapping[str, object],
@@ -238,6 +253,7 @@ def _program(
             raise TargetMismatch("native search schema differs")
         params = dict(parameters)
         if not verify_only:
+            _filter_parameters(program, params)
             value = params[entry.query_argument]
             if program["index"]["kind"] == "vector":
                 vector = program["index"]["vector"]

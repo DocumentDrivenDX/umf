@@ -16,7 +16,7 @@ from datetime import timedelta
 from decimal import Decimal
 from typing import Any, Protocol, cast
 
-from .native_program import NativeProgram, _literal_admission_sources
+from .native_program import NativeProgram
 from .native_program import canonical_json as _json
 from .protocols import (
     ActionDenied,
@@ -374,7 +374,16 @@ class _State:
         if "termFilter" in obligations:
             groups.append(("NATIVE_TERM_MISMATCH", "NATIVE_TERM_BINDING_SOURCE", obligations["termFilter"]["indexes"]))
         for mismatch, binding_error, descriptors in groups:
-            _literal_admission_sources(descriptors, binding_error)
+            for descriptor in descriptors:
+                admission = descriptor.get("nativeAdmission") if isinstance(descriptor, dict) else None
+                parameters = admission.get("parameters") if isinstance(admission, dict) else None
+                if not isinstance(parameters, list) or any(
+                    not isinstance(parameter, dict)
+                    or not isinstance(parameter.get("source"), dict)
+                    or set(parameter["source"]) != {"literal"}
+                    for parameter in parameters
+                ):
+                    raise ActionRefused(binding_error)
             for sql, parameters in _compiled_admissions(descriptors, ""):
                 rows = yield ("query", sql, parameters)
                 if len(rows) != 1 or len(rows[0]) != 1 or rows[0][0] is not True:
