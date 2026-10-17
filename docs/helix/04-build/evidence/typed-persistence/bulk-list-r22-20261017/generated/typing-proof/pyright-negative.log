@@ -1,0 +1,142 @@
+{
+    "version": "1.1.414",
+    "time": "1792231890016",
+    "generalDiagnostics": [
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/action_list_negative.py",
+            "severity": "error",
+            "message": "No overloads for \"set_selected\" match the provided arguments",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 4
+                },
+                "end": {
+                    "line": 3,
+                    "character": 73
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/action_list_negative.py",
+            "severity": "error",
+            "message": "Argument of type \"list[str]\" cannot be assigned to parameter \"after\" of type \"str\" in function \"set_selected\"\n  \"list[str]\" is not assignable to \"str\"",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 63
+                },
+                "end": {
+                    "line": 3,
+                    "character": 72
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/element_negative.py",
+            "severity": "error",
+            "message": "No overloads for \"set_selected\" match the provided arguments",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 4
+                },
+                "end": {
+                    "line": 3,
+                    "character": 72
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/element_negative.py",
+            "severity": "error",
+            "message": "Argument of type \"list[int]\" cannot be assigned to parameter \"ids\" of type \"list[str | None]\" in function \"set_selected\"\n  Type \"Literal[1]\" is not assignable to type \"str | None\"\n    \"Literal[1]\" is not assignable to \"str\"\n    \"Literal[1]\" is not assignable to \"None\"",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 38
+                },
+                "end": {
+                    "line": 3,
+                    "character": 39
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/outer_none_negative.py",
+            "severity": "error",
+            "message": "No overloads for \"set_selected\" match the provided arguments",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 4
+                },
+                "end": {
+                    "line": 3,
+                    "character": 73
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/outer_none_negative.py",
+            "severity": "error",
+            "message": "Argument of type \"None\" cannot be assigned to parameter \"ids\" of type \"list[str | None]\" in function \"set_selected\"\n  \"None\" is not assignable to \"list[str | None]\"",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 37
+                },
+                "end": {
+                    "line": 3,
+                    "character": 41
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/scalar_filter_list_negative.py",
+            "severity": "error",
+            "message": "No overloads for \"set_selected\" match the provided arguments",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 4
+                },
+                "end": {
+                    "line": 3,
+                    "character": 73
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/sdk-bulk-list-r22-20261017/cli/scalar_filter_list_negative.py",
+            "severity": "error",
+            "message": "Argument of type \"list[str]\" cannot be assigned to parameter \"before\" of type \"str\" in function \"set_selected\"\n  \"list[str]\" is not assignable to \"str\"",
+            "range": {
+                "start": {
+                    "line": 3,
+                    "character": 48
+                },
+                "end": {
+                    "line": 3,
+                    "character": 57
+                }
+            },
+            "rule": "reportArgumentType"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 4,
+        "errorCount": 8,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.35
+    }
+}
+

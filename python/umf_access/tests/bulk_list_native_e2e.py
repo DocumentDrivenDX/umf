@@ -213,7 +213,9 @@ try:
         ("nullable", True),
     ):
         changed = copy.deepcopy(owner_request)
+        changed["parameters"] = copy.deepcopy(changed["parameters"])
         changed["parameters"][0][field] = value
+        assert changed["parameters"][0] != changed["selection"]["parameters"][0]
         result = json.loads(weft.compile_native_bulk_json(json.dumps(changed)))
         assert result["status"] == "blocked", (field, result)
         faults.append({"field": field, "original": result})
@@ -335,14 +337,20 @@ try:
             target, ids=values, before="draft", after="not-written"
         ).execute()
         assert (result.selected, result.changed) == (0, 0) and rows() == before
-    before = rows()
-    result = queries.set_outside(target, ids=[None], after="not-written").execute()
-    assert (result.selected, result.changed) == (0, 0) and rows() == before
+    # Governed S8 ignores null list members for nonnull x; NOT IN is S2
+    # negation, not the different SQL NOT IN (..., NULL) truth table.
+    result = queries.set_outside(target, ids=[None], after="null-ignored").execute()
+    assert (result.selected, result.changed) == (3, 3)
+    assert rows() == [
+        ("o-1", "null-ignored"),
+        ("o-2", "null-ignored"),
+        ("o-3", "null-ignored"),
+    ]
     result = queries.set_outside(target, ids=[], after="all").execute()
     assert (result.selected, result.changed) == (3, 3)
     assert rows() == [("o-1", "all"), ("o-2", "all"), ("o-3", "all")]
     cases.append(
-        "real SQL IN and NOT IN retain empty-list and NULL three-valued semantics with independent exact table oracle"
+        "original native SQL implements governed S8 empty/null-list membership and S2 NOT IN with independent exact table oracle"
     )
 
     for bad in (None, [True], [1], ["o-1"] * 1001):

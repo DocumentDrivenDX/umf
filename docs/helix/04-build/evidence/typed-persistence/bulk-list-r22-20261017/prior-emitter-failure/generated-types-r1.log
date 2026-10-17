@@ -1,0 +1,6 @@
+mypy positive False
+Traceback (most recent call last):
+  File "/private/tmp/check-bulk-list-generated-types.py", line 30, in <module>
+    assert ok,(tool,phase,text)
+           ^^
+AssertionError: ('mypy', 'positive', '/private/tmp/sdk-bulk-list-r20-20261017/cli/native_sales/queries.py:37: error: Overloaded function implementation does not accept all possible parameters of signature 1  [misc]\n/private/tmp/sdk-bulk-list-r20-20261017/cli/native_sales/queries.py:38: error: Incompatible return value type (got "object", expected "_PlanT | Awaitable[_PlanT]")  [return-value]\n/private/tmp/sdk-bulk-list-r20-20261017/cli/native_sales/queries.py:46: error: Overloaded function implementation does not accept all possible parameters of signature 1  [misc]\n/private/tmp/sdk-bulk-list-r20-20261017/cli/native_sales/queries.py:47: error: Incompatible return value type (got "object", expected "_PlanT | Awaitable[_PlanT]")  [return-value]\nFound 4 errors in 1 file (checked 8 source files)\n')

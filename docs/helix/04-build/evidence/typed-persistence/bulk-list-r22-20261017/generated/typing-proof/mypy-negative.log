@@ -1,0 +1,14 @@
+/private/tmp/sdk-bulk-list-r22-20261017/cli/scalar_filter_list_negative.py:4: error: No overload variant of "set_selected" matches argument types "PostgresBulkTarget", "list[Never]", "list[str]", "str"  [call-overload]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/scalar_filter_list_negative.py:4: note: Possible overload variants:
+/private/tmp/sdk-bulk-list-r22-20261017/cli/scalar_filter_list_negative.py:4: note:     def [_PlanT] set_selected(target: AsyncBulkTarget[_PlanT], *, ids: list[str | None], before: str, after: str, timeout: timedelta | None = ...) -> Awaitable[_PlanT]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/scalar_filter_list_negative.py:4: note:     def [_PlanT] set_selected(target: BulkTarget[_PlanT], *, ids: list[str | None], before: str, after: str, timeout: timedelta | None = ...) -> _PlanT
+/private/tmp/sdk-bulk-list-r22-20261017/cli/outer_none_negative.py:4: error: No overload variant of "set_selected" matches argument types "PostgresBulkTarget", "None", "str", "str"  [call-overload]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/outer_none_negative.py:4: note: Possible overload variants:
+/private/tmp/sdk-bulk-list-r22-20261017/cli/outer_none_negative.py:4: note:     def [_PlanT] set_selected(target: AsyncBulkTarget[_PlanT], *, ids: list[str | None], before: str, after: str, timeout: timedelta | None = ...) -> Awaitable[_PlanT]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/outer_none_negative.py:4: note:     def [_PlanT] set_selected(target: BulkTarget[_PlanT], *, ids: list[str | None], before: str, after: str, timeout: timedelta | None = ...) -> _PlanT
+/private/tmp/sdk-bulk-list-r22-20261017/cli/element_negative.py:4: error: List item 0 has incompatible type "int"; expected "str | None"  [list-item]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/action_list_negative.py:4: error: No overload variant of "set_selected" matches argument types "PostgresBulkTarget", "list[Never]", "str", "list[str]"  [call-overload]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/action_list_negative.py:4: note: Possible overload variants:
+/private/tmp/sdk-bulk-list-r22-20261017/cli/action_list_negative.py:4: note:     def [_PlanT] set_selected(target: AsyncBulkTarget[_PlanT], *, ids: list[str | None], before: str, after: str, timeout: timedelta | None = ...) -> Awaitable[_PlanT]
+/private/tmp/sdk-bulk-list-r22-20261017/cli/action_list_negative.py:4: note:     def [_PlanT] set_selected(target: BulkTarget[_PlanT], *, ids: list[str | None], before: str, after: str, timeout: timedelta | None = ...) -> _PlanT
+Found 4 errors in 4 files (checked 4 source files)
