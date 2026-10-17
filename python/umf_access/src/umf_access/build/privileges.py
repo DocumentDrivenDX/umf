@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from .pg_privileges import postgres_runtime_advisory
+
 _RUNTIME = {
     "postgresql": (
         "pg_catalog relation/type/typmod/null/generation/collation and complete-Key observations",
@@ -46,7 +48,9 @@ _RUNTIME = {
 }
 
 
-def privilege_report(targets: list[dict[str, Any]], entries: list[dict[str, Any]]) -> dict[str, Any]:
+def privilege_report(
+    targets: list[dict[str, Any]], entries: list[dict[str, Any]]
+) -> dict[str, Any]:
     reports = []
     for target in targets:
         kind = target["kind"]
@@ -65,32 +69,65 @@ def privilege_report(targets: list[dict[str, Any]], entries: list[dict[str, Any]
                 and owner.get("unresolved") == []
             )
             if not complete:
-                unresolved.append({"entry": entry["name"], "requirement":
-                    "original owner exact used columns, operations, functions/operators, indexes and grant proposal"})
-            operations.append({
-                "name": entry["name"], "kind": entry["kind"],
-                "referencedTables": artifact.get("referencedTables"),
-                "referencedTablesScope": "conservative owner binding inventory; not exact least privilege",
-                "nativeObligations": artifact.get("obligations"),
-                "ownerInventory": owner,
-            })
+                unresolved.append(
+                    {
+                        "entry": entry["name"],
+                        "requirement": "original owner exact used columns, operations, functions/operators, indexes and grant proposal",
+                    }
+                )
+            operations.append(
+                {
+                    "name": entry["name"],
+                    "kind": entry["kind"],
+                    "referencedTables": artifact.get("referencedTables"),
+                    "referencedTablesScope": "conservative owner binding inventory; not exact least privilege",
+                    "nativeObligations": artifact.get("obligations"),
+                    "ownerInventory": owner,
+                }
+            )
         if runtime is None:
-            unresolved.append({"requirement": "qualified target runtime metadata inventory"})
+            unresolved.append(
+                {"requirement": "qualified target runtime metadata inventory"}
+            )
         else:
-            unresolved.append({"requirement":
-                "exact target runtime metadata/control privileges and native function/operator identities; checklist alone is not an inventory"})
-        reports.append({
-            "id": target["id"], "kind": kind, "entries": operations,
-            "knownRuntimeSurface": list(runtime or ()),
-            "runtimeSurfaceScope": "profile review checklist; not a sufficient grant set",
-            "hostOnlyObligations": [
-                "host applies and verifies native grants; SDK never executes grant proposals",
-                "independent native principal and least-privilege E2E",
-                "original native dependency/fence/restore/snapshot/control custody for each selected capability",
-            ],
-            "unresolved": unresolved, "inventoryComplete": not unresolved,
-            "grantProposal": {"status": "OWNER_INVENTORY_REQUIRED" if unresolved else "SEE_ORIGINAL_OWNER_INVENTORIES"},
-            "qualification": {"leastPrivilege": "UNQUALIFIED", "sufficiencyClaim": False,
-                              "reason": "native host proof is required; incomplete inventory refuses affected capability qualification"},
-        })
+            unresolved.append(
+                {
+                    "requirement": "exact target runtime metadata/control privileges and native function/operator identities; checklist alone is not an inventory"
+                }
+            )
+        advisory = (
+            postgres_runtime_advisory(
+                target,
+                [entry for entry in entries if entry["targetId"] == target["id"]],
+            )
+            if kind in ("postgresql", "lakebase")
+            else None
+        )
+        reports.append(
+            {
+                "id": target["id"],
+                "kind": kind,
+                "entries": operations,
+                "knownRuntimeSurface": list(runtime or ()),
+                "runtimeSurfaceScope": "profile review checklist; not a sufficient grant set",
+                **({"runtimeAdvisory": advisory} if advisory is not None else {}),
+                "hostOnlyObligations": [
+                    "host applies and verifies native grants; SDK never executes grant proposals",
+                    "independent native principal and least-privilege E2E",
+                    "original native dependency/fence/restore/snapshot/control custody for each selected capability",
+                ],
+                "unresolved": unresolved,
+                "inventoryComplete": not unresolved,
+                "grantProposal": {
+                    "status": "OWNER_INVENTORY_REQUIRED"
+                    if unresolved
+                    else "SEE_ORIGINAL_OWNER_INVENTORIES"
+                },
+                "qualification": {
+                    "leastPrivilege": "UNQUALIFIED",
+                    "sufficiencyClaim": False,
+                    "reason": "native host proof is required; incomplete inventory refuses affected capability qualification",
+                },
+            }
+        )
     return {"contract": "umf-access-privileges/0.1", "targets": reports}
