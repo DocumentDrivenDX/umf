@@ -116,6 +116,80 @@ def _bulk_list_custody(
     visit(program)
 
 
+def _literal_admission_sources(descriptors: list[Any], code: str) -> None:
+    for descriptor in descriptors:
+        admission = descriptor.get("nativeAdmission") if isinstance(descriptor, dict) else None
+        if not isinstance(admission, dict) or not isinstance(admission.get("parameters"), list):
+            raise ActionRefused(code)
+        for parameter in admission["parameters"]:
+            source = parameter.get("source") if isinstance(parameter, dict) else None
+            if not isinstance(source, dict) or set(source) != {"literal"}:
+                raise ActionRefused(code)
+
+
+def _configuration_custody(program: Mapping[str, Any]) -> None:
+    if program.get("target") not in ("postgresql18", "lakebase18"):
+        return
+    version = program.get("version")
+    if version not in ("weft.native-bulk/0.1", "weft.search/0.1"):
+        return
+    obligations = program.get("obligations", {})
+    template = program.get("readTemplate" if version == "weft.native-bulk/0.1" else "selectionTemplate", {})
+    original_obligations = template.get("obligations", {}) if isinstance(template, dict) else {}
+    if not isinstance(obligations, dict) or not isinstance(original_obligations, dict):
+        raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+    expected = original_obligations.get("termFilter")
+    actual = obligations.get("termFilter")
+    if expected is not None or actual is not None:
+        if not isinstance(expected, dict) or not isinstance(actual, dict):
+            raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+        for packet in (expected, actual):
+            if (
+                not isinstance(packet, dict)
+                or packet.get("version") != "umf.raw-term-filter/0.1"
+                or packet.get("nativeCatalogBeforeAfter") is not True
+                or not isinstance(packet.get("indexes"), list)
+                or not 1 <= len(packet["indexes"]) <= 2000
+            ):
+                raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+        if version == "weft.search/0.1":
+            same = canonical_json(actual) == canonical_json(expected)
+        else:
+            def semantics(packet: Any) -> Any:
+                if any(not isinstance(entry, dict) for entry in packet["indexes"]):
+                    raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+                return {**packet, "indexes": [{key: value for key, value in entry.items() if key != "nativeAdmission"} for entry in packet["indexes"]]}
+            same = canonical_json(semantics(actual)) == canonical_json(semantics(expected))
+            _literal_admission_sources(actual["indexes"], "NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+        if not same:
+            raise ActionRefused("NATIVE_TERM_FILTER_CUSTODY_REQUIRED")
+    index = program.get("index")
+    if version != "weft.search/0.1" or not isinstance(index, dict) or index.get("kind") != "keyword":
+        return
+    keyword_packet = obligations.get("keywordConfiguration")
+    if (
+        not isinstance(keyword_packet, dict)
+        or keyword_packet.get("version") != "umf.keyword-configuration/0.1"
+        or keyword_packet.get("nativeCatalogBeforeAfter") is not True
+        or not isinstance(keyword_packet.get("configurations"), list)
+        or len(keyword_packet["configurations"]) != 1
+    ):
+        raise ActionRefused("NATIVE_KEYWORD_CONFIGURATION_REQUIRED")
+    entry = keyword_packet["configurations"][0]
+    keyword = index.get("keyword", {})
+    analyzer = keyword.get("analyzer", {}) if isinstance(keyword, dict) else {}
+    language = analyzer.get("language") if isinstance(analyzer, dict) else None
+    if (
+        language not in ("english", "simple")
+        or not isinstance(entry, dict)
+        or canonical_json(entry.get("source")) != canonical_json(program.get("source"))
+        or canonical_json(entry.get("index")) != canonical_json(index)
+        or entry.get("configuration") != "pg_catalog." + language
+    ):
+        raise ActionRefused("NATIVE_KEYWORD_CONFIGURATION_REQUIRED")
+    _literal_admission_sources(keyword_packet["configurations"], "NATIVE_KEYWORD_CONFIGURATION_REQUIRED")
+
+
 @dataclass(frozen=True)
 class NativeProgram:
     original_json: str
@@ -305,6 +379,7 @@ class NativeProgram:
                 _require_source_exact(program)
             except ReadBuildError as error:
                 raise ActionRefused("NATIVE_SCHEMA_SOURCE_EXACT_REQUIRED") from error
+        _configuration_custody(program)
         # Re-derive only parameter style, never SQL structure or semantics.
         expected: dict[str, Any] = {}
 

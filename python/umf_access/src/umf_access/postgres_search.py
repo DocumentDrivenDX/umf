@@ -19,8 +19,10 @@ from .postgres_read import (
     _ROLE,
     ReadObligationUnmet,
     TimedOut,
+    _compiled_admissions,
     _output_value,
     _projection_admissions,
+    _term_admissions,
     native_read_admission,
 )
 from .search_catalog import SearchEntry, SearchVariant
@@ -183,12 +185,35 @@ def _finish(variant: SearchVariant, legs: list[list[_Hit]]) -> SearchResult[Any]
     )
 
 
+def _metadata_programs(
+    program: Mapping[str, Any], app_schema: str
+) -> tuple[tuple[str, dict[str, object], str], ...]:
+    obligations = program["obligations"]
+    programs = [(sql, parameters, "native search source schema differs")
+                for sql, parameters in _projection_admissions(obligations, app_schema)]
+    programs.extend((sql, parameters, "native search term configuration or index differs")
+                    for sql, parameters in _term_admissions(obligations, app_schema))
+    configuration = obligations.get("keywordConfiguration")
+    if configuration is not None:
+        if (
+            not isinstance(configuration, dict)
+            or configuration.get("version") != "umf.keyword-configuration/0.1"
+            or configuration.get("nativeCatalogBeforeAfter") is not True
+            or not isinstance(configuration.get("configurations"), list)
+            or len(configuration["configurations"]) != 1
+        ):
+            raise TargetMismatch("native keyword configuration packet required")
+        programs.extend((sql, parameters, "native keyword configuration differs")
+                        for sql, parameters in _compiled_admissions(configuration["configurations"], app_schema))
+    return tuple(programs)
+
+
 def _schema_admissions(program: Mapping[str, Any], app_schema: str):
-    for sql, parameters in _projection_admissions(program["obligations"], app_schema):
+    for sql, parameters, mismatch in _metadata_programs(program, app_schema):
         yield ("execute", sql, parameters)
         observed = yield ("many", 2)
         if len(observed) != 1 or len(observed[0]) != 1 or observed[0][0] is not True:
-            raise TargetMismatch("native search source schema differs")
+            raise TargetMismatch(mismatch)
 
 
 def _program(
@@ -245,7 +270,7 @@ def _program(
                     raise SearchError("plain keyword text required")
                 params[program["queryParameter"]] = value
         # Parse the original packet before BEGIN or native search SQL.
-        _projection_admissions(program["obligations"], configuration.app_schema)
+        _metadata_programs(program, configuration.app_schema)
         prepared.append((entry, program, params))
     yield ("begin",)
     yield (

@@ -16,7 +16,7 @@ from datetime import timedelta
 from decimal import Decimal
 from typing import Any, Protocol, cast
 
-from .native_program import NativeProgram
+from .native_program import NativeProgram, _literal_admission_sources
 from .native_program import canonical_json as _json
 from .protocols import (
     ActionDenied,
@@ -369,20 +369,16 @@ class _State:
         # configuration and cannot reinterpret an appSchema placeholder.
         from .postgres_read import _compiled_admissions
 
-        packet = self.program["obligations"]["nativeProjection"]
-        for descriptor in packet["columns"]:
-            admission = descriptor.get("nativeAdmission", {})
-            if any(
-                not isinstance(parameter, dict)
-                or not isinstance(parameter.get("source"), dict)
-                or set(parameter["source"]) != {"literal"}
-                for parameter in admission.get("parameters", [])
-            ):
-                raise ActionRefused("NATIVE_SCHEMA_BINDING_SOURCE")
-        for sql, parameters in _compiled_admissions(packet["columns"], ""):
-            rows = yield ("query", sql, parameters)
-            if len(rows) != 1 or len(rows[0]) != 1 or rows[0][0] is not True:
-                raise ActionRefused("NATIVE_SCHEMA_MISMATCH")
+        obligations = self.program["obligations"]
+        groups = [("NATIVE_SCHEMA_MISMATCH", "NATIVE_SCHEMA_BINDING_SOURCE", obligations["nativeProjection"]["columns"])]
+        if "termFilter" in obligations:
+            groups.append(("NATIVE_TERM_MISMATCH", "NATIVE_TERM_BINDING_SOURCE", obligations["termFilter"]["indexes"]))
+        for mismatch, binding_error, descriptors in groups:
+            _literal_admission_sources(descriptors, binding_error)
+            for sql, parameters in _compiled_admissions(descriptors, ""):
+                rows = yield ("query", sql, parameters)
+                if len(rows) != 1 or len(rows[0]) != 1 or rows[0][0] is not True:
+                    raise ActionRefused(mismatch)
 
     def execute(
         self, validate: bool
