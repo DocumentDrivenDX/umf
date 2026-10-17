@@ -332,3 +332,31 @@ validated0.9.0 integer/decimal Field through CONTRACT-076's version-dispatched
 value checker. Literal shapes and exact-number policy remain unchanged; UUID and
 bits128 do not become numeric domains. Signed/unsigned integer128 uses the existing
 width facet and lossless bigint bridge, with overflow and unsafe number refusal.
+
+## Invocation-owned prepared metadata inspection (1.0.0)
+
+`prepareCoreInspection(source)` accepts a valid core 0.8.0 or 0.9.0 document,
+using the existing guarded JSON copy and core validation before retaining a
+recursively frozen invocation-owned snapshot. Its `source` reference is the
+identity of that exact retained snapshot: it preserves unknown content, is
+separate from the mutable caller document, and is not an authentication token.
+No cache is attached to caller-owned documents. The private identity index holds
+references into that snapshot rather than separately retained document copies.
+
+The context's `keys({module,element})`, `facets({module,element})` and
+`schemaProperties({module,element})` return small independently copied metadata
+meanings for exact, closed identities. Invalid preparation, malformed identities
+and missing elements refuse. These selectors share the ordinary public core
+inspectors' interpretation routines, including partial unknown qualifiers and
+exact uninterpreted paths; they do not establish native enforcement. Existing
+inspection envelopes and their validation/copy behavior remain available unchanged.
+Repeated calls retain the same immutable snapshot identity while caller mutation
+and mutation of a previous result cannot alter later results.
+
+This context avoids repeatedly copying and validating a whole source for each
+reached Key Field in generator admission. Existing input depth, value and text
+limits remain active; the selected/reached element bound counts unique authored
+element roots rather than relevance paths. The explicit capacity E2E and parity,
+unknown, mutation and refusal controls are recorded in
+[the prepared inspection evidence](../../04-build/evidence/typed-persistence/prepared-inspection-20261016/README.md).
+This is structural metadata evidence. Temporal SDK qualification remains HELD.

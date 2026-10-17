@@ -57,6 +57,39 @@ PREFIX = 'SELECT "r"."order_id" FROM "commerce"."Order" AS "r"'
 
 
 class LogicalWeftRendering(unittest.TestCase):
+    # @covers US-082-AC8 -- WR-A11 logical grammar; compiler/native proof separate.
+    def test_prefix_preserves_parameter_and_literal_characters(self):
+        @query
+        def parameter(prefix: Param[str]):
+            return objects.filter(memo.starts_with(prefix)).select(order_id).limit(10).all()
+        self.assertIn('STARTS_WITH("r"."memo", :prefix)', render_logical(capture(parameter).variants[0]))
+        for prefix in ("", "%_\\", "A'B", "é", "e\u0301"):
+            @query
+            def literal_prefix():
+                return objects.filter(order_id.starts_with(prefix)).select(order_id).limit(10).all()  # noqa: B023
+            self.assertIn("STARTS_WITH(\"r\".\"order_id\", '" + prefix.replace("'", "''") + "')",
+                          render_logical(capture(literal_prefix).variants[0]))
+        @query
+        def wrong_literal():
+            return objects.filter(order_id.starts_with(3)).select(order_id).limit(10).all()
+        with self.assertRaises(TypeError):
+            capture(wrong_literal)
+
+    # @covers US-082-AC8
+    def test_null_safe_distinctness_preserves_owner_operators_and_nulls(self):
+        for method, operator in (("is_distinct_from", "IS DISTINCT FROM"),
+                                 ("is_not_distinct_from", "IS NOT DISTINCT FROM")):
+            @query
+            def declaration(value: Param[str | None]):
+                return objects.filter(getattr(memo, method)(value)).select(order_id).limit(10).all()  # noqa: B023
+            sql = render_logical(capture(declaration).variants[0])
+            self.assertIn(f'"r"."memo" {operator} :value', sql)
+
+            @query
+            def null_literal():
+                return objects.filter(getattr(memo, method)(None)).select(order_id).limit(10).all()  # noqa: B023
+            self.assertIn(f'"r"."memo" {operator} NULL', render_logical(capture(null_literal).variants[0]))
+
     # @covers US-082-AC6
     def test_unbounded_group_count_refuses_but_global_count_is_one_row(self):
         @query

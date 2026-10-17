@@ -230,16 +230,32 @@ def decode_model(
     values = checked_row(tuple(field["field"] for field in fields), columns, row)
     # model_construct is deliberately followed by raw graph revalidation. This
     # keeps decode and encode on the same sanitized, non-trusting boundary.
-    checked = revalidate_model(model_type, model_type.model_construct(_fields_set=None,
-        **{field["python"]: values[field["field"]] for field in fields}))
-    return revalidate_model(model_type, model_type.model_construct(_fields_set=None,
-        **{field["python"]: _convert(getattr(checked, field["python"]), field) for field in fields}))
+    checked = revalidate_model(
+        model_type,
+        model_type.model_construct(
+            _fields_set=None,
+            **{field["python"]: values[field["field"]] for field in fields},
+        ),
+    )
+    return revalidate_model(
+        model_type,
+        model_type.model_construct(
+            _fields_set=None,
+            **{
+                field["python"]: _convert(getattr(checked, field["python"]), field)
+                for field in fields
+            },
+        ),
+    )
+
+
 ClassT = TypeVar("ClassT")
 
 
 def seal_model(model: type[ClassT]) -> type[ClassT]:
     def refuse_subclass(cls: type[object], **kwargs: object) -> None:
         raise TypeError("generated model is final")
+
     type.__setattr__(model, "__init_subclass__", classmethod(refuse_subclass))
     return model
 
@@ -249,12 +265,27 @@ def unhashable_key(model: type[M]) -> type[M]:
     return model
 
 
-def initialize_rejection(error: Exception, code: str, retryable: dict[str, bool]) -> None:
+def initialize_rejection(
+    error: Exception, code: str, retryable: dict[str, bool]
+) -> None:
     if code not in retryable:
         raise CodecError("undeclared action rejection code")
     error.code = code  # type: ignore[attr-defined]
     error.retryable = retryable[code]  # type: ignore[attr-defined]
     Exception.__init__(error, "action rejected")
+
+
+def initialize_action_rejection(
+    error: Exception,
+    code: str,
+    retryable: dict[str, bool],
+    override: bool | None = None,
+) -> bool:
+    """New generated action ABI; retain the original three-argument helper."""
+    initialize_rejection(error, code, retryable)
+    resolved = retryable[code] if override is None else override
+    error.retryable = resolved  # type: ignore[attr-defined]
+    return resolved
 
 
 def make_projection_model(

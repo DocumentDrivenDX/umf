@@ -20,9 +20,23 @@ try{
  const cases=[joined,unreachable,base,search,badSearch,native];
  for(const req of cases){
   const p=profile(),expected=generateAccessPackage(req,p);
+  if(JSON.stringify(generateAccessPackage(req,p))!==JSON.stringify(expected))throw new Error('Bun generator is not deterministic');
   if((req===search||req===native)&&expected.outcome!=='candidate')throw new Error(JSON.stringify(expected.diagnostics));
   const actual=await page.evaluate(({req,p})=>(window as any).api.generateAccessPackage(req,p),{req,p});
   if(JSON.stringify(actual)!==JSON.stringify(expected))throw new Error('browser generator differs from Bun');
+  const repeated=await page.evaluate(({req,p})=>(window as any).api.generateAccessPackage(req,p),{req,p});
+  if(JSON.stringify(repeated)!==JSON.stringify(actual))throw new Error('browser generator is not deterministic');
  }
- console.log(JSON.stringify({browser:browser.version(),cases:cases.length,byteEquivalentPackages:true}));
+ // Independently perturb each input identity dimension in the real browser.
+ const originalProfile=profile(),original=generateAccessPackage(base,originalProfile);
+ for(const dimension of ['source','metadata','code'] as const){
+  const req=structuredClone(base),p=structuredClone(originalProfile);
+  if(dimension==='source')req.sources[0]!.text+='\n';
+  else if(dimension==='metadata')p.subset+='x';
+  else p.codeSha256=(p.codeSha256[0]==='a'?'b':'a')+p.codeSha256.slice(1);
+  const expected=generateAccessPackage(req,p);
+  const actual=await page.evaluate(({req,p})=>(window as any).api.generateAccessPackage(req,p),{req,p});
+  if(expected.inputDigest===original.inputDigest||JSON.stringify(actual)!==JSON.stringify(expected))throw new Error('browser identity perturbation failed: '+dimension);
+ }
+ console.log(JSON.stringify({browser:browser.version(),cases:cases.length,repeatedRunsPerHost:2,identityPerturbations:3,byteEquivalentPackages:true}));
 }finally{await browser.close();server.stop(true);}

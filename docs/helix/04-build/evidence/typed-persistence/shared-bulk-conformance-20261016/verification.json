@@ -1,0 +1,18 @@
+{
+  "schema": "umf.shared-bulk-conformance-evidence/1",
+  "scope": "repository-only assertion selftests; no native manifest adoption claim",
+  "cases": [
+    "bulk.seal_submit",
+    "bulk.control_recovery"
+  ],
+  "scenarios": 10,
+  "bulkSelftests": 3,
+  "deliberateFaultControls": 26,
+  "wholeCurrentSelftestDiscovery": 10,
+  "status": "PASS",
+  "temporalQualification": "HELD",
+  "sourceSha256": {
+    "python/umf_access/conformance/bulk.py": "011f831c4b28c0dfbad5d0ee8c91dede3a369d4ff693e6437f556a8e07d16ce3",
+    "python/umf_access/tests/conformance_selftest/test_bulk.py": "459608c7a5a1a3dbc2d0d7c618ca7e3a98d97694ac1aebcb0db2883ddaf47bf3"
+  }
+}

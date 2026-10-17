@@ -1,6 +1,10 @@
 """Actual generated non-temporal codec checks; target carriers unqualified."""
 
 import ast
+import json
+import os
+import subprocess
+import sys
 import unittest
 from decimal import Decimal
 from pathlib import Path
@@ -28,25 +32,110 @@ class GeneratedCodecTests(unittest.TestCase):
 
     # @covers US-081-AC8
     def test_generated_codecs_are_thin(self):
-        path = Path(commerce.__file__).parent / "codecs.py"
-        tree = ast.parse(path.read_text())
-        for node in ast.walk(tree):
-            self.assertNotIsInstance(
-                node, (ast.If, ast.Raise, ast.Try, ast.For, ast.While, ast.Compare)
-            )
-        functions = [node for node in tree.body if isinstance(node, ast.FunctionDef)]
-        self.assertGreaterEqual(len(functions), 12)
-        for node in functions:
-            self.assertEqual(len(node.body), 1)
-            self.assertIsInstance(node.body[0], ast.Return)
-            self.assertIsInstance(node.body[0].value, ast.Call)
-            self.assertIn(node.body[0].value.func.id, ("encode_model", "decode_model"))
-        for node in tree.body:
-            if isinstance(node, ast.AnnAssign):
-                # Literal metadata cannot execute an artifact-selected factory.
-                self.assertFalse(
-                    any(isinstance(child, ast.Call) for child in ast.walk(node.value))
+        package = Path(commerce.__file__).parent
+        modules = sorted(package.rglob("*.py"))
+        self.assertTrue(
+            {
+                "__init__.py",
+                "models.py",
+                "keys.py",
+                "fields.py",
+                "actions.py",
+                "codecs.py",
+            }.issubset({path.name for path in modules})
+        )
+        codec_count = 0
+        for path in modules:
+            tree = ast.parse(path.read_text())
+            for node in ast.walk(tree):
+                # TYPE_CHECKING imports are declarative and never execute here.
+                if (
+                    isinstance(node, ast.If)
+                    and isinstance(node.test, ast.Name)
+                    and node.test.id == "TYPE_CHECKING"
+                ):
+                    continue
+                self.assertNotIsInstance(
+                    node,
+                    (ast.If, ast.Raise, ast.Try, ast.For, ast.While, ast.Compare),
+                    str(path),
                 )
+                if isinstance(
+                    node, (ast.FunctionDef, ast.AsyncFunctionDef)
+                ) and node.name.startswith(("encode_", "decode_")):
+                    codec_count += 1
+                    self.assertEqual(len(node.body), 1, str(path))
+                    returned = node.body[0]
+                    self.assertIsInstance(returned, ast.Return)
+                    self.assertIsInstance(returned.value, ast.Call)
+                    call = returned.value
+                    self.assertIsInstance(call.func, ast.Name)
+                    self.assertIn(call.func.id, ("encode_model", "decode_model"))
+                    metadata = [
+                        arg.id
+                        for arg in call.args
+                        if isinstance(arg, ast.Name) and arg.id.startswith("_codec_")
+                    ]
+                    self.assertEqual(len(metadata), 1)
+                    declaration = next(
+                        n
+                        for n in tree.body
+                        if isinstance(n, ast.AnnAssign)
+                        and isinstance(n.target, ast.Name)
+                        and n.target.id == metadata[0]
+                    )
+                    allowed = (
+                        ast.Tuple,
+                        ast.List,
+                        ast.Dict,
+                        ast.Constant,
+                        ast.Name,
+                        ast.Load,
+                        ast.UnaryOp,
+                        ast.USub,
+                    )
+                    self.assertTrue(
+                        all(
+                            isinstance(child, allowed)
+                            for child in ast.walk(declaration.value)
+                        ),
+                        str(path),
+                    )
+        self.assertGreaterEqual(codec_count, 12)
+
+    # @covers US-081-AC6 -- installed runtime and every generated module.
+    def test_isolated_generated_import_has_no_external_side_effects(self):
+        package = Path(commerce.__file__).parent.resolve()
+        helper = Path(__file__).with_name("generated_import_probe.py")
+        env = {
+            k: v
+            for k, v in os.environ.items()
+            if k
+            not in {
+                "PYTHONPATH",
+                "PYTHONHOME",
+                "MYPYPATH",
+                "VIRTUAL_ENV",
+                "CONDA_PREFIX",
+            }
+        }
+        run = subprocess.run(
+            [sys.executable, "-I", "-B", str(helper), str(package)],
+            cwd="/private/tmp",
+            env=env,
+            text=True,
+            capture_output=True,
+            timeout=30,
+            check=False,
+        )
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        report = json.loads(run.stdout)
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(len(report["modules"]), len(list(package.rglob("*.py"))))
+        self.assertEqual(
+            set(report["blockedControls"]),
+            {"network", "process", "write", "database-import"},
+        )
 
 
 if __name__ == "__main__":

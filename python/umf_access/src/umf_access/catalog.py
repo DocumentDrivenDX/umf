@@ -10,7 +10,7 @@ from pydantic import BaseModel, TypeAdapter
 
 from .adoption import TargetIdentity
 from .codec_support import revalidate_model
-from .dsl import Continuation, Page, SortValue
+from .dsl import Continuation, Page as Page, SortValue
 from .pages import ReadContinuation, ReadPage, StaleContinuation
 from .protocols import AsyncReadTarget, ReadTarget
 from .reviewed import CatalogRead

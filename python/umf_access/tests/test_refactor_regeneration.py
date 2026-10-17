@@ -180,7 +180,36 @@ class RefactorByRegeneration(unittest.TestCase):
                     }
                 )
             )
+            ty_expected = {
+                "base": [],
+                "memo-rename": [{"line": 9, "rule": "unresolved-attribute"}],
+                "amount-retype": [{"line": 9, "rule": "unsupported-operator"}],
+                "memo-remove": [{"line": 9, "rule": "unresolved-attribute"}],
+                "memo-rename-with-names-override": [],
+            }
+            ty_version = subprocess.run(
+                [str(CHECKER_BIN / "ty"), "--version"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            self.assertEqual(ty_version.stdout.split()[:2], ["ty", "0.0.88"])
             commands = {
+                "ty": [
+                    str(CHECKER_BIN / "ty"),
+                    "check",
+                    "--python",
+                    self.snapshot["python"],
+                    "--python-version",
+                    "3.11",
+                    "--extra-search-path",
+                    str(generated_root),
+                    "--output-format",
+                    "concise",
+                    "--color",
+                    "never",
+                    str(source),
+                ],
                 "pyright": [
                     str(CHECKER_BIN / "pyright"),
                     "--project",
@@ -224,6 +253,14 @@ class RefactorByRegeneration(unittest.TestCase):
                         if d["severity"] == "error"
                     ]
                     wanted = case["observedPyright"]
+                elif checker == "ty":
+                    actual = [
+                        {"line": int(m[0]), "rule": m[1]}
+                        for m in re.findall(
+                            r":(\d+):\d+: error\[([^]]+)\] ", run.stdout
+                        )
+                    ]
+                    wanted = ty_expected[case["variant"]]
                 else:
                     actual = [
                         {"line": int(m[0]), "rule": m[1]}
@@ -278,6 +315,7 @@ class RefactorByRegeneration(unittest.TestCase):
                     keywords = {
                         k.arg: ast.literal_eval(k.value)
                         for k in statement.value.args[0].keywords
+                        if k.arg in {"field_module", "field"}
                     }
                     module_index, module = next(
                         (i, m)

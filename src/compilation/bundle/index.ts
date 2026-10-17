@@ -12,6 +12,7 @@ export function packageAccessFiles(request:AccessRequest,profile:AccessProfile,t
  const result:AccessResult={contract:'umf-access-generate/0.1',abi:'umf-python-types/0.1',runtimeAbi:{distribution:runtime?.distribution??'umf_access',version:runtime?.version??'unqualified',abi:'umf-access-runtime/0.1'},outcome:diagnostics.length?'refused':'candidate',inputDigest:hashCanonical({request,profile}),files:[],symbols:[],dispositions,diagnostics,obligations};
  if(result.outcome==='refused')return result;
  const refuseLimit=()=>{result.outcome='refused';result.diagnostics.push({code:'LIMIT',sourceId:request.logical,pointer:'',message:'Aggregate package resource bound exceeded'});return result;};
+ if(dispositions.length>100000)return refuseLimit();
  if(request.sources.reduce((n,s)=>n+new TextEncoder().encode(s.text).length,0)>33554432)return refuseLimit();
  texts.push({path:request.package+'/_umf/sources.json',text:canonical(request.sources)+'\n'});
  if(texts.length+1>1000||texts.reduce((n,f)=>n+new TextEncoder().encode(f.text).length,0)>33554432)return refuseLimit();

@@ -1,4 +1,4 @@
-import {copyJson,readDocument,validateDocument,inspectCoreRelationships,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,inspectCoreElementKind,validateCoreFieldValue,inspectActions,registerActions,Registry,UmfError,type InspectedAction,type Document} from '../../index';
+import {prepareCoreInspection,copyJson,readDocument,validateDocument,inspectCoreRelationships,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,inspectCoreElementKind,validateCoreFieldValue,inspectActions,registerActions,Registry,UmfError,type InspectedAction,type Document} from '../../index';
 import {inspectSelectedSearch} from './search';
 import {inspectAccessViews,type SuppliedBinding} from './access/index';
 import type {AccessRequest,AccessProfile,AccessDiagnostic,Disposition,Obligation,ResolvedAccess,ResolvedActionParameter,Ref} from '../ir/index';
@@ -39,6 +39,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  const inspection=inspectAccessViews(document,request.records,bindings,request.logical);diagnostics.push(...inspection.diagnostics);
  const ir:ResolvedAccess={documentId:document.id,sourceId:request.logical,records:inspection.records,relations:[],actions:[]};
  ir.search=inspectSelectedSearch(document,ir.records,add);
+ const prepared=prepareCoreInspection(document);
  const dependencyKeys=new Map<string,string>();
  const selectedIds=new Set(request.records.map(identity));
  for(const [mi,authoredModule] of document.modules.entries()){
@@ -75,7 +76,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  for(const [encoded,keyId] of dependencyKeys){
   const [moduleId,elementId]=JSON.parse(encoded) as [string,string],reference={module:moduleId,element:elementId};
   const mi=document.modules.findIndex(m=>m.id===moduleId),ei=document.modules[mi]?.elements.findIndex(e=>e.id===elementId)??-1;
-  const meaning=inspectCoreKeys(document,reference).meaning;
+  const meaning=prepared.keys(reference);
   const key=meaning.state==='known'?meaning.keys.find(k=>k.id===keyId):undefined;
   if(!key){add('REFERENCE',`/modules/${mi}/elements/${ei}/keys`);continue;}
   const dependency={ref:reference,pointer:`/modules/${mi}/elements/${ei}`,python:'',namespace:document.modules[mi]!.namespace,logicalName:typeof document.modules[mi]!.elements[ei]!.name==='string'?document.modules[mi]!.elements[ei]!.name:null,fields:[] as ResolvedAccess['records'][number]['fields'],keys:[{id:key.id,fields:key.fields.map(r=>({...r}))}],selected:false};
@@ -83,9 +84,9 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
    const fmi=document.modules.findIndex(m=>m.id===fieldRef.module),fei=document.modules[fmi]?.elements.findIndex(e=>e.id===fieldRef.element)??-1,field=document.modules[fmi]?.elements[fei];
    if(!field){add('REFERENCE',dependency.pointer);continue;}
    if(['date','timestamp'].includes(field.scalarType??'')){add('ACCESS',dependency.pointer);continue;}
-   const facets=inspectCoreFacets(document,fieldRef).meaning;
+   const facets=prepared.facets(fieldRef);
    if(facets.state==='partial')add('UNKNOWN_RELEVANT',facets.uninterpretedPaths[0]??dependency.pointer);
-   dependency.fields.push({ref:{module:fieldRef.module,element:fieldRef.element},pointer:`/modules/${fmi}/elements/${fei}`,python:'',logicalName:typeof field.name==='string'?field.name:null,scalarType:field.scalarType??null,cardinality:'one',row:{missing:false,null:false},create:{missing:false,null:false},mutable:false,generated:false,facets:facets.state==='known'?{...facets.interpreted}:{},properties:inspectCoreSchemaProperties(document,{scope:'element',module:fieldRef.module,element:fieldRef.element}).properties});
+   dependency.fields.push({ref:{module:fieldRef.module,element:fieldRef.element},pointer:`/modules/${fmi}/elements/${fei}`,python:'',logicalName:typeof field.name==='string'?field.name:null,scalarType:field.scalarType??null,cardinality:'one',row:{missing:false,null:false},create:{missing:false,null:false},mutable:false,generated:false,facets:facets.state==='known'?{...facets.interpreted}:{},properties:prepared.schemaProperties(fieldRef)});
   }
   ir.records.push(dependency);
  }
@@ -102,18 +103,28 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  for(const record of request.records)visitMembers(record);
  for(const record of ir.records.filter(r=>!r.selected))visitMembers(record.ref);
  for(const vocabulary of ['umf.access',...(request.actions.length?['umf.actions']:[])])for(const member of Object.keys(document.vocabularies[vocabulary]??{}))if(member!=='version')add('UNKNOWN_RELEVANT','/vocabularies/'+esc(vocabulary)+'/'+esc(member));
- const relevant=(p:string)=>[...selectedPaths].some(base=>p===base||p.startsWith(base+'/'));
+ const relevant=(p:string)=>{for(let path=p;path;path=path.slice(0,path.lastIndexOf('/')))if(selectedPaths.has(path))return true;return selectedPaths.has('');};
  // Public validation owns the unknown-core vocabulary. Access is interpreted by
  // the contextual validator; its absent registry warning is not missing meaning.
  for(const d of validateDocument(document).diagnostics){
   if(d.severity==='warning'&&d.code!=='UNKNOWN_EXTENSION'&&relevant(d.path))add('UNKNOWN_RELEVANT',d.path);
  }
  const selectedKeys=new Set(request.records.map(identity));
+ // Declaration/annotation coverage must include known facts even when they
+ // produce no Python symbol. These observations never discharge native duties.
+ const retainInformational=(value:unknown,pointer:string,assertion:string,reason:string)=>{
+  if(object(value)||Array.isArray(value)){for(const [key,child] of Object.entries(value))retainInformational(child,pointer+'/'+esc(key),assertion,reason);if(Object.keys(value).length)return;}
+  dispositions.push({id:'d'+dispositions.length,sourceId:request.logical,pointer,assertion,relevance:'selected',fidelity:'exact',checks:['informational'],reason,obligationIds:[]});
+ };
+ const sourceContextReason='Known source identity or annotation retained; no native enforcement or execution is established';
+ for(const key of ['umf','id','title','aliases'])if(Object.hasOwn(document,key))retainInformational((document as unknown as Record<string,unknown>)[key],'/'+esc(key),'source-context',sourceContextReason);
+ for(const vocabulary of ['umf.access',...(request.actions.length?['umf.actions']:[])])if(document.vocabularies[vocabulary]?.version!==undefined)retainInformational(document.vocabularies[vocabulary]!.version,'/vocabularies/'+esc(vocabulary)+'/version','source-context',sourceContextReason);
 
  for(const k of Object.keys(document.extensions??{}))add('UNKNOWN_RELEVANT','/extensions/'+esc(k));
  for(const n of request.names)if(n.sourceId!==request.logical)add('NAME','/names');
  for(const [mi,authoredModule] of document.modules.entries()){
   const base=`/modules/${mi}`;
+  if([...selectedPaths].some(path=>path.startsWith(base+'/elements/'))||selectedActionEntries.some(entry=>entry.module===authoredModule.id))for(const key of ['id','namespace','title','aliases'])if(Object.hasOwn(authoredModule,key))retainInformational((authoredModule as unknown as Record<string,unknown>)[key],base+'/'+esc(key),'source-context',sourceContextReason);
   if(request.records.some(r=>r.module===authoredModule.id)){
    for(const k of Object.keys(document))if(!['umf','id','vocabularies','modules','extensions','title','aliases'].includes(k))add('UNKNOWN_RELEVANT','/'+esc(k));
    for(const k of Object.keys(authoredModule))if(!['id','namespace','elements','extensions','relationships','title','aliases'].includes(k))add('UNKNOWN_RELEVANT',base+'/'+esc(k));
@@ -202,6 +213,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   const createdKeys:(Ref&{key:string})[]=[],changedKeys:(Ref&{key:string})[]=[];
   const addKey=(list:(Ref&{key:string})[],key:Ref&{key:string},pointer:string)=>{if(!ir.records.some(r=>identity(r.ref)===identity(key)&&r.keys.some(k=>k.id===key.key))){add('REFERENCE',pointer);return;}if(!list.some(k=>identity(k)===identity(key)&&k.key===key.key))list.push({...key});};
   const authored=entry.action as unknown as Record<string,unknown>;
+  retainInformational(authored,entry.path,'actions','Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation');
   const entityKey=(value:unknown):Ref&{key:string}|null=>{if(!object(value))return null;const parameter=typeof value.parameter==='string'?(authored.parameters as Record<string,unknown>[]).find(p=>p.id===value.parameter):undefined;return parameter?.kind==='entity'?parameter.target as Ref&{key:string}:null;};
   if(entry.action.binding.kind==='recipe'){
    const effects=(authored.binding as {effects:Record<string,unknown>[]}).effects;
@@ -234,7 +246,10 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
    if(obligation.kind==='model'&&!selectedPaths.has(obligation.path)&&!ir.records.some(r=>r.pointer===obligation.path)&&!ir.relations?.some(r=>r.pointer===obligation.path))add('REFERENCE',obligation.path);
   }
  }
- if(dispositions.length>100000||selectedPaths.size>10000)add('LIMIT','');
+ // Relevance paths include Key/member leaves as well as element roots. Count
+ // each authored element once; metadata paths must not consume element slots.
+ const reachedElements=new Set([...selectedPaths].flatMap(path=>path.match(/^\/modules\/\d+\/elements\/\d+(?=\/|$)/)?.[0]??[]));
+ if(dispositions.length>100000||reachedElements.size>10000)add('LIMIT','');
  if(dispositions.some(d=>d.relevance!=='unselected'&&d.fidelity!=='exact'))add('LOSS','');
  for(const diagnostic of diagnostics.filter(d=>d.code==='UNKNOWN_RELEVANT')){
   const matching=dispositions.filter(d=>d.sourceId===diagnostic.sourceId&&(d.pointer===diagnostic.pointer||d.pointer.startsWith(diagnostic.pointer+'/')));
@@ -251,7 +266,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   if(overrides.length>1){add('NAME',pointer);return '_invalid';}
   const words=id.replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z0-9])([A-Z])/g,'$1_$2').split('_');
   const name=overrides[0]?.python??(role==='field'?words.join('_').toLowerCase():words.map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join(''));
-  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Join','JoinProjection','Column','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','ActionRef','ActionSource','ActionProfile','FieldValidator','seal_model','unhashable_key','ValueNormalizer','encode_model','decode_model','initialize_rejection','GeneratedSource','UMF_GENERATED_SOURCE','UMF_SOURCE','CodecField','UMF_FINAL','UMF_KEY','Literal','Never','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS','Actions','ReplayingActions','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor','ActionRejected','OriginalOutcome','UMF_BUNDLE_INPUT_DIGEST','UMF_RUNTIME_ABI','Vector','KeywordIndex','VectorIndex','RankedQuery','SearchLeg','Score','Scored','SearchResult','KeyTypeRef','RecordTypeRef','OutcomeDetails','ExecutorT','ReplayingExecutorT','Generic','cast','Committed','make_committed_view','UMF_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
+  if(!overrides.length&&!/^[a-zA-Z][a-zA-Z0-9]*$/.test(id)||!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)||pythonKeywords.has(name)||name.startsWith('model_')||['c','s','objects'].includes(name)||profile.reservedNames.includes(name)||profile.importedNames.includes(name)||['StrictModel','Decimal','date','datetime','Annotated','ClassVar','TYPE_CHECKING','final','BeforeValidator','MISSING','TypeAdapter','FieldRef','RecordRef','Join','JoinProjection','Column','Query','Terminal','Related','Param','Mapping','MappingProxyType','TypedDict','Unpack','TypeVar','ActionRef','ActionSource','ActionProfile','FieldValidator','seal_model','unhashable_key','ValueNormalizer','encode_model','decode_model','initialize_rejection','initialize_action_rejection','GeneratedSource','UMF_GENERATED_SOURCE','UMF_SOURCE','CodecField','UMF_FINAL','UMF_KEY','Literal','Never','BUNDLE_INPUT_DIGEST','KEY_IDENTITY','UMF_PROJECTION_FIELDS','UMF_UPDATE_FIELDS','Actions','ReplayingActions','ActionEndpoint','ReplayingActionEndpoint','ActionExecutor','ReplayingActionExecutor','ActionRejected','OriginalOutcome','UMF_BUNDLE_INPUT_DIGEST','UMF_RUNTIME_ABI','Vector','KeywordIndex','VectorIndex','RankedQuery','SearchLeg','Score','Scored','SearchResult','KeyTypeRef','RecordTypeRef','OutcomeDetails','ExecutorT','ReplayingExecutorT','Generic','cast','Committed','make_committed_view','UMF_FIELDS'].includes(name)||name.startsWith('validate_field_'))add('NAME',pointer);
   return name;
  }
 }

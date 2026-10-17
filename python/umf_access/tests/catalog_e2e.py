@@ -85,6 +85,35 @@ with psycopg.connect(
     target.verify()
     rows = queries.joined(target)
     assert [(r.order_id, r.name) for r in rows] == [("a1", "Alpha"), ("a2", None)]
+    # @covers US-082-AC8: actual generated catalog, nullable joined output and
+    # caller-role RLS. Null-safe operators never discard both-null equality.
+    for name, equal, different in (
+        (None, ["a2"], ["a1"]),
+        ("Alpha", ["a1"], ["a2"]),
+        ("absent", [], ["a1", "a2"]),
+    ):
+        assert [r.order_id for r in queries.null_safe_equal(target, name=name)] == equal
+        assert [r.order_id for r in queries.null_safe_different(target, name=name)] == different
+    assert [r.order_id for r in queries.null_safe_null_literal(target)] == ["a2"]
+    # @covers US-082-AC8: actual compiled prefixes use Unicode sequences, not
+    # LIKE metacharacters, case folding or Unicode normalization. RLS hides a2's
+    # customer so even the empty prefix must exclude its SQL-null joined value.
+    with psycopg.connect(os.environ["UMF_PG_TEST_DSN"], autocommit=True) as owner:
+        try:
+            for text, prefix, expected in (
+                ("Alpha", "", ["a1"]), ("Alpha", "Al", ["a1"]),
+                ("Alpha", "al", []), ("ordinary", "%", []),
+                ("ordinary", "_", []), ("%_\\tail", "%_\\", ["a1"]),
+                ("éclair", "é", ["a1"]), ("éclair", "e\u0301", []),
+                ("e\u0301clair", "e\u0301", ["a1"]),
+                ("𝄞music", "𝄞", ["a1"]),
+            ):
+                owner.execute("UPDATE praxis_test.generated_customers SET name=%s WHERE customer_id='a1'", (text,))
+                assert [r.order_id for r in queries.prefix_match(target, prefix=prefix)] == expected
+            owner.execute("UPDATE praxis_test.generated_customers SET name=%s WHERE customer_id='a1'", ("%_\\tail",))
+            assert [r.order_id for r in queries.prefix_literal(target)] == ["a1"]
+        finally:
+            owner.execute("UPDATE praxis_test.generated_customers SET name='Alpha' WHERE customer_id='a1'")
     assert [r.order_id for r in queries.filtered(target)] == ["a1", "a2"]
     assert [r.order_id for r in queries.filtered(target, minimum="a2")] == ["a2"]
     first = queries.paged(target, after=None)

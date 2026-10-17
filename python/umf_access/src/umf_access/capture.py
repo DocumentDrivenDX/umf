@@ -232,7 +232,7 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
                         "CAPTURE_SIGNATURE",
                         "Key component parameters differ from declared carrier",
                     )
-            if value.op in ("=", "<>", "<", "<=", ">", ">=", "BETWEEN", "IN", "NOT IN"):
+            if value.op in ("=", "<>", "<", "<=", ">", ">=", "BETWEEN", "IN", "NOT IN", "IS DISTINCT FROM", "IS NOT DISTINCT FROM"):
                 left = value.args[0]
                 if isinstance(left, Node) and left.op == "column":
                     field = cast(FieldRef, left.args[0])
