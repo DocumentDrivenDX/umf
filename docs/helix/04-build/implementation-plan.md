@@ -12854,8 +12854,9 @@ after restoration. Owned native sessions stop and installed bytes remain unchang
 The current source additionally fixes the full hosted Python lint gate and adds
 an original-owner-confirmed Truss related-Key metadata profile with source
 controls. Those changes require a fresh final wheel; they do not relabel R13
-receipts. Engine RelatedKeys paging has an observed original Core compiler
-refusal and remains an owner prerequisite, with failed native attempts retained.
+receipts. Engine RelatedKeys paging's observed original Core compiler refusal is
+retained; the R14 original compiler source now passes read/page/export controls,
+while fresh native engine replay remains an owner prerequisite.
 Truss release-blocking hosted capacity/full-small failures, original protected
 action/manifest adoption, Ashlar primitive Field binding, broader engine/query
 forms and exact native managed commit-result custody remain open where their
@@ -12868,3 +12869,24 @@ qualification, compatible compiler publication, configured signing, remote CI,
 main merge/deployment and live-main parity require their own terminal evidence.
 The seven stale site attestations have not been bypassed; the configured
 1Password account currently reports that it is not signed in.
+
+The fresh [installed R14 frontend](evidence/typed-persistence/frontend-r14-20261017/README.md)
+freezes SDK source `dc66acfb` with46 exact installed payloads and original
+compiler source `a3090204` with two exact installed payloads. All three pinned
+checkers pass the positive corpus and66 negative files;291 installed unit tests
+pass without skips. Original engine navigation requests and page bounds retain
+source/target/compiler custody, with source controls retained
+[separately](evidence/typed-persistence/navigation-source-r14-20261017/README.md).
+The [whole-source typing triage](evidence/typed-persistence/source-type-triage-r14-20261017/README.md)
+records85 diagnostics across45 source files; earlier nine-error receipts were
+single-file correlated-state audits, not whole-library qualification. Narrow
+public alias, command, numeric bucket and optional-filter probes pass all three
+checkers and their misuse cases refuse. This does not erase implementation
+typing debt or promote untested backend behavior.
+
+Truss hosted diagnostic `39017085354` remains a failed diagnostic: Linux fails
+capacity and macOS passes capacity but times out during1,000-edge loading.
+Completed stock-counter observations are perturbed measurements, not clean
+performance acceptance. Original budgets and native validation remain intact.
+Temporal qualification remains **HELD**; release/main/deployment acceptance
+requires all remaining original gates rather than this scoped frontend result.
