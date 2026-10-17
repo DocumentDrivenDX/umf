@@ -1,0 +1,5 @@
+# Exact original multi-capability compilation capture
+
+Source-only public CLI preflights use immutable SDK R19 and original Weft R16 in a fresh qualification environment. Actual recorder pass-through observes2 raw calls,5 native-action calls plus1 raw command selection and1 bulk call, and8 search calls. Exact request text/native result text and hashes are retained; return bytes are unchanged. Raw calls receive original checked Var probes. Search/action/bulk calls explicitly remain UNRESOLVED_ORIGINAL_OWNER_API pending owner probe implementation; successful compilation does not qualify grants or runtime custody. No native database was started. These new captures are separate from immutable R19 runtime native proof and do not replace its source hashes.
+
+Runtime source inventory lists literal SQL and original statement-path call sites with source hashes; dynamic imported/owner branches remain unresolved. No blanket grants, caller authority flag or complete inventory is inferred. Temporal remains HELD.
