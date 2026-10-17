@@ -1068,9 +1068,8 @@ def _compile_catalog_owned(
                         "WEFT_BLOCKED: target has no admitted read compiler"
                     )
                 binding = target["binding"]
-                related = render_related_logical(current, binding=binding)
-                if related is not None and engine and terminal == "page":
-                    raise CatalogBuildError("WEFT_BLOCKED: WR-A6 original engine target-set navigation page compiler required")
+                engine_page = replace(current, node=Node("all", current.node.args[:2])) if engine and terminal == "page" else None
+                related = render_related_logical(engine_page or current, binding=binding, owner_bound=engine_page is not None)
                 logical = related.target_sql if related is not None else render_logical(current, binding=binding)
                 if terminal == "count":
                     logical = logical.replace(
@@ -1078,7 +1077,7 @@ def _compile_catalog_owned(
                     )
                 entry_class = "CatalogRead"
                 if engine:
-                    if terminal == "page":
+                    if terminal == "page" and related is None:
                         logical = render_logical(
                             replace(current, node=Node("all", current.node.args[:2])),
                             binding=binding,

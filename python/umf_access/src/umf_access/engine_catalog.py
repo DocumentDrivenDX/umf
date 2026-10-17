@@ -26,9 +26,10 @@ P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
 
 
-def _related_packet(request: Mapping[str, Any], source: Mapping[str, Any], relationship: Mapping[str, str], method: str) -> dict[str, Any]:
+def _related_packet(request: Mapping[str, Any], source: object, relationship: object, method: str, page_size: int | None = None) -> dict[str, Any]:
     """Retain both complete original requests; composition remains compiler-owned."""
-    if method not in ("truss-runtime", "ashlar-spark4", "ashlar-dbsql-20261016"):
+    methods = ("truss-runtime", "ashlar-spark4", "ashlar-dbsql-20261016") if page_size is None else ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")
+    if method not in methods:
         raise ReadBuildError("WEFT_BLOCKED: original engine navigation compiler profile required")
     if not isinstance(request, Mapping) or not isinstance(source, Mapping) or not isinstance(relationship, Mapping) or set(relationship)!={"module","id","direction"} or any(type(relationship[name]) is not str or not relationship[name] for name in relationship) or relationship["direction"] not in ("forward","inverse"):
         raise ReadBuildError("closed original directed relationship identity required")
@@ -36,7 +37,7 @@ def _related_packet(request: Mapping[str, Any], source: Mapping[str, Any], relat
         raise ReadBuildError("both original logical source and target queries required")
     if canonical_json({k:v for k,v in source.items() if k!="sql"}) != canonical_json({k:v for k,v in request.items() if k!="sql"}):
         raise ReadBuildError("original engine navigation requests must share exact context and parameter inventory")
-    return {"version":"weft.engine-related-read/0.1","compiler":method,"source":dict(source),"target":dict(request),"relationship":dict(relationship)}
+    return {"version":"weft.engine-related-page/0.1" if page_size is not None else "weft.engine-related-read/0.1","compiler":method,"source":dict(source),"target":dict(request),"relationship":dict(relationship), **({"pageSize": page_size} if page_size is not None else {})}
 
 
 @dataclass(frozen=True)
@@ -72,12 +73,10 @@ class EngineRead(CatalogRead[P, R]):
         if (related_source is None) != (relationship is None):
             raise ReadBuildError("both original navigation source and relationship are required")
         related = related_source is not None
-        if related and page_size is not None:
-            raise ReadBuildError("WEFT_BLOCKED: original engine navigation page compiler required")
-        packet = _related_packet(request, related_source, relationship, method) if related_source is not None and relationship is not None else None
+        packet = _related_packet(request, related_source, relationship, method, page_size) if related_source is not None and relationship is not None else None
         if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999 or method not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
             raise ReadBuildError("original engine page size must be in 1..999")
-        compile_method = getattr(compiler, "compile_engine_related_read_json" if related else "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
+        compile_method = getattr(compiler, ("compile_engine_related_page_json" if page_size is not None else "compile_engine_related_read_json") if related else "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
         if not callable(compile_method):
             raise ReadBuildError(
                 "WEFT_BLOCKED: original engine catalog compiler required"
@@ -162,9 +161,10 @@ class EngineRead(CatalogRead[P, R]):
             raise ReadBuildError("original first-page engine catalog required")
         if "relatedRequest" in program:
             packet = program["relatedRequest"]
-            if page or type(packet) is not dict or set(packet)!={"version","compiler","source","target","relationship"}:
+            fields = {"version","compiler","source","target","relationship"} | ({"pageSize"} if page else set())
+            if type(packet) is not dict or set(packet) != fields:
                 raise ReadBuildError("closed original engine navigation packet required")
-            expected = _related_packet(program["request"], packet.get("source"), packet.get("relationship"), program.get("compiler"))
+            expected = _related_packet(program["request"], packet.get("source"), packet.get("relationship"), program.get("compiler"), program.get("pageSize") if page else None)
             if canonical_json(packet) != canonical_json(expected):
                 raise ReadBuildError("original engine navigation packet differs")
         structural = dict(program)

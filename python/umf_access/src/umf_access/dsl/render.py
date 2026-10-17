@@ -489,7 +489,8 @@ class _NodeVariant:
 
 
 def render_related_logical(
-    variant: LogicalVariant, *, binding: Mapping[str, object] | None = None
+    variant: LogicalVariant, *, binding: Mapping[str, object] | None = None,
+    owner_bound: bool = False,
 ) -> RelatedLogical | None:
     """Retain both original logical queries for the distinct owner endpoint."""
     steps = cast(tuple[Node, ...], variant.node.args[1])
@@ -506,6 +507,6 @@ def render_related_logical(
     target_node = Node(variant.node.op, (variant.node.args[0], steps[1:], *variant.node.args[2:]))
     return RelatedLogical(
         render_logical(_NodeVariant(Node("all", (source, original_steps))), binding=binding, owner_bound=True),
-        render_logical(_NodeVariant(target_node), binding=binding),
+        render_logical(_NodeVariant(target_node), binding=binding, owner_bound=owner_bound),
         {"module": cast(str, relation.ref.field_module), "id": relation.ref.field, "direction": cast(str, direction)},
     )

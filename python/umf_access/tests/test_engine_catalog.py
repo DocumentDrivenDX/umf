@@ -51,6 +51,16 @@ class Compiler:
 class EngineCatalogTests(unittest.TestCase):
     def test_related_transport_preserves_whole_original_requests(self):
         class RelatedCompiler(Compiler):
+            def compile_engine_related_page_json(self, original):
+                value = json.loads(self.compile_engine_related_read_json(original))
+                value.pop("structuralDigest")
+                value.update(version="weft.engine-page/0.1", pageSize=self.packet["pageSize"], after=None)
+                value["structuralDigest"] = {
+                    "owner": "weft-runtime-engine-page", "version": "0.1",
+                    "sha256": hashlib.sha256(canonical_json(value).encode()).hexdigest(),
+                }
+                return canonical_json(value)
+
             def compile_engine_related_read_json(self, original):
                 self.packet = json.loads(original)
                 value = json.loads(super().compile_engine_read_json(canonical_json({
@@ -74,6 +84,12 @@ class EngineCatalogTests(unittest.TestCase):
         self.assertEqual(compiler.packet["target"], target)
         self.assertEqual(entry.artifact()["relatedRequest"], compiler.packet)
         self.assertEqual(json.loads(entry.originals())["request"], target)
+        page = EngineRead.build(compiler, target, parameters=Parameters, result=Result,
+                                method="truss-runtime", page_size=2,
+                                related_source=source, relationship=relationship)
+        self.assertEqual(page.artifact()["relatedRequest"]["version"], "weft.engine-related-page/0.1")
+        self.assertEqual(page.artifact()["relatedRequest"]["source"], source)
+        self.assertEqual(page.artifact()["pageSize"], 2)
         for changed in ({**source, "context": {"revision": True}},
                         {**source, "parameters": {}}, {**source, "extra": "unowned"}):
             with self.assertRaises(ReadBuildError):
