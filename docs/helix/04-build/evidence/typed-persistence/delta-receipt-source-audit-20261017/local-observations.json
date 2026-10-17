@@ -1,0 +1,72 @@
+{
+  "status": "SOURCE_AUDIT_NO_SUPPORTED_COMPLETE_RECEIPT_IDENTIFIED",
+  "temporal": "HELD",
+  "retrievedDate": "2026-10-17",
+  "nativeCallsPerformed": false,
+  "sourceEditsPerformed": false,
+  "r22Source": "5605d358650468d651f69ff29c40e986a0359a5b",
+  "installedConnector": {
+    "version": "4.6.0",
+    "clientSourceSha256": "a99fde0f1569624685d79fdb8de8db83c647dd0e4046267c459c3f5f15e3a84f",
+    "commitLine": 893,
+    "returnAnnotation": "None",
+    "executeStatement": "COMMIT",
+    "fetchCalls": []
+  },
+  "existingNativeLinkage": {
+    "path": "/private/tmp/sdk-managed-actions-20261016/native-statement-linkage-review-20261017/observed-native-linkage.json",
+    "sha256": "6f36b9f58b6a55a8d61c5eb27443cb2f5c7c0a1781ed296685cb4c4a3cecc7a3",
+    "qualified": false,
+    "sourceCohortStatus": "cleanup-failed",
+    "noOp015ActuallyIssuesUpdate": true
+  },
+  "existingResponseSurfaceInventory": {
+    "path": "/private/tmp/sdk-managed-actions-20261016/connector-native-receipt-surface-20261017.json",
+    "sha256": "1c2a857a4c6efaac78b18d5065f33b46778c38e4309ce5e2aa113d641dcbe02c"
+  },
+  "privatePrototypeCheckpoint": {
+    "path": "/Users/erik/Projects/weft/.git/recovery-bundles/weft-delta-atomic-prototype-checkpoint-20261017.tar.gz",
+    "sha256": "67898e8fe57cbc9ccfb8092285604a876d1bf68c4e61cf734c3e62dd89a96f89",
+    "baseBundleSha256": "2a5ae514da3422b14e4b01c282c98e1388fd544c6e1862b9978972e958d33e01",
+    "readbackPreservedFileHashes": 51,
+    "draftChangedFiles": 14
+  },
+  "sources": [
+    {
+      "url": "https://docs.databricks.com/api/statement-execution/v1/execute-statement",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-txn-commit",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/control-flow/get-diagnostics-stmt",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/history",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/history-schema",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/admin/system-tables/query-history",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/operations/custom-metadata",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/transactions/",
+      "retrievedDate": "2026-10-17"
+    },
+    {
+      "url": "https://github.com/delta-io/delta/blob/master/PROTOCOL.md",
+      "retrievedDate": "2026-10-17"
+    }
+  ]
+}
