@@ -34,7 +34,11 @@ class JoinRefinementMatrix(unittest.TestCase):
         from dataclasses import replace
 
         from commerce import Order
-        from umf_access.dsl import Node
-        relation = replace(Order.c.customer, target=Order.objects.ref)
+        from umf_access.dsl import Node, OptionalJoin
+        with self.assertRaisesRegex(TypeError, "navigation roots differ"):
+            replace(Order.c.customer, target=Order.objects.ref)
+        # Legacy Join metadata has no navigation-root constructor gate; its
+        # finite graph admission must independently reject the same corruption.
+        relation = OptionalJoin(Order.c.customer.ref, Order.objects.ref, optional=True)
         with self.assertRaisesRegex(ValueError, "distinct explicit alias"):
-            nullable_join_owners((Node("join",(relation,"inner")),))
+            nullable_join_owners((Node("join", (relation, "inner")),))

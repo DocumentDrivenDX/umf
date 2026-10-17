@@ -1,0 +1,7 @@
+{"reason":"Weft refused reviewed read: [{\"code\":\"WFT-RELATED-READ\",\"message\":\"related source explicit direct projections required\"}]","status":"refused"}
+
+Traceback (most recent call last):
+  File "/private/tmp/sdk-related-r11-preflight.py", line 16, in <module>
+    print(r.stdout+r.stderr,flush=True);assert r.returncode==0
+                                               ^^^^^^^^^^^^^^^
+AssertionError

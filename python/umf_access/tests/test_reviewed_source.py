@@ -130,7 +130,9 @@ class CursorDispatch(unittest.TestCase):
                                                           dbname="test", host="local", port=5432))
         identity = hashlib.sha256(json.dumps([entry.artifact_json, entry.context_json, "app", [],
                                              "reader", "test", "local", 5432, []], separators=(",", ":")).encode()).hexdigest()
-        def admission(*args):
+        def admission(*args, cache_context=None, shape_proof=None):
+            self.assertIsNone(cache_context)
+            self.assertEqual(shape_proof, [])
             yield from ()
             return ("reader",), []
         for values, permitted in (((None, None), False), ((None, True), False),
