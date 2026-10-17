@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3522,
+        "line": 6,
+        "path": "src/adapters/openapi/extraction.ts",
+        "sha256": "643a30a1427927647da93d374fe09011451726c205727094dbd5dc92752dcaf4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OpenapiSchemaExtraction",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OpenapiSchemaExtraction {\n source:Document;pointer:string;retrievalUri?:string;openapiVersion:string;\n dialect:string;dialectOrigin:'schema'|'document'|'openapi-default';\n schema:NativeJson;nativeSchema:string;complete:false;limitations:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OpenapiSchemaExtraction\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3522,
+      "line": 6,
+      "path": "src/adapters/openapi/extraction.ts",
+      "sha256": "643a30a1427927647da93d374fe09011451726c205727094dbd5dc92752dcaf4"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/openapi/extraction.ts",
+  "title": "OpenapiSchemaExtraction"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8291,
+        "line": 6,
+        "path": "src/projections/smithy-json-schema.ts",
+        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SmithyJsonSchemaBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SmithyJsonSchemaBackend extends SmithyAssemblyBackend {converterIdentity:string;jsonSchema(modelJson:string,rootShape:string):string|Promise<string>;jsonSchemaForService?(modelJson:string,rootShape:string,serviceContext:string,addRootDefinition:boolean):string|Promise<string>;jsonSchemaWithRootDefinition?(modelJson:string,rootShape:string):string|Promise<string>;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SmithyJsonSchemaBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8291,
+      "line": 6,
+      "path": "src/projections/smithy-json-schema.ts",
+      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+    }
+  ],
+  "summary": "Type declaration · src/projections/smithy-json-schema.ts",
+  "title": "SmithyJsonSchemaBackend"
+}

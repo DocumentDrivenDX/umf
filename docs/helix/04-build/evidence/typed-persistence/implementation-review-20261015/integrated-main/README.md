@@ -1,0 +1,11 @@
+# Integrated recovered Typed SDK review
+
+This packet reviews main `1ba3a2a5` (reporting implementation `93ba935b`) integrated with the baseline fixes at `25382ec3` through merge `45bb7564`. The adjacent baseline packet and `astra-baseline-rereview.json` remain evidence only for their exact earlier source. Fresh integrated receipts identify the changed generator/runtime inputs; they do not inherit an older wheel's qualification.
+
+The implementation delivers stage-one generated model/value/Key/projection/action-source components, a bounded capture/render subset, and a narrow `ReviewedSQL` / `weft.raw-read/0.1` bridge. Local PostgreSQL18.6 execution uses an isolated UTF-8 cluster, native caller roles/RLS and the actual pinned Weft wheel. Python3.11.17 reporting evidence does not establish every interpreter/platform in the declared compatibility range. Lakebase18 is compilation-only.
+
+Astra's integrated findings concern parameter raw-graph validation and sanitization, cursor input/output validation, owned projection members, native Key equality/collation, and exact generated source/cohort binding. Regression receipts and the final review give each disposition. The native Key profile deliberately refuses unqualified index operator classes/collations rather than treating attribute-number coincidence as uniqueness under query equality.
+
+Still open: complete STP acceptance, the full CONTRACT-071/072 catalog/Target API and release profile, four-edge/snapshot joins and broader DSL forms, native Lakebase/service-principal execution, async/stream/search/action/atomic-command/reconciliation paths, and Truss/Ashlar adoption witnesses. Cursor identity binds the tested structural/schema/principal/connection/table cut; database restore/incarnation and broader session/collation identity are not qualified. Authored SQL/catalog input remains a trusted build input, not issued execution authority.
+
+Weft owns SQL lowering. Generated persistence cannot bypass actions. Preserve Truss registration/selection/sealing/action execution and Ashlar publication/ACK protocols. The frozen browser SQL-to-actions cohort and its performance/publication hold are independent; these source changes require a fresh producer cohort if promoted into that path.

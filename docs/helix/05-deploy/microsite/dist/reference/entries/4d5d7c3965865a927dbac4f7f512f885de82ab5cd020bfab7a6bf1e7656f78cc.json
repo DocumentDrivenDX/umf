@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9306,
+        "line": 7,
+        "path": "src/adapters/delta/reconcile.ts",
+        "sha256": "9fc14f5863506aa14a6c3ca76ae54932bcaffd3e9b3598d105fbb3cf2d720dcc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaActionState",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaActionState {version:string;protocol:NativeJson;metaData:NativeJson;adds:NativeJson[];removes:NativeJson[];transactions:NativeJson[];domains:NativeJson[];commitInfo:NativeJson[];deferred:DeltaActionOccurrence[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaActionState\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9306,
+      "line": 7,
+      "path": "src/adapters/delta/reconcile.ts",
+      "sha256": "9fc14f5863506aa14a6c3ca76ae54932bcaffd3e9b3598d105fbb3cf2d720dcc"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/reconcile.ts",
+  "title": "DeltaActionState"
+}

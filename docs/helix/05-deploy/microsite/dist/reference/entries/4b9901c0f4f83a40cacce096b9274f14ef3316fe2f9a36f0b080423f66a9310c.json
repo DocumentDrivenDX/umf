@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 20534,
+        "line": 15,
+        "path": "src/extensions/security/evaluate.ts",
+        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityFactCut",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityFactCut {\n  trusted:boolean;generation:string;expectedGeneration:string;\n  policyId:string;policyRevision:string;ontologyDocumentId:string;ontologyRevision:string;\n  subjects:SecurityFact[];facts:SecurityFact[];\n  coverage:{type:SecurityRef;complete:boolean;fields:SecurityRef[]}[];\n  context:{field:SecurityRef;value:CoreLiteral}[];\n  maxFacts:number;maxSteps:number;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityFactCut\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 20534,
+      "line": 15,
+      "path": "src/extensions/security/evaluate.ts",
+      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+    }
+  ],
+  "summary": "Host attestation, not a credential: never construct this from policy or client input.",
+  "title": "SecurityFactCut"
+}

@@ -1,0 +1,610 @@
+{
+  "data": {
+    "extensionId": "umf.binding",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [
+          "tests/binding-uuid.test.ts"
+        ],
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Explicit exact 128-bit physical carrier metadata; native enforcement separately qualified",
+      "id": "umf.binding",
+      "schema": {
+        "$defs": {
+          "elementRef": {
+            "properties": {
+              "element": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "field": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "module": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "element"
+            ],
+            "type": "object"
+          },
+          "index": {
+            "properties": {
+              "include": {
+                "items": {
+                  "$ref": "#/$defs/elementRef"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "enum": [
+                  "btree",
+                  "hash",
+                  "gin",
+                  "gist",
+                  "expression",
+                  "partial",
+                  "unique",
+                  "clustering"
+                ]
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "on": {
+                "items": {
+                  "$ref": "#/$defs/indexTarget"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "predicate": {
+                "properties": {
+                  "expression": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "language": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "version": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "language",
+                  "version",
+                  "expression"
+                ],
+                "type": "object"
+              },
+              "unique": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "name",
+              "kind",
+              "on",
+              "unique"
+            ],
+            "type": "object"
+          },
+          "indexTarget": {
+            "oneOf": [
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/$defs/elementRef"
+                  }
+                },
+                "required": [
+                  "field"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "documentPath": {
+                    "properties": {
+                      "field": {
+                        "$ref": "#/$defs/elementRef"
+                      },
+                      "path": {
+                        "$ref": "#/$defs/path"
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "path"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "documentPath"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "path": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "relationshipRef": {
+            "properties": {
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "module": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "id"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:binding:0.3.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "elements": {
+            "items": {
+              "properties": {
+                "element": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "partition": {
+                  "anyOf": [
+                    {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "table": {
+                  "maxLength": 4000000,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "module",
+                "element"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "fields": {
+            "items": {
+              "allOf": [
+                {
+                  "else": {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "documentColumn"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "path"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "if": {
+                    "properties": {
+                      "storage": {
+                        "const": "embedded"
+                      }
+                    },
+                    "required": [
+                      "storage"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "documentColumn": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "path": {
+                        "$ref": "#/$defs/path"
+                      }
+                    },
+                    "required": [
+                      "documentColumn",
+                      "path"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "storage": {
+                        "const": "scalar-carrier"
+                      }
+                    },
+                    "required": [
+                      "storage"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "carrier": {},
+                      "column": false,
+                      "documentColumn": false,
+                      "field": false,
+                      "path": false
+                    },
+                    "required": [
+                      "carrier"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "storage": {
+                        "enum": [
+                          "column",
+                          "embedded"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "storage"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "carrier": false
+                    }
+                  }
+                }
+              ],
+              "properties": {
+                "carrier": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "column": {
+                          "maxLength": 4000000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "kind": {
+                          "const": "native-uuid"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "column"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "column": {
+                          "maxLength": 4000000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "kind": {
+                          "const": "bytes16"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "column"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "column": {
+                          "maxLength": 4000000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "kind": {
+                          "const": "uuid-text"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "column"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "column": {
+                          "maxLength": 4000000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "kind": {
+                          "const": "hex128-text"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "column"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "highColumn": {
+                          "maxLength": 4000000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "kind": {
+                          "const": "words64"
+                        },
+                        "lowColumn": {
+                          "maxLength": 4000000,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "signed": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "highColumn",
+                        "lowColumn",
+                        "signed"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "kind": {
+                          "minLength": 1,
+                          "not": {
+                            "enum": [
+                              "native-uuid",
+                              "bytes16",
+                              "uuid-text",
+                              "hex128-text",
+                              "words64"
+                            ]
+                          },
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "column": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "documentColumn": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "element": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "field": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "path": {
+                  "$ref": "#/$defs/path"
+                },
+                "storage": {
+                  "enum": [
+                    "column",
+                    "embedded",
+                    "scalar-carrier"
+                  ]
+                }
+              },
+              "required": [
+                "module",
+                "element",
+                "storage"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "groups": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "element": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "members": {
+                  "items": {
+                    "$ref": "#/$defs/elementRef"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "module",
+                "element",
+                "members"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "indexes": {
+            "items": {
+              "$ref": "#/$defs/index"
+            },
+            "type": "array"
+          },
+          "logical": {
+            "properties": {
+              "coreVersion": {
+                "const": "0.9.0"
+              },
+              "documentId": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "documentId",
+              "coreVersion"
+            ],
+            "type": "object"
+          },
+          "profile": {
+            "const": "umf-binding-3"
+          },
+          "relationships": {
+            "items": {
+              "properties": {
+                "id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "storage": {
+                  "enum": [
+                    "edge",
+                    "foreign_key",
+                    "junction",
+                    "inline"
+                  ]
+                }
+              },
+              "required": [
+                "module",
+                "id",
+                "storage"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "target": {
+            "properties": {
+              "subset": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "system": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "system",
+              "version",
+              "subset"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "profile",
+          "logical",
+          "target",
+          "elements",
+          "fields",
+          "relationships",
+          "indexes"
+        ],
+        "title": "UMF 128-bit physical carriers",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "Bounded explicit 128-bit carrier inspection and lossless values",
+      "version": "0.3.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/binding-128/schema.json\",\"\"]",
+    "version": "0.3.0"
+  },
+  "id": "[\"extension\",\"umf.binding\",\"0.3.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"bindings\"]",
+    "[\"schema\",\"spec/extensions/binding-128/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 14360,
+      "path": "spec/extensions/binding-128/package.json",
+      "sha256": "e19490b9e71698d0a008e8fcb6fce0a2734a2539146c0aaa636de7ce1a566488"
+    }
+  ],
+  "summary": "Explicit exact 128-bit physical carrier metadata; native enforcement separately qualified",
+  "title": "umf.binding · 0.3.0"
+}

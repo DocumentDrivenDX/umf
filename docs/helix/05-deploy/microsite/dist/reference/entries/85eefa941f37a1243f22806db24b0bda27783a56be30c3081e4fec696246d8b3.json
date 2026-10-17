@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11423,
+        "line": 14,
+        "path": "src/core-ideals/facets-parquet-projection.ts",
+        "sha256": "d4b23d70f185b5c4fc8fe7b63dda59267ba54a8e3edd8ea34d874bedfdf2a718"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsParquetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsParquetRequest {id:string;recordName:string;fieldName:string;nullable:boolean;fieldId?:number;carrier:ParquetFacetCarrier;mode:'strict'|'report';encoding:'native-type'|'metadata-only'|'carrier-only';profile:'declared-schema'|'pyarrow-21';obligation:'value-domain'|'exact-input';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsParquetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11423,
+      "line": 14,
+      "path": "src/core-ideals/facets-parquet-projection.ts",
+      "sha256": "d4b23d70f185b5c4fc8fe7b63dda59267ba54a8e3edd8ea34d874bedfdf2a718"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-parquet-projection.ts",
+  "title": "FacetsParquetRequest"
+}

@@ -9,7 +9,7 @@ from pydantic import BaseModel, ValidationError
 from .types import MISSING, CodecError, StrictModel
 from .values import validate_instant
 
-M = TypeVar("M", bound=StrictModel)
+M = TypeVar("M", bound=BaseModel)
 
 
 def _model_types(annotation: object) -> tuple[type[BaseModel], ...]:
@@ -97,6 +97,11 @@ def revalidate_model(model_type: type[M], value: M) -> M:
     if not isinstance(value, model_type):
         raise CodecError("codec requires the declared model type")
     raw = _raw_graph(value, set(), [10000], annotation=model_type)
+    return validate_graph(model_type, raw)
+
+
+def validate_graph(model_type: type[M], raw: object) -> M:
+    """Persistence validation with locations limited to authored field names."""
     try:
         return model_type.model_validate(raw, strict=True)
     except ValidationError as error:
@@ -225,23 +230,31 @@ def decode_model(
     values = checked_row(tuple(field["field"] for field in fields), columns, row)
     # model_construct is deliberately followed by raw graph revalidation. This
     # keeps decode and encode on the same sanitized, non-trusting boundary.
-    checked = revalidate_model(
-        model_type,
-        model_type.model_construct(
-            _fields_set=None,
-            **{field["python"]: values[field["field"]] for field in fields},
-        ),
-    )
-    return revalidate_model(
-        model_type,
-        model_type.model_construct(
-            _fields_set=None,
-            **{
-                field["python"]: _convert(getattr(checked, field["python"]), field)
-                for field in fields
-            },
-        ),
-    )
+    checked = revalidate_model(model_type, model_type.model_construct(_fields_set=None,
+        **{field["python"]: values[field["field"]] for field in fields}))
+    return revalidate_model(model_type, model_type.model_construct(_fields_set=None,
+        **{field["python"]: _convert(getattr(checked, field["python"]), field) for field in fields}))
+ClassT = TypeVar("ClassT")
+
+
+def seal_model(model: type[ClassT]) -> type[ClassT]:
+    def refuse_subclass(cls: type[object], **kwargs: object) -> None:
+        raise TypeError("generated model is final")
+    type.__setattr__(model, "__init_subclass__", classmethod(refuse_subclass))
+    return model
+
+
+def unhashable_key(model: type[M]) -> type[M]:
+    type.__setattr__(model, "__hash__", None)
+    return model
+
+
+def initialize_rejection(error: Exception, code: str, retryable: dict[str, bool]) -> None:
+    if code not in retryable:
+        raise CodecError("undeclared action rejection code")
+    error.code = code  # type: ignore[attr-defined]
+    error.retryable = retryable[code]  # type: ignore[attr-defined]
+    Exception.__init__(error, "action rejected")
 
 
 def make_projection_model(

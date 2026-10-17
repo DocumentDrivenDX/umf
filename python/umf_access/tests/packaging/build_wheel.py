@@ -12,6 +12,7 @@ import tempfile
 import tomllib
 from pathlib import Path
 
+from packaging.specifiers import SpecifierSet
 from replay_installed import inspect_wheel
 
 
@@ -40,7 +41,7 @@ def main() -> int:
             or project["version"] != pin["version"]
         ):
             raise ValueError("package metadata differs from runtime profile")
-        if project["requires-python"] != profile["requiresPython"] or project[
+        if (project["requires-python"] != profile["requiresPython"] or not SpecifierSet(project["requires-python"]).contains(profile["python"])) or project[
             "dependencies"
         ] != ["pydantic==" + profile["runtimeDependencies"]["pydantic"]]:
             raise ValueError("Python/Pydantic metadata differs from local profile")

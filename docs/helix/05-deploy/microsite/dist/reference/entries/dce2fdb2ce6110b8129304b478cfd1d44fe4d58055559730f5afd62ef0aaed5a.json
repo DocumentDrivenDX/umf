@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8291,
+        "line": 7,
+        "path": "src/projections/smithy-json-schema.ts",
+        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SmithyJsonSchemaPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SmithyJsonSchemaPolicy {id:string;baseUri:string;rootShape:string;profile:'native-defaults-2020-12'|'native-root-definition-2020-12'|'native-service-context-2020-12';serviceContext?:string;usage:'native-emission';lossPolicy:'strict'|'allow-reported-loss';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SmithyJsonSchemaPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8291,
+      "line": 7,
+      "path": "src/projections/smithy-json-schema.ts",
+      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+    }
+  ],
+  "summary": "Type declaration · src/projections/smithy-json-schema.ts",
+  "title": "SmithyJsonSchemaPolicy"
+}

@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 2098,
+        "path": "spec/extensions/delta-definition/package.json",
+        "sha256": "21f05eddbff419dd133cec8cd29959042419147564ce7e9b02ed27c27d7a4e81"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.delta.definition@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.delta.definition@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Azure Databricks SQL · Documentation inspected 2026-10-08; native execution not yet verified",
+      "subset": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, migration, keys, other column metadata, unknown types or arbitrary properties",
+      "targetSystem": "UMF",
+      "title": "umf.delta.definition · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.delta.definition@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.delta.definition\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, migration, keys, other column metadata, unknown types or arbitrary properties",
+  "title": "umf.delta.definition · import"
+}

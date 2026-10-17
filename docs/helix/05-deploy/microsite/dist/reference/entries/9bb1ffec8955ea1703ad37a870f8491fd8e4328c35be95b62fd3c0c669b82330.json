@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 30505,
+        "line": 175,
+        "path": "src/adapters/jsonld/index.ts",
+        "sha256": "f1e27eebfa713f0a3df459f69447da4571605cef02678dc6d0b9fbb0368df2c2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeGeneralizedRdfToJsonLd",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { id: string; baseIRI: string; processingMode: \"json-ld-1.0\" | \"json-ld-1.1\"; lossPolicy: \"report\" | \"reject\"; }): Promise<GeneralizedRdfToJsonLdReport>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeGeneralizedRdfToJsonLd\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 30505,
+      "line": 175,
+      "path": "src/adapters/jsonld/index.ts",
+      "sha256": "f1e27eebfa713f0a3df459f69447da4571605cef02678dc6d0b9fbb0368df2c2"
+    }
+  ],
+  "summary": "Public export · src/adapters/jsonld/index.ts",
+  "title": "proposeGeneralizedRdfToJsonLd"
+}

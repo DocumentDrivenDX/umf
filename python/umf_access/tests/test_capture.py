@@ -330,3 +330,10 @@ class TemporalProfileCapture(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GeneratedClientTypeVarExports(unittest.TestCase):
+    def test_executor_typevars_remain_importable(self):
+        from umf_access.protocols import ExecutorT, ReplayingExecutorT
+        self.assertEqual(ExecutorT.__name__, "ExecutorT")
+        self.assertEqual(ReplayingExecutorT.__name__, "ReplayingExecutorT")

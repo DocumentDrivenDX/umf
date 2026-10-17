@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6957,
+        "line": 13,
+        "path": "src/core-ideals/tablespec-record.ts",
+        "sha256": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecRecordRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecRecordRequest {recordModule:string;recordId:string;mode:'strict'|'report';authors?:CoreKindDeclaration[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecRecordRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6957,
+      "line": 13,
+      "path": "src/core-ideals/tablespec-record.ts",
+      "sha256": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/tablespec-record.ts",
+  "title": "TableSpecRecordRequest"
+}

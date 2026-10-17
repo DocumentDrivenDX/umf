@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "umf.reference.evidence-map/1"
+    },
+    "allocations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": "string"
+          },
+          "recordPath": {
+            "type": "string"
+          },
+          "readerId": {
+            "type": "string"
+          },
+          "selector": {
+            "type": "string"
+          },
+          "closureProfile": {
+            "enum": [
+              "historical-v1",
+              "full-operation-v1"
+            ]
+          },
+          "supersedes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "operationId",
+          "recordPath",
+          "readerId",
+          "selector",
+          "closureProfile",
+          "supersedes"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "allocations"
+  ],
+  "additionalProperties": false
+}

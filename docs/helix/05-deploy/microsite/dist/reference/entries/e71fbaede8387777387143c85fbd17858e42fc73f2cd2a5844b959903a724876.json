@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6494,
+        "line": 10,
+        "path": "src/projections/graphql-input-json-schema.ts",
+        "sha256": "8bbd7aa2e384449744d916b820b6eb1b1f93f8571d3015524160c302819b8ae9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "GraphqlInputProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface GraphqlInputProjection {\n status:'blocked'|'projected';source:Document;policy:GraphqlInputBindings;issues:ProjectionIssue[];\n mappings:{name:string;targetPointer:string}[];target?:Document;nativeSchema?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"GraphqlInputProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6494,
+      "line": 10,
+      "path": "src/projections/graphql-input-json-schema.ts",
+      "sha256": "8bbd7aa2e384449744d916b820b6eb1b1f93f8571d3015524160c302819b8ae9"
+    }
+  ],
+  "summary": "Type declaration · src/projections/graphql-input-json-schema.ts",
+  "title": "GraphqlInputProjection"
+}

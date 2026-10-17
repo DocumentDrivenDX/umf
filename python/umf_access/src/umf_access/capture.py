@@ -14,7 +14,7 @@ from typing import Any, Union, cast, get_args, get_origin, get_type_hints
 
 from pydantic import MISSING, BaseModel
 
-from .dsl import Join, Param, Terminal
+from .dsl import GeneratedSource, Join, Param, Terminal
 from .dsl._context import CURRENT, CaptureContext
 
 # Explicit public re-export is required by static consumers.
@@ -26,15 +26,12 @@ from .dsl._nodes import (
     RecordRef,
     key_identity,
 )
-from .dsl._nodes import (
-    # Explicit public re-export is required by static consumers.
-    ProjectionRef as ProjectionRef,  # noqa: PLC0414
-)
-
-# Explicit public re-export is required by static consumers.
-from .dsl.render import render_logical as render_logical  # noqa: PLC0414
+from .dsl._nodes import KeyLiteral as CapturedKey  # noqa: F401 -- Retained public compatibility alias.
+from .dsl._nodes import Node as ExpressionNode  # noqa: F401 -- Retained public compatibility alias.
+from .dsl._nodes import ProjectionRef as ProjectionRef  # noqa: PLC0414 -- Explicit typed public re-export.
+from .dsl.render import render_logical as render_logical  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.search import SearchLeg
-from .types import ActionRef, Vector
+from .types import ActionRef, ActionSource, Vector
 
 
 @dataclass(frozen=True)
@@ -44,6 +41,7 @@ class CapturedParameter:
     optional: bool
     key_components: tuple[str, ...] = ()
     key_identity: tuple[tuple[str, str], ...] = ()
+    key_source: GeneratedSource | None = None
 
 
 @dataclass(frozen=True)
@@ -59,7 +57,7 @@ class CapturedDeclaration:
     kind: str
     parameters: tuple[CapturedParameter, ...]
     variants: tuple[CapturedVariant, ...]
-    action: tuple[str, str] | None = None
+    action: ActionSource | None = None
 
 
 def _members(annotation: object) -> tuple[object, ...]:
@@ -128,15 +126,7 @@ def _parameters(function: Callable[..., Any]) -> tuple[CapturedParameter, ...]:
             m for m in members if isinstance(m, type) and issubclass(m, BaseModel)
         ]
         components = tuple(key_models[0].model_fields) if len(key_models) == 1 else ()
-        result.append(
-            CapturedParameter(
-                name,
-                carrier,
-                any(m is MISSING for m in members),
-                components,
-                key_identity(key_models[0]) if key_models else (),
-            )
-        )
+        result.append(CapturedParameter(name, carrier, any(m is MISSING for m in members), components, key_identity(key_models[0]) if key_models else (), getattr(key_models[0], "UMF_SOURCE", None) if key_models else None))
     names = {p.name for p in result}
     expanded = [f"{p.name}__{c}" for p in result for c in p.key_components]
     if len(set(expanded)) != len(expanded) or names.intersection(expanded):
@@ -269,21 +259,15 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
         elif isinstance(value, tuple):
             for child in cast(tuple[object, ...], value):
                 visit(child)
-
-    if node.op == "get":
-        key = cast(Node, node.args[2])
-        identity = (
-            dict(cast(tuple[tuple[str, str], ...], key.args[2]))
-            if key.op == "key_param"
-            else dict(cast(KeyLiteral, key.args[0]).identity)
-            if key.op == "key"
-            else {}
-        )
-        if identity and (identity["module"], identity["element"]) != (
-            record.module,
-            record.element,
-        ):
+    if node.op in ("get", "page"):
+        key = cast(Node, node.args[2] if node.op == "get" else node.args[3])
+        identity = dict(cast(tuple[tuple[str, str], ...], key.args[2])) if key.op == "key_param" else dict(cast(KeyLiteral, key.args[0]).identity) if key.op == "key" else {}
+        if identity and (identity["module"], identity["element"]) != (record.module, record.element):
             raise CaptureError("CAPTURE_SIGNATURE", "Key belongs to another Record")
+        if record.key_id is not None and record.source is not None:
+            expected = {"documentId": record.source.document_id, "coreVersion": record.source.core_version, "module": record.module, "element": record.element, "key": record.key_id}
+            if identity != expected:
+                raise CaptureError("CAPTURE_SIGNATURE", "Key differs from selected Record Key")
     visit(node)
 
 
@@ -379,14 +363,6 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
     if kind == "command":
         reference = getattr(function, "__umf_action__", None)
         if not isinstance(reference, ActionRef):
-            raise CaptureError(
-                "CAPTURE_UNSUPPORTED", "command requires generated action identity"
-            )
-        action = (reference.module, reference.action)
-    return CapturedDeclaration(
-        cast(str, function.__name__),
-        kind,
-        parameters,
-        tuple(variants),
-        action,
-    )
+            raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
+        action = reference.source
+    return CapturedDeclaration(cast(str, function.__name__), kind, parameters, tuple(variants), action)

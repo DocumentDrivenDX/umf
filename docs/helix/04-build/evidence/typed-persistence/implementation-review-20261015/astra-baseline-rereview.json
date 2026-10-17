@@ -1,0 +1,840 @@
+{
+  "kind": "recovered-implementation-baseline-rereview",
+  "date": "2026-10-15",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "task": "/root/astra_design_review"
+  },
+  "reviewedBaseline": "5bcfaec09075bb02586f7e04f9aa349208582d35",
+  "baselineIdentitySource": "Parent supplied exact clean origin/main baseline before fixes. Findings describe pre-fix files read in this review.",
+  "status": "complete for checkpoint 25382ec3 only; latest main integration pending",
+  "findings": [
+    {
+      "id": "AI01",
+      "severity": "P1",
+      "title": "Action source identity is erased",
+      "path": "python/umf_access/src/umf_access/types.py",
+      "section": "ActionRef",
+      "counterexample": "ActionRef carries only module/action and model classes; capture stores only (module,action). Same-named actions with different declaration bytes become indistinguishable compilation identities.",
+      "governing": "CONTRACT-068 Actions; CONTRACT-071 command provenance",
+      "repair": "Carry immutable full source descriptor from exact retained document through generated ActionRef and CapturedDeclaration, preserving invocation profile; no issued revision claim.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Immutable full ActionSource/Profile retained through generated ActionRef and capture; exact retained-document hash supplied by facade. This does not issue engine authority."
+    },
+    {
+      "id": "AI02",
+      "severity": "P1",
+      "title": "Action Python aliases silently erase parameters",
+      "path": "src/compilation/admission/index.ts",
+      "section": "parameters(group)",
+      "counterexample": "Two shipOrder input name overrides set to same: candidate with no diagnostics emits two same assignments, allowing optional memo to overwrite required entity Key. Outputs use the same unguarded path.",
+      "governing": "CONTRACT-067 Naming and ordering",
+      "repair": "Reject duplicate resolved Python names separately in each action input/output namespace before emission.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Input/output parameter namespaces reject duplicate resolved Python names; shared runtime helper names are reserved."
+    },
+    {
+      "id": "AI03",
+      "severity": "P2",
+      "title": "Required selectedKey is rejected while omission is accepted",
+      "path": "src/compilation/admission/access/index.ts",
+      "section": "View shape and unknown-member check",
+      "counterexample": "A valid explicit Order selectedKey produces UNKNOWN_RELEVANT; omission returns candidate and emitter chooses keys[0].",
+      "governing": "CONTRACT-067 selected closure; CONTRACT-070 RecordView",
+      "repair": "Require and resolve selectedKey exactly. Keep unsupported multiple/alternate Keys refused rather than infer a first Key; update current schemas/fixtures without rewriting historical evidence.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "selectedKey required and exact; unsupported multiple/alternate Keys refuse. Current schema and fixtures updated; historical evidence preserved."
+    },
+    {
+      "id": "AI04",
+      "severity": "P2",
+      "title": "Generated update signature retains known ty unknown-key escape",
+      "path": "src/compilation/targets/python/index.ts",
+      "section": "RecordQuery.update",
+      "counterexample": "Generated **values: Unpack[RecordUpdate] is explicitly superseded because ty does not reject unknown keyword names. Recovery static evidence only runs mypy and pyright.",
+      "governing": "CONTRACT-068 Field expressions; TD-082",
+      "repair": "Emit explicit keyword-only mutable fields with MISSING defaults; add ty and positive/negative corpus checks.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Explicit keyword-only update fields with MISSING filtering; unknown keyword negative rejected by all three checkers."
+    },
+    {
+      "id": "AI05",
+      "severity": "P2",
+      "title": "Column RHS erases owning Record in static comparisons",
+      "path": "python/umf_access/src/umf_access/dsl/_expressions.py",
+      "section": "Column comparison signatures",
+      "counterexample": "Column[Any,T] admits foreign-owner RHS for a comparison whose result is typed as the left Record predicate. Runtime capture later refuses but static rejection promised by the current contract is missing.",
+      "governing": "CONTRACT-068 Field expressions; CONTRACT-071 owner-set restriction",
+      "repair": "Use Column[O,T] and add foreign-owner RHS negatives across all supported comparison operators/checkers.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Column RHS retains owner generic; same-type foreign-owner negative rejected by all three checkers."
+    },
+    {
+      "id": "AI06",
+      "severity": "P2",
+      "title": "Generated rejection type cannot represent reserved missing entity",
+      "path": "src/compilation/targets/python/index.ts",
+      "section": "action rejection codeType",
+      "counterexample": "ShipOrderRejected literal is only NOT_READY; ENTITY_MISSING is omitted, and construction with that reserved result raises KeyError instead of a typed rejection. Existing test enshrines the omission.",
+      "governing": "CONTRACT-068 Actions; US-081-AC4",
+      "repair": "Include reserved ENTITY_MISSING; preserve retryable classification from original results rather than indexing only declared failures.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Reserved ENTITY_MISSING included and initialized safely. Complete original-result/client ABI remains open."
+    },
+    {
+      "id": "AI07",
+      "severity": "P1",
+      "title": "Grouped count has no result bound",
+      "path": "python/umf_access/src/umf_access/dsl/render.py",
+      "section": "count/group_count rendering",
+      "counterexample": "group_by(value).count() renders SELECT value, COUNT(*) ... GROUP BY value without LIMIT. Every distinct value may become a returned row; count renderer rejects a limit and Grouped offers no bound.",
+      "governing": "CONTRACT-071 Grouped counts must remain bounded by an admitted limit/page",
+      "repair": "Expose explicit group-result limit and enforce it for group_count; preserve unbounded-input single-row global count.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Explicit Grouped.limit bounds group outputs; renderer refuses unbounded grouped count. Global count remains single-row; pre-group limit is refused."
+    },
+    {
+      "id": "AI08",
+      "severity": "P2",
+      "title": "Decode error text leaks input map keys",
+      "path": "src/compilation/targets/python/index.ts",
+      "section": "emitted decode model_validate calls; equivalent new codec_support.decode_model path",
+      "counterexample": "Invalid dict value under key private-customer@example.invalid appears in str(ValidationError) as data.private-customer@example.invalid despite hide_input_in_errors=True. Encode revalidation already strips untrusted location components, but decode calls model_validate directly.",
+      "governing": "CONTRACT-068 Codecs and errors: messages name field/rule without input values",
+      "repair": "Use one sanitized validation boundary for decoded data, retaining trusted declared field names only, with nested-map and extra-key leak regressions.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Shared validation sanitizer strips untrusted locations at decode/revalidation boundaries. Direct general Pydantic error APIs are outside this safety claim."
+    },
+    {
+      "id": "AI09",
+      "severity": "P1",
+      "title": "Reused item Fields skip nested presence and mutation rules",
+      "path": "src/compilation/admission/access/index.ts",
+      "section": "collect and checkAccessPresence call",
+      "counterexample": "Reuse owned nullable/mutable memo as itemType of new memos array. collect ignores the already-seen nested occurrence; generation returns candidate although item Fields must be immutable and cannot carry missing. Nested-only nullable Fields also permit false null flags despite the complete nested F/T rule.",
+      "governing": "CONTRACT-070 FieldView item/value rules and shared occurrence Conflict rules",
+      "repair": "Track every nested occurrence even when Field already owned; require both owned and nested rules, with exact nullable/nonnullable nested presence.",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "Nested occurrences tracked independently of owned occurrence; both presence/mutation rules apply, including exact null alternatives."
+    },
+    {
+      "id": "AI10",
+      "severity": "P2",
+      "title": "Host writer omitted the fourth stage-two path",
+      "path": "scripts/umf-access-generate.ts",
+      "section": "candidate reserved paths",
+      "counterexample": "Existing _umf/privileges.json is treated as an unexpected stage-one file and causes OUTPUT_CHANGED instead of preservation during regeneration.",
+      "governing": "CONTRACT-067 stage ownership; CONTRACT-071 privilege artifact",
+      "repair": "Reserve and preserve all four stage-two paths; add drift-check and regeneration regression with privileges.json present.",
+      "discoverer": "parent implementation reviewer; independently inspected corrected writer",
+      "disposition": "resolved in baseline checkpoint 25382ec3",
+      "resolution": "All four stage-two paths preserved including privileges.json; writer regression verifies regeneration/drift behavior."
+    }
+  ],
+  "scopeLimits": [
+    "Recovery receipts expressly limit claims to experimental components, not full slices or native targets; no false full-qualification claim is attributed to them.",
+    "Shared metadata-driven validators/codecs now replace copied generated algorithms. Real Python3.11 runtime qualification, complete three-checker profile, complete revised DSL, stage-two catalog/runtime provenance, full action clients/results and native/engine adapters remain future gates.",
+    "Current CONTRACT-068 Key identity explicitly excludes build digest; existing no-digest KEY_IDENTITY is not a finding."
+  ],
+  "probes": [
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generator-probes.ts",
+      "sha256": "44cc84c79ed039b1d899eea240a8f83be1e2ee2a1fc4219c9254eee153cd507b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generator-probes.json",
+      "sha256": "0bbe1bb0681d0fa39ee53c0d44a39cb4346540271c9a0dbcddf9af9a9f85564e"
+    }
+  ],
+  "checks": [
+    {
+      "name": "admission/schema/naming/allow-matrix",
+      "result": "735 pass, 0 fail, 2235 assertions",
+      "command": "bun test tests/compilation/access-generator.test.ts tests/compilation/access-naming.test.ts tests/compilation/access-extension.test.ts tests/compilation/access-matrix.test.ts",
+      "log": "admission-tests-final2.log"
+    },
+    {
+      "name": "logical renderer",
+      "result": "23 tests pass",
+      "command": "PYTHONPATH=python/umf_access/src /private/tmp/umf-access-runtime-9189ac065cbe51b4/bin/python -m unittest discover -s python/umf_access/tests -p test_dsl_render.py",
+      "log": "group-tests.log",
+      "qualification": "Source runtime loaded explicitly; this is not installed-wheel or Weft/native qualification."
+    },
+    {
+      "name": "fresh generated current models/action types/projections and renderer",
+      "result": "30 tests pass",
+      "log": "review-python-final.log",
+      "qualification": "Fresh generated package with explicitly selected source runtime; not installed-wheel or full-profile evidence."
+    }
+  ],
+  "finalReview": {
+    "date": "2026-10-15",
+    "checkpoint": "25382ec3",
+    "verdict": "All ten recorded findings resolved in the reviewed implemented subset. No remaining blocker identified for that subset. This does not close full Typed SDK slices or qualify newer main integration.",
+    "integrationBoundary": "Parent subsequently fetched main 1ba3a2a5, including overlapping reporting, joins and PostgreSQL read changes. Those bytes are excluded from this receipt. Focused review and fresh qualification are required after merge.",
+    "plans": "Both plans distinguish completed local components from open Python3.11, complete DSL, catalog, native and engine-adoption gates.",
+    "evidenceInspection": {
+      "sourceEntriesVerified": 82,
+      "evidenceEntriesVerified": 22,
+      "mismatches": 0,
+      "wheelCurrentPythonFilesMatched": 11,
+      "namedGates": {
+        "bun": {
+          "version": "1.4.2",
+          "tests": 932,
+          "assertions": 3213,
+          "files": 14
+        },
+        "python": {
+          "host": "3.14.8",
+          "pydantic": "2.14.1",
+          "isolated": true,
+          "installedWheelSha256": "1868382358a28b53333052b92722337a8a33716ec826c0379e6b67957d8ca9f6",
+          "tests": 96,
+          "errors": 0,
+          "failures": 0
+        },
+        "static": {
+          "pythonTarget": "3.12",
+          "mypy": "2.4.0",
+          "pyright": "1.1.414 strict",
+          "ty": "0.0.88",
+          "positive": "clean generated package and positive declaration on all three",
+          "negative": "unknown update keyword and same-type foreign RHS rejected on all three; strict pyright emits additional unknown-type consequences"
+        },
+        "browser": {
+          "chromium": "153.0.8010.12",
+          "cases": 15,
+          "runsPerRuntime": 2,
+          "externalRequests": 0,
+          "receipt": "browser.json"
+        }
+      },
+      "attribution": "Targeted reviewer-run checks retained above. Parent produced integrated named-gate receipts; reviewer inspected exact hashes and wheel/source equality, without claiming an independent rerun of every integrated gate."
+    },
+    "remainingGates": [
+      "No Python3.11 runtime qualification; local package metadata remains exact3.14.8.",
+      "No complete revised DSL, stage-two catalog, Weft backend, native target, async/timeout, action execution or engine-adoption qualification.",
+      "Nominal local prerelease ABI/version does not let old wheel/source evidence qualify these new bytes.",
+      "Remote CI and integration with subsequent main sources remain separate."
+    ]
+  },
+  "reviewedFiles": {
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": {
+      "sha256": "2bb077ee262f72614da27292ee29772eab8c553e8c4e27b2eee38885970ce377",
+      "bytes": 14293
+    },
+    "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md": {
+      "sha256": "16fcbe9f6e8a473b4b937bd0cf1880400af2d4f6678a7509784f76b49a92576f",
+      "bytes": 16087
+    },
+    "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md": {
+      "sha256": "a866b179a72259e155cce2fe4e326300fb99ab40e3166ca75e95cdd3b1bda4a3",
+      "bytes": 10483
+    },
+    "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md": {
+      "sha256": "fcb2227df05c55f0673ea89f08e32b70ddde75cac6b0c24350890d4e5ef567eb",
+      "bytes": 16390
+    },
+    "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md": {
+      "sha256": "5734c795c272e4326aa2d1228e78e154b7baa4c15f6e87c6e772ec06af365fad",
+      "bytes": 33684
+    },
+    "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md": {
+      "sha256": "e546acdc49118edbca49b21dd8dfbb7ff7ff4e915b2fdbc07b164373f3b040e3",
+      "bytes": 30283
+    },
+    "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md": {
+      "sha256": "6b54852cb499e3bf6fe393152287878411d9153bc4b2b9ab449c92283c920c53",
+      "bytes": 21399
+    },
+    "docs/helix/02-design/contracts/CONTRACT-074-search.md": {
+      "sha256": "a1b631b2aa4c1ad5007a0e70f0ba9add14ec024071b3ad011bc0b879ebd2b439",
+      "bytes": 13547
+    },
+    "docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md": {
+      "sha256": "f5fd731cba3d7bf985c489c6e561e1ce58b79621d486724ca7329057bc7a7615",
+      "bytes": 8422
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/admission-tests-final.log": {
+      "sha256": "a9d93356861461c9cf4ec9a68e1ec323e452d23eb821b13460b4c6abfcb332af",
+      "bytes": 65321
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/admission-tests-final2.log": {
+      "sha256": "424329799f9b5ed30f96d1206469830b7ee47d2e5111c67ed12711aac04a4921",
+      "bytes": 65366
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/boundaries.log": {
+      "sha256": "1dcd395b510db96a8c30b527731528f8134d4be7c85e0547583c31e1468ce582",
+      "bytes": 260
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/browser-cases.json": {
+      "sha256": "1a1eb5801ec1ba77152414ba5c817dd5a1988c47568222b0167a792a9ef149aa",
+      "bytes": 1913969
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/browser-replay.ts": {
+      "sha256": "320711afc38d87fd544c3bb52f28e9d3ba9d54e9ccd33f6add1289118ae25721",
+      "bytes": 5402
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/browser.json": {
+      "sha256": "ae8a5dd88cb49cb1cbf2dc434e40943d7304f71fb68fdb5124d2f104eb64f1a1",
+      "bytes": 2035
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/bun-tests.log": {
+      "sha256": "34d87135f0749ae3716d08f856816ea55d5e0a48fb8e81b4fa55bbbad5cebdc5",
+      "bytes": 81003
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/explicit-update-red.log": {
+      "sha256": "79a5f647995a30060be53af1ebdf9411262ca36ce873dcd999f8e5fb6529f43d",
+      "bytes": 4878
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-mypy.log": {
+      "sha256": "ab35ee42183d4d6d3ba483825ab037d18a5a15622d03be01d82220b1564851ff",
+      "bytes": 43
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-negative.py": {
+      "sha256": "8ad4ed4889c0bba1d92f2d5423a90696c2aabb231d0c88cec89fd777f976865e",
+      "bytes": 288
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-positive.py": {
+      "sha256": "fd46e5a18eadedae63a7796484af2984e44606f5c4b4f9bf94bdeee0fb3c62ad",
+      "bytes": 161
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-probe-input.json": {
+      "sha256": "a38062bb626395fab01b54efa54d96dc2066c6e2a0bb1abfe9eb1da2d42541ec",
+      "bytes": 9160
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-probe-result.json": {
+      "sha256": "55b4022b32464e9bbe29b5c5f3b3594f867c071dfcefaabe671c0f400c5e0483",
+      "bytes": 196326
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-pyright-positive.json": {
+      "sha256": "fe89a3a4fc584725e18de93eb6119693e002a31f3122b36f24c7ca4b09c819f9",
+      "bytes": 182
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-pyrightconfig.json": {
+      "sha256": "429ac2e3a9c1221e4f76d4883f1dc22d32c68c543d7786bc7ace9c9f203b7dc8",
+      "bytes": 196
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-strict-pyright.log": {
+      "sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+      "bytes": 37
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generated-ty.log": {
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generation.log": {
+      "sha256": "8d122190507bf95d1852590cf02e03b84f6e9198d639fbed89885a2d0505c6a1",
+      "bytes": 202
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generator-probes.json": {
+      "sha256": "0bbe1bb0681d0fa39ee53c0d44a39cb4346540271c9a0dbcddf9af9a9f85564e",
+      "bytes": 2273
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generator-probes.ts": {
+      "sha256": "44cc84c79ed039b1d899eea240a8f83be1e2ee2a1fc4219c9254eee153cd507b",
+      "bytes": 1613
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/group-probe-before.json": {
+      "sha256": "c85521d4620c71fadbe42598bfbc534582f9a565f8a084908cb4e6d81745502f",
+      "bytes": 93
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/group-probe.py": {
+      "sha256": "724e60628ddbaa1836159b2bbe70e51e99cae7f109ebf21305180065022867d8",
+      "bytes": 533
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/group-tests.log": {
+      "sha256": "4b1466b77048ebccccd836a54b75581fa925911c0cc0b1452c131afd59bf9c23",
+      "bytes": 122
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/initial-missing-dependencies-boundaries.log": {
+      "sha256": "1dcd395b510db96a8c30b527731528f8134d4be7c85e0547583c31e1468ce582",
+      "bytes": 260
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/initial-missing-dependencies-typecheck.log": {
+      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+      "bytes": 109
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/installed-tests.log": {
+      "sha256": "91c873617f51a3150b69af76e0a00d5068f392c8748b2557c145ffa66d0eadf2",
+      "bytes": 13866
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/nested-probe.ts": {
+      "sha256": "63335eb61e376a85051cfc22ba096d303744eff5204e798613c3e45b3c8ed339",
+      "bytes": 879
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/privileges-writer-red.log": {
+      "sha256": "3d297c53ec5443481bca2dc566b6a108e717f324155ee9d22c4e7da44015bb37",
+      "bytes": 1822
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/replay-installed.py": {
+      "sha256": "719a39a2088fdb8bdd186e3129a8eb0ad85ba492f9ca1403dced2233b415e951",
+      "bytes": 1803
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/review-python-final.log": {
+      "sha256": "a62e7f1292f4740ed2372e03e74c49b811764325df1da1ea7adf818901d837e3",
+      "bytes": 129
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/static-negative-mypy.log": {
+      "sha256": "31e6d15ac7e34009d93cfd9fd7415ce043fa8caafcca1c38db9d7a258031ce3a",
+      "bytes": 496
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/static-negative-pyright.log": {
+      "sha256": "9c609413eca648fb1aa31f9322fc584b7a5b6e9227a99af4875a5b770c1fcb95",
+      "bytes": 857
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/static-negative-ty.log": {
+      "sha256": "58847cd3ab82c1a3f51ca365936a1eef5aed3d57e6deff435640851b069121d0",
+      "bytes": 1258
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/static-positive-mypy.log": {
+      "sha256": "050c52a2b0c61e8b681ef5c485e0bc03340b8d55148e0acef27d744c8be42033",
+      "bytes": 43
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/static-positive-pyright.log": {
+      "sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+      "bytes": 37
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/static-positive-ty.log": {
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/structure-check.json": {
+      "sha256": "8411f0661dd2fb3a96d7588664058bebff97060175a83e0f9cbb6a61727e456f",
+      "bytes": 751
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/typecheck.log": {
+      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+      "bytes": 109
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/verification.json": {
+      "sha256": "c400854aff66f5bf0d1bd2d688ea138720325bf0828c7db34144cc6b965be007",
+      "bytes": 15205
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/wheel-build.json": {
+      "sha256": "47073e52b17e52a4a3a25c844c7963b2da42aee912b59dd6ecd90826f9a827e5",
+      "bytes": 5806
+    },
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/wheel/umf_access-0.1.0.dev0-py3-none-any.whl": {
+      "sha256": "1868382358a28b53333052b92722337a8a33716ec826c0379e6b67957d8ca9f6",
+      "bytes": 22872
+    },
+    "docs/helix/04-build/implementation-plan.md": {
+      "sha256": "0ae80ad62531a557979c74ba29e3283654c86addc1825e34808a946c23e62682",
+      "bytes": 1158729
+    },
+    "docs/helix/04-build/typed-persistence-design.md": {
+      "sha256": "cdbdb7dafe4cb13ef203f8145202364a797b7c71e77a586a4c9369367cff5f50",
+      "bytes": 28979
+    },
+    "fixtures/access/commerce/actions.json": {
+      "sha256": "0e6b0ece13fe5ef18ca1655ab4829bee4e8ea68b2e90d11d13dd26ac3b5b41bc",
+      "bytes": 13081
+    },
+    "fixtures/access/commerce/containers.json": {
+      "sha256": "d1de20ab896b3795f210e8afa17af31be55e545d02117c039c11c8b8b2e34852",
+      "bytes": 13889
+    },
+    "fixtures/access/commerce/engine-only.json": {
+      "sha256": "e16b17bfa07a5b10d2dfbc9a8d17473dfe1bdeb47fdf47d3608b5b0ee149809c",
+      "bytes": 10528
+    },
+    "fixtures/access/commerce/named.json": {
+      "sha256": "9c35ea6c7669958a67c963040f5467214a2b094635af32b68bd9f68bf324fd0a",
+      "bytes": 10909
+    },
+    "fixtures/access/commerce/postgresql18-binding.json": {
+      "sha256": "a8d523d74def9a8e9c795071a3297c2cfb775ecda914b5eaf2ce3d7bd872dc04",
+      "bytes": 1403
+    },
+    "fixtures/access/commerce/postgresql18.json": {
+      "sha256": "a2b54818ab2a125431d7f0eb4afc18e1430c6283200ed464a4355873c561368a",
+      "bytes": 12262
+    },
+    "fixtures/access/commerce/relationships.json": {
+      "sha256": "83d4faec71f93ccf7efb023bb3b23277451182e9cb6dbaea23bdc27ebe7c2bba",
+      "bytes": 11206
+    },
+    "fixtures/access/golden-vectors/core-carriers.json": {
+      "sha256": "fdad48d32f30da8a66f6d72e7124debbb78442192cb8e3107e224957bb768e8a",
+      "bytes": 41922
+    },
+    "fixtures/access/golden-vectors/temporal-profile.json": {
+      "sha256": "33e246d47ead263e9b2467b57a46811cdd3628d703d91b5f4fa564b1d207f9c2",
+      "bytes": 6389
+    },
+    "python/umf_access/compatibility-profile.json": {
+      "sha256": "26aba1bb2bfbf308cbb52e64cd0ce81fc8bab3eac1e4628e7fac883f507abe28",
+      "bytes": 1833
+    },
+    "python/umf_access/pyproject.toml": {
+      "sha256": "c2df9f590493620dbdfd8d35846d567b715f709902acd8fc088c226709e1eb8a",
+      "bytes": 432
+    },
+    "python/umf_access/src/umf_access/__init__.py": {
+      "sha256": "4d924a6cba4b47b844f0ed7ca3dbc0eb2fcaf66aef3582e459250d688b769259",
+      "bytes": 833
+    },
+    "python/umf_access/src/umf_access/capture.py": {
+      "sha256": "831e8814cec1e27aae3dcac454466cf741cea86d433198ad0be2308b019d397d",
+      "bytes": 11524
+    },
+    "python/umf_access/src/umf_access/codec_support.py": {
+      "sha256": "d822bc4616b136bd8fc0cbd298161047665fb3c68dee4912ba1fa62cf3889654",
+      "bytes": 7309
+    },
+    "python/umf_access/src/umf_access/dsl/__init__.py": {
+      "sha256": "44f441e0ac082b916b9ada9ed043e79946639d23513d9b4be4c25b12cd4b9783",
+      "bytes": 734
+    },
+    "python/umf_access/src/umf_access/dsl/_context.py": {
+      "sha256": "ab629894a433d90a95cd03971a10bef625b994d837ca7ec6589eb854f08e1764",
+      "bytes": 896
+    },
+    "python/umf_access/src/umf_access/dsl/_expressions.py": {
+      "sha256": "f4a2cc2a756fb51ef51313e8ec31679386ae22c83c5108c9ce3047157b0f1b98",
+      "bytes": 7681
+    },
+    "python/umf_access/src/umf_access/dsl/_nodes.py": {
+      "sha256": "94750ae45c660bd2f4bfa196036ea846253ea44fa2de09b661d2062c84c164d7",
+      "bytes": 5300
+    },
+    "python/umf_access/src/umf_access/dsl/_query.py": {
+      "sha256": "e2eefe1e1166d806ca1fa6c0d826f6ff0ff083b360d8856a25f42493f7c43877",
+      "bytes": 13027
+    },
+    "python/umf_access/src/umf_access/dsl/render.py": {
+      "sha256": "051e3032c16cd3d72316f34f6ede2edc73f26810680ae6fa7285c27cfdece339",
+      "bytes": 9486
+    },
+    "python/umf_access/src/umf_access/py.typed": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "python/umf_access/src/umf_access/types.py": {
+      "sha256": "95879c8620e27b82ed28a4e3e61b8b7a9b6e047d14239b7c22f5826f358afbe2",
+      "bytes": 3356
+    },
+    "python/umf_access/src/umf_access/values.py": {
+      "sha256": "8cb4a60a7c0ae7bc4295b9c914ff9537190e6f9d5cfee0586e1fad682b2fb33f",
+      "bytes": 9555
+    },
+    "python/umf_access/tests/packaging/build_wheel.py": {
+      "sha256": "ef9a15ee49e639cf66a54390df2796d5d127ff6274d0e0438641a3b58de37cec",
+      "bytes": 4622
+    },
+    "python/umf_access/tests/packaging/emit_replay_fixture.ts": {
+      "sha256": "bacbca2f47899a78dab2f00578e66690415b8fbb34bce0bd348668fabf6c8670",
+      "bytes": 2839
+    },
+    "python/umf_access/tests/packaging/replay_installed.py": {
+      "sha256": "6ea285be31f9a51b6c0847533ccffc742c1442e022068db13e6a3cc40904e4b8",
+      "bytes": 15448
+    },
+    "python/umf_access/tests/packaging/snapshot_runtime.py": {
+      "sha256": "cc92d95645b03bb02db2b493f637523ffab5e80ec038d0b017c617785b7246a9",
+      "bytes": 5369
+    },
+    "python/umf_access/tests/test_capture.py": {
+      "sha256": "6dec4c3168c0fd6566b05661c4415fabdf590a698a8a350fe662a98515389d55",
+      "bytes": 9550
+    },
+    "python/umf_access/tests/test_codec_support_red.py": {
+      "sha256": "67d4d09cf011c6ecd6f5985cb72ea343b79abecd5ffab2be2914472d6985eeff",
+      "bytes": 7971
+    },
+    "python/umf_access/tests/test_dsl_render.py": {
+      "sha256": "b2bfef3ca8f6432ed2b53bc766dcf076095b709f5d0e2d447ab788a0e4e43bd6",
+      "bytes": 15613
+    },
+    "python/umf_access/tests/test_dsl_runtime.py": {
+      "sha256": "dc827463a3f0aae068bc8914994c1b0742e3818c78b530e78043dd0c5a0520a3",
+      "bytes": 12262
+    },
+    "python/umf_access/tests/test_generated_actiontypes.py": {
+      "sha256": "39da2b7c72366c99eb931cb0fb5789c30161afd4c963790406ed53f2eaa00d04",
+      "bytes": 1915
+    },
+    "python/umf_access/tests/test_generated_models.py": {
+      "sha256": "37d2da8dfce2f8edc509c343e0e0e68c7cdea82e85f56f73949ad382a999e027",
+      "bytes": 3884
+    },
+    "python/umf_access/tests/test_generated_projections.py": {
+      "sha256": "04fde2d5adf3306fdb59f22cfdd70bebdd11545861493cdec139ac32c8ca7e49",
+      "bytes": 2587
+    },
+    "python/umf_access/tests/test_golden_vectors.py": {
+      "sha256": "8c27221a7550b1643e54349349e48f9cac82c84ed145035e1809e25babc4d1e1",
+      "bytes": 4178
+    },
+    "python/umf_access/tests/test_refactor_regeneration.py": {
+      "sha256": "a22934fdc4a251773031e1dbb172280fb78fdb08bb85469491c7be5ecd7d599a",
+      "bytes": 9731
+    },
+    "python/umf_access/tests/test_temporal_carriers_red.py": {
+      "sha256": "bf1af190eb7d681c0c4e9913f6ce1dc01bd7eb3ea6896e336fb7a2b169c9ca91",
+      "bytes": 5819
+    },
+    "python/umf_access/tests/test_values_red.py": {
+      "sha256": "9b333cc2047b8b271eb2f20113705fe8ce0ab96daa81c1788d5663503c278e25",
+      "bytes": 4357
+    },
+    "python/umf_access/tests/test_wheel_contract.py": {
+      "sha256": "3e1b53ec68a7e05dee67c5ed432ceaa24574da414f47e402d6e1e5b04466a59e",
+      "bytes": 7119
+    },
+    "scripts/check-access-python-boundaries.py": {
+      "sha256": "5fa21d560097ec0e96065748ed419a550158ab89ea9ae1a55a94ce0ea4ca775f",
+      "bytes": 7925
+    },
+    "scripts/check-compilation-boundaries.ts": {
+      "sha256": "5e3caef8983f2f347e3635f61669e4d4e74e1e319e4d59b90cea17637e5036be",
+      "bytes": 6362
+    },
+    "scripts/umf-access-generate.ts": {
+      "sha256": "e4d8749470a88bbad0c77887c615e5ad47a4b4fc86284399a838f5a8b3888fbf",
+      "bytes": 8304
+    },
+    "spec/extensions/access/package.json": {
+      "sha256": "76500befee51579ab62fbcb4ab83f9fa8aef6c38775eaf7cbd1efe8ad46bea8a",
+      "bytes": 15781
+    },
+    "spec/extensions/access/schema.json": {
+      "sha256": "b106d554f9845f5a0dc276ce0cfea0928cf34edff93b9cfb0da8f10a97c8f961",
+      "bytes": 14175
+    },
+    "src/adapters/access-temporal.ts": {
+      "sha256": "45dac162a1502c90d2e2e0ecca5e01b790d126c84fcf3880edbf4dc92405a8c5",
+      "bytes": 3628
+    },
+    "src/compilation/admission/access/index.ts": {
+      "sha256": "4e6de60d49ba2dca9dea86b1749c2dea1572274efa383b02c5e5c050fb94a923",
+      "bytes": 15649
+    },
+    "src/compilation/admission/diff.ts": {
+      "sha256": "6a1dad4057f8a229f3013bada541a065882aeef3cd95e04c4700ac18194e7ffb",
+      "bytes": 6997
+    },
+    "src/compilation/admission/index.ts": {
+      "sha256": "14f0318e1832b9dbce991d3dd8f5ebb3440ddca7269850c5a71192084c2ebf9f",
+      "bytes": 28740
+    },
+    "src/compilation/bundle/hash.ts": {
+      "sha256": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8",
+      "bytes": 4681
+    },
+    "src/compilation/bundle/index.ts": {
+      "sha256": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8",
+      "bytes": 3502
+    },
+    "src/compilation/index.ts": {
+      "sha256": "2d62b2e0f8bafa0d8d2a26488c04fc8c1b38eb8f14141c9132312ba0cff6e7d0",
+      "bytes": 1263
+    },
+    "src/compilation/ir/index.ts": {
+      "sha256": "a375d691f9d5bd653c11902c24348e0d8d9e80338efc8b42b8de624fd3d9755a",
+      "bytes": 3439
+    },
+    "src/compilation/targets/python/index.ts": {
+      "sha256": "eb098345ac2d50904a24d0e6dcc395dde8167e371cae0f8ac79b441eee947bad",
+      "bytes": 18738
+    },
+    "src/extensions/actions/plan-identity.ts": {
+      "sha256": "4cb463a988b06b83e9165361f7e29e2649e1dda3086052fe33acec2314c32245",
+      "bytes": 309
+    },
+    "src/extensions/binding/raw-profiles.ts": {
+      "sha256": "7ad89fe5e9c7bd1c78bd1199e74cfaefadae36677ce06661e83ee3512ad8973e",
+      "bytes": 4756
+    },
+    "tests/compilation/access-context.test.ts": {
+      "sha256": "5783f70d01f2d9e2f35842d328fe9957acba6bd42295ecaa6e68c4d0ba616fa6",
+      "bytes": 2856
+    },
+    "tests/compilation/access-diff.test.ts": {
+      "sha256": "32cd319d174b21d715990555c0357a7d7ca3ec94276a3eb2ad25e8a0f3f8bb03",
+      "bytes": 1927
+    },
+    "tests/compilation/access-digest.test.ts": {
+      "sha256": "bd7394a1b90d402ed5f41bad468eae2c66404f001faa8e725ccfabf27019c617",
+      "bytes": 1523
+    },
+    "tests/compilation/access-extension.test.ts": {
+      "sha256": "150e635fd37617f820196e44d96df7729052997646e39523e24701077d474a6f",
+      "bytes": 5358
+    },
+    "tests/compilation/access-fixtures.ts": {
+      "sha256": "0cb82eb2ce651ebf9b32d7b6a110b1bbdbbf755846ae30058c4b70536b7dcd2c",
+      "bytes": 1663
+    },
+    "tests/compilation/access-generator.test.ts": {
+      "sha256": "2f7bce7b0e28ed156a002efe529f9f87b8be9947d21989319b799236f348f3c4",
+      "bytes": 17150
+    },
+    "tests/compilation/access-golden-vectors.test.ts": {
+      "sha256": "307db3da186c57a97511e5b7463cc1aa26975bfd6cce4e884ab80b849b218c2f",
+      "bytes": 1499
+    },
+    "tests/compilation/access-matrix.test.ts": {
+      "sha256": "bcf03c89477c43dca1f2fd1b8aaefddd8ed2ec431f1dab8db0e3e6d173ca650c",
+      "bytes": 5120
+    },
+    "tests/compilation/access-naming.test.ts": {
+      "sha256": "b80a67f5a185395801234188a3a28abcc6d1e3ba323f5c650aa77bd3fa368767",
+      "bytes": 5259
+    },
+    "tests/compilation/access-schemas.test.ts": {
+      "sha256": "bc3f686db04dbc21d5ce5860da49a4d2e0af9552711014b4fbf20853345fbaf9",
+      "bytes": 1601
+    },
+    "tests/compilation/access-writer.test.ts": {
+      "sha256": "7dd85bea6a26db70ec2aa32b7620b6731204bbe10991c32d9a9237f16b4a4015",
+      "bytes": 8875
+    },
+    "tests/compilation/boundaries.test.ts": {
+      "sha256": "5997ed3f1982d810be2d1502b527b8ced5253c7029f1bb0cf1deb645d3710180",
+      "bytes": 9689
+    },
+    "tests/compilation/python/static/queries/negative/call_missing_keyword.py": {
+      "sha256": "93a5b2127a247a30096409ddbbbec32c634ba75ade5afd0c2b938d2e5641ab8e",
+      "bytes": 237
+    },
+    "tests/compilation/python/static/queries/negative/call_wrong_keyword.py": {
+      "sha256": "fe7b6b38af2f05e131ee1abc355392f97f7ef94ff6bee94bc8a36329d63e68bb",
+      "bytes": 256
+    },
+    "tests/compilation/python/static/queries/negative/call_wrong_type.py": {
+      "sha256": "3f50ed87243f405131d2b8ca982de0e1b4d6bb7f2905aa7ecb25a06c77d169dd",
+      "bytes": 250
+    },
+    "tests/compilation/python/static/queries/negative/count_iterated.py": {
+      "sha256": "805024de958715cb664c11f3ea725732788297ead9239d022d81ee255dcb51c0",
+      "bytes": 243
+    },
+    "tests/compilation/python/static/queries/negative/expected.json": {
+      "sha256": "a0d03f2f1b395c7c3c62aeb777140173474541c989841ca08488daad1e30abef",
+      "bytes": 14325
+    },
+    "tests/compilation/python/static/queries/negative/first_used_as_value.py": {
+      "sha256": "2c98b2c047cd1095bd38c2bf22339e9c27e3354c012710fca8562864e38232a3",
+      "bytes": 245
+    },
+    "tests/compilation/python/static/queries/negative/foreign_column_filter.py": {
+      "sha256": "af13630154ed99cf086ade33420f1e36d21af6f00708bd4bd8f0f895e3e9bf49",
+      "bytes": 274
+    },
+    "tests/compilation/python/static/queries/negative/foreign_column_select.py": {
+      "sha256": "e86a816ef76abf8caa7bfd642aea013ffb79adbbd70ccd5c3f48c2820f6880d1",
+      "bytes": 265
+    },
+    "tests/compilation/python/static/queries/negative/foreign_projection.py": {
+      "sha256": "c2568d3e005377e99e9729ae74142ad0bca23fb38b5fbbc322d40ec7cd7db1b8",
+      "bytes": 188
+    },
+    "tests/compilation/python/static/queries/negative/ninth_select_column.py": {
+      "sha256": "fb7c59edc9770f1388e8a3c24bb0c2021c584555af8841ed0eedc4670f889e6c",
+      "bytes": 410
+    },
+    "tests/compilation/python/static/queries/negative/null_optional_filter.py": {
+      "sha256": "531b7b8eb114ca4469033555e71c0405012cc70e059539dc101550bfc999e1bd",
+      "bytes": 257
+    },
+    "tests/compilation/python/static/queries/negative/nullable_param_nonnull.py": {
+      "sha256": "b8254cfb5bddf1a258bdf2535ae2d2cd469b2dc6afead08e93d5b6c743320894",
+      "bytes": 282
+    },
+    "tests/compilation/python/static/queries/negative/page_indexed.py": {
+      "sha256": "291b8fb70b1d7303744f4183e6605850f5fa9d65d74a4dc7cdaf0556d693c478",
+      "bytes": 238
+    },
+    "tests/compilation/python/static/queries/negative/runtime_foreign_filter.py": {
+      "sha256": "b6987cea96967254808fed3ae8466ebc5b373806fbe269a0126956e7f4970ebb",
+      "bytes": 261
+    },
+    "tests/compilation/python/static/queries/negative/runtime_foreign_select.py": {
+      "sha256": "253ef0d343995a973f7ef91b7ce65d8953c5425c23bde8fca18a3aa21fda2ef0",
+      "bytes": 254
+    },
+    "tests/compilation/python/static/queries/negative/runtime_ninth_select.py": {
+      "sha256": "66e6171b8be54684da8016e3a47ae96576c93169fc09da12c57179e73e65b78c",
+      "bytes": 316
+    },
+    "tests/compilation/python/static/queries/negative/runtime_null_optional.py": {
+      "sha256": "8eae99e3a87405cf47a3bb112d792115efcc58a827fec6d08340cda9c05e444e",
+      "bytes": 307
+    },
+    "tests/compilation/python/static/queries/negative/runtime_wrong_eq.py": {
+      "sha256": "53c8064af944f237ef02b7175489f7b9e633efbdb46b9e954254f7c0d167af55",
+      "bytes": 263
+    },
+    "tests/compilation/python/static/queries/negative/runtime_wrong_operand.py": {
+      "sha256": "057a2fefc929e19f46b8917625e1957221576b8f7c4b678cacf5f1c54271b367",
+      "bytes": 262
+    },
+    "tests/compilation/python/static/queries/negative/unknown_column.py": {
+      "sha256": "b4209b63838dc5a3eca13e0cb7177ba87170d55a740c6d567e85c08b45b8794b",
+      "bytes": 281
+    },
+    "tests/compilation/python/static/queries/negative/update_generated_field.py": {
+      "sha256": "e57bbd3462847f3fd2c53bda974d5eeccf662dcd45bcd1ee346a1f2ede9e80a6",
+      "bytes": 288
+    },
+    "tests/compilation/python/static/queries/negative/update_immutable_field.py": {
+      "sha256": "8bc5bc41cdf552a63644c1c9f6d94d57d7893d5dc00802fc1b0f967121ed790e",
+      "bytes": 287
+    },
+    "tests/compilation/python/static/queries/negative/update_nullable_param_nonnull.py": {
+      "sha256": "51dffd740a10019ee87d9edcd0b2c09fe760ab444b4b30e5b9a9af8bc8982825",
+      "bytes": 295
+    },
+    "tests/compilation/python/static/queries/negative/update_unknown_field.py": {
+      "sha256": "b69efd3ae0fcf9b7e2d539e566ae9e1e0993871bbbbddfcc143d4e720c7dfe09",
+      "bytes": 284
+    },
+    "tests/compilation/python/static/queries/negative/update_wrong_type.py": {
+      "sha256": "80231296d425114bbc2c6838fbbcf4f8a1ddc546335956c4300792384ffbd4b5",
+      "bytes": 284
+    },
+    "tests/compilation/python/static/queries/negative/wrong_eq_operand.py": {
+      "sha256": "9608e3ef84dd0ef454f93791c4a1b42896cfda92db0387624693eed438caee24",
+      "bytes": 272
+    },
+    "tests/compilation/python/static/queries/negative/wrong_ne_operand.py": {
+      "sha256": "07ae3f8d96ef74597d68dab00e21f03ed4fdd5a48290c9ad8468c6f7fa7d0c6a",
+      "bytes": 272
+    },
+    "tests/compilation/python/static/queries/negative/wrong_operand.py": {
+      "sha256": "4a5596670a4214fa46afa1d70f20addfb5eebb1b0e3eb0e66c72dbc967c389d1",
+      "bytes": 271
+    },
+    "tests/compilation/python/static/queries/negative/wrong_param.py": {
+      "sha256": "abd03aa8265f21a87aced6a2587c4a7581a578b02cea48a01556eecb25141ae2",
+      "bytes": 276
+    },
+    "tests/compilation/python/static/queries/positive/expected.json": {
+      "sha256": "855011257892af7172ac5a1bf45aed96affa48e743373e39273ee508a5f825fc",
+      "bytes": 510
+    },
+    "tests/compilation/python/static/queries/positive/forms.py": {
+      "sha256": "63b7f20f025c4059a27d7e7faa6b8a64307c3b0837b1affeda132588f956c6dc",
+      "bytes": 2250
+    },
+    "tests/compilation/python/static/queries/positive/runtime_types.py": {
+      "sha256": "7eceb3a01136bc85a1bfcb2b34434bb8b2a73c46468d949c38d48802f22ef7b7",
+      "bytes": 1088
+    },
+    "tests/compilation/python/static/queries/positive/terminals.py": {
+      "sha256": "3213758e7290fcd1acf27cc9080efd70fd547b1fe96ca3da28f57a670026170c",
+      "bytes": 957
+    },
+    "tests/compilation/python/static/queries/refactor/expected.json": {
+      "sha256": "b4e7aee463d47f1974333433b96551bbd8f40829fa950890428d37cf58ef0bd8",
+      "bytes": 1917
+    },
+    "tests/compilation/python/static/queries/refactor/unchanged.py": {
+      "sha256": "162c327dd79b44e1e58b46b5e78656985b797ef0eb2c8578a25c6b9f9702f43f",
+      "bytes": 320
+    }
+  }
+}

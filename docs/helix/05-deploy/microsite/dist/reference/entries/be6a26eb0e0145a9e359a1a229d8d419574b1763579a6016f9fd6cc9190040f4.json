@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12848,
+        "line": 20,
+        "path": "src/extensions/ddd/index.ts",
+        "sha256": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddContext",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddContext extends DddBase {kind:'bounded-context';terms:DddTerm[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddContext\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12848,
+      "line": 20,
+      "path": "src/extensions/ddd/index.ts",
+      "sha256": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/ddd/index.ts",
+  "title": "DddContext"
+}

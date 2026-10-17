@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4716,
+        "line": 8,
+        "path": "src/adapters/owl/expressions.ts",
+        "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlExpressionDescription",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type OwlExpressionDescription=\n |{kind:'reference';node:RdfNode}\n |{kind:'intersectionOf'|'unionOf'|'oneOf';node:RdfNode;members:Term[]}\n |{kind:'complementOf'|'datatypeComplementOf'|'inverseOf';node:RdfNode;operand:Term}\n |{kind:'restriction';node:RdfNode;properties:Term[];facets:{predicate:string;values:Term[]}[]}\n |{kind:'datatypeRestriction';node:RdfNode;datatype:Term;facets:{node:RdfNode;statements:{predicate:string;values:Term[]}[]}[]}\n |{kind:'unrecognized';node:RdfNode};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlExpressionDescription\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4716,
+      "line": 8,
+      "path": "src/adapters/owl/expressions.ts",
+      "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/expressions.ts",
+  "title": "OwlExpressionDescription"
+}

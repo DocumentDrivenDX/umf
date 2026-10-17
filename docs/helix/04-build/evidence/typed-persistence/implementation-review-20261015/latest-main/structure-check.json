@@ -1,0 +1,22 @@
+{
+  "kind": "scoped-design-structure",
+  "base": "1ba3a2a5a0b370839f4c4744427342fbe31b8c0a",
+  "status": "pass",
+  "newArtifacts": 3,
+  "modifiedDocuments": 7,
+  "newArtifactIds": [],
+  "acceptanceCriteria": 0,
+  "checks": [
+    "new ID uniqueness outside historical evidence/spikes",
+    "required sections",
+    "new ddx link resolution",
+    "local Markdown links in new and modified documents",
+    "all ACs referenced by TD and cited in STP",
+    "frontmatter of pre-existing documents unchanged since base"
+  ],
+  "errors": [],
+  "limitations": [
+    "Text/structure checks do not establish semantic correctness, implementation, native acceptance or actual test coverage.",
+    "Existing unrelated documentation inconsistencies excluded."
+  ]
+}

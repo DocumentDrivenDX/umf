@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2094,
+        "line": 6,
+        "path": "src/adapters/delta/parquet-checkpoint.ts",
+        "sha256": "bd8f0dabf5834d11687a9c9d042a70bae2c77021cc87867703223cc151ab4f7f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaParquetCheckpointRecovery",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaParquetCheckpointRecovery {\n status:'blocked'|'reconciled';complete:false;spec:'v1'|'v2';checkpoint:DeltaCommit;sources:DeltaCommit[];sidecars:DeltaSidecar[];diagnostics:Diagnostic[];\n projection?:DeltaParquetActions;recovery?:DeltaReconciliation|DeltaSidecarReconciliation;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaParquetCheckpointRecovery\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2094,
+      "line": 6,
+      "path": "src/adapters/delta/parquet-checkpoint.ts",
+      "sha256": "bd8f0dabf5834d11687a9c9d042a70bae2c77021cc87867703223cc151ab4f7f"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/parquet-checkpoint.ts",
+  "title": "DeltaParquetCheckpointRecovery"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12090,
+        "line": 95,
+        "path": "src/adapters/openapi/index.ts",
+        "sha256": "9b4e04289971120b34b18f4a997ced0799ed17fd3e58ad0095c3bf4954d414e5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeOpenapiEdit",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, path: string, json: string, resourceUri?: string | undefined): { document: Document; validation: Validation; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeOpenapiEdit\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12090,
+      "line": 95,
+      "path": "src/adapters/openapi/index.ts",
+      "sha256": "9b4e04289971120b34b18f4a997ced0799ed17fd3e58ad0095c3bf4954d414e5"
+    }
+  ],
+  "summary": "Public export · src/adapters/openapi/index.ts",
+  "title": "proposeOpenapiEdit"
+}

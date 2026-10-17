@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11181,
+        "line": 9,
+        "path": "src/core-ideals/record-sqlserver-projection.ts",
+        "sha256": "8a9820108f7650df0651b8fefdfcbd85e92fa4374cb8cfe0b61815605e9e7657"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordSqlServerRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordSqlServerRequest {id:string;namespace:string;tableName:string;identifierCollation:'Latin1_General_100_BIN2';mode:'strict'|'report';fields:{author:CoreKindDeclaration;columnName:string;nativeType:FieldSqlServerRequest['nativeType']}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordSqlServerRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11181,
+      "line": 9,
+      "path": "src/core-ideals/record-sqlserver-projection.ts",
+      "sha256": "8a9820108f7650df0651b8fefdfcbd85e92fa4374cb8cfe0b61815605e9e7657"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-sqlserver-projection.ts",
+  "title": "RecordSqlServerRequest"
+}

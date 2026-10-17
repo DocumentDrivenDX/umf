@@ -42,6 +42,8 @@ from ._expressions import (
     or_ as or_,
 )
 from ._nodes import FieldRef as FieldRef
+from ._nodes import GeneratedSource as GeneratedSource
+from ._nodes import KeyLiteral as KeyLiteral
 from ._nodes import Node as Node
 from ._nodes import RecordRef as RecordRef
 from ._query import (

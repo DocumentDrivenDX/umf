@@ -1,0 +1,204 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql.keys",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/key-postgresql.test.ts",
+          "fixtures/validation/key-postgresql-discovery-native.json",
+          "fixtures/validation/key-postgresql-catalog-browser.json",
+          "fixtures/validation/key-postgresql-browser.json",
+          "tests/core-ideals/key-postgresql-projection.test.ts",
+          "fixtures/validation/key-postgresql-projection-native.json"
+        ],
+        "native": {
+          "subset": "Correlated captured indexes over relations including descendants; observed enforcement/equality only, no authored identity, authentication, exact-input conversion or native equivalence",
+          "system": "PostgreSQL",
+          "version": "17.4"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Observed PostgreSQL key enforcement with retained native meaning",
+      "id": "umf.postgresql.keys",
+      "schema": {
+        "$id": "urn:umf:postgresql:key-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.postgresql.keys",
+              "nativeVersion": "17.4",
+              "subset": "Correlated captured indexes over relations including descendants; observed enforcement/equality only, no authored identity, authentication, exact-input conversion or native equivalence",
+              "version": "1.0.0"
+            }
+          },
+          "nativeSource": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "enforcement": {
+                  "enum": [
+                    "immediate-unique-nonnull",
+                    "conditional",
+                    "deferred",
+                    "nullable",
+                    "not-unique",
+                    "unavailable",
+                    "unknown"
+                  ]
+                },
+                "equality": {
+                  "enum": [
+                    "exact-on-representable-values",
+                    "incompatible",
+                    "unknown"
+                  ]
+                },
+                "fields": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "element": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "module": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "identity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "index": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "schema": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "table": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "schema",
+                    "table",
+                    "index"
+                  ],
+                  "type": "object"
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "primary": {
+                  "type": "boolean"
+                },
+                "provenance": {
+                  "const": "inferred"
+                },
+                "reasons": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "scope": {
+                  "const": "relation-with-descendants"
+                }
+              },
+              "required": [
+                "identity",
+                "nativePath",
+                "fields",
+                "primary",
+                "enforcement",
+                "equality",
+                "authorIntent",
+                "provenance",
+                "scope",
+                "reasons"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "const": "captured-stored-values"
+          },
+          "supplement": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "nativeSource",
+          "supplement",
+          "observations"
+        ],
+        "title": "PostgreSQL observed key enforcement, never authored identity",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-040 and TD-044; this payload retains correlated native observations. Authored projection uses the separate key-postgresql-projection operation schema, explicit native constraints and retained residuals. Qualified PostgreSQL 17.4 binding only; retained source and explicit residuals remain required. Key ideal admission, all-five delivery and native equivalence are separate gates.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql-keys/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql.keys\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql-keys/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql.keys@1.0.0:import\"]",
+    "[\"integration\",\"umf.postgresql.keys@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5264,
+      "path": "spec/extensions/postgresql-keys/package.json",
+      "sha256": "516b2991c9d53ff430b426f253b2dab51fe4158703ebf30135d5db1d9e56a4e4"
+    }
+  ],
+  "summary": "Observed PostgreSQL key enforcement with retained native meaning",
+  "title": "umf.postgresql.keys · 1.0.0"
+}

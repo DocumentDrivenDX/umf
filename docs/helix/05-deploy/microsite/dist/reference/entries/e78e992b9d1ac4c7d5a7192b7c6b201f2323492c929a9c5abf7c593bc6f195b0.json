@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3777,
+        "line": 12,
+        "path": "src/adapters/parquet/index.ts",
+        "sha256": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "captureParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bytes: Uint8Array<ArrayBufferLike>, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"captureParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3777,
+      "line": 12,
+      "path": "src/adapters/parquet/index.ts",
+      "sha256": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5"
+    }
+  ],
+  "summary": "Captures even malformed source, without interpreting or normalizing any bytes.",
+  "title": "captureParquet"
+}

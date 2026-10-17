@@ -14,6 +14,23 @@ from ._context import CaptureError
 
 
 @dataclass(frozen=True)
+class GeneratedSource:
+    document_id: str
+    core_version: str
+    document_sha256: str
+    input_digest: str
+    runtime_abi: str
+
+    def __post_init__(self) -> None:
+        import re
+        if (type(self.document_id) is not str or not self.document_id or self.core_version != "0.8.0"
+                or self.runtime_abi != "umf-access-runtime/0.1"
+                or any(type(digest) is not str or re.fullmatch(r"[0-9a-f]{64}", digest) is None
+                       for digest in (self.document_sha256, self.input_digest))):
+            raise TypeError("generated source requires exact document, generation and runtime pins")
+
+
+@dataclass(frozen=True)
 class FieldRef:
     module: str
     element: str
@@ -21,6 +38,7 @@ class FieldRef:
     temporal: Literal["instant", "local"] | None = None
     field_module: str | None = None
     logical_name: str | None = None
+    source: GeneratedSource | None = None
 
     def __post_init__(self) -> None:
         if any(
@@ -42,14 +60,13 @@ class RecordRef:
     key: tuple[FieldRef, ...]
     logical_namespace: str | None = None
     logical_name: str | None = None
+    source: GeneratedSource | None = None
+    key_id: str | None = None
 
     def __post_init__(self) -> None:
-        if (
-            type(self.module) is not str
-            or not self.module
-            or type(self.element) is not str
-            or not self.element
-        ):
+        if self.key_id is not None and (type(self.key_id) is not str or not self.key_id):
+            raise TypeError("selected Key identity requires a nonempty schema ID")
+        if type(self.module) is not str or not self.module or type(self.element) is not str or not self.element:
             raise TypeError("record identity requires nonempty schema IDs")
         if (
             type(self.key) is not tuple
@@ -77,6 +94,7 @@ class ProjectionRef:
 class KeyLiteral:
     identity: tuple[tuple[str, str], ...]
     values: tuple[Node, ...]
+    source: GeneratedSource | None = None
 
 
 def key_identity(model: type[BaseModel]) -> tuple[tuple[str, str], ...]:
@@ -149,18 +167,7 @@ def literal(value: object) -> Node:
             raise ValueError("list literal exceeds 1000 items")
         return Node("list", tuple(literal(v) for v in sequence))
     if isinstance(value, BaseModel):
-        return Node(
-            "key",
-            (
-                KeyLiteral(
-                    key_identity(type(value)),
-                    tuple(
-                        literal(getattr(value, name))
-                        for name in type(value).model_fields
-                    ),
-                ),
-            ),
-        )
+        return Node("key", (KeyLiteral(key_identity(type(value)), tuple(literal(getattr(value, name)) for name in type(value).model_fields), getattr(type(value), "UMF_SOURCE", None)),))
     raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported literal carrier")
 
 

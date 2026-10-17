@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6224,
+        "line": 15,
+        "path": "src/extensions/security/protection/domains.ts",
+        "sha256": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtectionDomainOccurrence",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtectionDomainOccurrence {\n source:'policy'|'catalog';path:string;ref:SecurityRef;\n definition:{documentIndex:number;moduleIndex:number;elementIndex:number};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtectionDomainOccurrence\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6224,
+      "line": 15,
+      "path": "src/extensions/security/protection/domains.ts",
+      "sha256": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/domains.ts",
+  "title": "ProtectionDomainOccurrence"
+}

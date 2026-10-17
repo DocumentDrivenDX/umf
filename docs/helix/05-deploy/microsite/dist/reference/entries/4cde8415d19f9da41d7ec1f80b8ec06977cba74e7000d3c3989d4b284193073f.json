@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1037,
+        "line": 11,
+        "path": "src/extensions/actions/manifest-types.ts",
+        "sha256": "d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionManifestInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionManifestInspection {manifest:ActionManifest|null;source:ActionPlanArtifact;plan:ActionPlanInspection|null;eligible:boolean;diagnostics:ActionPlanDiagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionManifestInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1037,
+      "line": 11,
+      "path": "src/extensions/actions/manifest-types.ts",
+      "sha256": "d18378c644f6578247112273dd2733ea228cfb17abf2c06ecdf6f9d6e02c1d47"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/manifest-types.ts",
+  "title": "ActionManifestInspection"
+}

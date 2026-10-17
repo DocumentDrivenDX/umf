@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13857,
+        "line": 20,
+        "path": "src/extensions/security/write.ts",
+        "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityWriteResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityWriteResult {decision:SecurityDecision}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityWriteResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13857,
+      "line": 20,
+      "path": "src/extensions/security/write.ts",
+      "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/write.ts",
+  "title": "SecurityWriteResult"
+}

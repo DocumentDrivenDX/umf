@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15542,
+        "line": 22,
+        "path": "src/core-ideals/facets-sqlserver.ts",
+        "sha256": "f0b77c6f98aafff72dd89d544e5c9c1251991cda57cd225aad0b20e160e40d8d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerFacetClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerFacetClassification {\n operation:'classify-sqlserver-facets';version:'1.0.0';status:'classified'|'blocked';outcome:Outcome;source:Document;target?:Document;request:SqlServerFacetRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;facets:CoreFacetPatch;observations:Observation[]};\n residuals:{path:string;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15542,
+      "line": 22,
+      "path": "src/core-ideals/facets-sqlserver.ts",
+      "sha256": "f0b77c6f98aafff72dd89d544e5c9c1251991cda57cd225aad0b20e160e40d8d"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-sqlserver.ts",
+  "title": "SqlServerFacetClassification"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4478,
+        "line": 19,
+        "path": "src/model/reference-links.ts",
+        "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreReferenceLinks",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identityInput: CoreReferenceLinkIdentity): CoreReferenceLinksInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreReferenceLinks\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4478,
+      "line": 19,
+      "path": "src/model/reference-links.ts",
+      "sha256": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f"
+    }
+  ],
+  "summary": "Resolve only direct core links, preserving order, repetition, roles and opaque qualifiers.\nCONTRACT-040 requires separate verified receipts for authored record-type assertions.",
+  "title": "inspectCoreReferenceLinks"
+}

@@ -1,0 +1,98 @@
+Skip to content
+umf
+Overview
+Developers
+Reference
+Playground
+Schemas
+Ecosystem
+Actions
+GitHub ↗
+Reference
+Core
+Extensions
+Integrations
+API
+Examples
+Workbench
+
+UMF / GENERATED REFERENCE
+
+Follow the evidence.
+
+Inspect individual operations and their tested scope. Declarations, recorded outcomes and source correspondence are shown separately.
+
+405 schemas
+69 extension versions
+1857 API exports
+Reference index ↧
+Build provenance ↧
+
+Source-bound reference · 2492 entries · assets verified on use
+
+Search this reference
+
+Searches names, identities, summaries and loaded definition text.
+
+Core profile
+All profiles
+0.1.0
+0.2.0
+0.3.0
+0.4.0
+0.5.0
+0.6.0
+0.7.0
+0.8.0
+0.9.0
+
+2 entries
+
+Actions · bounded acceptance certificate
+Fixed owned PostgreSQL reference profile; production adoption excluded.
+JSON Schema · independent exact numeric oracle
+Recorded exact Decimal/Fraction corpus with individual failures retained.
+Show more entries
+integration
+Actions · bounded acceptance certificate
+
+Fixed owned PostgreSQL reference profile; production adoption excluded.
+
+↓ operations.json
+DECLARED OPERATION
+consumer-execution
+RECORDED OBSERVATIONS
+passed
+SOURCE CORRESPONDENCE
+historical
+Version and subset
+
+PostgreSQL reference consumer → PostgreSQL reference consumer
+
+Fixed owned PostgreSQL reference profile; production adoption excluded.
+
+Recorded scope only; native equivalence and production adoption are separate.
+
+actions-certificate-record
+RECORDED OUTCOME
+passed
+SOURCE CORRESPONDENCE
+historical
+DEPENDENCY CLOSURE
+Incomplete / unknown
+
+{"core":"0.8.0","extension":{"id":"umf.actions","version":"0.1.0"},"contracts":["CONTRACT-052","CONTRACT-053"],"stories":["US-055","US-056"],"configuration":"Exact fixed owned PostgreSQL store.sql schema and qualified host/container reference consumer; declared local scalar and independent directed set relationship subsets","excluded":["Production/downstream adoption","Cross-store/workflow/external business effects","Unbounded or universal correctness","Arbitrary administrator-added triggers and ordinary outside writers","Unqualified native layouts and future profile meanings"]}
+
+↓ actions-certification.json
+
+runtime: {"bun":"1.4.2","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","nativeImageIdentity":"sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545","handler":{"imageIdentity":"sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27","node":"v24.20.0","profile":"umf.actions.container/1"},"browser":"153.0.8010.12","playwright":"1.63.0","replayImageIdentity":"sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249","finalizationReplayImage":{"imageId":"sha256:de99f8525cbb92e5e7a3ef85825e998b647a07537f23ae2e6b7fb0687c6c132c","parentImageId":"sha256:1ad9fcd7156f59b0e8f5965abf48f90690471ee828929dae4c77921955868249","stages":["publish","gates"],"scope":"Only stale publication script names aligned with existing current schema-properties scripts; source-revision and clean-source guards retained","historicalExperimentalProofs":"Deleted core-semantic-types core0.9.0 proofs remain immutable history; no mapping to current core0.8.0 schema-properties proofs"}}
+
+Recorded scope only; native equivalence and production adoption are separate.
+
+Complete tested dependency closure is not recorded; current-source qualification is unknown.
+
+Original observation and provenance
+Machine-readable reference record
+UMF / Schema interchange fabric
+Experimental · Versioned definitions and scoped evidence · Licenses and notices
+Complete evidence path inventory ↧

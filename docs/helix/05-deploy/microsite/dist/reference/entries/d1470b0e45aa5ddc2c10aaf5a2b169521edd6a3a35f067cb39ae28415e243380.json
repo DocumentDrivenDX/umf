@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11033,
+        "line": 77,
+        "path": "src/projections/binding-sqlserver/indexes.ts",
+        "sha256": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectBindingIndexesAgainstSqlServerPlan",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(logical: Document, binding: Document, plannedColumns: SqlServerPlannedColumn[], lossPolicy: \"strict\" | \"report\"): SqlServerPlannedIndexProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectBindingIndexesAgainstSqlServerPlan\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11033,
+      "line": 77,
+      "path": "src/projections/binding-sqlserver/indexes.ts",
+      "sha256": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98"
+    }
+  ],
+  "summary": "Render the same bounded rowstore subset from columns proved by a generated table plan.",
+  "title": "projectBindingIndexesAgainstSqlServerPlan"
+}

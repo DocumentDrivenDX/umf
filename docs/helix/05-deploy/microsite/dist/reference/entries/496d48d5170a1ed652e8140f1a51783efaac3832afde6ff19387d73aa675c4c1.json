@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 25118,
+        "line": 32,
+        "path": "src/core-ideals/relationship-postgresql.ts",
+        "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRelationshipClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRelationshipClassification {operation:'classify-postgresql-relationships';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:PostgresqlRelationshipRequest;binding:typeof binding;observations:PostgresqlRelationshipObservation[];residuals:Residual[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRelationshipClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 25118,
+      "line": 32,
+      "path": "src/core-ideals/relationship-postgresql.ts",
+      "sha256": "f779075175995aed2ec7c75313699a18b6cc26f5cd0f80e16ac6fb4582710ba5"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-postgresql.ts",
+  "title": "PostgresqlRelationshipClassification"
+}

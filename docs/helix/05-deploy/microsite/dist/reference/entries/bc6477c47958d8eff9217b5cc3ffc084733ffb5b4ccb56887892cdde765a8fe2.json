@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12086,
+        "line": 17,
+        "path": "src/core-ideals/key-postgresql.ts",
+        "sha256": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlKeyRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlKeyRequest {nativeSource:string;supplement:string;mode:'strict'|'report';profile:'captured-stored-values'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlKeyRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12086,
+      "line": 17,
+      "path": "src/core-ideals/key-postgresql.ts",
+      "sha256": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-postgresql.ts",
+  "title": "PostgresqlKeyRequest"
+}

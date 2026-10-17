@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3227,
+        "line": 1,
+        "path": "spec/extensions/dataset-source/schema.json",
+        "sha256": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "datasetSourceSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:dataset-source:1.0.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"kind\",\n    \"data_kind\"\n  ],\n  \"properties\": {\n    \"kind\": {\n      \"enum\": [\n        \"synthetic\",\n        \"external\"\n      ]\n    },\n    \"data_kind\": {\n      \"enum\": [\n        \"fabricated\",\n        \"observed\",\n        \"deidentified\",\n        \"unknown\"\n      ]\n    },\n    \"description\": {\n      \"type\": \"string\"\n    },\n    \"generator\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"id\",\n        \"version\"\n      ],\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"version\": {\n          \"type\": \"string\",\n          \"pattern\": \"^[0-9]+\\\\.[0-9]+\\\\.[0-9]+$\"\n        }\n      },\n      \"additionalProperties\": true\n    },\n    \"reference\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"format\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"revision\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"checksum\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"algorithm\",\n        \"value\"\n      ],\n      \"properties\": {\n        \"algorithm\": {\n          \"const\": \"sha256\"\n        },\n        \"value\": {\n          \"type\": \"string\",\n          \"pattern\": \"^[a-f0-9]{64}$\"\n        }\n      },\n      \"additionalProperties\": true\n    },\n    \"license\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"reference\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"redistribution\": {\n          \"enum\": [\n            \"allowed\",\n            \"restricted\",\n            \"unknown\"\n          ]\n        },\n        \"attribution\": {\n          \"type\": \"string\"\n        },\n        \"notices\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        }\n      },\n      \"additionalProperties\": true\n    },\n    \"provenance\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"publisher\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"retrieved_at\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"source_ids\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          }\n        },\n        \"transformations\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          }\n        }\n      },\n      \"additionalProperties\": true\n    }\n  },\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"kind\": {\n            \"const\": \"external\"\n          }\n        }\n      },\n      \"then\": {\n        \"properties\": {\n          \"reference\": {},\n          \"format\": {}\n        },\n        \"required\": [\n          \"reference\",\n          \"format\"\n        ]\n      }\n    },\n    {\n      \"if\": {\n        \"properties\": {\n          \"kind\": {\n            \"const\": \"synthetic\"\n          }\n        }\n      },\n      \"then\": {\n        \"properties\": {\n          \"generator\": {}\n        },\n        \"required\": [\n          \"generator\"\n        ]\n      }\n    }\n  ],\n  \"additionalProperties\": true\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"datasetSourceSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3227,
+      "line": 1,
+      "path": "spec/extensions/dataset-source/schema.json",
+      "sha256": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95"
+    }
+  ],
+  "summary": "Public export · spec/extensions/dataset-source/schema.json",
+  "title": "datasetSourceSchema"
+}

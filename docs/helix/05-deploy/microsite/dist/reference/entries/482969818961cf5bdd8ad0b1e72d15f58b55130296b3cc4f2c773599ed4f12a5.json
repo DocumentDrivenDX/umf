@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8852,
+        "line": 7,
+        "path": "src/projections/postgresql-avro.ts",
+        "sha256": "b40356065df7a6a09111a70b78433622d33d526ed8e8dc501152c8145df80842"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlAvroRepresentation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type PostgresqlAvroRepresentation='value'|'finite-decimal'|'avro-temporal'|'sql-text';"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlAvroRepresentation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8852,
+      "line": 7,
+      "path": "src/projections/postgresql-avro.ts",
+      "sha256": "b40356065df7a6a09111a70b78433622d33d526ed8e8dc501152c8145df80842"
+    }
+  ],
+  "summary": "Type declaration · src/projections/postgresql-avro.ts",
+  "title": "PostgresqlAvroRepresentation"
+}

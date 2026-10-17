@@ -1,0 +1,65 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unassessed",
+        "id": "typed-sdk-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "unassessed",
+        "readerId": "source-only",
+        "scope": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
+        "selector": "",
+        "source": {
+          "bytes": 1133,
+          "path": "docs/helix/04-build/evidence/typed-persistence/integrated-native-20261016/README.md",
+          "sha256": "dfa52264cd2afd0bc73c6d7c2e23e5a01a247c0591ba4636e794794794e2f401"
+        },
+        "supersedes": [],
+        "versions": {}
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "typed-sdk",
+      "kind": "consumer-execution",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "typed-sdk",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF consumers",
+      "subset": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
+      "targetSystem": "UMF consumers",
+      "title": "Typed SDK · installed native cohort"
+    }
+  },
+  "id": "[\"integration\",\"typed-sdk\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
+  "title": "Typed SDK · installed native cohort"
+}

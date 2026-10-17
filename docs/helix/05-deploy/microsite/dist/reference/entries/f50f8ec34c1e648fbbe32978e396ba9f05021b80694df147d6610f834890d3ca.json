@@ -1,0 +1,173 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/tablespec-cardinality/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:tablespec:cardinality-binding:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "basis": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "Explicit native data_type and uncoerced dimension under selected metadata profile; item and execution semantics remain native"
+                }
+              }
+            },
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.tablespec.cardinality"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "interpretation": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "declared"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unsupported"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "nativePath": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "origin": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "classified"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "runtime-model"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "checked-schema"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unresolved"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "origin"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "interpretation"
+            },
+            {
+              "kind": "string",
+              "value": "nativePath"
+            },
+            {
+              "kind": "string",
+              "value": "basis"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Retained TableSpec Cardinality scope"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/tablespec-cardinality/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1005,
+      "path": "spec/extensions/tablespec-cardinality/schema.json",
+      "sha256": "357014ebffaebab780de96aa743a9c35adc55fd36451562ed24ca5ff52752cd7"
+    }
+  ],
+  "summary": "spec/extensions/tablespec-cardinality/schema.json",
+  "title": "Retained TableSpec Cardinality scope"
+}

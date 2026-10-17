@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6147,
+        "line": 7,
+        "path": "src/adapters/arrow/ipc-rename.ts",
+        "sha256": "8688bbe9865f8eecf7bec636cc5861666aafa1896a8b4ce60c8be4bd875d8e3b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowIpcRenameResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowIpcRenameResult {source:Document;document:Document;complete:false;bodyBytesPreserved:true;validation:ArrowIpcConsistency;diagnostics:Diagnostic[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowIpcRenameResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6147,
+      "line": 7,
+      "path": "src/adapters/arrow/ipc-rename.ts",
+      "sha256": "8688bbe9865f8eecf7bec636cc5861666aafa1896a8b4ce60c8be4bd875d8e3b"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/ipc-rename.ts",
+  "title": "ArrowIpcRenameResult"
+}

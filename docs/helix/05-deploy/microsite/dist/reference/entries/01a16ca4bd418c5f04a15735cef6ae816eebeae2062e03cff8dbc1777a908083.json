@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3932,
+        "path": "spec/extensions/generalized-rdf/package.json",
+        "sha256": "2aef0d5c1790221f3edede51dcd6aa1d1e75d5c10f76ab67ad6bc87735fafa69"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.generalized-rdf@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.generalized-rdf@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "JSON-LD generalized RDF dataset · JSON-LD 1.0/1.1 processing API; RDFJS-shaped JSON term records",
+      "subset": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export",
+      "targetSystem": "UMF",
+      "title": "umf.generalized-rdf · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.generalized-rdf@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.generalized-rdf\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export",
+  "title": "umf.generalized-rdf · import"
+}

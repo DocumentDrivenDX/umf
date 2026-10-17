@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3777,
+        "line": 8,
+        "path": "src/adapters/parquet/levels.ts",
+        "sha256": "cadcc0d5b9af042d4a5e93ed18120072caea95e206c461486be1201578c8542c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "decodeParquetLevels",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetLevels"
+    ]
+  },
+  "id": "[\"api\",\".\",\"decodeParquetLevels\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3777,
+      "line": 8,
+      "path": "src/adapters/parquet/levels.ts",
+      "sha256": "cadcc0d5b9af042d4a5e93ed18120072caea95e206c461486be1201578c8542c"
+    }
+  ],
+  "summary": "Decodes level streams only. Dictionary and physical value decoding remain separate.",
+  "title": "decodeParquetLevels"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14271,
+        "line": 26,
+        "path": "src/core-ideals/nullability-sqlserver.ts",
+        "sha256": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerNullabilityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerNullabilityClassification {\n operation:'classify-sqlserver-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerNullabilityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:SqlServerNullabilityRequest['scope'];carrier:SqlServerNullabilityRequest['carrier'];basis:'Captured declarations for stored relation values; not query results, omitted inputs or live enforcement verification'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14271,
+      "line": 26,
+      "path": "src/core-ideals/nullability-sqlserver.ts",
+      "sha256": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-sqlserver.ts",
+  "title": "SqlServerNullabilityClassification"
+}

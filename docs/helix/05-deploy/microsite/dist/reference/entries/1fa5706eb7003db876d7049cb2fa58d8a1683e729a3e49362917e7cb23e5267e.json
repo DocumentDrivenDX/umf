@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7048,
+        "line": 12,
+        "path": "src/extensions/security/policy-representation-v2.ts",
+        "sha256": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityPolicyV2Inspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityPolicyV2Inspection extends Validation {source:Json;complete:false;authority:false}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityPolicyV2Inspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7048,
+      "line": 12,
+      "path": "src/extensions/security/policy-representation-v2.ts",
+      "sha256": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/policy-representation-v2.ts",
+  "title": "SecurityPolicyV2Inspection"
+}

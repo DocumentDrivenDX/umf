@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9306,
+        "line": 8,
+        "path": "src/adapters/delta/reconcile.ts",
+        "sha256": "9fc14f5863506aa14a6c3ca76ae54932bcaffd3e9b3598d105fbb3cf2d720dcc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaReconciliation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaReconciliation {status:'blocked'|'reconciled';complete:false;sources:DeltaCommit[];diagnostics:Diagnostic[];state?:DeltaActionState;checkpoint?:DeltaCommit}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaReconciliation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9306,
+      "line": 8,
+      "path": "src/adapters/delta/reconcile.ts",
+      "sha256": "9fc14f5863506aa14a6c3ca76ae54932bcaffd3e9b3598d105fbb3cf2d720dcc"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/reconcile.ts",
+  "title": "DeltaReconciliation"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4695,
+        "line": 1,
+        "path": "spec/core/nullability-operation-v3.schema.json",
+        "sha256": "e276d1140ecfa47a2a0d2fa8167779c21657df6cd3e6da9344f8943e3c15b55d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreNullabilityOperationV3Schema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:nullability-operation:3.0.0\",\n  \"title\": \"Core nullability inspection and explicit author declaration results (Facet envelope)\",\n  \"$defs\": {\n    \"nullability\": {\n      \"enum\": [\n        \"required\",\n        \"absent-allowed\",\n        \"unspecified\"\n      ]\n    },\n    \"identity\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"module\",\n        \"element\"\n      ],\n      \"properties\": {\n        \"module\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"element\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.5.0\"\n    },\n    \"lookup\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"operation\",\n        \"version\",\n        \"source\",\n        \"identity\",\n        \"path\",\n        \"meaning\",\n        \"provenance\"\n      ],\n      \"properties\": {\n        \"operation\": {\n          \"const\": \"inspect-core-nullability\"\n        },\n        \"version\": {\n          \"const\": \"3.0.0\"\n        },\n        \"source\": {\n          \"$ref\": \"#/$defs/source\"\n        },\n        \"identity\": {\n          \"$ref\": \"#/$defs/identity\"\n        },\n        \"path\": {\n          \"type\": \"string\"\n        },\n        \"provenance\": {\n          \"const\": \"unverified\"\n        },\n        \"meaning\": {\n          \"oneOf\": [\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\",\n                \"nullability\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"known\"\n                },\n                \"nullability\": {\n                  \"$ref\": \"#/$defs/nullability\"\n                }\n              }\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"missing\"\n                }\n              }\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\",\n                \"value\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"unknown\"\n                },\n                \"value\": {\n                  \"type\": \"string\",\n                  \"minLength\": 1,\n                  \"not\": {\n                    \"$ref\": \"#/$defs/nullability\"\n                  }\n                }\n              }\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": false,\n              \"required\": [\n                \"state\"\n              ],\n              \"properties\": {\n                \"state\": {\n                  \"const\": \"inapplicable\"\n                }\n              }\n            }\n          ]\n        }\n      }\n    },\n    \"declaration\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"operation\",\n        \"version\",\n        \"source\",\n        \"target\",\n        \"identity\",\n        \"provenance\"\n      ],\n      \"properties\": {\n        \"operation\": {\n          \"const\": \"declare-core-nullability\"\n        },\n        \"version\": {\n          \"const\": \"3.0.0\"\n        },\n        \"source\": {\n          \"$ref\": \"urn:umf:core:0.5.0\"\n        },\n        \"target\": {\n          \"$ref\": \"urn:umf:core:0.5.0\"\n        },\n        \"identity\": {\n          \"$ref\": \"#/$defs/identity\"\n        },\n        \"provenance\": {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\n            \"origin\",\n            \"idealPath\",\n            \"nullability\",\n            \"binding\",\n            \"basis\",\n            \"nativePath\"\n          ],\n          \"properties\": {\n            \"origin\": {\n              \"const\": \"authored\"\n            },\n            \"idealPath\": {\n              \"type\": \"string\"\n            },\n            \"nullability\": {\n              \"$ref\": \"#/$defs/nullability\"\n            },\n            \"binding\": {\n              \"const\": {\n                \"id\": \"umf.core.nullability.authoring\",\n                \"version\": \"3.0.0\"\n              }\n            },\n            \"basis\": {\n              \"const\": \"explicit-author-declaration\"\n            },\n            \"nativePath\": {\n              \"type\": \"null\"\n            }\n          }\n        }\n      }\n    }\n  },\n  \"oneOf\": [\n    {\n      \"$ref\": \"#/$defs/lookup\"\n    },\n    {\n      \"$ref\": \"#/$defs/declaration\"\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreNullabilityOperationV3Schema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4695,
+      "line": 1,
+      "path": "spec/core/nullability-operation-v3.schema.json",
+      "sha256": "e276d1140ecfa47a2a0d2fa8167779c21657df6cd3e6da9344f8943e3c15b55d"
+    }
+  ],
+  "summary": "Public export · spec/core/nullability-operation-v3.schema.json",
+  "title": "coreNullabilityOperationV3Schema"
+}

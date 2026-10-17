@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7403,
+        "line": 8,
+        "path": "src/model/selection.ts",
+        "sha256": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreElementSelection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreElementSelection {scope:'core-elements';referenceScope:'explicit-core-references'|'explicit-core-references-and-item-types'|'explicit-core-references-item-types-members-and-keys';source:Document;query:CoreElementQuery;sourceValidation:Validation;selection:CoreElementSelectionEntry[];boundaryReferences:{from:{module:string;element:string};reference:NonNullable<Element['references']>[number];targetPath:string}[];boundaryMembers?:{from:{module:string;element:string};reference:CoreItemTypeReference;path:string;targetPath:string}[];boundaryKeyFields?:{from:{module:string;element:string};key:string;reference:CoreItemTypeReference;path:string;targetPath:string}[];boundaryItemTypes?:{from:{module:string;element:string};reference:CoreItemTypeReference;path:string;targetPath:string}[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreElementSelection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7403,
+      "line": 8,
+      "path": "src/model/selection.ts",
+      "sha256": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077"
+    }
+  ],
+  "summary": "Type declaration · src/model/selection.ts",
+  "title": "CoreElementSelection"
+}

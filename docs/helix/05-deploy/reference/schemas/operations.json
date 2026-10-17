@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "umf.reference.operations/1"
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "import",
+              "export",
+              "round-trip",
+              "edited-round-trip",
+              "classification",
+              "projection",
+              "inspection",
+              "validation",
+              "serialization",
+              "selection",
+              "structural-diff",
+              "consumer-execution"
+            ]
+          },
+          "sourceSystem": {
+            "type": "string"
+          },
+          "targetSystem": {
+            "type": "string"
+          },
+          "coreProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "extensionVersions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "version"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "subset": {
+            "type": "string"
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "apiNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fixturePaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "runtime": {
+            "type": "object",
+            "properties": {
+              "availability": {
+                "enum": [
+                  "browser",
+                  "host-only",
+                  "unavailable"
+                ]
+              },
+              "profileId": {
+                "type": "string"
+              },
+              "requirements": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "availability",
+              "profileId",
+              "requirements"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "kind",
+          "sourceSystem",
+          "targetSystem",
+          "coreProfiles",
+          "extensionVersions",
+          "subset",
+          "limitations",
+          "apiNames",
+          "fixturePaths",
+          "runtime"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "operations"
+  ],
+  "additionalProperties": false
+}

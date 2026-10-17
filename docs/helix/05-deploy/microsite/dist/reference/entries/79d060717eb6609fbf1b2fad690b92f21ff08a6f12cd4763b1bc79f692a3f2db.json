@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4950,
+        "line": 13,
+        "path": "src/adapters/parquet/repair-offsets.ts",
+        "sha256": "70abbf8e005ce9029acdd8fce08046d791978f8e525a0eee34dc5464c966e842"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "repairParquetDictionaryOffsets",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetOffsetRepair"
+    ]
+  },
+  "id": "[\"api\",\".\",\"repairParquetDictionaryOffsets\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4950,
+      "line": 13,
+      "path": "src/adapters/parquet/repair-offsets.ts",
+      "sha256": "70abbf8e005ce9029acdd8fce08046d791978f8e525a0eee34dc5464c966e842"
+    }
+  ],
+  "summary": "Explicit correction of a dictionary stored at data_page_offset with no dictionary offset.",
+  "title": "repairParquetDictionaryOffsets"
+}

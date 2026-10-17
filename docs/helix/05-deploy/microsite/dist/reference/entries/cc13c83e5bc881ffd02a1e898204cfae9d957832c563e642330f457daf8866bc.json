@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10104,
+        "line": 32,
+        "path": "src/core-ideals/nullability-avro.ts",
+        "sha256": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyAvroNullability",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: AvroNullabilityRequest): AvroNullabilityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyAvroNullability\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10104,
+      "line": 32,
+      "path": "src/core-ideals/nullability-avro.ts",
+      "sha256": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/nullability-avro.ts",
+  "title": "classifyAvroNullability"
+}

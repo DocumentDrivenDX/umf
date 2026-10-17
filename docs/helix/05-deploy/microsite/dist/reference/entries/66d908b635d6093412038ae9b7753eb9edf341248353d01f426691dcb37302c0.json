@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7624,
+        "line": 51,
+        "path": "src/core-ideals/field-postgresql-projection.ts",
+        "sha256": "3aaefe512a44366abf601c4a6878c46f69ea0841082a70bdc88b415e6c4b2078"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFieldFromPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FieldPostgresqlProjection, nativeText: string, backend: PostgresqlBackend): Promise<Document>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFieldFromPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7624,
+      "line": 51,
+      "path": "src/core-ideals/field-postgresql-projection.ts",
+      "sha256": "3aaefe512a44366abf601c4a6878c46f69ea0841082a70bdc88b415e6c4b2078"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverFieldFromPostgresql"
+}

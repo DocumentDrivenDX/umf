@@ -12180,6 +12180,9 @@ separates passing checkpoints from open slice and native/consumer gates. This
 scope does not reorder TableSpec-first integration or authorize production
 operations or migrations.
 
+The recovered main implementation now has an [explicit component/slice status matrix](typed-persistence-design.md#recovered-implementation-status--2026-10-15) and [integrated Astra implementation review](evidence/typed-persistence/implementation-review-20261015/latest-main/astra-review.json), backed by [fresh integrated receipts](evidence/typed-persistence/implementation-review-20261015/latest-main/verification.json). Stage-one generation and local model/value/capture components have scoped fresh evidence. Main `b19a997a` includes non-temporal schema-to-instance creation/codec E2E and main `1ba3a2a5` adds a narrow reviewed-SQL catalog and generated-DSL bridge with local Python3.11/PostgreSQL18 reads; Lakebase is compile-only. Complete revised DSL, general CONTRACT-071/072 catalog/Target ABI, native action/search/stream/async and engine-adoption qualification remain open. This status is separate from the frozen browser SQL-to-actions cohort and its Truss performance/publication gates.
+
+
 ### Atomic complete scan batches and direct issuer bridge — 2026-10-15
 
 CONTRACT-062/TD-079/STP-079 now define and exercise private ordered multi-scan
@@ -12485,6 +12488,10 @@ Reviewed catalogs now bind to participating generated stage-one digest/runtime A
 
 Implementation commit `25a38767` integrates with the fourteen newer remote-main commits. The execution-log conflict retains both workstreams. On the combined source, both TypeScript configurations pass and the seven UUID/128-bit test files pass27 tests with6849 assertions; `git diff --check` is clean. This integration check does not refresh the earlier native or browser receipts or claim a full-repository replay.
 
+
+### PR #21 merge reconciliation — 2026-10-16
+
+The reviewed SDK repairs are reconciled with main `0b2bf0c1`, preserving source-bound action clients, catalog generation guards, snapshot exports and independent UUID changes. [Fresh merge verification](evidence/typed-persistence/pr21-merge-20261016/verification.json) scopes the new local source/wheel checks separately from earlier receipts. Python lint and schema-browser reproducibility/integrity CI blockers are corrected; published release parity remains an explicit fail-closed qualification. The shared typed SDK slice matrix and frozen browser/performance holds remain governing.
 ### Five-adapter128-bit completion execution — 2026-10-16
 
 Owner authorization: finish PostgreSQL and SQL Server end to end, then Avro,
@@ -12694,6 +12701,26 @@ Astra Ultra completed independent review with no open product findings. The reta
 The Truss consumer has a separate preliminary review and native qualification
 stream; no implicit cohort repin or activation is authorized by these results.
 
+
+### PR21 current-main reconciliation — 2026-10-16
+
+The reviewed persistence fixes are reconciled with main96eb347f's native action,
+bulk, search, catalog, Delta and security additions. Independent Astra integration
+review repaired continuation null handling, exact source preservation through the
+new catalog/count/tuple path, and full command ActionSource matching. All new
+public APIs and the prior source/selected-Key/codec safeguards are retained.
+[Exact final candidate evidence](evidence/typed-persistence/pr21-current-main-20261016/README.md)
+records925 Bun tests,116 isolated installed SDK tests per Python version, all3
+checkers with32 negatives each,32 actual native read/catalog/source/Key controls,
+and owned local action/bulk/search replays. Prior source/wheel receipts remain
+historical. The separate reviewed lint commit8cd8ff23 is coordinated with the
+SQL-to-actions agent for its independent PR22 integration.
+
+Complete for this candidate: review findings, conflict resolution, scoped local
+regressions and regenerated guide verification. Still pending: configured
+1Password-backed Innsigle resealing, final-head remote CI and PR21 merge. Full
+STP/temporal/managed service and Truss/Ashlar adoption qualification remain open;
+no native managed-service or frozen cohort claim is promoted by this merge.
 ## Nested ontology F/U/T formal extension — 2026-10-16
 
 The [retained conditional proof](evidence/security/nested-ontology-refinement-20261016/README.md)
@@ -12774,3 +12801,15 @@ source. Both native/browser and source-bound gates pass. The later `902c9f71`
 security test-documentation correction changes no qualified source/schema.
 [Integration evidence](evidence/uuid-composition.md#main-integration--2026-10-16)
 retains scope and the115-test boundary.
+
+
+### Current-main SDK and release convergence — 2026-10-16
+
+PR21's reviewed safeguards now coexist with main d40988e7's newer engine-owned
+catalog/target APIs. Independent Astra review and fresh source/installed/native
+checks are retained in [the exact-source packet](evidence/typed-persistence/pr21-d409-release-20261016/README.md).
+The bundled TypeScript SDK prepares version0.3.0; the separate Python runtime
+retains its experimental0.1.0.dev0 version and scoped qualification. Open PR27
+reference and PR29 guide signatures will be consolidated before final signing,
+remote CI, main deployment and release. None of those publication steps is
+claimed complete by the local source evidence.

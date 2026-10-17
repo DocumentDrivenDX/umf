@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3922,
+        "path": "spec/extensions/tablespec-facets/package.json",
+        "sha256": "396215e5874f3f5ac15eea4db04e50828143c61786b361ccab64ef74301220d9"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.tablespec.facets@1.0.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.tablespec.facets@1.0.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TableSpec · 647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses explicit native scalar carriers and consumer profiles, with strict/report loss handling and retained ideal recovery",
+      "targetSystem": "TableSpec · 647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "title": "umf.tablespec.facets · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.tablespec.facets@1.0.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.tablespec.facets\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses explicit native scalar carriers and consumer profiles, with strict/report loss handling and retained ideal recovery",
+  "title": "umf.tablespec.facets · export"
+}

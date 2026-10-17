@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2315,
+        "line": 2,
+        "path": "src/domain-packs/artifacts.ts",
+        "sha256": "d3bff93f5d6a9f2caa34f29781eb0978ad89672cf1f003340b9801204b7cf9e0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "generateArtifactCollectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(): { readonly type: \"object\"; readonly required: readonly [\"version\", \"id\", \"title\", \"view\", \"semantic_kinds\", \"source_ids\"]; readonly properties: { readonly version: { readonly const: \"1.0.0\"; }; readonly id: { readonly type: \"string\"; readonly pattern: \"^[A-Za-z][A-Za-z0-9_-]*$\"; }; readonly title: { type: string; minLength: number; }; readonly description: { readonly type: \"string\"; }; readonly view: { readonly enum: readonly [\"documents\", \"imaging\", \"other\"]; }; readonly semantic_kinds: { readonly minItems: 1; readonly type: string; readonly maxItems: number; readonly uniqueItems: boolean; readonly items: { type: string; minLength: number; }; }; readonly source_ids: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; readonly media_types: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; readonly metadata_schema_ids: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; readonly derived_schema_ids: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; readonly ontology_schema_ids: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; readonly loader_inventory_source_id: { type: string; minLength: number; }; readonly identity: { type: string; required: string[]; properties: { description: { type: string; minLength: number; }; fields: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; }; additionalProperties: boolean; }; readonly grouping: { type: string; required: string[]; properties: { description: { type: string; minLength: number; }; fields: { type: string; maxItems: number; uniqueItems: boolean; items: { type: string; minLength: number; }; }; }; additionalProperties: boolean; }; }; readonly anyOf: readonly [{ readonly properties: { readonly source_ids: { readonly type: \"array\"; readonly minItems: 1; }; }; }, { readonly required: readonly [\"loader_inventory_source_id\"]; readonly properties: { readonly loader_inventory_source_id: { type: string; minLength: number; }; }; }]; readonly additionalProperties: true; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"generateArtifactCollectionSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2315,
+      "line": 2,
+      "path": "src/domain-packs/artifacts.ts",
+      "sha256": "d3bff93f5d6a9f2caa34f29781eb0978ad89672cf1f003340b9801204b7cf9e0"
+    }
+  ],
+  "summary": "Original resource collections; semantic kind, media type and browser view are independent.",
+  "title": "generateArtifactCollectionSchema"
+}

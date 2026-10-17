@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5493,
+        "line": 9,
+        "path": "src/adapters/parquet/rows.ts",
+        "sha256": "07b4ee7bb0fa2d16b9ab712a24ecefa5bda59dc074512b8e09210e55450a188d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "assembleParquetRows",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetRows"
+    ]
+  },
+  "id": "[\"api\",\".\",\"assembleParquetRows\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5493,
+      "line": 9,
+      "path": "src/adapters/parquet/rows.ts",
+      "sha256": "07b4ee7bb0fa2d16b9ab712a24ecefa5bda59dc074512b8e09210e55450a188d"
+    }
+  ],
+  "summary": "Reconstruct physical records by schema identity; logical LIST/MAP lowering is separate.",
+  "title": "assembleParquetRows"
+}

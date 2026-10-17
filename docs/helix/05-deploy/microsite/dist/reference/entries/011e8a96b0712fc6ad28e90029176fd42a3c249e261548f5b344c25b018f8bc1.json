@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6391,
+        "line": 14,
+        "path": "src/core-ideals/tablespec-field.ts",
+        "sha256": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecFieldClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecFieldClassification {\n operation:'classify-tablespec-field';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:TableSpecFieldRequest;binding:typeof binding;diagnostics?:Diagnostic[];\n mapping:{origin:'classified';kind:'field';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-native-column-membership';outcome:'exact'|'unknown'};\n residuals:{path:string;value:Json;reason:string;recovery:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecFieldClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6391,
+      "line": 14,
+      "path": "src/core-ideals/tablespec-field.ts",
+      "sha256": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/tablespec-field.ts",
+  "title": "TableSpecFieldClassification"
+}

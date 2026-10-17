@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2192,
+        "line": 1,
+        "path": "src/adapters/parquet/plain.ts",
+        "sha256": "4fe1bf36c3d4e3d1430604a9ce8449af78c72fb8d7db736461c537c13f8c833f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetPhysicalValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ParquetPhysicalValue={type:'BOOLEAN';value:boolean}|{type:'INT32'|'INT64';value:string}|{type:'FLOAT'|'DOUBLE'|'INT96'|'BYTE_ARRAY'|'FIXED_LEN_BYTE_ARRAY';hex:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetPhysicalValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2192,
+      "line": 1,
+      "path": "src/adapters/parquet/plain.ts",
+      "sha256": "4fe1bf36c3d4e3d1430604a9ce8449af78c72fb8d7db736461c537c13f8c833f"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/plain.ts",
+  "title": "ParquetPhysicalValue"
+}

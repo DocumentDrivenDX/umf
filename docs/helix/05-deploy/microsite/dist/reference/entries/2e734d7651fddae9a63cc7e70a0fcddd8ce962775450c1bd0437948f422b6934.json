@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8724,
+        "line": 22,
+        "path": "src/core-ideals/nullability-avro-projection.ts",
+        "sha256": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectNullabilityToAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreNullabilityDeclaration, options: NullabilityAvroRequest): NullabilityAvroProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectNullabilityToAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8724,
+      "line": 22,
+      "path": "src/core-ideals/nullability-avro-projection.ts",
+      "sha256": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/nullability-avro-projection.ts",
+  "title": "projectNullabilityToAvro"
+}

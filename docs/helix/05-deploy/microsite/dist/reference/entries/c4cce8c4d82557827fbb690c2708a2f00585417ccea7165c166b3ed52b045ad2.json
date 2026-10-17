@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5740,
+        "line": 37,
+        "path": "src/adapters/dbt/artifact.ts",
+        "sha256": "bb4a0ac648cc2e9ba0a65e053b364eb16ae3800d92055bf9c5445fcd30f87ca1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getDbtArtifactNode",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, path: string): NativeJson"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getDbtArtifactNode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5740,
+      "line": 37,
+      "path": "src/adapters/dbt/artifact.ts",
+      "sha256": "bb4a0ac648cc2e9ba0a65e053b364eb16ae3800d92055bf9c5445fcd30f87ca1"
+    }
+  ],
+  "summary": "Public export · src/adapters/dbt/artifact.ts",
+  "title": "getDbtArtifactNode"
+}

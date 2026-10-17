@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2084,
+        "line": 3,
+        "path": "src/model/uuid.ts",
+        "sha256": "f2abc6139f958decad18156b1ac3d8e6b62cc6083a8efd78a3a760f7883dc503"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "UuidValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface UuidValue extends Bit128Value {readonly canonicalText:string;readonly originalText:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"UuidValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2084,
+      "line": 3,
+      "path": "src/model/uuid.ts",
+      "sha256": "f2abc6139f958decad18156b1ac3d8e6b62cc6083a8efd78a3a760f7883dc503"
+    }
+  ],
+  "summary": "Type declaration · src/model/uuid.ts",
+  "title": "UuidValue"
+}

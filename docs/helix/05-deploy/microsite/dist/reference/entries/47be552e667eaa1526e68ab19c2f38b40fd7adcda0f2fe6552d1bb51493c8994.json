@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5108,
+        "line": 28,
+        "path": "src/extensions/actions/manifest-construction.ts",
+        "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "constructActionManifest",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ActionManifestConstruction, context: ActionPlanInspectionContext): ConstructedActionManifest"
+    ]
+  },
+  "id": "[\"api\",\".\",\"constructActionManifest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5108,
+      "line": 28,
+      "path": "src/extensions/actions/manifest-construction.ts",
+      "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+    }
+  ],
+  "summary": "Constructs portable invocation bytes; native selection, order and sealing remain host-owned.",
+  "title": "constructActionManifest"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3937,
+        "line": 15,
+        "path": "src/model/key-transition.ts",
+        "sha256": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeyRollbackReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeyRollbackReceipt {operation:'rollback-key-envelope';version:'1.0.0';source:KeyCandidateDocument;target:Document;receipt:KeyUpgradeReceipt;reason:'Original envelope restored; all subsequent content retained in source, not applied to legacy target'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeyRollbackReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3937,
+      "line": 15,
+      "path": "src/model/key-transition.ts",
+      "sha256": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172"
+    }
+  ],
+  "summary": "Type declaration · src/model/key-transition.ts",
+  "title": "KeyRollbackReceipt"
+}

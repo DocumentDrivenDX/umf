@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4827,
+        "line": 7,
+        "path": "src/adapters/parquet/field-metadata.ts",
+        "sha256": "fcc4301f5862fd6d12f215f1514d18c09918805d94402959bc52ffe2652028af"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetFieldMetadataResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetFieldMetadataResult {status:'checked'|'blocked';complete:false;fields:ParquetFieldMetadata[];diagnostics:Diagnostic[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetFieldMetadataResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4827,
+      "line": 7,
+      "path": "src/adapters/parquet/field-metadata.ts",
+      "sha256": "fcc4301f5862fd6d12f215f1514d18c09918805d94402959bc52ffe2652028af"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/field-metadata.ts",
+  "title": "ParquetFieldMetadataResult"
+}

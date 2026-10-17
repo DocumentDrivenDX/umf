@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3704,
+        "path": "spec/extensions/postgresql-catalog/package.json",
+        "sha256": "cebb03eede287e67c62b1ea0355376e6983805c36ee6299390ea92aff3593ad5"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.postgresql.catalog@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.postgresql.catalog@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF PostgreSQL catalog capture profile · 0.1.0 / PostgreSQL 17",
+      "subset": "The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation",
+      "targetSystem": "UMF PostgreSQL catalog capture profile · 0.1.0 / PostgreSQL 17",
+      "title": "umf.postgresql.catalog · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.postgresql.catalog@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.postgresql.catalog\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation",
+  "title": "umf.postgresql.catalog · export"
+}

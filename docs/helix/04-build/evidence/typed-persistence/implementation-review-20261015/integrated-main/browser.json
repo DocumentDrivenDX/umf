@@ -1,0 +1,41 @@
+{
+  "scope": "Experimental stage-one candidate bytes and refusal/report parity; Python runtime ABI/native execution not qualified",
+  "bun": "1.4.2",
+  "chromium": "153.0.8010.12",
+  "cases": [
+    "commerce-engine",
+    "all-commerce",
+    "unknown-selected",
+    "missing-view",
+    "coverage-gap",
+    "name-reserved",
+    "profile-changed",
+    "profile-invalid-digest",
+    "hostile-literal",
+    "report-mode",
+    "containers",
+    "actions",
+    "relationships",
+    "named",
+    "multiple-projections"
+  ],
+  "runsPerRuntime": 2,
+  "candidates": 9,
+  "refusals": 6,
+  "externalRequests": [],
+  "bundleSha256": "d722f5cc46975ff819a2f0110973c3f340e3ca0035966dd02356948088f0471d",
+  "inputsSha256": "ead8396dbc589759c56c94206aa505cdce3467ca7fcc4a0e7616df85434e6b1a",
+  "outputsSha256": "572dd58cb78d69f97a65ddb695d9f98f52a2f05e777370604091eea5e126ae48",
+  "sourceSha256": {
+    "src/compilation/index.ts": "2d62b2e0f8bafa0d8d2a26488c04fc8c1b38eb8f14141c9132312ba0cff6e7d0",
+    "src/compilation/admission/index.ts": "0719732251d315e54bd88fe1e0652ad21b3c93be3265b51e49a35c9b2bb83477",
+    "src/compilation/admission/diff.ts": "6a1dad4057f8a229f3013bada541a065882aeef3cd95e04c4700ac18194e7ffb",
+    "src/compilation/admission/access/index.ts": "4e6de60d49ba2dca9dea86b1749c2dea1572274efa383b02c5e5c050fb94a923",
+    "src/compilation/ir/index.ts": "8f0196696a0768244bbd46ee494bd659ca230d74b2f7ee93c2a93179f2c35aad",
+    "src/compilation/bundle/index.ts": "da837dc2c839b90dd28f9be276f566aefd3fcfdfde764d787de908488aac75c8",
+    "src/compilation/bundle/hash.ts": "36ed0c5c2f99dfed2f17f694800d3bdaca63173c3523b70aa925ce5bfee369a8",
+    "src/compilation/targets/python/index.ts": "c6e9c9926d26798761884c36050bc7303063beb1e88651ff2fc2fdf4be89e22d",
+    "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/integrated-main/browser-replay.ts": "e3aa5fdbcb5057f0926f962ebd4ce66c62383ce92b5d5baeb3a404358e9a534a",
+    "tests/compilation/access-fixtures.ts": "0cb82eb2ce651ebf9b32d7b6a110b1bbdbbf755846ae30058c4b70536b7dcd2c"
+  }
+}

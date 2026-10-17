@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5414,
+        "line": 11,
+        "path": "src/extensions/binding/model-dataset.ts",
+        "sha256": "71f2ee0c35f87d6325ca804d66235350f4f060ac2e1f8366c443618da55a2ad4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateBit128Dataset",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bindingInput: Document, sourceInput: Document, input: Bit128DatasetRecord[]): Bit128DatasetRecord[]"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateBit128Dataset\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5414,
+      "line": 11,
+      "path": "src/extensions/binding/model-dataset.ts",
+      "sha256": "71f2ee0c35f87d6325ca804d66235350f4f060ac2e1f8366c443618da55a2ad4"
+    }
+  ],
+  "summary": "Complete finite snapshot validation. This does not authorize concurrent mutations.",
+  "title": "validateBit128Dataset"
+}

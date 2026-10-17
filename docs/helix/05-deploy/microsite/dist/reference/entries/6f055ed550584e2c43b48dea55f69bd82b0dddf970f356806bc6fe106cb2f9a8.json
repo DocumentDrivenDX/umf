@@ -1,0 +1,86 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/smithy/native-selection.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:smithy:native-selection:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "shapeIds": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "minLength": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "pattern": {
+                      "kind": "string",
+                      "value": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                },
+                "uniqueItems": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "shapeIds"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/smithy/native-selection.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 500,
+      "path": "spec/extensions/smithy/native-selection.schema.json",
+      "sha256": "3309db13703066e0ca21a2ded143d51fc70213660e1f433ad56064a84124ea4d"
+    }
+  ],
+  "summary": "spec/extensions/smithy/native-selection.schema.json",
+  "title": "native-selection.schema.json"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3407,
+        "line": 45,
+        "path": "src/model/field-transition.ts",
+        "sha256": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "rollbackFieldEnvelope",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FieldUpgradeReceipt, current: Document): FieldRollbackReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"rollbackFieldEnvelope\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3407,
+      "line": 45,
+      "path": "src/model/field-transition.ts",
+      "sha256": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d"
+    }
+  ],
+  "summary": "Restore original model; retain the entire current model separately, including later assertions/edits.",
+  "title": "rollbackFieldEnvelope"
+}

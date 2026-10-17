@@ -2,6 +2,7 @@
 import {mkdtemp,rm} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
+import {verifyPackage,verifyCleanBuilds} from './schema-browser-integrity';
 const originalRevision='00755f5d2b76696b14a4750214c66f1209560939';
 const originalRuntime='1.3.14',originalVersion='1.1.2';
 const originalLock='2905b77b247fd271f43010349ac10ee43b13a9ff0cb43b227b92304e60475a32';

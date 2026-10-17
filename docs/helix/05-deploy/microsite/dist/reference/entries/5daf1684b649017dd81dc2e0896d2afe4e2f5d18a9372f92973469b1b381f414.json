@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11106,
+        "line": 11,
+        "path": "src/core-ideals/key-tablespec-projection.ts",
+        "sha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeyTableSpecRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeyTableSpecRequest {\n id:string;record:CoreRecordIdentity;tableName:string;mode:'strict'|'report';\n columns:{field:CoreRecordIdentity;name:string;nativeType:'BOOLEAN'|'INTEGER'|'DECIMAL'|'TEXT'|'VARCHAR'|'CHAR'|'FLOAT'|'DATE'|'DATETIME'|'TIMESTAMP'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeyTableSpecRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11106,
+      "line": 11,
+      "path": "src/core-ideals/key-tablespec-projection.ts",
+      "sha256": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-tablespec-projection.ts",
+  "title": "KeyTableSpecRequest"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4716,
+        "line": 17,
+        "path": "src/adapters/owl/expressions.ts",
+        "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getOwlExpressionView",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, node: RdfNode): OwlExpressionView"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getOwlExpressionView\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4716,
+      "line": 17,
+      "path": "src/adapters/owl/expressions.ts",
+      "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+    }
+  ],
+  "summary": "Local RDF constructor view, not a recursive OWL DL parse or a reasoning result.",
+  "title": "getOwlExpressionView"
+}

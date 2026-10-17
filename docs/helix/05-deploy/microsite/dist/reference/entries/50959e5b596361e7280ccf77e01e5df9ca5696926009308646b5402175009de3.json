@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11528,
+        "line": 62,
+        "path": "src/extensions/security/protection/disclosure.ts",
+        "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectSecurityDisclosureV2",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown, policy: unknown, catalog: unknown, closure: unknown): SecurityDisclosureInspectionV2"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectSecurityDisclosureV2\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11528,
+      "line": 62,
+      "path": "src/extensions/security/protection/disclosure.ts",
+      "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+    }
+  ],
+  "summary": "Every check is against detached supplied sources; successful data validation is not admission.",
+  "title": "inspectSecurityDisclosureV2"
+}

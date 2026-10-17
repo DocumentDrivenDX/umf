@@ -1,0 +1,118 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "target": "https://json-schema.org/draft/2020-12/schema"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.1-meta.json\",\"\"]",
+        "target": "https://spec.openapis.org/oas/3.1/meta/2024-11-10"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/openapi/upstream/3.1-dialect.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$dynamicAnchor": {
+          "kind": "string",
+          "value": "meta"
+        },
+        "$id": {
+          "kind": "string",
+          "value": "https://spec.openapis.org/oas/3.1/dialect/2024-11-10"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "$vocabulary": {
+          "kind": "object",
+          "members": {
+            "https://json-schema.org/draft/2020-12/vocab/applicator": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://json-schema.org/draft/2020-12/vocab/content": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://json-schema.org/draft/2020-12/vocab/core": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://json-schema.org/draft/2020-12/vocab/format-annotation": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://json-schema.org/draft/2020-12/vocab/meta-data": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://json-schema.org/draft/2020-12/vocab/unevaluated": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://json-schema.org/draft/2020-12/vocab/validation": {
+              "kind": "boolean",
+              "value": true
+            },
+            "https://spec.openapis.org/oas/3.1/vocab/base": {
+              "kind": "boolean",
+              "value": false
+            }
+          }
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "https://json-schema.org/draft/2020-12/schema"
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "https://spec.openapis.org/oas/3.1/meta/2024-11-10"
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "description": {
+          "kind": "string",
+          "value": "A JSON Schema dialect describing schemas found in OpenAPI v3.1 Descriptions"
+        },
+        "title": {
+          "kind": "string",
+          "value": "OpenAPI 3.1 Schema Object Dialect"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/openapi/upstream/3.1-dialect.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/extensions/openapi/upstream/3.1-meta.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1027,
+      "path": "spec/extensions/openapi/upstream/3.1-dialect.json",
+      "sha256": "647f32dfff64949d5020a28ecd1af4ffeffb1e9c695f861a52255a8004e07460"
+    }
+  ],
+  "summary": "A JSON Schema dialect describing schemas found in OpenAPI v3.1 Descriptions",
+  "title": "OpenAPI 3.1 Schema Object Dialect"
+}

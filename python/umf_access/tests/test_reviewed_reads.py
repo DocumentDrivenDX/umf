@@ -11,6 +11,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import ClassVar
 
+from pydantic import BaseModel, ConfigDict, field_validator
 from umf_access.capture import capture
 from umf_access.dsl import (
     Column,
@@ -29,7 +30,7 @@ from umf_access.postgres_read import (
     execute_stream,
 )
 from umf_access.reviewed import CatalogRead, ReadBuildError, ReviewedSQL, build_query
-from umf_access.types import StrictModel
+from umf_access.types import CodecError, StrictModel
 
 
 class Compiler:
@@ -239,6 +240,23 @@ def binding(schema: str | None = None) -> dict[str, object]:
     result["modelSha256"] = hashlib.sha256(result["modelJson"].encode()).hexdigest()
     return result
 
+# Handwritten DSL stand-ins explicitly carry the same pinned source as the binding.
+from dataclasses import replace
+
+from umf_access.dsl import GeneratedSource
+
+_source_binding = binding()
+SOURCE = GeneratedSource("praxis-read-test", "0.8.0", str(_source_binding["modelSha256"]), "a" * 64, "umf-access-runtime/0.1")
+OID = replace(OID, source=SOURCE)
+CID = replace(CID, source=SOURCE)
+NAME = replace(NAME, source=SOURCE)
+ORDER = replace(ORDER, key=(OID,), source=SOURCE, key_id="Order_key")
+CUSTOMER = replace(CUSTOMER, key=(CID,), source=SOURCE, key_id="Customer_key")
+CUSTOMER_REL = Join[Order, Customer, int](replace(CUSTOMER_REL.ref, source=SOURCE), CUSTOMER, True)
+objects = Query[Order, Order, int](ORDER)
+order_id = Column[Order, int](OID)
+customer_name = Column[Customer, str](NAME)
+Projection.UMF_PROJECTION_FIELDS = (OID, NAME)
 
 TOTAL_SQL = """SELECT o.status AS status, sum(o.amount) AS total, avg(o.amount) AS average,
 min(o.amount) AS smallest, max(o.amount) AS largest, count(*) AS count
@@ -249,6 +267,13 @@ ORDER BY c.name ASC NULLS LAST, o.id ASC LIMIT 2"""
 
 
 class Compilation(unittest.TestCase):
+    def test_hidden_cursor_carriers_and_nullability_refuse(self):
+        from umf_access.postgres_read import _check_cursor_value
+        for carrier, value in (("integer", None), ("integer", True), ("decimal", Decimal("NaN")), ("string", 1), ("boolean", 0)):
+            with self.subTest(carrier=carrier, value=value), self.assertRaises(ReadObligationUnmet):
+                _check_cursor_value({"carrier": carrier, "nullable": False}, value)
+        _check_cursor_value({"carrier": "string", "nullable": True}, None)
+
     def test_exact_aggregate_signature_and_round_trip(self):
         entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(
             Compiler(), target="postgresql18", binding=binding()
@@ -426,6 +451,40 @@ class Native(unittest.TestCase):
         cls.a.close()
         cls.b.close()
         cls.admin.close()
+
+    def test_injected_parameter_extras_refuse_without_leaking_values(self):
+        entry = ReviewedSQL(TOTAL_SQL, Minimum, Totals, 10).build(Compiler(), target="postgresql18", binding=binding())
+        params = Minimum(minimum=Decimal(0)).model_copy(update={"private-extra-key": "private-extra-value"})
+        with self.assertRaises(CodecError) as caught:
+            execute_read(self.a, entry, params, app_schema="praxis_test")
+        self.assertNotIn("private-extra", str(caught.exception))
+        self.assertEqual(self.a.info.transaction_status, 0)
+
+    def test_invalid_result_is_sanitized_for_host_models(self):
+        class GuardedStatus(BaseModel):
+            model_config = ConfigDict(strict=True, extra="forbid")
+            status: str
+            @field_validator("status")
+            @classmethod
+            def refuse(cls, value):
+                raise ValueError("private-result-" + value)
+        sql = 'SELECT o.status AS status FROM "commerce"."Order" AS o LIMIT 10'
+        entry = ReviewedSQL(sql, Empty, GuardedStatus, 10).build(Compiler(), target="postgresql18", binding=binding())
+        with self.assertRaises(CodecError) as caught:
+            execute_read(self.a, entry, Empty(), app_schema="praxis_test")
+        self.assertNotIn("open", str(caught.exception))
+        self.assertNotIn("private-result", str(caught.exception))
+        self.assertEqual(self.a.info.transaction_status, 0)
+
+    def test_nonnullable_continuation_value_refuses(self):
+        from umf_access.postgres_read import ReadContinuation
+        entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(Compiler(), target="postgresql18", binding=binding())
+        first = execute_page(self.a, entry, Empty(), app_schema="praxis_test")
+        valid = first.next_after
+        self.assertIsNotNone(valid)
+        invalid = ReadContinuation((valid.values[0], None), valid.identity_digest)
+        with self.assertRaises(ReadObligationUnmet):
+            execute_page(self.a, entry, Empty(), app_schema="praxis_test", after=invalid)
 
     def test_stream_uses_one_snapshot_and_releases_connection(self):
         entry = ReviewedSQL(JOIN_SQL, Empty, JoinedRow, 2, keyset=True).build(

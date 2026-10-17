@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18270,
+        "line": 16,
+        "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+        "sha256": "6868df2c75c9d018d069852e3509bd517e1098565f3080270eec29dfc47ad4cf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipSqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipSqlServerProjection {operation:'project-relationship-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreRelationshipDeclaration;bindingSource:Document;request:RelationshipSqlServerRequest;binding:typeof binding;target?:{format:'sqlserver-ddl';sql:string};mappings:{idealPath:string;nativePath:string;storage:'foreign_key'|'junction';targetKey:string;sourceKey:string;enforcement:'enabled-trusted-stored-values';outcome:'approximated'}[];residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible'|'approximated';recovery:string}[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipSqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18270,
+      "line": 16,
+      "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+      "sha256": "6868df2c75c9d018d069852e3509bd517e1098565f3080270eec29dfc47ad4cf"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-sqlserver-projection.ts",
+  "title": "RelationshipSqlServerProjection"
+}

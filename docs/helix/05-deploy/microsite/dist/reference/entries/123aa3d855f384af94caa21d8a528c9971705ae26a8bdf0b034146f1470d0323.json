@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12478,
+        "line": 58,
+        "path": "src/adapters/tablespec/index.ts",
+        "sha256": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getTableSpecTable",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): NativeJson"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getTableSpecTable\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12478,
+      "line": 58,
+      "path": "src/adapters/tablespec/index.ts",
+      "sha256": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8"
+    }
+  ],
+  "summary": "Copy the captured table view, including unknown native metadata and exact numbers.\nSplit sidecars and shadowed content remain in the document's source archive.\nThis is inspection, not native validation or a flattened spl",
+  "title": "getTableSpecTable"
+}

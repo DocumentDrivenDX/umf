@@ -1,0 +1,221 @@
+{
+  "profile": "umf.reference.evidence-map/1",
+  "allocations": [
+    {
+      "id": "json-schema-upstream-record",
+      "operationId": "json-schema-upstream",
+      "recordPath": "fixtures/json-schema/upstream-results.json",
+      "readerId": "json-schema-upstream",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "json-schema-python-record",
+      "operationId": "json-schema-python",
+      "recordPath": "fixtures/json-schema/python-oracle-results.json",
+      "readerId": "json-schema-python",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-descriptor-record",
+      "operationId": "protobuf-descriptor",
+      "recordPath": "fixtures/protobuf/descriptor-results.json",
+      "readerId": "protobuf-descriptor",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-emission-record",
+      "operationId": "protobuf-emission",
+      "recordPath": "fixtures/protobuf/emission-results.json",
+      "readerId": "protobuf-emission",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-source-compiler-record",
+      "operationId": "protobuf-source-compiler",
+      "recordPath": "fixtures/protobuf/source-compiler-results.json",
+      "readerId": "protobuf-corpus",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-behavior-record",
+      "operationId": "protobuf-behavior",
+      "recordPath": "fixtures/protobuf/behavior-results.json",
+      "readerId": "protobuf-corpus",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-source-behavior-record",
+      "operationId": "protobuf-source-behavior",
+      "recordPath": "fixtures/protobuf/source-behavior-results.json",
+      "readerId": "protobuf-corpus",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-emission-corpus-record",
+      "operationId": "protobuf-emission-corpus",
+      "recordPath": "fixtures/protobuf/emission-corpus-results.json",
+      "readerId": "protobuf-corpus",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "protobuf-emission-behavior-record",
+      "operationId": "protobuf-emission-behavior",
+      "recordPath": "fixtures/protobuf/emission-behavior-results.json",
+      "readerId": "protobuf-corpus",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "field-gate-record",
+      "operationId": "field-gate",
+      "recordPath": "fixtures/validation/field-conformance.json",
+      "readerId": "core-gate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "nullability-gate-record",
+      "operationId": "nullability-gate",
+      "recordPath": "fixtures/validation/nullability-conformance.json",
+      "readerId": "core-gate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "cardinality-gate-record",
+      "operationId": "cardinality-gate",
+      "recordPath": "fixtures/validation/cardinality-conformance.json",
+      "readerId": "core-gate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "facets-gate-record",
+      "operationId": "facets-gate",
+      "recordPath": "fixtures/validation/facets-conformance.json",
+      "readerId": "core-gate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "key-gate-record",
+      "operationId": "key-gate",
+      "recordPath": "fixtures/validation/key-conformance.json",
+      "readerId": "core-gate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "relationship-gate-record",
+      "operationId": "relationship-gate",
+      "recordPath": "fixtures/validation/relationship-conformance.json",
+      "readerId": "core-gate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "tablespec-field-native-record",
+      "operationId": "tablespec-field-native",
+      "recordPath": "fixtures/validation/field-tablespec-acceptance-evidence.json",
+      "readerId": "acceptance",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "postgresql-field-native-record",
+      "operationId": "postgresql-field-native",
+      "recordPath": "fixtures/validation/field-postgresql-acceptance-evidence.json",
+      "readerId": "acceptance",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "uuid-record",
+      "operationId": "uuid",
+      "recordPath": "docs/helix/04-build/evidence/uuid-adapter-completion.md",
+      "readerId": "source-only",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "typed-reporting-record",
+      "operationId": "typed-reporting",
+      "recordPath": "docs/helix/04-build/evidence/typed-reporting/README.md",
+      "readerId": "source-only",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "typed-sdk-record",
+      "operationId": "typed-sdk",
+      "recordPath": "docs/helix/04-build/evidence/typed-persistence/integrated-native-20261016/README.md",
+      "readerId": "source-only",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "actions-certificate-record",
+      "operationId": "actions-certificate",
+      "recordPath": "docs/helix/04-build/evidence/actions-certification.json",
+      "readerId": "certificate",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "sqlserver-field-native-record",
+      "operationId": "sqlserver-field-native",
+      "recordPath": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+      "readerId": "acceptance",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "avro-field-native-record",
+      "operationId": "avro-field-native",
+      "recordPath": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+      "readerId": "acceptance",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    },
+    {
+      "id": "parquet-field-native-record",
+      "operationId": "parquet-field-native",
+      "recordPath": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+      "readerId": "acceptance",
+      "selector": "",
+      "closureProfile": "historical-v1",
+      "supersedes": []
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5580,
+        "line": 7,
+        "path": "src/adapters/linkml/merge.ts",
+        "sha256": "0ea2a012990891242b6af2de3a5c9e38912c44541ed88a1b8f2c780730bae51c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LinkmlImportMergeReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LinkmlImportMergeReport {\n context:LinkmlImportContext;mode:'view'|'merge-imports';status:'candidate'|'blocked';complete:false;\n closure:string[];selections:{collection:string;name:string;winner:string;shadowed:string[]}[];\n candidate?:Document;diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LinkmlImportMergeReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5580,
+      "line": 7,
+      "path": "src/adapters/linkml/merge.ts",
+      "sha256": "0ea2a012990891242b6af2de3a5c9e38912c44541ed88a1b8f2c780730bae51c"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/linkml/merge.ts",
+  "title": "LinkmlImportMergeReport"
+}

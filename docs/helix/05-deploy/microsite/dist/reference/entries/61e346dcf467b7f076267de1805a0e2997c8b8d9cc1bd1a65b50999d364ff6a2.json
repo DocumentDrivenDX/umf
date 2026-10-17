@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3500,
+        "path": "spec/extensions/postgresql/package.json",
+        "sha256": "acfa56e1c8ce44e6b6a2ff1fb2a739c2b5ad6c1dbe558aa7ab6622d17c2ce994"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.postgresql@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.postgresql@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "PostgreSQL raw SQL syntax · PostgreSQL 17.4 (170004), @libpg-query/parser 17.6.10",
+      "subset": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim.",
+      "targetSystem": "PostgreSQL raw SQL syntax · PostgreSQL 17.4 (170004), @libpg-query/parser 17.6.10",
+      "title": "umf.postgresql · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.postgresql@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.postgresql\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim.",
+  "title": "umf.postgresql · export"
+}

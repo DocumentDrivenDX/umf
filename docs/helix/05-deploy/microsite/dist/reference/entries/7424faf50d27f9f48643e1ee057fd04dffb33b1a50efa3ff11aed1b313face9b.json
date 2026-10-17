@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 20534,
+        "line": 248,
+        "path": "src/extensions/security/evaluate.ts",
+        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "evaluateSecurityCollection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: SecurityEvaluationRequest): SecurityCollectionResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"evaluateSecurityCollection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 20534,
+      "line": 248,
+      "path": "src/extensions/security/evaluate.ts",
+      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/evaluate.ts",
+  "title": "evaluateSecurityCollection"
+}

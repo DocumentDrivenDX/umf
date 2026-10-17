@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3037,
+        "line": 7,
+        "path": "src/extensions/actions/bulk.ts",
+        "sha256": "158721656fb1b5f0d097f3c9e24b226df673d996b8f9b013edeea4eedeb740b7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "BulkOutcomeValidation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface BulkOutcomeValidation {valid:boolean;source:ActionPlanArtifact;diagnostics:ActionPlanDiagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"BulkOutcomeValidation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3037,
+      "line": 7,
+      "path": "src/extensions/actions/bulk.ts",
+      "sha256": "158721656fb1b5f0d097f3c9e24b226df673d996b8f9b013edeea4eedeb740b7"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/bulk.ts",
+  "title": "BulkOutcomeValidation"
+}

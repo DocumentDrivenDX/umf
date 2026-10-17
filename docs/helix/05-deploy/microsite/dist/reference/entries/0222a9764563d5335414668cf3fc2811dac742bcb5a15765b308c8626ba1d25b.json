@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 2195,
+        "path": "spec/extensions/tablespec-nullability/package.json",
+        "sha256": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.tablespec.nullability@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.tablespec.nullability@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TableSpec · 647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee",
+      "targetSystem": "UMF",
+      "title": "umf.tablespec.nullability · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.tablespec.nullability@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.tablespec.nullability\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee",
+  "title": "umf.tablespec.nullability · import"
+}

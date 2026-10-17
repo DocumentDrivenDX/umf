@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10602,
+        "line": 13,
+        "path": "src/extensions/binding/bit128.ts",
+        "sha256": "69d99ab6192aa90ecdd3bf878e13dc7d19b620868d1e4b415c82cff906df1444"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128Carrier",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type Bit128Carrier={kind:'native-uuid'|'bytes16'|'uuid-text'|'hex128-text';column:string}|{kind:'words64';highColumn:string;lowColumn:string;signed:boolean};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128Carrier\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10602,
+      "line": 13,
+      "path": "src/extensions/binding/bit128.ts",
+      "sha256": "69d99ab6192aa90ecdd3bf878e13dc7d19b620868d1e4b415c82cff906df1444"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/binding/bit128.ts",
+  "title": "Bit128Carrier"
+}

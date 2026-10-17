@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 18990,
+        "path": "spec/extensions/security/package.json",
+        "sha256": "8bb3020ef3597a087052765dad5ab8716c5490329fbce7d054d8f281837d286a"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.security@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.security@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF-authored security · 0.1.0",
+      "subset": "Policy representation, preservation and bounded syntax inspection; external typed closure and enforcement are separate gates",
+      "targetSystem": "UMF",
+      "title": "umf.security · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.security@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.security\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Policy representation, preservation and bounded syntax inspection; external typed closure and enforcement are separate gates",
+  "title": "umf.security · import"
+}

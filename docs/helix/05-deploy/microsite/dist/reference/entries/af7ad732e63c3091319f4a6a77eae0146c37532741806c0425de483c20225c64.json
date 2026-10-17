@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2775,
+        "line": 2,
+        "path": "src/model/json.ts",
+        "sha256": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LIMITS",
+    "runtime": "unassessed",
+    "signatureText": [
+      "LIMITS = { maxDepth: 128, maxValues: 100_000, maxTextLength: 4_000_000 } as const"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LIMITS\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2775,
+      "line": 2,
+      "path": "src/model/json.ts",
+      "sha256": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5"
+    }
+  ],
+  "summary": "Public export · src/model/json.ts",
+  "title": "LIMITS"
+}

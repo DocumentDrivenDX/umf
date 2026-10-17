@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2029,
+        "line": 1,
+        "path": "spec/core/schema.json",
+        "sha256": "59fa4e6964d9b3f1f264d103784484402b756a7e0d1b896b2a5bedd559814b19"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n \"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\n \"$id\":\"urn:umf:core:0.1.0\",\n \"title\":\"UMF 0.1.0 document envelope\",\n \"type\":\"object\",\n \"required\":[\"umf\",\"id\",\"vocabularies\",\"modules\"],\n \"properties\":{\n  \"umf\":{\"const\":\"0.1.0\"},\n  \"id\":{\"$ref\":\"#/$defs/id\"},\n  \"vocabularies\":{\"type\":\"object\",\"propertyNames\":{\"$ref\":\"#/$defs/id\"},\"additionalProperties\":{\"type\":\"object\",\"required\":[\"version\"],\"properties\":{\"version\":{\"$ref\":\"#/$defs/version\"}}}},\n  \"modules\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/module\"}},\n  \"extensions\":{\"$ref\":\"#/$defs/extensions\"}\n },\n \"$defs\":{\n  \"id\":{\"type\":\"string\",\"minLength\":1},\n  \"version\":{\"type\":\"string\",\"pattern\":\"^(0|[1-9][0-9]*)\\\\.(0|[1-9][0-9]*)\\\\.(0|[1-9][0-9]*)$\"},\n  \"knownScalarType\":{\"enum\":[\"boolean\",\"integer\",\"decimal\",\"float\",\"string\",\"binary\",\"date\",\"time\",\"timestamp\"],\"description\":\"Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior.\"},\n  \"scalarType\":{\"anyOf\":[{\"$ref\":\"#/$defs/knownScalarType\"},{\"type\":\"string\",\"minLength\":1,\"not\":{\"$ref\":\"#/$defs/knownScalarType\"},\"description\":\"Unknown family retained with incomplete semantic validation.\"}]},\n  \"extensions\":{\"type\":\"object\",\"propertyNames\":{\"$ref\":\"#/$defs/id\"},\"additionalProperties\":true},\n  \"reference\":{\"type\":\"object\",\"required\":[\"role\",\"module\",\"element\"],\"properties\":{\"role\":{\"$ref\":\"#/$defs/id\"},\"module\":{\"$ref\":\"#/$defs/id\"},\"element\":{\"$ref\":\"#/$defs/id\"}}},\n  \"element\":{\"type\":\"object\",\"required\":[\"id\",\"extensions\"],\"properties\":{\"id\":{\"$ref\":\"#/$defs/id\"},\"name\":{\"type\":\"string\"},\"description\":{\"type\":\"string\"},\"scalarType\":{\"$ref\":\"#/$defs/scalarType\"},\"extensions\":{\"$ref\":\"#/$defs/extensions\"},\"references\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/reference\"}}}},\n  \"module\":{\"type\":\"object\",\"required\":[\"id\",\"namespace\",\"elements\"],\"properties\":{\"id\":{\"$ref\":\"#/$defs/id\"},\"namespace\":{\"type\":\"string\"},\"elements\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/element\"}},\"extensions\":{\"$ref\":\"#/$defs/extensions\"}}}\n }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2029,
+      "line": 1,
+      "path": "spec/core/schema.json",
+      "sha256": "59fa4e6964d9b3f1f264d103784484402b756a7e0d1b896b2a5bedd559814b19"
+    }
+  ],
+  "summary": "Public export · spec/core/schema.json",
+  "title": "coreSchema"
+}

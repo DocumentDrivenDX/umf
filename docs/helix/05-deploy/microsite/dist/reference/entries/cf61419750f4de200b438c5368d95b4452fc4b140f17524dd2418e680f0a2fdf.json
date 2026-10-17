@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5407,
+        "line": 7,
+        "path": "src/projections/binding-delta/index.ts",
+        "sha256": "186168d2cd2f2d80af16959acd9eb360b0fd14b7f126fae641f1e95c1f1e74a6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaBindingProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaBindingProjection {\n  status:'blocked'|'reported'|'projected';\n  logical:Document;binding:Document;nativeArchive:Document;\n  target:BindingPayload['target'];residuals:DeltaBindingResidual[];\n  /** A domainMetadata action proposal, not a transaction commit or clustered data files. */\n  candidate?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaBindingProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5407,
+      "line": 7,
+      "path": "src/projections/binding-delta/index.ts",
+      "sha256": "186168d2cd2f2d80af16959acd9eb360b0fd14b7f126fae641f1e95c1f1e74a6"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-delta/index.ts",
+  "title": "DeltaBindingProjection"
+}

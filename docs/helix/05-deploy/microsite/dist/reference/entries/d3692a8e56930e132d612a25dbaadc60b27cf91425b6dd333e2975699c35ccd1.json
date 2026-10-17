@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5054,
+        "line": 15,
+        "path": "src/model/dataset-values-compact.ts",
+        "sha256": "98d4e3b287ba593ee8e079feb64bc6094bf5de79f28fae3019533d515777b83a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreCompactKeyTupleReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreCompactKeyTupleReceipt=Omit<CoreKeyTupleReceipt,'source'>&{sourceRef:'#/source'};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreCompactKeyTupleReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5054,
+      "line": 15,
+      "path": "src/model/dataset-values-compact.ts",
+      "sha256": "98d4e3b287ba593ee8e079feb64bc6094bf5de79f28fae3019533d515777b83a"
+    }
+  ],
+  "summary": "Type declaration · src/model/dataset-values-compact.ts",
+  "title": "CoreCompactKeyTupleReceipt"
+}

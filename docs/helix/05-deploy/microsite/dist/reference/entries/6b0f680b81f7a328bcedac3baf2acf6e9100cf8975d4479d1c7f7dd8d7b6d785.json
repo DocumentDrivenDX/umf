@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 30505,
+        "line": 62,
+        "path": "src/adapters/jsonld/index.ts",
+        "sha256": "f1e27eebfa713f0a3df459f69447da4571605cef02678dc6d0b9fbb0368df2c2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "JsonLdExpansionReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface JsonLdExpansionReport {source:Document;lossPolicy:'report'|'reject';status:'candidate'|'blocked';complete:false;candidate?:Document;resourcesUsed:string[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"JsonLdExpansionReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 30505,
+      "line": 62,
+      "path": "src/adapters/jsonld/index.ts",
+      "sha256": "f1e27eebfa713f0a3df459f69447da4571605cef02678dc6d0b9fbb0368df2c2"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/jsonld/index.ts",
+  "title": "JsonLdExpansionReport"
+}

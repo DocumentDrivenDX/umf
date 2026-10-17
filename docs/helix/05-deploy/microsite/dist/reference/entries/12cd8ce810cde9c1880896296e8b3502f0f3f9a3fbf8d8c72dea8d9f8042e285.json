@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22644,
+        "line": 83,
+        "path": "src/core-ideals/relationship-extras.ts",
+        "sha256": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectRelationshipToExtra",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, authorInput: CoreRelationshipDeclaration, options: RelationshipExtraRequest): RelationshipExtraProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectRelationshipToExtra\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22644,
+      "line": 83,
+      "path": "src/core-ideals/relationship-extras.ts",
+      "sha256": "a851ae2f0c32574c8b0bf4ba92da7c8eb676d96b394b98bbb9bab5936783cc33"
+    }
+  ],
+  "summary": "Explicit Record-shape down-binding; native-only import never authenticates authored intent.",
+  "title": "projectRelationshipToExtra"
+}

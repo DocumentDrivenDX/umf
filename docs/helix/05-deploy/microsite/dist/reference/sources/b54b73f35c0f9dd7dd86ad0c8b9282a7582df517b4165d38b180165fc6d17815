@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:odcs:rename-result:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "candidate": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string"
+          },
+          "after": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "before",
+          "after"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "changes",
+    "diagnostics"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "candidate"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "candidate"
+          ]
+        },
+        "properties": {
+          "changes": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

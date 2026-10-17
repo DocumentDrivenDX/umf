@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9003,
+        "line": 59,
+        "path": "src/core-ideals/nullability-tablespec-projection.ts",
+        "sha256": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverNullabilityFromTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: NullabilityTableSpecProjection, nativeText: string): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverNullabilityFromTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9003,
+      "line": 59,
+      "path": "src/core-ideals/nullability-tablespec-projection.ts",
+      "sha256": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverNullabilityFromTableSpec"
+}

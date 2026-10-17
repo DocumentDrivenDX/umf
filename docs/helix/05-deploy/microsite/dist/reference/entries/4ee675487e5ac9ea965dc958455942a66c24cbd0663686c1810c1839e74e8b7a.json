@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5558,
+        "line": 10,
+        "path": "src/adapters/delta/multipart.ts",
+        "sha256": "19a557a25cd624cc68a0cf27447f227cb537e0d729ac720036f5d70bfac9df3a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaMultipartRecovery",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaMultipartRecovery {status:'blocked'|'reconciled';complete:false;version:string;partCount:number;parts:(DeltaCheckpointPart&{projection?:DeltaParquetActions})[];sources:DeltaCommit[];diagnostics:Diagnostic[];origins?:{line:number;part:number;row:number}[];recovery?:DeltaReconciliation}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaMultipartRecovery\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5558,
+      "line": 10,
+      "path": "src/adapters/delta/multipart.ts",
+      "sha256": "19a557a25cd624cc68a0cf27447f227cb537e0d729ac720036f5d70bfac9df3a"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/multipart.ts",
+  "title": "DeltaMultipartRecovery"
+}

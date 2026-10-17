@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3091,
+        "line": 10,
+        "path": "src/extensions/security/protection/parameters.ts",
+        "sha256": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateProtectionParameters",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policy: unknown, catalog: unknown, closure: unknown): ProtectionParameterValidation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateProtectionParameters\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3091,
+      "line": 10,
+      "path": "src/extensions/security/protection/parameters.ts",
+      "sha256": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/protection/parameters.ts",
+  "title": "validateProtectionParameters"
+}

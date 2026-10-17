@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6497,
+        "line": 14,
+        "path": "src/adapters/generalized-rdf/index.ts",
+        "sha256": "08aad31dc6697682a3e3506e59373de112cfecd5887831ee755ffea1da9ed192"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "GeneralizedRdfQuad",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface GeneralizedRdfQuad {subject:GeneralizedRdfNode;predicate:GeneralizedRdfNode;object:GeneralizedRdfNode|GeneralizedRdfLiteral;graph:GeneralizedRdfNode|{termType:'DefaultGraph';value:''}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"GeneralizedRdfQuad\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6497,
+      "line": 14,
+      "path": "src/adapters/generalized-rdf/index.ts",
+      "sha256": "08aad31dc6697682a3e3506e59373de112cfecd5887831ee755ffea1da9ed192"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/generalized-rdf/index.ts",
+  "title": "GeneralizedRdfQuad"
+}

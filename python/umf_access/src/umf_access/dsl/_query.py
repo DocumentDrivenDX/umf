@@ -100,6 +100,11 @@ class WithKeys(Generic[R, K]):
 class Grouped(Generic[OutputT, G_co, K]):
     query: Query[OutputT, Any, K]
 
+    def limit(self, n: int) -> Grouped[OutputT, G_co, K]:
+        """Bound the number of result groups, never the input population."""
+        Query._bound(n)
+        return replace(self, query=self.query._add("group_limit", n))
+
     def count(self) -> Terminal[list[G_co]]:
         require_capture()
         return Terminal(Node("group_count", (self.query.ref, self.query.steps)))
@@ -271,6 +276,8 @@ class Query(Generic[OutputT, R, K]):
             ),
         )
 
+    def _update_present(self, values: Mapping[str, object]) -> Terminal[object]:
+        return self._update({name: value for name, value in values.items() if value is not MISSING})
     def search(
         self, leg: SearchLeg[OutputT], *, allow_partial: bool = False
     ) -> RankedQuery[OutputT, R]:

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7983,
+        "line": 13,
+        "path": "src/extensions/security/protection/queries.ts",
+        "sha256": "8a6ef6229120d68b55f003496a86f13a1d757eae88acc7ee6e553e90b1481b59"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtectionQueryPropertyInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtectionQueryPropertyInspection extends Omit<ProtectionParameterValidation,'status'|'validated'> {\n status:'compatible-properties'|'prohibited'|'requires-original-action'|'refused';use:Json;\n authoredProperties:readonly Json[];impliedProperties:readonly Json[];effectiveProperties:readonly Json[];\n requiredProperties:readonly Json[];missingProperties:readonly Json[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtectionQueryPropertyInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7983,
+      "line": 13,
+      "path": "src/extensions/security/protection/queries.ts",
+      "sha256": "8a6ef6229120d68b55f003496a86f13a1d757eae88acc7ee6e553e90b1481b59"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/queries.ts",
+  "title": "ProtectionQueryPropertyInspection"
+}

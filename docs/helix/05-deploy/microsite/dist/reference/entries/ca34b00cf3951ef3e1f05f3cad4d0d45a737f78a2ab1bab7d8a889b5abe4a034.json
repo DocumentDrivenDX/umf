@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6391,
+        "line": 12,
+        "path": "src/core-ideals/tablespec-field.ts",
+        "sha256": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecFieldRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecFieldRequest {column:number;mode:'strict'|'report';author?:CoreKindDeclaration}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecFieldRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6391,
+      "line": 12,
+      "path": "src/core-ideals/tablespec-field.ts",
+      "sha256": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/tablespec-field.ts",
+  "title": "TableSpecFieldRequest"
+}

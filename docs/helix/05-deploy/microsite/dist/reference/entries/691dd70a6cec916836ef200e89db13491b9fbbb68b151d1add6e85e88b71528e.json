@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2731,
+        "line": 9,
+        "path": "src/adapters/delta/actions.ts",
+        "sha256": "604e31e961a25fb82be98982c18fc4611f196ba246b874e931009fc8b1b026d2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectDeltaActions",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(doc: Document): { knownShapesValid: boolean; diagnostics: Diagnostic[]; source: Document; complete: false; parsedAll: boolean; lines: DeltaLogLine[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectDeltaActions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2731,
+      "line": 9,
+      "path": "src/adapters/delta/actions.ts",
+      "sha256": "604e31e961a25fb82be98982c18fc4611f196ba246b874e931009fc8b1b026d2"
+    }
+  ],
+  "summary": "The tree remains authoritative; the temporary JS view is used only for shape validation.",
+  "title": "inspectDeltaActions"
+}

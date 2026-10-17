@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5303,
+        "line": 7,
+        "path": "src/adapters/delta/rename.ts",
+        "sha256": "4eca67d58f7c732a887d5760549e2abb2ac73588706a24deef1ace4f53897dbc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "renameDeltaMappedField",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, options: { fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }): { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"renameDeltaMappedField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5303,
+      "line": 7,
+      "path": "src/adapters/delta/rename.ts",
+      "sha256": "4eca67d58f7c732a887d5760549e2abb2ac73588706a24deef1ace4f53897dbc"
+    }
+  ],
+  "summary": "Candidate context edit only; applying it requires a transaction and external-state checks.",
+  "title": "renameDeltaMappedField"
+}

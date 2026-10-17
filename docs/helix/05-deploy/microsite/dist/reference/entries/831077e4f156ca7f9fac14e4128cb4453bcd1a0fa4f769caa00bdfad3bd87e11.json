@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12848,
+        "line": 23,
+        "path": "src/extensions/ddd/index.ts",
+        "sha256": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddDefinition",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type DddDefinition=DddEntity|DddValue|DddEvent|DddService|DddRepository;"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddDefinition\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12848,
+      "line": 23,
+      "path": "src/extensions/ddd/index.ts",
+      "sha256": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/ddd/index.ts",
+  "title": "DddDefinition"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6753,
+        "line": 12,
+        "path": "src/adapters/odcs/relationships.ts",
+        "sha256": "4cc4faaf16cb218ef237090db02de9105bc6a304b329829054a7f1cfebe503c2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectOdcsRelationships",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options?: { maxRelationships?: number; }): OdcsRelationshipReport"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectOdcsRelationships\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6753,
+      "line": 12,
+      "path": "src/adapters/odcs/relationships.ts",
+      "sha256": "4cc4faaf16cb218ef237090db02de9105bc6a304b329829054a7f1cfebe503c2"
+    }
+  ],
+  "summary": "Local endpoint pairing, not execution of referential-integrity constraints.",
+  "title": "inspectOdcsRelationships"
+}

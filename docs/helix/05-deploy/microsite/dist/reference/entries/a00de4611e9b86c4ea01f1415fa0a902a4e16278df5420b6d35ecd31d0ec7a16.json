@@ -1,0 +1,74 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "historical",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "historical",
+        "id": "nullability-gate-record",
+        "inputHashes": [
+          {
+            "path": "scripts/core-ideals/nullability-conformance.ts",
+            "sha256": "d192c2c7b9e73652467a974047166fd7f04d5a043762f504fa506f8eff5e5be3"
+          },
+          {
+            "path": "tests/core-ideals/nullability-conformance.test.ts",
+            "sha256": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2"
+          }
+        ],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "passed",
+        "readerId": "core-gate",
+        "scope": "Qualified Nullability ideal admission and five-system delivery; retained evidence consistency checks are not native reruns",
+        "selector": "",
+        "source": {
+          "bytes": 3941,
+          "path": "fixtures/validation/nullability-conformance.json",
+          "sha256": "a0e76e8b9eeb69687dc31862fdc16e1245a55ad1034c2dcf73e3cc575e0fee70"
+        },
+        "supersedes": [],
+        "versions": {}
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "nullability-gate",
+      "kind": "classification",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "nullability-gate",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TableSpec / PostgreSQL / SQL Server / Avro / Parquet",
+      "subset": "Published nullability binding subsets; ideal admission and delivery are distinct.",
+      "targetSystem": "UMF",
+      "title": "Nullability · five-priority qualification"
+    }
+  },
+  "id": "[\"integration\",\"nullability-gate\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "Published nullability binding subsets; ideal admission and delivery are distinct.",
+  "title": "Nullability · five-priority qualification"
+}

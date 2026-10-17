@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2802,
+        "line": 2,
+        "path": "src/adapters/iceberg/transforms.ts",
+        "sha256": "82cc91ba37416c5c73cfe849327b7f397e7a60ae421ea05d09a964176f10990f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "IcebergTransformType",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergTransformType {\n sourceType:string;\n transform:string;\n status:'compatible'|'incompatible'|'uninterpreted';\n resultType?:string;\n complete:false;\n reason:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"IcebergTransformType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2802,
+      "line": 2,
+      "path": "src/adapters/iceberg/transforms.ts",
+      "sha256": "82cc91ba37416c5c73cfe849327b7f397e7a60ae421ea05d09a964176f10990f"
+    }
+  ],
+  "summary": "Pinned Iceberg 1.11.0 single-source transform type rules; no value execution.",
+  "title": "IcebergTransformType"
+}

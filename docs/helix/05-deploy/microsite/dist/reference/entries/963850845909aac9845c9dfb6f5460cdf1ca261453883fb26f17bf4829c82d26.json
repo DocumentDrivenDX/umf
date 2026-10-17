@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3224,
+        "line": 8,
+        "path": "src/extensions/security/authority-guard.ts",
+        "sha256": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityAuthorityGuard",
+    "runtime": "unassessed",
+    "signatureText": [
+      "export class SecurityAuthorityGuard {\n  #generation:string;\n  #seen:Set<string>;\n  #readers=0;\n  #changing=false;\n  #closed=false;\n  #queue:Waiter[]=[];\n  constructor(generation:string){\n    if(typeof generation!=='string'||!generation.length||generation.length>4096)throw refused();\n    this.#generation=generation;this.#seen=new Set([generation]);\n  }\n  async read<T>(operation:(generation:string)=>Promise<T>,signal?:AbortSignal):Promise<T>{\n    await this.#acquire('read',signal);\n    try{if(this.#closed)throw refused();return await operation(this.#generation);}\n    finally{this.#readers--;this.#drain();}\n  }\n  /** A change callback must commit its complete authority transaction before resolving. */\n  async change(generation:string,operation:()=>Promise<void>,signal?:AbortSignal):Promise<void>{\n    if(typeof generation!=='string'||!generation.length||generation.length>4096)throw refused();\n    await this.#acquire('change',signal);\n    try{\n      if(this.#closed||this.#seen.has(generation)||this.#seen.size>=1024)throw refused();\n      try{\n        await operation();\n        if(this.#closed)throw refused();\n        this.#generation=generation;this.#seen.add(generation);\n      }catch{\n        // A thrown producer may have committed. Never reuse a possibly stale generation.\n        this.close();throw new UmfError('SECURITY_TRANSITION_UNKNOWN','Authority transition outcome unavailable');\n      }\n    }finally{this.#changing=false;this.#drain();}\n  }\n  /** Closing refuses new/queued work; active callbacks retain their guard until they settle. */\n  close():void{\n    this.#closed=true;\n    for(const waiter of this.#queue.splice(0)){this.#unlisten(waiter);waiter.reject(refused());}\n  }\n  #acquire(mode:Mode,signal?:AbortSignal):Promise<void>{\n    if(this.#closed||signal?.aborted||this.#queue.length+this.#readers+Number(this.#changing)>=256)\n      return Promise.reject(refused());\n    return new Promise((resolve,reject)=>{\n      const waiter:Waiter={mode,resolve,reject,...(signal?{signal}:{})};\n      if(signal){\n        waiter.abort=()=>{\n          const index=this.#queue.indexOf(waiter);\n          if(index>=0){this.#queue.splice(index,1);this.#unlisten(waiter);reject(refused());this.#drain();}\n        };\n        signal.addEventListener('abort',waiter.abort,{once:true});\n      }\n      this.#queue.push(waiter);this.#drain();\n    });\n  }\n  #unlisten(waiter:Waiter):void{if(waiter.signal&&waiter.abort)waiter.signal.removeEventListener('abort',waiter.abort);}\n  #drain():void{\n    if(this.#closed||this.#changing)return;\n    while(this.#queue.length){\n      const first=this.#queue[0]!;\n      if(first.mode==='change'&&this.#readers)return;\n      this.#queue.shift();this.#unlisten(first);\n      if(first.mode==='change'){this.#changing=true;first.resolve();return;}\n      this.#readers++;first.resolve();\n    }\n  }\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityAuthorityGuard\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3224,
+      "line": 8,
+      "path": "src/extensions/security/authority-guard.ts",
+      "sha256": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3"
+    }
+  ],
+  "summary": "Single-realm coordination only. Hosts must prove all native writers and final releases participate.",
+  "title": "SecurityAuthorityGuard"
+}

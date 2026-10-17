@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11540,
+        "line": 24,
+        "path": "src/model/facets.ts",
+        "sha256": "10b2851af59d0245b93e42ef25220154f0d4b764dda6287ab230ac99bca8d555"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreFacets",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreFacets {length?:{min?:number;max?:number;unit:string;[key:string]:unknown};precision?:number;scale?:number;integerWidth?:{bits:number;signed:boolean;[key:string]:unknown};[key:string]:unknown}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreFacets\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11540,
+      "line": 24,
+      "path": "src/model/facets.ts",
+      "sha256": "10b2851af59d0245b93e42ef25220154f0d4b764dda6287ab230ac99bca8d555"
+    }
+  ],
+  "summary": "Type declaration · src/model/facets.ts",
+  "title": "CoreFacets"
+}

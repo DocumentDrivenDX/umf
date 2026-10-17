@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10045,
+        "line": 10,
+        "path": "src/core-ideals/relationship-sqlserver.ts",
+        "sha256": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipRequest {nativeSource:string;mode:'strict'|'report';profile:'captured-foreign-keys'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10045,
+      "line": 10,
+      "path": "src/core-ideals/relationship-sqlserver.ts",
+      "sha256": "5a654a43e3a67192f3af5673dd06cb465f45de5207cd55122c64318f9bcf1385"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-sqlserver.ts",
+  "title": "SqlServerRelationshipRequest"
+}

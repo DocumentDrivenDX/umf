@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3281,
+        "line": 13,
+        "path": "src/adapters/parquet/bodies.ts",
+        "sha256": "05976bb07a14b777772157c7bd261952e2390cb623ea5780a6bd0b5c31b54b53"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "decodeParquetPageBodies",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetPageBodies"
+    ]
+  },
+  "id": "[\"api\",\".\",\"decodeParquetPageBodies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3281,
+      "line": 13,
+      "path": "src/adapters/parquet/bodies.ts",
+      "sha256": "05976bb07a14b777772157c7bd261952e2390cb623ea5780a6bd0b5c31b54b53"
+    }
+  ],
+  "summary": "Bounded physical page-body decoding only; encodings, levels and scalar values are separate.",
+  "title": "decodeParquetPageBodies"
+}

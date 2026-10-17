@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8291,
+        "line": 14,
+        "path": "src/projections/smithy-json-schema.ts",
+        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectSmithyToJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, backend: SmithyJsonSchemaBackend, input: SmithyJsonSchemaPolicy): Promise<SmithyJsonSchemaProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectSmithyToJsonSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8291,
+      "line": 14,
+      "path": "src/projections/smithy-json-schema.ts",
+      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+    }
+  ],
+  "summary": "Native emission with explicit policy; does not certify Smithy instance or protocol equivalence.",
+  "title": "projectSmithyToJsonSchema"
+}

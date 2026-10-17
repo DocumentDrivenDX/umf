@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5504,
+        "line": 16,
+        "path": "src/model/relationship-selection.ts",
+        "sha256": "824f26bdaea89c21cb4f1547dfd8520f5b5b8899cdadda5d8f2009e36c4ebe5b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreRelationshipSelectionEntry",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreRelationshipSelectionEntry {identity:CoreRelationshipIdentity;path:string;relationship:CoreRelationship;sources:{reference:RelationshipEndpoint;recordPath:string}[];targets:{reference:RelationshipTarget;recordPath:string;keyPath:string}[];associationRecord?:{reference:RelationshipEndpoint;recordPath:string};navigation:{forward:Navigation;reverse?:Navigation};uninterpretedPaths:string[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreRelationshipSelectionEntry\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5504,
+      "line": 16,
+      "path": "src/model/relationship-selection.ts",
+      "sha256": "824f26bdaea89c21cb4f1547dfd8520f5b5b8899cdadda5d8f2009e36c4ebe5b"
+    }
+  ],
+  "summary": "Type declaration · src/model/relationship-selection.ts",
+  "title": "CoreRelationshipSelectionEntry"
+}

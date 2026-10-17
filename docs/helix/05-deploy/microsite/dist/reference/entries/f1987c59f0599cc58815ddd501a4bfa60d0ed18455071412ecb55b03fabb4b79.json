@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10653,
+        "line": 87,
+        "path": "src/core-ideals/nullability-tablespec.ts",
+        "sha256": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyTableSpecNullabilityClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecNullabilityClassification, current: Document): TableSpecNullabilityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyTableSpecNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10653,
+      "line": 87,
+      "path": "src/core-ideals/nullability-tablespec.ts",
+      "sha256": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b"
+    }
+  ],
+  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "title": "verifyTableSpecNullabilityClassification"
+}

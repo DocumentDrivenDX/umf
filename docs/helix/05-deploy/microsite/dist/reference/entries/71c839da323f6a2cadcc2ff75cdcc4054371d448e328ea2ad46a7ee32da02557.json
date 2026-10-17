@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3862,
+        "line": 57,
+        "path": "src/extensions/security/disclosure.ts",
+        "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "encodeSecurityDisclosure",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: SecurityDisclosureBatch, policy: SecurityPolicy, resolution: SecurityResolution): string"
+    ]
+  },
+  "id": "[\"api\",\".\",\"encodeSecurityDisclosure\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3862,
+      "line": 57,
+      "path": "src/extensions/security/disclosure.ts",
+      "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/disclosure.ts",
+  "title": "encodeSecurityDisclosure"
+}

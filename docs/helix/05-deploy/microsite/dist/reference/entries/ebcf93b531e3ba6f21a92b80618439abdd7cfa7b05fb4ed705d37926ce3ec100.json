@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3392,
+        "line": 2,
+        "path": "src/adapters/rfc3339-exact-instant.ts",
+        "sha256": "323828b047b88321facab39aac05943635bd28dcef156b7951c69c462c9e4adb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RFC3339_EXACT_INSTANT_PROFILE",
+    "runtime": "unassessed",
+    "signatureText": [
+      "RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0' as const"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RFC3339_EXACT_INSTANT_PROFILE\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3392,
+      "line": 2,
+      "path": "src/adapters/rfc3339-exact-instant.ts",
+      "sha256": "323828b047b88321facab39aac05943635bd28dcef156b7951c69c462c9e4adb"
+    }
+  ],
+  "summary": "Explicit instant comparison profile; no implicit core timestamp semantics.",
+  "title": "RFC3339_EXACT_INSTANT_PROFILE"
+}

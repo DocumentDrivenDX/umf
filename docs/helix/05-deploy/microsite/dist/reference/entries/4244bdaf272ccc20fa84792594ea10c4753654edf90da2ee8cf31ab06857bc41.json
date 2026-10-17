@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3090,
+        "line": 29,
+        "path": "src/extensions/actions/plan-types.ts",
+        "sha256": "3c73b0c0acf53c781331653470c9b821fb6d4beaa0059e50b37b4c55338b0025"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PreparedActionPlanModel",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PreparedActionPlanModel {\n protocol:'umf.actions.plan-model/1';model:ActionPlanModelPin;action:PortableActionPin;entityParameter:string;target:ActionKeyReference;\n assignments:{input:string;field:ActionReference}[];frames:string[];\n producer:{id:'umf.actions.plan-model';version:'1';build:string};schema:{id:'urn:umf:actions:plan-model:1';sha256:string};\n obligations:{id:string;status:'checked'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PreparedActionPlanModel\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3090,
+      "line": 29,
+      "path": "src/extensions/actions/plan-types.ts",
+      "sha256": "3c73b0c0acf53c781331653470c9b821fb6d4beaa0059e50b37b4c55338b0025"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/plan-types.ts",
+  "title": "PreparedActionPlanModel"
+}

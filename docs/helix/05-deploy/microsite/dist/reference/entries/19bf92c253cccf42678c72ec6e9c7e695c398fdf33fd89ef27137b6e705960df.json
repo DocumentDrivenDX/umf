@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7483,
+        "line": 67,
+        "path": "src/adapters/smithy/index.ts",
+        "sha256": "0eaaf0879e08ce2675a048fa0c95358fa9aaa1c01fdff0a0046acc526e0b0528"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "exportSmithyBundle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"exportSmithyBundle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7483,
+      "line": 67,
+      "path": "src/adapters/smithy/index.ts",
+      "sha256": "0eaaf0879e08ce2675a048fa0c95358fa9aaa1c01fdff0a0046acc526e0b0528"
+    }
+  ],
+  "summary": "Public export · src/adapters/smithy/index.ts",
+  "title": "exportSmithyBundle"
+}

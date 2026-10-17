@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12680,
+        "line": 91,
+        "path": "src/extensions/actions/index.ts",
+        "sha256": "b310149d6fa5048691e52abf05f2f73d3b4bfe9b2923472a9d880d1041bf74bb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "assessAction",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(sourceInput: Document, identityInput: ActionIdentity, profileInput: ActionExecutorProfile, registry: Registry): ActionAssessment"
+    ]
+  },
+  "id": "[\"api\",\".\",\"assessAction\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12680,
+      "line": 91,
+      "path": "src/extensions/actions/index.ts",
+      "sha256": "b310149d6fa5048691e52abf05f2f73d3b4bfe9b2923472a9d880d1041bf74bb"
+    }
+  ],
+  "summary": "Public export · src/extensions/actions/index.ts",
+  "title": "assessAction"
+}

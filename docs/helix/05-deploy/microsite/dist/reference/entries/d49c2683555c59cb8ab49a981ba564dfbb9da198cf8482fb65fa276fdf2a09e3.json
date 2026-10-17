@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7180,
+        "line": 12,
+        "path": "src/core-ideals/field-avro-projection.ts",
+        "sha256": "58343a9b56c27ce4e9cc6b432eb370b90fcba481c3e5ab71c7bcef7e6f3314c5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldAvroRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldAvroRequest {id:string;recordName:string;namespace:string;fieldName:string;nativeType:keyof typeof avroCarriers;mode:'strict'|'report'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldAvroRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7180,
+      "line": 12,
+      "path": "src/core-ideals/field-avro-projection.ts",
+      "sha256": "58343a9b56c27ce4e9cc6b432eb370b90fcba481c3e5ab71c7bcef7e6f3314c5"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-avro-projection.ts",
+  "title": "FieldAvroRequest"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5074,
+        "line": 17,
+        "path": "src/adapters/smithy/assembly.ts",
+        "sha256": "e6aed852e88f125202a9ff5ffb1694d5da3ef636db50667b71807ce66f4ac05d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "assembleSmithyDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, backend: SmithyAssemblyBackend, options: { id: string; signal?: AbortSignal; }): Promise<SmithyAssemblyResult>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"assembleSmithyDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5074,
+      "line": 17,
+      "path": "src/adapters/smithy/assembly.ts",
+      "sha256": "e6aed852e88f125202a9ff5ffb1694d5da3ef636db50667b71807ce66f4ac05d"
+    }
+  ],
+  "summary": "Public export · src/adapters/smithy/assembly.ts",
+  "title": "assembleSmithyDocument"
+}

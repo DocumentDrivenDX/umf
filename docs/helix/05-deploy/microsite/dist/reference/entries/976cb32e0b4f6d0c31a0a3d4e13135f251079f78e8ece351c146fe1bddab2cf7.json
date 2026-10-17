@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5272,
+        "line": 11,
+        "path": "src/core-ideals/field-report.ts",
+        "sha256": "4b353b00df4be2cafe2ad01ccbcf63df300d519fdd279c69ef9764cfefc83e16"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectFieldProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: AuthoredFieldProjection, backend?: PostgresqlBackend | undefined): Promise<FieldProjectionInspection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectFieldProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5272,
+      "line": 11,
+      "path": "src/core-ideals/field-report.ts",
+      "sha256": "4b353b00df4be2cafe2ad01ccbcf63df300d519fdd279c69ef9764cfefc83e16"
+    }
+  ],
+  "summary": "Recompute a native-specific receipt before exposing common consumer metadata.",
+  "title": "inspectFieldProjection"
+}

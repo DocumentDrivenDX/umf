@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10962,
+        "line": 32,
+        "path": "src/core-ideals/cardinality-avro.ts",
+        "sha256": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyAvroCardinality",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: AvroCardinalityRequest): AvroCardinalityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyAvroCardinality\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10962,
+      "line": 32,
+      "path": "src/core-ideals/cardinality-avro.ts",
+      "sha256": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f"
+    }
+  ],
+  "summary": "Schema classification creates logical identities; native metadata and codec semantics remain intact.",
+  "title": "classifyAvroCardinality"
+}

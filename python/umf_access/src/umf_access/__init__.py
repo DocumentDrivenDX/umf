@@ -103,6 +103,5 @@ from .reviewed import (
     build_query as build_query,
 )
 from .types import MISSING as MISSING
+from .types import RUNTIME_ABI as RUNTIME_ABI
 from .types import Vector as Vector
-
-RUNTIME_ABI = "umf-access-runtime/0.1"

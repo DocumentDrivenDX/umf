@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5821,
+        "line": 40,
+        "path": "src/adapters/typespec/index.ts",
+        "sha256": "81e686083cb81140936547e8063906f85659c9273ccf832c100d9ac0dae7406b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "compileTypeSpecDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"compileTypeSpecDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5821,
+      "line": 40,
+      "path": "src/adapters/typespec/index.ts",
+      "sha256": "81e686083cb81140936547e8063906f85659c9273ccf832c100d9ac0dae7406b"
+    }
+  ],
+  "summary": "Public export · src/adapters/typespec/index.ts",
+  "title": "compileTypeSpecDocument"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8228,
+        "line": 9,
+        "path": "src/core-ideals/postgresql-ddl-kinds.ts",
+        "sha256": "15aca057292465dd9fc29cd68951f074ba0ce918c089536814b282380b6f7e66"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlDdlKindRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlDdlKindRequest {module:string;recordId:string;declaration:string;mode:'strict'|'report'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlDdlKindRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8228,
+      "line": 9,
+      "path": "src/core-ideals/postgresql-ddl-kinds.ts",
+      "sha256": "15aca057292465dd9fc29cd68951f074ba0ce918c089536814b282380b6f7e66"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/postgresql-ddl-kinds.ts",
+  "title": "PostgresqlDdlKindRequest"
+}

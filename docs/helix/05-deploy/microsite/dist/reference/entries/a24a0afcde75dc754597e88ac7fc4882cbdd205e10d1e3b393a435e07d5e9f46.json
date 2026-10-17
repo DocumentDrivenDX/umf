@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4292,
+        "path": "spec/extensions/avro/package.json",
+        "sha256": "6c539c9cd8e5665b3165caca77954c1cd2e04167b731af895cbdae4b23964b06"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.avro@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.avro@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Avro JSON schema · 1.12.0; avsc 5.7.9 validation profile",
+      "subset": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation.",
+      "targetSystem": "UMF",
+      "title": "umf.avro · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.avro@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.avro\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134720,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "d2bb1095bb6e2a91eae87fde51bdea19159eee8fb2d5fc45b3090a0270d4e20b"
+    }
+  ],
+  "summary": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation.",
+  "title": "umf.avro · import"
+}

@@ -122,22 +122,22 @@ class Column(Generic[OutputT, T]):
 
     # Symbolic equality intentionally replaces object’s bool result. The narrow
     # operand/result types remain active in caller checks (including misuse).
-    def __eq__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[OutputT]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
+    def __eq__(self, other: T | Param[T] | Column[OutputT, T]) -> Predicate[OutputT]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
         return self._cmp("=", other)
 
-    def __ne__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[OutputT]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
+    def __ne__(self, other: T | Param[T] | Column[OutputT, T]) -> Predicate[OutputT]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
         return self._cmp("<>", other)
 
-    def __lt__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[OutputT]:
+    def __lt__(self, other: T | Param[T] | Column[OutputT, T]) -> Predicate[OutputT]:
         return self._cmp("<", other)
 
-    def __le__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[OutputT]:
+    def __le__(self, other: T | Param[T] | Column[OutputT, T]) -> Predicate[OutputT]:
         return self._cmp("<=", other)
 
-    def __gt__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[OutputT]:
+    def __gt__(self, other: T | Param[T] | Column[OutputT, T]) -> Predicate[OutputT]:
         return self._cmp(">", other)
 
-    def __ge__(self, other: T | Param[T] | Column[Any, T]) -> Predicate[OutputT]:
+    def __ge__(self, other: T | Param[T] | Column[OutputT, T]) -> Predicate[OutputT]:
         return self._cmp(">=", other)
 
     def _test(self, op: str) -> Predicate[OutputT]:

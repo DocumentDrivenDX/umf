@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6465,
+        "line": 22,
+        "path": "src/core-ideals/key-parquet.ts",
+        "sha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyParquetKeys",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: ParquetKeyRequest): ParquetKeyClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyParquetKeys\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6465,
+      "line": 22,
+      "path": "src/core-ideals/key-parquet.ts",
+      "sha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2"
+    }
+  ],
+  "summary": "Observe physical schema only. Sorting, field IDs, statistics and metadata never assert identity.",
+  "title": "classifyParquetKeys"
+}

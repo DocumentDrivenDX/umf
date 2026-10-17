@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4859,
+        "line": 5,
+        "path": "src/adapters/arrow/ipc-layout.ts",
+        "sha256": "72fd59d43e2902e9e7a33a34c6f6523a732f7e3884480083ca1b6ccb022106f1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowIpcFrame",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowIpcFrame {offset:number;prefixLength:number;metadataOffset:number;metadataLength:number;bodyOffset:number;bodyLength:number;kind:string;metadata:Document;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowIpcFrame\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4859,
+      "line": 5,
+      "path": "src/adapters/arrow/ipc-layout.ts",
+      "sha256": "72fd59d43e2902e9e7a33a34c6f6523a732f7e3884480083ca1b6ccb022106f1"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/ipc-layout.ts",
+  "title": "ArrowIpcFrame"
+}

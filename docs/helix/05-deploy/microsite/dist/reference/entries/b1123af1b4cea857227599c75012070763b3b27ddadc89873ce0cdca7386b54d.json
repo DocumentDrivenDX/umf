@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5821,
+        "line": 34,
+        "path": "src/adapters/typespec/index.ts",
+        "sha256": "81e686083cb81140936547e8063906f85659c9273ccf832c100d9ac0dae7406b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importTypeSpecSources",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: { entrypoint: string; files: Record<string, string>; libraries?: Record<string, string>; }, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importTypeSpecSources\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5821,
+      "line": 34,
+      "path": "src/adapters/typespec/index.ts",
+      "sha256": "81e686083cb81140936547e8063906f85659c9273ccf832c100d9ac0dae7406b"
+    }
+  ],
+  "summary": "Public export · src/adapters/typespec/index.ts",
+  "title": "importTypeSpecSources"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5463,
+        "line": 7,
+        "path": "src/adapters/protobuf/descriptor.ts",
+        "sha256": "4abbe2929268b0f0c6480470da0874ba514abbe2026c16f2b75f519cfbfb1aaf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DescriptorNode",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DescriptorNode {\n type:string;\n fields:Record<string,Json>;\n unknown:{number:number;wireType:number;data:string}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DescriptorNode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5463,
+      "line": 7,
+      "path": "src/adapters/protobuf/descriptor.ts",
+      "sha256": "4abbe2929268b0f0c6480470da0874ba514abbe2026c16f2b75f519cfbfb1aaf"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/protobuf/descriptor.ts",
+  "title": "DescriptorNode"
+}

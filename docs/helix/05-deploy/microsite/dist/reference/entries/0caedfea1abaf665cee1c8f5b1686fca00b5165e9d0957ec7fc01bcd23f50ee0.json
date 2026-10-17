@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5416,
+        "line": 8,
+        "path": "src/adapters/parquet/schema.ts",
+        "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectParquetSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetSchemaInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectParquetSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5416,
+      "line": 8,
+      "path": "src/adapters/parquet/schema.ts",
+      "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+    }
+  ],
+  "summary": "Checks physical schema topology and available row-group column links, not logical semantics.",
+  "title": "inspectParquetSchema"
+}

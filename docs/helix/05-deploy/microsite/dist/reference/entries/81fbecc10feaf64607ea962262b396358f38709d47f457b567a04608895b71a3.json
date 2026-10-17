@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7403,
+        "line": 7,
+        "path": "src/model/selection.ts",
+        "sha256": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreElementSelectionEntry",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreElementSelectionEntry {module:string;namespace:string;path:string;element:Element;includedBy:'match'|'reference';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreElementSelectionEntry\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7403,
+      "line": 7,
+      "path": "src/model/selection.ts",
+      "sha256": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077"
+    }
+  ],
+  "summary": "Type declaration · src/model/selection.ts",
+  "title": "CoreElementSelectionEntry"
+}

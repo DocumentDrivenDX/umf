@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11328,
+        "line": 10,
+        "path": "src/projections/tablespec-avro.ts",
+        "sha256": "9f136bcd562897ade406116a29ba971de22ecce6b056ccae550660ab7d2312ca"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecAvroProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecAvroProjection {status:'blocked'|'projected';source:Document;policy:TableSpecAvroPolicy;issues:ProjectionIssue[];mappings:{index:number;column:string;field:string;representation:TableSpecAvroRepresentation;nullable:boolean}[];target?:Document;nativeSchema?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11328,
+      "line": 10,
+      "path": "src/projections/tablespec-avro.ts",
+      "sha256": "9f136bcd562897ade406116a29ba971de22ecce6b056ccae550660ab7d2312ca"
+    }
+  ],
+  "summary": "Type declaration · src/projections/tablespec-avro.ts",
+  "title": "TableSpecAvroProjection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6497,
+        "line": 31,
+        "path": "src/adapters/generalized-rdf/index.ts",
+        "sha256": "08aad31dc6697682a3e3506e59373de112cfecd5887831ee755ffea1da9ed192"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importGeneralizedRdfDataset",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; blankNodeScope?: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importGeneralizedRdfDataset\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6497,
+      "line": 31,
+      "path": "src/adapters/generalized-rdf/index.ts",
+      "sha256": "08aad31dc6697682a3e3506e59373de112cfecd5887831ee755ffea1da9ed192"
+    }
+  ],
+  "summary": "Public export · src/adapters/generalized-rdf/index.ts",
+  "title": "importGeneralizedRdfDataset"
+}

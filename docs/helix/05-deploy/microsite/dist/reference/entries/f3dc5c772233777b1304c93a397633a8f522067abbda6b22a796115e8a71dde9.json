@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5558,
+        "line": 12,
+        "path": "src/adapters/delta/multipart.ts",
+        "sha256": "19a557a25cd624cc68a0cf27447f227cb537e0d729ac720036f5d70bfac9df3a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "reconcileDeltaMultipartCheckpoint",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(version: string, partCount: number, parts: DeltaCheckpointPart[], commits: DeltaCommit[]): DeltaMultipartRecovery"
+    ]
+  },
+  "id": "[\"api\",\".\",\"reconcileDeltaMultipartCheckpoint\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5558,
+      "line": 12,
+      "path": "src/adapters/delta/multipart.ts",
+      "sha256": "19a557a25cd624cc68a0cf27447f227cb537e0d729ac720036f5d70bfac9df3a"
+    }
+  ],
+  "summary": "Explicit complete multipart checkpoint set, with Spark-style file-key clustering checks.",
+  "title": "reconcileDeltaMultipartCheckpoint"
+}

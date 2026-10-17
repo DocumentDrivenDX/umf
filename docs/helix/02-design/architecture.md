@@ -692,6 +692,33 @@ access, transitive behavior of existing public APIs, runtime SQL assembly,
 generated table handles, and engine-storage access require semantic review and
 behavioral gates. B-TP-000 evidence qualifies enforcement, not SDK functionality.
 
+## Generated reference consumer boundaries
+
+[FEAT-032](../01-frame/features/FEAT-032-generated-reference.md) adds a static
+metadata consumer. [SD-032](solution-designs/SD-032-generated-reference.md) owns
+the feature approach; [CONTRACT-077](contracts/CONTRACT-077-generated-reference.md)
+owns its versioned interchange, evidence normalization and tool protocol.
+These are proposed implementation boundaries, not delivered checks. They reuse
+ADR-002 and the current DOM-based site; no new service or framework is introduced.
+
+| Module | Owns / public boundary | Allowed dependencies | Forbidden dependencies |
+| --- | --- | --- | --- |
+| `docs/helix/05-deploy/reference/model/` | Reference records, joins, search, structural comparison; `index.ts` | Own internals, type-only public UMF types | DOM, host globals, network, registry compilation, native execution |
+| `scripts/reference/` | Discovery, TypeScript export analysis, evidence readers, standalone validator generation, deterministic staging; `build.ts` entry | Model public barrel, public UMF APIs, pinned compiler API, host I/O | Importing browser UI; artifact-selected execution; rewriting evidence |
+| `docs/helix/05-deploy/microsite/reference/` | Rendering, routing, search, workbench controller; `index.ts` | Model barrel, runtime protocol types, DOM, explicit same-origin bundle loader | UMF internals, host APIs, dynamic validator compilation, native executors |
+| `docs/helix/05-deploy/reference/runtime/` | Fixed operation dispatch and cancellable worker; `index.ts` | Model barrel, public `src/index.ts` APIs, build-supplied fixed validators | UI imports, host APIs, arbitrary imports/network, artifact-supplied code |
+
+The build may reuse the existing schema-browser `notices.ts` host utility to
+retain dependency licenses; this imports no renderer or package internals.
+The build composes discovered inputs and reviewed mappings; browser controllers
+construct workers only from the generated allowlist. Integration translation
+belongs to evidence readers and runtime bridges, never templates. Existing
+schema-browser mount/asset ownership remains independent. Modules cross only
+their public barrels; cycles, private cross-imports and uncovered source files
+refuse. Proposed enforcement is `bun scripts/reference/check-boundaries.ts`,
+including browser transitive-closure checks and injected negative controls.
+Its scope must not imply that the existing access-SDK checker covers these paths.
+
 ## Proposed 128-bit and UUID module boundaries
 
 [SD-005](solution-designs/SD-005-128-bit-uuid.md) and

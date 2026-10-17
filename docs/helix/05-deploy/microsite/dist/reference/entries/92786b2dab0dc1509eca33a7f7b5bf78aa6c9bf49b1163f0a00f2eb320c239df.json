@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6494,
+        "line": 7,
+        "path": "src/projections/graphql-input-json-schema.ts",
+        "sha256": "8bbd7aa2e384449744d916b820b6eb1b1f93f8571d3015524160c302819b8ae9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "GraphqlInputBindings",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface GraphqlInputBindings {\n id:string;schemaId:string;inputType:string;list:'array-only';idEncoding:'string-or-integer';lossPolicy:'strict'|'allow-reported-loss';\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"GraphqlInputBindings\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6494,
+      "line": 7,
+      "path": "src/projections/graphql-input-json-schema.ts",
+      "sha256": "8bbd7aa2e384449744d916b820b6eb1b1f93f8571d3015524160c302819b8ae9"
+    }
+  ],
+  "summary": "Type declaration · src/projections/graphql-input-json-schema.ts",
+  "title": "GraphqlInputBindings"
+}

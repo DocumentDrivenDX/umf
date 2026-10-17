@@ -1,0 +1,377 @@
+{
+  "data": {
+    "extensionId": "umf.shacl",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/shacl/paths.test.ts",
+          "fixtures/shacl/oracle-results.json",
+          "fixtures/shacl/browser-results.json",
+          "fixtures/shacl/corpus-results.json",
+          "fixtures/shacl/corpus-oracle-results.json",
+          "fixtures/shacl/target-oracle-results.json",
+          "fixtures/shacl/target-browser-results.json",
+          "fixtures/shacl/validation-results.json",
+          "fixtures/shacl/report-comparison.json",
+          "fixtures/shacl/validation-browser-results.json",
+          "fixtures/shacl/exact-numeric-results.json",
+          "fixtures/shacl/exact-numeric-oracle.json",
+          "fixtures/shacl/exact-numeric-browser-results.json",
+          "fixtures/shacl/float-results.json",
+          "fixtures/shacl/float-oracle.json",
+          "fixtures/shacl/float-browser-results.json",
+          "tests/shacl/metadata.test.ts",
+          "fixtures/shacl/metadata.json",
+          "fixtures/shacl/metadata-browser-results.json",
+          "tests/shacl/lists.test.ts",
+          "fixtures/shacl/list-gap.json",
+          "fixtures/shacl/string-results.json",
+          "fixtures/shacl/string-oracle.json",
+          "fixtures/shacl/string-browser-results.json"
+        ],
+        "native": {
+          "subset": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim",
+          "system": "SHACL",
+          "version": "W3C Recommendation 2017-07-20"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "SHACL 1.0 shapes graphs with source-preserving RDF representation and explicit property-path interpretation",
+      "id": "umf.shacl",
+      "schema": {
+        "$id": "urn:umf:shacl:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "rdf11-turtle",
+                    "rdf11-trig"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "baseIRI": {}
+              },
+              "required": [
+                "baseIRI"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "profile": {
+                  "const": "rdf11-trig"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "namedGraphs": {}
+              },
+              "required": [
+                "namedGraphs"
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "baseIRI": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "blankNodeScope": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "namedGraphs": {
+            "items": {
+              "oneOf": [
+                {
+                  "additionalProperties": true,
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": true,
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "maxItems": 10000,
+            "type": "array"
+          },
+          "originalSource": {
+            "maxLength": 4000000,
+            "type": "string"
+          },
+          "profile": {
+            "enum": [
+              "rdf11-nquads",
+              "rdf11-turtle",
+              "rdf11-trig"
+            ]
+          },
+          "quads": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "graph": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "iri"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "blank"
+                        },
+                        "value": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "default"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "object": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "iri"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "blank"
+                        },
+                        "value": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "datatype": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "const": "literal"
+                        },
+                        "language": {
+                          "pattern": "^[a-z]+(?:-[a-z0-9]+)*$",
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value",
+                        "datatype"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "predicate": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "type": "object"
+                },
+                "subject": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "iri"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "kind": {
+                          "const": "blank"
+                        },
+                        "value": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "subject",
+                "predicate",
+                "object",
+                "graph"
+              ],
+              "type": "object"
+            },
+            "maxItems": 10000,
+            "type": "array"
+          },
+          "shaclVersion": {
+            "const": "1.0"
+          }
+        },
+        "required": [
+          "profile",
+          "blankNodeScope",
+          "quads",
+          "originalSource",
+          "shaclVersion"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-028; SHACL 2017 Recommendation, source graph preservation, property paths and Core target selection; verified constraint conformance remains unimplemented; engine proposal available",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"shaclRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/shacl/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.shacl\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"shaclRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/shacl/schema.json\",\"\"]",
+    "[\"integration\",\"umf.shacl@0.1.0:import\"]",
+    "[\"integration\",\"umf.shacl@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 9467,
+      "path": "spec/extensions/shacl/package.json",
+      "sha256": "6a8e65fec3e29383a26160adf8457075c365e432045081c6c3701c9e37509fdd"
+    }
+  ],
+  "summary": "SHACL 1.0 shapes graphs with source-preserving RDF representation and explicit property-path interpretation",
+  "title": "umf.shacl · 0.1.0"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9303,
+        "line": 13,
+        "path": "src/core-ideals/parquet-record.ts",
+        "sha256": "ab58fa68e3dab1dce2cf48a61a84ee05276e8408e16acd75e4ca48bc0ed9b3af"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRecordRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetRecordRequest {recordModule:string;recordId:string;index:number;mode:'strict'|'report';authors?:CoreKindDeclaration[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRecordRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9303,
+      "line": 13,
+      "path": "src/core-ideals/parquet-record.ts",
+      "sha256": "ab58fa68e3dab1dce2cf48a61a84ee05276e8408e16acd75e4ca48bc0ed9b3af"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/parquet-record.ts",
+  "title": "ParquetRecordRequest"
+}

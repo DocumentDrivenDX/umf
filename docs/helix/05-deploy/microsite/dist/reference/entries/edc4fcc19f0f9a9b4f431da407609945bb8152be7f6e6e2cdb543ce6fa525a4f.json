@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6465,
+        "line": 14,
+        "path": "src/core-ideals/key-parquet.ts",
+        "sha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetKeyObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetKeyObservation {nativePath:string;index:number;path:string[];kind:'physical-leaf'|'physical-group';definitionLevel:number;repetitionLevel:number;nativeField:Json;enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'file-schema'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetKeyObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6465,
+      "line": 14,
+      "path": "src/core-ideals/key-parquet.ts",
+      "sha256": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-parquet.ts",
+  "title": "ParquetKeyObservation"
+}

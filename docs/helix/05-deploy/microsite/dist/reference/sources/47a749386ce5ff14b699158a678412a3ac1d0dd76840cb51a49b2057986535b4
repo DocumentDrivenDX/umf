@@ -1,0 +1,87 @@
+{
+  "printer": "protoprint 1.18.1",
+  "compiler": "protocompile 0.14.1",
+  "nativeOracle": "protoc 36.2",
+  "records": [
+    {
+      "root": "google/protobuf/any.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/api.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/c_sharp_features.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/cpp_features.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/cpp_file_options.proto",
+      "outcome": "unsupported",
+      "detail": "Error: Emitted source does not compile: google/protobuf/cpp_file_options.proto:1:11: edition value \"2024\" not recognized; should be one of [\"2023\"]"
+    },
+    {
+      "root": "google/protobuf/cpp_options.proto",
+      "outcome": "unsupported",
+      "detail": "Error: Emitted source does not compile: google/protobuf/cpp_file_options.proto:1:11: edition value \"2024\" not recognized; should be one of [\"2023\"]"
+    },
+    {
+      "root": "google/protobuf/descriptor.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/duration.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/empty.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/field_mask.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/go_features.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/java_features.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/json_enumvalue_options.proto",
+      "outcome": "unsupported",
+      "detail": "Error: Emitted source does not compile: google/protobuf/json_enumvalue_options.proto:1:11: edition value \"2024\" not recognized; should be one of [\"2023\"]"
+    },
+    {
+      "root": "google/protobuf/json_options.proto",
+      "outcome": "unsupported",
+      "detail": "Error: Emitted source does not compile: google/protobuf/json_options.proto:1:11: edition value \"2024\" not recognized; should be one of [\"2023\"]"
+    },
+    {
+      "root": "google/protobuf/source_context.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/struct.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/timestamp.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/type.proto",
+      "outcome": "passed"
+    },
+    {
+      "root": "google/protobuf/wrappers.proto",
+      "outcome": "passed"
+    }
+  ]
+}

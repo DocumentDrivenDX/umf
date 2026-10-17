@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5493,
+        "line": 4,
+        "path": "src/adapters/parquet/rows.ts",
+        "sha256": "07b4ee7bb0fa2d16b9ab712a24ecefa5bda59dc074512b8e09210e55450a188d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetRowValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ParquetRowValue=null|{kind:'record';fields:{index:number;name:string;value:ParquetRowValue}[]}|{kind:'repeated';items:ParquetRowValue[]}|{kind:'physical';value:ParquetPhysicalValue};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetRowValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5493,
+      "line": 4,
+      "path": "src/adapters/parquet/rows.ts",
+      "sha256": "07b4ee7bb0fa2d16b9ab712a24ecefa5bda59dc074512b8e09210e55450a188d"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/rows.ts",
+  "title": "ParquetRowValue"
+}
