@@ -45,7 +45,7 @@ Implemented source-pinned replay:
 
 ```sh
 bun test tests/compilation/access-*.test.ts
-bun scripts/check-access-reporting-browser.ts
+bun scripts/check-access-reporting-browser.ts "$(mktemp -d /tmp/umf-access-browser.XXXXXX)"
 ```
 
 The retained run selected the17 files listed in its Bun log; it did not run
@@ -69,7 +69,7 @@ These totals include adjacent generation controls and are not individual AC coun
 
 The named tests retain `@covers US-080-AC1` through `@covers US-080-AC6`
 citations. This execution qualifies the pinned candidate generation profile;
-it does not close broader B-TP-003, catalog/backend adoption, native search
+it closes the bounded [B-TP-003 implementation gate](../../04-build/evidence/typed-persistence/b-tp-003/README.md). The conformance profile remains explicitly unqualified test data; it does not qualify a production profile, catalog/backend adoption, native search
 configuration concurrency or release/deployment gates. Temporal candidate
 examples do not establish temporal qualification. Draft status is retained.
 

@@ -19,6 +19,8 @@ The named [R23 installed cohort](04-build/evidence/typed-persistence/frontend-r2
 
 The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Pinned Lakebase 18.6 read/catalog and exact pgvector 0.8.6 search execution now has [isolated native evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md); other managed forms remain separately gated.
 
+The bounded [B-TP-003 implementation/test gate](04-build/evidence/typed-persistence/b-tp-003/README.md) now passes the archived stage-one conformance cut. Its synthetic test profile remains explicitly unqualified; downstream SDK/backend and release gates remain open, and temporal qualification is **HELD**.
+
 ## Proposed typed data access SDK
 
 [Design and build handoff](04-build/typed-persistence-design.md) indexes draft

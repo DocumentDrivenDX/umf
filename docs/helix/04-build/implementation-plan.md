@@ -13017,3 +13017,18 @@ it does not supply the remaining native Truss providers or close Truss's origina
 macOS capacity/performance failure. Current native privilege, managed authority
 and commit-result, configured signing, final integration and live-byte deployment
 checks remain open. Temporal qualification remains **HELD**.
+
+
+### B-TP-003 bounded stage-one closure — 2026-10-17
+
+[B-TP-003 verification](evidence/typed-persistence/b-tp-003/verification.json)
+closes the implementation/test row for the exact archived STP-080 AC1–6
+conformance cut:864 Bun tests,14 real Chromium cases with complete repeated
+package parity and independent digest perturbations, exact source custody and
+installed/static replay. The synthetic `test.access` profile remains explicitly
+`test fixture, not qualified`; production profile registration/release is not
+inferred. Owner-approved exact-only modes and the explicit hypothetical allow
+row remain part of this scoped result. Broader SDK, protected Truss action and
+manifest adoption, selected privilege closure, native configuration concurrency,
+managed prerequisites, exact Delta attribution and release/deployment remain
+OPEN. Temporal qualification stays **HELD**.
