@@ -435,6 +435,7 @@ try:
         expected_native = connection.execute(
             "SELECT id,count,amount,payload,embedding::text FROM search_app.docs WHERE id IN ('a','b') ORDER BY id"
         ).fetchall()
+        connection.rollback()
         assert [
             (hit.item.id, hit.item.count, hit.item.amount, hit.item.payload)
             for hit in text
@@ -482,6 +483,7 @@ try:
         independent = connection.execute(
             'SELECT id,count,amount,payload FROM search_app.docs ORDER BY id COLLATE "C"'
         ).fetchall()
+        connection.rollback()
         assert [
             (hit.item.id, hit.item.count, hit.item.amount, hit.item.payload)
             for hit in vector

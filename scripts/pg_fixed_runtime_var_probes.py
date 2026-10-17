@@ -188,6 +188,15 @@ def resolve_observed_fixed_sql(
             raise ValueError(
                 "native parse-only output names differ from actual workflow"
             )
+        # Close our native-only statement before any Psycopg SQL. Its cache
+        # manager may deallocate all statements when rolling back a savepoint.
+        closed = connection.pgconn.close_prepared(name.encode())
+        if closed.status != pq.ExecStatus.COMMAND_OK:
+            raise ValueError(
+                "native CLOSE refused owned prepared statement: "
+                + closed.error_message.decode()
+            )
+        prepared = False
         types = []
         for oid in inferred:
             row = connection.execute(
@@ -246,6 +255,12 @@ def resolve_observed_fixed_sql(
             "nativeAuthority": False,
             "inventoryComplete": False,
             "businessSqlExecuted": False,
+            "preparedLifecycle": {
+                "prepare": "COMMAND_OK",
+                "describe": "COMMAND_OK",
+                "close": "COMMAND_OK",
+                "closedBeforePsycopgSql": True,
+            },
             "actualObservation": record,
             "inferredNativeParameterOids": inferred,
             "nativeTypeIo": [list(row) for row in types],
@@ -263,10 +278,13 @@ def resolve_observed_fixed_sql(
         }
     finally:
         try:
-            connection.execute("ROLLBACK TO SAVEPOINT umf_fixed_runtime_var_probe")
             if prepared:
-                connection.execute(
-                    sql.SQL("DEALLOCATE {}").format(sql.Identifier(name))
-                )
+                closed = connection.pgconn.close_prepared(name.encode())
+                if closed.status != pq.ExecStatus.COMMAND_OK:
+                    raise ValueError(
+                        "native CLOSE cleanup failed for owned prepared statement: "
+                        + closed.error_message.decode()
+                    )
         finally:
+            connection.execute("ROLLBACK TO SAVEPOINT umf_fixed_runtime_var_probe")
             connection.execute("RELEASE SAVEPOINT umf_fixed_runtime_var_probe")
