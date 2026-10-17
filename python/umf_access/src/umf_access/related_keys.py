@@ -42,8 +42,8 @@ def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str,
         raise CodecError("closed original related-Key decoder required")
     profile=decoder.get("profile")
     common={"profile","bound","relationship","key"}
-    expected=common | {"target","representation","modelPins"} if profile=="ashlar-related-keys-string/0.1" else common
-    if set(decoder)!=expected or profile not in ("pg-related-keys-json/0.1","ashlar-related-keys-string/0.1") or type(decoder["bound"]) is not int or not 1 <= decoder["bound"] <= 1000:
+    expected=common | {"target","representation","modelPins"} if profile in ("ashlar-related-keys-string/0.1","truss-related-keys/0.1") else common
+    if set(decoder)!=expected or profile not in ("pg-related-keys-json/0.1","ashlar-related-keys-string/0.1","truss-related-keys/0.1") or type(decoder["bound"]) is not int or not 1 <= decoder["bound"] <= 1000:
         raise CodecError("related-Key output bound/profile differs")
     relation = decoder["relationship"]
     if type(relation) is not dict or set(relation) != {"module","id","direction"} or any(type(relation[name]) is not str or not relation[name] for name in ("module","id")) or relation["direction"] not in ("forward","inverse"):
@@ -53,7 +53,7 @@ def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str,
     components=declared_key.get("components") if type(declared_key) is dict else None
     if declared_key != descriptor or type(components) is not list or any(type(c) is not dict or c.get("nullable") is not False for c in components):
         raise CodecError("original relationship Key descriptor differs from generated class")
-    if profile=="ashlar-related-keys-string/0.1":
+    if profile in ("ashlar-related-keys-string/0.1","truss-related-keys/0.1"):
         _engine_metadata(decoder,key_model,descriptor)
     return cast(dict[str,object],decoder)
 
@@ -85,9 +85,28 @@ def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], de
     key=representation["key"]
     components=cast(list[dict[str,object]],descriptor["components"])
     fields=[{**identity,**cast(dict[str,object],c["field"])} for c in components]
-    types=[{"family":"string","facets":{},"nullable":False} for _ in components]
-    if any(c["carrier"]!="string" for c in components) or type(key) is not dict or set(key)!={"id","fields","types"} or type(key["types"]) is not list or any(type(t) is not dict or t.get("nullable") is not False for t in key["types"]) or key!={"id":descriptor["key"],"fields":fields,"types":types}:
-        raise CodecError("original Ashlar required String-Key profile differs")
+    if type(key) is not dict or set(key)!={"id","fields","types"} or key["id"]!=descriptor["key"] or key["fields"]!=fields or type(key["types"]) is not list or len(key["types"])!=len(components):
+        raise CodecError("original engine relationship Key identity or component inventory differs")
+    if decoder["profile"]=="ashlar-related-keys-string/0.1":
+        types=[{"family":"string","facets":{},"nullable":False} for _ in components]
+        if any(c["carrier"]!="string" for c in components) or any(type(t) is not dict or t.get("nullable") is not False for t in key["types"]) or key["types"]!=types:
+            raise CodecError("original Ashlar required String-Key profile differs")
+    elif any(not _truss_component_type(t,c["carrier"]) for t,c in zip(key["types"],components,strict=True)):
+        raise CodecError("original Truss non-temporal related-Key profile differs")
+
+
+def _truss_component_type(value: object, carrier: object) -> bool:
+    """Original Truss ordinary query decoder subset, not a native value decoder."""
+    if type(value) is not dict or set(value)!={"family","facets","nullable"} or value["family"]!=carrier or value["nullable"] is not False or type(value["facets"]) is not dict:
+        return False
+    facets=value["facets"]
+    if carrier in ("string","boolean"):
+        return facets=={}
+    if carrier=="integer":
+        if not facets:return True
+        width=facets.get("integerWidth")
+        return set(facets)=={"integerWidth"} and type(width) is dict and set(width)=={"bits","signed"} and type(width["bits"]) is int and width["bits"]==64 and width["signed"] is True
+    return carrier=="decimal" and set(facets)=={"precision","scale"} and type(facets["precision"]) is int and type(facets["scale"]) is int and (facets["precision"],facets["scale"]) in ((18,4),(18,2),(12,2))
 
 
 def _object(pairs: list[tuple[str, object]]) -> dict[str,object]:
