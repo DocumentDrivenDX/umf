@@ -9,6 +9,7 @@ import argparse
 import copy
 import hashlib
 import importlib
+import importlib.metadata
 import json
 import sys
 from pathlib import Path
@@ -78,7 +79,7 @@ def prepare(root: Path) -> Path:
         descriptors.append({"path": str(path.relative_to(root)), "sha256": hashlib.sha256(text.encode()).hexdigest()})
     config = {
         "package": package, "modules": ["manifest_declarations"], "targets": targets,
-        "weft": {"distribution": "weft-sql", "version": "0.4.42.dev0"}, "umf": {"documents": descriptors},
+        "weft": {"distribution": "weft-sql", "version": importlib.metadata.version("weft-sql")}, "umf": {"documents": descriptors},
     }
     path = root / "catalog-config.json"
     path.write_text(json.dumps(config, indent=2) + "\n")

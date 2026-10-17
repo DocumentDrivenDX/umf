@@ -106,6 +106,90 @@
                                 "properties": {
                                   "kind": "object",
                                   "members": {
+                                    "collation": {
+                                      "kind": "object",
+                                      "members": {
+                                        "anyOf": {
+                                          "items": [
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "null"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "additionalProperties": {
+                                                  "kind": "boolean",
+                                                  "value": true
+                                                },
+                                                "properties": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "name": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "maxLength": {
+                                                          "kind": "number",
+                                                          "value": "63"
+                                                        },
+                                                        "minLength": {
+                                                          "kind": "number",
+                                                          "value": "1"
+                                                        },
+                                                        "type": {
+                                                          "kind": "string",
+                                                          "value": "string"
+                                                        }
+                                                      }
+                                                    },
+                                                    "schema": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "maxLength": {
+                                                          "kind": "number",
+                                                          "value": "63"
+                                                        },
+                                                        "minLength": {
+                                                          "kind": "number",
+                                                          "value": "1"
+                                                        },
+                                                        "type": {
+                                                          "kind": "string",
+                                                          "value": "string"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "required": {
+                                                  "items": [
+                                                    {
+                                                      "kind": "string",
+                                                      "value": "schema"
+                                                    },
+                                                    {
+                                                      "kind": "string",
+                                                      "value": "name"
+                                                    }
+                                                  ],
+                                                  "kind": "array"
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "object"
+                                                }
+                                              }
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    },
                                     "field": {
                                       "kind": "object",
                                       "members": {
@@ -1740,9 +1824,9 @@
   "links": [],
   "sources": [
     {
-      "bytes": 14175,
+      "bytes": 14741,
       "path": "spec/extensions/access/schema.json",
-      "sha256": "2491be8c2441e3ac6ee1ca4c0b41113f8181828d33676ceb5907a5bb90eb9d34"
+      "sha256": "f2222b7884fecd0f83701346a69a7b1590a2623333cccecad613a8c0e3cd512b"
     }
   ],
   "summary": "spec/extensions/access/schema.json",

@@ -44,6 +44,33 @@
                   "items": {
                     "additionalProperties": true,
                     "properties": {
+                      "collation": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": true,
+                            "properties": {
+                              "name": {
+                                "maxLength": 63,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "schema": {
+                                "maxLength": 63,
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schema",
+                              "name"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
                       "field": {
                         "additionalProperties": true,
                         "properties": {
@@ -583,9 +610,9 @@
   ],
   "sources": [
     {
-      "bytes": 15781,
+      "bytes": 16719,
       "path": "spec/extensions/access/package.json",
-      "sha256": "910735460e6bfb4366137aaf6b0839ca845d50baa002556867eb76a8c89ec90b"
+      "sha256": "09dba8e8cecb76e24a44c668d02fcdc9810d954535f03cc5182c378cf84d39f3"
     }
   ],
   "summary": "Authored typed access views over core 0.8.0; experimental metadata validation",

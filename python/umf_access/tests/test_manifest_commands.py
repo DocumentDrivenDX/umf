@@ -1,5 +1,6 @@
 """Original portable compiler controls, separate from native engine authority."""
 import hashlib
+import importlib.metadata
 import json
 import tempfile
 import unittest
@@ -54,7 +55,7 @@ class ManifestProgramTests(unittest.TestCase):
                 model = request['model']['utf8']
                 (root/'model.json').write_text(model)
                 config = {'package':'candidate','modules':['not_imported'],
-                          'weft':{'distribution':'weft-sql','version':'0.4.42.dev0'},
+                          'weft':{'distribution':'weft-sql','version':importlib.metadata.version('weft-sql')},
                           'umf':{'documents':[{'path':'model.json','sha256':hashlib.sha256(model.encode()).hexdigest()}]},
                           'targets':[{'id':'truss','kind':'truss','binding':{'modelJson':model},
                                       'manifestCommands':{'command:0':{'configuration':registry,'request':request}}}]}
