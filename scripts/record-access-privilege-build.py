@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 import runpy
 import sys
 from pathlib import Path
@@ -19,6 +20,11 @@ originals = {
         "compile_native_bulk_json",
     )
 }
+probe_apis = set(
+    os.environ.get("UMF_PRIVILEGE_PROBE_APIS", "compile_raw_read_json").split(",")
+)
+if not probe_apis <= originals.keys():
+    raise ValueError("unknown original compiler privilege probe API selection")
 calls = []
 
 
@@ -34,7 +40,7 @@ def observed(api_name, request):
         "programSha256": hashlib.sha256(exact).hexdigest(),
         "returnBytesUnchanged": True,
     }
-    if program.get("status") == "compiled" and api_name == "compile_raw_read_json":
+    if program.get("status") == "compiled" and api_name in probe_apis:
         probes = weft.compile_native_privilege_probes_json(
             json.dumps(
                 {

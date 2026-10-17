@@ -6,8 +6,10 @@ import json
 import unittest
 
 from pg_owner_privilege_resolver import (
+    analyzed_command_types,
     checked_packet,
     observe_original_protocol,
+    rule_profile,
     setup_owner_input,
 )
 
@@ -41,6 +43,44 @@ def packet():
 
 
 class OwnerCustodyTests(unittest.TestCase):
+    def test_rule_profile_is_explicit_never_fired_and_preserves_native_command(self):
+        probe = {
+            "analysisKind": "pg-rewrite-rule/0.1",
+            "analysisRelation": {
+                "schema": "pg_temp",
+                "native": "event",
+                "probeOnly": True,
+            },
+            "analysisRule": {
+                "name": "owned_rule",
+                "event": "INSERT",
+                "instead": True,
+                "unconditional": True,
+                "neverFire": True,
+                "expectedBusinessCommandType": 2,
+            },
+            "setupStatements": ["original owner setup"],
+        }
+        self.assertTrue(rule_profile(probe))
+        self.assertFalse(rule_profile({}))
+        for field, value in [
+            ("neverFire", False),
+            ("expectedBusinessCommandType", True),
+            ("event", "UPDATE"),
+        ]:
+            wrong = copy.deepcopy(probe)
+            wrong["analysisRule"][field] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                rule_profile(wrong)
+        with self.assertRaises(ValueError):
+            rule_profile(dict(probe, analysisKind="unknown"))
+        self.assertEqual(
+            analyzed_command_types(
+                "({QUERY :commandType 2 :subselect {QUERY :commandType 1}})"
+            ),
+            [2, 1],
+        )
+
     def test_parameterless_owner_probe_has_no_setup_statement(self):
         class Connection:
             def __init__(self):

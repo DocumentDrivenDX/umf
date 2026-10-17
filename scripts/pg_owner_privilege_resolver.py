@@ -12,7 +12,7 @@ import json
 from collections.abc import Callable, Mapping
 from typing import Any
 
-from pg_runtime_privilege_resolver import analyze, resolve
+from pg_runtime_privilege_resolver import analyze, node_tree, resolve
 
 
 def digest(text: str) -> str:
@@ -77,6 +77,52 @@ def setup_owner_input(connection: Any, probe: Mapping[str, Any]) -> None:
         raise ValueError("owner probe parameters require original setup SQL")
 
 
+def rule_profile(probe: Mapping[str, Any]) -> bool:
+    kind = probe.get("analysisKind")
+    if kind is None:
+        return False
+    if kind != "pg-rewrite-rule/0.1":
+        raise ValueError("unknown original owner analysis profile")
+    relation, rule = probe["analysisRelation"], probe["analysisRule"]
+    if (
+        relation.get("schema") != "pg_temp"
+        or relation.get("probeOnly") is not True
+        or not isinstance(relation.get("native"), str)
+        or not relation["native"]
+        or not isinstance(rule.get("name"), str)
+        or not rule["name"]
+        or rule.get("event") != "INSERT"
+        or any(
+            rule.get(flag) is not True
+            for flag in ["instead", "unconditional", "neverFire"]
+        )
+        or type(rule.get("expectedBusinessCommandType")) is not int
+        or rule["expectedBusinessCommandType"] not in (2, 3, 4)
+        or type(probe.get("setupStatements")) is not list
+        or not probe["setupStatements"]
+        or any(type(item) is not str or not item for item in probe["setupStatements"])
+    ):
+        raise ValueError("exact never-fired original owner rule profile required")
+    return True
+
+
+def analyzed_command_types(text: str) -> list[int]:
+    found = []
+
+    def visit(value):
+        if isinstance(value, list):
+            for child in value:
+                visit(child)
+        elif isinstance(value, dict):
+            if value["tag"] == "QUERY":
+                found.append(value["fields"]["commandType"])
+            for child in value["fields"].values():
+                visit(child)
+
+    visit(node_tree(text))
+    return found
+
+
 def resolve_owner_packet(
     connection: Any, packet: Mapping[str, Any], owner_check: Callable[[str], object]
 ) -> dict[str, Any]:
@@ -91,21 +137,40 @@ def resolve_owner_packet(
         for variant, probe in enumerate(statement["probes"]):
             connection.execute("SAVEPOINT umf_owner_privilege_probe")
             try:
-                setup_owner_input(connection, probe)
-                name = f"__umf_privilege_view_{index}_{variant}"
-                connection.execute(
-                    sql.SQL("CREATE TEMPORARY VIEW {} ({}) AS ").format(
-                        sql.Identifier(name),
-                        sql.SQL(",").join(
-                            sql.Identifier(column) for column in probe["outputColumns"]
-                        ),
+                is_rule = rule_profile(probe)
+                if is_rule:
+                    for setup in probe["setupStatements"]:
+                        connection.execute(setup)
+                    name = probe["analysisRelation"]["native"]
+                    rule_name = probe["analysisRule"]["name"]
+                else:
+                    setup_owner_input(connection, probe)
+                    name = f"__umf_privilege_view_{index}_{variant}"
+                    rule_name = "_RETURN"
+                    connection.execute(
+                        sql.SQL("CREATE TEMPORARY VIEW {} ({}) AS ").format(
+                            sql.Identifier(name),
+                            sql.SQL(",").join(
+                                sql.Identifier(column)
+                                for column in probe["outputColumns"]
+                            ),
+                        )
+                        + sql.SQL(probe["sql"])
                     )
-                    + sql.SQL(probe["sql"])
-                )
-                text = connection.execute(
-                    "SELECT r.ev_action::pg_catalog.text FROM pg_catalog.pg_rewrite r JOIN pg_catalog.pg_class c ON c.oid=r.ev_class WHERE c.relnamespace=pg_catalog.pg_my_temp_schema() AND c.relname=%s AND r.rulename='_RETURN'",
-                    (name,),
-                ).fetchone()[0]
+                row = connection.execute(
+                    "SELECT r.ev_action::pg_catalog.text FROM pg_catalog.pg_rewrite r JOIN pg_catalog.pg_class c ON c.oid=r.ev_class WHERE c.relnamespace=pg_catalog.pg_my_temp_schema() AND c.relname=%s AND r.rulename=%s",
+                    (name, rule_name),
+                ).fetchone()
+                if row is None:
+                    raise ValueError("original owner analysis relation/rule absent")
+                text = row[0]
+                if is_rule:
+                    commands = analyzed_command_types(text)
+                    expected = probe["analysisRule"]["expectedBusinessCommandType"]
+                    if expected not in commands or any(
+                        command not in (1, expected) for command in commands
+                    ):
+                        raise ValueError("native original write command tree differs")
                 analysis = analyze(text)
                 native = resolve(connection, analysis)
                 inputs = []
@@ -140,6 +205,9 @@ def resolve_owner_packet(
                         "analysis": analysis,
                         "resolved": native,
                         "inputTypes": inputs,
+                        "analysisKind": probe.get("analysisKind", "pg-rewrite-view/0.1"),
+                        "analysisRule": probe.get("analysisRule"),
+                        "businessDmlExecuted": False,
                         "probeSupportRelation": probe["inputRelation"],
                         "probeSupportExcludedFromBusinessGrants": True,
                     }
