@@ -15,6 +15,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 from pg_fixed_runtime_var_probes import resolve_observed_fixed_sql
 from pg_owner_privilege_resolver import resolve_owner_packet
+from pg_runtime_privilege_resolver import analyze, resolve
 
 
 def qualify(target, captures, out, source_archive):
@@ -271,6 +272,68 @@ def qualify(target, captures, out, source_archive):
                 )
                 save("owner-" + str(index) + ".json", resolved)
                 observations.extend(resolved["observations"])
+            selected_tables = {
+                (program["binding"]["schema"], table["native"])
+                for program in programs.values()
+                for table in program["binding"]["tables"]
+            }
+            policy_observations = []
+            for schema, table in sorted(selected_tables):
+                if (
+                    type(schema) is not str
+                    or not schema
+                    or type(table) is not str
+                    or not table
+                ):
+                    raise ValueError(
+                        "explicit original bound table identity required for native policy closure"
+                    )
+                policy_rows = connection.execute(
+                    "SELECT p.oid,p.polrelid,p.polname,p.polcmd,p.polpermissive,p.polroles,p.polqual::text,p.polwithcheck::text,c.relrowsecurity,c.relforcerowsecurity,n.nspname,c.relname FROM pg_catalog.pg_policy p JOIN pg_catalog.pg_class c ON c.oid=p.polrelid JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s AND p.polcmd IN ('r','*') ORDER BY p.oid",
+                    (schema, table),
+                ).fetchall()
+                for row in policy_rows:
+                    if (
+                        row[10:] != (schema, table)
+                        or type(row[0]) is not int
+                        or row[0] <= 0
+                        or type(row[1]) is not int
+                        or row[1] <= 0
+                    ):
+                        raise ValueError("native policy relation identity differs")
+                    provenance = {
+                        "kind": "native-pg-policy-select-using/18.6",
+                        "policySetScope": "selected-table SELECT/ALL candidates; role applicability not inferred",
+                        "policyOid": row[0],
+                        "relationOid": row[1],
+                        "name": row[2],
+                        "command": row[3],
+                        "permissive": row[4],
+                        "roleOids": row[5],
+                        "usingNodeText": row[6],
+                        "withCheckNodeText": row[7],
+                        "rowSecurity": row[8],
+                        "forceRowSecurity": row[9],
+                        "schema": schema,
+                        "native": table,
+                        "withCheckNotExecutedForRead": True,
+                        "bareVarsRetainNativePolicyRelationContext": True,
+                        "noFabricatedRteOrSelectGrantInference": True,
+                    }
+                    if row[7] is not None:
+                        provenance["withCheckNodeSha256"] = hashlib.sha256(
+                            row[7].encode()
+                        ).hexdigest()
+                    policy = {"provenance": provenance, "nativeRelationPermissions": []}
+                    if row[6] is not None:
+                        provenance["usingNodeSha256"] = hashlib.sha256(
+                            row[6].encode()
+                        ).hexdigest()
+                        policy["analysis"] = analyze(row[6])
+                        policy["resolved"] = resolve(connection, policy["analysis"])
+                        observations.append(policy)
+                    policy_observations.append(policy)
+            save("native-selected-read-policies.json", policy_observations)
             for index, (source, call) in enumerate(fixed.values()):
                 resolved = resolve_observed_fixed_sql(
                     connection, source, call, index, source_archive
@@ -481,6 +544,35 @@ def qualify(target, captures, out, source_archive):
                     }
                 )
                 save("catalog-column-revoke-controls.json", column_controls)
+        # Individually unnecessary candidates can be mutually substitutable.
+        # Remove them collectively and require the entire selected baseline.
+        pruned_functions = []
+        for item in results:
+            if not item["requiredBySelectedWorkload"]:
+                access("REVOKE", item["function"])
+                pruned_functions.append(item["function"])
+        pruned_columns = []
+        for item in column_controls:
+            if not item["native42501Observed"]:
+                admin.execute(
+                    sql.SQL("REVOKE SELECT ({}) ON {}.{} FROM search_user").format(
+                        sql.Identifier(item["column"]),
+                        sql.Identifier(item["schema"]),
+                        sql.Identifier(item["native"]),
+                    )
+                )
+                pruned_columns.append(item)
+        assert workload() == baseline
+        save(
+            "collective-prune-baseline.json",
+            {
+                "prunedFunctions": pruned_functions,
+                "prunedCatalogColumns": pruned_columns,
+                "allSelectedBranchesRecovered": True,
+                "nativeAuthority": False,
+                "inventoryComplete": False,
+            },
+        )
         admin.execute("REVOKE SELECT ON search_app.docs FROM search_user")
         denied = False
         try:
