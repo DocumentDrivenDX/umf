@@ -56,6 +56,8 @@ on:
       - 'bun.lock'
       - 'tsconfig.json'
       - '.innsigle/**'
+      - 'scripts/generated-page-seals.ts'
+      - 'tests/generated-page-seals.test.ts'
   pull_request:
     branches: [main]
     paths:
@@ -111,6 +113,8 @@ on:
       - 'bun.lock'
       - 'tsconfig.json'
       - '.innsigle/**'
+      - 'scripts/generated-page-seals.ts'
+      - 'tests/generated-page-seals.test.ts'
   workflow_dispatch:
 
 permissions:
@@ -232,8 +236,20 @@ jobs:
         with:
           name: generated-action-guides
           path: docs/helix/05-deploy/microsite/dist/actions
-      - name: Verify page signatures
-        run: node .tools/innsigle/src/cli.mjs verify --all
+      - name: Test generated and curated signer separation
+        run: bun test tests/generated-page-seals.test.ts
+      - name: Verify curated page signatures
+        run: bun scripts/generated-page-seals.ts --verify-curated
+      - name: Seal generated pages with the build key
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          INNSIGLE_BUILD_KEY: ${{ secrets.INNSIGLE_BUILD_KEY }}
+        run: bun scripts/generated-page-seals.ts --seal
+      - name: Verify page signatures and signer roles
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          bun scripts/generated-page-seals.ts --check
+          node .tools/innsigle/src/cli.mjs verify --all
       - name: Include public keys and attestations
         run: node .tools/innsigle/src/cli.mjs publish docs/helix/05-deploy/microsite/dist
       - name: Upload site
