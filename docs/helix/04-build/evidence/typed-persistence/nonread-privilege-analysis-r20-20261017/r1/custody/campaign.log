@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-nonread-probe-native.py", line 24, in <module>
+    resolved=resolve_owner_packet(owner,packet,weft.check_native_privilege_probes_json);save(path.stem+'-resolved.json',resolved)
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_owner_privilege_resolver.py", line 174, in resolve_owner_packet
+    analysis = analyze(text)
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py", line 290, in analyze
+    visit(root)
+    ~~~~~^^^^^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py", line 213, in visit
+    visit(child)
+    ~~~~~^^^^^^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py", line 288, in visit
+    visit(child)
+    ~~~~~^^^^^^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py", line 213, in visit
+    visit(child)
+    ~~~~~^^^^^^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/pg_runtime_privilege_resolver.py", line 219, in visit
+    raise NodeError("unreviewed PG18 execution/structure node " + tag)
+pg_runtime_privilege_resolver.NodeError: unreviewed PG18 execution/structure node ROWMARKCLAUSE
