@@ -48,6 +48,41 @@ def report(t=None, e=None):
 
 
 class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
+    def test_current_runtime_reference_cannot_qualify_current_target_or_other_operations(
+        self,
+    ):
+        result = report()
+        reference = result["runtimeAdvisory"]["testedReferences"][0]
+        root = Path(__file__).resolve().parents[3]
+        inventory = root / reference["packet"] / "inventory.json"
+        self.assertEqual(
+            hashlib.sha256(inventory.read_bytes()).hexdigest(),
+            reference["packetInventorySha256"],
+        )
+        self.assertEqual(
+            reference["sdkSourceCommit"], "7b206ef3b2720500c8409b17915629e4aac11448"
+        )
+        self.assertEqual(
+            [e["name"] for e in reference["selectedEntries"]], ["plain", "pages"]
+        )
+        self.assertEqual(reference["observedNecessaryFunctions"], 27)
+        self.assertFalse(reference["currentTargetQualified"])
+        self.assertFalse(reference["qualificationTransfer"])
+        self.assertFalse(reference["nativeAuthority"])
+        self.assertFalse(reference["inventoryComplete"])
+        self.assertTrue(
+            {"actions", "bulk commands", "search"}.issubset(
+                reference["unselectedOperations"]
+            )
+        )
+        self.assertFalse(result["inventoryComplete"])
+        self.assertEqual(result["qualification"]["leastPrivilege"], "UNQUALIFIED")
+        reference["selectedEntries"].clear()
+        self.assertEqual(
+            len(report()["runtimeAdvisory"]["testedReferences"][0]["selectedEntries"]),
+            2,
+        )
+
     def test_exact_sql_profile_emits_only_scoped_runtime_reference_grants(self):
         result = report()
         data = result["runtimeAdvisory"]

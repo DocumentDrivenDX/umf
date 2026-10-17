@@ -1328,6 +1328,63 @@ _EVIDENCE: dict[str, Any] = json.loads(r"""{
 }""")
 
 
+_TESTED_REFERENCE = r"""{
+  "version": "umf.pg-privilege-qualification-reference/0.1",
+  "scope": "exact owned plain/pages generated catalog; current SDK metadata/cache/closing/read/page/stream sync/async paths only",
+  "sdkWheelSha256": "b1acf1978672c1f1ba7af0593d33bbbbc8c34f65a715839eed8b58f4dff5556c",
+  "weftWheelSha256": "26d20aa8e4d1bac465051498b1a3fe4fdf01dd0a2fee1591e755099d8e8e4323",
+  "catalogSha256": "2f06038d4007a32c3727e60e40a93db974a30a4debc337220a3d0e6cf2171a59",
+  "selectedEntries": [
+    {
+      "name": "plain",
+      "kind": "query",
+      "targetId": "local",
+      "originalStructuralDigest": "3a86cb6658e15c89f7053c9735e0b09326cb526542d9920cbfb55b0e27501f31"
+    },
+    {
+      "name": "pages",
+      "kind": "query",
+      "targetId": "local",
+      "originalStructuralDigest": "3d9913d325caeda8751360cc39162a178c28e16951b0fe681ecd30b191a62a55"
+    }
+  ],
+  "observedNecessaryFunctions": 27,
+  "runtimeFunctions": 23,
+  "metadataRelations": 14,
+  "nativeVersion": 180006,
+  "inventoryComplete": false,
+  "nativeAuthority": false,
+  "unresolved": [
+    "other selected programs/capabilities require their own owner/runtime path inventories",
+    "actions/bulk/search/managed/engine grants not qualified by this read catalog",
+    "production report reference integration and reporting ABI correspondence require root review"
+  ],
+  "temporal": "HELD",
+  "sdkSourceCommit": "7b206ef3b2720500c8409b17915629e4aac11448",
+  "weftSourceCommit": "8bf99117f1e4ab6fd8d4506b25bfdd8214c9afd6",
+  "packet": "docs/helix/04-build/evidence/typed-persistence/runtime-privilege-r19-20261017",
+  "packetInventorySha256": "6a86cb623bf4489983a7751791771f991a0185e3f4e8554535e7ae07c43eb1e5",
+  "qualificationTransfer": false,
+  "currentTargetQualified": false,
+  "reportingAbiScope": "informative reference only; changing this report module does not qualify a new runtime wheel",
+  "selectedOperations": [
+    "plain read",
+    "keyset page",
+    "bounded stream",
+    "cold/warm verification and cache",
+    "selected metadata/admission/closing SQL",
+    "sync/async execution and cancellation cleanup"
+  ],
+  "unselectedOperations": [
+    "actions",
+    "bulk commands",
+    "search",
+    "managed platforms",
+    "engine targets"
+  ]
+}"""
+
+
 def _source_snapshot() -> dict[str, Any]:
     path = Path(__file__).resolve().parent.parent / "postgres_read.py"
     try:
@@ -1442,6 +1499,7 @@ def postgres_runtime_advisory(
             if reference_selected
             else "REFERENCE_ONLY_NOT_APPLICABLE",
             "inventoryComplete": False,
+            "testedReferences": [json.loads(_TESTED_REFERENCE)],
             "sourceObservation": snapshot,
             "fixedSqlHashesMatch": bool(sql_match),
             "nativeTestedSourceMatches": source_match,
