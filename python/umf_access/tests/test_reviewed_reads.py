@@ -575,8 +575,16 @@ class Native(unittest.TestCase):
         self.assertEqual(reached.exception.emitted, 3)
         self.assertIs(reached.exception.truncated, True)
         self.assertEqual(self.a.info.transaction_status, 0)
+        exact_page = []
+        with self.assertRaises(StreamLimitReached) as boundary:
+            for row in execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=4):
+                exact_page.append(row.id)
+        self.assertEqual(exact_page, [1, 2, 4, 5])
+        self.assertEqual(boundary.exception.emitted, 4)
+        self.assertIsNone(boundary.exception.truncated)
+        self.assertEqual(self.a.info.transaction_status, 0)
         self.assertEqual(
-            [row.id for row in execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=4)],
+            [row.id for row in execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=5)],
             [1, 2, 4, 5],
         )
         for limit in (0, -1, True):
@@ -771,7 +779,8 @@ class Native(unittest.TestCase):
                             "native": "order_id",
                             "carrier": "string",
                             "nullable": False,
-                        }
+                        },
+                        {"logical": "orderOwnerRole", "native": "owner_role", "carrier": "string", "nullable": False},
                     ],
                 },
                 {
@@ -791,6 +800,7 @@ class Native(unittest.TestCase):
                             "carrier": "string",
                             "nullable": False,
                         },
+                        {"logical": "customerOwnerRole", "native": "owner_role", "carrier": "string", "nullable": False},
                     ],
                 },
             ],
@@ -804,6 +814,17 @@ class Native(unittest.TestCase):
                 }
             ],
         }
+        document = json.loads(model)
+        sets = document["modules"][0]["extensions"]["umf.access"]["columns"]
+        self.assertEqual(len(sets), 1)
+        bound["nativeColumns"] = {"target": {"platform": "postgresql", "majorVersion": "18"}, "sets": []}
+        for index, column_set in enumerate(sets):
+            source_id = column_set["binding"]["sourceId"]
+            original = next(source["text"] for source in request["sources"] if source["id"] == source_id)
+            bound["nativeColumns"]["sets"].append({
+                "columnSet": {"documentId": document["id"], "coreVersion": "0.8.0", "documentSha256": bound["modelSha256"], "module": "commerce", "pointer": f"/modules/0/extensions/umf.access/columns/{index}"},
+                "binding": {"sourceId": source_id, "documentJson": original, "documentSha256": hashlib.sha256(original.encode()).hexdigest()},
+            })
         return bound
 
     @unittest.skipUnless(
@@ -930,6 +951,7 @@ class Native(unittest.TestCase):
                     ),
                     str(root),
                     "--reads-only",
+                    "--native-reviewed",
                 ],
                 cwd=Path(__file__).resolve().parents[3],
                 capture_output=True,
@@ -982,6 +1004,12 @@ class Native(unittest.TestCase):
                 text=True,
                 check=False,
             )
+            capture_root = os.environ.get("UMF_REVIEWED_NATIVE_OUTPUT")
+            if capture_root:
+                saved = Path(capture_root)
+                saved.mkdir(parents=True, exist_ok=True)
+                (saved / "public-cli-subprocess.log").write_text(result.stdout + result.stderr)
+                shutil.copytree(root, saved / "public-cli-generated", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("catalog native E2E: pass", result.stdout)
 
