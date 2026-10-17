@@ -12898,3 +12898,47 @@ Completed stock-counter observations are perturbed measurements, not clean
 performance acceptance. Original budgets and native validation remain intact.
 Temporal qualification remains **HELD**; release/main/deployment acceptance
 requires all remaining original gates rather than this scoped frontend result.
+
+### Coherent R16 native replay and release continuation — 2026-10-17
+
+The immutable SDK source `b51c8773` and original compiler source `3f64056`
+have a coherent [installed R16 packet](evidence/typed-persistence/frontend-r16-20261017/README.md):
+47 SDK payloads plus two compiler payloads match their exact wheels;293 installed
+unit tests pass without skips and all three pinned checkers pass positive clients
+and66 negative files. The [public schema/instance replay](evidence/typed-persistence/schema-instance-r16-20261017/README.md)
+passes three independently generated fixture families against these installed
+bytes. Later working-tree navigation changes do not inherit these results.
+
+[Real PostgreSQL search](evidence/typed-persistence/postgres-search-r16-20261017/README.md)
+passes15 complete-profile and16 explicitly partial-profile controls. Native
+keyword/vector comparisons, generated projections, transactional freshness,
+async execution and index drift are covered. The original exact materialized
+candidate path does not claim ANN execution or an asynchronous external index.
+[Real PostgreSQL actions and bulk](evidence/typed-persistence/postgres-actions-bulk-r16-20261017/README.md)
+pass27 controls covering commit/no-op receipts, rollback, rule order,
+serialization conflicts, native authorization, reconciliation, cancellation,
+preview and atomic reselect. Owned clusters stop and all49 installed payloads
+remain unchanged. These base-table receipts do not qualify Truss or managed
+Delta mutations.
+
+The separate [Spark HLL R15 packet](evidence/typed-persistence/spark-hll-r15-20261017/README.md)
+passes26 controls with seven independent native comparisons. Admission preserves
+the exact original Spark4.0.1 HyperLogLog++ descriptor, including relative standard
+deviation0.05 and `hardBound:false`; no deterministic error bound is asserted.
+This explicit approximate query intent does not change the exact-only initial
+generator profile. Temporal qualification remains **HELD**.
+
+Remaining execution is the current many-navigation successor's generator,
+pinned checker, real-browser and native target-set proof; original Truss
+RelatedKeys/protected action/bulk adoption; current-source native privilege
+closure; and original managed authority/commit-result gates. Truss main
+`4ddad044` has local correctness/capacity and original full-small evidence;
+the earlier clean hosted failures remain unresolved by that local result.
+New disabled compiler candidates do not establish runtime or native support.
+
+Completed changes and evidence are committed and pushed on the recovery branch.
+Final consolidation must also retain the reference release change, pass remote
+CI, produce valid configured attestations, merge normally, and verify deployed
+bytes against the accepted main revision. The signing account still reports
+not signed in after reopening the installed 1Password app. No attestation gate
+has been bypassed and no final deployment or full SDK acceptance is claimed.
