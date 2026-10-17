@@ -23,6 +23,8 @@ The bounded [B-TP-003 implementation/test gate](04-build/evidence/typed-persiste
 
 ## Proposed typed data access SDK
 
+The [PostgreSQL fence deployment guide](04-build/guides/native-postgresql-fences.md) explains the explicit original binding, deployment program and native grants for selected text-search configurations and source-exact mutations. Its successor installed/native qualification remains pending.
+
 [Design and build handoff](04-build/typed-persistence-design.md) indexes draft
 FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-075 and nine
 story/design/test slices (080 to 088). A TypeScript generator emits typed Python

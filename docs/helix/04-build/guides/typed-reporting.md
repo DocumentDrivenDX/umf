@@ -30,6 +30,8 @@ joined_entry = build_query(capture(customer_orders), weft,
 
 The binding is reviewed build input with version `umf.raw-read-binding/0.1`. It retains exact `modelJson` and `modelSha256`, logical-to-native table/column mappings, ordered unique keys and relationship key pairs. Set its `schema` to the app schema for qualified SQL, or `None` for schema-neutral statements. Weft checks the supplied mappings against the actual pinned UMF model and refuses unsupported forms before producing a catalog.
 
+Selected PostgreSQL text-search bindings additionally require the explicit original catalog fence and deployment prerequisites in the [fence guide](native-postgresql-fences.md). Configuration-free reads are unchanged by that requirement. The successor fence profile remains a candidate until its exact installed/native cohort passes.
+
 The default join is inner for required relationships and left for optional relationships. `how="inner"` and `how="left"` select either explicitly. Joins are limited to three declared to-one edges. Named projection handles keep the projection's owning root in the type system; an unrelated projection is rejected by all three checkers.
 
 ## Build a reviewed aggregate
