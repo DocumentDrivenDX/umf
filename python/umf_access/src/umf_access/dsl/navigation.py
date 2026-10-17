@@ -91,9 +91,11 @@ class RequiredNavigation(
     def __post_init__(self) -> None:
         super().__post_init__()
         _roots(self, self.source_query, self.target_query)
-        if self.inverse_key_target is not None:
-            if not _same_record(self.inverse_key_target, self.source_query) or self.inverse_key_target.key_id is None:
-                raise TypeError("original inverse Key belongs to the original source Record")
+        if self.inverse_key_target is not None and (
+            not _same_record(self.inverse_key_target, self.source_query)
+            or self.inverse_key_target.key_id is None
+        ):
+            raise TypeError("original inverse Key belongs to the original source Record")
 
     def inverse(self) -> InverseNavigation[Target, Owner, SourceKey, RelationKey, InverseKey]:
         require_capture()
@@ -121,9 +123,11 @@ class OptionalNavigation(
     def __post_init__(self) -> None:
         super().__post_init__()
         _roots(self, self.source_query, self.target_query)
-        if self.inverse_key_target is not None:
-            if not _same_record(self.inverse_key_target, self.source_query) or self.inverse_key_target.key_id is None:
-                raise TypeError("original inverse Key belongs to the original source Record")
+        if self.inverse_key_target is not None and (
+            not _same_record(self.inverse_key_target, self.source_query)
+            or self.inverse_key_target.key_id is None
+        ):
+            raise TypeError("original inverse Key belongs to the original source Record")
 
     def inverse(self) -> InverseNavigation[Target, Owner, SourceKey, RelationKey, InverseKey]:
         require_capture()

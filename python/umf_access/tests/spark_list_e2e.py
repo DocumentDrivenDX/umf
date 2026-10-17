@@ -77,7 +77,14 @@ def main():
         integers = [-(2**63), 2**63-1, -100, -1, 0, 1, 100, 17]
         rows = [(f'{i:02}', integers[i], None if amount is None else Decimal(amount), labels[i], [None,False,True][i%3])
                 for i, amount in enumerate(amounts)]
-        from pyspark.sql.types import StructType, StructField, StringType, LongType, DecimalType, BooleanType
+        from pyspark.sql.types import (
+            BooleanType,
+            DecimalType,
+            LongType,
+            StringType,
+            StructField,
+            StructType,
+        )
         row_schema=StructType([StructField('id',StringType(),False),StructField('big',LongType(),False),
             StructField('amount',DecimalType(38,9),True),StructField('label',StringType(),True),StructField('active',BooleanType(),True)])
         spark.createDataFrame(rows,row_schema).write.format('delta').mode('append').saveAsTable(f'{schema}.metrics')
@@ -135,7 +142,7 @@ def main():
                     actual=getattr(queries,field+('_not_in' if negative else '_in'))(target,values=values)
                     check(f'exact {field} case{index} negated{negative}',actual==wanted)
                     observations.append({'field':field,'case':index,'negative':negative,'expected':wanted,'actual':actual})
-        for values,threshold in [([None,-100,17],Decimal('1E+100')),([],Decimal('1')),([-(2**63),2**63-1],None),([17],Decimal('1.000000000000000000000000000000000001'))]:
+        for values,threshold in [([None,-100,17],Decimal('1E+100')),([],Decimal(1)),([-(2**63),2**63-1],None),([17],Decimal('1.000000000000000000000000000000000001'))]:
             wanted=[(identifier,) for identifier,big,amount,_,_ in rows if big in values and amount is not None and threshold is not None and amount<threshold]
             check('separate exact scalar and list native transports',queries.mixed_numeric(target,values=values,threshold=threshold)==wanted)
         for values in ([],[None],['plain',None]):
