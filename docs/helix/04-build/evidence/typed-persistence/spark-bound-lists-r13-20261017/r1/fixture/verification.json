@@ -1,0 +1,1241 @@
+{
+  "checks": [
+    "actual generated public catalog build and check",
+    "generated nullable exact instance creation",
+    "exact big case0 negatedFalse",
+    "exact big case0 negatedTrue",
+    "exact big case1 negatedFalse",
+    "exact big case1 negatedTrue",
+    "exact big case2 negatedFalse",
+    "exact big case2 negatedTrue",
+    "exact big case3 negatedFalse",
+    "exact big case3 negatedTrue",
+    "exact big case4 negatedFalse",
+    "exact big case4 negatedTrue",
+    "exact amount case0 negatedFalse",
+    "exact amount case0 negatedTrue",
+    "exact amount case1 negatedFalse",
+    "exact amount case1 negatedTrue",
+    "exact amount case2 negatedFalse",
+    "exact amount case2 negatedTrue",
+    "exact amount case3 negatedFalse",
+    "exact amount case3 negatedTrue",
+    "exact amount case4 negatedFalse",
+    "exact amount case4 negatedTrue",
+    "exact label case0 negatedFalse",
+    "exact label case0 negatedTrue",
+    "exact label case1 negatedFalse",
+    "exact label case1 negatedTrue",
+    "exact label case2 negatedFalse",
+    "exact label case2 negatedTrue",
+    "exact label case3 negatedFalse",
+    "exact label case3 negatedTrue",
+    "exact label case4 negatedFalse",
+    "exact label case4 negatedTrue",
+    "exact active case0 negatedFalse",
+    "exact active case0 negatedTrue",
+    "exact active case1 negatedFalse",
+    "exact active case1 negatedTrue",
+    "exact active case2 negatedFalse",
+    "exact active case2 negatedTrue",
+    "exact active case3 negatedFalse",
+    "exact active case3 negatedTrue",
+    "exact active case4 negatedFalse",
+    "exact active case4 negatedTrue",
+    "separate exact scalar and list native transports",
+    "separate exact scalar and list native transports",
+    "separate exact scalar and list native transports",
+    "separate exact scalar and list native transports",
+    "original list page case[]",
+    "original list stream case[]",
+    "original list page case[None]",
+    "original list stream case[None]",
+    "original list page case['plain', None]",
+    "original list stream case['plain', None]",
+    "original list facets reject oversize and NUL"
+  ],
+  "observations": [
+    {
+      "field": "big",
+      "case": 0,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "big",
+      "case": 0,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "big",
+      "case": 1,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "big",
+      "case": 1,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "big",
+      "case": 2,
+      "negative": false,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ]
+      ]
+    },
+    {
+      "field": "big",
+      "case": 2,
+      "negative": true,
+      "expected": [
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "big",
+      "case": 3,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "big",
+      "case": 3,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "big",
+      "case": 4,
+      "negative": false,
+      "expected": [
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "big",
+      "case": 4,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 0,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "amount",
+      "case": 0,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 1,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "amount",
+      "case": 1,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 2,
+      "negative": false,
+      "expected": [
+        [
+          "03"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "03"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 2,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 3,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "amount",
+      "case": 3,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 4,
+      "negative": false,
+      "expected": [
+        [
+          "02"
+        ]
+      ],
+      "actual": [
+        [
+          "02"
+        ]
+      ]
+    },
+    {
+      "field": "amount",
+      "case": 4,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 0,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "label",
+      "case": 0,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 1,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "label",
+      "case": 1,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 2,
+      "negative": false,
+      "expected": [
+        [
+          "03"
+        ]
+      ],
+      "actual": [
+        [
+          "03"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 2,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 3,
+      "negative": false,
+      "expected": [
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ],
+      "actual": [
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 3,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 4,
+      "negative": false,
+      "expected": [
+        [
+          "02"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "02"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "label",
+      "case": 4,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 0,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "active",
+      "case": 0,
+      "negative": true,
+      "expected": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "00"
+        ],
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "03"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "06"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 1,
+      "negative": false,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "active",
+      "case": 1,
+      "negative": true,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 2,
+      "negative": false,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "04"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "04"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 2,
+      "negative": true,
+      "expected": [
+        [
+          "02"
+        ],
+        [
+          "05"
+        ]
+      ],
+      "actual": [
+        [
+          "02"
+        ],
+        [
+          "05"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 3,
+      "negative": false,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "02"
+        ],
+        [
+          "04"
+        ],
+        [
+          "05"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 3,
+      "negative": true,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "field": "active",
+      "case": 4,
+      "negative": false,
+      "expected": [
+        [
+          "01"
+        ],
+        [
+          "04"
+        ],
+        [
+          "07"
+        ]
+      ],
+      "actual": [
+        [
+          "01"
+        ],
+        [
+          "04"
+        ],
+        [
+          "07"
+        ]
+      ]
+    },
+    {
+      "field": "active",
+      "case": 4,
+      "negative": true,
+      "expected": [
+        [
+          "02"
+        ],
+        [
+          "05"
+        ]
+      ],
+      "actual": [
+        [
+          "02"
+        ],
+        [
+          "05"
+        ]
+      ]
+    }
+  ],
+  "failure": null,
+  "sparkStopped": true,
+  "elapsedSeconds": 18.81285420898348,
+  "temporalQualification": "held"
+}
