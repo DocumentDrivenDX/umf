@@ -11,6 +11,7 @@ import json
 from collections.abc import Callable, Generator
 from dataclasses import dataclass
 from datetime import timedelta
+from decimal import Decimal
 from threading import Event, Timer
 from typing import Any, TypeVar
 from uuid import uuid4
@@ -81,6 +82,47 @@ def _ident(value: str) -> str:
     if not value or "\0" in value:
         raise TargetMismatch("native identifier required")
     return "`" + value.replace("`", "``") + "`"
+
+
+def _numeric_parameters(artifact: dict[str, Any], values: dict[str, Any]) -> dict[str, Any]:
+    """Execute only the original compiler's closed exact numeric text codec."""
+    descriptor = artifact["obligations"].get("numericPredicateParameters")
+    if descriptor is None:
+        return values
+    expected = [
+        {name: parameter[name] for name in ("name", "carrier", "nullable")}
+        for parameter in artifact["parameters"]
+        if parameter["carrier"] in ("integer", "decimal")
+    ]
+    if descriptor != {"version": "weft.spark-exact-numeric-text/0.1", "parameters": expected,
+                      "maximumTokenBytes": 10000, "format": "finite-plain-base-ten"} or not expected:
+        raise TargetMismatch("original exact Spark numeric parameter profile required")
+    encoded = dict(values)
+    for parameter in expected:
+        value = values[parameter["name"]]
+        if value is None:
+            if parameter["nullable"] is not True:
+                raise ValueError("forbidden NULL numeric parameter")
+            continue
+        if parameter["carrier"] == "integer":
+            if type(value) is not int or value.bit_length() > 33220:
+                raise ValueError("bounded exact Integer parameter required")
+            number = Decimal(value)
+        else:
+            if type(value) is not Decimal or not value.is_finite():
+                raise ValueError("exact finite Decimal parameter required")
+            number = value
+        sign, digits, exponent = number.as_tuple()
+        assert type(exponent) is int
+        size = (len(digits) + exponent if exponent >= 0 else
+                len(digits) + 1 if len(digits) + exponent > 0 else 2 - exponent) + sign
+        if size > 10000:
+            raise ValueError("exact numeric parameter exceeds original token budget")
+        token = format(number, "f")
+        if len(token) > 10000:
+            raise ValueError("exact numeric parameter exceeds original token budget")
+        encoded[parameter["name"]] = token
+    return encoded
 
 
 def _native_projection(output: dict[str, Any], value: object) -> object:
@@ -293,6 +335,9 @@ class SparkDeltaTarget:
             {n: getattr(parameters, n) for n in entry.parameters.model_fields},
             strict=True,
         )
+        parameter_values = _numeric_parameters(artifact, {
+            name: getattr(checked, name) for name in entry.parameters.model_fields
+        })
         group = "umf-access-" + uuid4().hex
         expired = Event()
         context = self.session.sparkContext
@@ -319,7 +364,7 @@ class SparkDeltaTarget:
             self._profile()
             bound = self._snapshots(artifact)
             for ordinal, name in enumerate(artifact["parameterOrder"], 1):
-                bound["p" + str(ordinal)] = getattr(checked, name)
+                bound["p" + str(ordinal)] = parameter_values[name]
             for check in artifact["nativeChecks"]:
                 if expired.is_set():
                     raise TimedOut("Spark read deadline expired")
@@ -493,8 +538,9 @@ class SparkDeltaTarget:
                     for index, value in enumerate(cursor_values)
                 }
             )
+            native_values = _numeric_parameters(artifact, values)
             bound = {
-                "p" + str(ordinal): values[name]
+                "p" + str(ordinal): native_values[name]
                 for ordinal, name in enumerate(artifact["parameterOrder"], 1)
             }
             for check in artifact["nativeChecks"]:
