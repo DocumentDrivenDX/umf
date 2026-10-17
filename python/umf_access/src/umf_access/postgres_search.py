@@ -24,6 +24,7 @@ from .postgres_read import (
     _catalog_fence_programs,
     _compiled_admissions,
     _early_relation_locks,
+    _observe_resolution,
     _output_value,
     _projection_admissions,
     _snapshot_free_timeout,
@@ -245,6 +246,7 @@ def _program(
     *,
     verify_only: bool = False,
     target_profile: str,
+    database: str,
 ):
     prepared = []
     for entry in variant.entries:
@@ -292,6 +294,14 @@ def _program(
                 params[program["queryParameter"]] = value
         # Parse the original packet before BEGIN or native search SQL.
         _metadata_programs(program, configuration.app_schema)
+        binding = program["binding"]
+        selection = program["selectionTemplate"]
+        mode = binding.get("schemaBinding")
+        if (selection["binding"] != binding
+            or selection["obligations"].get("schemaBinding") != mode
+            or mode not in (None, "qualified", "search-path")
+            or mode is not None and ((mode == "qualified") != (binding["schema"] is not None))):
+            raise TargetMismatch("native search original schema binding context differs")
         prepared.append((entry, program, params))
     yield ("begin",)
     locked = set()
@@ -305,6 +315,13 @@ def _program(
         locks = tuple(sql for sql in original["selectionTemplate"]["lockSql"] if sql not in relation_locks)
         yield from _early_relation_locks(original["binding"], locks, configuration.app_schema)
         relation_locks.update(locks)
+    native_contexts = []
+    for _, original, _ in prepared:
+        mode = original["binding"].get("schemaBinding")
+        context = None
+        if mode is not None:
+            context = yield from _observe_resolution(original["binding"], configuration.app_schema, mode, database)
+        native_contexts.append(context)
     yield (
         "execute",
         "SELECT pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security','on',true)",
@@ -350,6 +367,11 @@ def _program(
         rows = yield ("many", program["topK"] + 1)
         yield from _schema_admissions(program, configuration.app_schema)
         results.append(_hits(entry, columns, rows))
+    for (_, original, _), context in zip(prepared, native_contexts, strict=True):
+        if context is not None:
+            observed = yield from _observe_resolution(original["binding"], configuration.app_schema, original["binding"]["schemaBinding"], database)
+            if observed != context:
+                raise ReadObligationUnmet("native search binding context changed inside snapshot")
     yield ("execute", _ROLE)
     after = yield ("one",)
     if any(role != after for role in original_roles):
@@ -392,6 +414,7 @@ class PostgresSearchTarget(PostgresTarget):
             deadline,
             verify_only=verify,
             target_profile=self.profile,
+            database=self.connection.info.dbname,
         )
         result: Any = None
         began = False
@@ -508,6 +531,7 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
             deadline,
             verify_only=verify,
             target_profile=self.profile,
+            database=self.connection.info.dbname,
         )
         result: Any = None
         began = False
