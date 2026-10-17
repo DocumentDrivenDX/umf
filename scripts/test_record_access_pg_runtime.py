@@ -17,6 +17,23 @@ spec.loader.exec_module(capture)
 
 
 class CaptureTests(unittest.TestCase):
+    def test_connection_identity_never_substitutes_startup_login_for_effective_role(self):
+        info = types.SimpleNamespace(backend_pid=101, dbname="fixture", user="login", host="/private/tmp/owned", port=55513)
+        connection = types.SimpleNamespace(info=info, pgconn=types.SimpleNamespace(backend_pid=101))
+        cursor = types.SimpleNamespace(connection=connection)
+        observed = capture.connection_identity(cursor)
+        self.assertEqual(observed["startupUser"], "login")
+        self.assertEqual(observed["sessionUser"], "UNOBSERVED")
+        self.assertEqual(observed["effectiveUser"], "UNOBSERVED")
+        self.assertEqual(observed["backendPid"], 101)
+        connection.pgconn.backend_pid = 102
+        with self.assertRaises(ValueError):
+            capture.connection_identity(cursor)
+        connection.pgconn.backend_pid = 101
+        info.port = "55513"
+        with self.assertRaises(ValueError):
+            capture.connection_identity(cursor)
+
     def run_capture(
         self,
         body,
@@ -39,6 +56,10 @@ class CaptureTests(unittest.TestCase):
 
             class Cursor:
                 def __init__(self):
+                    self.connection = types.SimpleNamespace(
+                        info=types.SimpleNamespace(backend_pid=101, dbname="fixture", user="startup_login", host="/private/tmp/owned", port=55513),
+                        pgconn=types.SimpleNamespace(backend_pid=101),
+                    )
                     self.description = [types.SimpleNamespace(name="id", type_code=25)]
                     self._query = types.SimpleNamespace(
                         query=None if broken else b"SELECT $1",

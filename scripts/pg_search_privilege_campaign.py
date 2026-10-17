@@ -143,6 +143,18 @@ def qualify(target, captures, out, source_archive):
                 "inventoryComplete": False,
             },
         )
+        expected_connection = {
+            "backendPid": connection.info.backend_pid,
+            "database": connection.info.dbname,
+            "startupUser": connection.info.user,
+            "host": connection.info.host,
+            "port": connection.info.port,
+        }
+        for call in calls:
+            observed_connection = call.get("nativeConnection", {})
+            if any(observed_connection.get(key) != value for key, value in expected_connection.items()):
+                raise ValueError("selected bootstrap SQL belongs to a different or unobserved native connection")
+        save("selected-native-connection.json", {"actualConnection": expected_connection, "scope": "observed selected target connection only; session/effective identity remains original-runtime role-admission responsibility", "nativeAuthority": False})
         site = Path(sysconfig.get_path("purelib")) / "umf_access"
         definitions = {}
         for source in [site / "postgres_read.py", site / "postgres_search.py"]:

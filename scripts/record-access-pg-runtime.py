@@ -70,6 +70,31 @@ def compiler_command(command, destination, recorder):
     return [*original[:index], str(recorder), str(destination), *original[index + 2 :]]
 
 
+def connection_identity(cursor):
+    """Observe libpq connection identity without attributing SET ROLE state."""
+    connection = cursor.connection
+    info = connection.info
+    native = connection.pgconn
+    pid = info.backend_pid
+    if type(pid) is not int or pid <= 0 or native.backend_pid != pid:
+        raise ValueError("actual native connection backend identity absent")
+    database, user, host, port = info.dbname, info.user, info.host, info.port
+    if any(not isinstance(value, str) or not value for value in (database, user, host)) or type(port) is not int or not 1 <= port <= 65535:
+        raise ValueError("actual native connection endpoint identity absent")
+    return {
+        "connectionObjectId": id(connection),
+        "nativeConnectionObjectId": id(native),
+        "backendPid": pid,
+        "database": database,
+        "startupUser": user,
+        "host": host,
+        "port": port,
+        "sessionUser": "UNOBSERVED",
+        "effectiveUser": "UNOBSERVED",
+        "roleAttribution": "startup identity does not establish session/current_user under SET ROLE",
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", required=True, type=Path)
@@ -171,6 +196,7 @@ def main():
             "sql": query,
             "sqlSha256": hashlib.sha256(query.encode()).hexdigest(),
             "origin": origin,
+            "nativeConnection": connection_identity(cursor),
             "protocol": observed[0],
             "outcome": "returned" if error is None else "raised",
             "sqlstate": getattr(error, "sqlstate", None),
