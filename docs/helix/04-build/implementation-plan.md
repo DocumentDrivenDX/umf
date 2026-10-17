@@ -12813,3 +12813,58 @@ retains its experimental0.1.0.dev0 version and scoped qualification. Open PR27
 reference and PR29 guide signatures will be consolidated before final signing,
 remote CI, main deployment and release. None of those publication steps is
 claimed complete by the local source evidence.
+
+
+### Typed SDK exact non-temporal runtime cohorts — 2026-10-17
+
+Temporal qualification remains **HELD**. CONTRACT-067 through CONTRACT-075 and
+[the existing typed SDK build handoff](typed-persistence-design.md) govern this
+continuation. The owner approved the initial exact-only generator profile and
+explicit hypothetical-row qualification without changing core nullability.
+These decisions do not admit approximate or temporal behavior implicitly.
+
+The immutable R12 SDK production freeze is `3a8ba171`; its exact installed
+[frontend packet](evidence/typed-persistence/frontend-r12-20261017/README.md)
+records all three pinned checkers and269 unit tests. Real PostgreSQL18.6
+[full projection checks](evidence/typed-persistence/postgres-full-projection-r12-20261017/README.md)
+pass16 controls, including exact Binary/Vector/Decimal/integer values, metadata
+cache invalidation, grants, inheritance, unbound columns, pagination and async
+session reuse. Real Spark4.0.1/Delta4.0.0
+[numeric predicates](evidence/typed-persistence/spark-exact-numeric-r12-20261017/README.md)
+pass57 checks with48 independent exact comparisons. Each packet retains its own
+source/wheel hashes, native versions, failed attempts and cleanup; evidence is
+not transferred to later source cuts.
+
+The immutable R13 SDK production freeze is `a623b1fb`, paired with Weft source
+`6640db8f`. The [installed frontend packet](evidence/typed-persistence/frontend-r13-20261017/README.md)
+records45 exact SDK payloads, all three pinned checkers,66 negative files/74
+sites,152 graph-state cases,277 units with no skips and actual public catalog
+build/check. [Real Spark bounded lists](evidence/typed-persistence/spark-bound-lists-r13-20261017/README.md)
+pass53 checks/40 independent S8 comparisons across String/Boolean/Integer/Decimal,
+including mixed scalar/list parameters, original pages and snapshot streams.
+[Real PostgreSQL joined hydration](evidence/typed-persistence/postgres-joined-r13-20261017/README.md)
+passes14 checks across24 declarations, including generated tuple/model/alias
+results and original composite-versus-selected Key correspondence.
+[Actual SDK finite-degree admission](evidence/typed-persistence/postgres-finite-degree-r13-20261017/README.md)
+passes13 controls: seven admitted executions observe native repeatable-read and
+read-only transactions; zero/excess degree, forced RLS, nondeterministic
+collation and custom operator classes refuse before business dispatch and recover
+after restoration. Owned native sessions stop and installed bytes remain unchanged.
+
+The current source additionally fixes the full hosted Python lint gate and adds
+an original-owner-confirmed Truss related-Key metadata profile with source
+controls. Those changes require a fresh final wheel; they do not relabel R13
+receipts. Engine RelatedKeys paging has an observed original Core compiler
+refusal and remains an owner prerequisite, with failed native attempts retained.
+Truss release-blocking hosted capacity/full-small failures, original protected
+action/manifest adoption, Ashlar primitive Field binding, broader engine/query
+forms and exact native managed commit-result custody remain open where their
+original evidence does not close them. Native statement-linked history metadata
+is observational evidence, not a substitute for the required commit result.
+
+Recovery branch commits and packets are preserved independently of public main.
+Final current-source/browser/refactor/inventory gates, independent privilege
+qualification, compatible compiler publication, configured signing, remote CI,
+main merge/deployment and live-main parity require their own terminal evidence.
+The seven stale site attestations have not been bypassed; the configured
+1Password account currently reports that it is not signed in.
