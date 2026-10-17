@@ -213,7 +213,7 @@ def qualify(target, captures, out, source_archive):
                     metadata_styles(child, path + "/" + str(index), packet)
 
         for packet in packets.values():
-            metadata_styles(packet["program"], "", packet)
+            metadata_styles(packet["program"]["obligations"], "/obligations", packet)
         fixed = {}
         coverage = []
         for call in calls:
