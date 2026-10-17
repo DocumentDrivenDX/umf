@@ -445,6 +445,8 @@ class SparkDeltaTarget:
             {name: getattr(parameters, name) for name in entry.parameters.model_fields},
             strict=True,
         )
+        values = {name: getattr(checked, name) for name in entry.parameters.model_fields}
+        native_values = _numeric_parameters(artifact, values)
         milliseconds = _milliseconds(timeout, self.configuration.default_timeout)
         group = "umf-access-" + uuid4().hex
         expired = Event()
@@ -498,7 +500,9 @@ class SparkDeltaTarget:
                         self.configuration.schema,
                         self.configuration.binding_sha256,
                         [
-                            (name, type(value).__name__, str(value))
+                            (name, type(value).__name__, native_values[name]
+                             if artifact["obligations"].get("numericPredicateParameters") is not None
+                             and type(value) in (int, Decimal) else str(value))
                             for name, value in values.items()
                         ],
                         identities,
@@ -538,7 +542,9 @@ class SparkDeltaTarget:
                     for index, value in enumerate(cursor_values)
                 }
             )
-            native_values = _numeric_parameters(artifact, values)
+            # Reserved cursor values keep their separately admitted physical
+            # codec; only original user numeric parameters use text transport.
+            native_values.update({name: value for name, value in values.items() if name.startswith("__umf_")})
             bound = {
                 "p" + str(ordinal): native_values[name]
                 for ordinal, name in enumerate(artifact["parameterOrder"], 1)
