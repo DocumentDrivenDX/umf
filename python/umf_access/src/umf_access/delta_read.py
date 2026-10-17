@@ -29,7 +29,7 @@ from .pages import (
     stream_page_size,
 )
 from .postgres_read import TimedOut, _checked_sort_values
-from .reviewed import CatalogRead
+from .reviewed import CatalogRead, validate_list_parameters
 from .targets import NotCompiledForTarget, TargetMismatch, _milliseconds, binding_digest
 from .values import ValueRuleError, validate_decimal, validate_integer, validate_vector
 
@@ -84,6 +84,27 @@ def _ident(value: str) -> str:
     return "`" + value.replace("`", "``") + "`"
 
 
+def _numeric_token(value: object, carrier: str) -> str:
+    if carrier == "integer":
+        if type(value) is not int or value.bit_length() > 33220:
+            raise ValueError("bounded exact Integer parameter required")
+        number = Decimal(value)
+    else:
+        if type(value) is not Decimal or not value.is_finite():
+            raise ValueError("exact finite Decimal parameter required")
+        number = value
+    sign, digits, exponent = number.as_tuple()
+    assert type(exponent) is int
+    size = (len(digits) + exponent if exponent >= 0 else
+            len(digits) + 1 if len(digits) + exponent > 0 else 2 - exponent) + sign
+    if size > 10000:
+        raise ValueError("exact numeric parameter exceeds original token budget")
+    token = format(number, "f")
+    if len(token) > 10000:
+        raise ValueError("exact numeric parameter exceeds original token budget")
+    return token
+
+
 def _numeric_parameters(artifact: dict[str, Any], values: dict[str, Any]) -> dict[str, Any]:
     """Execute only the original compiler's closed exact numeric text codec."""
     descriptor = artifact["obligations"].get("numericPredicateParameters")
@@ -92,7 +113,7 @@ def _numeric_parameters(artifact: dict[str, Any], values: dict[str, Any]) -> dic
     expected = [
         {name: parameter[name] for name in ("name", "carrier", "nullable")}
         for parameter in artifact["parameters"]
-        if parameter["carrier"] in ("integer", "decimal")
+        if parameter["carrier"] in ("integer", "decimal") and parameter.get("container") is None
     ]
     if descriptor != {"version": "weft.spark-exact-numeric-text/0.1", "parameters": expected,
                       "maximumTokenBytes": 10000, "format": "finite-plain-base-ten"} or not expected:
@@ -104,34 +125,59 @@ def _numeric_parameters(artifact: dict[str, Any], values: dict[str, Any]) -> dic
             if parameter["nullable"] is not True:
                 raise ValueError("forbidden NULL numeric parameter")
             continue
-        if parameter["carrier"] == "integer":
-            if type(value) is not int or value.bit_length() > 33220:
-                raise ValueError("bounded exact Integer parameter required")
-            number = Decimal(value)
-        else:
-            if type(value) is not Decimal or not value.is_finite():
-                raise ValueError("exact finite Decimal parameter required")
-            number = value
-        sign, digits, exponent = number.as_tuple()
-        assert type(exponent) is int
-        size = (len(digits) + exponent if exponent >= 0 else
-                len(digits) + 1 if len(digits) + exponent > 0 else 2 - exponent) + sign
-        if size > 10000:
-            raise ValueError("exact numeric parameter exceeds original token budget")
-        token = format(number, "f")
-        if len(token) > 10000:
-            raise ValueError("exact numeric parameter exceeds original token budget")
-        encoded[parameter["name"]] = token
+        encoded[parameter["name"]] = _numeric_token(value, parameter["carrier"])
     return encoded
+
+
+def _list_descriptor(artifact: dict[str, Any]) -> list[dict[str, Any]]:
+    descriptor = artifact["obligations"].get("listPredicateParameters")
+    parameters = [parameter for parameter in artifact["parameters"] if parameter.get("container") == "list"]
+    if descriptor is None:
+        if parameters:
+            raise TargetMismatch("original Spark list parameter transport descriptor required")
+        return []
+    if any(set(parameter) != {"name", "carrier", "nullable", "container", "elementNullable", "maxItems"}
+           or type(parameter["name"]) is not str or parameter["carrier"] not in ("string", "boolean", "integer", "decimal")
+           or parameter["nullable"] is not False or type(parameter["elementNullable"]) is not bool
+           or type(parameter["maxItems"]) is not int or not 1 <= parameter["maxItems"] <= 1000 for parameter in parameters):
+        raise TargetMismatch("original Spark list facets differ")
+    expected = [{name: parameter[name] for name in ("name", "carrier", "nullable", "elementNullable", "maxItems")}
+                for parameter in parameters]
+    if not expected or descriptor != {"version": "weft.spark-list-json/0.1", "parameters": expected,
+                                     "maximumElementBytes": 10000, "maximumEncodedBytes": 1000000,
+                                     "format": "typed-json-array"}:
+        raise TargetMismatch("original exact Spark list parameter profile required")
+    return parameters
+
+
+def _parameter_values(artifact: dict[str, Any], values: dict[str, Any]) -> dict[str, Any]:
+    parameters = _list_descriptor(artifact)
+    validate_list_parameters(artifact["parameters"], values)
+    encoded = dict(values)
+    for parameter in parameters:
+        items = []
+        size = 2
+        for value in values[parameter["name"]]:
+            item = (_numeric_token(value, parameter["carrier"])
+                    if value is not None and parameter["carrier"] in ("integer", "decimal") else value)
+            if isinstance(item, str) and len(item.encode("utf-8")) > 10000:
+                raise ValueError("exact list element exceeds original byte budget")
+            size += len(json.dumps(item, ensure_ascii=False, allow_nan=False).encode("utf-8")) + (1 if items else 0)
+            if size > 1000000:
+                raise ValueError("exact list exceeds original encoded byte budget")
+            items.append(item)
+        encoded[parameter["name"]] = json.dumps(items, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
+    return _numeric_parameters(artifact, encoded)
 
 
 def _runtime_obligations(artifact: dict[str, Any]) -> None:
     known = {"transaction", "snapshot", "principal", "ansiEnabled", "sparkVersion", "deltaVersion",
              "binaryStringCollation", "escapedStringLiterals", "rowCap", "timeout", "tableIdentity",
-             "streamPageSize", "numericPredicateParameters"}
+             "streamPageSize", "numericPredicateParameters", "listPredicateParameters"}
     obligations = artifact.get("obligations")
     if type(obligations) is not dict or set(obligations) - known:
         raise TargetMismatch("unrecognized original Spark runtime obligation")
+    _list_descriptor(artifact)
     fixed = {"principal": "administrative-single-tenant", "ansiEnabled": True,
              "sparkVersion": "4.0.1", "deltaVersion": "4.0.0", "binaryStringCollation": True,
              "escapedStringLiterals": False}
@@ -359,7 +405,7 @@ class SparkDeltaTarget:
             {n: getattr(parameters, n) for n in entry.parameters.model_fields},
             strict=True,
         )
-        parameter_values = _numeric_parameters(artifact, {
+        parameter_values = _parameter_values(artifact, {
             name: getattr(checked, name) for name in entry.parameters.model_fields
         })
         group = "umf-access-" + uuid4().hex
@@ -471,7 +517,7 @@ class SparkDeltaTarget:
             strict=True,
         )
         values = {name: getattr(checked, name) for name in entry.parameters.model_fields}
-        native_values = _numeric_parameters(artifact, values)
+        native_values = _parameter_values(artifact, values)
         milliseconds = _milliseconds(timeout, self.configuration.default_timeout)
         group = "umf-access-" + uuid4().hex
         expired = Event()
@@ -526,8 +572,9 @@ class SparkDeltaTarget:
                         self.configuration.binding_sha256,
                         [
                             (name, type(value).__name__, native_values[name]
-                             if artifact["obligations"].get("numericPredicateParameters") is not None
-                             and type(value) in (int, Decimal) else str(value))
+                             if (artifact["obligations"].get("numericPredicateParameters") is not None
+                                 and type(value) in (int, Decimal))
+                             or any(parameter["name"] == name for parameter in _list_descriptor(artifact)) else str(value))
                             for name, value in values.items()
                         ],
                         identities,
