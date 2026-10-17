@@ -1051,7 +1051,7 @@ def _compile_catalog_owned(
                 kind = target["kind"]
                 entry_result = result
                 entry_result_expr = result_expr
-                if related_field is not None and kind not in ("postgresql", "lakebase", "ashlar"):
+                if related_field is not None and kind not in ("postgresql", "lakebase", "truss", "ashlar"):
                     raise CatalogBuildError("WEFT_BLOCKED: WR-A6 target-specific bounded relationship-Key output profile required")
                 if snapshot and kind not in ("spark-delta", "unity-catalog", "ashlar"):
                     raise CatalogBuildError(
@@ -1069,8 +1069,8 @@ def _compile_catalog_owned(
                     )
                 binding = target["binding"]
                 related = render_related_logical(current, binding=binding)
-                if related is not None and engine:
-                    raise CatalogBuildError("WEFT_BLOCKED: WR-A6 original engine target-set navigation compiler required")
+                if related is not None and engine and terminal == "page":
+                    raise CatalogBuildError("WEFT_BLOCKED: WR-A6 original engine target-set navigation page compiler required")
                 logical = related.target_sql if related is not None else render_logical(current, binding=binding)
                 if terminal == "count":
                     logical = logical.replace(
@@ -1128,10 +1128,15 @@ def _compile_catalog_owned(
                         raise CatalogBuildError(
                             "original engine model differs from selected logical binding"
                         )
+                    navigation = {
+                        "related_source": {**original, "sql": related.source_sql},
+                        "relationship": related.relationship,
+                    } if related is not None else {}
                     if related_field is not None:
                         original_program = EngineRead.compile_original(
                             compiler, original, method=method,
                             page_size=cast(int, node.args[2]) if terminal == "page" else None,
+                            **navigation,
                         )
                         original_outputs = program_json(original_program).get("outputs")
                         candidates = [output for output in original_outputs if type(output) is dict and output.get("name") == related_field] if type(original_outputs) is list else []
@@ -1154,6 +1159,7 @@ def _compile_catalog_owned(
                             page_size=cast(int, node.args[2])
                             if terminal == "page"
                             else None,
+                            **navigation,
                         )
                     entry_class = "EngineRead"
                 else:

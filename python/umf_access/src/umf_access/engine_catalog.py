@@ -26,6 +26,19 @@ P = TypeVar("P", bound=BaseModel)
 R = TypeVar("R", bound=BaseModel)
 
 
+def _related_packet(request: Mapping[str, Any], source: Mapping[str, Any], relationship: Mapping[str, str], method: str) -> dict[str, Any]:
+    """Retain both complete original requests; composition remains compiler-owned."""
+    if method not in ("truss-runtime", "ashlar-spark4", "ashlar-dbsql-20261016"):
+        raise ReadBuildError("WEFT_BLOCKED: original engine navigation compiler profile required")
+    if not isinstance(request, Mapping) or not isinstance(source, Mapping) or not isinstance(relationship, Mapping) or set(relationship)!={"module","id","direction"} or any(type(relationship[name]) is not str or not relationship[name] for name in relationship) or relationship["direction"] not in ("forward","inverse"):
+        raise ReadBuildError("closed original directed relationship identity required")
+    if type(request.get("sql")) is not str or type(source.get("sql")) is not str:
+        raise ReadBuildError("both original logical source and target queries required")
+    if canonical_json({k:v for k,v in source.items() if k!="sql"}) != canonical_json({k:v for k,v in request.items() if k!="sql"}):
+        raise ReadBuildError("original engine navigation requests must share exact context and parameter inventory")
+    return {"version":"weft.engine-related-read/0.1","compiler":method,"source":dict(source),"target":dict(request),"relationship":dict(relationship)}
+
+
 @dataclass(frozen=True)
 class EngineRead(CatalogRead[P, R]):
     @classmethod
@@ -38,8 +51,10 @@ class EngineRead(CatalogRead[P, R]):
         result: type[R],
         method: str,
         page_size: int | None = None,
+        related_source: Mapping[str, Any] | None = None,
+        relationship: Mapping[str, str] | None = None,
     ) -> EngineRead[P, R]:
-        original = cls.compile_original(compiler, request, method=method, page_size=page_size)
+        original = cls.compile_original(compiler, request, method=method, page_size=page_size, related_source=related_source, relationship=relationship)
         return cls.from_original(original, parameters=parameters, result=result)
 
     @classmethod
@@ -50,18 +65,26 @@ class EngineRead(CatalogRead[P, R]):
         *,
         method: str,
         page_size: int | None = None,
+        related_source: Mapping[str, Any] | None = None,
+        relationship: Mapping[str, str] | None = None,
     ) -> str:
         """Obtain one untouched owner program before choosing typed transport."""
+        if (related_source is None) != (relationship is None):
+            raise ReadBuildError("both original navigation source and relationship are required")
+        related = related_source is not None
+        if related and page_size is not None:
+            raise ReadBuildError("WEFT_BLOCKED: original engine navigation page compiler required")
+        packet = _related_packet(request, related_source, relationship, method) if related_source is not None and relationship is not None else None
         if page_size is not None and (type(page_size) is not int or not 1 <= page_size <= 999 or method not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
             raise ReadBuildError("original engine page size must be in 1..999")
-        compile_method = getattr(compiler, "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
+        compile_method = getattr(compiler, "compile_engine_related_read_json" if related else "compile_engine_page_json" if page_size is not None else "compile_engine_read_json", None)
         if not callable(compile_method):
             raise ReadBuildError(
                 "WEFT_BLOCKED: original engine catalog compiler required"
             )
         original = compile_method(
             canonical_json(
-                {
+                packet if packet is not None else {
                     "version": "weft.engine-page/0.1" if page_size is not None else "weft.engine-read/0.1",
                     **({"pageSize": page_size} if page_size is not None else {}),
                     "compiler": method,
@@ -72,8 +95,10 @@ class EngineRead(CatalogRead[P, R]):
         program = program_json(original)
         if program.get("status") != "compiled":
             raise ProgramBuildError(original)
-        if program.get("request") != dict(request) or program.get("compiler") != method or (page_size is not None and program.get("pageSize") != page_size):
+        if canonical_json(program.get("request")) != canonical_json(dict(request)) or program.get("compiler") != method or (page_size is not None and program.get("pageSize") != page_size):
             raise ReadBuildError("original engine request or page bound differs")
+        if packet is not None and canonical_json(program.get("relatedRequest")) != canonical_json(packet):
+            raise ReadBuildError("original engine navigation packet differs")
         return original
 
     @classmethod
@@ -135,6 +160,13 @@ class EngineRead(CatalogRead[P, R]):
         page = program["version"] == "weft.engine-page/0.1"
         if page and (program.get("after") is not None or type(program.get("pageSize")) is not int or not 1 <= program["pageSize"] <= 999 or program.get("compiler") not in ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")):
             raise ReadBuildError("original first-page engine catalog required")
+        if "relatedRequest" in program:
+            packet = program["relatedRequest"]
+            if page or type(packet) is not dict or set(packet)!={"version","compiler","source","target","relationship"}:
+                raise ReadBuildError("closed original engine navigation packet required")
+            expected = _related_packet(program["request"], packet.get("source"), packet.get("relationship"), program.get("compiler"))
+            if canonical_json(packet) != canonical_json(expected):
+                raise ReadBuildError("original engine navigation packet differs")
         structural = dict(program)
         pin = structural.pop("structuralDigest", None)
         if pin != {
