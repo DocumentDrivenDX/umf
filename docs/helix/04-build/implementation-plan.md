@@ -12874,7 +12874,15 @@ The fresh [installed R14 frontend](evidence/typed-persistence/frontend-r14-20261
 freezes SDK source `dc66acfb` with46 exact installed payloads and original
 compiler source `a3090204` with two exact installed payloads. All three pinned
 checkers pass the positive corpus and66 negative files;291 installed unit tests
-pass without skips. Original engine navigation requests and page bounds retain
+pass without skips.
+
+Fresh [public schema-to-instance E2Es](evidence/typed-persistence/schema-instance-r14-20261017/README.md)
+pass three fixture families against this exact installed SDK wheel. Actual
+[PostgreSQL R14 native replays](evidence/typed-persistence/postgres-native-r14-20261017/README.md)
+pass16 full-projection and14 joined controls, with generated public catalogs,
+unchanged installed runtime bytes, fixture cleanup and stopped owned servers.
+
+Original engine navigation requests and page bounds retain
 source/target/compiler custody, with source controls retained
 [separately](evidence/typed-persistence/navigation-source-r14-20261017/README.md).
 The [whole-source typing triage](evidence/typed-persistence/source-type-triage-r14-20261017/README.md)
