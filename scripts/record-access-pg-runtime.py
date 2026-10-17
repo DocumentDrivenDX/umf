@@ -79,6 +79,7 @@ def main():
         raise ValueError("new transcript destination required")
     entries = []
     count = 0
+    script_names = {str(args.script), str(args.script.resolve())}
     source_hashes = {}
     capture_errors = []
     args.out.write_text(
@@ -108,7 +109,7 @@ def main():
             if (
                 (p.name in RUNTIME_NAMES and p.parent.name == "umf_access")
                 or (p.parent.name == "tests" and p.parent.parent.name == "umf_access")
-                or p.resolve() == args.script.resolve()
+                or str(p) in script_names
             ):
                 key = str(p)
                 if key not in source_hashes:
