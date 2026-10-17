@@ -17,7 +17,6 @@ class NoCompiler(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path, target=None):
         if fullname == "weft" or fullname.startswith("weft."):
             raise AssertionError("generated models must not load a compiler")
-        return None
 
 
 def main():
