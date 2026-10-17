@@ -1,0 +1,46 @@
+{
+    "version": "1.1.414",
+    "time": "1792222084542",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/engine-actions/negative/ashlar_write_ports.py",
+            "severity": "error",
+            "message": "Argument of type \"AshlarTarget\" cannot be assigned to parameter \"executor\" of type \"ExecutorT@Actions\" in function \"__init__\"\n  Type \"AshlarTarget\" is not assignable to type \"ActionExecutor | AsyncActionExecutor\"\n    Type \"AshlarTarget\" is not assignable to type \"ActionExecutor | AsyncActionExecutor\"\n      \"AshlarTarget\" is incompatible with protocol \"ActionExecutor\"\n        \"invoke\" is not present\n        \"validate\" is not present\n      \"AshlarTarget\" is incompatible with protocol \"AsyncActionExecutor\"\n        \"invoke\" is not present\n        \"validate\" is not present",
+            "range": {
+                "start": {
+                    "line": 4,
+                    "character": 12
+                },
+                "end": {
+                    "line": 4,
+                    "character": 18
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/engine-actions/negative/ashlar_write_ports.py",
+            "severity": "error",
+            "message": "Argument of type \"AshlarTarget\" cannot be assigned to parameter \"executor\" of type \"ReplayingExecutorT@ReplayingActions\" in function \"__init__\"\n  Type \"AshlarTarget\" is not assignable to type \"ReplayingActionExecutor | AsyncReplayingActionExecutor\"\n    Type \"AshlarTarget\" is not assignable to type \"ReplayingActionExecutor | AsyncReplayingActionExecutor\"\n      \"AshlarTarget\" is incompatible with protocol \"ReplayingActionExecutor\"\n        \"invoke_keyed\" is not present\n        \"invoke\" is not present\n        \"validate\" is not present\n      \"AshlarTarget\" is incompatible with protocol \"AsyncReplayingActionExecutor\"\n        \"invoke_keyed\" is not present\n  ...",
+            "range": {
+                "start": {
+                    "line": 5,
+                    "character": 21
+                },
+                "end": {
+                    "line": 5,
+                    "character": 27
+                }
+            },
+            "rule": "reportArgumentType"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 2,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.284
+    }
+}
+

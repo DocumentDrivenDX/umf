@@ -1,0 +1,35 @@
+{
+  "attempts": [
+    {
+      "id": "r1",
+      "outcome": "refused",
+      "inputLogicalSha256": "575c04498db7ceefbf0625798bb2db9bc07228f6a3fcf8bdb19ba06eae1274a9",
+      "diagnostics": [
+        {
+          "code": "SEARCH_DECLARATION",
+          "pointer": "/modules/0/extensions/umf.access/search/0"
+        },
+        {
+          "code": "ACCESS_COVERAGE",
+          "pointer": "/modules/0/extensions/umf.access/views/0/fields"
+        }
+      ],
+      "cause": "Authored access view omitted the reached Vector component Field; complete owned-then-reached inventory is required."
+    },
+    {
+      "id": "r2",
+      "outcome": "generation-completed/output-write-failed",
+      "error": "ENOENT undefined/spark_page_fixture/__init__.py",
+      "cause": "Host invocation omitted required output-directory argument; no semantic guard changed."
+    },
+    {
+      "id": "r3",
+      "outcome": "candidate-package-emitted",
+      "logicalSha256": "3321ea5375791bfa3cd062cdf4cfb30d37626a1d54444ac3cefc3498678f699b",
+      "fix": "Append original component Field row/create allow table after all owned view members, mutable=false. Supply explicit output argument.",
+      "generator": "Current UMF TypeScript source via Bun1.4.2",
+      "nativeExecution": false
+    }
+  ],
+  "temporal": "HELD"
+}

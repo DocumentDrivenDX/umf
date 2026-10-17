@@ -1,0 +1,3 @@
+tests/compilation/python/static/engine-actions/negative/ashlar_write_ports.py:5:13: error[invalid-argument-type] Argument to `Actions.__init__` is incorrect: Argument type `AshlarTarget` does not satisfy upper bound `ActionExecutor | AsyncActionExecutor` of type variable `ExecutorT`
+tests/compilation/python/static/engine-actions/negative/ashlar_write_ports.py:6:22: error[invalid-argument-type] Argument to `ReplayingActions.__init__` is incorrect: Argument type `AshlarTarget` does not satisfy upper bound `ReplayingActionExecutor | AsyncReplayingActionExecutor` of type variable `ReplayingExecutorT`
+Found 2 diagnostics

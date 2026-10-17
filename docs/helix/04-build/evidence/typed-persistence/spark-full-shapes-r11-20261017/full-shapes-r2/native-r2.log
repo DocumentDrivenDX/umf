@@ -1,0 +1,12 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+26/10/17 02:49:47 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                Traceback (most recent call last):
+  File "/private/tmp/sdk-spark-snapshot-pages-20261017/full-shapes-r2/e2e.py", line 91, in <module>
+    check('generated typed stream page_size11 exactoracle',[list(row) for row in bounded(queries.live_page_stream(target,after=None,max_rows=25,page_size=11),25,True,'typedstream25')]==[list(row.values()) for row in oracle[:25]])
+  File "/private/tmp/sdk-spark-snapshot-pages-20261017/full-shapes-r2/e2e.py", line 34, in check
+    if not condition:raise AssertionError(name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: generated typed stream page_size11 exactoracle
