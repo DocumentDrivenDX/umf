@@ -170,6 +170,50 @@ def qualify(target, captures, out, source_archive):
                         "originalOwnerLock": lock,
                     }
                 )
+
+        # New source-exact metadata admissions retain their original owner's
+        # DBAPI form inside the checked artifact rather than statements_json.
+        # Match both forms to the original probe path; never translate SQL here.
+        def metadata_styles(value, path, packet):
+            if isinstance(value, dict):
+                for name, child in value.items():
+                    child_path = path + "/" + name
+                    if (
+                        name == "nativeAdmission"
+                        and isinstance(child, dict)
+                        and "dbapiSql" in child
+                    ):
+                        matching = [
+                            statement
+                            for statement in packet["statements"]
+                            if statement["path"] == child_path + "/sql"
+                        ]
+                        if (
+                            len(matching) != 1
+                            or matching[0]["sql"] != child["sql"]
+                            or matching[0]["sqlSha256"]
+                            != hashlib.sha256(child["sql"].encode()).hexdigest()
+                        ):
+                            raise ValueError(
+                                "original metadata DBAPI admission lacks exact owner probe correspondence"
+                            )
+                        styles.setdefault(child["dbapiSql"], []).append(
+                            {
+                                "sourceProgramDigest": packet["sourceProgramDigest"],
+                                "originalOwnerPath": child_path,
+                                "originalOwnerStatement": matching[0],
+                                "originalDbapiSqlSha256": hashlib.sha256(
+                                    child["dbapiSql"].encode()
+                                ).hexdigest(),
+                            }
+                        )
+                    metadata_styles(child, child_path, packet)
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    metadata_styles(child, path + "/" + str(index), packet)
+
+        for packet in packets.values():
+            metadata_styles(packet["program"], "", packet)
         fixed = {}
         coverage = []
         for call in calls:
