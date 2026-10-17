@@ -181,6 +181,51 @@
       "sha256": "b99c6939a40e9c6e6819d696264cd294b3c072bfd4f3acd9e94382b4ef23c8f6"
     },
     {
+      "path": "r1/frozen-host/python/umf_access/tests/search_e2e.py",
+      "bytes": 25413,
+      "sha256": "cbf9a1d4526e0be7dc81c79ab1388b1b618baffac361aa6483dcc3d1372e8092"
+    },
+    {
+      "path": "r1/frozen-host/scripts/pg_fixed_runtime_var_probes.py",
+      "bytes": 11187,
+      "sha256": "0f5da6778f8ea16cb4136951bd75ad4534395df9579bc06e8d5e330c9c10bd54"
+    },
+    {
+      "path": "r1/frozen-host/scripts/pg_owner_privilege_resolver.py",
+      "bytes": 17049,
+      "sha256": "f36eed7b2547c53f21052b96cfde640191cb850854c666b03b0b62a3fa5e8099"
+    },
+    {
+      "path": "r1/frozen-host/scripts/pg_runtime_privilege_resolver.py",
+      "bytes": 26131,
+      "sha256": "8485426c33dbd57b83627ec01916f7accc6aa9567c439c40f06f7bc59a60a00a"
+    },
+    {
+      "path": "r1/frozen-host/scripts/pg_search_privilege_campaign.py",
+      "bytes": 22048,
+      "sha256": "9af68cf37708a30d0156b7472706e6844063bc06d66742fd86245af4798ee958"
+    },
+    {
+      "path": "r1/frozen-host/scripts/record-access-pg-runtime.py",
+      "bytes": 9565,
+      "sha256": "1aaf4b364f84fc06bd5b22a8b33406532e0c135349cc6047336a31cd641bda6b"
+    },
+    {
+      "path": "r1/frozen-host/scripts/record-access-privilege-build.py",
+      "bytes": 3738,
+      "sha256": "68d11f29d9d736a727b127b0f6c5372add086c55108b5c60f011ebf3e81dfbfa"
+    },
+    {
+      "path": "r1/frozen-host/scripts/run-access-search-privilege-workflow.py",
+      "bytes": 1698,
+      "sha256": "b742b7296beb3a221cd4e6d7b4c6987936449a7d35bf4eaffe20308bb5568648"
+    },
+    {
+      "path": "r1/frozen-source-commits.json",
+      "bytes": 717,
+      "sha256": "aa6a275378ec5e429f411f89fd616989e8471d272b1fac683cffdd4e92b7551f"
+    },
+    {
       "path": "r1/launch.json",
       "bytes": 612,
       "sha256": "8eaae61d54f4caaf54e71da22a173015ff4a18c91db21fbbe12b6048e38cfe84"
@@ -256,5 +301,5 @@
       "sha256": "912760627082d3570f2fd5f93418970c0568a520cb30f38e4ae69558e05f2b3c"
     }
   ],
-  "fileCount": 51
+  "fileCount": 60
 }
