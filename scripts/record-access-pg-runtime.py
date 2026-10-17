@@ -74,15 +74,34 @@ def main():
     ap.add_argument("--compile-recorder", type=Path)
     ap.add_argument("script", type=Path)
     args = ap.parse_args()
-    if args.out.exists():
+    journal = args.out.with_suffix(".jsonl")
+    if args.out.exists() or journal.exists():
         raise ValueError("new transcript destination required")
     entries = []
+    count = 0
+    source_hashes = {}
     capture_errors = []
+    args.out.write_text(
+        json.dumps(
+            {
+                "version": "umf.runtime-protocol-observation/0.1",
+                "nativeAuthority": False,
+                "inventoryComplete": False,
+                "parameterValuesRetained": False,
+                "eventJournal": str(journal),
+                "calls": [],
+                "totalCalls": 0,
+                "callsComplete": False,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
 
     def origins():
         result = []
         runtime = False
-        for frame in inspect.stack():
+        for frame in inspect.stack(context=0):
             p = Path(frame.filename)
             if p.name in RUNTIME_NAMES and p.parent.name == "umf_access":
                 runtime = True
@@ -91,12 +110,15 @@ def main():
                 or (p.parent.name == "tests" and p.parent.parent.name == "umf_access")
                 or p.resolve() == args.script.resolve()
             ):
+                key = str(p)
+                if key not in source_hashes:
+                    source_hashes[key] = hashlib.sha256(p.read_bytes()).hexdigest()
                 result.append(
                     {
                         "path": str(p),
                         "line": frame.lineno,
                         "function": frame.function,
-                        "sourceSha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+                        "sourceSha256": source_hashes[key],
                     }
                 )
         return result if runtime else []
@@ -106,35 +128,28 @@ def main():
             return
         if not isinstance(query, str):
             raise TypeError("selected runtime query must retain original SQL text")
-        entries.append(
-            {
-                "sequence": len(entries),
-                "sql": query,
-                "sqlSha256": hashlib.sha256(query.encode()).hexdigest(),
-                "origin": origin,
-                "protocol": protocol(cursor),
-                "outcome": "returned" if error is None else "raised",
-                "sqlstate": getattr(error, "sqlstate", None),
-                "resultColumns": [
-                    {"native": column.name, "typeOid": column.type_code}
-                    for column in (getattr(cursor, "description", None) or ())
-                ],
-                "nativeAuthority": False,
-            }
-        )
-        args.out.write_text(
-            json.dumps(
-                {
-                    "version": "umf.runtime-protocol-observation/0.1",
-                    "nativeAuthority": False,
-                    "inventoryComplete": False,
-                    "parameterValuesRetained": False,
-                    "calls": entries,
-                },
-                indent=2,
-            )
-            + "\n"
-        )
+        nonlocal count
+        entry = {
+            "sequence": count,
+            "sql": query,
+            "sqlSha256": hashlib.sha256(query.encode()).hexdigest(),
+            "origin": origin,
+            "protocol": protocol(cursor),
+            "outcome": "returned" if error is None else "raised",
+            "sqlstate": getattr(error, "sqlstate", None),
+            "resultColumns": [
+                {"native": column.name, "typeOid": column.type_code}
+                for column in (getattr(cursor, "description", None) or ())
+            ],
+            "nativeAuthority": False,
+        }
+        with journal.open("a") as output:
+            output.write(json.dumps(entry, separators=(",", ":")) + "\n")
+        count += 1
+        # Bounded convenience snapshot only. The append-only journal retains
+        # every observation, including all revoke/recover attempts.
+        if len(entries) < 1000:
+            entries.append(entry)
 
     def observe(cursor, query, origin, error):
         try:
@@ -202,6 +217,38 @@ def main():
             )
         psycopg.Cursor.execute = sync
         psycopg.AsyncCursor.execute = asynchronous
+        changed = {
+            path: sha
+            for path, sha in source_hashes.items()
+            if not Path(path).is_file()
+            or hashlib.sha256(Path(path).read_bytes()).hexdigest() != sha
+        }
+        if changed:
+            capture_errors.append({"type": "SourceChanged", "paths": sorted(changed)})
+        args.out.write_text(
+            json.dumps(
+                {
+                    "version": "umf.runtime-protocol-observation/0.1",
+                    "nativeAuthority": False,
+                    "inventoryComplete": False,
+                    "parameterValuesRetained": False,
+                    "eventJournal": str(journal),
+                    "eventJournalSha256": hashlib.sha256(
+                        journal.read_bytes()
+                    ).hexdigest()
+                    if journal.exists()
+                    else None,
+                    "calls": entries,
+                    "totalCalls": count,
+                    "callsComplete": count == len(entries),
+                    "snapshotMaximumCalls": 1000,
+                    "sourceFiles": source_hashes,
+                    "sourceFilesUnchanged": not changed,
+                },
+                indent=2,
+            )
+            + "\n"
+        )
         if capture_errors:
             args.out.with_suffix(args.out.suffix + ".capture-failures.json").write_text(
                 json.dumps(capture_errors, indent=2) + "\n"

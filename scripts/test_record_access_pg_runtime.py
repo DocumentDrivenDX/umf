@@ -70,6 +70,12 @@ class CaptureTests(unittest.TestCase):
                 seen,
                 failure,
                 list(root.glob("*.capture-failures.json")),
+                [
+                    json.loads(line)
+                    for line in out.with_suffix(".jsonl").read_text().splitlines()
+                ]
+                if out.with_suffix(".jsonl").exists()
+                else [],
             )
 
     def test_exact_catalog_subprocess_route_preserves_flags_and_arguments(self):
@@ -118,7 +124,7 @@ class CaptureTests(unittest.TestCase):
                 )
 
     def test_sync_exact_forwarding_and_protocol(self):
-        doc, seen, error, _ = self.run_capture(
+        doc, seen, error, _, _ = self.run_capture(
             "import psycopg\nassert psycopg.Cursor().execute('SELECT %s',(7,),prepare=False) is psycopg.sentinel\n"
         )
         self.assertIsNone(error)
@@ -135,7 +141,7 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(doc["calls"][0]["outcome"], "returned")
 
     def test_async_exact_forwarding(self):
-        doc, seen, error, _ = self.run_capture(
+        doc, seen, error, _, _ = self.run_capture(
             "import psycopg,asyncio\nasync def run():\n assert await psycopg.AsyncCursor().execute('SELECT %s',(7,),binary=True) is psycopg.sentinel\nasyncio.run(run())\n"
         )
         self.assertIsNone(error)
@@ -144,7 +150,7 @@ class CaptureTests(unittest.TestCase):
 
     def test_original_failure_identity(self):
         original = RuntimeError("original")
-        doc, _, error, _ = self.run_capture(
+        doc, _, error, _, _ = self.run_capture(
             "import psycopg\ntry: psycopg.Cursor().execute('SELECT %s',(7,))\nexcept RuntimeError as error: assert error is psycopg.error\n",
             error=original,
         )
@@ -152,11 +158,31 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(doc["calls"][0]["outcome"], "raised")
 
     def test_capture_failure_preserves_native_return_then_fails_qualification(self):
-        _, _, error, receipts = self.run_capture(
+        _, _, error, receipts, _ = self.run_capture(
             "import psycopg\nassert psycopg.Cursor().execute('SELECT %s',(7,)) is psycopg.sentinel\n",
             broken=True,
         )
         self.assertIsInstance(error, RuntimeError)
+        self.assertEqual(len(receipts), 1)
+
+    def test_full_journal_retains_every_event_after_summary_bound(self):
+        doc, seen, error, _, journal = self.run_capture(
+            "import psycopg\nfor _ in range(1003): psycopg.Cursor().execute('SELECT %s',(7,))\n"
+        )
+        self.assertIsNone(error)
+        self.assertEqual(len(seen), 1003)
+        self.assertEqual(doc["totalCalls"], 1003)
+        self.assertEqual(len(doc["calls"]), 1000)
+        self.assertFalse(doc["callsComplete"])
+        self.assertEqual([entry["sequence"] for entry in journal], list(range(1003)))
+        self.assertTrue(doc["sourceFilesUnchanged"])
+
+    def test_cached_source_hash_is_hard_checked_at_exit(self):
+        doc, _, error, receipts, _ = self.run_capture(
+            "import psycopg\nfrom pathlib import Path\nassert psycopg.Cursor().execute('SELECT %s',(7,)) is psycopg.sentinel\nPath(__file__).write_text('changed source')\n"
+        )
+        self.assertIsInstance(error, RuntimeError)
+        self.assertFalse(doc["sourceFilesUnchanged"])
         self.assertEqual(len(receipts), 1)
 
 
