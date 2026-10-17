@@ -29,14 +29,18 @@ try{
  const search=request();search.package='search_docs';search.sources=[{id:'logical',format:'json',text:await Bun.file('fixtures/access/search/model.json').text()}];search.records=[{module:'search',element:'Doc'}];search.actions=[];search.projections=[{name:'docSummary',record:search.records[0]!,fields:[{module:'search',element:'id'},{module:'search',element:'body'}]}];
  const badSearch=structuredClone(search);mutateSource(badSearch,d=>{const payload=d.modules[0]!.extensions!['umf.access'] as any;payload.search[0].keyword.syntax='operators';});
  const native=request();const nativeRequest=JSON.parse(await Bun.file('fixtures/access/native-actions/request.json').text());native.sources=[{id:'logical',format:'json',text:nativeRequest.binding.modelJson}];native.records=[{module:'sales',element:'order'}];native.projections=[];native.names=[];native.actions=[{module:'sales',action:'approve'},{module:'sales',action:'createOrder'}];
- const cases=[joined,unreachable,base,navigation,requiredNavigation,selfNavigation,search,badSearch,native];
+ const many=request();many.package='many_keys';many.sources=[{id:'logical',format:'json',text:await Bun.file('tests/compilation/fixtures/many-navigation.json').text()}];many.records=[{module:'sales',element:'order'},{module:'sales',element:'customer'}];
+ const manyCollision=structuredClone(many);const manyDoc=JSON.parse(many.sources[0]!.text);manyCollision.names=[{sourceId:'logical',pointer:`/modules/0/elements/${manyDoc.modules[0].elements.findIndex((e:any)=>e.id==='order')}`,python:'ManyNavigation'}];
+ const cases=[joined,unreachable,base,navigation,requiredNavigation,selfNavigation,search,badSearch,native,many,manyCollision];
  const observations:unknown[]=[];const identities:unknown[]=[];const sha=(value:string|ArrayBuffer)=>new Bun.CryptoHasher('sha256').update(value).digest('hex');
  for(const req of cases){
   const p=profile(),expected=generateAccessPackage(req,p);
   if(JSON.stringify(generateAccessPackage(req,p))!==JSON.stringify(expected))throw new Error('Bun generator is not deterministic');
-  if([search,native,navigation,requiredNavigation,selfNavigation].includes(req)&&expected.outcome!=='candidate')throw new Error(JSON.stringify(expected.diagnostics));
+  if([search,native,navigation,requiredNavigation,selfNavigation,many].includes(req)&&expected.outcome!=='candidate')throw new Error(JSON.stringify(expected.diagnostics));
   const fields=expected.files.find(file=>file.path.endsWith('/fields.py'))?.text??'';
   if(req===navigation&&(!fields.includes('OptionalNavigation[')||!fields.includes('customer-name-key')||!fields.includes('Customer-key')))throw new Error('alternate relationship Key or selected target Key metadata omitted');
+  if(req===many&&!fields.includes('ManyNavigation[Order, Customer, OrderKey, CustomerKey, CustomerPkKey, OrderPkKey]'))throw Error('many navigation selected/original Key phantoms omitted');
+  if(req===manyCollision&&(expected.outcome!=='refused'||expected.files.length!==0||!expected.diagnostics.some(d=>d.code==='NAME')))throw Error('many navigation import collision was not refused');
   if(req===requiredNavigation&&!fields.includes('RequiredNavigation['))throw new Error('required navigation metadata omitted');
   if(req===selfNavigation&&(!fields.includes('RecordAlias')||!fields.includes('OptionalNavigation[')))throw new Error('self-alias/refinement navigation metadata omitted');
   if(req===search&&(!fields.includes('DocSelectedQuery')||!fields.includes('DocSummary')||!fields.includes('RANKED_MODEL_PROFILE')))throw new Error('ranked selected/projection family metadata omitted');

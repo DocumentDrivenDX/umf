@@ -15,7 +15,7 @@ from types import MappingProxyType
 from typing import Protocol, cast
 
 from ._context import CaptureError
-from ._expressions import Join, Ordering
+from ._expressions import Join, Ordering, Related
 from ._nodes import FieldRef, KeyLiteral, Node, ProjectionRef, RecordRef, owner_identity
 
 _ALIASES: ContextVar[Mapping[tuple[str, str, str | None], str]] = ContextVar(
@@ -506,7 +506,7 @@ def render_related_logical(
     original_steps = cast(tuple[Node, ...], source_steps)
     if any(step.op == "related" for step in original_steps):
         raise CaptureError("WEFT_BLOCKED", "WR-A6 nested navigation requires a recursive owner profile")
-    relation = cast(Join[object, object, object], relationship)
+    relation = cast(Related[object, object], relationship)
     target_node = Node(variant.node.op, (variant.node.args[0], steps[1:], *variant.node.args[2:]))
     return RelatedLogical(
         render_logical(_NodeVariant(Node("all", (source, original_steps))), binding=binding, owner_bound=True),

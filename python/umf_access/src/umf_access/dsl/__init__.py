@@ -105,7 +105,9 @@ from ._selection import count_distinct as count_distinct
 from ._selection import max_ as max_
 from ._selection import min_ as min_
 from ._selection import sum_ as sum_
+from .navigation import InverseManyNavigation as InverseManyNavigation
 from .navigation import InverseNavigation as InverseNavigation
+from .navigation import ManyNavigation as ManyNavigation
 from .navigation import OptionalNavigation as OptionalNavigation
 from .navigation import RequiredNavigation as RequiredNavigation
 from .render import render_logical as render_logical

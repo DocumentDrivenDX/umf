@@ -50,7 +50,9 @@ from ._selection import (
     scalar_fields,
 )
 from .navigation import (
+    InverseManyNavigation,
     InverseNavigation,
+    ManyNavigation,
     OptionalNavigation,
     RequiredNavigation,
     navigation_parts,
@@ -414,6 +416,10 @@ class Query(Generic[OutputT, R, K]):
     def related(self, relationship: OptionalNavigation[OutputT, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     @overload
     def related(self, relationship: InverseNavigation[OutputT, J, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
+    @overload
+    def related(self, relationship: ManyNavigation[OutputT, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
+    @overload
+    def related(self, relationship: InverseManyNavigation[OutputT, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     def related(self, relationship: object) -> object:
         return _related_query(self.ref, self.steps, relationship)
 
@@ -1033,6 +1039,10 @@ class _Context(Generic[Root, Required, Optional, R, K]):
     def related(self, relationship: OptionalNavigation[Root, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     @overload
     def related(self, relationship: InverseNavigation[Root, J, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
+    @overload
+    def related(self, relationship: ManyNavigation[Root, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
+    @overload
+    def related(self, relationship: InverseManyNavigation[Root, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     def related(self, relationship: object) -> object:
         return _related_query(self.ref, self.steps, relationship)
 

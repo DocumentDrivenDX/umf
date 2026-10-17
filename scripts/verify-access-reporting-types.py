@@ -11,6 +11,7 @@ subprocess.run(['bun',str(root/'scripts/generate-access-native-action-fixture.ts
 subprocess.run(['bun',str(root/'scripts/generate-access-refinement-fixture.ts'),str(generated)],check=True,cwd=root)
 subprocess.run(['bun',str(root/'scripts/generate-access-search-fixture.ts'),str(generated)],check=True,cwd=root)
 subprocess.run(['bun',str(root/'scripts/generate-access-relationship-fixture.ts'),str(generated)],check=True,cwd=root)
+subprocess.run(['bun',str(root/'scripts/generate-access-many-navigation-fixture.ts'),str(generated)],check=True,cwd=root)
 base=root/'tests/compilation/python/static/queries/negative'
 names=['unknown_column','wrong_operand','wrong_param','foreign_column_filter','foreign_column_select','foreign_projection','wrong_eq_operand','wrong_ne_operand','null_optional_filter','update_unknown_field','update_wrong_type','ninth_select_column']
 names += ['distinct_wrong_operand', 'distinct_wrong_param', 'prefix_wrong_operand', 'prefix_wrong_param']
@@ -19,11 +20,13 @@ negative+=sorted((root/'tests/compilation/python/static/actions/negative').glob(
 negative+=sorted((root/'tests/compilation/python/static/search/negative').glob('*.py'))
 negative+=sorted((root/'tests/compilation/python/static/models/negative').glob('*.py'))
 negative+=sorted((root/'tests/compilation/python/static/relationships/negative').glob('*.py'))
+negative+=sorted((root/'tests/compilation/python/static/many-navigation/negative').glob('*.py'))
 positive=[root/'tests/compilation/python/static/actions/positive.py',generated/'commerce',root/'tests/compilation/python/static/joins/positive.py',root/'tests/compilation/python/static/joins/aggregate_positive.py',root/'tests/compilation/python/static/joins/related_positive.py',root/'tests/compilation/python/static/joins/alias_positive.py',generated/'refinement_shop',root/'tests/compilation/python/static/joins/refinement_positive.py',root/'tests/compilation/python/static/joins/refinement_matrix.py',root/'tests/compilation/python/static/queries/positive/runtime_types.py',root/'tests/compilation/python/static/queries/positive/terminals.py']
 search=str(generated) if args.installed_runtime else f'{runtime}:{generated}'
 env=dict(os.environ,PYTHONPATH=search,MYPYPATH=search)
 positive += [generated/'native_sales',root/'tests/compilation/python/static/native-actions/positive.py',root/'tests/compilation/python/static/native-actions/async_bulk_positive.py',generated/'search_docs',root/'tests/compilation/python/static/search/positive.py']
 positive += [generated/'relationship_shop',root/'tests/compilation/python/static/relationships/positive.py',root/'tests/compilation/python/static/relationships/joined_positive.py']
+positive += [generated/'many_keys',root/'tests/compilation/python/static/many-navigation/many_positive.py']
 for file in (generated/'commerce').glob('*.py'):
  text=file.read_text()
  assert not any(s in text for s in ('type: ignore','pyright: ignore','ty: ignore')),file

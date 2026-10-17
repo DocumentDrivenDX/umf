@@ -1,6 +1,6 @@
 {
   "version": "umf-static-negative-sites/0.1",
-  "review": "Every source call site inspected; query carrier/record ownership, nullability, arity, action replay/input, ranked-search misuse and the five generated-model constructor/Key/update/projection misuse sites. Exact multiplicity retained (ty hybrid emits three diagnostics). Native/temporal support is not inferred. Prefix wrong literal and named parameter inspected at line7; both require string-carrier argument diagnostics, with exact source hashes. Same-carrier generated CustomerKey cannot replace ShipOrderInput selected OrderKey; line5 constructor argument must reject nominal Key identity on all three checkers. Required/optional relationship overloads preserve foreign-owner refusal; reviewed Pyright reports both call and argument errors and ty reports no matching overload at the same unchanged line5. Aggregate negative sites at line6 individually reviewed: SUM string carrier, AVG missing required exact scale, literal-only bucket refusing bound Param; exact checker rules and multiplicity retained. Both MATCHES_ALL_TERMS/ANY_TERM reject wrong literal, wrong Param carrier, and numeric Column receiver at reviewed lines6/10; exact rules retained on all three checkers. Covariant immutable Predicate composition preserves every referenced owner; owner-free COUNT mixed with foreign predicates remains refused by root filter at reviewed lines6/10. Concrete numeric SUM overload diagnostics reviewed at unchanged string misuse line6. Alias cases independently reviewed: distinct tag phantom owner cannot select an unjoined alias; to_alias requires the original relationship target Record and Key. Exact three-checker rule multiplicities retained. Related target-set navigation controls reviewed at line5 on all three checkers: source owner and selected target field remain distinct; exact Pyright wrong-source call/argument multiplicity retained. This does not qualify the native semijoin profile. Approximate-distinct original-node surface wrong operand line4 and foreign owner line5 each reject once on all3checkers; native algorithm/error-bound qualification remains explicitly unsupported. Joined/grouped modelclass owner witness, preselected rankedmodel owner, and async bulk plan must-await controls reviewed on all3checkers; exact paths/line5 or6/rules/multiplicity retained. No native semantics inferred. R12 original inverse primary Key vs selected paging Key and list element family controls inspected at line5 on all3checkers; exact Pyright list-Param overload call+argument multiplicity retained. Fresh six-phantom generated client preserves WithKeys original inverse Key independently of target-set selected Key. Native semantics remain separately qualified. R13 joined bounded-Key hydration preserves tuple/model row type, root/optional joined owners and alias tags. Wrong root inverse relationship line5 and same-shaped wrong root alias line11 each refuse once with argument diagnostics on all3checkers. Grouped non-entity hydration remains an explicit named refusal; native joined hydration is separately qualified.",
+  "review": "Every source call site inspected; query carrier/record ownership, nullability, arity, action replay/input, ranked-search misuse and the five generated-model constructor/Key/update/projection misuse sites. Exact multiplicity retained (ty hybrid emits three diagnostics). Native/temporal support is not inferred. Prefix wrong literal and named parameter inspected at line7; both require string-carrier argument diagnostics, with exact source hashes. Same-carrier generated CustomerKey cannot replace ShipOrderInput selected OrderKey; line5 constructor argument must reject nominal Key identity on all three checkers. Required/optional relationship overloads preserve foreign-owner refusal; reviewed Pyright reports both call and argument errors and ty reports no matching overload at the same unchanged line5. Aggregate negative sites at line6 individually reviewed: SUM string carrier, AVG missing required exact scale, literal-only bucket refusing bound Param; exact checker rules and multiplicity retained. Both MATCHES_ALL_TERMS/ANY_TERM reject wrong literal, wrong Param carrier, and numeric Column receiver at reviewed lines6/10; exact rules retained on all three checkers. Covariant immutable Predicate composition preserves every referenced owner; owner-free COUNT mixed with foreign predicates remains refused by root filter at reviewed lines6/10. Concrete numeric SUM overload diagnostics reviewed at unchanged string misuse line6. Alias cases independently reviewed: distinct tag phantom owner cannot select an unjoined alias; to_alias requires the original relationship target Record and Key. Exact three-checker rule multiplicities retained. Related target-set navigation controls reviewed at line5 on all three checkers: source owner and selected target field remain distinct; exact Pyright wrong-source call/argument multiplicity retained. This does not qualify the native semijoin profile. Approximate-distinct original-node surface wrong operand line4 and foreign owner line5 each reject once on all3checkers; native algorithm/error-bound qualification remains explicitly unsupported. Joined/grouped modelclass owner witness, preselected rankedmodel owner, and async bulk plan must-await controls reviewed on all3checkers; exact paths/line5 or6/rules/multiplicity retained. No native semantics inferred. R12 original inverse primary Key vs selected paging Key and list element family controls inspected at line5 on all3checkers; exact Pyright list-Param overload call+argument multiplicity retained. Fresh six-phantom generated client preserves WithKeys original inverse Key independently of target-set selected Key. Native semantics remain separately qualified. R13 joined bounded-Key hydration preserves tuple/model row type, root/optional joined owners and alias tags. Wrong root inverse relationship line5 and same-shaped wrong root alias line11 each refuse once with argument diagnostics on all3checkers. Grouped non-entity hydration remains an explicit named refusal; native joined hydration is separately qualified. To-many navigation controls independently inspected at lines5/6: six phantom selected source/target Keys differ from original relationship/inverse Keys; foreign typed page Param, selected-Key misuse, wrong source/inverse source, plain Related, join and to_alias refusals retain exact checker rules/multiplicity. No native graph authority follows from static proof.",
   "checkers": {
     "mypy": "2.4.0",
     "pyright": "1.1.414",
@@ -1522,6 +1522,178 @@
             ],
             "ty": [
               "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/wrong_source.py",
+      "sourceSha256": "57d1bf0f19a7df209f3e2e4256214c509be8fc5efc15af600e36962b309878a9",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Customer.objects.related(Order.c.customers).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/wrong_inverse_source.py",
+      "sourceSha256": "b2a01652f799520662cab78cacfbe82d8f1e2324cf9b11f1efe1a6a20529ef7d",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.objects.related(Order.c.customers.inverse()).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/selected_key_not_relationship_key.py",
+      "sourceSha256": "049e7bac832dd253f7b1f44f457a4e141c0ba6778df917c0e4505ea6314316e4",
+      "sites": [
+        {
+          "line": 6,
+          "source": "return Order.objects.filter(Order.c.customers.has(CustomerKey(customer_id='x',customer_name='Name'))).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/inverse_selected_key_not_relationship_key.py",
+      "sourceSha256": "b47487b75c51559e08472a98a8d2df683de2e91fef9f1977b8686387a4d18f5a",
+      "sites": [
+        {
+          "line": 6,
+          "source": "return Customer.objects.filter(Order.c.customers.inverse().has(OrderKey(id='a',status='draft'))).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/foreign_selected_page_key.py",
+      "sourceSha256": "99d61da574933d51554e387bc36a1d4213196542df065cecb796833ba99bbc82",
+      "sites": [
+        {
+          "line": 6,
+          "source": "return Order.objects.related(Order.c.customers).page(size=1,after=after)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/many_is_not_join.py",
+      "sourceSha256": "83050f8d805c774558648cf19972dbb875a1c3098fd87b60619724cf257ef9fc",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.objects.join(Order.c.customers).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/many_has_no_to_alias.py",
+      "sourceSha256": "28d6b41ca4be1da439b6676b172f7a8e057b4cade4638fa978f91e987471d3ca",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.c.customers.to_alias(None)",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/many-navigation/negative/plain_related_not_navigation.py",
+      "sourceSha256": "d5bbfd8c77a8552c6c0dd85f44ae66606b09314b05a4309bccf0013b680f1aac",
+      "sites": [
+        {
+          "line": 6,
+          "source": "return Order.objects.related(relationship).limit(1).all()",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
             ]
           }
         }
