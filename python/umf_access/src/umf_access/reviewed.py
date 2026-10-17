@@ -148,7 +148,7 @@ def parameter_style(sql: str, count: int) -> tuple[str, tuple[int, ...]]:
     return _dbapi(sql), tuple(index for _, _, index in positions)
 
 
-def _carrier(annotation: object) -> tuple[str, bool]:
+def _carrier(annotation: object, *, projection: bool = False) -> tuple[str, bool]:
     from types import UnionType
     from typing import Annotated, Union, get_args, get_origin
 
@@ -172,6 +172,11 @@ def _carrier(annotation: object) -> tuple[str, bool]:
     ):
         if annotation is typ:
             return name, nullable
+    if projection:
+        if annotation is bytes:
+            return "binary", nullable
+        if get_origin(annotation) is tuple and get_args(annotation) == (float, Ellipsis):
+            return "vector", nullable
     raise ReadBuildError("unsupported reviewed-read carrier")
 
 
@@ -190,7 +195,7 @@ def _compatible_outputs(actual: object, expected: list[dict[str, object]]) -> bo
     return True
 
 
-def _fields(model: type[BaseModel]) -> list[dict[str, object]]:
+def _fields(model: type[BaseModel], *, projection: bool = False) -> list[dict[str, object]]:
     if (
         model.model_config.get("extra") != "forbid"
         or model.model_config.get("strict") is not True
@@ -202,7 +207,7 @@ def _fields(model: type[BaseModel]) -> list[dict[str, object]]:
     for name, field in model.model_fields.items():
         if field.alias is not None:
             raise ReadBuildError("reviewed read aliases are unsupported")
-        carrier, nullable = _carrier(field.annotation)
+        carrier, nullable = _carrier(field.annotation, projection=projection)
         result.append({"name": name, "carrier": carrier, "nullable": nullable})
     return result
 
@@ -267,6 +272,10 @@ class ReviewedSQL(Generic[P, R]):
         target: str,
         binding: Mapping[str, object],
         snapshots: Mapping[str, int] | None = None,
+        snapshot: bool = False,
+        stream_page_size: bool = False,
+        related_source: str | None = None,
+        related_relationship: Mapping[str, str] | None = None,
     ) -> CatalogRead[P, R]:
         if type(self.row_cap) is not int or not 1 <= self.row_cap <= 1000:
             raise ReadBuildError("row cap must be 1..1000")
@@ -279,14 +288,47 @@ class ReviewedSQL(Generic[P, R]):
             "rowCap": self.row_cap,
             "keyset": self.keyset,
         }
+        if type(stream_page_size) is not bool or stream_page_size and not self.keyset:
+            raise ReadBuildError("stream page size requires a bounded keyset declaration")
+        if stream_page_size:
+            request["streamPageSize"] = True
+        if type(snapshot) is not bool:
+            raise ReadBuildError("snapshot must be boolean")
+        if snapshot:
+            if not self.keyset or target != "spark-delta4":
+                raise ReadBuildError("SNAPSHOT_UNSUPPORTED: snapshot pages require an admitted Delta target")
+            request["snapshot"] = True
         if snapshots is not None:
             request["snapshots"] = dict(snapshots)
-        raw = compiler.compile_raw_read_json(_json(request))
+        related_request = None
+        if related_source is not None:
+            if related_relationship is None or set(related_relationship) != {"module", "id", "direction"}:
+                raise ReadBuildError("WR-A6 original relationship metadata required")
+            source_request = dict(request)
+            source_request.update(sql=related_source, keyset=False)
+            for target_only in ("streamPageSize", "snapshot"):
+                source_request.pop(target_only, None)
+            related_request = {
+                "version": "weft.related-read/0.1",
+                "source": source_request,
+                "target": request,
+                "relationship": dict(related_relationship),
+            }
+            method = getattr(compiler, "compile_related_read_json", None)
+            if not callable(method):
+                raise ReadBuildError("WEFT_BLOCKED: WR-A6 original related-read compiler required")
+            raw = method(_json(related_request))
+        else:
+            if related_relationship is not None:
+                raise ReadBuildError("WR-A6 original source query required")
+            raw = compiler.compile_raw_read_json(_json(request))
         artifact = _load(raw)
         if artifact.get("status") != "compiled":
             raise ReadBuildError(
                 "Weft refused reviewed read: " + _json(artifact.get("diagnostics"))
             )
+        if related_request is not None and artifact.get("relatedRequest") != related_request:
+            raise ReadBuildError("compiler related source/target custody differs from request")
         if (
             artifact.get("target") != target
             or artifact.get("binding") != dict(binding)
@@ -294,7 +336,7 @@ class ReviewedSQL(Generic[P, R]):
         ):
             raise ReadBuildError("compiler response does not match request")
         if (
-            not _compatible_outputs(artifact.get("outputs"), _fields(self.result))
+            not _compatible_outputs(artifact.get("outputs"), _fields(self.result, projection=True))
             or artifact.get("parameters") != request["parameters"]
         ):
             raise ReadBuildError(
@@ -340,7 +382,7 @@ class CatalogRead(Generic[P, R]):
         ):
             raise ReadBuildError("unsupported catalog artifact")
         if not _compatible_outputs(
-            artifact.get("outputs"), _fields(self.result)
+            artifact.get("outputs"), _fields(self.result, projection=True)
         ) or artifact.get("parameters") != _fields(self.parameters):
             raise ReadBuildError("catalog model signatures changed")
         raw_source = artifact.get("generatedSource")
@@ -415,7 +457,7 @@ def captured_source(variant: object, *, binding: Mapping[str, object]) -> Genera
 def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type[P], result: type[R], target: str, binding: Mapping[str, object], row_cap: int = 1000) -> CatalogRead[P, R]:
     """Capture one closed DSL read and compile it through the same Weft entrypoint."""
     from .capture import CapturedDeclaration
-    from .dsl import render_logical
+    from .dsl import render_logical, render_related_logical
 
     if (
         not isinstance(declaration, CapturedDeclaration)
@@ -435,7 +477,14 @@ def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type
     expected = [(f["name"], (f["carrier"], f["nullable"])) for f in _fields(parameters)]
     if declared != expected:
         raise ReadBuildError("captured signature differs from parameter model")
-    compiled = ReviewedSQL(render_logical(variant, binding=binding), parameters, result, row_cap, keyset=keyset).build(compiler, target=target, binding=binding)
+    snapshot = any(step.op == "snapshot" for step in cast(tuple[Node, ...], variant.node.args[1]))
+    related = render_related_logical(variant, binding=binding)
+    logical = related.target_sql if related is not None else render_logical(variant, binding=binding)
+    compiled = ReviewedSQL(logical, parameters, result, row_cap, keyset=keyset).build(
+        compiler, target=target, binding=binding, snapshot=snapshot,
+        related_source=related.source_sql if related is not None else None,
+        related_relationship=related.relationship if related is not None else None,
+    )
     artifact = compiled.artifact()
     artifact.pop("catalogDigest", None)  # artifact() already excludes this local digest.
     artifact["generatedSource"] = asdict(source)

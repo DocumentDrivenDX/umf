@@ -208,6 +208,7 @@ class PostgresTarget(_PostgresBase):
         parameters: P,
         *,
         max_rows: int,
+        page_size: int | None = None,
         timeout: timedelta | None = None,
     ) -> Generator[R, None, None]:
         return execute_stream(
@@ -217,6 +218,7 @@ class PostgresTarget(_PostgresBase):
             app_schema=self.configuration.app_schema,
             target=self.profile,
             max_rows=max_rows,
+            page_size=page_size,
             timeout_ms=self._admit(entry, timeout),
         )
 
@@ -282,6 +284,7 @@ class AsyncPostgresTarget(_PostgresBase):
         parameters: P,
         *,
         max_rows: int,
+        page_size: int | None = None,
         timeout: timedelta | None = None,
     ) -> AsyncGenerator[R, None]:
         return execute_stream_async(
@@ -291,6 +294,7 @@ class AsyncPostgresTarget(_PostgresBase):
             app_schema=self.configuration.app_schema,
             target=self.profile,
             max_rows=max_rows,
+            page_size=page_size,
             timeout_ms=self._admit(entry, timeout),
         )
 

@@ -1,0 +1,19 @@
+PASS actual-public-cli-and-drift-check
+PASS exact-required-optional-alias-output-carriers
+PASS original-native-admission
+PASS three-edge-distinct-row-self-join-native-oracle
+PASS deliberate-wrong-alias-projection-detected
+PASS left-parent-missing-independent-inner-peer-present
+PASS alias-group-sum-count-distinct-source-values
+PASS aliased-root-original-field-validators
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/alias_native_e2e.py", line 161, in <module>
+    main()
+    ~~~~^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/alias_native_e2e.py", line 136, in main
+    wrong_entry = ReviewedSQL(original.artifact()['sourceSql'],original.parameters,original.result).build(weft,target='postgresql18',binding=wrong_binding)
+  File "/private/tmp/sdk-r7b-314-env/lib/python3.14/site-packages/umf_access/reviewed.py", line 294, in build
+    raise ReadBuildError(
+        "Weft refused reviewed read: " + _json(artifact.get("diagnostics"))
+    )
+umf_access.reviewed.ReadBuildError: Weft refused reviewed read: [{"code":"WFT-RAW-READ","message":"join is not a declared to-one relationship"}]

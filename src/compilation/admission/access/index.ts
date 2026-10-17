@@ -37,6 +37,8 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
  const unknown=(pointer:string)=>diagnostics.push({code:'UNKNOWN_RELEVANT',sourceId,pointer,message:'Selected access meaning is uninterpreted'});
  if(document.umf!=='0.8.0'||!validateDocument(document).valid){add('ACCESS_SHAPE','');return {records,diagnostics};}
  if(document.vocabularies['umf.access']?.version!=='0.1.0'){add('ACCESS_SHAPE','/vocabularies/umf.access');return {records,diagnostics};}
+ const vectorDimensions=new Map<string,number>();
+ for(const module of document.modules){const access=module.extensions?.['umf.access'];if(object(access)&&Array.isArray(access.search))for(const index of access.search)if(object(index)&&index.kind==='vector'&&object(index.vector)&&reference(index.vector.field)&&Number.isSafeInteger(index.vector.dimensions)&&Number(index.vector.dimensions)>0){const id=identity(index.vector.field),dimensions=Number(index.vector.dimensions),previous=vectorDimensions.get(id);vectorDimensions.set(id,previous===undefined||previous===dimensions?dimensions:0);}}
  const locate=(r:Ref)=>{const mi=document.modules.findIndex(m=>m.id===r.module),ei=document.modules[mi]?.elements.findIndex(e=>e.id===r.element)??-1;return {element:document.modules[mi]?.elements[ei],path:`/modules/${mi}/elements/${ei}`};};
  const allViews:{view:View;path:string}[]=[],allColumns:{set:ColumnSet;path:string}[]=[];
  for(const [mi,authoredModule] of document.modules.entries()){
@@ -136,7 +138,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const valid=(!memberIds.has(identity(fv.field))||checkAccessPresence(facts,fv))&&(!expectedField.nested||checkAccessPresence({...facts,key:false,nested:true},fv));
    if(!valid||key&&['date','timestamp'].includes(field.scalarType??'')||(field.scalarType==='timestamp')!==(fv.temporal!==undefined)||fv.generated&&columns.some(c=>c.column.generation===null))add('ACCESS_CONFLICT',fp);
    const interpreted=facets.state==='known'||facets.state==='partial'?facets.interpreted:{};
-   for(const c of columns)if(!nativeDeclarationCompatible(field,fv,c.column,c.set,{...interpreted}))add('ACCESS_NATIVE',c.path+'/columns');
+   for(const c of columns)if(!nativeDeclarationCompatible(field,fv,c.column,c.set,{...interpreted},vectorDimensions))add('ACCESS_NATIVE',c.path+'/columns');
    const card=inspectCoreCardinality(document,fv.field).meaning;
    resolved.push({ref:{...fv.field},pointer:locate(fv.field).path,owned:memberIds.has(identity(fv.field)),viewPointer:fp,python:'',logicalName:typeof field.name==='string'?field.name:null,scalarType:field.scalarType??null,cardinality:card.state==='known'?card.cardinality:'unspecified',row:{...fv.row},create:{...fv.create},mutable:fv.mutable,generated:fv.generated,...(fv.temporal?{temporal:fv.temporal}:{}),facets:{...interpreted},properties,...(card.state==='known'&&card.itemType?{item:card.itemType}:{} )});
   }
@@ -144,10 +146,23 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
  }
  return {records,diagnostics};
 }
-function nativeDeclarationCompatible(field:Element,view:FieldView,column:NativeColumn,set:ColumnSet,facets:Record<string,unknown>):boolean {
+function nativeDeclarationCompatible(field:Element,view:FieldView,column:NativeColumn,set:ColumnSet,facets:Record<string,unknown>,vectors:ReadonlyMap<string,number>):boolean {
  // Declarative spellings only, not native equivalence or execution qualification.
- if(set.target.platform!=='postgresql'||set.target.majorVersion!=='18')return false;
+ const dimensions=vectors.get(identity(column.field)),size=facets.collectionSize;
+ const vector=field.cardinality==='array'&&dimensions!==undefined&&dimensions>0&&object(size)&&size.min===dimensions&&size.max===dimensions;
+ if(field.cardinality!=='one'&&!vector)return false;
+ if(['unity-catalog','spark-delta'].includes(set.target.platform)){
+  const type=column.type.toUpperCase();
+  if(field.scalarType==='integer'){const width=facets.integerWidth;return object(width)&&width.signed===true&&({8:'TINYINT',16:'SMALLINT',32:'INT',64:'BIGINT'} as Record<number,string>)[Number(width.bits)]===type;}
+  if(field.scalarType==='decimal')return typeof facets.precision==='number'&&typeof facets.scale==='number'&&facets.precision>=1&&facets.precision<=38&&type===`DECIMAL(${facets.precision},${facets.scale})`;
+  // Only a declared search embedding has the float32 vector interpretation;
+  // inspectSelectedSearch independently checks its complete original meaning.
+  if(vector)return type==='ARRAY<FLOAT>';
+  return ({string:'STRING',boolean:'BOOLEAN',binary:'BINARY'} as Record<string,string>)[field.scalarType??'']===type;
+ }
+ if(!(set.target.platform==='postgresql'&&set.target.majorVersion==='18'||set.target.platform==='lakebase'&&['17','18'].includes(set.target.majorVersion)))return false;
  const type=column.type;
+ if(vector)return type===`vector(${dimensions})`;
  if(field.scalarType==='integer'){
   const width=facets.integerWidth;
   return object(width)&&width.signed===true&&({16:['smallint','int2'],32:['integer','int','int4'],64:['bigint','int8']} as Record<number,string[]>)[Number(width.bits)]?.includes(type)===true;

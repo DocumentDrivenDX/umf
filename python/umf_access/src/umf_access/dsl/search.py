@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import isfinite
-from typing import Any, Generic, Literal, TypeVar, overload
+from typing import Any, Generic, Literal, Self, TypeVar, cast, overload
 
 from pydantic import BaseModel
 
@@ -13,6 +13,17 @@ from ..types import Vector
 from ._context import CaptureError, require_capture
 from ._expressions import Column, Param, operand
 from ._nodes import JoinProjection, Node, ProjectionRef, RecordRef, Terminal
+
+RANKED_MODEL_PROFILE = "umf.ranked-generated-model/0.1"
+
+
+def require_ranked_model_profile(actual: str, expected: str) -> None:
+    """Inert generated-module ABI admission; no capture or external work."""
+    if actual != RANKED_MODEL_PROFILE or expected != RANKED_MODEL_PROFILE:
+        raise RuntimeError(
+            "RANKED_MODEL_PROFILE_MISMATCH: generated/runtime profile differs"
+        )
+
 
 OutputT = TypeVar("OutputT")
 R = TypeVar("R")
@@ -178,9 +189,23 @@ class RankedQuery(Generic[OutputT, R]):
     leg: SearchLeg[OutputT]
     allow_partial: bool = False
 
+    @classmethod
+    def _from_query(cls, query: RankedQuery[OutputT, R]) -> Self:
+        return cls(query.ref, query.steps, query.leg, query.allow_partial)
+
     def into(self, projection: JoinProjection[OutputT, P]) -> RankedQuery[OutputT, P]:
+        return cast("RankedQuery[OutputT, P]", self._into(projection))
+
+    def _into(self, projection: object) -> RankedQuery[OutputT, BaseModel]:
         require_capture()
-        fields = getattr(projection.model, "UMF_PROJECTION_FIELDS", None)
+        model = (
+            projection.model if isinstance(projection, JoinProjection) else projection
+        )
+        if not isinstance(model, type) or not issubclass(model, BaseModel):
+            raise CaptureError(
+                "SEARCH_DECLARATION", "generated projection model required"
+            )
+        fields = getattr(model, "UMF_PROJECTION_FIELDS", None)
         if not isinstance(fields, tuple) or any(
             (f.module, f.element) != (self.ref.module, self.ref.element) for f in fields
         ):
@@ -195,10 +220,10 @@ class RankedQuery(Generic[OutputT, R]):
                     "into",
                     (
                         ProjectionRef(
-                            projection.model.__module__,
-                            projection.model.__name__,
+                            model.__module__,
+                            model.__name__,
                             fields,
-                            tuple(projection.model.model_fields),
+                            tuple(model.model_fields),
                         ),
                     ),
                 ),
@@ -277,22 +302,41 @@ class RankedQuery(Generic[OutputT, R]):
         /,
     ) -> RankedQuery[OutputT, tuple[T1, T2, T3, T4, T5, T6, T7, T8]]: ...
     def select(self, *columns: Column[OutputT, Any]) -> Any:
+        return self._select(*columns)
+
+    def _select(self, *columns: object) -> Any:
         require_capture()
         if not 1 <= len(columns) <= 8 or any(
-            (c.ref.module, c.ref.element) != (self.ref.module, self.ref.element)
+            not isinstance(c, Column)
+            or (c.ref.module, c.ref.element) != (self.ref.module, self.ref.element)
             for c in columns
         ):
             raise CaptureError(
                 "SEARCH_DECLARATION", "bounded typed search projection required"
             )
         return replace(
-            self, steps=self.steps + (Node("select", tuple(c.ref for c in columns)),)
+            self,
+            steps=self.steps
+            + (Node("select", tuple(c.ref for c in columns if isinstance(c, Column))),),
         )
 
-    def top(self, k: int) -> Terminal[SearchResult[R]]:
+    def top(self, k: int, *, allow_partial: bool = False) -> Terminal[SearchResult[R]]:
         require_capture()
+        if type(allow_partial) is not bool:
+            raise CaptureError(
+                "SEARCH_DECLARATION", "explicit partial-search opt-in required"
+            )
         if type(k) is not int or not 1 <= k <= 1000:
             raise CaptureError("SEARCH_LIMIT", "k must be in 1..1000")
         return Terminal(
-            Node("search_top", (self.ref, self.steps, self.leg, k, self.allow_partial))
+            Node(
+                "search_top",
+                (
+                    self.ref,
+                    self.steps,
+                    self.leg,
+                    k,
+                    self.allow_partial or allow_partial,
+                ),
+            )
         )

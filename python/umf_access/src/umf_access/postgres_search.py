@@ -6,7 +6,6 @@ import asyncio
 import inspect
 import json
 import math
-import struct
 import time
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -16,7 +15,13 @@ from typing import Any, Protocol, cast
 
 from .codec_support import checked_row
 from .dsl import Score, Scored, SearchResult
-from .postgres_read import _ROLE, ReadObligationUnmet, TimedOut, native_read_admission
+from .postgres_read import (
+    _ROLE,
+    ReadObligationUnmet,
+    TimedOut,
+    _vector_output,
+    native_read_admission,
+)
 from .search_catalog import SearchEntry, SearchVariant
 from .targets import (
     AsyncPostgresTarget,
@@ -82,27 +87,10 @@ def _decode(value: object, output: Mapping[str, Any]) -> object:
         return None
     carrier = output["carrier"]
     if carrier == "vector":
-        decoder = output["decoder"]
-        if (
-            decoder.get("profile")
-            not in ("pgvector-text-float32/0.8.6", "pgvector-text-float32/0.8.7")
-            or type(value) is not str
-            or len(value) > 500_000
-        ):
-            raise SearchError("native vector decoder profile mismatch")
-        items = json.loads(value, parse_int=float, parse_float=float)
-        if (
-            not isinstance(items, list)
-            or len(items) != decoder["dimensions"]
-            or any(type(v) not in (int, float) for v in items)
-        ):
-            raise SearchError("native vector output inventory mismatch")
-        # Native pgvector text uses shortest float32 spelling. This explicitly
-        # reconstructs its native float32 value; input vectors are never rounded.
-        result = tuple(
-            struct.unpack("!f", struct.pack("!f", float(v)))[0] for v in items
-        )
-        return validate_vector(result, dimensions=decoder["dimensions"])
+        try:
+            return _vector_output(value, output)
+        except ReadObligationUnmet as error:
+            raise SearchError(str(error)) from error
     expected = {"string": str, "boolean": bool, "integer": int, "decimal": Decimal}.get(
         carrier
     )

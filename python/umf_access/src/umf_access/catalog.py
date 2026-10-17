@@ -143,7 +143,12 @@ class ReadPlan:
                 raise StaleContinuation(
                     "continuation Key differs from its complete sort context"
                 )
-            after = ReadContinuation(after.sort_values, after.identity_digest, after.owner_cursor)
+            after = ReadContinuation(
+                after.sort_values,
+                after.identity_digest,
+                after.owner_cursor,
+                after.snapshot_versions,
+            )
         presence = tuple(
             a.name
             for a in self.arguments
@@ -219,7 +224,11 @@ def _page(plan: ReadPlan, page: ReadPage[Any]) -> Page[Any, Any]:
             strict=True,
         )
         after = Continuation(
-            key, cast(tuple[SortValue, ...], original.values), original.identity_digest, original.owner_cursor
+            key,
+            cast(tuple[SortValue, ...], original.values),
+            original.identity_digest,
+            original.owner_cursor,
+            original.snapshot_versions,
         )
     return Page(tuple(_row(plan, row) for row in page.items), after)
 
@@ -257,13 +266,22 @@ def run_stream(
     arguments: Mapping[str, object],
     *,
     max_rows: int,
+    page_size: int | None = None,
     timeout: Any = None,
 ) -> object:
     variant, parameters, after = plan.bind(target, arguments)
     if plan.terminal != "page" or after is not None:
         raise CatalogError("exports require an initial catalog page declaration")
+    if page_size is not None and (
+        type(page_size) is not int or not 1 <= page_size <= 1000
+    ):
+        raise ValueError("page_size must be an integer from 1 through 1000")
     stream = target.stream(
-        variant.entry, parameters, max_rows=max_rows, timeout=timeout
+        variant.entry,
+        parameters,
+        max_rows=max_rows,
+        timeout=timeout,
+        **({"page_size": page_size} if page_size is not None else {}),
     )
     if not plan.tuple_fields:
         return stream

@@ -1,0 +1,64 @@
+{
+  "wheels": [
+    {
+      "wheel": "/private/tmp/sdk-completion-runtime-r8-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+      "sha256": "d71c7c1fb228150ef4514733aefa141c0ab4ac9fc7eb2ccab888d36356ecc953",
+      "payloadsVerified": [
+        "umf_access/__init__.py",
+        "umf_access/adoption.py",
+        "umf_access/bulk.py",
+        "umf_access/capture.py",
+        "umf_access/catalog.py",
+        "umf_access/codec_support.py",
+        "umf_access/commands.py",
+        "umf_access/delta_read.py",
+        "umf_access/engine_catalog.py",
+        "umf_access/native_actions.py",
+        "umf_access/native_program.py",
+        "umf_access/pages.py",
+        "umf_access/postgres_bulk.py",
+        "umf_access/postgres_read.py",
+        "umf_access/postgres_search.py",
+        "umf_access/protocols.py",
+        "umf_access/py.typed",
+        "umf_access/reviewed.py",
+        "umf_access/search_catalog.py",
+        "umf_access/targets.py",
+        "umf_access/types.py",
+        "umf_access/unity_search.py",
+        "umf_access/values.py",
+        "umf_access/build/__init__.py",
+        "umf_access/build/catalog.py",
+        "umf_access/build/commands.py",
+        "umf_access/build/search.py",
+        "umf_access/build/unity_search.py",
+        "umf_access/dsl/__init__.py",
+        "umf_access/dsl/_context.py",
+        "umf_access/dsl/_expressions.py",
+        "umf_access/dsl/_joined.py",
+        "umf_access/dsl/_nodes.py",
+        "umf_access/dsl/_query.py",
+        "umf_access/dsl/_selection.py",
+        "umf_access/dsl/render.py",
+        "umf_access/dsl/search.py"
+      ]
+    },
+    {
+      "wheel": "/private/tmp/sdk-spark-snapshot-pages-20261017/weft-wheels-r3/weft_sql-0.4.42.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "b00f741c89c4e4bd127a8f23be93e02b9cfd3a2d8b2b668882bc840cc551b534",
+      "payloadsVerified": [
+        "weft/__init__.py",
+        "weft/weft.abi3.so"
+      ]
+    }
+  ],
+  "sources": {
+    "e2e-source.py": "8e3d5514e9d12029ac3cd36e067901d4f069ba08a5ce4b4d1372c42e7e9653d5",
+    "prepare_generated.py": "92aad6d327ff7ddad7d214c74c5122a0cddf3206b09b7e645f81a5f4a7a7d1be",
+    "read-request.json": "6461874dd52e355a5de912239ad88c4f9b5327db89adbfd3c58cc42ba488820f",
+    "binding.json": "103a6c25181afa57b598a46cefe859d3d363b2a6a61fdede48edcb11a3aa0fe2"
+  },
+  "generatedManifestSha256": "f6637da41b10afa378f5018abf2ec48e53f0b1c63821e907b0ce76b62e0e798e",
+  "preflight": "source-pinned generated CLI catalog/build/check PASS",
+  "temporal": "held"
+}

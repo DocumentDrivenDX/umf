@@ -2,7 +2,7 @@
 
 from collections.abc import Sequence
 from datetime import UTC
-from typing import Annotated, Any, TypedDict, TypeVar, cast, get_args
+from typing import Annotated, Any, TypedDict, TypeVar, cast, get_args, get_origin
 
 from pydantic import BaseModel, ValidationError
 
@@ -335,3 +335,92 @@ def make_projection_model(
         type.__setattr__(model, "UMF_BUNDLE_INPUT_DIGEST", digest)
         type.__setattr__(model, "UMF_RUNTIME_ABI", abi)
     return model
+
+
+def make_scalar_projection_model(
+    name: str,
+    fields: tuple[tuple[str, type[StrictModel], str, str, object, bool], ...],
+) -> type[StrictModel]:
+    """Closed aggregate/bucket row metadata; never reuse input numeric bounds.
+
+    Group columns and extrema retain their original exact Field validators.
+    SUM/bucket/AVG outputs use fresh unbounded numeric domains: their result can
+    exceed the input's width, range, allowed set or decimal precision.
+    """
+    from copy import copy
+    from decimal import Decimal
+
+    from pydantic import BeforeValidator, create_model
+
+    from .values import FieldValidator, validate_integer
+
+    if not fields or len({f[0] for f in fields}) != len(fields):
+        raise CodecError("distinct scalar projection aliases required")
+    pins = {(getattr(owner, "UMF_BUNDLE_INPUT_DIGEST", None), getattr(owner, "UMF_RUNTIME_ABI", None)) for _, owner, _, _, _, _ in fields}
+    if len(pins) != 1 or None in next(iter(pins)):
+        raise CodecError("mixed or absent generated scalar sources")
+    definitions: dict[str, Any] = {}
+    for alias, owner, source, op, argument, nullable in fields:
+        original = owner.model_fields.get(source)
+        if op in ("field", "min", "max"):
+            if original is None:
+                raise CodecError("scalar source field absent")
+            field = copy(original)
+            annotation: Any = field.annotation
+            if annotation is None:
+                raise CodecError("scalar source carrier absent")
+            if nullable or op != "field":
+                annotation = (Annotated[(annotation, *field.metadata)] if field.metadata else annotation) | None
+                field.metadata = []
+            field.alias = None
+            definitions[alias] = (annotation, field)
+            continue
+        def numeric_metadata(annotation: object) -> tuple[list[object], list[object]]:
+            if get_origin(annotation) is Annotated:
+                carrier, *metadata = get_args(annotation)
+                carriers, nested = numeric_metadata(carrier)
+                return carriers, [*metadata, *nested]
+            arguments = get_args(annotation)
+            if arguments:
+                carriers = []
+                metadata = []
+                for member in arguments:
+                    found, validators = numeric_metadata(member)
+                    carriers.extend(found)
+                    metadata.extend(validators)
+                return carriers, metadata
+            return [annotation], []
+        candidates, nested_metadata = numeric_metadata(original.annotation) if original is not None else ([], [])
+        numeric = next((a for a in candidates if a in (int, Decimal)), None)
+        if op == "bucket_width" and type(None) in candidates:
+            nullable = True
+        if op in ("count", "count_distinct", "approx_count_distinct"):
+            annotation = Annotated[int, BeforeValidator(validate_integer)]
+            nullable = False
+        elif op in ("sum", "avg", "bucket_width") and numeric is not None:
+            decimal = numeric is Decimal or op == "avg" or op == "bucket_width" and type(argument) is Decimal
+            if op == "avg" and (type(argument) is not int or not 0 <= argument <= 1000):
+                raise CodecError("average output scale outside profile")
+            source_scales = [
+                validator.func.scale
+                for validator in ([*original.metadata, *nested_metadata] if original is not None else ())
+                if isinstance(validator, BeforeValidator)
+                and isinstance(validator.func, FieldValidator)
+                and validator.func.scale is not None
+            ]
+            output_scale: int | None = cast(int, argument) if op == "avg" else max(source_scales, default=None)
+            if op == "bucket_width" and isinstance(argument, Decimal):
+                exponent = argument.as_tuple().exponent
+                assert isinstance(exponent, int)
+                output_scale = max(output_scale or 0, -exponent, 0)
+            annotation = Annotated[Decimal, BeforeValidator(FieldValidator(kind="decimal", scale=output_scale))] if decimal else Annotated[int, BeforeValidator(validate_integer)]
+        else:
+            raise CodecError("unsupported scalar result carrier")
+        if nullable:
+            annotation = annotation | None
+        definitions[alias] = (annotation, ...)
+    result = create_model(name, __base__=StrictModel, **definitions)
+    digest, abi = next(iter(pins))
+    type.__setattr__(result, "UMF_BUNDLE_INPUT_DIGEST", digest)
+    type.__setattr__(result, "UMF_RUNTIME_ABI", abi)
+    return result

@@ -12,6 +12,7 @@ from ..dsl import FieldRef, Node, SearchLeg, render_logical
 from ..native_program import NativeProgram
 from ..types import StrictModel
 from .commands import _carrier
+from .unity_search import compile_unity_search
 
 
 class SearchBuildError(ValueError):
@@ -57,13 +58,13 @@ def emit_search(
         allow_partial = cast(bool, variant.node.args[4])
         legs = leg.legs if leg.kind == "hybrid" else (leg,)
         fusion = leg.fusion
-        if fusion is not None and fusion.kind != "rrf":
+        if fusion is not None and fusion.kind not in ("rrf", "target-defined"):
             raise SearchBuildError(
                 "SEARCH_UNSUPPORTED: target-defined fusion requires a separately qualified native program"
             )
         depth = (
             (fusion.depth if fusion.depth is not None else min(1000, top * 2))
-            if fusion
+            if fusion and fusion.kind == "rrf"
             else top
         )
         params = {}
@@ -147,7 +148,7 @@ def emit_search(
             )
         native_parameters.sort(key=lambda p: p["name"])
         for target in targets:
-            if target["kind"] not in ("postgresql", "lakebase"):
+            if target["kind"] not in ("postgresql", "lakebase", "unity-catalog"):
                 raise SearchBuildError(
                     "SEARCH_UNSUPPORTED: target has no qualified search row"
                 )
@@ -177,7 +178,21 @@ def emit_search(
             if search_key is None:
                 raise SearchBuildError("selected search Key model absent")
             compiled = []
-            for li, item in enumerate(legs):
+            if target["kind"] == "unity-catalog":
+                program, query_argument, embed, aliases = compile_unity_search(
+                    compiler, legs=legs, fusion=fusion, target=target,
+                    selection_sql=render_logical(selected, binding=target["binding"], owner_bound=True),
+                    native_parameters=native_parameters, fields=projection_fields,
+                    names=projection_names, top=top, allow_partial=allow_partial,
+                    bundle_digest=manifest["inputDigest"],
+                )
+                compiled.append(
+                    f"SearchEntry(NativeProgram({program.original_json!r}, {program.statements_json!r}, {program.bundle_input_digest!r}), {result_expr}, {search_key.__name__}, {query_argument!r}, {embed!r}, {tuple_fields!r}, {aliases!r})"
+                )
+                entries.append({"name": name, "kind": "search", "targetId": target["id"], "presence": variant.presence, "leg": 0, "artifact": program.checked(), "fusion": None if fusion is None else {"kind": fusion.kind}})
+            elif fusion is not None and fusion.kind != "rrf":
+                raise SearchBuildError("SEARCH_UNSUPPORTED: PostgreSQL/Lakebase require explicit qualified runtime fusion")
+            for li, item in enumerate(legs if target["kind"] != "unity-catalog" else ()):
                 if (
                     item.index_json is None
                     or item.value is None

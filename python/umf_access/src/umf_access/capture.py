@@ -135,6 +135,9 @@ def _parameters(function: Callable[..., Any]) -> tuple[CapturedParameter, ...]:
 
 
 def _canonical(value: object) -> object:
+    if isinstance(value, Decimal):
+        # Bucket widths retain the exact carrier/spelling in captured source.
+        return ("decimal", str(value))
     if isinstance(value, frozenset):
         return tuple(sorted(cast(frozenset[str], value)))
     if isinstance(value, tuple):
@@ -143,7 +146,8 @@ def _canonical(value: object) -> object:
         return (
             type(value).__module__,
             type(value).__qualname__,
-            tuple((f.name, _canonical(getattr(value, f.name))) for f in fields(value)),
+            tuple((f.name, _canonical(getattr(value, f.name))) for f in fields(value)
+                  if not (f.name == "alias" and getattr(value, f.name) is None)),
         )
     if isinstance(value, type):
         return (value.__module__, value.__qualname__)
@@ -168,13 +172,19 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
         raise CaptureError("CAPTURE_UNSUPPORTED", "terminal has no record identity")
     record = node.args[0]
     steps = cast(tuple[Node, ...], node.args[1])
-    owners = {(record.module, record.element)}
+    selections = [value for step in steps if step.op == "select" for value in step.args]
+    scalar_selection = any(isinstance(value, Node) for value in selections)
+    if any(s.op == "group" for s in steps) and not selections and not any(s.op == "into" for s in steps) and node.op != "group_count":
+        raise CaptureError("CAPTURE_UNSUPPORTED", "grouped query requires explicit selection or count")
+    if scalar_selection and node.op not in {"all", "first", "one"}:
+        raise CaptureError("CAPTURE_UNSUPPORTED", "scalar aggregate/bucket projection does not admit this terminal")
+    owners = {(record.module, record.element, record.alias)}
     for step in steps:
         if step.op == "join":
             relation = cast(Join[Any, Any, Any], step.args[0])
-            if (relation.ref.module, relation.ref.element) not in owners:
+            if (relation.ref.module, relation.ref.element, relation.ref.alias) not in owners:
                 raise CaptureError("CAPTURE_UNSUPPORTED", "join source is absent")
-            owners.add((relation.target.module, relation.target.element))
+            owners.add((relation.target.module, relation.target.element, relation.target.alias))
     parameter_map = {p.name: p for p in parameters}
     temporal_parameters: dict[str, str] = {}
 
@@ -189,7 +199,7 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
 
     def visit(value: object) -> None:
         if isinstance(value, FieldRef):
-            if (value.module, value.element) not in owners:
+            if (value.module, value.element, value.alias) not in owners:
                 raise TypeError("expression column belongs to another Record")
         elif isinstance(value, SearchLeg):
             if (value.record.module, value.record.element) != (
@@ -215,6 +225,31 @@ def _validate_node(node: Node, parameters: tuple[CapturedParameter, ...]) -> Non
         elif isinstance(value, Join):
             visit(value.ref)
         elif isinstance(value, Node):
+            if value.op == "related":
+                from .dsl.navigation import navigation_parts
+
+                if len(value.args) != 4:
+                    raise CaptureError("CAPTURE_UNSUPPORTED", "malformed navigation source")
+                source, source_steps, relationship, direction = value.args
+                if not isinstance(source, RecordRef) or type(source_steps) is not tuple or any(not isinstance(step, Node) for step in source_steps) or direction not in ("forward", "inverse"):
+                    raise CaptureError("CAPTURE_UNSUPPORTED", "closed navigation source required")
+                original_source, original_target, _, _ = navigation_parts(relationship)
+                expected_source, expected_target = (original_source, original_target) if direction == "forward" else (original_target, original_source)
+                if source != expected_source or record != expected_target:
+                    raise CaptureError("CAPTURE_UNSUPPORTED", "navigation selected root differs")
+                _validate_node(Node("all", (source, source_steps)), parameters)
+                return
+            if value.op in ("aggregate", "bucket_width"):
+                from .dsl._selection import scalar_fields
+                scalar_fields(value)
+                if value.op == "aggregate":
+                    op, field, scale = value.args
+                    if op not in {"sum", "min", "max", "avg", "count", "count_distinct", "approx_count_distinct"}:
+                        raise CaptureError("CAPTURE_UNSUPPORTED", "unknown aggregate operation")
+                    if isinstance(field, FieldRef) and field.temporal is not None:
+                        raise CaptureError("CAPTURE_UNSUPPORTED", "temporal aggregate qualification is held")
+                    if op == "avg" and (type(scale) is not int or not 0 <= scale <= 1000):
+                        raise CaptureError("CAPTURE_UNSUPPORTED", "average requires bounded literal scale")
             if value.op in ("param", "key_param"):
                 name = cast(str, value.args[0])
                 if name not in parameter_map:
