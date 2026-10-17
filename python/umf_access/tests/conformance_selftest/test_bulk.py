@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from conformance.bulk import BULK_CASES, BulkScenario, run_bulk_case, run_bulk_suite
 from conformance.reads import ConformanceFailure
+from umf_access.protocols import ActionRefused
 
 
 @dataclass(frozen=True)
@@ -60,6 +61,10 @@ class Plan:
         return self._call((sealed, submission_key, attempt))
 
     def probe_fresh(self, refusal):
+        if isinstance(refusal, ActionRefused):
+            if self.fault == "unexpected_fresh_exception":
+                raise RuntimeError("unexpected native fixture error")
+            raise ActionRefused(refusal.code, refusal.original)
         if self.fault == "fresh_allowed":
             return replace(refusal, utf8=b'{"status":"success"}')
         if self.fault == "fresh_attempt":
@@ -119,6 +124,8 @@ class Fixture:
                 fresh_refusal = Original(
                     b'{"status":"refusal","code":"UNKNOWN_CONTROL_HELD"}', None
                 )
+                if self.fault in ("typed_fresh_refusal", "unexpected_fresh_exception"):
+                    fresh_refusal = ActionRefused("UNKNOWN_CONTROL_HELD")
                 plan = Plan(name, answer, self.fault)
                 if self.fault == "execute":
                     plan.execute = lambda: None
@@ -128,10 +135,16 @@ class Fixture:
                         plan,
                         object(),
                         lambda a=answer: a,
-                        lambda a: a.utf8,
-                        lambda a: json.loads(a.utf8)["status"],
-                        lambda a: a.recovery,
-                        lambda a: a.job,
+                        lambda a: (
+                            a.code.encode() if isinstance(a, ActionRefused) else a.utf8
+                        ),
+                        lambda a: (
+                            "refusal"
+                            if isinstance(a, ActionRefused)
+                            else json.loads(a.utf8)["status"]
+                        ),
+                        lambda a: None if isinstance(a, ActionRefused) else a.recovery,
+                        lambda a: None if isinstance(a, ActionRefused) else a.job,
                         lambda p=plan: p.attempts,
                         2
                         if self.fault == "expected_two"
@@ -207,6 +220,16 @@ class BulkAssertions(unittest.TestCase):
                 with self.assertRaises(ConformanceFailure):
                     run_bulk_case(fixture, case)
                 self.assertEqual(fixture.closed, 1)
+
+    # @covers US-087-AC6
+    def test_owner_typed_refusal_is_preserved_and_unexpected_exception_propagates(self):
+        fixture = Fixture("typed_fresh_refusal")
+        run_bulk_case(fixture, "bulk.control_recovery")
+        self.assertEqual(fixture.closed, 1)
+        fixture = Fixture("unexpected_fresh_exception")
+        with self.assertRaisesRegex(RuntimeError, "unexpected native fixture error"):
+            run_bulk_case(fixture, "bulk.control_recovery")
+        self.assertEqual(fixture.closed, 1)
 
     # @covers US-087-AC6
     def test_case_inventory_refuses_unknown_empty_and_duplicate(self):

@@ -1,9 +1,9 @@
 {
   "scope": "real generator, source-compatibility/refactor typing, exact installed runtime; not full STP or native acceptance",
   "snapshot": {
-    "wheel": "/private/tmp/sdk-completion-runtime-r5-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
-    "wheelSha256": "c360781c703b326d676c9e033e53b314502d6636fc3bbc00c6b555a83dab023c",
-    "python": "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python"
+    "wheel": "/private/tmp/sdk-completion-runtime-r5b-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+    "wheelSha256": "9427c729c3e5ffe68f08e4c6e94cbdc0d478680a408ff769294f2eb61ad52adb",
+    "python": "/private/tmp/sdk-r5b-314-env/bin/python"
   },
   "checks": [
     {
@@ -121,11 +121,11 @@
         "/private/tmp/umf-tp001-compat-env/bin/ty",
         "check",
         "--python",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--python-version",
         "3.11",
         "--extra-search-path",
-        "/private/tmp/umf-b005-refactor-arqyysh3/base",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/base",
         "--output-format",
         "concise",
         "--color",
@@ -146,16 +146,16 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/pyright",
         "--project",
-        "/private/tmp/umf-b005-refactor-arqyysh3/base-pyright.json",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/base-pyright.json",
         "--pythonpath",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--outputjson",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
       ],
       "actual": [],
       "expected": [],
       "exitCode": 0,
-      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204345048\",\n    \"generalDiagnostics\": [],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 0,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.787\n    }\n}\n\n",
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204974195\",\n    \"generalDiagnostics\": [],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 0,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.405\n    }\n}\n\n",
       "stderr": ""
     },
     {
@@ -166,7 +166,7 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/mypy",
         "--python-executable",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--config-file",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
@@ -186,11 +186,11 @@
         "/private/tmp/umf-tp001-compat-env/bin/ty",
         "check",
         "--python",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--python-version",
         "3.11",
         "--extra-search-path",
-        "/private/tmp/umf-b005-refactor-arqyysh3/memo-rename",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/memo-rename",
         "--output-format",
         "concise",
         "--color",
@@ -221,9 +221,9 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/pyright",
         "--project",
-        "/private/tmp/umf-b005-refactor-arqyysh3/memo-rename-pyright.json",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/memo-rename-pyright.json",
         "--pythonpath",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--outputjson",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
       ],
@@ -256,7 +256,7 @@
         }
       ],
       "exitCode": 1,
-      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204349937\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Type of \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportUnknownMemberType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 78\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Cannot access attribute \\\"memo\\\" for class \\\"OrderColumns\\\"\\n\u00a0\u00a0Attribute \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 66\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportAttributeAccessIssue\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 3,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 1.113\n    }\n}\n\n",
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204975884\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Type of \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportUnknownMemberType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 78\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Cannot access attribute \\\"memo\\\" for class \\\"OrderColumns\\\"\\n\u00a0\u00a0Attribute \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 66\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportAttributeAccessIssue\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 3,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.383\n    }\n}\n\n",
       "stderr": ""
     },
     {
@@ -267,7 +267,7 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/mypy",
         "--python-executable",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--config-file",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
@@ -297,11 +297,11 @@
         "/private/tmp/umf-tp001-compat-env/bin/ty",
         "check",
         "--python",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--python-version",
         "3.11",
         "--extra-search-path",
-        "/private/tmp/umf-b005-refactor-arqyysh3/amount-retype",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/amount-retype",
         "--output-format",
         "concise",
         "--color",
@@ -332,9 +332,9 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/pyright",
         "--project",
-        "/private/tmp/umf-b005-refactor-arqyysh3/amount-retype-pyright.json",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/amount-retype-pyright.json",
         "--pythonpath",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--outputjson",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
       ],
@@ -359,7 +359,7 @@
         }
       ],
       "exitCode": 1,
-      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204352150\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Operator \\\">\\\" not supported for types \\\"Column[Order, str]\\\" and \\\"Param[Decimal]\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 32\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 56\n                }\n            },\n            \"rule\": \"reportOperatorIssue\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 32\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 56\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 2,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.572\n    }\n}\n\n",
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204977629\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Operator \\\">\\\" not supported for types \\\"Column[Order, str]\\\" and \\\"Param[Decimal]\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 32\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 56\n                }\n            },\n            \"rule\": \"reportOperatorIssue\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 32\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 56\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 2,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.381\n    }\n}\n\n",
       "stderr": ""
     },
     {
@@ -370,7 +370,7 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/mypy",
         "--python-executable",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--config-file",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
@@ -400,11 +400,11 @@
         "/private/tmp/umf-tp001-compat-env/bin/ty",
         "check",
         "--python",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--python-version",
         "3.11",
         "--extra-search-path",
-        "/private/tmp/umf-b005-refactor-arqyysh3/memo-remove",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/memo-remove",
         "--output-format",
         "concise",
         "--color",
@@ -435,9 +435,9 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/pyright",
         "--project",
-        "/private/tmp/umf-b005-refactor-arqyysh3/memo-remove-pyright.json",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/memo-remove-pyright.json",
         "--pythonpath",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--outputjson",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
       ],
@@ -470,7 +470,7 @@
         }
       ],
       "exitCode": 1,
-      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204354988\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Type of \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportUnknownMemberType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 78\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Cannot access attribute \\\"memo\\\" for class \\\"OrderColumns\\\"\\n\u00a0\u00a0Attribute \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 66\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportAttributeAccessIssue\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 3,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.501\n    }\n}\n\n",
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204979283\",\n    \"generalDiagnostics\": [\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Type of \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportUnknownMemberType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Argument type is unknown\\n\u00a0\u00a0Argument corresponds to parameter \\\"preds\\\" in function \\\"filter\\\"\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 58\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 78\n                }\n            },\n            \"rule\": \"reportUnknownArgumentType\"\n        },\n        {\n            \"file\": \"/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py\",\n            \"severity\": \"error\",\n            \"message\": \"Cannot access attribute \\\"memo\\\" for class \\\"OrderColumns\\\"\\n\u00a0\u00a0Attribute \\\"memo\\\" is unknown\",\n            \"range\": {\n                \"start\": {\n                    \"line\": 8,\n                    \"character\": 66\n                },\n                \"end\": {\n                    \"line\": 8,\n                    \"character\": 70\n                }\n            },\n            \"rule\": \"reportAttributeAccessIssue\"\n        }\n    ],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 3,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.384\n    }\n}\n\n",
       "stderr": ""
     },
     {
@@ -481,7 +481,7 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/mypy",
         "--python-executable",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--config-file",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
@@ -511,11 +511,11 @@
         "/private/tmp/umf-tp001-compat-env/bin/ty",
         "check",
         "--python",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--python-version",
         "3.11",
         "--extra-search-path",
-        "/private/tmp/umf-b005-refactor-arqyysh3/memo-rename-with-names-override",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/memo-rename-with-names-override",
         "--output-format",
         "concise",
         "--color",
@@ -536,16 +536,16 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/pyright",
         "--project",
-        "/private/tmp/umf-b005-refactor-arqyysh3/memo-rename-with-names-override-pyright.json",
+        "/private/tmp/umf-b005-refactor-f4snl7gq/memo-rename-with-names-override-pyright.json",
         "--pythonpath",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--outputjson",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
       ],
       "actual": [],
       "expected": [],
       "exitCode": 0,
-      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204357341\",\n    \"generalDiagnostics\": [],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 0,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.551\n    }\n}\n\n",
+      "stdout": "{\n    \"version\": \"1.1.414\",\n    \"time\": \"1792204980943\",\n    \"generalDiagnostics\": [],\n    \"summary\": {\n        \"filesAnalyzed\": 1,\n        \"errorCount\": 0,\n        \"warningCount\": 0,\n        \"informationCount\": 0,\n        \"timeInSec\": 0.372\n    }\n}\n\n",
       "stderr": ""
     },
     {
@@ -556,7 +556,7 @@
       "command": [
         "/private/tmp/umf-tp001-compat-env/bin/mypy",
         "--python-executable",
-        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "/private/tmp/sdk-r5b-314-env/bin/python",
         "--config-file",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/mypy.ini",
         "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/tests/compilation/python/static/queries/refactor/unchanged.py"
@@ -844,7 +844,7 @@
     "command": [
       "bun",
       "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/docs/helix/04-build/evidence/typed-persistence/b-tp-005-generate-corpus.ts",
-      "/private/tmp/umf-b005-refactor-arqyysh3"
+      "/private/tmp/umf-b005-refactor-f4snl7gq"
     ],
     "exitCode": 0,
     "stdout": "base candidate []\nmemo-rename candidate []\namount-retype candidate []\nmemo-remove candidate []\nmemo-rename-with-names-override candidate []\n",
@@ -2247,7 +2247,7 @@
   },
   "changedCompilerInputs": [],
   "installedLookup": {
-    "file": "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/lib/python3.14/site-packages/umf_access/__init__.py",
+    "file": "/private/tmp/sdk-r5b-314-env/lib/python3.14/site-packages/umf_access/__init__.py",
     "abi": "umf-access-runtime/0.1",
     "version": "0.1.0.dev0",
     "pydantic": "2.14.1",
