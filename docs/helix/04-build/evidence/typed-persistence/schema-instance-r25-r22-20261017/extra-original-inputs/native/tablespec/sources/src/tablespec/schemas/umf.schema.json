@@ -1,0 +1,3258 @@
+{
+  "$defs": {
+    "Cardinality": {
+      "description": "Relationship cardinality specification.",
+      "properties": {
+        "type": {
+          "description": "Cardinality type (e.g., many_to_one, one_to_many, one_to_one)",
+          "title": "Type",
+          "type": "string"
+        },
+        "notation": {
+          "description": "Cardinality notation (e.g., 1:N, N:1, 1:1)",
+          "title": "Notation",
+          "type": "string"
+        },
+        "composite_key": {
+          "default": false,
+          "description": "Whether the relationship uses a composite key",
+          "title": "Composite Key",
+          "type": "boolean"
+        },
+        "mandatory": {
+          "default": false,
+          "description": "Whether the relationship is mandatory",
+          "title": "Mandatory",
+          "type": "boolean"
+        },
+        "source_multiplicity": {
+          "description": "Source side multiplicity (e.g., '*', '1', '0..1')",
+          "title": "Source Multiplicity",
+          "type": "string"
+        },
+        "target_multiplicity": {
+          "description": "Target side multiplicity (e.g., '*', '1', '0..1')",
+          "title": "Target Multiplicity",
+          "type": "string"
+        },
+        "pattern_matched": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pattern used to infer cardinality",
+          "title": "Pattern Matched"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Reason for cardinality assignment",
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "type",
+        "notation",
+        "source_multiplicity",
+        "target_multiplicity"
+      ],
+      "title": "Cardinality",
+      "type": "object"
+    },
+    "DelimitedSource": {
+      "additionalProperties": false,
+      "description": "Delimited flat-file source: ``kind: delimited`` + the FileFormatSpec fields.\n\nThe ``source:`` spelling of :class:`FileFormatSpec`. ``path`` optionally\npins the file (or directory) to read; readers that are handed a spec\nwithout a path receive it from the caller per file.",
+      "properties": {
+        "delimiter": {
+          "default": "|",
+          "description": "Field delimiter character",
+          "title": "Delimiter",
+          "type": "string"
+        },
+        "encoding": {
+          "default": "utf-8",
+          "description": "File encoding",
+          "title": "Encoding",
+          "type": "string"
+        },
+        "header": {
+          "default": true,
+          "description": "Whether file has header row",
+          "title": "Header",
+          "type": "boolean"
+        },
+        "quote_char": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Quote character for fields",
+          "title": "Quote Char"
+        },
+        "escape_char": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Escape character",
+          "title": "Escape Char"
+        },
+        "null_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "String representing NULL values",
+          "title": "Null Value"
+        },
+        "null_escape": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional null escape token used by dump files (e.g. '\\N')",
+          "title": "Null Escape"
+        },
+        "skip_rows": {
+          "default": 0,
+          "description": "Number of rows to skip at start",
+          "minimum": 0,
+          "title": "Skip Rows",
+          "type": "integer"
+        },
+        "footer_rows": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Number of footer rows to ignore at end of file",
+          "title": "Footer Rows"
+        },
+        "line_terminator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Record terminator token or literal line separator (e.g. 'CRLF' or '||')",
+          "title": "Line Terminator"
+        },
+        "comment_char": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Comment line prefix character",
+          "title": "Comment Char"
+        },
+        "filename_pattern": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilenamePattern"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pattern for extracting metadata from filenames into table columns"
+        },
+        "source_directory": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Subdirectory name to look for files in (when different from table name). Used when files for multiple tables are stored in the same folder.",
+          "title": "Source Directory"
+        },
+        "kind": {
+          "const": "delimited",
+          "default": "delimited",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional file or directory path to read. Usually supplied at runtime by the caller rather than declared in the UMF.",
+          "title": "Path"
+        }
+      },
+      "title": "DelimitedSource",
+      "type": "object"
+    },
+    "DerivationCandidate": {
+      "description": "Source column candidate for survivorship derivation.",
+      "properties": {
+        "table": {
+          "description": "Source table name (supports qualified refs: 'pipeline.table' or bare 'table'). Special value 'intermediate' indicates expression uses columns from intermediate pre-aggregation views already joined into the base context (no separate table JOIN created).",
+          "title": "Table",
+          "type": "string"
+        },
+        "column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source column name (optional if expression is provided)",
+          "title": "Column"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL expression for deriving value (e.g., 'CONCAT_WS(\" \", fname, lname)'). Use instead of column for computed values.",
+          "title": "Expression"
+        },
+        "priority": {
+          "description": "Priority order (1 = highest priority)",
+          "minimum": 1,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Explanation of why this source was selected and its priority",
+          "title": "Reason"
+        },
+        "join_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL WHERE clause for filtering this table join (e.g., 'pcp_type = \"P4Q\"'). Used when joining same table multiple times with different filters.",
+          "title": "Join Filter"
+        },
+        "table_instance": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unique alias for this table+filter combination (e.g., 'pcp_assigned', 'pcp_imputed'). Required when joining same table multiple times with different filters to disambiguate joins.",
+          "title": "Table Instance"
+        },
+        "join_via": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/JoinViaSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Specification for joining through an intermediary lookup table. Used when the source table's key doesn't directly match the target's primary key."
+        },
+        "order_by": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Columns for window function ORDER BY (all DESC). When specified, uses ROW_NUMBER() window function instead of GROUP BY aggregation to get the full row with max value. E.g., ['result_approval_date', 'meta_snapshot_dt'] for max row by date then file timestamp.",
+          "title": "Order By"
+        },
+        "row_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL WHERE clause to filter source rows before aggregation. E.g., 'test_name = \"Glyco HGB A1C\" AND result IS NOT NULL'. Used with window functions to pre-filter qualifying records.",
+          "title": "Row Filter"
+        },
+        "select_columns": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Additional columns to include in the aggregation view output. Used with window functions to preserve traceability columns like result value, meta_source_name, loinc code, etc. E.g., ['result', 'meta_source_name', 'meta_snapshot_dt'].",
+          "title": "Select Columns"
+        },
+        "union_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Literal value to emit for this column in the UNION part corresponding to this table. Used for synthetic columns that don't exist in source tables but need different values per UNION branch (e.g., a flag that is false for the base table, true for the union table).",
+          "title": "Union Value"
+        }
+      },
+      "required": [
+        "table",
+        "priority"
+      ],
+      "title": "DerivationCandidate",
+      "type": "object"
+    },
+    "Expectation": {
+      "description": "A single validation expectation with structured metadata.",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "kwargs": {
+          "additionalProperties": true,
+          "title": "Kwargs",
+          "type": "object"
+        },
+        "meta": {
+          "$ref": "#/$defs/ExpectationMeta"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Expectation",
+      "type": "object"
+    },
+    "ExpectationMeta": {
+      "description": "Structured metadata for a single expectation.",
+      "properties": {
+        "stage": {
+          "default": "unknown",
+          "enum": [
+            "raw",
+            "ingested",
+            "unknown"
+          ],
+          "title": "Stage",
+          "type": "string"
+        },
+        "severity": {
+          "default": "warning",
+          "enum": [
+            "critical",
+            "error",
+            "warning",
+            "info"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "blocking": {
+          "default": false,
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "generated_from": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated From"
+        }
+      },
+      "title": "ExpectationMeta",
+      "type": "object"
+    },
+    "ExpectationSuite": {
+      "description": "Unified collection of all expectations for a table, classified by stage.",
+      "properties": {
+        "expectations": {
+          "items": {
+            "$ref": "#/$defs/Expectation"
+          },
+          "title": "Expectations",
+          "type": "array"
+        },
+        "thresholds": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thresholds"
+        },
+        "alert_config": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alert Config"
+        },
+        "pending": {
+          "items": {
+            "$ref": "#/$defs/Expectation"
+          },
+          "title": "Pending",
+          "type": "array"
+        }
+      },
+      "title": "ExpectationSuite",
+      "type": "object"
+    },
+    "FileFormatSpec": {
+      "description": "File format specification for data ingestion.",
+      "properties": {
+        "delimiter": {
+          "default": "|",
+          "description": "Field delimiter character",
+          "title": "Delimiter",
+          "type": "string"
+        },
+        "encoding": {
+          "default": "utf-8",
+          "description": "File encoding",
+          "title": "Encoding",
+          "type": "string"
+        },
+        "header": {
+          "default": true,
+          "description": "Whether file has header row",
+          "title": "Header",
+          "type": "boolean"
+        },
+        "quote_char": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Quote character for fields",
+          "title": "Quote Char"
+        },
+        "escape_char": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Escape character",
+          "title": "Escape Char"
+        },
+        "null_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "String representing NULL values",
+          "title": "Null Value"
+        },
+        "null_escape": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional null escape token used by dump files (e.g. '\\N')",
+          "title": "Null Escape"
+        },
+        "skip_rows": {
+          "default": 0,
+          "description": "Number of rows to skip at start",
+          "minimum": 0,
+          "title": "Skip Rows",
+          "type": "integer"
+        },
+        "footer_rows": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Number of footer rows to ignore at end of file",
+          "title": "Footer Rows"
+        },
+        "line_terminator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Record terminator token or literal line separator (e.g. 'CRLF' or '||')",
+          "title": "Line Terminator"
+        },
+        "comment_char": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Comment line prefix character",
+          "title": "Comment Char"
+        },
+        "filename_pattern": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FilenamePattern"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pattern for extracting metadata from filenames into table columns"
+        },
+        "source_directory": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Subdirectory name to look for files in (when different from table name). Used when files for multiple tables are stored in the same folder.",
+          "title": "Source Directory"
+        }
+      },
+      "title": "FileFormatSpec",
+      "type": "object"
+    },
+    "FilenamePattern": {
+      "description": "Filename pattern for extracting metadata from filenames.",
+      "properties": {
+        "regex": {
+          "description": "Regular expression with capture groups",
+          "title": "Regex",
+          "type": "string"
+        },
+        "captures": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Mapping from capture group index to column name (e.g., {1: 'source_vendor', 7: 'mode'})",
+          "title": "Captures",
+          "type": "object"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Human-readable pattern description",
+          "title": "Description"
+        }
+      },
+      "required": [
+        "regex",
+        "captures"
+      ],
+      "title": "FilenamePattern",
+      "type": "object"
+    },
+    "ForeignKey": {
+      "description": "Foreign key relationship.",
+      "properties": {
+        "column": {
+          "description": "Source column name",
+          "title": "Column",
+          "type": "string"
+        },
+        "references_table": {
+          "description": "Referenced table name",
+          "title": "References Table",
+          "type": "string"
+        },
+        "references_column": {
+          "description": "Referenced column name",
+          "title": "References Column",
+          "type": "string"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Confidence score for relationship",
+          "title": "Confidence"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Relationship type (e.g., 'foreign_key', 'reference')",
+          "title": "Type"
+        },
+        "domain_context": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Healthcare/business domain context (e.g., 'member-provider relationship')",
+          "title": "Domain Context"
+        },
+        "references": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Legacy format: table.column",
+          "title": "References"
+        },
+        "detection_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Method used to detect relationship",
+          "title": "Detection Method"
+        },
+        "cross_pipeline": {
+          "default": false,
+          "description": "Whether this FK references a table in a different pipeline",
+          "title": "Cross Pipeline",
+          "type": "boolean"
+        },
+        "references_pipeline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pipeline name for cross-pipeline references",
+          "title": "References Pipeline"
+        },
+        "join_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL join type: 'left' (default) or 'inner'",
+          "title": "Join Type"
+        },
+        "join_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL WHERE clause appended to JOIN ON clause (e.g., 'clientid = 2')",
+          "title": "Join Filter"
+        }
+      },
+      "required": [
+        "column",
+        "references_table",
+        "references_column"
+      ],
+      "title": "ForeignKey",
+      "type": "object"
+    },
+    "IncomingRelationship": {
+      "description": "Incoming foreign key relationship from another table.",
+      "properties": {
+        "source_table": {
+          "description": "Table that references this table (supports qualified refs: 'pipeline.table' or bare 'table')",
+          "title": "Source Table",
+          "type": "string"
+        },
+        "source_column": {
+          "description": "Column in source table that references this table",
+          "title": "Source Column",
+          "type": "string"
+        },
+        "target_column": {
+          "description": "Column in this table being referenced",
+          "title": "Target Column",
+          "type": "string"
+        },
+        "type": {
+          "description": "Relationship type (e.g., foreign_to_foreign)",
+          "title": "Type",
+          "type": "string"
+        },
+        "confidence": {
+          "description": "Confidence score for relationship",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "reasoning": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "AI reasoning for relationship detection",
+          "title": "Reasoning"
+        },
+        "cardinality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Cardinality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cardinality specification for relationship"
+        }
+      },
+      "required": [
+        "source_table",
+        "source_column",
+        "target_column",
+        "type",
+        "confidence"
+      ],
+      "title": "IncomingRelationship",
+      "type": "object"
+    },
+    "Index": {
+      "description": "Database index definition.",
+      "properties": {
+        "name": {
+          "description": "Index name",
+          "title": "Name",
+          "type": "string"
+        },
+        "columns": {
+          "description": "Index columns",
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "unique": {
+          "default": false,
+          "description": "Whether index is unique",
+          "title": "Unique",
+          "type": "boolean"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Index description",
+          "title": "Description"
+        }
+      },
+      "required": [
+        "name",
+        "columns"
+      ],
+      "title": "Index",
+      "type": "object"
+    },
+    "IngestionConfig": {
+      "description": "Configuration for ingestion behavior.\n\nControls how data from multiple files is deduplicated and written.",
+      "properties": {
+        "mode": {
+          "default": "incremental",
+          "description": "'snapshot': Filter to latest file, overwrite table. 'incremental': Keep latest per PK, upsert to table.",
+          "enum": [
+            "snapshot",
+            "incremental"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "order_by": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Columns to determine 'latest' (sorted descending). Can include: filename-extracted columns (e.g., 'file_date_yyyymmdd') or metadata columns (e.g., 'meta_source_name', 'meta_snapshot_dt', 'meta_load_dt'). For snapshot mode: filters to rows with MAX values of these columns. For incremental mode: orders rows when deduping by primary key.",
+          "title": "Order By"
+        },
+        "pre_upsert_exclusions": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/IngestionExclusionRule"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cross-pipeline exclusion rules applied before upsert. Matching rows are dropped, preserving existing ingested data for those keys.",
+          "title": "Pre Upsert Exclusions"
+        },
+        "post_upsert_rules": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/PostUpsertRule"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Rules applied after upsert to set flags (e.g., soft-delete) on ingested data.",
+          "title": "Post Upsert Rules"
+        }
+      },
+      "title": "IngestionConfig",
+      "type": "object"
+    },
+    "IngestionExclusionRule": {
+      "description": "Pre-upsert exclusion rule using cross-table data.\n\nRows matching the exclusion are dropped before upsert, preserving\nexisting ingested data for those keys.",
+      "properties": {
+        "cross_pipeline_table": {
+          "description": "Cross-pipeline table reference: 'pipeline.table'",
+          "title": "Cross Pipeline Table",
+          "type": "string"
+        },
+        "join_column": {
+          "description": "Column in this table to join on",
+          "title": "Join Column",
+          "type": "string"
+        },
+        "cross_pipeline_join_column": {
+          "description": "Column in the cross-pipeline table to join on",
+          "title": "Cross Pipeline Join Column",
+          "type": "string"
+        },
+        "exclude_when": {
+          "description": "SQL expression evaluated on joined row. When true, the row is excluded from upsert. References this table's columns as 'src.*' and cross-pipeline columns as 'xref.*'.",
+          "title": "Exclude When",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Human-readable description",
+          "title": "Description"
+        }
+      },
+      "required": [
+        "cross_pipeline_table",
+        "join_column",
+        "cross_pipeline_join_column",
+        "exclude_when"
+      ],
+      "title": "IngestionExclusionRule",
+      "type": "object"
+    },
+    "JdbcSource": {
+      "additionalProperties": false,
+      "description": "JDBC source (JDBC-01). Reading lands with bead tablespec-4b65c810.\n\nCredentials are never inlined: ``password_secret_ref`` names a secret in\nthe runtime's secret store. A literal ``password`` field is rejected\n(``extra=\"forbid\"``).",
+      "properties": {
+        "kind": {
+          "const": "jdbc",
+          "title": "Kind",
+          "type": "string"
+        },
+        "url": {
+          "description": "JDBC connection URL (jdbc:...)",
+          "title": "Url",
+          "type": "string"
+        },
+        "dbtable": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Table (or subquery alias) to read. Mutually exclusive with 'query'.",
+          "title": "Dbtable"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL query to read. Mutually exclusive with 'dbtable'.",
+          "title": "Query"
+        },
+        "driver": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "JDBC driver class name override",
+          "title": "Driver"
+        },
+        "user": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Connection user name",
+          "title": "User"
+        },
+        "password_secret_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Reference to the connection password in the runtime secret store (e.g. a Databricks secret scope/key). Plaintext passwords are rejected by design.",
+          "title": "Password Secret Ref"
+        },
+        "fetch_size": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "JDBC fetch size hint",
+          "title": "Fetch Size"
+        },
+        "partition_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Numeric column used for partitioned reads",
+          "title": "Partition Column"
+        },
+        "lower_bound": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Partitioned-read lower bound",
+          "title": "Lower Bound"
+        },
+        "upper_bound": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Partitioned-read upper bound",
+          "title": "Upper Bound"
+        },
+        "num_partitions": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Number of partitions for parallel reads",
+          "title": "Num Partitions"
+        }
+      },
+      "required": [
+        "kind",
+        "url"
+      ],
+      "title": "JdbcSource",
+      "type": "object"
+    },
+    "JoinViaSpec": {
+      "description": "Specification for joining through an intermediary lookup table.\n\nUsed when the source table's join key doesn't directly match the target's primary key.\nFor example, when a truncated key needs to be resolved through an intermediary\ntable to get the full identifier.",
+      "properties": {
+        "lookup_table": {
+          "description": "Intermediary table to join through (e.g., 'datawarehouse')",
+          "title": "Lookup Table",
+          "type": "string"
+        },
+        "source_key": {
+          "description": "Key column in the base table (e.g., 'client_member_id')",
+          "title": "Source Key",
+          "type": "string"
+        },
+        "lookup_key": {
+          "description": "Key column in lookup table that matches source_key (e.g., 'member_id')",
+          "title": "Lookup Key",
+          "type": "string"
+        },
+        "target_key": {
+          "description": "Key column that links lookup table to source table (e.g., 'insurance_policy')",
+          "title": "Target Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lookup_table",
+        "source_key",
+        "lookup_key",
+        "target_key"
+      ],
+      "title": "JoinViaSpec",
+      "type": "object"
+    },
+    "JsonProjection": {
+      "additionalProperties": false,
+      "description": "Flat JSON field projection for one UMF column.",
+      "properties": {
+        "column": {
+          "description": "UMF column name",
+          "title": "Column",
+          "type": "string"
+        },
+        "path": {
+          "description": "Top-level field name or explicit dot-path in the JSON source.",
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "column",
+        "path"
+      ],
+      "title": "JsonProjection",
+      "type": "object"
+    },
+    "JsonSource": {
+      "additionalProperties": false,
+      "description": "JSON / JSONL source with flat column projection metadata.",
+      "properties": {
+        "kind": {
+          "const": "json",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File or directory path of the JSON or JSONL data to read.",
+          "title": "Path"
+        },
+        "multi_line": {
+          "default": false,
+          "description": "Whether the source uses multiline JSON records instead of JSONL.",
+          "title": "Multi Line",
+          "type": "boolean"
+        },
+        "projection": {
+          "description": "Flat projection list from UMF column name to JSON field path. Every UMF column must appear exactly once. Dot paths are resolved explicitly; no recursive flattening is performed.",
+          "items": {
+            "$ref": "#/$defs/JsonProjection"
+          },
+          "minItems": 1,
+          "title": "Projection",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "JsonSource",
+      "type": "object"
+    },
+    "LookupJoin": {
+      "description": "Two-hop join specification: reach a target table through a bridge.\n\nUsed when the base table shares no direct key with the target, but a\nbridge table links them (e.g. a fact row carries ``IncidentID``; the\nfacility dim is keyed on ``facility_id``; ``bronze_incident`` bridges\nthem via ``ID`` and ``FacilityID``). The generator emits\n``base JOIN bridge ON base.source_key = bridge.bridge_source_key`` then\n``JOIN target ON bridge.bridge_target_key = target.<target_column>``.",
+      "properties": {
+        "source_key": {
+          "description": "Column on the BASE table that keys into the bridge (e.g. 'IncidentID')",
+          "title": "Source Key",
+          "type": "string"
+        },
+        "bridge_table": {
+          "description": "The intermediary table joining base to target (e.g. 'bronze_incident')",
+          "title": "Bridge Table",
+          "type": "string"
+        },
+        "bridge_source_key": {
+          "description": "Column on the bridge that matches the base's source_key (e.g. 'ID')",
+          "title": "Bridge Source Key",
+          "type": "string"
+        },
+        "bridge_target_key": {
+          "description": "Column on the bridge that keys into the target (e.g. 'FacilityID')",
+          "title": "Bridge Target Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_key",
+        "bridge_table",
+        "bridge_source_key",
+        "bridge_target_key"
+      ],
+      "title": "LookupJoin",
+      "type": "object"
+    },
+    "Nullable": {
+      "additionalProperties": true,
+      "description": "Nullable configuration per context (e.g., Line of Business).\n\nAccepts arbitrary context keys with boolean values. Common healthcare\ncontexts include MD (Medicaid), MP (Medicare Part D), ME (Medicare),\nbut any domain-specific keys are supported.\n\nExamples:\n    Nullable(MD=False, MP=False, ME=False)      # Healthcare LOBs\n    Nullable(US=False, EU=True)                  # Regional contexts\n    Nullable(production=False, staging=True)      # Environment contexts",
+      "properties": {},
+      "title": "Nullable",
+      "type": "object"
+    },
+    "OutgoingRelationship": {
+      "description": "Outgoing foreign key relationship to another table.",
+      "properties": {
+        "target_table": {
+          "description": "Table that this table references (supports qualified refs: 'pipeline.table' or bare 'table')",
+          "title": "Target Table",
+          "type": "string"
+        },
+        "source_column": {
+          "description": "Column in this table that references target table",
+          "title": "Source Column",
+          "type": "string"
+        },
+        "target_column": {
+          "description": "Column in target table being referenced",
+          "title": "Target Column",
+          "type": "string"
+        },
+        "type": {
+          "description": "Relationship type (e.g., foreign_to_primary)",
+          "title": "Type",
+          "type": "string"
+        },
+        "confidence": {
+          "description": "Confidence score for relationship",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "reasoning": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "AI reasoning for relationship detection",
+          "title": "Reasoning"
+        },
+        "cardinality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Cardinality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cardinality specification for relationship"
+        },
+        "alternative_joins": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Alternative join conditions using OR logic. Each dict specifies source_column and target_column for additional join paths.",
+          "title": "Alternative Joins"
+        }
+      },
+      "required": [
+        "target_table",
+        "source_column",
+        "target_column",
+        "type",
+        "confidence"
+      ],
+      "title": "OutgoingRelationship",
+      "type": "object"
+    },
+    "OutputConfig": {
+      "description": "Output file configuration.",
+      "properties": {
+        "include_footer": {
+          "default": false,
+          "description": "Include row count footer in output files",
+          "title": "Include Footer",
+          "type": "boolean"
+        },
+        "line_terminator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Line terminator (e.g., 'CRLF')",
+          "title": "Line Terminator"
+        },
+        "file_naming_example": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Example filename pattern",
+          "title": "File Naming Example"
+        }
+      },
+      "title": "OutputConfig",
+      "type": "object"
+    },
+    "ParquetSource": {
+      "additionalProperties": false,
+      "description": "Parquet source (model stub; reading lands with bead tablespec-61da147e).",
+      "properties": {
+        "kind": {
+          "const": "parquet",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File or directory path of the parquet data to read.",
+          "title": "Path"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "ParquetSource",
+      "type": "object"
+    },
+    "PostUpsertRule": {
+      "description": "Post-upsert rule to update flags on ingested data.\n\nSupports optional cross-pipeline table references for conditions that need\nto check external data (e.g., mark as deleted if member disenrolled in another table).",
+      "properties": {
+        "flag_column": {
+          "description": "Column to set (e.g., 'is_deleted')",
+          "title": "Flag Column",
+          "type": "string"
+        },
+        "flag_value": {
+          "description": "Value to set (e.g., 'true')",
+          "title": "Flag Value",
+          "type": "string"
+        },
+        "condition": {
+          "description": "SQL condition identifying rows to flag. Can reference table columns directly. Use '{this_table}' as placeholder for the current table name. If cross_pipeline_table is set, use '{xref}' to reference the cross-pipeline table.",
+          "title": "Condition",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Human-readable description",
+          "title": "Description"
+        },
+        "cross_pipeline_table": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional cross-pipeline table ref: 'pipeline.table' for conditions that need external data. When set, the table is registered as '{xref}' temp view.",
+          "title": "Cross Pipeline Table"
+        },
+        "join_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column in this table to join on (required if cross_pipeline_table is set)",
+          "title": "Join Column"
+        },
+        "cross_pipeline_join_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column in the cross-pipeline table to join on (required if cross_pipeline_table is set)",
+          "title": "Cross Pipeline Join Column"
+        }
+      },
+      "required": [
+        "flag_column",
+        "flag_value",
+        "condition"
+      ],
+      "title": "PostUpsertRule",
+      "type": "object"
+    },
+    "QualityCheck": {
+      "description": "Single data quality check executed on typed/ingested data.\n\nQuality checks run on typed data AFTER type conversion.\nThey check data values, business rules, and cross-column constraints.\n\nSee INGESTED_QUALITY_CHECK_TYPES for allowed expectation types.",
+      "properties": {
+        "expectation": {
+          "additionalProperties": true,
+          "description": "Great Expectations expectation configuration (type + kwargs + meta)",
+          "title": "Expectation",
+          "type": "object"
+        },
+        "severity": {
+          "description": "Severity level: critical (halt), error (fail), warning (log), info (report)",
+          "enum": [
+            "critical",
+            "error",
+            "warning",
+            "info"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "blocking": {
+          "default": false,
+          "description": "If True, pipeline execution halts when this check fails. Default: False (non-blocking)",
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Human-readable description of what this check validates",
+          "title": "Description"
+        },
+        "tags": {
+          "description": "Tags for grouping/filtering checks (e.g., ['business_rule', 'lob'])",
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "expectation",
+        "severity"
+      ],
+      "title": "QualityCheck",
+      "type": "object"
+    },
+    "QualityChecks": {
+      "description": "Data quality checks executed on typed/ingested data.\n\nThese checks run on typed data AFTER type conversion.\nThey validate data values, business rules, and relationships.\n\nSee INGESTED_QUALITY_CHECK_TYPES for allowed check types.\n\nFor schema/structure checks on raw strings, use validation_rules instead.",
+      "properties": {
+        "checks": {
+          "description": "List of quality checks to execute on ingested data",
+          "items": {
+            "$ref": "#/$defs/QualityCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "thresholds": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Aggregate quality thresholds (e.g., max_critical_failure_percent: 5.0)",
+          "title": "Thresholds"
+        },
+        "alert_config": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Alerting configuration (channels, recipients, threshold_breach_only)",
+          "title": "Alert Config"
+        }
+      },
+      "title": "QualityChecks",
+      "type": "object"
+    },
+    "ReferencedBy": {
+      "description": "Reverse foreign key relationship.",
+      "properties": {
+        "table": {
+          "description": "Referencing table name",
+          "title": "Table",
+          "type": "string"
+        },
+        "column": {
+          "description": "Referenced column name",
+          "title": "Column",
+          "type": "string"
+        },
+        "foreign_key_column": {
+          "description": "Foreign key column name",
+          "title": "Foreign Key Column",
+          "type": "string"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Confidence score for relationship",
+          "title": "Confidence"
+        }
+      },
+      "required": [
+        "table",
+        "column",
+        "foreign_key_column"
+      ],
+      "title": "ReferencedBy",
+      "type": "object"
+    },
+    "RelationshipSummary": {
+      "description": "Summary statistics for table relationships.",
+      "properties": {
+        "total_relationships": {
+          "description": "Total number of relationships",
+          "minimum": 0,
+          "title": "Total Relationships",
+          "type": "integer"
+        },
+        "total_incoming": {
+          "description": "Number of incoming relationships",
+          "minimum": 0,
+          "title": "Total Incoming",
+          "type": "integer"
+        },
+        "total_outgoing": {
+          "description": "Number of outgoing relationships",
+          "minimum": 0,
+          "title": "Total Outgoing",
+          "type": "integer"
+        },
+        "hub_score": {
+          "description": "Hub score indicating centrality in relationship graph",
+          "minimum": 0.0,
+          "title": "Hub Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total_relationships",
+        "total_incoming",
+        "total_outgoing",
+        "hub_score"
+      ],
+      "title": "RelationshipSummary",
+      "type": "object"
+    },
+    "Relationships": {
+      "description": "Table relationships.",
+      "properties": {
+        "foreign_keys": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ForeignKey"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Foreign key relationships",
+          "title": "Foreign Keys"
+        },
+        "referenced_by": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ReferencedBy"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Reverse foreign key relationships",
+          "title": "Referenced By"
+        },
+        "indexes": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Index"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Database indexes",
+          "title": "Indexes"
+        },
+        "outgoing": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OutgoingRelationship"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Outgoing relationships from this table to other tables",
+          "title": "Outgoing"
+        },
+        "incoming": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/IncomingRelationship"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Incoming relationships from tables that reference this table",
+          "title": "Incoming"
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RelationshipSummary"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Summary statistics for all relationships"
+        }
+      },
+      "title": "Relationships",
+      "type": "object"
+    },
+    "Survivorship": {
+      "description": "Survivorship strategy for multi-source column derivation.",
+      "properties": {
+        "strategy": {
+          "description": "Survivorship strategy (e.g., 'highest_priority', 'most_recent', 'longest_value')",
+          "title": "Strategy",
+          "type": "string"
+        },
+        "explanation": {
+          "description": "Comprehensive explanation of mapping strategy, source selection/rejection reasoning, candidates examined, business rules applied, and fallback behavior",
+          "title": "Explanation",
+          "type": "string"
+        },
+        "default_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Default value to use when no source data is available or all candidates are null. Extracted from target column description (e.g., 'default to 0', 'Default it to IHA').",
+          "title": "Default Value"
+        },
+        "default_condition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Condition or context for when the default value should be applied. Extracted from target column description (e.g., 'until assessment is completed', 'when not available').",
+          "title": "Default Condition"
+        }
+      },
+      "required": [
+        "strategy",
+        "explanation"
+      ],
+      "title": "Survivorship",
+      "type": "object"
+    },
+    "UMFColumn": {
+      "description": "UMF Column definition.",
+      "properties": {
+        "name": {
+          "description": "Column name",
+          "maxLength": 128,
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "canonical_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Canonical column name from source specifications (original case, any format). Used for input/output file headers. Can contain spaces, special characters, etc. If not provided, defaults to name.",
+          "title": "Canonical Name"
+        },
+        "aliases": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Alternative names for this column (e.g., variations in spelling, case, or abbreviations). Used for resolving column name mismatches when mapping between different data sources.",
+          "title": "Aliases"
+        },
+        "data_type": {
+          "description": "Column data type",
+          "pattern": "^(VARCHAR|DECIMAL|INTEGER|DATE|DATETIME|TIMESTAMP|BOOLEAN|TEXT|CHAR|FLOAT|EMBEDDING)$",
+          "title": "Data Type",
+          "type": "string"
+        },
+        "dimension": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Vector dimensionality for EMBEDDING columns",
+          "title": "Dimension"
+        },
+        "position": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Excel column position or identifier",
+          "title": "Position"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column description",
+          "title": "Description"
+        },
+        "nullable": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Nullable"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Nullability by LOB"
+        },
+        "sample_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Sample values for the column",
+          "title": "Sample Values"
+        },
+        "length": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Maximum length for VARCHAR columns",
+          "title": "Length"
+        },
+        "precision": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Precision for DECIMAL columns",
+          "title": "Precision"
+        },
+        "scale": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Scale for DECIMAL columns",
+          "title": "Scale"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column title",
+          "title": "Title"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Unstructured format pattern or example from source specification. May contain date patterns (YYYY-MM-DD), value enumerations (M, F, U), structural patterns (State_LOB), or example values ('40', '1.85'). This field preserves vendor documentation as-is and requires context-aware interpretation based on the data_type and column purpose.",
+          "title": "Format"
+        },
+        "fallback_formats": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Alternative date/timestamp formats to try if primary format fails. Used when source data has mixed format conventions (e.g., M/D/YYYY and MM-DD-YYYY). Formats are tried in order after the primary format fails.",
+          "title": "Fallback Formats"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Additional notes or business rules from source specification. Contains unstructured documentation that provides context for the column.",
+          "title": "Notes"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "pattern": "^(data|filename|metadata|derived)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source of column value: 'data' (from file content), 'filename' (parsed from filename), 'metadata' (from ingestion metadata), or 'derived' (computed at runtime in Silver/Gold layers)",
+          "title": "Source"
+        },
+        "key_type": {
+          "anyOf": [
+            {
+              "pattern": "^(primary|unique|foreign_one_to_one|foreign_one_to_many)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Key type for constraint-aware generation: 'primary', 'unique', 'foreign_one_to_one', or 'foreign_one_to_many'",
+          "title": "Key Type"
+        },
+        "exclude_from_change_detection": {
+          "default": false,
+          "description": "When True, exclude this column from change detection hash. Use for columns whose values change every run (e.g., rundate) but should not trigger a record to be treated as 'changed'.",
+          "title": "Exclude From Change Detection",
+          "type": "boolean"
+        },
+        "reporting_requirement": {
+          "anyOf": [
+            {
+              "pattern": "^(R|O|S)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Reporting requirement classification: 'R' (Required), 'O' (Optional), 'S' (Suggested)",
+          "title": "Reporting Requirement"
+        },
+        "derived_from": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "DEPRECATED: Use 'derivation' field instead. Source column name when this column is derived from another column (e.g., PBPType derived from source_lob)",
+          "title": "Derived From"
+        },
+        "derivation_mapping": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "DEPRECATED: Use 'derivation' field instead. Value mapping for derivation: {source_value: derived_value} (e.g., {'MD': 'MEDICAID', 'ME': 'MEDICARE'})",
+          "title": "Derivation Mapping"
+        },
+        "derivation_expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "DEPRECATED: Use 'derivation' field instead. Python expression for complex derivations.",
+          "title": "Derivation Expression"
+        },
+        "domain_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Domain type classification (e.g., 'us_state_code', 'email', 'phone_number', 'member_id'). Used to apply standard validation rules, sample data generators, and format patterns. Inferred during spec generation based on column name and metadata.",
+          "title": "Domain Type"
+        },
+        "derivation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UMFColumnDerivation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Multi-source derivation metadata with survivorship strategy. Specifies candidate source columns and logic for selecting the best value. Used for generated tables that consolidate data from multiple sources."
+        },
+        "provenance_policy": {
+          "anyOf": [
+            {
+              "pattern": "^(enterprise_only|enterprise_preferred|outreach_only|survivorship)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Data provenance policy for survivorship mapping: 'enterprise_only' (never use outreach files), 'enterprise_preferred' (prefer enterprise; use outreach as fallback), 'outreach_only' (only use outreach files), 'survivorship' (standard multi-source logic)",
+          "title": "Provenance Policy"
+        },
+        "provenance_notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Human-readable explanation of provenance policy and data source expectations",
+          "title": "Provenance Notes"
+        },
+        "pivot_field": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Whether this field is part of a numbered pivot sequence (e.g., GAP1, GAP2, GAP3)",
+          "title": "Pivot Field"
+        },
+        "pivot_source_table": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source table for pivot field (e.g., 'outreach_list_gaps' for GAP1, GAP2, etc.)",
+          "title": "Pivot Source Table"
+        },
+        "pivot_source_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source column name to pivot from (e.g., 'quality_gap_group' for GAP fields)",
+          "title": "Pivot Source Column"
+        },
+        "pivot_index": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Position in the pivot sequence (e.g., 1 for GAP1, 2 for GAP2, etc.)",
+          "title": "Pivot Index"
+        },
+        "pivot_max_count": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Maximum number of pivot fields in the sequence (e.g., 6 for GAP1-GAP6)",
+          "title": "Pivot Max Count"
+        },
+        "default": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Default value to use for this column when no data is provided or value is null. Commonly used in disposition tracking and status fields.",
+          "title": "Default"
+        },
+        "profiling": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Profiling metadata for data quality expectations (e.g., completeness, approximate_num_distinct). Used to generate profiling-based Great Expectations constraints.",
+          "title": "Profiling"
+        },
+        "null_output_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "String value to use when rendering NULL values in output files. When specified, NULL values are replaced with this string during output formatting. When not specified, NULL values are rendered according to the CSV writer's nullValue option (empty string by default). Example: 'NA', 'N/A', 'NULL', '9999-12-31'",
+          "title": "Null Output Value"
+        },
+        "preserve_literal_null": {
+          "default": false,
+          "description": "If True, the string 'NULL' (case-insensitive) is preserved as a literal string value during ingestion. If False (default), 'NULL' strings are converted to SQL NULL. Use this for columns where 'NULL' is a valid data value (e.g., someone's actual last name is 'NULL').",
+          "title": "Preserve Literal Null",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "data_type"
+      ],
+      "title": "UMFColumn",
+      "type": "object"
+    },
+    "UMFColumnDerivation": {
+      "description": "Column derivation metadata for multi-source survivorship.\n\nUsed when a column in a generated table is derived from multiple source tables,\nrequiring survivorship logic to choose the best value.\n\nNote: Either candidates, survivorship, or strategy must be present.\nEnterprise-only fields may have survivorship metadata without candidates.\nPrimary key columns use strategy: primary_key without candidates.",
+      "properties": {
+        "strategy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Derivation strategy for special column types. Use 'primary_key' for columns that should be derived from the base table's primary key column, or 'base_column' for columns that come directly from the base table.",
+          "title": "Strategy"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Human-readable explanation of the derivation logic for documentation.",
+          "title": "Explanation"
+        },
+        "candidates": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DerivationCandidate"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source columns this field can be derived from, ordered by priority. May be omitted for enterprise-only fields that have no source candidates.",
+          "title": "Candidates"
+        },
+        "survivorship": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Survivorship"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Survivorship strategy for selecting among candidates"
+        }
+      },
+      "title": "UMFColumnDerivation",
+      "type": "object"
+    },
+    "UMFMetadata": {
+      "description": "Additional UMF metadata.",
+      "properties": {
+        "updated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Last update timestamp",
+          "title": "Updated At"
+        },
+        "created_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Creator identifier",
+          "title": "Created By"
+        },
+        "pipeline_phase": {
+          "anyOf": [
+            {
+              "maximum": 7,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pipeline phase that created/updated this file",
+          "title": "Pipeline Phase"
+        },
+        "source_file_modified": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Last modified timestamp of the source Excel file",
+          "title": "Source File Modified"
+        },
+        "base_table_strategy": {
+          "anyOf": [
+            {
+              "enum": [
+                "union_sources",
+                "unpivot",
+                "union_branches"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Strategy for building base table. 'union_sources': build a key-only universe from UNION of source_tables. 'unpivot': UNPIVOT the base table's unpivot_columns into rows. 'union_branches': UNION the base_table with union_base_tables (falling back to source_tables), each branch projecting the target column set through its own derivation candidates.",
+          "title": "Base Table Strategy"
+        },
+        "base_table": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Explicit base table name for SQL generation. Overrides automatic base table inference.",
+          "title": "Base Table"
+        },
+        "base_table_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL WHERE clause applied to the base table when building the base view. Used by generated tables that need to pre-filter base-table rows before joins run.",
+          "title": "Base Table Filter"
+        },
+        "base_join_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column on `base_table` to use as the join key when building the base view. Overrides the auto-inferred key column. Set when the base table has multiple key-like columns and the wrong one would be auto-selected.",
+          "title": "Base Join Column"
+        },
+        "final_filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL WHERE clause applied after the final assembly view is built. Runs against the fully-joined derivation output, so it can reference derived columns that don't exist on the base table. Use base_table_filter for filters that reference only base-table columns (faster, filters earlier).",
+          "title": "Final Filter"
+        },
+        "union_base_tables": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Additional tables to UNION ALL into the base view. Tables must have columns matching the base_table's selected columns. Used to merge rows from multiple sources into the generated base.",
+          "title": "Union Base Tables"
+        },
+        "union_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "union_all",
+                "union"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SQL union operator for union_base_tables. Defaults to 'union_all' (preserves all rows). Use 'union' for deduplication across sources.",
+          "title": "Union Type"
+        },
+        "union_exclude_base": {
+          "default": false,
+          "description": "When true, union_base_tables rows are excluded if their primary key already exists in the base table (anti-join). Prevents duplicate rows when populations may overlap.",
+          "title": "Union Exclude Base",
+          "type": "boolean"
+        },
+        "union_coalesce_base": {
+          "default": false,
+          "description": "When true (with union_exclude_base), overlapping rows are merged using COALESCE(base_col, union_col) instead of excluding the union table rows. Base table values preferred; union table values fill NULLs.",
+          "title": "Union Coalesce Base",
+          "type": "boolean"
+        },
+        "source_tables": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source table names for union_sources strategy.",
+          "title": "Source Tables"
+        },
+        "unpivot_columns": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source columns to UNPIVOT into rows.",
+          "title": "Unpivot Columns"
+        },
+        "unpivot_value_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Output column name for the unpivoted values.",
+          "title": "Unpivot Value Column"
+        },
+        "dedup_strategy": {
+          "anyOf": [
+            {
+              "const": "latest",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Deduplication strategy for generated tables. 'latest': deduplicate on primary_key, keeping the row with the most recent load date.",
+          "title": "Dedup Strategy"
+        },
+        "final_dedup": {
+          "anyOf": [
+            {
+              "const": "distinct",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Final-assembly deduplication strategy (runs after all joins). 'distinct': emit SELECT DISTINCT so exact-duplicate rows produced by join fan-out are collapsed. Use when a joined table has higher cardinality than the base and you don't need every joined row.",
+          "title": "Final Dedup"
+        },
+        "output_config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OutputConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Output file configuration"
+        }
+      },
+      "title": "UMFMetadata",
+      "type": "object"
+    },
+    "ValidationRule": {
+      "description": "Individual validation rule.",
+      "properties": {
+        "rule_type": {
+          "description": "Type of validation rule",
+          "title": "Rule Type",
+          "type": "string"
+        },
+        "description": {
+          "description": "Rule description",
+          "title": "Description",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Rule severity",
+          "pattern": "^(error|warning|info)$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "parameters": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Rule parameters",
+          "title": "Parameters"
+        }
+      },
+      "required": [
+        "rule_type",
+        "description",
+        "severity"
+      ],
+      "title": "ValidationRule",
+      "type": "object"
+    },
+    "ValidationRules": {
+      "description": "Validation rules for UMF table.",
+      "properties": {
+        "table_level": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ValidationRule"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Table-level validation rules",
+          "title": "Table Level"
+        },
+        "column_level": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "items": {
+                  "$ref": "#/$defs/ValidationRule"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column-level validation rules",
+          "title": "Column Level"
+        },
+        "expectations": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "GX-style expectation list (legacy/loader format)",
+          "title": "Expectations"
+        },
+        "pending_expectations": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Expectations pending implementation",
+          "title": "Pending Expectations"
+        }
+      },
+      "title": "ValidationRules",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Universal Metadata Format model.",
+  "example": {
+    "columns": [
+      {
+        "data_type": "VARCHAR",
+        "description": "Line of Business",
+        "length": 20,
+        "name": "PBPTYPE",
+        "nullable": {
+          "MD": false,
+          "ME": false,
+          "MP": false
+        },
+        "position": "A",
+        "sample_values": [
+          "MEDICAID",
+          "MEDICARE",
+          "MARKETPLACE"
+        ]
+      }
+    ],
+    "description": "Healthcare claims and billing information",
+    "sheet_name": "Medical Claims",
+    "source_file": "Centene Outbound Outreach Data Layouts v2.5 2026.xlsx",
+    "table_name": "Medical_Claims",
+    "version": "1.0"
+  },
+  "properties": {
+    "version": {
+      "description": "UMF format version",
+      "pattern": "^\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    },
+    "table_name": {
+      "description": "Database table name",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+      "title": "Table Name",
+      "type": "string"
+    },
+    "canonical_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Canonical name from source specifications (original case, any format). Can contain spaces, special characters, etc. Exact match to Excel tab name or specification.",
+      "title": "Canonical Name"
+    },
+    "aliases": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Alternative names for this table (e.g., sheet name variations, case variants). Used for resolving references when table names don't match exactly.",
+      "title": "Aliases"
+    },
+    "source_sheet_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Original Excel sheet name from source specification. Stored for provenance tracking when canonical_name is derived from filename patterns.",
+      "title": "Source Sheet Name"
+    },
+    "source_file": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Original source file name",
+      "title": "Source File"
+    },
+    "sheet_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Excel sheet name if applicable",
+      "title": "Sheet Name"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Human-readable table description",
+      "title": "Description"
+    },
+    "table_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Table classification: data_table, lookup_table, or configuration",
+      "title": "Table Type"
+    },
+    "columns": {
+      "description": "Array of column definitions",
+      "items": {
+        "$ref": "#/$defs/UMFColumn"
+      },
+      "minItems": 1,
+      "title": "Columns",
+      "type": "array"
+    },
+    "primary_key": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Primary key column names (single or compound).",
+      "title": "Primary Key"
+    },
+    "unique_constraints": {
+      "anyOf": [
+        {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Unique constraint column combinations (non-primary compound uniqueness). Each inner list represents a set of columns that must be unique together.",
+      "title": "Unique Constraints"
+    },
+    "file_format": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FileFormatSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "File format specification for ingestion (delimiter, encoding, etc.)"
+    },
+    "source": {
+      "anyOf": [
+        {
+          "discriminator": {
+            "mapping": {
+              "delimited": "#/$defs/DelimitedSource",
+              "jdbc": "#/$defs/JdbcSource",
+              "json": "#/$defs/JsonSource",
+              "parquet": "#/$defs/ParquetSource"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/DelimitedSource"
+            },
+            {
+              "$ref": "#/$defs/ParquetSource"
+            },
+            {
+              "$ref": "#/$defs/JsonSource"
+            },
+            {
+              "$ref": "#/$defs/JdbcSource"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Source shape declaration (ADR-015), discriminated on 'kind' (delimited | parquet | json | jdbc). When absent the table is a delimited flat file described by file_format (or its defaults); resolve via effective_source().",
+      "title": "Source"
+    },
+    "validation_rules": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ValidationRules"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Validation rules added by Phase 4"
+    },
+    "quality_checks": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/QualityChecks"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Post-ingestion data quality checks for fitness assessment"
+    },
+    "expectations": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ExpectationSuite"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Unified expectation suite (replaces validation_rules + quality_checks)"
+    },
+    "relationships": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Relationships"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Table relationships added by Phase 4"
+    },
+    "metadata": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UMFMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Additional metadata"
+    },
+    "config_data": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Configuration data for configuration-type tables",
+      "title": "Config Data"
+    },
+    "lookup_metadata": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Lookup table metadata including sample data and structure",
+      "title": "Lookup Metadata"
+    },
+    "sample_data_cases": {
+      "anyOf": [
+        {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Forced test cases for sample data generation. Each dict defines column values that must be included in generated sample data to test specific scenarios (e.g., edge cases, cross-table relationships).",
+      "title": "Sample Data Cases"
+    },
+    "derivations": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Derivation metadata including LLM generation info, mappings, survivorship strategies, and normalization rules",
+      "title": "Derivations"
+    },
+    "ingestion": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IngestionConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Ingestion strategy. Controls file filtering, deduplication, and write mode."
+    },
+    "context_column": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Column used for context-based conditional validation (e.g. 'LOB' for healthcare line-of-business, 'segment' for fintech). When set, nullable rules with per-context keys generate filtered expectations using row_condition.",
+      "title": "Context Column"
+    }
+  },
+  "required": [
+    "version",
+    "table_name",
+    "columns"
+  ],
+  "title": "UMF",
+  "type": "object"
+}
