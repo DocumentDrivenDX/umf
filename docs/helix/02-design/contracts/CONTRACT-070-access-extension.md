@@ -168,7 +168,8 @@ is `{platform:"postgresql"|"lakebase"|"spark-delta"|"unity-catalog",
 majorVersion:string}`. One ColumnSet per binding/target pair.
 
 NativeColumn is `{field:FieldRef, type:string, notNull:boolean,
-generation:null|"identity"|"stored-expression"|"default"}`.
+generation:null|"identity"|"stored-expression"|"default",
+collation?:null|{schema:string,name:string}}`.
 
 - `field` MUST be bound to a column by the referenced CONTRACT-042 binding.
 - `type` is the exact native type spelling the column uses, including modifiers
@@ -183,6 +184,19 @@ generation:null|"identity"|"stored-expression"|"default"}`.
 - `generation` records how the engine produces the value. `generated:true` in the
   view requires a non-null `generation`; `default` alone does not make a field
   generated.
+- `collation` is an authored PostgreSQL/Lakebase native identity, not an inferred
+  string ordering policy. It is explicit `null` for a noncollatable column, or the
+  exact qualified native collation name, including `pg_catalog.default` only
+  when deliberately authored. Names are nonempty, NUL-free and at most63 UTF-8
+  bytes. Unknown selected members refuse. Other target profiles do not interpret
+  this member and refuse a selected declaration that supplies it.
+- Source-exact PostgreSQL/Lakebase catalog admission requires this fact for every
+  bound column, alongside the complete ColumnSet inventory. Omission remains
+  authorable for legacy declaration/generic compiler use, but cannot qualify an
+  SDK native catalog. No default locale or `C` collation is chosen by a generator.
+  Qualified-name equality does not claim portable locale equivalence; the native
+  target observes the collation definition in its own database and detects later
+  snapshot drift. Generation-kind policy above is unchanged.
 
 ### Temporal value qualification
 
@@ -249,11 +263,11 @@ is asserted: CONTRACT-049 does not admit one in this profile.
   "columns": [{"binding": {"sourceId": "orders-binding", "module": "commerce"},
     "target": {"platform": "postgresql", "majorVersion": "18"},
     "columns": [
-      {"field": {"module": "commerce", "element": "orderId"},  "type": "text",          "notNull": true,  "generation": null},
-      {"field": {"module": "commerce", "element": "amount"},   "type": "numeric(12,2)", "notNull": true,  "generation": null},
-      {"field": {"module": "commerce", "element": "memo"},     "type": "text",          "notNull": false, "generation": null},
-      {"field": {"module": "commerce", "element": "placedAt"}, "type": "timestamptz",   "notNull": true,  "generation": null},
-      {"field": {"module": "commerce", "element": "revision"}, "type": "bigint",        "notNull": true,  "generation": "identity"}
+      {"field": {"module": "commerce", "element": "orderId"},  "type": "text",          "notNull": true,  "generation": null, "collation": {"schema": "pg_catalog", "name": "default"}},
+      {"field": {"module": "commerce", "element": "amount"},   "type": "numeric(12,2)", "notNull": true,  "generation": null, "collation": null},
+      {"field": {"module": "commerce", "element": "memo"},     "type": "text",          "notNull": false, "generation": null, "collation": {"schema": "pg_catalog", "name": "default"}},
+      {"field": {"module": "commerce", "element": "placedAt"}, "type": "timestamptz",   "notNull": true,  "generation": null, "collation": null},
+      {"field": {"module": "commerce", "element": "revision"}, "type": "bigint",        "notNull": true,  "generation": "identity", "collation": null}
     ]}]
 }}
 ```

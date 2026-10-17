@@ -39,3 +39,27 @@ test('source binding and complete row policy remain independently mandatory',()=
  const nullable=fixture();nullable.access.columns[0].columns[0].notNull=false;expect(nullable.inspect().diagnostics.some(d=>d.accessCode==='ACCESS_CONFLICT')).toBe(true);
  const reordered=fixture();reordered.access.views[0].fields.unshift(reordered.access.views[0].fields.pop());expect(reordered.inspect().diagnostics.some(d=>d.accessCode==='ACCESS_COVERAGE')).toBe(true);
 });
+
+// @covers US-080-AC2 -- authored identities are retained, never inferred.
+test('PostgreSQL-family native collation facts are explicit and nonmutating',()=>{
+ const f=fixture('lakebase');
+ for(const column of f.access.columns[0].columns)column.collation=['id','body'].includes(column.field.element)?{schema:'pg_catalog',name:'default'}:null;
+ const before=JSON.stringify([f.document,f.binding]);
+ expect(f.inspect().diagnostics).toEqual([]);
+ expect(JSON.stringify([f.document,f.binding])).toBe(before);
+ const named=fixture('lakebase');named.access.columns[0].columns[0].collation={schema:'application',name:'authored ordering'};
+ expect(named.inspect().diagnostics).toEqual([]);
+ // Declaration acceptance is not a native table observation or equivalence claim.
+});
+
+// @covers US-080-AC2
+test('malformed or unknown selected collation facts refuse without substitution',()=>{
+ for(const value of [undefined,'C',{}, {schema:'pg_catalog'}, {schema:'',name:'C'}, {schema:'pg_catalog',name:'a\0b'}, {schema:'pg_catalog',name:'é'.repeat(32)}]){
+  const f=fixture('lakebase');f.access.columns[0].columns[0].collation=value;
+  expect(f.inspect().diagnostics.some(d=>d.accessCode==='ACCESS_SHAPE')).toBe(true);
+ }
+ const unknown=fixture('lakebase');unknown.access.columns[0].columns[0].collation={schema:'pg_catalog',name:'C',meaning:'uninterpreted'};
+ expect(unknown.inspect().diagnostics.some(d=>d.code==='UNKNOWN_RELEVANT'&&d.pointer.endsWith('/collation/meaning'))).toBe(true);
+ const foreign=fixture();foreign.access.columns[0].columns[0].collation=null;
+ expect(foreign.inspect().diagnostics.some(d=>d.accessCode==='ACCESS_NATIVE')).toBe(true);
+});

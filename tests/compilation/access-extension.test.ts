@@ -60,3 +60,15 @@ import {inspectBinding} from '../../src/extensions/binding/index';
  }
  expect(inspectBinding(binding as unknown as Document,relational as unknown as Document)).toEqual({valid:true,complete:true,diagnostics:[]});
  });
+
+// @covers US-080-AC2 -- structural validation does not observe a native target.
+test('native collation facts have a structural shape in the published package',()=>{
+ const check=new Registry().register(manifest as unknown as ExtensionPackage).get('umf.access','0.1.0')!.structure;
+ const payload=structuredClone(relational.modules[0]!.extensions['umf.access']) as any;
+ for(const collation of [null,{schema:'pg_catalog',name:'default'}]){
+  payload.columns[0].columns[0].collation=collation;expect(check(payload)).toBe(true);
+ }
+ for(const collation of ['C',{}, {schema:'pg_catalog'}, {schema:'pg_catalog',name:5}]){
+  payload.columns[0].columns[0].collation=collation;expect(check(payload)).toBe(false);
+ }
+});

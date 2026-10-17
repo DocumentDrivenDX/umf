@@ -69,6 +69,13 @@ column shape, then compares them with the binding and CONTRACT-070 ColumnSets:
 Any difference raises `TargetMismatch`. Lakebase applies minor versions
 automatically, so a Lakebase target qualifies a major version plus an explicit
 set of observed minor versions; an unlisted minor refuses until qualified.
+PostgreSQL/Lakebase SDK catalogs require an original source-exact compiler
+verification profile and the complete CONTRACT-070 ColumnSet facts, including
+authored native collation identities. Family-only legacy lowering is not this
+profile: missing facts or profile custody refuse catalog promotion and use before
+data SQL. A fingerprint first observed from an unchecked table cannot establish
+initial schema agreement. Native metadata admission is compiled by the original
+owner; the SDK does not infer physical types, collations or admission SQL.
 Verification checks shape and identity only; it confers no authorization and
 does not prove the shape stays unchanged after it runs. For action claims, the host supplies pinned `nativeAdmission` descriptors: declared native relation identities, dependency-closure/profile digest, the qualified action-time unchanged-closure fence, authenticated principal/profile correspondence and original writer-incarnation/restore-epoch custody. CONTRACT-073 requires admission at the effect transaction; first-use shape verification is insufficient. Missing or changed proof refuses the affected action. Reconnect must establish original namespace continuity before transaction reconciliation; otherwise return Indeterminate. Native descriptors confer no action or role authority.
 

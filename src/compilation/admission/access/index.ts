@@ -24,11 +24,13 @@ import {inspectCoreElementKind,inspectCoreNullability,inspectCoreCardinality,ins
 import type {AccessDiagnostic,Ref,ResolvedField,ResolvedRecord} from '../../ir/index';
 export interface SuppliedBinding {sourceId:string;document:Document}
 interface View {record:Ref;selectedKey:Ref&{key:string};fields:(FieldView&{field:Ref})[]}
-interface NativeColumn {field:Ref;type:string;notNull:boolean;generation:null|'identity'|'stored-expression'|'default'}
+interface NativeColumn {field:Ref;type:string;notNull:boolean;generation:null|'identity'|'stored-expression'|'default';collation?:null|{schema:string;name:string}}
 interface ColumnSet {binding:{sourceId:string;module:string};target:{platform:string;majorVersion:string};columns:NativeColumn[]}
 const identity=(r:Ref)=>JSON.stringify([r.module,r.element]);
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 const reference=(v:unknown):v is Ref=>object(v)&&typeof v.module==='string'&&!!v.module&&typeof v.element==='string'&&!!v.element&&Object.keys(v).every(k=>k==='module'||k==='element');
+const nativeName=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&!v.includes('\0')&&new TextEncoder().encode(v).length<=63;
+const collation=(v:unknown):boolean=>v===null||object(v)&&nativeName(v.schema)&&nativeName(v.name);
 const presence=(v:unknown):v is Presence=>object(v)&&typeof v.missing==='boolean'&&typeof v.null==='boolean';
 /** Contextual read-only declaration checks. Native execution is never implied. */
 export function inspectAccessViews(document:Document,selected:readonly Ref[],bindings:readonly SuppliedBinding[]=[],sourceId='logical'):{records:ResolvedRecord[];diagnostics:AccessDiagnostic[]} {
@@ -58,7 +60,7 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
   (payload.columns as unknown[]).forEach((entry,i)=>{
    const path=base+`/columns/${i}`;
    if(!object(entry)||!object(entry.binding)||typeof entry.binding.sourceId!=='string'||typeof entry.binding.module!=='string'||!object(entry.target)||typeof entry.target.platform!=='string'||typeof entry.target.majorVersion!=='string'||!Array.isArray(entry.columns)){add('ACCESS_SHAPE',path);return;}
-   if(entry.columns.some(c=>!object(c)||!reference(c.field)||typeof c.type!=='string'||typeof c.notNull!=='boolean'||![null,'identity','stored-expression','default'].includes(c.generation as null))){add('ACCESS_SHAPE',path+'/columns');return;}
+   if(entry.columns.some(c=>!object(c)||!reference(c.field)||typeof c.type!=='string'||typeof c.notNull!=='boolean'||![null,'identity','stored-expression','default'].includes(c.generation as null)||Object.hasOwn(c,'collation')&&!collation(c.collation))){add('ACCESS_SHAPE',path+'/columns');return;}
    allColumns.push({set:entry as unknown as ColumnSet,path});
   });
  }
@@ -74,7 +76,13 @@ export function inspectAccessViews(document:Document,selected:readonly Ref[],bin
    const selectedSet=set.columns.some(c=>selected.some(r=>{const e=locate(r).element;return Array.isArray(e?.members)&&(e.members as Ref[]).some(f=>identity(f)===identity(c.field));}));
    const unchecked=(value:object,allowed:string[],pointer:string)=>{if(selectedSet)for(const key of Object.keys(value))if(!allowed.includes(key))unknown(pointer+'/'+key.replace(/~/g,'~0').replace(/\//g,'~1'));};
    unchecked(set,['binding','target','columns'],path);unchecked(set.binding,['sourceId','module'],path+'/binding');unchecked(set.target,['platform','majorVersion'],path+'/target');
-   for(const [ci,column] of set.columns.entries())unchecked(column,['field','type','notNull','generation'],path+'/columns/'+ci);
+   for(const [ci,column] of set.columns.entries()){
+    const cp=path+'/columns/'+ci;unchecked(column,['field','type','notNull','generation','collation'],cp);
+    if(column.collation!==undefined){
+     if(!['postgresql','lakebase'].includes(set.target.platform))add('ACCESS_NATIVE',cp+'/collation');
+     if(column.collation!==null)unchecked(column.collation,['schema','name'],cp+'/collation');
+    }
+   }
    if(['lakebase','spark-delta','unity-catalog'].includes(set.target.platform)){
     if(binding.target.subset!==RAW_TABLE_BINDING_SUBSET||!inspectRawTableBinding(supplied[0]!.document,document,set.target,set.binding.module).complete)add('ACCESS_REFERENCE',path+'/target');
    }else if(set.target.platform!=='postgresql'||binding.target.system!=='postgresql'||binding.target.version.split('.')[0]!==set.target.majorVersion)add('ACCESS_REFERENCE',path+'/target');
