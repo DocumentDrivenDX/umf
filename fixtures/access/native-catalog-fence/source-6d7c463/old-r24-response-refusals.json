@@ -34,5 +34,13 @@
       "businessSQLCalls": 0,
       "connectionConstructed": false
     }
-  ]
+  ],
+  "additionalRawReadRefusal": {
+    "version": "weft.raw-read/0.2",
+    "code": "catalog digest mismatch",
+    "scope": "Actual original nested readTemplate through immutable R24 CatalogRead.artifact gate; no connection or execution",
+    "businessSQLCalls": 0,
+    "connectionConstructed": false,
+    "sha256": "8d3d357f48ba6d542acf8eb7753c2098aa3a442f38fa430ae427691b4980866e"
+  }
 }
