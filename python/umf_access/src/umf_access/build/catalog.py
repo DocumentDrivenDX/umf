@@ -1097,6 +1097,7 @@ def _compile_catalog_owned(
                         else {
                             "registered",
                             "ashlar-spark4",
+                            "ashlar-spark4-fields",
                             "ashlar-dbsql-20261016",
                             "ashlar-spark4-pages",
                             "ashlar-dbsql-20261016-pages",
