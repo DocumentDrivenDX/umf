@@ -329,51 +329,51 @@ try:
         "SELECT status FROM native_app.orders WHERE id='o-2'"
     ).fetchone() == ("draft",)
     cases.append("native primary-key violation confirms rollback")
-    # Both real SERIALIZABLE transactions establish their snapshot before
-    # either can update. The loser must report the native conflict without retry.
+    # Original early SRE NOWAIT makes the historical post-admission barrier
+    # unreachable. Retain SERIALIZABLE and prove first-lock contention instead.
     from concurrent.futures import ThreadPoolExecutor
-    from threading import Barrier
-
-    from umf_access.protocols import Conflict
-
-    gate = Barrier(2)
-
-    class ConcurrentAdmission(Admission):
+    from threading import Event
+    entered, release = Event(), Event()
+    class HeldAdmission(Admission):
         def admit(self, connection, program, *, deadline):
             original = super().admit(connection, program, deadline=deadline)
-            gate.wait(timeout=4)
+            entered.set()
+            assert release.wait(timeout=8)
             return original
-
-    def concurrent_action():
+    class ObservedConnection:
+        def __init__(self, connection): self.connection, self.sql = connection, []
+        def __getattr__(self, name): return getattr(self.connection, name)
+        def execute(self, sql, *args, **kwargs):
+            self.sql.append(sql)
+            return self.connection.execute(sql, *args, **kwargs)
+    def held_action():
         with psycopg.connect(base + " user=erik") as connection:
-            current = PostgresActionExecutor(
-                connection,
-                tuple(programs),
-                ConcurrentAdmission(),
-                default_timeout=timedelta(seconds=5),
-            )
-            answer = current.invoke(Approve, {"order": OrderKey(id="o-1")})
+            current = PostgresActionExecutor(connection, tuple(programs), HeldAdmission(), default_timeout=timedelta(seconds=10))
+            result = current.invoke(Approve, {"order": OrderKey(id="o-1")})
             assert connection.info.transaction_status == 0
-            return answer
-
+            return result
     admin.execute("UPDATE native_app.orders SET status='draft' WHERE id='o-1'")
-    with ThreadPoolExecutor(max_workers=2) as workers:
-        futures = [workers.submit(concurrent_action) for _ in range(2)]
-        outcomes = [future.result(timeout=10) for future in futures]
-    assert sum(isinstance(o, Committed) for o in outcomes) == 1, outcomes
-    assert (
-        sum(
-            isinstance(o, Conflict) and o.code == "40001" and not o.retained
-            for o in outcomes
-        )
-        == 1
-    ), outcomes
-    assert admin.execute(
-        "SELECT status FROM native_app.orders WHERE id='o-1'"
-    ).fetchone() == ("approved",)
-    cases.append(
-        "actual concurrent SERIALIZABLE writes yield one commit and one native conflict without retry"
-    )
+    with ThreadPoolExecutor(max_workers=1) as workers:
+        first = workers.submit(held_action)
+        try:
+            assert entered.wait(timeout=5)
+            with psycopg.connect(base + " user=erik") as raw:
+                second = ObservedConnection(raw)
+                current = PostgresActionExecutor(second, tuple(programs), Admission(), default_timeout=timedelta(seconds=5))
+                try:
+                    current.invoke(Approve, {"order": OrderKey(id="o-1")})
+                except ActionFailed as error:
+                    assert getattr(error.cause, "sqlstate", None) == "55P03", error
+                    assert second.info.transaction_status == 0
+                    assert not any(statement.lstrip().upper().startswith(("SELECT", "INSERT", "UPDATE", "DELETE")) for statement in second.sql), second.sql
+                else:
+                    raise AssertionError("contending original early mutation fence accepted")
+        finally:
+            release.set()
+        winner = first.result(timeout=10)
+    assert isinstance(winner, Committed), winner
+    assert admin.execute("SELECT status FROM native_app.orders WHERE id='o-1'").fetchone() == ("approved",)
+    cases.append("original SERIALIZABLE early SRE NOWAIT contention yields55P03 rollback before observation/data SQL, one commit, no retry; historical post-admission40001 barrier superseded")
     admin.execute("REVOKE native_approver FROM erik")
     result = executor.invoke(Approve, {"order": OrderKey(id="o-1")})
     assert isinstance(result, Denied)
