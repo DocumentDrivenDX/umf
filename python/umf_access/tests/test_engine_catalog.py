@@ -90,6 +90,20 @@ class EngineCatalogTests(unittest.TestCase):
         self.assertEqual(page.artifact()["relatedRequest"]["version"], "weft.engine-related-page/0.1")
         self.assertEqual(page.artifact()["relatedRequest"]["source"], source)
         self.assertEqual(page.artifact()["pageSize"], 2)
+        for method in ("ashlar-spark4-pages", "ashlar-dbsql-20261016-pages"):
+            compiled = EngineRead.compile_original(
+                compiler, target, method=method,
+                related_source=source, relationship=relationship,
+            )
+            self.assertEqual(json.loads(compiled)["compiler"], method)
+            self.assertEqual(compiler.packet["compiler"], method)
+            self.assertEqual(compiler.packet["target"], target)
+            self.assertEqual(compiler.packet["source"], source)
+        with self.assertRaises(ReadBuildError):
+            EngineRead.compile_original(
+                compiler, target, method="ashlar-spark4-fields",
+                related_source=source, relationship=relationship,
+            )
         for changed in ({**source, "context": {"revision": True}},
                         {**source, "parameters": {}}, {**source, "extra": "unowned"}):
             with self.assertRaises(ReadBuildError):

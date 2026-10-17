@@ -28,7 +28,7 @@ R = TypeVar("R", bound=BaseModel)
 
 def _related_packet(request: Mapping[str, Any], source: object, relationship: object, method: str, page_size: int | None = None) -> dict[str, Any]:
     """Retain both complete original requests; composition remains compiler-owned."""
-    methods = ("truss-runtime", "ashlar-spark4", "ashlar-dbsql-20261016") if page_size is None else ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")
+    methods = ("truss-runtime", "ashlar-spark4", "ashlar-dbsql-20261016", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages") if page_size is None else ("truss-runtime", "ashlar-spark4-pages", "ashlar-dbsql-20261016-pages")
     if method not in methods:
         raise ReadBuildError("WEFT_BLOCKED: original engine navigation compiler profile required")
     if not isinstance(request, Mapping) or not isinstance(source, Mapping) or not isinstance(relationship, Mapping) or set(relationship)!={"module","id","direction"} or any(type(relationship[name]) is not str or not relationship[name] for name in relationship) or relationship["direction"] not in ("forward","inverse"):
