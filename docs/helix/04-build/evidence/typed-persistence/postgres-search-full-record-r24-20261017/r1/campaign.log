@@ -1,0 +1,25 @@
+ownedServerStopped=true
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/record-access-pg-runtime.py", line 267, in <module>
+    main()
+    ~~~~^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/record-access-pg-runtime.py", line 213, in main
+    runpy.run_path(str(args.script), run_name="__main__")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/search_e2e.py", line 456, in <module>
+    selected = queries.selected(target, term="cats")
+  File "/private/tmp/sdk-sourceexact-search-full-r24-generated/search_docs/queries.py", line 81, in selected
+    return cast(SearchResult[tuple[str, str]] | Awaitable[SearchResult[tuple[str, str]]], _S5.run(target, {'term': term}, timeout=timeout))
+                                                                                          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-privilege-r24-weft-r20-env/lib/python3.14/site-packages/umf_access/search_catalog.py", line 119, in run
+    return target.search(variant, native, timeout=timeout)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-privilege-r24-weft-r20-env/lib/python3.14/site-packages/umf_access/postgres_search.py", line 413, in search
+    return cast(SearchResult[Any], self._run_search(variant, parameters, timeout))
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-privilege-r24-weft-r20-env/lib/python3.14/site-packages/umf_access/postgres_search.py", line 327, in _run_search
+    raise ReadObligationUnmet("idle search connection required")
+umf_access.pages.ReadObligationUnmet: idle search connection required

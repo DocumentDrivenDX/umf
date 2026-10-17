@@ -1,0 +1,24 @@
+{
+  "scope": "source fixture preflight only; no native",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "refused",
+      "diagnostic": "exact search request required",
+      "cause": "test configuration attempted binary in closed raw binding scalar Carrier; native ColumnSet separately owns Binary output"
+    },
+    {
+      "attempt": 2,
+      "status": "refused",
+      "diagnostic": "native scalar column missing scalar binding",
+      "cause": "test configuration omitted Integer/Decimal scalar bindings"
+    },
+    {
+      "attempt": 3,
+      "status": "pass",
+      "nativeExecuted": false,
+      "configuration": "Integer/Decimal scalar binding retained; Binary source-owned native ColumnSet"
+    }
+  ],
+  "temporal": "HELD"
+}
