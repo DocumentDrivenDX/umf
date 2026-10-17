@@ -346,6 +346,8 @@ class ReviewedSQL(Generic[P, R]):
             "rowCap": self.row_cap,
             "keyset": self.keyset,
         }
+        if target in ("postgresql18", "lakebase18"):
+            request["verificationProfile"] = "source-exact/0.1"
         if type(stream_page_size) is not bool or stream_page_size and not self.keyset:
             raise ReadBuildError("stream page size requires a bounded keyset declaration")
         if stream_page_size:
@@ -400,6 +402,7 @@ class ReviewedSQL(Generic[P, R]):
             raise ReadBuildError(
                 "compiled parameter/result types differ from declaration"
             )
+        _require_source_exact(artifact)
         artifact["dbapiSql"] = _dbapi(cast(str, artifact["sql"]))
         artifact["dbapiParameterOrder"] = _dbapi_order(cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"]))
         sources = _model_sources(self.parameters, self.result)
@@ -412,6 +415,23 @@ class ReviewedSQL(Generic[P, R]):
         artifact["stageOne"] = _generation(self.parameters, self.result)
         artifact["catalogDigest"] = hashlib.sha256(_json(artifact).encode()).hexdigest()
         return CatalogRead(_json(artifact), self.parameters, self.result, source)
+
+
+def _require_source_exact(artifact: Mapping[str, object]) -> None:
+    """Require original-owner native schema proof before promoting PG reads."""
+    if artifact.get("target") not in ("postgresql18", "lakebase18"):
+        return
+    obligations = artifact.get("obligations")
+    projection = obligations.get("nativeProjection") if isinstance(obligations, dict) else None
+    if (
+        not isinstance(projection, dict)
+        or projection.get("version") != "umf.native-columns/0.1"
+        or projection.get("verificationProfile") != "source-exact/0.1"
+        or projection.get("nativeCatalogBeforeAfter") is not True
+        or not isinstance(projection.get("columns"), list)
+        or not 1 <= len(projection["columns"]) <= 2000
+    ):
+        raise ReadBuildError("NATIVE_SCHEMA_SOURCE_EXACT_REQUIRED")
 
 
 @dataclass(frozen=True)
@@ -472,6 +492,7 @@ class CatalogRead(Generic[P, R]):
             cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"])
         ):
             raise ReadBuildError("catalog parameter order mismatch")
+        _require_source_exact(artifact)
         return artifact
 
 

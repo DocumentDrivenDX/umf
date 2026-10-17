@@ -108,7 +108,7 @@ try:
     )
 
     request = json.loads(
-        (root / "fixtures/access/native-bulk-list/request.json").read_text()
+        Path(os.environ.get("UMF_BULK_LIST_REQUEST", root / "fixtures/access/native-bulk-list/request.json")).read_text()
     )
     request["binding"]["schema"] = "native_app"
     generated = Path(os.environ["UMF_NATIVE_GENERATED_ROOT"])

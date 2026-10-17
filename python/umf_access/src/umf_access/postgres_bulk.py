@@ -186,6 +186,7 @@ class _BulkState(_State):
         if not self.read_only:
             for sql in self.program["lockSql"]:
                 yield ("query", sql, None)
+        yield from self.schema_admissions()
         self.rows = yield (
             "query",
             *self.statement("/preview" if self.read_only else "/selection"),
@@ -208,6 +209,7 @@ class _BulkState(_State):
             if len(row) != len(fields):
                 raise ActionRefused("NATIVE_BULK_ROW_SHAPE")
         if self.read_only:
+            yield from self.schema_admissions()
             yield ("rollback",)
             return BulkPreview(
                 keys, "one bounded source-bound native SET; preview is advisory"
@@ -253,6 +255,7 @@ class _BulkState(_State):
             returned,
             details,
         )
+        yield from self.schema_admissions()
         yield ("commit", result)
         return result
 

@@ -363,6 +363,27 @@ class _State:
                     break
         return failures
 
+    def schema_admissions(self) -> Generator[Any, Any, None]:
+        # The original action owner binds qualified schemas literally or resolves
+        # its exact unqualified relation with to_regclass. This port has no read-target schema
+        # configuration and cannot reinterpret an appSchema placeholder.
+        from .postgres_read import _compiled_admissions
+
+        packet = self.program["obligations"]["nativeProjection"]
+        for descriptor in packet["columns"]:
+            admission = descriptor.get("nativeAdmission", {})
+            if any(
+                not isinstance(parameter, dict)
+                or not isinstance(parameter.get("source"), dict)
+                or set(parameter["source"]) != {"literal"}
+                for parameter in admission.get("parameters", [])
+            ):
+                raise ActionRefused("NATIVE_SCHEMA_BINDING_SOURCE")
+        for sql, parameters in _compiled_admissions(packet["columns"], ""):
+            rows = yield ("query", sql, parameters)
+            if len(rows) != 1 or len(rows[0]) != 1 or rows[0][0] is not True:
+                raise ActionRefused("NATIVE_SCHEMA_MISMATCH")
+
     def execute(
         self, validate: bool
     ) -> Generator[Any, Any, ActionOutcome | ValidationResult]:
@@ -387,6 +408,7 @@ class _State:
             )
         for sql in self.program["lockSql"]:
             yield ("query", sql, None)
+        yield from self.schema_admissions()
         yield from self.images("pre")
         missing = [
             name
@@ -399,6 +421,7 @@ class _State:
             else (yield from self.conditions("pre", collect_all=validate))
         )
         if failures or validate:
+            yield from self.schema_admissions()
             yield ("rollback",)
             if validate:
                 return ValidationResult(
@@ -513,6 +536,7 @@ class _State:
             tuple(changed),
             self.details("committed"),
         )
+        yield from self.schema_admissions()
         yield ("commit", result)
         return result
 

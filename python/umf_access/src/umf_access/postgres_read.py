@@ -255,11 +255,12 @@ def _projection_admissions(
     obligations: dict[str, object], app_schema: str
 ) -> tuple[tuple[str, dict[str, object]], ...]:
     if "nativeProjection" not in obligations:
-        return ()
+        raise ReadBuildError("NATIVE_SCHEMA_SOURCE_EXACT_REQUIRED")
     projection = obligations["nativeProjection"]
     if (
         not isinstance(projection, dict)
         or projection.get("version") != "umf.native-columns/0.1"
+        or projection.get("verificationProfile") != "source-exact/0.1"
         or projection.get("nativeCatalogBeforeAfter") is not True
         or not isinstance(projection.get("columns"), list)
         or not 1 <= len(projection["columns"]) <= 2000

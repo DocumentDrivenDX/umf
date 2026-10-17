@@ -19,6 +19,7 @@ from .postgres_read import (
     _ROLE,
     ReadObligationUnmet,
     TimedOut,
+    _projection_admissions,
     _vector_output,
     native_read_admission,
 )
@@ -181,6 +182,14 @@ def _finish(variant: SearchVariant, legs: list[list[_Hit]]) -> SearchResult[Any]
     )
 
 
+def _schema_admissions(program: Mapping[str, Any], app_schema: str):
+    for sql, parameters in _projection_admissions(program["obligations"], app_schema):
+        yield ("execute", sql, parameters)
+        observed = yield ("many", 2)
+        if len(observed) != 1 or len(observed[0]) != 1 or observed[0][0] is not True:
+            raise TargetMismatch("native search source schema differs")
+
+
 def _program(
     variant: SearchVariant,
     parameters: Mapping[str, object],
@@ -234,6 +243,8 @@ def _program(
                 if type(value) is not str:
                     raise SearchError("plain keyword text required")
                 params[program["queryParameter"]] = value
+        # Parse the original packet before BEGIN or native search SQL.
+        _projection_admissions(program["obligations"], configuration.app_schema)
         prepared.append((entry, program, params))
     yield ("begin",)
     yield (
@@ -250,6 +261,7 @@ def _program(
             tuple(program["selectionTemplate"]["lockSql"]),
         )
         original_roles.append(role)
+        yield from _schema_admissions(program, configuration.app_schema)
         yield (
             "execute",
             *_statement(entry, "/nativeAdmission", params, configuration.app_schema),
@@ -260,6 +272,7 @@ def _program(
                 "native search index/expression/extension correspondence refused"
             )
         if verify_only:
+            yield from _schema_admissions(program, configuration.app_schema)
             continue
         for index in range(len(program["preflights"])):
             yield (
@@ -277,6 +290,7 @@ def _program(
         )
         columns = yield ("columns",)
         rows = yield ("many", program["topK"] + 1)
+        yield from _schema_admissions(program, configuration.app_schema)
         results.append(_hits(entry, columns, rows))
     yield ("execute", _ROLE)
     after = yield ("one",)

@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .protocols import ActionRefused
-from .reviewed import parameter_style
+from .reviewed import ReadBuildError, _require_source_exact, parameter_style
 from .types import RUNTIME_IDENTITY, ActionRef
 
 
@@ -128,7 +128,24 @@ class NativeProgram:
         cls, compiler: Any, request: Mapping[str, Any], *, bundle_input_digest: str
     ) -> NativeProgram:
         """Explicit build-time compiler call; runtime never loads a compiler."""
+        request = dict(program_json(canonical_json(dict(request))))
         version = request.get("version")
+        if version == "weft.native-action/0.1" and request.get("target") in ("postgresql18", "lakebase18"):
+            request["verificationProfile"] = "source-exact/0.1"
+        elif (
+            version == "weft.native-bulk/0.1"
+            and isinstance(request.get("action"), dict)
+            and isinstance(request.get("selection"), dict)
+            and request["action"].get("target") in ("postgresql18", "lakebase18")
+        ):
+            request["action"]["verificationProfile"] = "source-exact/0.1"
+            request["selection"]["verificationProfile"] = "source-exact/0.1"
+        elif (
+            version == "weft.search/0.1"
+            and isinstance(request.get("selection"), dict)
+            and request["selection"].get("target") in ("postgresql18", "lakebase18")
+        ):
+            request["selection"]["verificationProfile"] = "source-exact/0.1"
         if version == "weft.managed-action/0.1":
             method = getattr(compiler, "compile_managed_action_json", None)
         elif version == "weft.managed-bulk/0.1":
@@ -283,6 +300,11 @@ class NativeProgram:
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         _bulk_list_custody(program)
+        if program.get("version") in ("weft.native-action/0.1", "weft.native-bulk/0.1", "weft.search/0.1"):
+            try:
+                _require_source_exact(program)
+            except ReadBuildError as error:
+                raise ActionRefused("NATIVE_SCHEMA_SOURCE_EXACT_REQUIRED") from error
         # Re-derive only parameter style, never SQL structure or semantics.
         expected: dict[str, Any] = {}
 
