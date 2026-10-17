@@ -1,0 +1,692 @@
+{
+  "status": "READ_CONSISTENCY_WINDOW_REPRODUCED",
+  "readerRowMismatch": true,
+  "readerBothAdmissionSetsTrue": true,
+  "scope": "Owned local original-query/admission execution-order regression; not full SDK actor/deployment qualification",
+  "roleScope": "Fresh fixture bootstrap identity; flags recorded, no GRANT/REVOKE/CREATE ROLE/SET ROLE",
+  "originalRequestSHA256": "5aa58bf3fc43d090bac8c9597a921ed5f4a677ce0f8fdcca76e345d65cc41500",
+  "originalProgramSHA256": "28fd59d25a1dea4518bf992f83676d727a4bebd333743208095579087802d7ac",
+  "originalRoleSql": "SELECT current_user, session_user, r.rolsuper, r.rolbypassrls\nFROM pg_catalog.pg_roles r WHERE r.rolname = current_user",
+  "observations": [
+    {
+      "order": "role-before-original-locks",
+      "roleObservation": [
+        "erik",
+        "erik",
+        true,
+        true
+      ],
+      "snapshotBeforeRelationLock": [
+        "760"
+      ],
+      "snapshotAfterEarlyLocksBeforeRole": null,
+      "originalLockSql": [
+        "LOCK TABLE \"orders\" IN ACCESS SHARE MODE"
+      ],
+      "rewriteSql": "ALTER TABLE native_app.orders ALTER COLUMN status TYPE text COLLATE pg_catalog.\"C\" USING (status || '')",
+      "rewriteError": null,
+      "nativeBefore": [
+        "16385",
+        "16397",
+        "757",
+        "(0,11)",
+        "text",
+        -1,
+        false,
+        "\"C\""
+      ],
+      "nativeAfter": [
+        "16385",
+        "16401",
+        "760",
+        "(0,20)",
+        "text",
+        -1,
+        false,
+        "\"C\""
+      ],
+      "relfilenodeChanged": true,
+      "knownRows": [
+        [
+          "row-1",
+          "alpha",
+          "1.00"
+        ],
+        [
+          "row-2",
+          "beta",
+          "2.00"
+        ]
+      ],
+      "freshRowsAfterRewrite": [
+        [
+          "row-1",
+          "alpha",
+          "1.00"
+        ],
+        [
+          "row-2",
+          "beta",
+          "2.00"
+        ]
+      ],
+      "freshAdmissionsBefore": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ],
+      "readerAdmissionsBeforeQuery": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ],
+      "readerOriginalQueryRows": [],
+      "readerAdmissionsAfterQuery": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ],
+      "freshAdmissionsAfter": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "order": "original-locks-before-role",
+      "roleObservation": [
+        "erik",
+        "erik",
+        true,
+        true
+      ],
+      "snapshotBeforeRelationLock": [
+        "764"
+      ],
+      "snapshotAfterEarlyLocksBeforeRole": [
+        null
+      ],
+      "originalLockSql": [
+        "LOCK TABLE \"orders\" IN ACCESS SHARE MODE"
+      ],
+      "rewriteSql": "ALTER TABLE native_app.orders ALTER COLUMN status TYPE text COLLATE pg_catalog.\"C\" USING (status || '')",
+      "rewriteError": {
+        "type": "LockNotAvailable",
+        "sqlstate": "55P03",
+        "message": "canceling statement due to lock timeout"
+      },
+      "nativeBefore": [
+        "16385",
+        "16407",
+        "761",
+        "(0,26)",
+        "text",
+        -1,
+        false,
+        "\"C\""
+      ],
+      "nativeAfter": [
+        "16385",
+        "16407",
+        "761",
+        "(0,26)",
+        "text",
+        -1,
+        false,
+        "\"C\""
+      ],
+      "relfilenodeChanged": false,
+      "knownRows": [
+        [
+          "row-1",
+          "alpha",
+          "1.00"
+        ],
+        [
+          "row-2",
+          "beta",
+          "2.00"
+        ]
+      ],
+      "freshRowsAfterRewrite": [
+        [
+          "row-1",
+          "alpha",
+          "1.00"
+        ],
+        [
+          "row-2",
+          "beta",
+          "2.00"
+        ]
+      ],
+      "freshAdmissionsBefore": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ],
+      "readerAdmissionsBeforeQuery": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ],
+      "readerOriginalQueryRows": [
+        [
+          "row-1"
+        ],
+        [
+          "row-2"
+        ]
+      ],
+      "readerAdmissionsAfterQuery": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ],
+      "freshAdmissionsAfter": [
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "amount",
+            "__umf_native_4": "numeric(12,2)"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "id",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+          "parameters": {
+            "__umf_native_1": "native_app",
+            "__umf_native_2": "orders",
+            "__umf_native_3": "status",
+            "__umf_native_4": "text",
+            "__umf_native_5": "pg_catalog",
+            "__umf_native_6": "C"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        },
+        {
+          "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+          "parameters": {
+            "__umf_inventory_1": "native_app",
+            "__umf_inventory_2": "orders",
+            "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+          },
+          "rows": [
+            [
+              true
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "sdkCompilerPayloads": {
+    "umf_access/__init__.py": "767836329333329c211f57b23116b0aff5f35ced12c9eb2988474c6fdd113cb9",
+    "umf_access/adoption.py": "42dedd7ae908c4194a99c586e9056cfeda638209c4f2d56426d2c15383aaafd2",
+    "umf_access/build/__init__.py": "f2a7ac0078bc169c017a8b280d6ad7fc4f45ea043d25c987890ed015fae3db9c",
+    "umf_access/build/approximate.py": "c6484a1e870e9c932154ab05faa79391e3655a55e50a0239e70e038edaa6d721",
+    "umf_access/build/catalog.py": "9904f6f85268f13f609b64483864982e950d50d4388024b8c282aaaca22af9ea",
+    "umf_access/build/commands.py": "7426cbf7c542a85c04b1038301b28582faffed5dc4194aa35d233f6069d7313b",
+    "umf_access/build/pg_privileges.py": "03d049609e0a68338ef1b2d4c6e9989f7b0b2f3b263c6c26bbf9453d33db2b63",
+    "umf_access/build/privileges.py": "977ec258b354026f0742da03a17aabef6827249f0c3b398fb50a39d5ee0c1942",
+    "umf_access/build/search.py": "3054d8f7116772d5de24aa62449abcf67f0d9dbe98abb0acbbe29d7b51fdd8a6",
+    "umf_access/build/unity_search.py": "bc9e67b576699ed66d01a502212c8d23b3b7917486c4139ae06f3cf9a6008fda",
+    "umf_access/bulk.py": "7d1d0dc4c702af79fcd981dff823b27209aa9ee29463eed78f608f0219f24e5b",
+    "umf_access/capture.py": "8f391f644b6794b83a52ee7754544c9a6914022de66ad40e3c1499c2609c2586",
+    "umf_access/catalog.py": "4d6c3d1ebc9ffb6e180bdc5114461560dd816c8805c5c8ee0c70f48dfc6e8f3e",
+    "umf_access/codec_support.py": "2d99a82a08ab7168d3782543e42495b3605d43d75e2834fa7c4b7c609763f700",
+    "umf_access/commands.py": "1a79461725d561b1217b9031374416df9ebf38a8875448c22d3e751df019123c",
+    "umf_access/delta_read.py": "ea9cf42a663a014e6953847865be29d596d2b253b367ae1aff4f7b1d65bd9893",
+    "umf_access/dsl/__init__.py": "1c0cd7a3c78276e7dd103d626d8857452e57b42b4f28708a27883040cbbba419",
+    "umf_access/dsl/_context.py": "a73451718cc072692ae821971e17e1ebd23eee98e1bca9401ba7b285b4fdf2d7",
+    "umf_access/dsl/_expressions.py": "c22a687e5fb057b1e979ad90103ab0824f0bcdae9c373bb186862adebf04501e",
+    "umf_access/dsl/_joined.py": "65a897ab4f0cae0eb66ec3afed6164d1a014774cb159e5c7efee1382bc3884cb",
+    "umf_access/dsl/_nodes.py": "aeeda9c07fd5072449bb6533155f0a4bf77b8cef23d0de694f55cf2e386c9bf8",
+    "umf_access/dsl/_query.py": "e5fed12dd23e2dc63a5929574c06dae1308360cdf9c715abd639a995b31d89bf",
+    "umf_access/dsl/_selection.py": "fe574f91ee55de766feda900081050a7dc8f4a0fa324002ad46102d527caf5ef",
+    "umf_access/dsl/navigation.py": "ef870ae10d4b39e6624d145fbabbfeb41635dcfabe935990bd8015d8dcc8f5be",
+    "umf_access/dsl/render.py": "b8841b093f378f0bca4ea62c8a18d46c1ee1c05fefdaa3888233307c2afcf266",
+    "umf_access/dsl/search.py": "d1dea05095662ca06bb0e0bb9dac7156c5b1b94dc60f162d6f6887d02abd2dde",
+    "umf_access/engine_catalog.py": "9e6b8fa87cc32b41b81570f577527ee0c82d96273e1d6d75cc8fa62eb61b9296",
+    "umf_access/managed_actions.py": "f9c05769d52786fb7e4c4756b7444c08017b1546d7ef9d1bf34901a06829e584",
+    "umf_access/managed_bulk.py": "7b911affd616882806d133511d792bf74e75a3f0035a77e41b164d4df46c5bd6",
+    "umf_access/managed_delta.py": "4d46234e1b1e64fc92dbac89981a1fd3e652a24c6e5fdabff1c87836d6cb8617",
+    "umf_access/managed_support.py": "c652f5afec7d9344af6f26cecd1be0ba09ae0e0788fd48a7e9fcf419ad325616",
+    "umf_access/native_actions.py": "802ab2678b878458029bb2b5c88d88849292d826c8adf350c6dd76720e637910",
+    "umf_access/native_program.py": "1c829c39807e3029f8f723909311513ff645c3e2c4cc2d59e2fe816ca9a07764",
+    "umf_access/pages.py": "ba6f61af9426a954d2c6d4b84ff1e2baff70f08a4ee2a18fd2f1dc0a0767a4a6",
+    "umf_access/postgres_bulk.py": "f0ce72206c2fd19f0235c899e5369c92db087084364a7fe2272433307d979044",
+    "umf_access/postgres_read.py": "1a171136d22256c904478c16fdec27d9f2b755d6dbc200e1db139b30b7e748c8",
+    "umf_access/postgres_search.py": "f7ad24d014a4839fd0149aea9110cb05e3c680b1c4d2b45d5537db923f69f475",
+    "umf_access/protocols.py": "3de9750adcd78e6e7b95374771e9b4385e4326c31ea1cbc4d6930cbd1daa82c3",
+    "umf_access/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "umf_access/related_keys.py": "4fbcfa9bac91276bd7968c9ed6cbdd5faa7d623bcbe5f1db3d27e883c21540c5",
+    "umf_access/reviewed.py": "dbc9ea8fbc536d9eec20e32cb06b846040afa37ae3962813746df72e0432f4d9",
+    "umf_access/search_catalog.py": "3e47139ae80c58bc2be8bdfadae510554b2e6101e384d7237eb9f3d46707a2c1",
+    "umf_access/targets.py": "2c34e7c988e05c19ef6fb6690f5186eab68f089583009fbee36cfc19be61c472",
+    "umf_access/types.py": "b003ca6d6a84446a2f0eb32d26187c5adc27dbf62936ce6f69827b6a1f9a2d5e",
+    "umf_access/unity_search.py": "39ea9b4c8fce488982349ffac768506db860e7eb3f16a1b260a97e69cfae6e17",
+    "umf_access/values.py": "c8aab7363a09c38d77b8f60c2b97fa361fc4b80f522e9d1d3f7cbaaf32b5d848",
+    "umf_access/verification.py": "070ea416451d8cc8e26482173557c067b8e25137ef1d9778c00c30259f8ba48b",
+    "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "weft/weft.abi3.so": "3ca29741b86eb6ce26187fede41e754dbd15e4db8abc7f556ff0a1d5d60dcc95"
+  }
+}
