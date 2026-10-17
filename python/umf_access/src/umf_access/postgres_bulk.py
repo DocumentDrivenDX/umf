@@ -33,8 +33,37 @@ from .protocols import (
     Receipt,
     TimedOut,
 )
+from .reviewed import validate_list_parameters
 from .targets import AsyncPostgresTarget, PostgresConfiguration, PostgresTarget
 from .types import ActionRef, StrictModel
+
+
+def _validate_parameters(
+    parameters: list[Any], inputs: Mapping[str, object], action_inputs: Mapping[str, str]
+) -> None:
+    """Check original parameter values without granting execution authority."""
+    from decimal import Decimal
+
+    carriers = {"string": str, "boolean": bool, "integer": int, "decimal": Decimal}
+    validate_list_parameters(parameters, inputs)
+    for parameter in parameters:
+        if parameter.get("container") == "list":
+            if parameter["name"] in action_inputs.values():
+                raise ActionRefused("NATIVE_BULK_ACTION_INPUT_SCALAR")
+            continue
+        annotation = carriers[parameter["carrier"]]
+        TypeAdapter(
+            cast(Any, annotation | None if parameter["nullable"] else annotation)
+        ).validate_python(inputs[parameter["name"]], strict=True)
+
+
+def _bulk_input_value(value: object) -> Any:
+    """Retain bounded selection lists; action scalar conversion stays unchanged."""
+    return (
+        [native_input_value(item) for item in value]
+        if type(value) is list
+        else native_input_value(value)
+    )
 
 
 class _BulkState(_State):
@@ -60,14 +89,7 @@ class _BulkState(_State):
         parameters = self.program["parameters"]
         if set(inputs) != {p["name"] for p in parameters}:
             raise ActionRefused("NATIVE_BULK_PARAMETER_INVENTORY")
-        from decimal import Decimal
-
-        carriers = {"string": str, "boolean": bool, "integer": int, "decimal": Decimal}
-        for p in parameters:
-            annotation = carriers[p["carrier"]]
-            TypeAdapter(
-                cast(Any, annotation | None if p["nullable"] else annotation)
-            ).validate_python(inputs[p["name"]], strict=True)
+        _validate_parameters(parameters, inputs, self.program["actionInputs"])
         # Mutation inputs use their original generated Field validators, including
         # constraints, rather than only the SQL scalar carrier.
         for source, name in self.program["actionInputs"].items():
@@ -99,7 +121,7 @@ class _BulkState(_State):
                 "program": self.program,
                 "inputDigest": program.bundle_input_digest,
                 "parameters": {
-                    name: native_input_value(value)
+                    name: _bulk_input_value(value)
                     for name, value in self.inputs.items()
                 },
             }
