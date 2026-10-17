@@ -1,0 +1,9 @@
+Building wheel...
+WARN `hatchling==1.27.0` needs to be downloaded from a registry
+WARN hatchling needs to be downloaded from a registry
+error: Failed to build `/private/tmp/sdk-r26-build-source/python/umf_access`
+  cause: Failed to resolve requirements from `build-system.requires`
+  cause: No solution found when resolving: `hatchling==1.27.0`
+  cause: Because hatchling==1.27.0 needs to be downloaded from a registry and you require hatchling==1.27.0, we can conclude that your requirements are unsatisfiable.
+
+hint: Packages were unavailable because the network was disabled. When the network is disabled, registry packages may only be read from the cache.

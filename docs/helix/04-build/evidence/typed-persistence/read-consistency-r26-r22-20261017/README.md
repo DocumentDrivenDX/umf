@@ -1,0 +1,7 @@
+# R26/R22 public read-consistency controls
+
+All six genuine installed public controls pass on Python3.11.17/PostgreSQL18.6: sync/async read, page, stream. SDK R26 source fcb8cc2f2c9e715364e3332635e84f56be052edd is paired with unchanged Weft R22 source5605d358650468d651f69ff29c40e986a0359a5b. No compiled artifact or owner SQL was modified. The public ReviewedSQL build authored keyset only for page/stream.
+
+Each owned fixture uses a SELECT-only NOSUPER/NOBYPASS actor, default caller path, original early relation lock, independently confirmed value-preserving table rewrite and native relfilenode change, and exact two returned rows. Native backend_xmin is NULL immediately before the original early lock, after the legacy snapshot-free search_path utility. This contrasts with the preserved R25 public stream red. Both original admissions and normal SDK actor checks execute unchanged. All49 installed SDK/compiler payloads remain exact and every fixture restores/stops.
+
+This packet is scoped to read consistency and legacy host context. Strict ranked contexts and other functional/mutation workflows have separate native gates. Initial offline builder lacked hatchling cache; the pinned existing build environment succeeded. No database data directories, wheels, executables, credentials or private engine implementation are included. Exact executed harnesses retain recorded /tmp helper/input paths; the mechanism helper is preserved in the predecessor read-consistency packet.

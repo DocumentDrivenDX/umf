@@ -1,0 +1,325 @@
+{
+  "method": "page",
+  "asynchronous": true,
+  "payloadsUnchanged": true,
+  "rows": [
+    "row-1",
+    "row-2"
+  ],
+  "expected": [
+    "row-1",
+    "row-2"
+  ],
+  "actor": [
+    "erik",
+    "erik",
+    false,
+    false
+  ],
+  "observation": {
+    "readerXminBeforeLock": [
+      null
+    ],
+    "nativeBefore": [
+      "16386",
+      "16394",
+      "759",
+      "(0,11)",
+      "text",
+      -1,
+      false,
+      "\"C\""
+    ],
+    "nativeAfter": [
+      "16386",
+      "16398",
+      "760",
+      "(0,12)",
+      "text",
+      -1,
+      false,
+      "\"C\""
+    ],
+    "independentRows": [
+      [
+        "row-1",
+        "alpha",
+        "1.00"
+      ],
+      [
+        "row-2",
+        "beta",
+        "2.00"
+      ]
+    ]
+  },
+  "trace": [
+    {
+      "sql": "SET TRANSACTION READ ONLY",
+      "params": null
+    },
+    {
+      "sql": "SET LOCAL statement_timeout = '8000ms'",
+      "params": null
+    },
+    {
+      "sql": "SET LOCAL search_path = pg_catalog, \"native_app\", pg_temp",
+      "params": null
+    },
+    {
+      "sql": "SET LOCAL statement_timeout = '8000ms'",
+      "params": null
+    },
+    {
+      "sql": "LOCK TABLE \"orders\" IN ACCESS SHARE MODE",
+      "params": null
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7986"
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('search_path', %s, true), pg_catalog.set_config('row_security', 'on', true)",
+      "params": [
+        "pg_catalog, \"native_app\", pg_temp"
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7986"
+      ]
+    },
+    {
+      "sql": "SELECT current_user, session_user, r.rolsuper, r.rolbypassrls\nFROM pg_catalog.pg_roles r WHERE r.rolname = current_user",
+      "params": null
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7985"
+      ]
+    },
+    {
+      "sql": "SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,\npg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')\nFROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace\nWHERE n.nspname = %s AND c.relname = %s\nAND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance\n WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)",
+      "params": [
+        "native_app",
+        "orders"
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7985"
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.to_regclass(%s)::pg_catalog.oid",
+      "params": [
+        "\"orders\""
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7985"
+      ]
+    },
+    {
+      "sql": "SELECT a.attname, tn.nspname, t.typname, a.attnotnull\nFROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid\nJOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace\nWHERE a.attrelid = %s AND a.attnum > 0 AND NOT a.attisdropped",
+      "params": [
+        16386
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7982"
+      ]
+    },
+    {
+      "sql": "SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)\nJOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum\nWHERE k.pos <= i.indnkeyatts ORDER BY k.pos)\nFROM pg_catalog.pg_index i\nJOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid\nJOIN pg_catalog.pg_am am ON am.oid = ix.relam\nWHERE i.indrelid = %s AND i.indisunique AND i.indisvalid AND i.indisready\nAND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'\nAND NOT EXISTS (\n SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)\n JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum\n JOIN pg_catalog.pg_type t ON t.oid = a.atttypid\n JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace\n LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]\n LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace\n LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation\n WHERE k.pos <= i.indnkeyatts AND (\n  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'\n  AND op.opcmethod = ix.relam\n  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'\n   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'\n   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END\n  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation\n  AND (a.attcollation = 0 OR co.collisdeterministic)\n ) IS NOT TRUE\n)",
+      "params": [
+        16386
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7979"
+      ]
+    },
+    {
+      "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+      "params": {
+        "__umf_native_1": "native_app",
+        "__umf_native_2": "orders",
+        "__umf_native_3": "amount",
+        "__umf_native_4": "numeric(12,2)"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7979"
+      ]
+    },
+    {
+      "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+      "params": {
+        "__umf_native_1": "native_app",
+        "__umf_native_2": "orders",
+        "__umf_native_3": "id",
+        "__umf_native_4": "text",
+        "__umf_native_5": "pg_catalog",
+        "__umf_native_6": "C"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7979"
+      ]
+    },
+    {
+      "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+      "params": {
+        "__umf_native_1": "native_app",
+        "__umf_native_2": "orders",
+        "__umf_native_3": "status",
+        "__umf_native_4": "text",
+        "__umf_native_5": "pg_catalog",
+        "__umf_native_6": "C"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7978"
+      ]
+    },
+    {
+      "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+      "params": {
+        "__umf_inventory_1": "native_app",
+        "__umf_inventory_2": "orders",
+        "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7977"
+      ]
+    },
+    {
+      "sql": "SELECT \"r\".\"id\" COLLATE pg_catalog.\"C\" AS \"id\", \"r\".\"id\" COLLATE pg_catalog.\"C\" AS \"__umf_order_0\" FROM \"orders\" AS \"r\" WHERE (%s::pg_catalog.bool = FALSE OR ((((%s::pg_catalog.text IS NOT NULL AND \"r\".\"id\" COLLATE pg_catalog.\"C\" > %s::pg_catalog.text) OR (%s::pg_catalog.text IS NOT NULL AND \"r\".\"id\" COLLATE pg_catalog.\"C\" IS NULL))))) ORDER BY \"r\".\"id\" COLLATE pg_catalog.\"C\" ASC NULLS LAST LIMIT 10",
+      "params": [
+        false,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7977"
+      ]
+    },
+    {
+      "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+      "params": {
+        "__umf_native_1": "native_app",
+        "__umf_native_2": "orders",
+        "__umf_native_3": "amount",
+        "__umf_native_4": "numeric(12,2)"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7977"
+      ]
+    },
+    {
+      "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+      "params": {
+        "__umf_native_1": "native_app",
+        "__umf_native_2": "orders",
+        "__umf_native_3": "id",
+        "__umf_native_4": "text",
+        "__umf_native_5": "pg_catalog",
+        "__umf_native_6": "C"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7977"
+      ]
+    },
+    {
+      "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=FALSE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+      "params": {
+        "__umf_native_1": "native_app",
+        "__umf_native_2": "orders",
+        "__umf_native_3": "status",
+        "__umf_native_4": "text",
+        "__umf_native_5": "pg_catalog",
+        "__umf_native_6": "C"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7976"
+      ]
+    },
+    {
+      "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+      "params": {
+        "__umf_inventory_1": "native_app",
+        "__umf_inventory_2": "orders",
+        "__umf_inventory_3": "[\"amount\",\"id\",\"status\"]"
+      }
+    },
+    {
+      "sql": "SELECT pg_catalog.set_config('statement_timeout', %s, true)",
+      "params": [
+        "7976"
+      ]
+    },
+    {
+      "sql": "SELECT current_user, session_user, r.rolsuper, r.rolbypassrls\nFROM pg_catalog.pg_roles r WHERE r.rolname = current_user",
+      "params": null
+    }
+  ],
+  "fetchoneObservations": [
+    [
+      "erik",
+      "erik",
+      false,
+      false
+    ],
+    [
+      16386,
+      "r",
+      false,
+      false,
+      false
+    ],
+    [
+      16386
+    ],
+    [
+      "erik",
+      "erik",
+      false,
+      false
+    ]
+  ],
+  "status": "ROWS_PRESERVED"
+}
