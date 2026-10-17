@@ -19,8 +19,8 @@ from .postgres_read import (
     _ROLE,
     ReadObligationUnmet,
     TimedOut,
+    _output_value,
     _projection_admissions,
-    _vector_output,
     native_read_admission,
 )
 from .search_catalog import SearchEntry, SearchVariant
@@ -87,11 +87,12 @@ def _decode(value: object, output: Mapping[str, Any]) -> object:
             raise SearchError("native non-null search output is null")
         return None
     carrier = output["carrier"]
-    if carrier == "vector":
-        try:
-            return _vector_output(value, output)
-        except ReadObligationUnmet as error:
-            raise SearchError(str(error)) from error
+    try:
+        value = _output_value(value, dict(output))
+    except ReadObligationUnmet as error:
+        raise SearchError(str(error)) from error
+    if carrier in ("binary", "vector"):
+        return value
     expected = {"string": str, "boolean": bool, "integer": int, "decimal": Decimal}.get(
         carrier
     )
