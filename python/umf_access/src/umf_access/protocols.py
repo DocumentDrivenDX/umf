@@ -85,6 +85,8 @@ class NativeOutcomeDetails:
             "umf.actions.native-bulk/0.1",
             "umf.actions.native-delta/0.1",
             "umf.actions.native-delta-bulk/0.1",
+            "umf.actions.managed-delta/0.1",
+            "umf.actions.managed-delta-bulk/0.1",
         ):
             raise ValueError("original source-bound native profile required")
         for text in (
