@@ -31,6 +31,20 @@ class RelatedGeneratedTests(unittest.TestCase):
         self.assertTrue(rendered.target_sql.endswith('LIMIT 7'))
         self.assertEqual(rendered.relationship['direction'], 'inverse')
 
+    def test_owner_page_bound_does_not_cap_source_or_rewrite_queries(self):
+        @query
+        def selected(amount: Param[int]):
+            return Order.objects.filter(Order.c.revision > amount).limit(17).related(Order.c.customer).all()
+        variant = capture(selected).variants[0]
+        with self.assertRaises(CaptureError):
+            render_related_logical(variant)
+        rendered = render_related_logical(variant, owner_bound=True)
+        self.assertTrue(rendered.source_sql.endswith('LIMIT 17'))
+        self.assertIn(':amount', rendered.source_sql)
+        self.assertNotIn('LIMIT', rendered.target_sql)
+        self.assertNotIn('EXISTS', rendered.target_sql)
+        self.assertEqual(rendered.relationship, {'module':'commerce','id':'customer','direction':'forward'})
+
     def test_wrong_source_and_nested_profile_refuse(self):
         @query
         def wrong():
