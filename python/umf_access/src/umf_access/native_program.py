@@ -64,12 +64,18 @@ class NativeProgram:
     ) -> NativeProgram:
         """Explicit build-time compiler call; runtime never loads a compiler."""
         version = request.get("version")
-        if version == "weft.native-action/0.1":
+        if version == "weft.managed-action/0.1":
+            method = getattr(compiler, "compile_managed_action_json", None)
+        elif version == "weft.managed-bulk/0.1":
+            method = getattr(compiler, "compile_managed_bulk_json", None)
+        elif version == "weft.native-action/0.1":
             method = compiler.compile_native_action_json
         elif version == "weft.native-bulk/0.1":
             method = compiler.compile_native_bulk_json
         elif version == "weft.search/0.1":
             method = compiler.compile_search_json
+        elif version == "weft.unity-search/0.1":
+            method = compiler.compile_unity_search_json
         else:
             method = None
         if method is None:
@@ -88,7 +94,10 @@ class NativeProgram:
                         if program.get("profile")
                         in (
                             "umf.actions.native-delta/0.1",
+                            "umf.actions.managed-delta/0.1",
+                            "umf.actions.managed-delta-bulk/0.1",
                             "umf.actions.native-delta-bulk/0.1",
+                            "unity-catalog-current/0.1",
                         )
                         else parameter_style(value["sql"], len(value["parameters"]))
                     )
@@ -143,8 +152,16 @@ class NativeProgram:
         ):
             raise ActionRefused("NATIVE_PROGRAM_ABI")
         program = program_json(self.original_json)
+        if program.get("version") == "weft.unity-search/0.1" and (
+            program.get("profile") != "unity-catalog-current/0.1"
+            or program.get("request", {}).get("managed", {}).get("indexType") != "DIRECT_ACCESS"
+        ):
+            raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         if program.get("version") == "weft.native-action/0.1":
-            if program.get("profile") == "umf.actions.native-delta/0.1":
+            if program.get("profile") == "umf.actions.managed-delta/0.1":
+                if program.get("target") != "databricks-managed-delta" or not isinstance(program.get("catalog"),str) or not program["catalog"]:
+                    raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+            elif program.get("profile") == "umf.actions.native-delta/0.1":
                 if program.get("target") != "spark-delta4":
                     raise ActionRefused("NATIVE_PROGRAM_PROFILE")
             elif program.get("profile") != "umf.actions.native-sql/0.1" or program.get(
@@ -156,23 +173,32 @@ class NativeProgram:
             or program.get("target") != "spark-delta4"
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+        if program.get("profile") == "umf.actions.managed-delta-bulk/0.1" and (
+            program.get("version") != "weft.native-bulk/0.1"
+            or program.get("target") != "databricks-managed-delta"
+            or not isinstance(program.get("catalog"), str)
+            or not program["catalog"]
+        ):
+            raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         pin = program.pop("structuralDigest", {})
         if (
             pin.get("owner")
             != {
                 "weft.native-action/0.1": (
                     "weft-databricks-native-action"
-                    if program.get("profile") == "umf.actions.native-delta/0.1"
-                    and program.get("target") == "spark-delta4"
+                    if (program.get("profile"),program.get("target")) in (("umf.actions.native-delta/0.1","spark-delta4"),("umf.actions.managed-delta/0.1","databricks-managed-delta"))
                     else "weft-postgresql-native-action"
                 ),
                 "weft.native-bulk/0.1": (
                     "weft-databricks-native-bulk"
-                    if program.get("profile") == "umf.actions.native-delta-bulk/0.1"
-                    and program.get("target") == "spark-delta4"
+                    if (program.get("profile"), program.get("target")) in (
+                        ("umf.actions.native-delta-bulk/0.1", "spark-delta4"),
+                        ("umf.actions.managed-delta-bulk/0.1", "databricks-managed-delta"),
+                    )
                     else "weft-postgresql-native-bulk"
                 ),
                 "weft.search/0.1": "weft-postgresql-search",
+                "weft.unity-search/0.1": "weft-databricks-search",
             }.get(program.get("version"))
             or pin.get("version") != "0.1"
             or hashlib.sha256(canonical_json(program).encode()).hexdigest()
@@ -184,6 +210,7 @@ class NativeProgram:
             "weft.native-action/0.1",
             "weft.native-bulk/0.1",
             "weft.search/0.1",
+            "weft.unity-search/0.1",
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
         # Re-derive only parameter style, never SQL structure or semantics.
@@ -197,7 +224,10 @@ class NativeProgram:
                         if program.get("profile")
                         in (
                             "umf.actions.native-delta/0.1",
+                            "umf.actions.managed-delta/0.1",
+                            "umf.actions.managed-delta-bulk/0.1",
                             "umf.actions.native-delta-bulk/0.1",
+                            "unity-catalog-current/0.1",
                         )
                         else parameter_style(value["sql"], len(value["parameters"]))
                     )
