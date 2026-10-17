@@ -66,6 +66,7 @@ class StreamPageSizeTests(unittest.TestCase):
         plan = SimpleNamespace(
             terminal="page",
             tuple_fields=(),
+            related_field=None,
             bind=lambda target, args: (
                 SimpleNamespace(entry="original"),
                 "parameters",

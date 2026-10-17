@@ -295,7 +295,7 @@ def run_stream(
         timeout=timeout,
         **({"page_size": page_size} if page_size is not None else {}),
     )
-    if not plan.tuple_fields:
+    if not plan.tuple_fields and plan.related_field is None:
         return stream
     return (
         _async_tuple_stream(plan, cast(AsyncGenerator[Any, None], stream))
