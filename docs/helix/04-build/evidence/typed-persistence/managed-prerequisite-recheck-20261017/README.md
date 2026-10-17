@@ -1,3 +1,5 @@
 # Managed identity prerequisite recheck — 2026-10-17
 
 Temporal qualification remains **HELD**. Both configured aidev-cus and scope-test logins still resolve to the same current user. The approved temporary principal name lookup returns an empty list. A fresh creation retry is refused by the workspace ServicePrincipals endpoint as accessible only by admins. No principal or credential was created. The original error is retained without credentials. This is a failed prerequisite check, not independent native authorization qualification. The owner has been asked to enable the required workspace admin access while local work continues.
+
+A later read-only native current-user check succeeds but observes no `admins` group membership for the configured development identity. Its subject is recorded only as a SHA-256 digest. This is a membership observation, not a new SCIM endpoint authorization test. No principal, credential or compute was created or started; independent authorization remains unqualified.
