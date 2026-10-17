@@ -195,6 +195,29 @@ def main():
                     admin.execute('GRANT SELECT ON sdk_projection_a.docs TO projection_reader')
                     assert len(queries.rows(target('sdk_projection_a'))) == 120
                     passed('native-shape-cache-DDL-invalidation-and-current-grant-refusal')
+                    admin.execute('CREATE TABLE sdk_projection_a.docs_child () INHERITS (sdk_projection_a.docs)')
+                    admin.execute('INSERT INTO sdk_projection_a.docs_child SELECT * FROM sdk_projection_a.docs LIMIT 1')
+                    try:
+                        queries.rows(target('sdk_projection_a'))
+                    except ReadObligationUnmet:
+                        assert connection.info.transaction_status == 0
+                    else:
+                        raise AssertionError('native inheritance admitted rows outside the bound table Key proof')
+                    finally:
+                        admin.execute('DROP TABLE sdk_projection_a.docs_child')
+                    assert len(queries.rows(target('sdk_projection_a'))) == 120
+                    passed('native-inheritance-refusal-after-warmed-shape-cache-and-recovery')
+                    admin.execute('ALTER TABLE sdk_projection_a.docs ADD COLUMN unbound_native text')
+                    try:
+                        queries.rows(target('sdk_projection_a'))
+                    except ReadObligationUnmet:
+                        assert connection.info.transaction_status == 0
+                    else:
+                        raise AssertionError('complete native column inventory admitted an unbound column')
+                    finally:
+                        admin.execute('ALTER TABLE sdk_projection_a.docs DROP COLUMN unbound_native')
+                    assert len(queries.rows(target('sdk_projection_a'))) == 120
+                    passed('native-complete-column-inventory-refusal-and-recovery')
                     for schema in schemas[:2]:
                         connection.execute(f'SET search_path TO pg_catalog,{schema},pg_temp')
                         selected = target(schema)

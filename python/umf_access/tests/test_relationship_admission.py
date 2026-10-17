@@ -4,8 +4,13 @@ from __future__ import annotations
 
 import copy
 import unittest
+from types import SimpleNamespace
 
-from umf_access.postgres_read import _relationship_admissions
+from umf_access.postgres_read import (
+    _native_relationship_admissions,
+    _program,
+    _relationship_admissions,
+)
 from umf_access.reviewed import ReadBuildError
 
 
@@ -31,6 +36,39 @@ def obligation():
 
 
 class RelationshipAdmissionTests(unittest.TestCase):
+    def test_original_fk_program_and_complete_scope_isolation_are_required(self):
+        program = obligation()["nativeRelationshipKeys"]["keys"][0]["nativeAdmission"]
+        descriptor = {"version": "umf.native-relationships/0.1", "nativeCatalogBeforeAfter": True,
+                      "relationships": [{"module": "domain", "id": "person",
+                        "sourceTable": ["domain", "Order"], "targetTable": ["domain", "Person"],
+                        "logicalPairs": [["personEmail", "email"]], "nativePairs": [["person_email", "email_address"]],
+                        "completeNativeSnapshotRequired": True, "nativeAdmission": program}]}
+        original = copy.deepcopy(descriptor)
+        obligations = {"nativeRelationships": descriptor}
+        with self.assertRaisesRegex(ReadBuildError, "repeatable-read"):
+            _native_relationship_admissions(obligations, "tenant")
+        obligations["readIsolation"] = "repeatable-read"
+        self.assertEqual(_native_relationship_admissions(obligations, "tenant"), _relationship_admissions(obligation(), "tenant"))
+        self.assertEqual(descriptor, original)
+        descriptor["relationships"][0]["nativePairs"] = []
+        with self.assertRaises(ReadBuildError):
+            _native_relationship_admissions(obligations, "tenant")
+
+    def test_only_original_repeatable_read_isolation_reaches_transaction_entry(self):
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=0, server_version=180006))
+        for isolation in (None, "repeatable-read", "read-uncommitted", True):
+            artifact = {"target": "postgresql18", "binding": {"schema": "tenant"}, "dbapiParameterOrder": [],
+                        "obligations": {"transaction": "read-only", "rowCap": 1, "readIsolation": isolation}}
+            entry = SimpleNamespace(artifact=lambda artifact=artifact: artifact)
+            program = _program(connection, entry, None, app_schema="tenant", _verify_only=True)
+            if isolation in (None, "repeatable-read"):
+                step = next(program)
+                self.assertEqual((step[0], step[2]), ("begin", isolation))
+                program.close()
+            else:
+                with self.assertRaises(ReadBuildError):
+                    next(program)
+
     def test_original_program_and_declared_alternate_key_are_unchanged(self):
         original = obligation()
         saved = copy.deepcopy(original)

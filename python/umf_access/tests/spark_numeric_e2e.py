@@ -44,6 +44,7 @@ def main():
                                                 'documentSha256': sha(physical)}}]},
     }
     checks = []
+    observations = []
     spark = None
     failure = None
     started = time.monotonic()
@@ -95,10 +96,10 @@ def main():
                 declarations.append(f'@query\ndef {field}_{name}(value: Param[{annotation}]):\n    return Metric.objects.filter(Metric.c.{field} {symbol} value).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()')
         declarations.extend([
             '@query\ndef amount_page(value: Param[Decimal | None], after: Param[MetricKey | None]):\n    return Metric.objects.filter(Metric.c.amount >= value).select(Metric.c.id).order_by(Metric.c.id.asc()).page(size=7, after=after, snapshot=True)',
-            '@query\ndef amount_in():\n    return Metric.objects.filter(Metric.c.amount.isin((None, Decimal("-12.000000000"), Decimal("1.000000001")))).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
-            '@query\ndef amount_not_in():\n    return Metric.objects.filter(~Metric.c.amount.isin((None, Decimal("-12.000000000"), Decimal("1.000000001")))).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
-            '@query\ndef amount_empty():\n    return Metric.objects.filter(Metric.c.amount.isin(())).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
-            '@query\ndef amount_not_empty():\n    return Metric.objects.filter(~Metric.c.amount.isin(())).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
+            '@query\ndef amount_in():\n    return Metric.objects.filter(Metric.c.amount.is_in((None, Decimal("-12.000000000"), Decimal("1.000000001")))).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
+            '@query\ndef amount_not_in():\n    return Metric.objects.filter(~Metric.c.amount.is_in((None, Decimal("-12.000000000"), Decimal("1.000000001")))).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
+            '@query\ndef amount_empty():\n    return Metric.objects.filter(Metric.c.amount.is_in(())).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
+            '@query\ndef amount_not_empty():\n    return Metric.objects.filter(~Metric.c.amount.is_in(())).select(Metric.c.id).order_by(Metric.c.id.asc()).limit(50).all()',
         ])
         (root / 'declarations.py').write_text('\n'.join(declarations) + '\n')
         pin = lambda name: {'path': name, 'sha256': hashlib.sha256((root / name).read_bytes()).hexdigest()}
@@ -135,6 +136,9 @@ def main():
                                 and operators[name](amount if field == 'amount' else big, value)]
                     actual = getattr(queries, f'{field}_{name}')(target, value=value)
                     check(f'exact {field} {name} case {thresholds[field].index(value)}', actual == expected)
+                    observations.append({'field': field, 'operation': name,
+                        'threshold': None if value is None else format(Decimal(value), 'f'),
+                        'expected': expected, 'actual': actual})
         selected = {Decimal('-12.000000000'), Decimal('1.000000001')}
         check('S8 literal nullable membership', queries.amount_in(target) == [(identifier,) for identifier, _, amount in rows if amount is not None and amount in selected])
         check('S8 literal nullable NOT membership', queries.amount_not_in(target) == [(identifier,) for identifier, _, amount in rows if amount is not None and amount not in selected])
@@ -158,7 +162,7 @@ def main():
         if spark is not None:
             spark.stop()
             stopped = True
-        (root / 'verification.json').write_text(json.dumps({'checks': checks, 'failure': failure,
+        (root / 'verification.json').write_text(json.dumps({'checks': checks, 'observations': observations, 'failure': failure,
             'sparkStopped': stopped, 'elapsedSeconds': time.monotonic()-started, 'temporalQualification': 'held'}, indent=2) + '\n')
 
 
