@@ -1,5 +1,6 @@
 """Bulk metadata/value controls; these do not grant native execution authority."""
 
+import copy
 import json
 import unittest
 from decimal import Decimal
@@ -11,6 +12,7 @@ from umf_access.build.commands import CommandBuildError, compile_command
 from umf_access.capture import CapturedVariant
 from umf_access.dsl import FieldRef, Node
 from umf_access.native_actions import native_input_value
+from umf_access.native_program import _bulk_list_custody
 from umf_access.postgres_bulk import _bulk_input_value, _validate_parameters
 from umf_access.protocols import ActionRefused
 from umf_access.reviewed import ReadBuildError, parameter_signature
@@ -92,6 +94,84 @@ class BulkListParameterTests(unittest.TestCase):
             native_input_value(values)  # Scalar action-input API remains closed.
         with self.assertRaises(ActionRefused):
             _bulk_input_value([[1]])
+
+    def test_original_list_slot_custody_refuses_old_metadata_without_inventing_use(
+        self,
+    ):
+        descriptor = {"name": "ids", **parameter_signature(list[str | None])}
+        slot = {
+            "source": {"bulkInput": "ids"},
+            **{key: value for key, value in descriptor.items() if key != "name"},
+        }
+        request = {
+            "parameters": [descriptor],
+            "selection": {"parameters": [descriptor]},
+        }
+        program = {
+            "version": "weft.native-bulk/0.1",
+            "parameters": [descriptor],
+            "selection": {"sql": "original opaque SQL", "parameters": [slot]},
+        }
+        before = copy.deepcopy(program)
+        _bulk_list_custody(program, request)
+        self.assertEqual(program, before)
+        _bulk_list_custody(
+            {
+                **program,
+                "selection": {"sql": "owner folded predicate", "parameters": []},
+            },
+            request,
+        )
+        _bulk_list_custody(
+            {
+                **program,
+                "selection": {"sql": "owner unused outer parameter", "parameters": []},
+            },
+            {"parameters": [descriptor], "selection": {"parameters": []}},
+        )
+        for field in (
+            "carrier",
+            "nullable",
+            "container",
+            "elementNullable",
+            "maxItems",
+        ):
+            malformed = copy.deepcopy(program)
+            malformed["selection"]["parameters"][0].pop(field)
+            with self.subTest(missing=field), self.assertRaises(ActionRefused):
+                _bulk_list_custody(malformed, request)
+        for field, value in (
+            ("nullable", 0),
+            ("elementNullable", 1),
+            ("maxItems", True),
+            ("maxItems", 999),
+            ("container", "array"),
+        ):
+            malformed = copy.deepcopy(program)
+            malformed["selection"]["parameters"][0][field] = value
+            with self.subTest(changed=field), self.assertRaises(ActionRefused):
+                _bulk_list_custody(malformed, request)
+        changed_request = copy.deepcopy(request)
+        changed_request["selection"]["parameters"][0] = {**descriptor, "maxItems": 999}
+        with self.assertRaises(ActionRefused):
+            _bulk_list_custody(program, changed_request)
+        changed_request = copy.deepcopy(request)
+        changed_request["parameters"][0] = {**descriptor, "elementNullable": False}
+        with self.assertRaises(ActionRefused):
+            _bulk_list_custody(program, changed_request)
+        scalar = {
+            "version": "weft.native-bulk/0.1",
+            "parameters": [{"name": "status", "carrier": "string", "nullable": False}],
+            "selection": {
+                "sql": "old scalar SQL",
+                "parameters": [
+                    {"source": {"bulkInput": "status"}, "carrier": "string"}
+                ],
+            },
+        }
+        before = copy.deepcopy(scalar)
+        _bulk_list_custody(scalar)
+        self.assertEqual(scalar, before)
 
     def test_command_retains_selection_list_descriptor_and_scalar_assignment(self):
         field = FieldRef("sales", "order", "status", logical_name="status")

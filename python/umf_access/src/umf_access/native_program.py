@@ -51,6 +51,71 @@ def canonical_json(value: Any) -> str:
     )
 
 
+def _bulk_list_custody(
+    program: Mapping[str, Any], request: Mapping[str, Any] | None = None
+) -> None:
+    """Require original list facets on every bound original bulk-input slot."""
+    if program.get("version") != "weft.native-bulk/0.1":
+        return
+    parameters = program.get("parameters", [])
+    candidates = [parameter for parameter in parameters if type(parameter) is dict and parameter.get("container") == "list"]
+    requested = request.get("parameters", []) if request is not None else parameters
+    selection = request.get("selection", {}).get("parameters", []) if request is not None else []
+    if not candidates and not any(
+        type(parameter) is dict and parameter.get("container") == "list"
+        for parameter in [*requested, *selection]
+    ):
+        return  # Preserve the established scalar program path byte-for-byte.
+
+    def refuse() -> None:
+        raise ActionRefused("NATIVE_BULK_LIST_SLOT_METADATA_REQUIRED")
+
+    if request is not None and canonical_json(parameters) != canonical_json(requested):
+        refuse()
+    declared = {}
+    expected = {}
+    for parameter in candidates:
+        name = parameter.get("name")
+        if (
+            set(parameter) != {"name", "carrier", "nullable", "container", "elementNullable", "maxItems"}
+            or type(name) is not str or not name or name in declared
+            or parameter["carrier"] not in ("string", "integer", "decimal", "boolean")
+            or parameter["nullable"] is not False
+            or type(parameter["elementNullable"]) is not bool
+            or type(parameter["maxItems"]) is not int
+            or not 1 <= parameter["maxItems"] <= 1000
+        ):
+            refuse()
+        declared[name] = parameter
+        expected[name] = {"source": {"bulkInput": name}, **{key: value for key, value in parameter.items() if key != "name"}}
+    for parameter in selection:
+        if type(parameter) is dict:
+            name = parameter.get("name")
+            if (parameter.get("container") == "list" or type(name) is str and name in declared) and (type(name) is not str or canonical_json(parameter) != canonical_json(declared.get(name))):
+                refuse()
+
+    def visit(value: Any) -> None:
+        if type(value) is dict:
+            if set(value) == {"sql", "parameters"}:
+                if type(value["parameters"]) is not list:
+                    refuse()
+                for slot in value["parameters"]:
+                    source = slot.get("source") if type(slot) is dict else None
+                    name = source.get("bulkInput") if type(source) is dict else None
+                    if type(name) is str and name in declared and canonical_json(slot) != canonical_json(expected[name]):
+                        refuse()
+            else:
+                for child in value.values():
+                    visit(child)
+        elif type(value) is list:
+            for child in value:
+                visit(child)
+
+    # A declared parameter may be unused or folded away by its original owner.
+    # Validate actual slots only; do not derive parameter use from native SQL.
+    visit(program)
+
+
 @dataclass(frozen=True)
 class NativeProgram:
     original_json: str
@@ -84,6 +149,10 @@ class NativeProgram:
         program = program_json(original)
         if program.get("status") != "compiled":
             raise ProgramBuildError(original)
+        try:
+            _bulk_list_custody(program, request)
+        except ActionRefused as error:
+            raise ValueError("WEFT_BLOCKED: " + error.code) from error
         statements: dict[str, Any] = {}
 
         def visit(value: Any, path: str) -> None:
@@ -213,6 +282,7 @@ class NativeProgram:
             "weft.unity-search/0.1",
         ):
             raise ActionRefused("NATIVE_PROGRAM_PROFILE")
+        _bulk_list_custody(program)
         # Re-derive only parameter style, never SQL structure or semantics.
         expected: dict[str, Any] = {}
 
