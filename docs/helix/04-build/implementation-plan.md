@@ -12980,3 +12980,40 @@ and full-small run passes124.163s, while macOS CREATE times out in the original
 row validation path. A measured conversion experiment was rejected as too small
 a benefit; no timeout, validation or authority gate is weakened. Temporal
 qualification remains **HELD** throughout continued implementation and release.
+
+### Source-exact initial schema correction — 2026-10-17
+
+Fresh empty-table testing reproduced seven incompatible initial shapes accepted
+by the earlier scalar admission path. The original compiler now emits the
+explicit source-exact initial profile from complete authored ColumnSets,
+RowViews and physical binding documents, including qualified native collation
+identity. The SDK requires and executes these original pre/post programs;
+a first-observed catalog fingerprint does not establish source agreement.
+Legacy serialized catalogs refuse before business SQL.
+
+The [R23 native packet](evidence/typed-persistence/source-exact-r23-20261017/README.md)
+passes eleven fresh-table initial-verification cases, ten qualified action/bulk
+controls and eleven unqualified controls with a real pg_catalog-first path.
+Incompatible first schemas execute no original data SQL. A deliberate fixture
+post-write schema fault rolls back both data and DDL. The packet explicitly
+retains the constructor-only failed precursor and the qualified generated-tree
+capture limitation; isolated successor captures and bulk post-effect testing
+remain separate. Every owned server stops and all49 installed payloads remain
+unchanged. These observations do not qualify managed or Truss mutations.
+
+The [installed R23 frontend](evidence/typed-persistence/frontend-r23-20261017/README.md)
+passes317 unit tests without skips plus all three pinned checkers and74 negative
+clients. Test fixtures now retain complete original authored native sources;
+the old mock compiler is refused rather than given invented qualification
+metadata. Runtime and test source freezes are recorded separately. Two later
+search decoder tests belong to a successor runtime and are excluded from this
+predecessor cohort. Actual search replay also identified vector version
+inconsistency and incomplete full-record projection support; their correction
+and native qualification continue independently.
+
+The completed generic manifest bulk interface merged normally in public PR34,
+main `b40e9a130cd6e6617d762da809efe673bc864246`. This supplies the SDK interface;
+it does not supply the remaining native Truss providers or close Truss's original
+macOS capacity/performance failure. Current native privilege, managed authority
+and commit-result, configured signing, final integration and live-byte deployment
+checks remain open. Temporal qualification remains **HELD**.
