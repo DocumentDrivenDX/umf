@@ -100,8 +100,27 @@ class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
             2,
         )
 
-    def test_exact_sql_profile_emits_only_scoped_runtime_reference_grants(self):
-        result = report()
+    def historical_sql_snapshot(self):
+        # Unit fixture for the unchanged archived native cohort, not current SQL
+        # qualification. The real current snapshot is checked separately below.
+        snapshot = pg_privileges._source_snapshot()
+        snapshot["fixedSql"] = copy.deepcopy(pg_privileges._EVIDENCE["fixedSql"])
+        return snapshot
+
+    def test_changed_current_sql_suppresses_legacy_reference_grants(self):
+        data = report()["runtimeAdvisory"]
+        self.assertNotEqual(
+            {k: v["sha256"] for k, v in data["sourceObservation"]["fixedSql"].items()},
+            {k: v["sha256"] for k, v in pg_privileges._EVIDENCE["fixedSql"].items()},
+        )
+        self.assertFalse(data["fixedSqlHashesMatch"])
+        self.assertEqual(data["referenceGrantStatements"], [])
+        self.assertFalse(data["nativeTestedSourceMatches"])
+        self.assertFalse(data["inventoryComplete"])
+
+    def test_historical_sql_fixture_emits_only_scoped_runtime_reference_grants(self):
+        with patch.object(pg_privileges, "_source_snapshot", return_value=self.historical_sql_snapshot()):
+            result = report()
         data = result["runtimeAdvisory"]
         self.assertTrue(data["fixedSqlHashesMatch"])
         self.assertEqual(len(data["runtimeFunctions"]), 23)
@@ -123,7 +142,7 @@ class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
         self.assertEqual(result["qualification"]["leastPrivilege"], "UNQUALIFIED")
 
     def test_unchanged_sql_does_not_qualify_changed_runtime_dependency(self):
-        snapshot = pg_privileges._source_snapshot()
+        snapshot = self.historical_sql_snapshot()
         snapshot["sha256"] = pg_privileges._EVIDENCE["evidence"][
             "testedRuntimeSourceSha256"
         ]
@@ -206,7 +225,7 @@ class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
                 self.assertFalse(data["inventoryComplete"])
 
     def test_same_sql_does_not_qualify_changed_control_flow_source(self):
-        changed = pg_privileges._source_snapshot()
+        changed = self.historical_sql_snapshot()
         changed["sha256"] = "1" * 64
         with patch.object(pg_privileges, "_source_snapshot", return_value=changed):
             data = report()["runtimeAdvisory"]
