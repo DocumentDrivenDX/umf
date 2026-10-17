@@ -305,7 +305,7 @@ try:
         def quarantine(self, conn, original):
             conn.close()
 
-    conn = psycopg.connect(base + " user=erik")
+    conn = psycopg.connect(base + " user=erik", **({"options": "-c search_path=pg_catalog,native_app,pg_temp"} if unqualified else {}))
     from pydantic import ValidationError
     from umf_access.postgres_bulk import PostgresBulkTarget
     from umf_access.protocols import ActionDenied
@@ -519,6 +519,34 @@ try:
         admin.execute("INSERT INTO shadow_app.orders VALUES ('o-1','shadow')")
         admin.execute("GRANT USAGE ON SCHEMA shadow_app TO erik")
         admin.execute("GRANT SELECT,UPDATE ON shadow_app.orders TO erik")
+        # The caller supplies neutral resolution before the original early
+        # locks. A different initial relation cannot be silently retargeted by
+        # the later host context callback: original held-OID guards must refuse.
+        class InitialContextProbe:
+            def __init__(self, connection): self.connection, self.sql = connection, []
+            def __getattr__(self, name): return getattr(self.connection, name)
+            def execute(self, sql, *args, **kwargs):
+                self.sql.append(sql)
+                return self.connection.execute(sql, *args, **kwargs)
+        before = rows()
+        with psycopg.connect(base + " user=erik", options="-c search_path=pg_catalog,shadow_app,pg_temp") as wrong:
+            probe = InitialContextProbe(wrong)
+            wrong_target = PostgresBulkTarget(probe, target.configuration, admission)
+            wrong_plan = queries.set_selected(wrong_target, ids=["o-1"], before="shadow", after="forbidden")
+            original_statements = json.loads(wrong_plan.executor.program.statements_json)
+            business_sql = {entry["sql"] for pointer, entry in original_statements.items() if pointer in ("/selection", "/preview", "/update")}
+            assert business_sql
+            try:
+                wrong_plan.execute()
+            except ActionRefused as error:
+                assert error.code == "NATIVE_SCHEMA_MISMATCH", error
+            else:
+                raise AssertionError("wrong initial neutral lock OID accepted")
+            assert not any(sql in business_sql for sql in probe.sql), probe.sql
+            assert wrong.info.transaction_status == 0
+        assert rows() == before
+        assert admin.execute("SELECT id,status FROM shadow_app.orders").fetchall() == [("o-1", "shadow")]
+        cases.append("wrong initial neutral shadow table is locked but original held-OID guard refuses before selection/mutation and rolls back")
         before = rows()
         admission.shadow = True
         try:
