@@ -1,0 +1,22 @@
+mypy positive 0 0
+mypy negative 1 6
+pyright positive 0 0
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/access_type_diagnostics.py", line 37, in parse_diagnostics
+    data = json.loads(text)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 348, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 14 column 1 (char 247)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/private/tmp/run-sdk-filter-static.py", line 42, in <module>
+    diagnostics = parse_diagnostics(tool, output, root) if phase == 'negative' else []
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/access_type_diagnostics.py", line 39, in parse_diagnostics
+    raise DiagnosticMismatch('pyright JSON required') from error
+access_type_diagnostics.DiagnosticMismatch: pyright JSON required
