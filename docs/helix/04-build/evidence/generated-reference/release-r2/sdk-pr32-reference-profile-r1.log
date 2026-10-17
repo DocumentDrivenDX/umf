@@ -1,0 +1,14 @@
+8.315 Extracting schemas and public export graph…
+21.821 Building fixed runtime, guides and evidence inventory…
+74.945 63 |  for(const[hash,bytes]of originals)await Bun.write(join(stage,'sources',hash),bytes);
+74.945 64 |  const outputs=[];for(const path of await files(stage)){const bytes=await Bun.file(join(stage,path)).bytes();outputs.push({path,sha256:sha(bytes),bytes:bytes.length});}
+74.945 65 |  const manifest={profile:'umf.reference.manifest/1',inputs:inputList,outputs,inputDigest};await validate('manifest',manifest);const manifestBytes=json(manifest);await Bun.write(join(stage,'manifest.json'),manifestBytes);
+74.945 66 |  const integrity={script:'sha256-'+Buffer.from(sha(await Bun.file(join(stage,'assets/reference.js')).bytes()),'hex').toString('base64'),style:'sha256-'+Buffer.from(sha(await Bun.file(join(stage,'assets/reference.css')).bytes()),'hex').toString('base64')};
+74.945 67 |  for(const view of views)await Bun.write(join(stage,view+'.html'),render(view,entries,sha(manifestBytes),integrity));
+74.945 68 |  const expected=await files(stage),actual=await files(output);if(check){if(canonical(expected)!==canonical(actual))throw Error('REFERENCE_DRIFT output membership');for(const path of expected)if(sha(await Bun.file(join(stage,path)).bytes())!==sha(await Bun.file(join(output,path)).bytes()))throw Error('REFERENCE_DRIFT '+path);}
+74.945                                                                                                                                                                                                                                                                                                             ^
+74.946 error: REFERENCE_DRIFT index.html
+74.946       at /Users/erik/.codex/worktrees/typed-sdk-release-clean/umf/scripts/reference/build.ts:68:296
+74.946 
+74.946 Bun v1.4.2 (macOS arm64)
+EXIT 1 SECONDS 74.97579554119147

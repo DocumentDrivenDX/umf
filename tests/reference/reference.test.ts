@@ -1,4 +1,4 @@
-import {test,expect} from 'bun:test';
+import {test,expect,afterAll} from 'bun:test';
 import {resolve,join} from 'node:path';
 import {unlink} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';
@@ -10,6 +10,8 @@ const root=resolve(import.meta.dir,'../..'),dist=join(root,'docs/helix/05-deploy
 const index=await Bun.file(join(dist,'index.json')).json();
 const sha=(s:string|Uint8Array)=>new Bun.CryptoHasher('sha256').update(s).digest('hex');
 const entry=async(id:string)=>Bun.file(join(dist,index.entries.find((e:any)=>e.id===id).href)).json();
+let interruptedDrift:{path:string;original:string}|undefined;
+afterAll(async()=>{if(interruptedDrift){const {path,original}=interruptedDrift,current=await Bun.file(path).text();if(current===original+'\n<!-- deliberate drift -->\n')await Bun.write(path,original);else if(current!==original)throw Error('Unexpected page bytes during drift-test cleanup; preserving them');}});
 
 // @covers US-089-AC1 @covers US-089-AC3
 test('every extension version and its exact manifest/schema are present',async()=>{
@@ -98,8 +100,8 @@ test('a second isolated generation matches; drift check refuses tampering withou
  const check=()=>{const child=Bun.spawn(['bun','scripts/reference/build.ts','--check'],{cwd:root,stdout:'pipe',stderr:'pipe'});return Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);};
  const good=await check();if(good[0]!==0)throw Error(String(good[1]));expect(await Bun.file(join(dist,'manifest.json')).text()).toBe(manifest);
  const path=join(dist,'index.html'),original=await Bun.file(path).text();
- try{await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
- finally{await Bun.write(path,original);}
+ try{interruptedDrift={path,original};await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
+ finally{await Bun.write(path,original);interruptedDrift=undefined;}
 },120000);
 
 // @covers US-089-AC11 -- host-neutral compiler notices remain source-bound.
