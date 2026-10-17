@@ -6653,6 +6653,7 @@
           "Aliases, computed/rowversion/identity, index filters and disabled state remain native observations, not author-asserted core identity.",
           "Record output requires explicit Latin1_General_100_BIN2 database identifier collation; wrong collation refuses execution.",
           "No ideal nullability, cardinality, facets or key intent inferred from native flags.",
+          "Recorded distribution artifact hashes are retained but not independently verified by this source profile; local build output is not qualification evidence.",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
         "outcome": "passed",

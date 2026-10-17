@@ -217,6 +217,7 @@
           "Matching facets do not erase native refinements, execution differences or other residuals",
           "SQL recovery preserves captured catalogs; arbitrary DDL or live database discovery is not claimed",
           "Unknown extension content remains attached; no native concept is replaced",
+          "Recorded distribution artifact hashes are retained but not independently verified by this source profile; local build output is not qualification evidence.",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
         "outcome": "passed",

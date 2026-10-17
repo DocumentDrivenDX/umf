@@ -1,6 +1,6 @@
 import {aggregate,type Evidence,type Outcome} from '../../../docs/helix/05-deploy/reference/model';
 import {source,read,text,paths,root} from '../io';
-import {resolve} from 'node:path';
+import {resolve,posix} from 'node:path';
 export function normalize(reader:string,d:any):Outcome {
  if(reader==='json-schema-upstream'){if(!Array.isArray(d.records))throw Error('REFERENCE_STRUCTURE upstream records');const pass=d.records.every((r:any)=>r.preservation==='passed'&&r.oracle==='passed'&&!r.mismatches?.length&&!r.parityMismatches?.length);return pass?'passed':'mixed';}
  if(reader==='json-schema-python'){if(!d.outcomes||!Array.isArray(d.records))throw Error('REFERENCE_STRUCTURE python outcomes');return d.outcomes.failed?d.outcomes.passed?'mixed':'failed':'passed';}
@@ -14,7 +14,17 @@ export function normalize(reader:string,d:any):Outcome {
 }
 export function correspondence(required:string[],hashes:{path:string;sha256:string}[],actual:Record<string,string>):Evidence['correspondence'] {
  if(hashes.some(h=>actual[h.path]&&actual[h.path]!==h.sha256))return 'historical';
- return required.length&&required.every(p=>hashes.some(h=>h.path===p)&&actual[p])?'matching':'unknown';
+ return required.length&&hashes.every(h=>actual[h.path]===h.sha256)&&required.every(p=>hashes.some(h=>h.path===p)&&actual[p])?'matching':'unknown';
+}
+const recordedArtifact=(path:string)=>posix.normalize(path).startsWith('dist/');
+/** Observe source inputs only; ambient distribution bytes are not qualification. */
+export async function observeRecordedHashes(hashes:{path:string;sha256:string}[]):Promise<Record<string,string>>{
+ const actual:Record<string,string>={};
+ for(const h of hashes){
+  if(recordedArtifact(h.path)||h.path.includes('..')||h.path.startsWith('/'))continue;
+  if(await Bun.file(resolve(root,h.path)).exists())actual[h.path]=(await source(h.path,false)).sha256;
+ }
+ return actual;
 }
 export async function evidence(allocation:any,operation:any):Promise<Evidence>{
  const recordSource=await source(allocation.recordPath);let d:any;
@@ -23,11 +33,11 @@ export async function evidence(allocation:any,operation:any):Promise<Evidence>{
  const outcome=normalize(allocation.readerId,d);const versions:Record<string,string>={};for(const k of ['compiler','runtime','oracle','nativeOracle','nativeVersion','versions','pydantic','dialect','serverVersion','parserVersion','printer'])if(d[k]!==undefined)versions[k]=typeof d[k]==='string'?d[k]:JSON.stringify(d[k]);
  if(d.systems&&typeof d.systems==='object'&&!Array.isArray(d.systems)&&operation.sourceSystem in d.systems){const native=d.systems[operation.sourceSystem];for(const [k,v]of Object.entries(native))if(/version|oracle|runtime/i.test(k))versions[operation.sourceSystem+'.'+k]=typeof v==='string'?v:JSON.stringify(v);}
  const hashes:{path:string;sha256:string}[]=[];const scan=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,x]of Object.entries(v)){if(typeof x==='string'&&/^[a-f0-9]{64}$/.test(x)&&k.includes('/'))hashes.push({path:k,sha256:x});else if(x&&typeof x==='object')scan(x);}};scan(d);
- const actual:Record<string,string>={};for(const h of hashes){if(h.path.includes('..')||h.path.startsWith('/'))continue;if(await Bun.file(resolve(root,h.path)).exists())actual[h.path]=(await source(h.path,false)).sha256;}
+ const actual=await observeRecordedHashes(hashes);
  const required=allocation.closureProfile==='full-operation-v1'?['package.json','bun.lock',...operation.fixturePaths,...await paths('src/**/*.ts'),...await paths('spec/**/*.json'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')]:[];
- for(const path of required)if(!actual[path])actual[path]=(await source(path,false)).sha256;
+ for(const path of required){if(recordedArtifact(path))throw Error('REFERENCE_STRUCTURE source closure cannot require an ambient distribution artifact');if(!actual[path])actual[path]=(await source(path,false)).sha256;}
  const current=outcome==='unassessed'?'unassessed':correspondence(required,hashes,actual);
  const recordedLimits=[d.limitations,d.limits,d.systems?.[operation.sourceSystem]?.limits].flatMap(v=>Array.isArray(v)?v.filter((x:any)=>typeof x==='string'):[]);
- return {id:allocation.id,source:recordSource,readerId:allocation.readerId,selector:allocation.selector,outcome,correspondence:current,scope:typeof d.scope==='string'?d.scope:d.scope?JSON.stringify(d.scope):operation.subset,versions,limitations:[...operation.limitations,...recordedLimits,...(required.length?[]:['Complete tested dependency closure is not recorded; current-source qualification is unknown.'])],commands:Array.isArray(d.commands)?d.commands.filter((x:any)=>typeof x==='string'):[],inputHashes:hashes,closureComplete:current==='matching',supersedes:allocation.supersedes};
+ return {id:allocation.id,source:recordSource,readerId:allocation.readerId,selector:allocation.selector,outcome,correspondence:current,scope:typeof d.scope==='string'?d.scope:d.scope?JSON.stringify(d.scope):operation.subset,versions,limitations:[...operation.limitations,...recordedLimits,...(hashes.some(h=>recordedArtifact(h.path))?['Recorded distribution artifact hashes are retained but not independently verified by this source profile; local build output is not qualification evidence.']:[]),...(required.length?[]:['Complete tested dependency closure is not recorded; current-source qualification is unknown.'])],commands:Array.isArray(d.commands)?d.commands.filter((x:any)=>typeof x==='string'):[],inputHashes:hashes,closureComplete:current==='matching',supersedes:allocation.supersedes};
 }
 export {aggregate};

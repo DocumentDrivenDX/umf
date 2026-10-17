@@ -223,6 +223,12 @@ fixtures, semantic contracts, runtime/dependency pins and reader-owned required
 inputs. Any mismatch yields `historical`; missing dependencies yield `unknown`.
 Repository commit equality or file existence alone cannot yield `matching`.
 External dependencies without immutable verified pins also yield `unknown`.
+Recorded `dist/**` hashes remain visible in `inputHashes`, but this source
+profile never reads ambient distribution build outputs as current evidence.
+Their presence, absence or host-dependent bytes cannot alter the reference.
+An unverified recorded artifact prevents `matching` and complete closure;
+independently observed source mismatches still yield `historical`. Actual
+reference runtime assets remain bound by their own build-input inventory.
 
 Aggregation never converts a declaration into a pass. For the same operation
 and exact scope, incompatible unsuperseded outcomes produce `conflicting` and

@@ -6653,6 +6653,7 @@
           "Physical repetition and logical/embedded Arrow refinements remain native; no ideal scalar cardinality inferred.",
           "Authored projections write empty native files using explicit physical carriers and repetition. No row writer or row-value transport claim.",
           "Native bytes and unknown footer/extension content remain retained.",
+          "Recorded distribution artifact hashes are retained but not independently verified by this source profile; local build output is not qualification evidence.",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
         "outcome": "passed",

@@ -6653,6 +6653,7 @@
           "Projection covers explicit single-field carriers and flat records; source-only intent needs the retained report for recovery.",
           "local-timestamp-micros reads as datetime in fastavro and plain long in Apache Python; compatible bytes do not establish logical equivalence.",
           "Native sample encode/decode is not general value-domain or writer/reader evolution conformance.",
+          "Recorded distribution artifact hashes are retained but not independently verified by this source profile; local build output is not qualification evidence.",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
         "outcome": "passed",

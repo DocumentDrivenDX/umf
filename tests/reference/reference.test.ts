@@ -3,7 +3,7 @@ import {resolve,join} from 'node:path';
 import {unlink} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';
 import {identity,aggregate,structuralDiff,search,assertJoins,exclude,type Evidence,type Entry} from '../../docs/helix/05-deploy/reference/model';
-import {normalize,correspondence} from '../../scripts/reference/evidence';
+import {normalize,correspondence,observeRecordedHashes} from '../../scripts/reference/evidence';
 import {checkBoundaries} from '../../scripts/reference/check-boundaries';
 import {execute} from '../../docs/helix/05-deploy/reference/runtime';
 const root=resolve(import.meta.dir,'../..'),dist=join(root,'docs/helix/05-deploy/microsite/dist/reference');
@@ -43,6 +43,19 @@ test('source hash changes and missing dependency closures cannot become current 
  expect(correspondence(['source.ts','lock'],[{path:'source.ts',sha256:'same'}],{'source.ts':'same'})).toBe('unknown');
  expect(correspondence(['source.ts'],[{path:'source.ts',sha256:'same'}],{'source.ts':'same'})).toBe('matching');
  expect(correspondence([],[],{})).toBe('unknown');
+ expect(correspondence(['source.ts'],[{path:'source.ts',sha256:'same'},{path:'dist/umf.js',sha256:'recorded'}],{'source.ts':'same'})).toBe('unknown');
+ expect(correspondence(['source.ts'],[{path:'source.ts',sha256:'old'},{path:'dist/umf.js',sha256:'recorded'}],{'source.ts':'new'})).toBe('historical');
+});
+// @covers US-089-AC5
+test('ambient distribution artifacts never enter evidence observations',async()=>{
+ const path='dist/reference-evidence-ambient-control.txt',file=join(root,path);
+ if(await Bun.file(file).exists())throw Error('Control path already exists');
+ const hashes=[{path,sha256:'recorded'},{path:'./'+path,sha256:'recorded'},{path:'.//'+path,sha256:'recorded'}];
+ try{
+  expect(await observeRecordedHashes(hashes)).toEqual({});
+  await Bun.write(file,'first ambient build');expect(await observeRecordedHashes(hashes)).toEqual({});
+  await Bun.write(file,'different host/build bytes');expect(await observeRecordedHashes(hashes)).toEqual({});
+ }finally{if(await Bun.file(file).exists())await unlink(file);}
 });
 // @covers US-089-AC5
 test('conflicting observations and supersession cycles refuse optimistic aggregation',()=>{

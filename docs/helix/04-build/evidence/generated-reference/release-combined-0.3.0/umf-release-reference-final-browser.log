@@ -1,0 +1,54 @@
+$ bun scripts/reference/browser.ts
+{
+  "testedManifestSha256": "d7fa46991549d2fb370094b00caa32d47773ec335a7803d2817d9ea619c22f9a",
+  "measurements": {
+    "searchP95Ms": 2.700000047683716,
+    "cancellationP95Ms": 0,
+    "trials": 20,
+    "longTasks": 0,
+    "layoutShift": 0.0018348143508295114,
+    "navigationDurationMs": 8.299999952316284,
+    "initialPayloadBytes": 4466658
+  },
+  "profile": "umf.reference.browser-evidence/1",
+  "browser": "153.0.8010.12",
+  "viewportProfiles": [
+    "1440x1000",
+    "375x812"
+  ],
+  "checks": [
+    "Desktop index route, data and layout",
+    "Desktop core route, data and layout",
+    "Desktop extensions route, data and layout",
+    "Desktop integrations route, data and layout",
+    "Desktop api route, data and layout",
+    "Desktop examples route, data and layout",
+    "Core definition pointer navigation",
+    "Nested base-path refresh/history",
+    "Malformed schema pointer refuses without selecting the root",
+    "Extension registration and semantic reference",
+    "Native oracle failures and unknown closure remain visible",
+    "Delayed previous navigation cannot overwrite current entry",
+    "Integration operation link selects its admitted example",
+    "Core 0.9 fixed validator executes",
+    "Unknown-extension preservation",
+    "Public Bun/browser exact serialization parity",
+    "Malformed input refusal retains original",
+    "Exact properties and default inspection",
+    "Copied metadata selection",
+    "Native compiled projection with explicit loss report",
+    "Strict projection refusal",
+    "Explicit Protobuf WASM source compilation",
+    "Worker cancellation",
+    "Original source download",
+    "Measured loaded-index search p95 <=100ms across20 trials",
+    "Measured cancellation feedback p95 <=250ms across20 trials",
+    "Sixteen existing public routes retain headings and layout",
+    "Seven routes at 375px without document overflow",
+    "Keyboard catalog activation and visible focus",
+    "Tampered detail shard refused"
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "source": "Generated local site under /umf/; no production deployment or native acceptance refresh"
+}
