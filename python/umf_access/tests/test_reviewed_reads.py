@@ -447,8 +447,8 @@ class Native(unittest.TestCase):
         if not cls.admin.execute(
             "SELECT 1 FROM pg_catalog.pg_roles WHERE rolname = 'praxis_a'"
         ).fetchone():
-            cls.admin.execute("CREATE ROLE praxis_a LOGIN")
-            cls.admin.execute("CREATE ROLE praxis_b LOGIN")
+            cls.admin.execute("CREATE ROLE praxis_a LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS")
+            cls.admin.execute("CREATE ROLE praxis_b LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS")
         for schema in ("praxis_test", "praxis_other"):
             if cls.admin.execute(
                 "SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname = %s", (schema,)
@@ -456,7 +456,7 @@ class Native(unittest.TestCase):
                 continue
             cls.admin.execute(f"CREATE SCHEMA {schema}")
             cls.admin.execute(
-                f"CREATE TABLE {schema}.orders (id bigint PRIMARY KEY, customer_id bigint, status text NOT NULL, amount numeric NOT NULL, owner_role text NOT NULL)"
+                f"CREATE TABLE {schema}.orders (id bigint PRIMARY KEY, customer_id bigint, status text NOT NULL, amount numeric(28,6) NOT NULL, owner_role text NOT NULL)"
             )
             cls.admin.execute(
                 f"CREATE TABLE {schema}.customers (id bigint PRIMARY KEY, name text NOT NULL, owner_role text NOT NULL)"
@@ -565,15 +565,19 @@ class Native(unittest.TestCase):
         self.assertEqual(self.a.info.transaction_status, 2)
         early.close()
         self.assertEqual(self.a.info.transaction_status, 0)
+        from umf_access.pages import StreamLimitReached
+
+        limited = []
+        with self.assertRaises(StreamLimitReached) as reached:
+            for row in execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=3):
+                limited.append(row.id)
+        self.assertEqual(limited, [1, 2, 4])
+        self.assertEqual(reached.exception.emitted, 3)
+        self.assertIs(reached.exception.truncated, True)
+        self.assertEqual(self.a.info.transaction_status, 0)
         self.assertEqual(
-            len(
-                list(
-                    execute_stream(
-                        self.a, entry, Empty(), app_schema="praxis_test", max_rows=3
-                    )
-                )
-            ),
-            3,
+            [row.id for row in execute_stream(self.a, entry, Empty(), app_schema="praxis_test", max_rows=4)],
+            [1, 2, 4, 5],
         )
         for limit in (0, -1, True):
             with self.assertRaises(ValueError):
