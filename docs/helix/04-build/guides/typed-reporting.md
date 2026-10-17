@@ -34,6 +34,8 @@ Selected PostgreSQL text-search bindings additionally require the explicit origi
 
 The default join is inner for required relationships and left for optional relationships. `how="inner"` and `how="left"` select either explicitly. Joins are limited to three declared to-one edges. Named projection handles keep the projection's owning root in the type system; an unrelated projection is rejected by all three checkers.
 
+For Truss `@command` catalogs, the separate [manifest command guide](truss-manifest-commands.md) describes original portable plan custody and the engine-owned provider boundary. It does not grant mutation authority to a reporting target.
+
 ## Build a reviewed aggregate
 
 ```python

@@ -38,6 +38,7 @@ from ..dsl import (
     render_related_logical,
 )
 from ..engine_catalog import EngineRead
+from ..manifest_commands import manifest_registry
 from ..native_program import NativeProgram, program_json
 from ..related_keys import key_descriptor, make_related_result_model, validate_decoder
 from ..reviewed import (
@@ -336,7 +337,25 @@ def resolve_configuration(
         _resolve_schema_binding(target)
         if target.get("kind") in ("truss", "ashlar"):
             requests = target.get("engineRequests")
-            if (
+            manifests = target.get("manifestCommands")
+            if manifests is not None:
+                if target["kind"] != "truss" or type(manifests) is not dict or not manifests:
+                    raise CatalogBuildError("MANIFEST_ORIGINAL_CONFIGURATION_REQUIRED")
+                for entry in manifests.values():
+                    if (type(entry) is not dict or set(entry) != {"configuration", "request"}
+                            or type(entry["configuration"]) is not str or type(entry["request"]) is not dict):
+                        raise CatalogBuildError("MANIFEST_ORIGINAL_CONFIGURATION_REQUIRED")
+                    registry = manifest_registry(entry["configuration"])
+                    model = entry["request"].get("model")
+                    if (type(registry) is not dict or type(registry.get("actions")) is not list
+                            or type(model) is not dict or model.get("utf8") not in originals
+                            or any(type(action) is not dict or type(action.get("snapshot")) is not dict
+                                   or action["snapshot"].get("utf8") not in originals
+                                   for action in registry["actions"])):
+                        raise CatalogBuildError("manifest models must equal complete original pinned documents")
+            if requests is None and manifests is not None:
+                pass  # Command-only target; read declarations still require their own owner request.
+            elif (
                 type(requests) is not dict
                 or not requests
                 or any(
@@ -546,6 +565,7 @@ def _compile_catalog_owned(
             "binding",
             "platform",
             "nativeActions",
+            "manifestCommands",
             "security",
             "roleMappings",
             "sessionPrincipal",
@@ -557,6 +577,8 @@ def _compile_catalog_owned(
             "engineCompiler",
         }:
             raise CatalogBuildError("unknown target configuration member")
+        if target.get("manifestCommands") is not None and target["kind"] != "truss":
+            raise CatalogBuildError("MANIFEST_TARGET_UNSUPPORTED")
         if target["kind"] in ("truss", "ashlar"):
             # CONTRACT-071: engine action dispatch stays in the engine SDK;
             # shared generated packages may still retain selected ActionRefs.
@@ -671,8 +693,6 @@ def _compile_catalog_owned(
         if declaration.kind == "command":
             if any(target["kind"] == "ashlar" for target in targets):
                 raise CatalogBuildError("ASHLAR_COMMAND_UNSUPPORTED: Ashlar has no SDK BulkTarget")
-            if any(target["kind"] == "truss" for target in targets):
-                raise CatalogBuildError("WEFT_BLOCKED: original Truss mutation manifest compiler required")
             command_ref = cast(RecordRef, declaration.variants[0].node.args[0])
             command_record = records[(command_ref.module, command_ref.element)]
             command_lines, command_entries = emit_command(

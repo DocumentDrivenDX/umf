@@ -9,6 +9,7 @@ from typing import Any, Union, cast, get_args, get_origin
 
 from ..capture import CapturedDeclaration, CapturedVariant, ProjectionRef
 from ..dsl import FieldRef, Node, Ordering, render_logical
+from ..manifest_commands import ManifestCompilationError, ManifestProgram
 from ..native_program import NativeProgram
 from ..reviewed import ReadBuildError, parameter_signature
 
@@ -167,6 +168,48 @@ def compile_command(
     return NativeProgram.build(compiler, request, bundle_input_digest=input_digest)
 
 
+def compile_manifest_command(compiler: Any, variant: CapturedVariant, target: dict[str, Any], reference: Any, configuration: Any, input_digest: str, parameters: dict[str, Any]) -> ManifestProgram:
+    """Forward exact captured source to the original portable mutation compiler."""
+    from ..manifest_commands import ManifestBuildError
+
+    if type(configuration) is not dict or set(configuration) != {"configuration", "request"}:
+        raise CommandBuildError("MANIFEST_ORIGINAL_CONFIGURATION_REQUIRED")
+    registry, request = configuration["configuration"], configuration["request"]
+    if type(registry) is not str or type(request) is not dict:
+        raise CommandBuildError("MANIFEST_ORIGINAL_CONFIGURATION_REQUIRED")
+    source = reference.source
+    record = variant.node.args[0]
+    action = {"identity": {"module": source.module, "action": source.action},
+              "documentSha256": source.document_sha256,
+              "invocation": {"id": source.invocation_id, "version": source.invocation_version}}
+    model = request.get("model")
+    if (request.get("action") != action
+            or request.get("target") != {"module": record.module, "element": record.element, "key": record.key_id}
+            or request.get("sql") != render_logical(variant, binding=target["binding"], owner_bound=True)
+            or type(model) is not dict or model.get("utf8") != target["binding"].get("modelJson")
+            or model.get("sha256") != source.document_sha256):
+        raise CommandBuildError("MANIFEST_CAPTURED_SOURCE_DIFFERS")
+    witnesses = request.get("parameters")
+    if type(witnesses) is not dict or set(witnesses) != set(parameters):
+        raise CommandBuildError("MANIFEST_PARAMETER_INVENTORY_DIFFERS")
+    for name, (annotation, _) in parameters.items():
+        carrier, nullable = _carrier(annotation)
+        tag = {"string": "string", "boolean": "boolean", "integer": "integerToken"}.get(carrier)
+        value = witnesses[name]
+        if nullable or tag is None or type(value) is not dict or set(value) != {tag}:
+            raise CommandBuildError("MANIFEST_PARAMETER_PROFILE_UNSUPPORTED")
+    # Only original compiler input data enters this configuration. The original
+    # registry closes every action registration and refuses executable backends.
+    try:
+        program = ManifestProgram.build(compiler, registry, request, bundle_input_digest=input_digest)
+        program.bind(reference)
+        return program
+    except ManifestCompilationError:
+        raise
+    except (ManifestBuildError, ValueError) as error:
+        raise CommandBuildError(str(error)) from error
+
+
 def emit_command(
     compiler: Any,
     declaration: CapturedDeclaration,
@@ -187,7 +230,12 @@ def emit_command(
     if len(references)!=1:raise CommandBuildError('command action source was not uniquely selected at stage one')
     reference=references[0]
     symbol=next(s['symbol'] for s in manifest['symbols'] if s['role']=='action-ref' and s['pointer']==reference.source.action_pointer)
+    manifest_target = any(t["kind"] == "truss" for t in targets)
+    mixed_target = manifest_target and any(t["kind"] != "truss" for t in targets)
     signature=[];arguments=[];names=[];lines=[];entries=[];variants=[]
+    if manifest_target:
+        lines.append("from umf_access.manifest_commands import ManifestProgram, ManifestCommandVariant, ManifestCommandPlan, MixedManifestCommandPlan, ManifestBulkTarget, AsyncManifestBulkTarget")
+        lines.append("from .actions import *")
     for parameter in declaration.parameters:
         names.append(parameter.name)
         signature.append(
@@ -249,19 +297,22 @@ def emit_command(
                 parameters[parameter.name] = (annotation, ...)
                 paths.append((parameter.name, parameter.name, None))
         for target in targets:
-            request = action_requests[
-                (target["id"], reference.module, reference.action)
-            ]
-            program = compile_command(
-                compiler,
-                declaration,
-                variant,
-                record,
-                target,
-                request,
-                manifest["inputDigest"],
-                parameters,
-            )
+            is_manifest = target["kind"] == "truss"
+            if is_manifest:
+                configurations = target.get("manifestCommands", {})
+                if type(configurations) is not dict:
+                    raise CommandBuildError("MANIFEST_ORIGINAL_CONFIGURATION_REQUIRED")
+                program = compile_manifest_command(
+                    compiler, variant, target, reference,
+                    configurations.get(name + ":" + str(_vi)),
+                    manifest["inputDigest"], parameters,
+                )
+            else:
+                request = action_requests[(target["id"], reference.module, reference.action)]
+                program = compile_command(
+                    compiler, declaration, variant, record, target, request,
+                    manifest["inputDigest"], parameters,
+                )
             import hashlib
             import json
 
@@ -285,9 +336,15 @@ def emit_command(
                     for p in target["platform"]
                 ),
             )
-            variants.append(
-                f"CommandVariant({variant.presence!r}, TargetPin{pin!r}, NativeProgram({program.original_json!r}, {program.statements_json!r}, {program.bundle_input_digest!r}), {symbol}, {tuple(paths)!r})"
-            )
+            if is_manifest:
+                retained = f"ManifestProgram({program.configuration_json!r}, {program.request_json!r}, {program.response_json!r}, {program.bundle_input_digest!r})"
+                variants.append(f"ManifestCommandVariant({variant.presence!r}, TargetPin{pin!r}, {retained}, {symbol}, {tuple(paths)!r})")
+                artifact = json.loads(program.response_json)
+            else:
+                variants.append(
+                    f"CommandVariant({variant.presence!r}, TargetPin{pin!r}, NativeProgram({program.original_json!r}, {program.statements_json!r}, {program.bundle_input_digest!r}), {symbol}, {tuple(paths)!r})"
+                )
+                artifact = json.loads(program.original_json)
             entries.append(
                 {
                     "name": name,
@@ -295,14 +352,20 @@ def emit_command(
                     "targetId": target["id"],
                     "presence": variant.presence,
                     "pin": pin,
-                    "artifact": json.loads(program.original_json),
+                    "artifact": artifact,
                     "parameters": paths,
                 }
             )
     plan = f"_C{number}"
+    plan_class = "MixedManifestCommandPlan" if mixed_target else "ManifestCommandPlan" if manifest_target else "CommandPlan"
+    sync_target = "ManifestBulkTarget" if manifest_target else "BulkTarget"
+    async_target = "AsyncManifestBulkTarget" if manifest_target else "AsyncBulkTarget"
+    sync_type = "BulkTarget[_PlanT] | ManifestBulkTarget[_PlanT]" if mixed_target else sync_target + "[_PlanT]"
+    async_type = "AsyncBulkTarget[_PlanT] | AsyncManifestBulkTarget[_PlanT]" if mixed_target else async_target + "[_PlanT]"
+    implementation_types = "BulkTarget[object] | ManifestBulkTarget[object] | AsyncBulkTarget[object] | AsyncManifestBulkTarget[object]" if mixed_target else sync_target + "[object] | " + async_target + "[object]"
     lines.extend(
         [
-            f"{plan} = CommandPlan({name!r}, ("
+            f"{plan} = {plan_class}({name!r}, ("
             + ", ".join(arguments)
             + ("," if arguments else "")
             + "), ("
@@ -319,10 +382,10 @@ def emit_command(
     lines.extend(
         [
             "@overload",
-            f"def {name}(target: AsyncBulkTarget[_PlanT]{tail}) -> Awaitable[_PlanT]: ...",
+            f"def {name}(target: {async_type}{tail}) -> Awaitable[_PlanT]: ...",
             "@overload",
-            f"def {name}(target: BulkTarget[_PlanT]{tail}) -> _PlanT: ...",
-            f"def {name}(target: BulkTarget[object] | AsyncBulkTarget[object]{tail}) -> object:",
+            f"def {name}(target: {sync_type}{tail}) -> _PlanT: ...",
+            f"def {name}(target: {implementation_types}{tail}) -> object:",
             f"    return {plan}.run(target, {values}, timeout=timeout)",
             "",
         ]
