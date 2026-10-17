@@ -7,3 +7,13 @@ Global Go1.27.2 correctly refused the exact1.27.1 build. Explicit GOTOOLCHAIN=go
 Configured Innsigle4185eb56 verification reports17VALID/7STALE reference claims. Re-sealing with the existing configured signer failed with1Password authorization timeout. The owned signer process was stopped to prevent duplicate attempts; no key/config/verification gate changed. Signing remains pending human1Password approval, so this packet claims neither successful signing nor publication/main completion.
 
 The original PR27 dirty working tree is preserved unchanged at public branch codex/preserve-pr27-dirty-20261016 commit24543f6c0d5b050e208b4d73c339a10eba3b7b39 (32 modified/untracked files, temporary index; no owner-file/index changes). It is an unfinished snapshot, not accepted implementation evidence. Original preservation tags remain unchanged.
+
+The new SDK cohort also passes17 real local Ashlar controls with native cleanup.
+After both fresh adoption packets, reference assets were regenerated and the
+actual pinned Chromium browser passes30 controls with zero errors/unexpected
+external requests. Final deterministic reference --check passes. Regenerated
+assets are committed as explicitly awaiting configured re-sealing; no stale
+claim is promoted to VALID. `consolidation-status.json` preserves both differing
+PR30 native-command outcomes at the same exact head:107/1 failure versus a
+complete121/0 success. No sandbox assertion/runtime was weakened and no race fix
+is claimed. Fresh aggregate CI remains required.
