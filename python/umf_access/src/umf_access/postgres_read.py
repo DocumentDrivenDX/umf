@@ -263,6 +263,29 @@ def _snapshot_free_timeout(deadline: float) -> str:
     return "SET LOCAL statement_timeout = '" + str(milliseconds) + "ms'"
 
 
+def _snapshot_free_search_path(app_schema: str) -> str:
+    """Preserve legacy host schema selection without assigning a snapshot."""
+    try:
+        valid = (type(app_schema) is str and "\x00" not in app_schema
+                 and 1 <= len(app_schema.encode("utf-8")) <= 63)
+    except UnicodeEncodeError:
+        valid = False
+    if not valid:
+        raise ReadObligationUnmet("valid native application schema required")
+    return 'SET LOCAL search_path = pg_catalog, "' + app_schema.replace('"', '""') + '", pg_temp'
+
+
+def _early_relation_locks(
+    binding: Mapping[str, object], lock_sql: Sequence[str], app_schema: str,
+) -> Generator[tuple[Any, ...], Any, None]:
+    """Execute opaque original locks in their original binding context."""
+    locks = tuple(dict.fromkeys(lock_sql))
+    if locks and binding.get("schemaBinding") is None and binding.get("schema") is None:
+        yield ("snapshot-free", _snapshot_free_search_path(app_schema))
+    for sql in locks:
+        yield ("snapshot-free", sql)
+
+
 def _term_admissions(
     obligations: dict[str, object], app_schema: str
 ) -> tuple[tuple[str, dict[str, object]], ...]:
@@ -646,14 +669,15 @@ def _program(
         # Utility timeout and original LOCK precede every snapshot-taking query.
         # A retained stream transaction keeps these locks across bounded pages.
         yield ("catalog-fence", lock_sql)
+    yield from _early_relation_locks(binding, cast(list[str], artifact["lockSql"]), app_schema)
     native_context = None
     if schema_mode is not None:
-        yield ("execute", "SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('row_security', 'on', true)", (str(timeout_ms),))
+        yield ("execute", "SELECT pg_catalog.set_config('row_security', 'on', true)", ())
         native_context = yield from _observe_resolution(binding, app_schema, cast(str, schema_mode), connection.info.dbname)
     yield (
         "execute",
-        "SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('search_path', %s, true), pg_catalog.set_config('row_security', 'on', true)",
-        (str(timeout_ms), search_path),
+        "SELECT pg_catalog.set_config('search_path', %s, true), pg_catalog.set_config('row_security', 'on', true)",
+        (search_path,),
     )
     if fence_programs is not None:
         # Preserve caller-resolution observations first; canonical view output
@@ -663,7 +687,7 @@ def _program(
         )
     shape_proof: list[str] = []
     before, native_ids = yield from native_read_admission(
-        binding, app_schema, tuple(cast(list[str], artifact["lockSql"])),
+        binding, app_schema, (),
         cache_context=(target, connection.info.server_version, native_context) if native_context is not None else None,
         shape_proof=shape_proof,
     )
@@ -759,7 +783,7 @@ def _drive(
             step = program.send(answer)
         except StopIteration as done:
             return cast(ReadPage[R], done.value)
-        if step[0] == "catalog-fence":
+        if step[0] in ("catalog-fence", "snapshot-free"):
             cursor.raw.execute(_snapshot_free_timeout(cursor.deadline))
             cursor.raw.execute(step[1])
             answer = None
@@ -846,7 +870,7 @@ async def _async_drive(
         remaining = math.ceil((deadline - time.monotonic()) * 1000)
         if remaining <= 0:
             raise TimedOut("catalog read exceeded its per-call timeout")
-        if step[0] == "catalog-fence":
+        if step[0] in ("catalog-fence", "snapshot-free"):
             await raw.execute(_snapshot_free_timeout(deadline))
             await raw.execute(step[1])
             answer = None

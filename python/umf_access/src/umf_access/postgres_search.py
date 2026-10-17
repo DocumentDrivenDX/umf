@@ -23,6 +23,7 @@ from .postgres_read import (
     TimedOut,
     _catalog_fence_programs,
     _compiled_admissions,
+    _early_relation_locks,
     _output_value,
     _projection_admissions,
     _snapshot_free_timeout,
@@ -299,6 +300,11 @@ def _program(
         if fence is not None and fence[0] not in locked:
             yield ("catalog-fence", fence[0])
             locked.add(fence[0])
+    relation_locks: set[str] = set()
+    for _, original, _ in prepared:
+        locks = tuple(sql for sql in original["selectionTemplate"]["lockSql"] if sql not in relation_locks)
+        yield from _early_relation_locks(original["binding"], locks, configuration.app_schema)
+        relation_locks.update(locks)
     yield (
         "execute",
         "SELECT pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security','on',true)",
@@ -310,7 +316,7 @@ def _program(
         role, _ = yield from native_read_admission(
             program["binding"],
             configuration.app_schema,
-            tuple(program["selectionTemplate"]["lockSql"]),
+            (),
         )
         original_roles.append(role)
         yield from _schema_admissions(program, configuration.app_schema)
@@ -411,7 +417,7 @@ class PostgresSearchTarget(PostgresTarget):
                     )
                     began = True
                     result = None
-                elif kind == "catalog-fence":
+                elif kind in ("catalog-fence", "snapshot-free"):
                     self.connection.execute(_snapshot_free_timeout(deadline))
                     self.connection.execute(operation[1])
                     result = None
@@ -526,7 +532,7 @@ class AsyncPostgresSearchTarget(AsyncPostgresTarget):
                         )
                         began = True
                         result = None
-                    elif kind == "catalog-fence":
+                    elif kind in ("catalog-fence", "snapshot-free"):
                         await self.connection.execute(_snapshot_free_timeout(deadline))
                         await self.connection.execute(operation[1])
                         result = None
