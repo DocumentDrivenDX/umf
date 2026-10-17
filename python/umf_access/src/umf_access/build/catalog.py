@@ -48,6 +48,7 @@ from ..reviewed import (
     captured_source,
 )
 from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
+from .approximate import require_approximate_profile
 from .commands import emit_command
 from .privileges import privilege_report
 from .search import emit_search
@@ -1189,9 +1190,7 @@ def _compile_catalog_owned(
                             ) from error
                         raise
                 if _requests_approximate_distinct(node):
-                    raise CatalogBuildError(
-                        "WEFT_BLOCKED: WR-A10 approximate distinct requires a qualified original algorithm/error-bound output profile"
-                    )
+                    require_approximate_profile(compiled.artifact(), profile)
                 context = _json(
                     {
                         "inputDigest": manifest["inputDigest"],
