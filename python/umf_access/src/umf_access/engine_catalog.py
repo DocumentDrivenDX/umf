@@ -65,7 +65,7 @@ class EngineRead(CatalogRead[P, R]):
             "version": "umf.engine-catalog/0.1",
             "programJson": original,
             "parameters": _fields(parameters),
-            "outputs": _fields(result),
+            "outputs": _fields(result, parameter=False, allow_related=True),
             "stageOne": _generation(parameters, result),
         }
         wrapper["catalogDigest"] = hashlib.sha256(
@@ -101,7 +101,7 @@ class EngineRead(CatalogRead[P, R]):
             raise ReadBuildError("CATALOG_STALE: engine loaded generation differs")
         if wrapper["parameters"] != _fields(self.parameters) or wrapper[
             "outputs"
-        ] != _fields(self.result):
+        ] != _fields(self.result, parameter=False, allow_related=True):
             raise ReadBuildError("engine model signature differs")
         original = wrapper["programJson"]
         if type(original) is not str or len(original.encode()) > 4_194_304:

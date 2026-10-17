@@ -6,7 +6,7 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Any, Generic, Never, TypeVar, cast, overload
+from typing import Any, Generic, Literal, Never, TypeVar, cast, overload
 
 from pydantic import MISSING, BaseModel
 
@@ -19,6 +19,7 @@ K = TypeVar("K")
 T_co = TypeVar("T_co", covariant=True)
 PredicateOwner_co = TypeVar("PredicateOwner_co", covariant=True)
 OtherOwner = TypeVar("OtherOwner")
+MemberT = TypeVar("MemberT")
 
 
 @dataclass(frozen=True)
@@ -222,14 +223,18 @@ class Column(Generic[OutputT, T]):
     def is_present(self) -> Predicate[OutputT]:
         return self._test("IS NOT MISSING")
 
-    def is_in(
-        self, values: Param[list[T]] | list[T] | tuple[T, ...]
-    ) -> Predicate[OutputT]:
+    @overload
+    def is_in(self: Column[OutputT, MemberT | None], values: Param[list[MemberT]] | list[MemberT] | tuple[MemberT, ...]) -> Predicate[OutputT]: ...
+    @overload
+    def is_in(self, values: Param[list[T]] | Param[list[T | None]] | list[T] | list[T | None] | tuple[T | None, ...]) -> Predicate[OutputT]: ...
+    def is_in(self, values: object) -> Predicate[OutputT]:
         return self._cmp("IN", values)
 
-    def not_in(
-        self, values: Param[list[T]] | list[T] | tuple[T, ...]
-    ) -> Predicate[OutputT]:
+    @overload
+    def not_in(self: Column[OutputT, MemberT | None], values: Param[list[MemberT]] | list[MemberT] | tuple[MemberT, ...]) -> Predicate[OutputT]: ...
+    @overload
+    def not_in(self, values: Param[list[T]] | Param[list[T | None]] | list[T] | list[T | None] | tuple[T | None, ...]) -> Predicate[OutputT]: ...
+    def not_in(self, values: object) -> Predicate[OutputT]:
         return self._cmp("NOT IN", values)
 
     def between(self, lo: T | Param[T], hi: T | Param[T]) -> Predicate[OutputT]:
@@ -251,14 +256,19 @@ class Column(Generic[OutputT, T]):
 class Related(Generic[OutputT, K]):
     ref: FieldRef
     key_target: RecordRef | None = field(default=None, kw_only=True)
+    direction: Literal["forward", "inverse"] = field(default="forward", kw_only=True)
 
     def __post_init__(self) -> None:
         if not isinstance(cast(object, self.ref), FieldRef):
             raise TypeError("Related requires generated FieldRef metadata")
+        if self.direction not in ("forward", "inverse"):
+            raise TypeError("original directed relationship required")
 
     def has(self, key: K | Param[K]) -> Predicate[OutputT]:
         require_capture()
         value = operand(key)
+        if self.key_target is None:
+            raise CaptureError("WEFT_BLOCKED", "WR-A6 regenerate exact original relationship Key metadata")
         if self.key_target is not None:
             target = self.key_target
             if target.source is None or target.key_id is None:
@@ -275,7 +285,11 @@ class Related(Generic[OutputT, K]):
                 raise CaptureError("CAPTURE_SIGNATURE", "relationship requires its declared generated Key")
             if identity != expected:
                 raise CaptureError("CAPTURE_SIGNATURE", "relationship declared Key identity differs")
-        return Predicate(Node("HAS_RELATED", (Node("column", (self.ref,)), value)))
+        op = "HAS_INVERSE_RELATED" if self.direction == "inverse" else "HAS_RELATED"
+        args: tuple[object, ...] = (Node("column", (self.ref,)), value)
+        if self.direction == "inverse":
+            args += (self.ref.field_module, self.ref.field)
+        return Predicate(Node(op, args))
 
 
 NonMissing = TypeVar(

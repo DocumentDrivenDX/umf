@@ -25,7 +25,9 @@ from .pages import (
     StreamLimitReached,
     stream_page_size,
 )
-from .reviewed import CatalogRead, P, R, ReadBuildError
+from .reviewed import CatalogRead, P, R, ReadBuildError, validate_list_parameters
+from .related_keys import decode_related_keys, transport_spec
+from .types import CodecError, StrictModel
 from .values import validate_vector
 from .verification import postgres_verification_cache
 
@@ -89,7 +91,9 @@ FROM pg_catalog.pg_roles r WHERE r.rolname = current_user"""
 _TABLE = """SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,
 pg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')
 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
-WHERE n.nspname = %s AND c.relname = %s"""
+WHERE n.nspname = %s AND c.relname = %s
+AND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance
+ WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)"""
 _COLUMNS = """SELECT a.attname, tn.nspname, t.typname, a.attnotnull
 FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
@@ -133,6 +137,8 @@ _TYPES = {"integer": {"int2", "int4", "int8"}, "decimal": {"numeric"},
 _SHAPE = """SELECT c.oid, n.nspname, c.relname,
 pg_catalog.jsonb_build_object(
  'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+ 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
  'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
    a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
    a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
@@ -292,6 +298,43 @@ def _relationship_admissions(
     return _compiled_admissions(descriptor["keys"], app_schema)
 
 
+def _native_relationship_admissions(
+    obligations: dict[str, object], app_schema: str
+) -> tuple[tuple[str, dict[str, object]], ...]:
+    if "nativeRelationships" not in obligations:
+        return ()
+    descriptor = obligations["nativeRelationships"]
+    if (
+        not isinstance(descriptor, dict)
+        or descriptor.get("version") != "umf.native-relationships/0.1"
+        or descriptor.get("nativeCatalogBeforeAfter") is not True
+        or not isinstance(descriptor.get("relationships"), list)
+        or not 1 <= len(descriptor["relationships"]) <= 2000
+    ):
+        raise ReadBuildError("unsupported original native relationship obligation")
+    for relation in descriptor["relationships"]:
+        if not isinstance(relation, dict):
+            raise ReadBuildError("malformed original native relationship")
+        if any(type(relation.get(name)) is not str for name in ("module", "id")):
+            raise ReadBuildError("original relationship identity required")
+        for name in ("sourceTable", "targetTable"):
+            table = relation.get(name)
+            if not isinstance(table, list) or len(table) != 2 or any(type(value) is not str for value in table):
+                raise ReadBuildError("original relationship endpoint required")
+        logical, native = relation.get("logicalPairs"), relation.get("nativePairs")
+        if (
+            not isinstance(logical, list) or not 1 <= len(logical) <= 16
+            or not isinstance(native, list) or len(native) != len(logical)
+            or any(not isinstance(pair, list) or len(pair) != 2
+                   or any(type(value) is not str or not value for value in pair) for pair in logical + native)
+            or type(relation.get("completeNativeSnapshotRequired")) is not bool
+        ):
+            raise ReadBuildError("original relationship pair/snapshot inventory required")
+        if relation["completeNativeSnapshotRequired"] and obligations.get("readIsolation") != "repeatable-read":
+            raise ReadBuildError("complete native relationship scope requires original repeatable-read obligation")
+    return _compiled_admissions(descriptor["relationships"], app_schema)
+
+
 def _compiled_admissions(
     descriptors: list[Any], app_schema: str
 ) -> tuple[tuple[str, dict[str, object]], ...]:
@@ -377,7 +420,14 @@ def _vector_output(value: object, output: Mapping[str, Any]) -> object:
         raise ReadObligationUnmet("native vector output differs from its profile") from error
 
 
-def _output_value(value: object, output: dict[str, object]) -> object:
+def _output_value(value: object, output: dict[str, object], *, key_model: type[StrictModel] | None = None) -> object:
+    if output.get("carrier") == "related-keys":
+        if key_model is None:
+            raise ReadObligationUnmet("original generated relationship Key class required")
+        try:
+            return decode_related_keys(value, output.get("decoder"), key_model)
+        except CodecError:
+            raise ReadObligationUnmet("native related-Key output differs from original decoder") from None
     if output.get("carrier") in ("binary", "vector"):
         if value is None:
             if output.get("nullable") is not True:
@@ -524,6 +574,8 @@ def _program(
     # Revalidate raw attributes: model_construct/model_copy never bypass codecs.
     checked = None if _verify_only else revalidate_model(entry.parameters, params)
     values = {} if checked is None else {name: getattr(checked, name) for name in entry.parameters.model_fields}
+    if checked is not None:
+        validate_list_parameters(artifact["parameters"], values)
     if any(isinstance(value, Decimal) and not value.is_finite() for value in values.values()):
         raise ValueError("nonfinite decimal parameter")
     order = cast(list[str], artifact["dbapiParameterOrder"])
@@ -540,6 +592,10 @@ def _program(
     term_admissions = _term_admissions(obligations, app_schema)
     projection_admissions = _projection_admissions(obligations, app_schema)
     relationship_admissions = _relationship_admissions(obligations, app_schema)
+    native_relationship_admissions = _native_relationship_admissions(obligations, app_schema)
+    isolation = obligations.get("readIsolation")
+    if isolation not in (None, "repeatable-read"):
+        raise ReadBuildError("unsupported original read isolation obligation")
     cap = obligations["rowCap"]
     if (
         type(cap) is not int
@@ -552,7 +608,7 @@ def _program(
         values["__umf_page_size"] = selected_page_size
     search_path = 'pg_catalog, "' + app_schema.replace('"', '""') + '", pg_temp'
     deadline = time.monotonic() + timeout_ms / 1000
-    yield ("begin", deadline)
+    yield ("begin", deadline, isolation)
     native_context = None
     if schema_mode is not None:
         yield ("execute", "SELECT pg_catalog.set_config('statement_timeout', %s, true), pg_catalog.set_config('row_security', 'on', true)", (str(timeout_ms),))
@@ -571,6 +627,7 @@ def _program(
     yield from _verify_terms(term_admissions)
     yield from _verify_admissions(projection_admissions, "native projection column shape differs from catalog")
     yield from _verify_admissions(relationship_admissions, "native relationship Key differs from catalog")
+    yield from _verify_admissions(native_relationship_admissions, "native relationship integrity or complete scope differs from catalog")
     yield ("verified",)
     identity_parts: list[object] = [
         entry.artifact_json, entry.context_json, app_schema,
@@ -617,13 +674,15 @@ def _program(
     if len(rows) > cap:
         raise ReadObligationUnmet("target returned more than the catalog row cap")
     outputs = cast(list[dict[str, object]], artifact["outputs"])
+    related = transport_spec(entry.result)
     result = [validate_graph(entry.result, {
-        name: _output_value(value, output)
+        name: _output_value(value, output, key_model=related[1] if related is not None and name == related[0] else None)
         for name, value, output in zip(expected, row[:len(expected)], outputs, strict=True)
     }) for row in rows]
     yield from _verify_terms(term_admissions)
     yield from _verify_admissions(projection_admissions, "native projection column shape differs before release")
     yield from _verify_admissions(relationship_admissions, "native relationship Key differs before release")
+    yield from _verify_admissions(native_relationship_admissions, "native relationship integrity or complete scope differs before release")
     if native_context is not None and (yield from _observe_resolution(binding, app_schema, cast(str, schema_mode), connection.info.dbname)) != native_context:
         raise ReadObligationUnmet("native database or schema resolution changed before release")
     if shape_proof and (yield from _shape_fingerprint(native_ids, app_schema)) != shape_proof[0]:
@@ -704,7 +763,7 @@ def _execute(
             connection.cursor() as raw,
         ):
             if not _snapshot:
-                raw.execute("SET TRANSACTION READ ONLY")
+                raw.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY" if begin[2] == "repeatable-read" else "SET TRANSACTION READ ONLY")
             return _drive(program, _DeadlineCursor(raw, begin[1]), _verify_only)
     except Exception as error:
         if getattr(error, "sqlstate", None) == "57014":
@@ -791,7 +850,7 @@ async def _async_execute(
             connection.cursor() as raw,
         ):
             if not _snapshot:
-                await raw.execute("SET TRANSACTION READ ONLY")
+                await raw.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY" if begin[2] == "repeatable-read" else "SET TRANSACTION READ ONLY")
             return await _async_drive(program, raw, begin[1], _verify_only)
     except Exception as error:
         if getattr(error, "sqlstate", None) == "57014":

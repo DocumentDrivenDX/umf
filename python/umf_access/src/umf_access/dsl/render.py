@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from contextvars import ContextVar
 from dataclasses import dataclass
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from types import MappingProxyType
 from typing import Protocol, cast
 
@@ -91,7 +91,7 @@ def _scalar_sql(value: FieldRef | Node) -> str:
             if "." not in token:
                 token += ".0"
         else:
-            token = str(width)
+            token = _value(Node("int", (width,)))
         if width <= 0:
             raise CaptureError("CAPTURE_UNSUPPORTED", "bucket width must be positive")
         return f"BUCKET_WIDTH({_column(field)}, {token})"
@@ -116,8 +116,26 @@ def _value(node: Node, mutation: bool = False) -> str:
         return "'" + value.replace("'", "''") + "'"
     if node.op == "bool":
         return "TRUE" if node.args[0] else "FALSE"
-    if node.op in ("int", "decimal"):
-        return str(node.args[0])
+    if node.op == "int":
+        integer_value = node.args[0]
+        if type(integer_value) is not int or integer_value.bit_length() > 33220:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "Integer literal exceeds exact token profile")
+        token = format(Decimal(integer_value), "f")
+        if len(token.removeprefix("-")) > 10000:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "Integer literal exceeds exact token profile")
+        return token
+    if node.op == "decimal":
+        if len(node.args) != 1 or type(node.args[0]) is not str:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "closed Decimal literal required")
+        try:
+            decimal_value = Decimal(cast(str, node.args[0]))
+        except InvalidOperation:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "finite Decimal literal required") from None
+        exponent = decimal_value.as_tuple().exponent
+        if not decimal_value.is_finite() or type(exponent) is not int or abs(exponent) > 10000 or len(decimal_value.as_tuple().digits) > 10000:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "Decimal literal exceeds exact token profile")
+        token = format(decimal_value, "f")
+        return token if "." in token else token + ".0"
     # Temporal/binary literal spelling is not specified by WR-A8. Keep typed
     # named parameters, rather than substituting text with weaker meaning.
     raise CaptureError(
@@ -162,10 +180,8 @@ def _predicate(node: Node, mutation: bool = False) -> str | None:
         left, right = (cast(Node, v) for v in node.args)
         if right.op == "list":
             if not right.args:
-                raise CaptureError(
-                    "CAPTURE_UNSUPPORTED",
-                    "empty literal list requires Weft list parameter semantics",
-                )
+                predicate = f"IN_EMPTY({_value(left, mutation)})"
+                return predicate if node.op == "IN" else "NOT (" + predicate + ")"
             values = ", ".join(_value(cast(Node, v), mutation) for v in right.args)
         else:
             values = _value(right, mutation)
@@ -176,9 +192,15 @@ def _predicate(node: Node, mutation: bool = False) -> str | None:
     if node.op in ("STARTS_WITH", "MATCHES_ALL_TERMS", "MATCHES_ANY_TERM"):
         left, right = (cast(Node, value) for value in node.args)
         return f"{node.op}({_value(left, mutation)}, {_value(right, mutation)})"
-    if node.op == "HAS_RELATED":
-        left, key = (cast(Node, v) for v in node.args)
-        return f"HAS_RELATED({_value(left, mutation)}, KEY({', '.join(_key_values(key, mutation))}))"
+    if node.op in ("HAS_RELATED", "HAS_INVERSE_RELATED"):
+        left, key = (cast(Node, v) for v in node.args[:2])
+        extra = ""
+        if node.op == "HAS_INVERSE_RELATED":
+            module, identifier = node.args[2:]
+            if not isinstance(module, str) or not isinstance(identifier, str):
+                raise CaptureError("CAPTURE_SIGNATURE", "original inverse relationship identity required")
+            extra = ", " + _value(Node("str", (module,))) + ", " + _value(Node("str", (identifier,)))
+        return f"{node.op}({_value(left, mutation)}, KEY({', '.join(_key_values(key, mutation))}){extra})"
     raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported logical predicate")
 
 
@@ -311,8 +333,15 @@ def _render_logical(
                 raise CaptureError("CAPTURE_UNSUPPORTED", "snapshot requires a page declaration")
         elif step.op == "include_keys":
             field, bound = cast(tuple[FieldRef, int], step.args[:2])
+            direction = step.args[3] if len(step.args) == 4 else "forward"
+            function = "INVERSE_RELATED_KEYS" if direction == "inverse" else "RELATED_KEYS"
+            extra = ""
+            if direction == "inverse":
+                if field.field_module is None:
+                    raise CaptureError("CAPTURE_SIGNATURE", "original inverse relationship module required")
+                extra = ", " + _value(Node("str", (field.field_module,))) + ", " + _value(Node("str", (field.field,)))
             includes.append(
-                f"RELATED_KEYS({_column(field)}, {bound}) AS {_quote(field.field + '_keys')}"
+                f"{function}({_column(field)}, {bound}{extra}) AS {_quote(field.field + '_keys')}"
             )
         else:
             raise CaptureError("CAPTURE_UNSUPPORTED", "unsupported logical query step")

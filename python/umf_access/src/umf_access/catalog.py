@@ -9,8 +9,8 @@ from typing import Any, cast
 from pydantic import BaseModel, TypeAdapter
 
 from .adoption import TargetIdentity
-from .codec_support import revalidate_model
-from .dsl import Continuation, SortValue
+from .codec_support import revalidate_model, validate_graph
+from .dsl import Continuation, RelatedKeys, SortValue, WithKeys
 from .dsl import Page as Page  # noqa: PLC0414 -- explicit public ABI re-export
 from .pages import ReadContinuation, ReadPage, StaleContinuation
 from .protocols import AsyncReadTarget, ReadTarget
@@ -110,6 +110,8 @@ class ReadPlan:
     cursor_argument: str | None = None
     cursor_key_model: type[StrictModel] | None = None
     key_components: tuple[tuple[str, int], ...] = ()
+    related_field: str | None = None
+    related_row_model: type[BaseModel] | None = None
 
     def bind(
         self, target: ReadTarget | AsyncReadTarget, values: Mapping[str, object]
@@ -184,11 +186,21 @@ class ReadPlan:
 
 
 def _row(plan: ReadPlan, row: object) -> object:
-    return (
-        tuple(getattr(row, name) for name in plan.tuple_fields)
-        if plan.tuple_fields
-        else row
-    )
+    result: object
+    if plan.tuple_fields:
+        result = tuple(getattr(row, name) for name in plan.tuple_fields)
+    elif plan.related_field is not None:
+        if plan.related_row_model is None:
+            raise CatalogError("original related row model required")
+        result = validate_graph(plan.related_row_model, {name: getattr(row, name) for name in plan.related_row_model.model_fields})
+    else:
+        result = row
+    if plan.related_field is not None:
+        keys = getattr(row, plan.related_field)
+        if not isinstance(keys, RelatedKeys):
+            raise CatalogError("original decoded related-Key collection required")
+        return WithKeys(result, keys)
+    return result
 
 
 def _finish(plan: ReadPlan, rows: list[Any]) -> object:

@@ -16,6 +16,7 @@ from typing import Generic, Protocol, TypeVar, cast
 from pydantic import BaseModel
 
 from .dsl import FieldRef, GeneratedSource, KeyLiteral, Node, RecordRef
+from .related_keys import transport_spec
 from .types import RUNTIME_ABI, RUNTIME_IDENTITY
 
 P = TypeVar("P", bound=BaseModel)
@@ -180,10 +181,57 @@ def _carrier(annotation: object, *, projection: bool = False) -> tuple[str, bool
     raise ReadBuildError("unsupported reviewed-read carrier")
 
 
+def parameter_signature(annotation: object) -> dict[str, object]:
+    """Original list facets are local read-parameter metadata, not scalar widening."""
+    from types import UnionType
+    from typing import Annotated, Union, get_args, get_origin
+
+    while get_origin(annotation) is Annotated:
+        annotation = get_args(annotation)[0]
+    if get_origin(annotation) in (Union, UnionType):
+        members = get_args(annotation)
+        if any(get_origin(member) is list for member in members):
+            raise ReadBuildError("WEFT_BLOCKED: WR-A4 list containers must be non-null")
+    if get_origin(annotation) is list:
+        members = get_args(annotation)
+        if len(members) != 1:
+            raise ReadBuildError("WEFT_BLOCKED: WR-A4 one exact list element carrier required")
+        carrier, nullable = _carrier(members[0])
+        return {"carrier": carrier, "nullable": False, "container": "list", "elementNullable": nullable, "maxItems": 1000}
+    carrier, nullable = _carrier(annotation)
+    return {"carrier": carrier, "nullable": nullable}
+
+
+def validate_list_parameters(parameters: object, values: Mapping[str, object]) -> None:
+    """Validate every original list facet before dispatch, preserving all values."""
+    if type(parameters) is not list:
+        raise ReadBuildError("original parameter inventory required")
+    for descriptor in parameters:
+        if type(descriptor) is not dict or "container" not in descriptor:
+            continue
+        if set(descriptor) != {"name", "carrier", "nullable", "container", "elementNullable", "maxItems"} or descriptor["container"] != "list" or descriptor["nullable"] is not False or type(descriptor["elementNullable"]) is not bool or type(descriptor["maxItems"]) is not int or not 1 <= descriptor["maxItems"] <= 1000:
+            raise ReadBuildError("closed original list parameter facets required")
+        if type(descriptor["carrier"]) is not str or type(descriptor["name"]) is not str:
+            raise ReadBuildError("original list parameter identity/carrier differs")
+        annotation = {"string": str, "integer": int, "decimal": Decimal, "boolean": bool}.get(descriptor["carrier"])
+        value = values.get(descriptor["name"])
+        if annotation is None or type(value) is not list or len(value) > descriptor["maxItems"]:
+            raise ReadBuildError("original list parameter cardinality/carrier differs")
+        for item in value:
+            if item is None and descriptor["elementNullable"]:
+                continue
+            if type(item) is not annotation or isinstance(item, Decimal) and not item.is_finite() or isinstance(item, str) and ("\x00" in item or any(0xD800 <= ord(character) <= 0xDFFF for character in item)):
+                raise ReadBuildError("original list element carrier differs")
+
+
 def _compatible_outputs(actual: object, expected: list[dict[str, object]]) -> bool:
     if not isinstance(actual, list) or len(actual) != len(expected):
         return False
     for a, e in zip(actual, expected, strict=True):
+        if e.get("carrier") == "related-keys":
+            if a != e:
+                return False
+            continue
         if (
             not isinstance(a, dict)
             or a.get("name") != e["name"]
@@ -195,7 +243,7 @@ def _compatible_outputs(actual: object, expected: list[dict[str, object]]) -> bo
     return True
 
 
-def _fields(model: type[BaseModel], *, projection: bool = False) -> list[dict[str, object]]:
+def _fields(model: type[BaseModel], *, projection: bool = False, parameter: bool = True, allow_related: bool = False) -> list[dict[str, object]]:
     if (
         model.model_config.get("extra") != "forbid"
         or model.model_config.get("strict") is not True
@@ -207,8 +255,18 @@ def _fields(model: type[BaseModel], *, projection: bool = False) -> list[dict[st
     for name, field in model.model_fields.items():
         if field.alias is not None:
             raise ReadBuildError("reviewed read aliases are unsupported")
-        carrier, nullable = _carrier(field.annotation, projection=projection)
-        result.append({"name": name, "carrier": carrier, "nullable": nullable})
+        related = transport_spec(model) if projection or allow_related else None
+        if related is not None and name == related[0]:
+            result.append({"name": name, "carrier": "related-keys", "nullable": False, "decoder": related[2]})
+        else:
+            if projection:
+                carrier, nullable = _carrier(field.annotation, projection=True)
+                result.append({"name": name, "carrier": carrier, "nullable": nullable})
+            elif parameter:
+                result.append({"name": name, **parameter_signature(field.annotation)})
+            else:
+                carrier, nullable = _carrier(field.annotation)
+                result.append({"name": name, "carrier": carrier, "nullable": nullable})
     return result
 
 
@@ -473,8 +531,8 @@ def build_query(declaration: object, compiler: ReadCompiler, *, parameters: type
         raise ReadBuildError("CATALOG_STALE: query and generated models differ")
     keyset = variant.node.op == "page"
     cursor_name = str(cast(Node, variant.node.args[3]).args[0]) if keyset else None
-    declared = [(p.name, _carrier(p.carrier)) for p in variant.parameters if p.name != cursor_name]
-    expected = [(f["name"], (f["carrier"], f["nullable"])) for f in _fields(parameters)]
+    declared = [{"name": p.name, **parameter_signature(p.carrier)} for p in variant.parameters if p.name != cursor_name]
+    expected = _fields(parameters)
     if declared != expected:
         raise ReadBuildError("captured signature differs from parameter model")
     snapshot = any(step.op == "snapshot" for step in cast(tuple[Node, ...], variant.node.args[1]))

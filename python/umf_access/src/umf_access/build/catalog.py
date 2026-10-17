@@ -39,6 +39,7 @@ from ..dsl import (
 )
 from ..engine_catalog import EngineRead
 from ..native_program import NativeProgram, program_json
+from ..related_keys import key_descriptor, make_related_result_model
 from ..reviewed import ReadBuildError, ReadCompiler, ReviewedSQL, captured_source
 from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
 from .commands import emit_command
@@ -128,6 +129,8 @@ def _type(annotation: object, package: str) -> str:
     origin = get_origin(annotation)
     if origin is Annotated:
         return _type(get_args(annotation)[0], package)
+    if origin is list and len(get_args(annotation)) == 1:
+        return "list[" + _type(get_args(annotation)[0], package) + "]"
     if origin in (UnionType, Union):
         return " | ".join(_type(a, package) for a in get_args(annotation))
     if (
@@ -481,7 +484,8 @@ def _compile_catalog_owned(
         "from umf_access.reviewed import CatalogRead",
         "from umf_access.engine_catalog import EngineRead",
         "from umf_access.pages import ReadPage, ReadContinuation",
-        "from umf_access.dsl import Page, Continuation",
+        "from umf_access.dsl import Page, Continuation, WithKeys",
+        "from umf_access.related_keys import make_related_result_model",
         "from umf_access.protocols import ReadTarget, AsyncReadTarget",
         "from umf_access.catalog import Argument, ReadPlan, ReadVariant, TargetPin, run_query, run_stream",
         "from umf_access.codec_support import make_projection_model, make_scalar_projection_model",
@@ -540,10 +544,12 @@ def _compile_catalog_owned(
             "engineCompiler",
         }:
             raise CatalogBuildError("unknown target configuration member")
-        if target["kind"] in ("truss", "ashlar") and action_refs:
-            raise CatalogBuildError(
-                "WEFT_BLOCKED: engine-owned original action executor catalog required"
-            )
+        if target["kind"] in ("truss", "ashlar"):
+            # CONTRACT-071: engine action dispatch stays in the engine SDK;
+            # shared generated packages may still retain selected ActionRefs.
+            if target.get("nativeActions"):
+                raise CatalogBuildError("engine targets have no native action catalog entries")
+            continue
         requests = target.get("nativeActions")
         if requests is None:
             requests = []
@@ -650,6 +656,10 @@ def _compile_catalog_owned(
         )
     for number, (name, declaration) in enumerate(declarations):
         if declaration.kind == "command":
+            if any(target["kind"] == "ashlar" for target in targets):
+                raise CatalogBuildError("ASHLAR_COMMAND_UNSUPPORTED: Ashlar has no SDK BulkTarget")
+            if any(target["kind"] == "truss" for target in targets):
+                raise CatalogBuildError("WEFT_BLOCKED: original Truss mutation manifest compiler required")
             command_ref = cast(RecordRef, declaration.variants[0].node.args[0])
             command_record = records[(command_ref.module, command_ref.element)]
             command_lines, command_entries = emit_command(
@@ -862,6 +872,36 @@ def _compile_catalog_owned(
                 )
             projection_fields = tuple(refs)
             projection_names = tuple(a for a, _, _ in owner_fields)
+        related_field = None
+        related_row_expr = None
+        includes = tuple(step for step in steps if step.op == "include_keys")
+        if includes:
+            if len(includes) != 1 or terminal not in ("all", "first", "one", "get", "page") or any(step.op in ("group", "having") for step in steps):
+                raise CatalogBuildError("WEFT_BLOCKED: WR-A6 bounded relationship Keys require an entity-row terminal")
+            include = includes[0]
+            if len(include.args) not in (3, 4) or not isinstance(include.args[0], FieldRef) or not isinstance(include.args[2], RecordRef):
+                raise CatalogBuildError("CATALOG_STALE: regenerate original relationship Key metadata")
+            relation_ref = cast(FieldRef, include.args[0])
+            bound = include.args[1]
+            key_target = cast(RecordRef, include.args[2])
+            if type(bound) is not int or not 1 <= bound <= 1000:
+                raise CatalogBuildError("WEFT_BLOCKED: WR-A6 bounded relationship Key limit required")
+            if key_target.source is None or key_target.key_id is None:
+                raise CatalogBuildError("CATALOG_STALE: original relationship Key source missing")
+            identity = {"documentId": key_target.source.document_id, "coreVersion": key_target.source.core_version, "module": key_target.module, "element": key_target.element, "key": key_target.key_id}
+            key_module = importlib.import_module(package + ".keys")
+            keys = [value for value in vars(key_module).values() if isinstance(value, type) and issubclass(value, StrictModel) and getattr(value, "UMF_KEY", False) and dict(getattr(value, "KEY_IDENTITY", {})) == identity and getattr(value, "UMF_SOURCE", None) == key_target.source]
+            if len(keys) != 1:
+                raise CatalogBuildError("CATALOG_STALE: exact original relationship Key class required")
+            related_key_model = keys[0]
+            related_field = relation_ref.field + "_keys"
+            decoder = {"profile": "pg-related-keys-json/0.1", "bound": bound, "relationship": {"module": relation_ref.field_module, "id": relation_ref.field, "direction": include.args[3] if len(include.args) == 4 else "forward"}, "key": key_descriptor(related_key_model)}
+            related_row_expr = result_expr
+            related_expr = f"_Q{number}Related"
+            result = make_related_result_model(related_expr, result, related_key_model, related_field, decoder, record)
+            lines.append(f"{related_expr} = make_related_result_model({related_expr!r}, {related_row_expr}, {related_key_model.__name__}, {related_field!r}, {decoder!r}, {record.__name__})")
+            result_expr = related_expr
+            return_type = "WithKeys[" + return_type + ", " + related_key_model.__name__ + "]"
         item_return_type = return_type
         if terminal in ("all", "group_count"):
             return_type = "list[" + return_type + "]"
@@ -1006,6 +1046,8 @@ def _compile_catalog_owned(
                 )
             for target in targets:
                 kind = target["kind"]
+                if related_field is not None and kind not in ("postgresql", "lakebase"):
+                    raise CatalogBuildError("WEFT_BLOCKED: WR-A6 target-specific bounded relationship-Key output profile required")
                 if snapshot and kind not in ("spark-delta", "unity-catalog", "ashlar"):
                     raise CatalogBuildError(
                         "SNAPSHOT_UNSUPPORTED: selected target has no admitted snapshot pages"
@@ -1222,7 +1264,7 @@ def _compile_catalog_owned(
         )
         lines.extend(
             [
-                f"{plan} = ReadPlan({name!r}, {terminal!r}, {argument_tuple}, ({', '.join(variants)},), {tuple_names!r}, {cursor_name!r}, {cursor_key.__name__ if cursor_key else 'None'}, {key_components!r})",
+                f"{plan} = ReadPlan({name!r}, {terminal!r}, {argument_tuple}, ({', '.join(variants)},), {tuple_names!r}, {cursor_name!r}, {cursor_key.__name__ if cursor_key else 'None'}, {key_components!r}" + (f", related_field={related_field!r}, related_row_model={related_row_expr}" if related_field is not None else "") + ")",
                 "",
             ]
         )

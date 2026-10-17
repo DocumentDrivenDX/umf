@@ -40,6 +40,9 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  const ir:ResolvedAccess={documentId:document.id,sourceId:request.logical,records:inspection.records,relations:[],actions:[]};
  ir.search=inspectSelectedSearch(document,ir.records,add);
  const prepared=prepareCoreInspection(document);
+ // Inverse relationship identity follows the original core default Key, never
+ // the RecordView selectedKey which inspection intentionally orders first.
+ for(const record of ir.records){const meaning=prepared.keys(record.ref);if(meaning.state==='known'){const primary=meaning.keys.filter(key=>key.primary===true),key=primary.length===1?primary[0]:meaning.keys.length===1?meaning.keys[0]:undefined;if(key)record.inverseKey=key.id;}}
  const dependencyKeys=new Map<string,string>();
  const selectedIds=new Set(request.records.map(identity));
  for(const [mi,authoredModule] of document.modules.entries()){

@@ -135,6 +135,12 @@ def _parameters(function: Callable[..., Any]) -> tuple[CapturedParameter, ...]:
 
 
 def _canonical(value: object) -> object:
+    # Keep capture deterministic across Python's configurable int-to-text cap.
+    # Refuse oversized authored Integer tokens before the canonical JSON writer.
+    if type(value) is int:
+        if value.bit_length() > 13607 or len(format(Decimal(value), "f").removeprefix("-")) > 4096:
+            raise CaptureError("CAPTURE_UNSUPPORTED", "Integer literal exceeds 4096-digit capture token profile")
+        return value
     if isinstance(value, Decimal):
         # Bucket widths retain the exact carrier/spelling in captured source.
         return ("decimal", str(value))

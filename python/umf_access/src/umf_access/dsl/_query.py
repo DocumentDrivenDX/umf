@@ -67,6 +67,7 @@ K = TypeVar("K")
 SourceKey = TypeVar("SourceKey")
 TargetKey = TypeVar("TargetKey")
 RelationKey = TypeVar("RelationKey")
+InverseKey = TypeVar("InverseKey")
 T = TypeVar("T")
 T1 = TypeVar("T1")
 T2 = TypeVar("T2")
@@ -408,11 +409,11 @@ class Query(Generic[OutputT, R, K]):
         )
 
     @overload
-    def related(self, relationship: RequiredNavigation[OutputT, J, SourceKey, TargetKey, RelationKey]) -> Query[J, J, TargetKey]: ...
+    def related(self, relationship: RequiredNavigation[OutputT, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     @overload
-    def related(self, relationship: OptionalNavigation[OutputT, J, SourceKey, TargetKey, RelationKey]) -> Query[J, J, TargetKey]: ...
+    def related(self, relationship: OptionalNavigation[OutputT, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     @overload
-    def related(self, relationship: InverseNavigation[OutputT, J, TargetKey, RelationKey]) -> Query[J, J, TargetKey]: ...
+    def related(self, relationship: InverseNavigation[OutputT, J, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     def related(self, relationship: object) -> object:
         return _related_query(self.ref, self.steps, relationship)
 
@@ -423,12 +424,14 @@ class Query(Generic[OutputT, R, K]):
         if not isinstance(cast(object, rel), Related):
             raise TypeError("include_keys requires a generated relationship")
         self._check_field(rel.ref)
+        if rel.key_target is None or rel.key_target.source is None or rel.key_target.key_id is None:
+            raise CaptureError("WEFT_BLOCKED", "WR-A6 regenerate exact original relationship Key metadata")
         if any(step.op == "include_keys" for step in self.steps):
             raise CaptureError(
                 "CAPTURE_UNSUPPORTED",
                 "multiple relationship hydrations are unspecified",
             )
-        return Query(self.ref, self.steps + (Node("include_keys", (rel.ref, limit, rel.key_target)),))
+        return Query(self.ref, self.steps + (Node("include_keys", (rel.ref, limit, rel.key_target, rel.direction)),))
 
     @overload
     def group_by(
@@ -1005,11 +1008,11 @@ class _Context(Generic[Root, Required, Optional, R, K]):
     ref: RecordRef
     steps: tuple[Node, ...] = ()
     @overload
-    def related(self, relationship: RequiredNavigation[Root, J, SourceKey, TargetKey, RelationKey]) -> Query[J, J, TargetKey]: ...
+    def related(self, relationship: RequiredNavigation[Root, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     @overload
-    def related(self, relationship: OptionalNavigation[Root, J, SourceKey, TargetKey, RelationKey]) -> Query[J, J, TargetKey]: ...
+    def related(self, relationship: OptionalNavigation[Root, J, SourceKey, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     @overload
-    def related(self, relationship: InverseNavigation[Root, J, TargetKey, RelationKey]) -> Query[J, J, TargetKey]: ...
+    def related(self, relationship: InverseNavigation[Root, J, TargetKey, RelationKey, InverseKey]) -> Query[J, J, TargetKey]: ...
     def related(self, relationship: object) -> object:
         return _related_query(self.ref, self.steps, relationship)
 
