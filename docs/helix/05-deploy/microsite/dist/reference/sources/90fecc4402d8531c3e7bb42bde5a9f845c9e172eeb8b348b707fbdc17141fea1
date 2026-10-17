@@ -1,3 +1,4 @@
+import {facetMeaning} from './internal/inspection-meanings';
 import {snapshotSchema} from '../validation/internal-schema';
 import bit128Document from '../../spec/core/bit128-document.schema.json';
 import bit128Result from '../../spec/core/facet-operation-v5.schema.json';
@@ -14,7 +15,6 @@ export {default as coreFacetOperationV2Schema} from '../../spec/core/facet-opera
 import {copyJson} from './json';
 import {UmfError,type Document,type Json} from './types';
 import {validateDocument} from '../validation/document';
-import {validateFacetElement} from '../validation/facets';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import schema from '../../spec/core/facet-operation.schema.json';
 export {default as coreFacetOperationSchema} from '../../spec/core/facet-operation.schema.json';
@@ -35,30 +35,11 @@ function locate(input:Document,identityInput:CoreFacetIdentity){
  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_FACET_SOURCE',JSON.stringify(validation.diagnostics));
  const mi=source.modules.findIndex(m=>m.id===identity.module),ei=source.modules[mi]?.elements.findIndex(e=>e.id===identity.element)??-1;
  if(mi<0||ei<0)throw new UmfError('CORE_FACET_MISSING','Element identity is absent');
- return {source,identity,mi,ei,element:source.modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}/facets`};
+ return {source,identity,mi,ei,element:source.modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}/facets`,validation};
 }
 /** Copies known assertions separately from uninterpreted members; never infers authorship. */
 export function inspectCoreFacets(input:Document,identity:CoreFacetIdentity):CoreFacetInspection {
- const located=locate(input,identity),{source,element,path}=located;let meaning:CoreFacetMeaning={state:'missing'};
- if(Object.hasOwn(element,'facets')){
-  if(source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0'&&source.umf!=='0.8.0'&&source.umf!=='0.9.0')meaning={state:'legacy',value:copyJson(element.facets)};
-  else{
-   const value=copyJson(element.facets) as unknown as CoreFacets,interpreted:CoreFacetInterpreted={};
-   if(value.length&&(value.length.unit==='unicode-scalar'||value.length.unit==='byte'))interpreted.length={...(value.length.max!==undefined?{max:value.length.max}:{}),...((source.umf==='0.8.0'||source.umf==='0.9.0')&&value.length.min!==undefined?{min:value.length.min}:{}),unit:value.length.unit};
-   if(value.integerWidth)interpreted.integerWidth={bits:value.integerWidth.bits,signed:value.integerWidth.signed};
-   if(value.precision!==undefined){interpreted.precision=value.precision;interpreted.scale=value.scale!;}
-   if(source.umf==='0.8.0'||source.umf==='0.9.0'){
-    for(const group of ['collectionSize','range'] as const){
-     const raw=value[group] as Record<string,Json>|undefined;if(!raw)continue;
-     const selected:Record<string,Json>={};
-     for(const key of group==='range'?['min','max','minInclusive','maxInclusive']:['min','max'])if(Object.hasOwn(raw,key))selected[key]=copyJson(raw[key]!);
-     Object.assign(interpreted,{[group]:selected});
-    }
-   }
-   const uninterpretedPaths=((source.umf==='0.8.0'||source.umf==='0.9.0')?validateDocument(source).diagnostics.filter(d=>d.path.startsWith(path+'/')):validateFacetElement(element,path.slice(0,-7)).diagnostics).filter(d=>d.severity==='warning').map(d=>d.path);
-   meaning={state:uninterpretedPaths.length?'partial':'known',facets:value,interpreted,uninterpretedPaths};
-  }
- }else if((source.umf==='0.5.0'||(source.umf==='0.6.0'||source.umf==='0.7.0'||(source.umf==='0.8.0'||source.umf==='0.9.0')))&&element.kind!=='field')meaning={state:'inapplicable'};
+ const located=locate(input,identity),{source,path}=located,meaning=facetMeaning({...located,path:located.path.slice(0,-7)});
  return finish({operation:'inspect-core-facets',version:source.umf==='0.9.0'?'5.0.0':source.umf==='0.8.0'?'4.0.0':source.umf==='0.7.0'?'3.0.0':source.umf==='0.6.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
 }
 /** Patch known groups only; omitted groups and unknown nested qualifiers remain attached. */

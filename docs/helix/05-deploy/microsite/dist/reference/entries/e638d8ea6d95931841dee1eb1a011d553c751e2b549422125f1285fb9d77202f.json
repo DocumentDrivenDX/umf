@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2202,
+        "line": 8,
+        "path": "src/model/prepared-inspection.ts",
+        "sha256": "d28fc66a694656c56a21e58575b3a37117152be7fa5d317156a5660a31a4151d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "prepareCoreInspection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document): Readonly<{ operation: \"prepare-core-inspection\"; version: \"1.0.0\"; source: Document; provenance: \"unverified\"; keys: (identity: CoreRecordIdentity) => CoreKeyMeaning; facets: (identity: CoreRecordIdentity) => CoreFacetMeaning; schemaProperties: (identity: CoreRecordIdentity) => Record<string, Json>; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"prepareCoreInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2202,
+      "line": 8,
+      "path": "src/model/prepared-inspection.ts",
+      "sha256": "d28fc66a694656c56a21e58575b3a37117152be7fa5d317156a5660a31a4151d"
+    }
+  ],
+  "summary": "Invocation-owned metadata only; snapshot reference identifies the exact retained source.",
+  "title": "prepareCoreInspection"
+}

@@ -1,3 +1,4 @@
+import {schemaProperties} from './internal/inspection-meanings';
 import {evaluateFieldValue} from './internal/field-body';
 import {copyJson} from './json';
 import {type Document,type Json,type Element,UmfError,type Validation} from './types';
@@ -25,8 +26,7 @@ function locate(input:Document,identityInput:CoreSchemaPropertyIdentity){
  return {source,identity,node:module.elements[ei]! as Record<string,unknown>,path:`/modules/${mi}/elements/${ei}`,validation};
 }
 export function inspectCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity){
- const located=locate(input,identity),properties:Record<string,Json>=Object.create(null);
- for(const key of [...schemaPropertyNames,'facets'])if(Object.hasOwn(located.node,key))properties[key]=copyJson(located.node[key]);
+ const located=locate(input,identity),properties=schemaProperties(located.node);
  return {operation:'inspect-core-schema-properties' as const,version:(located.source.umf==='0.9.0'?'2.0.0':'1.0.0') as '1.0.0'|'2.0.0',source:located.source,identity:located.identity,path:located.path,properties,diagnostics:located.validation.diagnostics,provenance:'unverified' as const};
 }
 export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity,patch:CoreSchemaPropertyPatch):Document {

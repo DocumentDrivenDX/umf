@@ -1,0 +1,76 @@
+diff --git a/scripts/reference/build.ts b/scripts/reference/build.ts
+index 76b65c5b..623a5902 100644
+--- a/scripts/reference/build.ts
++++ b/scripts/reference/build.ts
+@@ -20,6 +20,7 @@ const ajv=new Ajv({strict:true,allErrors:true,allowUnionTypes:true});
+ const validators=new Map<string,any>();
+ async function validate(name:string,value:unknown){let test=validators.get(name);if(!test){test=ajv.compile(await read(config+'/schemas/'+name+'.json'));validators.set(name,test);}if(!test(value))throw Error('REFERENCE_STRUCTURE '+name+' '+JSON.stringify(test.errors));}
+ async function files(dir:string):Promise<string[]>{try{return(await Promise.all((await readdir(dir,{withFileTypes:true})).map(d=>d.isDirectory()?files(join(dir,d.name)).then(xs=>xs.map(x=>d.name+'/'+x)):Promise.resolve([d.name])))).flat().sort();}catch(e:any){if(e.code==='ENOENT')return [];throw e;}}
++async function bounded<T,R>(values:T[],operation:(value:T)=>Promise<R>):Promise<R[]>{const results:R[]=[];for(let offset=0;offset<values.length;offset+=32){const batch=await Promise.allSettled(values.slice(offset,offset+32).map(operation));for(const result of batch){if(result.status==='rejected')throw result.reason;results.push(result.value);}}return results;}
+ try{
+  await checkBoundaries();
+  const profiles=await read(config+'/profiles.json');await validate('profiles',profiles);
+@@ -46,7 +47,8 @@ try{
+  console.log('Building fixed runtime, guides and evidence inventory…');
+  const evidenceExclusions=[{path:'docs/helix/04-build/evidence/generated-reference/**',reason:'This reference consumer’s own verification outputs are excluded to avoid a build-evidence self-hash cycle; they do not establish native integration support.'}];
+  const inventory=[];const evidencePaths=new Set((await Promise.all(['fixtures/validation/**/*.json','fixtures/*/*results*.json','fixtures/*/*oracle*.json','docs/helix/04-build/evidence/**/*.json','docs/helix/04-build/evidence/**/*.md'].map(paths))).flat().filter(path=>!path.startsWith('docs/helix/04-build/evidence/generated-reference/')));
+- for(const path of [...evidencePaths].sort()){const mapped=allocations.allocations.filter((a:any)=>a.recordPath===path);inventory.push({source:await source(path,false),allocationIds:mapped.map((a:any)=>a.id),assessment:mapped.length?'mapped':'unassessed'});}
++ const sortedEvidence=[...evidencePaths].sort();
++ for(let offset=0;offset<sortedEvidence.length;offset+=32)inventory.push(...await Promise.all(sortedEvidence.slice(offset,offset+32).map(async path=>{const mapped=allocations.allocations.filter((a:any)=>a.recordPath===path);return {source:await source(path,false),allocationIds:mapped.map((a:any)=>a.id),assessment:mapped.length?'mapped':'unassessed'};})));
+  await Bun.write(join(stage,'evidence-inventory.json'),json({profile:'umf.reference.evidence-inventory/1',items:inventory,exclusions:evidenceExclusions}));
+  const runtimeInputs=await runtimeBuild(join(stage,'assets'),api);
+  await Bun.write(join(stage,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(root,runtimeInputs));
+@@ -54,18 +56,18 @@ try{
+  for(const path of [...await paths('spec/**/LICENSE*'),...await paths('spec/**/NOTICE*'),...await paths('LICENSE*')]){const s=await source(path,false);await Bun.write(join(stage,'licenses',s.sha256+'-'+path.split('/').at(-1)),await Bun.file(resolve(root,path)).bytes());}
+  const ui=await Bun.build({entrypoints:[resolve(root,'docs/helix/05-deploy/microsite/reference/index.ts')],target:'browser',format:'esm',minify:true,metafile:true});if(!ui.success)throw Error(ui.logs.join('\n'));await Bun.write(join(stage,'assets/reference.js'),await ui.outputs[0]!.text());
+  await Bun.write(join(stage,'assets/reference.css'),await text('docs/helix/05-deploy/microsite/reference/style.css'));
+- for(const pattern of ['scripts/reference/**/*.ts',config+'/**/*','docs/helix/05-deploy/microsite/reference/**/*','src/**/*.ts','spec/**/*.json'])for(const path of await paths(pattern))await source(path,false);
++ for(const pattern of ['scripts/reference/**/*.ts',config+'/**/*','docs/helix/05-deploy/microsite/reference/**/*','src/**/*.ts','spec/**/*.json']){const discovered=await paths(pattern);for(let offset=0;offset<discovered.length;offset+=32)await Promise.all(discovered.slice(offset,offset+32).map(path=>source(path,false)));}
+  for(const path of ['package.json','bun.lock','tsconfig.json','tsconfig.tools.json','.github/workflows/microsite.yml','.innsigle/config.json','scripts/build-protobuf.ts','scripts/build-postgresql.ts','scripts/protobuf-module-notices.ts',...await paths('native/protobuf/*.go'),...await paths('native/protobuf/go.*'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')])await source(path,false);
+  const inputList=[...inputs.values()].sort((a,b)=>a.path<b.path?-1:1),inputDigest=sha(canonical(inputList.map(s=>[s.path,s.sha256])));
+  const index:ReferenceIndex={profile:'umf.reference/1',entries:[],inputDigest};
+- for(const e of entries.sort((a,b)=>a.id<b.id?-1:1)){const bytes=json(e);if(new TextEncoder().encode(bytes).length>8*1024*1024)throw Error('REFERENCE_LIMIT shard '+e.id);const href='entries/'+sha(e.id)+'.json';await Bun.write(join(stage,href),bytes);index.entries.push({id:e.id,kind:e.kind,title:e.title,summary:e.summary.slice(0,240),href,sha256:sha(bytes),bytes:new TextEncoder().encode(bytes).length});}
++ index.entries.push(...await bounded(entries.sort((a,b)=>a.id<b.id?-1:1),async e=>{const bytes=json(e);if(new TextEncoder().encode(bytes).length>8*1024*1024)throw Error('REFERENCE_LIMIT shard '+e.id);const href='entries/'+sha(e.id)+'.json';await Bun.write(join(stage,href),bytes);return {id:e.id,kind:e.kind,title:e.title,summary:e.summary.slice(0,240),href,sha256:sha(bytes),bytes:new TextEncoder().encode(bytes).length};}));
+  await validate('index',index);const indexBytes=json(index);if(new TextEncoder().encode(indexBytes).length>2*1024*1024)throw Error('REFERENCE_LIMIT index '+indexBytes.length);await Bun.write(join(stage,'index.json'),indexBytes);
+- for(const[hash,bytes]of originals)await Bun.write(join(stage,'sources',hash),bytes);
+- const outputs=[];for(const path of await files(stage)){const bytes=await Bun.file(join(stage,path)).bytes();outputs.push({path,sha256:sha(bytes),bytes:bytes.length});}
++ await bounded([...originals],async([hash,bytes])=>{await Bun.write(join(stage,'sources',hash),bytes);});
++ const outputs=await bounded(await files(stage),async path=>{const bytes=await Bun.file(join(stage,path)).bytes();return {path,sha256:sha(bytes),bytes:bytes.length};});
+  const manifest={profile:'umf.reference.manifest/1',inputs:inputList,outputs,inputDigest};await validate('manifest',manifest);const manifestBytes=json(manifest);await Bun.write(join(stage,'manifest.json'),manifestBytes);
+  const integrity={script:'sha256-'+Buffer.from(sha(await Bun.file(join(stage,'assets/reference.js')).bytes()),'hex').toString('base64'),style:'sha256-'+Buffer.from(sha(await Bun.file(join(stage,'assets/reference.css')).bytes()),'hex').toString('base64')};
+  for(const view of views)await Bun.write(join(stage,view+'.html'),render(view,entries,sha(manifestBytes),integrity));
+- const expected=await files(stage),actual=await files(output);if(check){if(canonical(expected)!==canonical(actual))throw Error('REFERENCE_DRIFT output membership');for(const path of expected)if(sha(await Bun.file(join(stage,path)).bytes())!==sha(await Bun.file(join(output,path)).bytes()))throw Error('REFERENCE_DRIFT '+path);}
++ const expected=await files(stage),actual=await files(output);if(check){if(canonical(expected)!==canonical(actual))throw Error('REFERENCE_DRIFT output membership');await bounded(expected,async path=>{if(sha(await Bun.file(join(stage,path)).bytes())!==sha(await Bun.file(join(output,path)).bytes()))throw Error('REFERENCE_DRIFT '+path);});}
+  else {const backup=output+'.previous';await rm(backup,{recursive:true,force:true});if(actual.length)await rename(output,backup);try{await mkdir(resolve(output,'..'),{recursive:true});await rename(stage,output);}catch(error){if(actual.length)await rename(backup,output);throw error;}await rm(backup,{recursive:true,force:true});}
+  console.log(JSON.stringify({checked:check,entries:entries.length,schemas:schema.length,extensions:ext.length,exports:api.length,operations:opIds.size,evidenceFiles:inventory.length,indexBytes:indexBytes.length,inputDigest}));
+ }finally{await rm(stage,{recursive:true,force:true});}
+diff --git a/tests/reference/reference.test.ts b/tests/reference/reference.test.ts
+index b2a5f3ff..e3e6122e 100644
+--- a/tests/reference/reference.test.ts
++++ b/tests/reference/reference.test.ts
+@@ -1,4 +1,4 @@
+-import {test,expect} from 'bun:test';
++import {test,expect,afterAll} from 'bun:test';
+ import {resolve,join} from 'node:path';
+ import {unlink} from 'node:fs/promises';
+ import Ajv from 'ajv/dist/2020';
+@@ -10,6 +10,8 @@ const root=resolve(import.meta.dir,'../..'),dist=join(root,'docs/helix/05-deploy
+ const index=await Bun.file(join(dist,'index.json')).json();
+ const sha=(s:string|Uint8Array)=>new Bun.CryptoHasher('sha256').update(s).digest('hex');
+ const entry=async(id:string)=>Bun.file(join(dist,index.entries.find((e:any)=>e.id===id).href)).json();
++let interruptedDrift:{path:string;original:string}|undefined;
++afterAll(async()=>{if(interruptedDrift){const {path,original}=interruptedDrift,current=await Bun.file(path).text();if(current===original+'\n<!-- deliberate drift -->\n')await Bun.write(path,original);else if(current!==original)throw Error('Unexpected page bytes during drift-test cleanup; preserving them');}});
+ 
+ // @covers US-089-AC1 @covers US-089-AC3
+ test('every extension version and its exact manifest/schema are present',async()=>{
+@@ -98,8 +100,8 @@ test('a second isolated generation matches; drift check refuses tampering withou
+  const check=()=>{const child=Bun.spawn(['bun','scripts/reference/build.ts','--check'],{cwd:root,stdout:'pipe',stderr:'pipe'});return Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);};
+  const good=await check();if(good[0]!==0)throw Error(String(good[1]));expect(await Bun.file(join(dist,'manifest.json')).text()).toBe(manifest);
+  const path=join(dist,'index.html'),original=await Bun.file(path).text();
+- try{await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
+- finally{await Bun.write(path,original);}
++ try{interruptedDrift={path,original};await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
++ finally{await Bun.write(path,original);interruptedDrift=undefined;}
+ },120000);
+ 
+ // @covers US-089-AC11 -- host-neutral compiler notices remain source-bound.
