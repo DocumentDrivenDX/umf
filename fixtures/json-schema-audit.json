@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 421,
-  "passed": 421,
+  "schemas": 427,
+  "passed": 427,
   "results": [
     {
       "path": "spec/compilation/access-manifest.schema.json",
@@ -1105,6 +1105,41 @@
     {
       "path": "spec/core/schema.json",
       "id": "urn:umf:core:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "id": "urn:umf:core:semantic-type-reference:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-document.schema.json",
+      "id": "urn:umf:core:0.10.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-operation.schema.json",
+      "id": "urn:umf:core:semantic-types-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-selection.schema.json",
+      "id": "urn:umf:core:semantic-types-selection:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/semantic-types-transition.schema.json",
+      "id": "urn:umf:core:semantic-types-transition:2.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -2498,6 +2533,13 @@
     {
       "path": "spec/extensions/security/schema.json",
       "id": "urn:umf:security:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/semantic-types/schema.json",
+      "id": "urn:umf:semantic-types:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

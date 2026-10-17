@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:semantic-type-reference:1.0.0",
+  "title": "Exact publisher-owned semantic term reference",
+  "type": "object",
+  "required": [
+    "vocabulary",
+    "version",
+    "term"
+  ],
+  "properties": {
+    "vocabulary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "term": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

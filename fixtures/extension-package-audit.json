@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 69,
-  "passed": 69,
+  "packages": 70,
+  "passed": 70,
   "results": [
     {
       "path": "spec/extensions/access/package.json",
@@ -661,6 +661,15 @@
         "subset": "Policy representation, preservation and bounded syntax inspection; external typed closure and enforcement are separate gates"
       },
       "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/semantic-types/package.json",
+      "id": "umf.semantic-types",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 2,
       "passed": true,
       "failures": []
     },

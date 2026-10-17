@@ -5,7 +5,7 @@ export type Scope = 'document' | 'module' | 'element';
 export const SCALAR_TYPES=Object.freeze(['boolean','integer','decimal','float','string','binary','date','time','timestamp'] as const);
 export const SCALAR_TYPES_V09=Object.freeze([...SCALAR_TYPES,'bits128','uuid'] as const);
 export type ScalarType=typeof SCALAR_TYPES_V09[number];
-export const scalarTypesForVersion=(version:string):readonly string[]=>version==='0.9.0'?SCALAR_TYPES_V09:SCALAR_TYPES;
+export const scalarTypesForVersion=(version:string):readonly string[]=>['0.9.0','0.10.0'].includes(version)?SCALAR_TYPES_V09:SCALAR_TYPES;
 export const ELEMENT_KINDS=['field','record','group'] as const;
 export type ElementKind=typeof ELEMENT_KINDS[number];
 /** Ideal availability only; native absence representations require explicit bindings. */
@@ -15,6 +15,7 @@ export type Nullability=typeof NULLABILITIES[number];
 export const CARDINALITIES=['one','array','map','unspecified'] as const;
 export type Cardinality=typeof CARDINALITIES[number];
 export interface CoreItemTypeReference {module:string;element:string;[key:string]:unknown}
+export interface CoreSemanticTypeReference {vocabulary:string;version:string;term:string;[key:string]:unknown}
 export interface Element {
   id: string;
   name?: string;
@@ -30,7 +31,7 @@ export interface Module {
   [key: string]: unknown;
 }
 export interface Document {
-  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.7.0' | '0.8.0' | '0.9.0'; id: string;
+  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.7.0' | '0.8.0' | '0.9.0' | '0.10.0'; id: string;
   vocabularies: Record<string, { version: string; [key: string]: unknown }>;
   modules: Module[];
   extensions?: Record<string, Json>;

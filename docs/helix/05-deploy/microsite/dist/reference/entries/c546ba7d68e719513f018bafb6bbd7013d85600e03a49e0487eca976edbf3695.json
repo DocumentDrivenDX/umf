@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6905,
+        "line": 9,
+        "path": "src/model/semantic-types.ts",
+        "sha256": "20b403d04d4ae51a458c10293e4f5a1a1cb15df031de814a96cd32874899c026"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreSemanticTypeInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreSemanticTypeInspection {operation:'inspect-core-semantic-types';version:'2.0.0';source:Document;identity:CoreSemanticTypeIdentity;path:string;meaning:CoreSemanticTypeMeaning;diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreSemanticTypeInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6905,
+      "line": 9,
+      "path": "src/model/semantic-types.ts",
+      "sha256": "20b403d04d4ae51a458c10293e4f5a1a1cb15df031de814a96cd32874899c026"
+    }
+  ],
+  "summary": "Type declaration · src/model/semantic-types.ts",
+  "title": "CoreSemanticTypeInspection"
+}

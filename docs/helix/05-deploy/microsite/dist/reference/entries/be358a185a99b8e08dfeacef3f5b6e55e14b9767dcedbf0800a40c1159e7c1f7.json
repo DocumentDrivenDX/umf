@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5548,
+        "line": 9,
+        "path": "src/model/semantic-types-transition.ts",
+        "sha256": "aa2231bf97fae5770f6b45454bcfcb9c89cb13f3a448cc7f2333b915b12f2b32"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SemanticTypesUpgradeReceipt",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SemanticTypesUpgradeReceipt {operation:'upgrade-semantic-types-envelope';version:'2.0.0';source:Document;target:Document;request:SemanticTypesUpgradeRequest;residuals:{path:string;value:Json;reason:typeof collisionReason}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SemanticTypesUpgradeReceipt\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5548,
+      "line": 9,
+      "path": "src/model/semantic-types-transition.ts",
+      "sha256": "aa2231bf97fae5770f6b45454bcfcb9c89cb13f3a448cc7f2333b915b12f2b32"
+    }
+  ],
+  "summary": "Type declaration · src/model/semantic-types-transition.ts",
+  "title": "SemanticTypesUpgradeReceipt"
+}

@@ -1,5 +1,13 @@
 # UMF project documentation
 
+The [core0.10 semantic-reference restoration](04-build/evidence/core-semantic-types-010/receipt.json)
+composes exact vocabulary/release/term metadata with the unchanged core0.9
+UUID/128-bit profile. [CONTRACT-078](02-design/contracts/CONTRACT-078-semantic-types.md)
+and [US-090](01-frame/user-stories/US-090-core-semantic-types.md) define the
+scoped TypeScript/Bun/Chromium profile. Explicit source migration and semantic2.0
+receipts preserve collisions and rollback; external term meaning, native delivery,
+Python adoption and other version-specific authoring expansion remain separate.
+
 ## Generated reference and microsite expansion
 
 [TD-089](02-design/technical-designs/TD-089-generated-reference.md) specifies

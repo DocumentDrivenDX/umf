@@ -1,0 +1,33 @@
+{
+  "umf": "0.10.0",
+  "id": "semantic-identities",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "example",
+      "namespace": "example.identity",
+      "elements": [
+        {
+          "id": "identifier",
+          "kind": "field",
+          "scalarType": "uuid",
+          "nullability": "required",
+          "cardinality": "one",
+          "examples": [
+            {
+              "uuid": "01234567-89ab-cdef-8123-456789abcdef"
+            }
+          ],
+          "semanticTypes": [
+            {
+              "vocabulary": "example.identity",
+              "version": "2026-10",
+              "term": "external-id"
+            }
+          ],
+          "extensions": {}
+        }
+      ]
+    }
+  ]
+}

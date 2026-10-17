@@ -1243,6 +1243,46 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"schema\",\"spec/core/semantic-type-reference.schema.json\",\"\"]",
+      "kind": "schema",
+      "paths": [
+        "spec/core/semantic-type-reference.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"schema\",\"spec/core/semantic-types-document.schema.json\",\"\"]",
+      "kind": "schema",
+      "paths": [
+        "spec/core/semantic-types-document.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"schema\",\"spec/core/semantic-types-operation.schema.json\",\"\"]",
+      "kind": "schema",
+      "paths": [
+        "spec/core/semantic-types-operation.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"schema\",\"spec/core/semantic-types-selection.schema.json\",\"\"]",
+      "kind": "schema",
+      "paths": [
+        "spec/core/semantic-types-selection.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"schema\",\"spec/core/semantic-types-transition.schema.json\",\"\"]",
+      "kind": "schema",
+      "paths": [
+        "spec/core/semantic-types-transition.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"schema\",\"spec/core/sqlserver-cardinality-classification.schema.json\",\"\"]",
       "kind": "schema",
       "paths": [
@@ -2747,6 +2787,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"schema\",\"spec/extensions/semantic-types/schema.json\",\"\"]",
+      "kind": "schema",
+      "paths": [
+        "spec/extensions/semantic-types/schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"schema\",\"spec/extensions/shacl/engine-report-schema.json\",\"\"]",
       "kind": "schema",
       "paths": [
@@ -3663,6 +3711,14 @@
       "kind": "extension",
       "paths": [
         "spec/extensions/security/package.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"extension\",\"umf.semantic-types\",\"0.1.0\"]",
+      "kind": "extension",
+      "paths": [
+        "spec/extensions/semantic-types/package.json"
       ]
     },
     {
@@ -5527,6 +5583,54 @@
       "kind": "api",
       "paths": [
         "src/model/schema-properties.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeDeclaration\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeInspection\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeMeaning\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeReference\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeValueResult\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
       ]
     },
     {
@@ -8899,6 +9003,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"SEMANTIC_TYPES_EXTENSION\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"SHACL_EXTENSION\"]",
       "kind": "api",
       "paths": [
@@ -9391,6 +9503,78 @@
       "kind": "api",
       "paths": [
         "src/extensions/actions/manifest-construction.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypeAnnotation\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypeCheck\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypeReference\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypeRegistry\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypeValidator\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypeValueResult\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypesRollbackReceipt\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types-transition.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypesUpgradeReceipt\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types-transition.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"SemanticTypesUpgradeRequest\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types-transition.ts"
       ]
     },
     {
@@ -11619,6 +11803,46 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"coreSemanticTypeReferenceSchema\"]",
+      "kind": "api",
+      "paths": [
+        "spec/core/semantic-type-reference.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"coreSemanticTypesDocumentSchema\"]",
+      "kind": "api",
+      "paths": [
+        "spec/core/semantic-types-document.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"coreSemanticTypesOperationSchema\"]",
+      "kind": "api",
+      "paths": [
+        "spec/core/semantic-types-operation.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"coreSemanticTypesSelectionSchema\"]",
+      "kind": "api",
+      "paths": [
+        "spec/core/semantic-types-selection.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"coreSemanticTypesTransitionSchema\"]",
+      "kind": "api",
+      "paths": [
+        "spec/core/semantic-types-transition.schema.json"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"correlatePostgresqlCardinalityCatalog\"]",
       "kind": "api",
       "paths": [
@@ -11903,6 +12127,14 @@
       "kind": "api",
       "paths": [
         "src/model/schema-properties.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"declareCoreSemanticTypes\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
       ]
     },
     {
@@ -12955,6 +13187,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"getCoreSemanticTypes\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"getDashboardDefinition\"]",
       "kind": "api",
       "paths": [
@@ -13231,6 +13471,14 @@
       "kind": "api",
       "paths": [
         "src/adapters/rdf/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"getSemanticTypes\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
       ]
     },
     {
@@ -13863,6 +14111,14 @@
       "kind": "api",
       "paths": [
         "src/model/schema-properties.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"inspectCoreSemanticTypes\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
       ]
     },
     {
@@ -17347,6 +17603,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"rollbackSemanticTypesEnvelope\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types-transition.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"sameRfc3339ExactInstant\"]",
       "kind": "api",
       "paths": [
@@ -17471,6 +17735,30 @@
       "kind": "api",
       "paths": [
         "src/adapters/smithy/selection.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"semanticTypesPackage\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"semanticTypesRegistry\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"setSemanticTypes\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
       ]
     },
     {
@@ -17987,6 +18275,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"upgradeSemanticTypesEnvelope\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types-transition.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"uuidFromBits128\"]",
       "kind": "api",
       "paths": [
@@ -18051,6 +18347,14 @@
     },
     {
       "assessment": "represented",
+      "id": "[\"api\",\".\",\"validateCoreSemanticTypeValue\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
       "id": "[\"api\",\".\",\"validateCsvBooleanLexical\"]",
       "kind": "api",
       "paths": [
@@ -18111,6 +18415,14 @@
       "kind": "api",
       "paths": [
         "src/extensions/security/disclosure.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"validateSemanticTypeValue\"]",
+      "kind": "api",
+      "paths": [
+        "src/extensions/semantic-types/index.ts"
       ]
     },
     {
@@ -18255,6 +18567,14 @@
       "kind": "api",
       "paths": [
         "src/model/relationships.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"verifyCoreSemanticTypeDeclaration\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types.ts"
       ]
     },
     {
@@ -18495,6 +18815,14 @@
       "kind": "api",
       "paths": [
         "src/model/schema-properties-transition.ts"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"api\",\".\",\"verifySemanticTypesTransition\"]",
+      "kind": "api",
+      "paths": [
+        "src/model/semantic-types-transition.ts"
       ]
     },
     {
@@ -19975,6 +20303,14 @@
       "kind": "example",
       "paths": [
         "docs/helix/05-deploy/reference/examples/uuid.json"
+      ]
+    },
+    {
+      "assessment": "represented",
+      "id": "[\"example\",\"core-semantic\"]",
+      "kind": "example",
+      "paths": [
+        "docs/helix/05-deploy/reference/examples/semantic-types.json"
       ]
     },
     {

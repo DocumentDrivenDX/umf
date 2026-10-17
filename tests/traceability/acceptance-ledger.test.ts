@@ -10,6 +10,8 @@ test('every governed acceptance criterion has one auditable traceability classif
   expect(ledger.criteria).toHaveLength(ledger.total);
   expect(new Set(ledger.criteria.map(row => row.id)).size).toBe(ledger.total);
   expect(ledger.danglingCitations).toEqual([]);
+  expect(ledger.criteria.find(row => row.id === 'US-085-AC4')?.story)
+    .toBe('docs/helix/01-frame/user-stories/US-085-typed-actions-on-raw-tables.md');
   for (const row of ledger.criteria) {
     expect(['SATISFIED', 'UNTESTED', 'UNCITED_COVERAGE', 'ASSERTED_UNBACKED', 'REVIEWED_EXCEPTION']).toContain(row.status);
     if (row.status === 'SATISFIED') {
@@ -22,7 +24,7 @@ test('every governed acceptance criterion has one auditable traceability classif
 test('partial security citations never close the open backend acceptance gate', async()=>{
   const ledger=await buildAcceptanceLedger();
   const security=ledger.criteria.filter(row=>['US-079','US-056','US-057'].some(id=>row.id.startsWith(id+'-AC')));
-  expect(security).toHaveLength(28);
+  expect(security).toHaveLength(34);
   const gate=await Bun.file('docs/helix/04-build/evidence/security/acceptance.json').json();
   if(gate.status!=='passed')expect(security.every(row=>row.status==='UNTESTED')).toBe(true);
   expect(security.find(row=>row.id==='US-079-AC3')?.evidence.length).toBeGreaterThan(0);

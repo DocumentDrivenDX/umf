@@ -13032,3 +13032,14 @@ row remain part of this scoped result. Broader SDK, protected Truss action and
 manifest adoption, selected privilege closure, native configuration concurrency,
 managed prerequisites, exact Delta attribution and release/deployment remain
 OPEN. Temporal qualification stays **HELD**.
+
+## Selected consolidation follow-through — core semantic references, 2026-10-17
+
+Owner-authorized US-090 / CONTRACT-078 / TD-090 / STP-090 restores the historical
+semantic-type feature on core0.10.0, preserving the current UUID core0.9.0 profile.
+Sequence: record governing scope, restore red tests, publish new composed schemas
+and version2.0 receipts, implement inherited validation and explicit migration,
+then run semantic and core0.9 regression, type/schema/build, independent structure
+and Chromium checks. Record exact source fingerprints and failed attempts under
+04-build/evidence/core-semantic-types-010/. Native delivery and other authoring
+profile expansion remain outside this source integration.

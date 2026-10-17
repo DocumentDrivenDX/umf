@@ -27,6 +27,19 @@
   },
   {
     "profile": "umf.reference.example/1",
+    "id": "core-semantic",
+    "operationId": "core-validate",
+    "inputPaths": {
+      "source": "docs/helix/05-deploy/reference/examples/semantic-types.json"
+    },
+    "expectedPath": "docs/helix/05-deploy/reference/examples/expected.json",
+    "apiNames": [],
+    "guideIds": [
+      "concepts"
+    ]
+  },
+  {
+    "profile": "umf.reference.example/1",
     "id": "unknown-preservation",
     "operationId": "core-write",
     "inputPaths": {

@@ -3255,3 +3255,12 @@ current evidence; the DSL typing spike is design-time evidence only.
 Evidence retains exact pins, commands, versions, observed outcomes, failed attempts
 and limits. Unavailable managed or engine lanes stay unqualified and are never
 silently skipped in an overall claim.
+
+## Core0.10 semantic-reference restoration — 2026-10-17
+
+STP-090 allocates US-090 to restored semantic registry/core tests, new UUID/128-bit
+composition tests, independent structural-schema checks and a real Chromium public
+bundle run. Scope includes exact reference identity, copied callbacks, unknown
+qualifiers, explicit migration, forged/stale receipt refusal and edited rollback.
+Unchanged core0.9 behavior and published schema hashes are separate regression
+checks. No test here establishes external term correctness or native admission.

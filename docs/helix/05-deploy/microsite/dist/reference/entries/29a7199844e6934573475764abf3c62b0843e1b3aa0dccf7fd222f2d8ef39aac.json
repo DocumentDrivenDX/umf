@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 493,
+        "line": 1,
+        "path": "spec/core/semantic-type-reference.schema.json",
+        "sha256": "cf098e7fe5efb2863466708964faeb63f8eeea254fb4fb2a65cab32c2821a009"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreSemanticTypeReferenceSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:semantic-type-reference:1.0.0\",\n  \"title\": \"Exact publisher-owned semantic term reference\",\n  \"type\": \"object\",\n  \"required\": [\n    \"vocabulary\",\n    \"version\",\n    \"term\"\n  ],\n  \"properties\": {\n    \"vocabulary\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"version\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"term\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreSemanticTypeReferenceSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 493,
+      "line": 1,
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "cf098e7fe5efb2863466708964faeb63f8eeea254fb4fb2a65cab32c2821a009"
+    }
+  ],
+  "summary": "Public export · spec/core/semantic-type-reference.schema.json",
+  "title": "coreSemanticTypeReferenceSchema"
+}

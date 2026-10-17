@@ -1148,7 +1148,7 @@
       "href": "entries/3123711b1b57da6cd6db7e2e964a92c8a7261e814b5118b3d27f641f7b539578.json",
       "id": "[\"api\",\".\",\"CARDINALITIES\"]",
       "kind": "api",
-      "sha256": "9759c3900559053e07d3c3153be41713e833a97b014f6fcc2e7d5f95464dff1f",
+      "sha256": "00ddd80593332912db4e3a1d30fde482a444088a46599736aeaa2e48e8221c9e",
       "summary": "Ideal container shape; native repetition and storage encodings remain separate.",
       "title": "CARDINALITIES"
     },
@@ -1157,7 +1157,7 @@
       "href": "entries/fd116f283dc4c8ef1b6328ecaf77b4f6488207f4c92ddf81676a22849d814360.json",
       "id": "[\"api\",\".\",\"Cardinality\"]",
       "kind": "api",
-      "sha256": "2a37bf64462047652eff85eab3422fc004856eb91b5e7428f4b52c15b2b80796",
+      "sha256": "61d06743d513532853d4a6e9ddff551980ecb89ab893ec6b5b72a62f5662d1b6",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Cardinality"
     },
@@ -1418,7 +1418,7 @@
       "href": "entries/c2119bf271ea6b438bbf3db3dc8a8b3e58f54e8dcc8fddf8d5af730be48bbf38.json",
       "id": "[\"api\",\".\",\"CoreElementQuery\"]",
       "kind": "api",
-      "sha256": "4df1e83b42db45386b040867ba774d9bd2adf12589f3ddcd2ed555d08704ab23",
+      "sha256": "348507841e042fad0ea566d75dacefbe78dad9b16bdd7212716448e3457db208",
       "summary": "Type declaration · src/model/selection.ts",
       "title": "CoreElementQuery"
     },
@@ -1427,7 +1427,7 @@
       "href": "entries/a34f0e9ed3d5f9f0ec47649794a45ec739cca0f4fecfd132dfd2571bbe89ada9.json",
       "id": "[\"api\",\".\",\"CoreElementSelection\"]",
       "kind": "api",
-      "sha256": "1beebe1b7ed2a2f8f09f3426cf1ee371f50d8879ff69301ad514771289da7a21",
+      "sha256": "b7c383149f3ed357c3d9dc654a34ea7a494c4f6cc3b3f77897fa4db1e81b3a4d",
       "summary": "Type declaration · src/model/selection.ts",
       "title": "CoreElementSelection"
     },
@@ -1436,7 +1436,7 @@
       "href": "entries/81fbecc10feaf64607ea962262b396358f38709d47f457b567a04608895b71a3.json",
       "id": "[\"api\",\".\",\"CoreElementSelectionEntry\"]",
       "kind": "api",
-      "sha256": "870651d44ef33a6879dc6d00d28509f39f3b3f7a7ffef82964d0fe51facf0d14",
+      "sha256": "37a13df8a231159b2e5fae053058e7551bc6dac140b899ab648f27e5aade77ad",
       "summary": "Type declaration · src/model/selection.ts",
       "title": "CoreElementSelectionEntry"
     },
@@ -1517,7 +1517,7 @@
       "href": "entries/91c2ab92fefe255996eaab6f08743b5b245a51dae2999d1e94e4fdf6bf4f961e.json",
       "id": "[\"api\",\".\",\"CoreItemTypeReference\"]",
       "kind": "api",
-      "sha256": "cd2df12102542a5a74b6e816be95be823b6a0eb7face681378a32f18ec684b6d",
+      "sha256": "52ca570f99bc38bca921fe76c96c80066b142b4b35a7ba27febfc9771d9df8dc",
       "summary": "Type declaration · src/model/types.ts",
       "title": "CoreItemTypeReference"
     },
@@ -1952,6 +1952,60 @@
       "sha256": "2bb00cdd1264e4f6a54d1246095427868b34a058da405e7b622f29cfe722328b",
       "summary": "Type declaration · src/model/schema-properties.ts",
       "title": "CoreSchemaPropertyPatch"
+    },
+    {
+      "bytes": 1095,
+      "href": "entries/b0faf07a7fedb4a39fe5c27408a1cbf32d73102c2e3298826814cff27461089d.json",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeDeclaration\"]",
+      "kind": "api",
+      "sha256": "838ce66d6f10bbca5ef2ed5ba4736544153523eaf854ebf9fdad4e2c5b36180c",
+      "summary": "Type declaration · src/model/semantic-types.ts",
+      "title": "CoreSemanticTypeDeclaration"
+    },
+    {
+      "bytes": 835,
+      "href": "entries/16373a086a03eeff74a103bc908c93c47661236f5e6ca640163b22159acc2598.json",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]",
+      "kind": "api",
+      "sha256": "3f78c69b8d52f059947e7a9d3c9f31e07776e1335f386b7b9e35f370c81588ef",
+      "summary": "Type declaration · src/model/semantic-types.ts",
+      "title": "CoreSemanticTypeIdentity"
+    },
+    {
+      "bytes": 989,
+      "href": "entries/c546ba7d68e719513f018bafb6bbd7013d85600e03a49e0487eca976edbf3695.json",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeInspection\"]",
+      "kind": "api",
+      "sha256": "edbc4c8131baba169af24be556e893a3c4c4f62ff787735ccc1fe05526677438",
+      "summary": "Type declaration · src/model/semantic-types.ts",
+      "title": "CoreSemanticTypeInspection"
+    },
+    {
+      "bytes": 895,
+      "href": "entries/28edbdd4179946b990f495ed48cbce04e915ee2008f78c61b54779bd36264950.json",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeMeaning\"]",
+      "kind": "api",
+      "sha256": "cc85faf92d6b29ff7a8a39696434c66d628e84436a6831ea4c5bf06370040c66",
+      "summary": "Type declaration · src/model/semantic-types.ts",
+      "title": "CoreSemanticTypeMeaning"
+    },
+    {
+      "bytes": 851,
+      "href": "entries/c9cd2a8957efcd9db88d889150f9d9dcec4f585eeb0c75d69e0d787efd0b602f.json",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeReference\"]",
+      "kind": "api",
+      "sha256": "8044fe1e465cebde7cb79307b5837a33463d429600d719993ac15345d00ec54e",
+      "summary": "Type declaration · src/model/types.ts",
+      "title": "CoreSemanticTypeReference"
+    },
+    {
+      "bytes": 971,
+      "href": "entries/856f63fd15fd41c3a51a39e3ccd75d3790f75b745c9f7a116ee06c4c082942c7.json",
+      "id": "[\"api\",\".\",\"CoreSemanticTypeValueResult\"]",
+      "kind": "api",
+      "sha256": "06c68344fce498ffc03f10454e15a8b0bf3ee224260fb6cd05cf9844b60d79d1",
+      "summary": "Type declaration · src/model/semantic-types.ts",
+      "title": "CoreSemanticTypeValueResult"
     },
     {
       "bytes": 1008,
@@ -2687,16 +2741,16 @@
       "href": "entries/34031b036c381ae4e1fa4a7364eda7eb244e1be0f510d78d95599ffd97f54270.json",
       "id": "[\"api\",\".\",\"Diagnostic\"]",
       "kind": "api",
-      "sha256": "6ec1b50ad86d12bd539bd0f7d0870cf97ea270f2789f48738e07cae38fd2878a",
+      "sha256": "87273d5260285f7375d72dafe15c097047a135dab160172bca2e0b536813d392",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Diagnostic"
     },
     {
-      "bytes": 994,
+      "bytes": 1005,
       "href": "entries/9562edb330d4e9b5ce4427cceacd981eddd79957c0d25a6f5ed9fecd3d2bfd74.json",
       "id": "[\"api\",\".\",\"Document\"]",
       "kind": "api",
-      "sha256": "85a75a5f29949f827a2dda73b86a66e901f7f4d4679e5b8a5d1f288c006d4f77",
+      "sha256": "bbe2c7e3705e2c899f233033e64c9c5418c3c4516932ffab001149991a1c0797",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Document"
     },
@@ -2705,7 +2759,7 @@
       "href": "entries/5c13cb189cf46ec81b3cecfcc2a1351498954423c0c5b2aeecb50a19d10cf38f.json",
       "id": "[\"api\",\".\",\"ELEMENT_KINDS\"]",
       "kind": "api",
-      "sha256": "afbe010f8823e6dcaa58938b15981a35029c9e44451355f97046da3002e3abb1",
+      "sha256": "2325c45452b854d4ad2ebe2df7ca427f69d8fc460b25c5a5df6e88840efb70e6",
       "summary": "Public export · src/model/types.ts",
       "title": "ELEMENT_KINDS"
     },
@@ -2714,7 +2768,7 @@
       "href": "entries/f56f4f420963bd982256c4e56d88dd143bb7fcb6b00057dea294485c5b2cbf52.json",
       "id": "[\"api\",\".\",\"Element\"]",
       "kind": "api",
-      "sha256": "df92489258096575b7b645ed1e9c851afef375f2f454c96f359e1b1b9c079e3c",
+      "sha256": "125a0565407c7d7ef77f595852c3acac409fc0e1f10c71248ce72d556a8b36fc",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Element"
     },
@@ -2723,7 +2777,7 @@
       "href": "entries/ff6a0bccb3114960d25f0cbc0cb639bb960948064a1911b49544fa2797ec8de3.json",
       "id": "[\"api\",\".\",\"ElementKind\"]",
       "kind": "api",
-      "sha256": "420be72c6835b3ee74dd6ce72a44961b0c5d93afec08ccab3bc1f44a5890c276",
+      "sha256": "107e7cf37d4f6936f9ecf9c9064f7e7432537277d1c61f9fe4ca2a383b18063c",
       "summary": "Type declaration · src/model/types.ts",
       "title": "ElementKind"
     },
@@ -2741,7 +2795,7 @@
       "href": "entries/251a564f0ba13bf8b12817d3ef630998871ee9242b67850eff37c096428a773b.json",
       "id": "[\"api\",\".\",\"ExtensionPackage\"]",
       "kind": "api",
-      "sha256": "c34171c85c0ac018e839e81a7572754785b316e53907031e5d2d9befb878434b",
+      "sha256": "0c239901d316ba17481d4ebf7feea106b8e6d61b539b710fa1e5b69d4a161c03",
       "summary": "Type declaration · src/model/types.ts",
       "title": "ExtensionPackage"
     },
@@ -3227,7 +3281,7 @@
       "href": "entries/ece16f806c92300aab185ade0ffc97f75ed440f7258c4baff5194e285a909dd3.json",
       "id": "[\"api\",\".\",\"Json\"]",
       "kind": "api",
-      "sha256": "03c788790597d89975dabaa39be9327a5fe5bc955bf1f68ccdff15ec159fff32",
+      "sha256": "1619b0a47836b3acf8dd381e3b858a483ad98006fafa4e5932c23933e1245079",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Json"
     },
@@ -3290,7 +3344,7 @@
       "href": "entries/4f74632ab7b1d16ee6d420b620d4307bd59c856d3791e8656035f11c7100346d.json",
       "id": "[\"api\",\".\",\"JsonObject\"]",
       "kind": "api",
-      "sha256": "3fc26272b4284832b7f074e591f400d00ec306434200725ed8e3c534baa2cc13",
+      "sha256": "b739c028924b982b99094728232c3fb45a4b42d5e42912314f99bfc612360dac",
       "summary": "Type declaration · src/model/types.ts",
       "title": "JsonObject"
     },
@@ -3551,7 +3605,7 @@
       "href": "entries/8b4592cdc8aedf56f08bf4a6f38bad2c39a91c75b6191955bfc90655085feeea.json",
       "id": "[\"api\",\".\",\"Module\"]",
       "kind": "api",
-      "sha256": "552c62ed804626aed4a6780f22fceb553a2bbbed2fee7bac4840c480242e8712",
+      "sha256": "f917f073d99832e96fd2a48296bf7717700432217b5908f3fd78585fcffa5878",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Module"
     },
@@ -3560,7 +3614,7 @@
       "href": "entries/d43ae8035ce319f5e7baf23f958956ae7d0033bc2ee56b2aef0862947ff45af0.json",
       "id": "[\"api\",\".\",\"NULLABILITIES\"]",
       "kind": "api",
-      "sha256": "07ffef1e422d905ee4f111a99445651f0c69729ce2a1e681e03e55e9b28982be",
+      "sha256": "61d2fc8bda5706788045ede6afd9124744cc50e107fef72ec9b356299f0fd07a",
       "summary": "Ideal availability only; native absence representations require explicit bindings.",
       "title": "NULLABILITIES"
     },
@@ -3596,7 +3650,7 @@
       "href": "entries/e72e8b29c022ac09943b4dddb69b8d85a23677a6751fc8135bc1287074da7581.json",
       "id": "[\"api\",\".\",\"Nullability\"]",
       "kind": "api",
-      "sha256": "a02bf0624bd5d77825fc2e6b9c720ee23fcaa31c0b931c81b1a240afe5ae4d56",
+      "sha256": "ba5489334d99a894cb62430d44070bf162da07c5bebe1cdb409d31477a00547a",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Nullability"
     },
@@ -5720,7 +5774,7 @@
       "href": "entries/1361bdea5c3a8f224f3f5da83b4d04ba9a841f57e95f159916e6d80ceb8c1de5.json",
       "id": "[\"api\",\".\",\"SCALAR_TYPES\"]",
       "kind": "api",
-      "sha256": "11b910034c60ee7d06d23be3f5c68c30eb8b47d07a962133ff245203629fa1d0",
+      "sha256": "fff336b878a24516f4f3adf74e33dc47966a4f02013b38a76e9d1baef51377e4",
       "summary": "Value family only; native refinements determine the actual domain and behavior.",
       "title": "SCALAR_TYPES"
     },
@@ -5729,7 +5783,7 @@
       "href": "entries/342b3d8b962c247860550392edb7cd8be96870b65fcc646102a7cbc735397c0f.json",
       "id": "[\"api\",\".\",\"SCALAR_TYPES_V09\"]",
       "kind": "api",
-      "sha256": "6af8f1bc83217aa77336c77d5621995545f34da582ba024c97c1cdd39664c03e",
+      "sha256": "28748b63f6f1dcd4b01b8a07533f66d37626605698a09badb26d700680be4abd",
       "summary": "Public export · src/model/types.ts",
       "title": "SCALAR_TYPES_V09"
     },
@@ -5741,6 +5795,15 @@
       "sha256": "fd5f6816b03acb6457f8c80686f9d6a52b37865100c5a0a444d24b62f6996d16",
       "summary": "Public export · src/extensions/security/policy.ts",
       "title": "SECURITY_EXTENSION"
+    },
+    {
+      "bytes": 839,
+      "href": "entries/23dc1bfbfaa6d9875d71e1c30edd1b327269cdcf0a3ba3913844f97e2486f349.json",
+      "id": "[\"api\",\".\",\"SEMANTIC_TYPES_EXTENSION\"]",
+      "kind": "api",
+      "sha256": "3d64c520062e46d3eb7d15636e4855b7d508893adbf3921068b9bec652e38a44",
+      "summary": "Public export · src/extensions/semantic-types/index.ts",
+      "title": "SEMANTIC_TYPES_EXTENSION"
     },
     {
       "bytes": 763,
@@ -5828,7 +5891,7 @@
       "href": "entries/0442c1a02160c8992c702dbc0818f2e95451cbd6c06a6487cbc3e88ae1b675bd.json",
       "id": "[\"api\",\".\",\"ScalarType\"]",
       "kind": "api",
-      "sha256": "3d631dc1f9191bd37add69a3f5d60cac1a8adda37f1708bf207850cd2414b901",
+      "sha256": "12b88440982f4f5c558b1a5c0f097f2533ff519b306ab88b1783758f177f0354",
       "summary": "Type declaration · src/model/types.ts",
       "title": "ScalarType"
     },
@@ -5855,7 +5918,7 @@
       "href": "entries/1afafa2eb782399f853fbc8ed74bc461755315e213b9f0ea61a21ced1b1d5dfc.json",
       "id": "[\"api\",\".\",\"Scope\"]",
       "kind": "api",
-      "sha256": "69a7cf1aaa22c7169c891a9916137c2d3f2aa5495b3e56e5b79553ea12707504",
+      "sha256": "1f4db8691b05f63e01db45b59636bb8b283978c61c7ad31d7bccb311655e7293",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Scope"
     },
@@ -6299,6 +6362,87 @@
       "sha256": "f0973002b9fa48e38b2e86703dcd4a5b3e8c9ed5328d810792d2bc0e28f42987",
       "summary": "Type declaration · src/extensions/actions/manifest-construction.ts",
       "title": "SelectedActionRow"
+    },
+    {
+      "bytes": 884,
+      "href": "entries/5eb6ff7839a75f16252d2fdd5f90cebf2e24cd24a2ae405d97a7b75b01935887.json",
+      "id": "[\"api\",\".\",\"SemanticTypeAnnotation\"]",
+      "kind": "api",
+      "sha256": "55260cafa6a1e8b6fac5240c1e4a279a6ee8c7766f9d3da6d94c710b6f6748f8",
+      "summary": "Type declaration · src/extensions/semantic-types/index.ts",
+      "title": "SemanticTypeAnnotation"
+    },
+    {
+      "bytes": 881,
+      "href": "entries/37cf9042365abe4ae48dca101fbea5fae8bf49d7e6b0048232d1c7766b2dcee3.json",
+      "id": "[\"api\",\".\",\"SemanticTypeCheck\"]",
+      "kind": "api",
+      "sha256": "71221a7dfea58846b6728483a27355c8a90171e5989729340f4d36170c16af5a",
+      "summary": "Type declaration · src/extensions/semantic-types/index.ts",
+      "title": "SemanticTypeCheck"
+    },
+    {
+      "bytes": 864,
+      "href": "entries/6a3b79bf2537e3d5b85a5f136735f73a5298b066c01e0e232da107f9715dd297.json",
+      "id": "[\"api\",\".\",\"SemanticTypeReference\"]",
+      "kind": "api",
+      "sha256": "d5176c44e3a70642aeea13a2cb44e6ca44bbc617bbadf5826a6b365f03e1431d",
+      "summary": "Type declaration · src/extensions/semantic-types/index.ts",
+      "title": "SemanticTypeReference"
+    },
+    {
+      "bytes": 3475,
+      "href": "entries/6f13a7596bd114a9b4c98e24553b41b0c6f90fdcebc82e9b466f2558d170e48c.json",
+      "id": "[\"api\",\".\",\"SemanticTypeRegistry\"]",
+      "kind": "api",
+      "sha256": "167e2aa2ec7414e673ef5abb2e7c0ecc0c64137346df44a065bb3ffdf043a8fe",
+      "summary": "No remote lookup or code loading. Callers explicitly install trusted implementations.",
+      "title": "SemanticTypeRegistry"
+    },
+    {
+      "bytes": 877,
+      "href": "entries/02993d7e261f1a3971a6747da00433c41139acf9720f708faf2ad507d17be8dd.json",
+      "id": "[\"api\",\".\",\"SemanticTypeValidator\"]",
+      "kind": "api",
+      "sha256": "5ce4aa45ed885841fc098e3bfbf3eb7348536c8de315c30bc0d9161c79d42f88",
+      "summary": "Type declaration · src/extensions/semantic-types/index.ts",
+      "title": "SemanticTypeValidator"
+    },
+    {
+      "bytes": 895,
+      "href": "entries/a0032cd749de9a90af3c0f6badd5497be1d90e0e9eeda42153bd6585b54e4b43.json",
+      "id": "[\"api\",\".\",\"SemanticTypeValueResult\"]",
+      "kind": "api",
+      "sha256": "0ca231d214b53fca08aa9971321f9c04f0a0aab6f7c8997638f8360496461344",
+      "summary": "Type declaration · src/extensions/semantic-types/index.ts",
+      "title": "SemanticTypeValueResult"
+    },
+    {
+      "bytes": 1061,
+      "href": "entries/fe6da863a60215d19853809fcc1ed8fc415c2d8a6f08604b620b0e05e234ac7f.json",
+      "id": "[\"api\",\".\",\"SemanticTypesRollbackReceipt\"]",
+      "kind": "api",
+      "sha256": "ac90c6fd65f48c61f3372be6af3a7eb51f48667af5e0f56da9573316fa163358",
+      "summary": "Type declaration · src/model/semantic-types-transition.ts",
+      "title": "SemanticTypesRollbackReceipt"
+    },
+    {
+      "bytes": 1046,
+      "href": "entries/be358a185a99b8e08dfeacef3f5b6e55e14b9767dcedbf0800a40c1159e7c1f7.json",
+      "id": "[\"api\",\".\",\"SemanticTypesUpgradeReceipt\"]",
+      "kind": "api",
+      "sha256": "b229bb39d3e29718a10f5ab5803cd690b766c9afc3ce0077b9437e7a860d881c",
+      "summary": "Type declaration · src/model/semantic-types-transition.ts",
+      "title": "SemanticTypesUpgradeReceipt"
+    },
+    {
+      "bytes": 876,
+      "href": "entries/86bd5aca1c64e765c03b6a3404584a0a5348c85bd609664402ea2059e6942076.json",
+      "id": "[\"api\",\".\",\"SemanticTypesUpgradeRequest\"]",
+      "kind": "api",
+      "sha256": "38812fe1f6a70d3aa12ba2035fbe6ace25b6420d5b505da44f8d80d718a33100",
+      "summary": "Type declaration · src/model/semantic-types-transition.ts",
+      "title": "SemanticTypesUpgradeRequest"
     },
     {
       "bytes": 856,
@@ -7187,7 +7331,7 @@
       "href": "entries/a6f58f6d3591ce46c941927e89da5eb0ee3c29100b6791b8093414747250536b.json",
       "id": "[\"api\",\".\",\"UmfError\"]",
       "kind": "api",
-      "sha256": "c336b0fbd0e1b6458ff68d55b2840c781b6042b45c7e80d8ff3972ff8c1d6c00",
+      "sha256": "23ad532aa3b2260a096c30381b0964d80100d26138676527309ac8ae1878e9dd",
       "summary": "Public export · src/model/types.ts",
       "title": "UmfError"
     },
@@ -7205,7 +7349,7 @@
       "href": "entries/d8ecab8841bef58d466db41d5c825a0543e8fc11f1fb7769d88c053185ca880a.json",
       "id": "[\"api\",\".\",\"Validation\"]",
       "kind": "api",
-      "sha256": "02464d1a97c1a0fd241bffe9133d151890e4f8b7ac84a5962882159a76fd5b96",
+      "sha256": "213f5b1012133c85b745785dd51ebdcc03af6a835693ee92dfe731cdb7a35493",
       "summary": "Type declaration · src/model/types.ts",
       "title": "Validation"
     },
@@ -8803,6 +8947,51 @@
       "title": "coreSchemaPropertiesTransitionSchema"
     },
     {
+      "bytes": 1402,
+      "href": "entries/29a7199844e6934573475764abf3c62b0843e1b3aa0dccf7fd222f2d8ef39aac.json",
+      "id": "[\"api\",\".\",\"coreSemanticTypeReferenceSchema\"]",
+      "kind": "api",
+      "sha256": "a57c5add6dc38dcab9ce70a94373d0b9d666a561d6ba1fc7afebb7bad7533e2e",
+      "summary": "Public export · spec/core/semantic-type-reference.schema.json",
+      "title": "coreSemanticTypeReferenceSchema"
+    },
+    {
+      "bytes": 23093,
+      "href": "entries/be713313d9cdf6f9167f67ad91bb2d828e3fb03ed5200ddf6f8998a931ea56df.json",
+      "id": "[\"api\",\".\",\"coreSemanticTypesDocumentSchema\"]",
+      "kind": "api",
+      "sha256": "b771f20e1b148690061946477bd8b6db7e469d4ad7dd0155d5ad9a3c60edef0e",
+      "summary": "Public export · spec/core/semantic-types-document.schema.json",
+      "title": "coreSemanticTypesDocumentSchema"
+    },
+    {
+      "bytes": 7034,
+      "href": "entries/5156a69e169bc2ba47bf32d1c667d48bf46cbe6061355f891e322d6454e1310a.json",
+      "id": "[\"api\",\".\",\"coreSemanticTypesOperationSchema\"]",
+      "kind": "api",
+      "sha256": "0a669de69e73496c3b2eedce62b59bb3f4573b695e9b7e299f551830f0dab738",
+      "summary": "Public export · spec/core/semantic-types-operation.schema.json",
+      "title": "coreSemanticTypesOperationSchema"
+    },
+    {
+      "bytes": 23152,
+      "href": "entries/8eaa54533ef3c187ab62902a97de806c43f7843fb8e8c245bf9f9f162d8a6cf6.json",
+      "id": "[\"api\",\".\",\"coreSemanticTypesSelectionSchema\"]",
+      "kind": "api",
+      "sha256": "7d313df78cdada8326e170298e241c36afdc578bc4af6f346ee3ba84f02164a6",
+      "summary": "Public export · spec/core/semantic-types-selection.schema.json",
+      "title": "coreSemanticTypesSelectionSchema"
+    },
+    {
+      "bytes": 3504,
+      "href": "entries/1362132e7d317b8f78105c7827e1c8c5c5532b2f9c1c0d0769c5f72927473bad.json",
+      "id": "[\"api\",\".\",\"coreSemanticTypesTransitionSchema\"]",
+      "kind": "api",
+      "sha256": "d5cc271345793fc87cf440cd2ecd1f4e44f04064972407ce91b6ddb09b71c042",
+      "summary": "Public export · spec/core/semantic-types-transition.schema.json",
+      "title": "coreSemanticTypesTransitionSchema"
+    },
+    {
       "bytes": 1199,
       "href": "entries/7c82806bb9962b0ac4eab4b7602cbea5ccae16258174f33080f3384d9e67e2de.json",
       "id": "[\"api\",\".\",\"correlatePostgresqlCardinalityCatalog\"]",
@@ -9125,6 +9314,15 @@
       "sha256": "55f2d585446cd2c74448c945ee2adc27773aa4e639f83315af78e0860173715b",
       "summary": "Public export · src/model/schema-properties.ts",
       "title": "declareCoreSchemaProperties"
+    },
+    {
+      "bytes": 943,
+      "href": "entries/e93f7250ccc28fd05183093ed827581d8021fa847d1ddb83a0e5b7481dffe0c3.json",
+      "id": "[\"api\",\".\",\"declareCoreSemanticTypes\"]",
+      "kind": "api",
+      "sha256": "06aab20a7bf2b9b02c28bb732632f208c0c41baa1536829ae4e0cbd4e9d2accd",
+      "summary": "Explicit declarations retain the entire previous model; they do not assert native enforcement.",
+      "title": "declareCoreSemanticTypes"
     },
     {
       "bytes": 1031,
@@ -10306,6 +10504,15 @@
       "title": "getBinding"
     },
     {
+      "bytes": 845,
+      "href": "entries/954682b3eeca84d540d5912be52c3530207b98b1c2ae3d23485c39ec0622a56d.json",
+      "id": "[\"api\",\".\",\"getCoreSemanticTypes\"]",
+      "kind": "api",
+      "sha256": "d96a4335dafe60a99af42da2bf22b879ea6066289a755435a7819518560f30a8",
+      "summary": "Public export · src/model/semantic-types.ts",
+      "title": "getCoreSemanticTypes"
+    },
+    {
       "bytes": 848,
       "href": "entries/4c60cc37c6306a17e7788a28bb450a4c166bbd837ab327aa5aefce7dada367a0.json",
       "id": "[\"api\",\".\",\"getDashboardDefinition\"]",
@@ -10619,6 +10826,15 @@
       "sha256": "3cb112917bb080c66d1e8535302b1014a32cb63e1ac889ed48d2438f10ca754f",
       "summary": "Public export · src/adapters/rdf/index.ts",
       "title": "getRdfQuads"
+    },
+    {
+      "bytes": 849,
+      "href": "entries/625ec4c6c6a40492438e2cd051ef532c0458e9b0ea689116fe2c40bd979ea025.json",
+      "id": "[\"api\",\".\",\"getSemanticTypes\"]",
+      "kind": "api",
+      "sha256": "5fefde474b960a32ab8f9c804aa7c7000946b58330e9cfe30043c622733183bb",
+      "summary": "Public export · src/extensions/semantic-types/index.ts",
+      "title": "getSemanticTypes"
     },
     {
       "bytes": 847,
@@ -11330,6 +11546,15 @@
       "sha256": "b268a5ee2e327375714cb6474567663c7180b13cb29d10196ac7c7afa08e8b77",
       "summary": "Public export · src/model/schema-properties.ts",
       "title": "inspectCoreSchemaProperties"
+    },
+    {
+      "bytes": 844,
+      "href": "entries/14f9e9a46e0d61ed18af51af61c04deb851ac86dd63d49ff62dbe8c2e050a8eb.json",
+      "id": "[\"api\",\".\",\"inspectCoreSemanticTypes\"]",
+      "kind": "api",
+      "sha256": "ed0511af210b1511dbd87b2ec5f235c3da1879cd6d9f68ab36d40131f4d20650",
+      "summary": "Public export · src/model/semantic-types.ts",
+      "title": "inspectCoreSemanticTypes"
     },
     {
       "bytes": 793,
@@ -12587,7 +12812,7 @@
       "href": "entries/87071edf54dc0f720db89914736c9367c4678d0beba47d2f073f45d033cea1d9.json",
       "id": "[\"api\",\".\",\"pointer\"]",
       "kind": "api",
-      "sha256": "9f87d688efa148488e25877169caa0c6701946e774a2c1ff8dec54fbeb0ca443",
+      "sha256": "083bf360b2cbfeca6ee2dcb8d35613baf4767b6d3c37e88efe43b3d24bf91672",
       "summary": "Public export · src/model/types.ts",
       "title": "pointer"
     },
@@ -15247,6 +15472,15 @@
       "title": "rollbackSchemaPropertiesEnvelope"
     },
     {
+      "bytes": 930,
+      "href": "entries/b13fdbb3bd836e13a4e9b316f9601910a50b111a7658dfb471ad684accf6eae1.json",
+      "id": "[\"api\",\".\",\"rollbackSemanticTypesEnvelope\"]",
+      "kind": "api",
+      "sha256": "3b76d66532716b12d57f95a2889e47970869b514e89eb2b43dad0c26e68b86f5",
+      "summary": "Restore the exact legacy source; preserve subsequent edits in the current-source archive.",
+      "title": "rollbackSemanticTypesEnvelope"
+    },
+    {
       "bytes": 828,
       "href": "entries/c8c5b7859ec787e822882f257534a41524b4e548ee954d585677176c3f476021.json",
       "id": "[\"api\",\".\",\"sameRfc3339ExactInstant\"]",
@@ -15260,7 +15494,7 @@
       "href": "entries/b1b131cdd23c43a1d889ced21f2ba3ecf8f124cf0dff5cf6d62d15d9f5050b24.json",
       "id": "[\"api\",\".\",\"scalarTypesForVersion\"]",
       "kind": "api",
-      "sha256": "cd7580e1da355769a8043528deaeeadfd6e612c7f68d6709d681830974b18200",
+      "sha256": "ad5d9fd5041ca74608515ff5892f00e3a0cba4028da05532edc7794ae6f2413b",
       "summary": "Public export · src/model/types.ts",
       "title": "scalarTypesForVersion"
     },
@@ -15359,7 +15593,7 @@
       "href": "entries/f4835935d464c8be18d5481ba4c5a6092faf4c9c6c47475c70b613dbe4dac741.json",
       "id": "[\"api\",\".\",\"selectCoreElements\"]",
       "kind": "api",
-      "sha256": "d8d81aca160d7c276681ad62d8c2ff166ae33624206f32efda97771fbafe95c1",
+      "sha256": "d60a3998f87ac17472b09f84cc69d55b967fc38dd2b24c7948870ac2260c419d",
       "summary": "Select core metadata with full source context and explicitly scoped reference traversal.",
       "title": "selectCoreElements"
     },
@@ -15389,6 +15623,33 @@
       "sha256": "637facb6a693b81d536d2cd06500dda93acc7537ab6d13140037836b93c4b755",
       "summary": "Public export · src/adapters/smithy/selection.ts",
       "title": "selectSmithyShapes"
+    },
+    {
+      "bytes": 842,
+      "href": "entries/81f6fadfa74181adef679efffdf91d5a65e5615f63177b0f697051246743089e.json",
+      "id": "[\"api\",\".\",\"semanticTypesPackage\"]",
+      "kind": "api",
+      "sha256": "41cab688b098d8ec3cdcd1fa70c425c6523221956a82ed031d0f9ad02f083a11",
+      "summary": "Public export · src/extensions/semantic-types/index.ts",
+      "title": "semanticTypesPackage"
+    },
+    {
+      "bytes": 799,
+      "href": "entries/eb3c96484db5cff96a806017f12cc7dc402ec7205c539a0258617d807c0d5036.json",
+      "id": "[\"api\",\".\",\"semanticTypesRegistry\"]",
+      "kind": "api",
+      "sha256": "26a7a448aa66a8a3263ed4cae97c2620df7bffa9ac3e16682b4361a29a304405",
+      "summary": "Public export · src/extensions/semantic-types/index.ts",
+      "title": "semanticTypesRegistry"
+    },
+    {
+      "bytes": 894,
+      "href": "entries/223b61d93a832cbe54977f4b3c352e0eb4ea99fb9c11c3263fbbfda17581c58b.json",
+      "id": "[\"api\",\".\",\"setSemanticTypes\"]",
+      "kind": "api",
+      "sha256": "1797255c581b0b444ba90fcf6b9a0551426af2b83216dec79517becd5124fb3e",
+      "summary": "Copy-on-write authoring; preserves native payloads and unfamiliar annotations.",
+      "title": "setSemanticTypes"
     },
     {
       "bytes": 779,
@@ -15967,6 +16228,15 @@
       "title": "upgradeSecurityPolicySource"
     },
     {
+      "bytes": 898,
+      "href": "entries/7db69509675f917b77e72b507699dd2af32ec0836c13a6dcfa2745daa4809491.json",
+      "id": "[\"api\",\".\",\"upgradeSemanticTypesEnvelope\"]",
+      "kind": "api",
+      "sha256": "4ea94da4ed2493f3e12b4aea2fa580a64dbaeef123b73d2b1e8d3ce18004985b",
+      "summary": "Public export · src/model/semantic-types-transition.ts",
+      "title": "upgradeSemanticTypesEnvelope"
+    },
+    {
       "bytes": 735,
       "href": "entries/69e1f9431d701ee5fe51416e1f99f8cb8002f2a581266b0b49ee18f61cd26d52.json",
       "id": "[\"api\",\".\",\"uuidFromBits128\"]",
@@ -16039,6 +16309,15 @@
       "title": "validateCoreRecordValues"
     },
     {
+      "bytes": 957,
+      "href": "entries/a06a82311c91c49d1c1857341fb12f9f9ca466bd0cd388f08410c24931773222.json",
+      "id": "[\"api\",\".\",\"validateCoreSemanticTypeValue\"]",
+      "kind": "api",
+      "sha256": "fffc8e042d0bd797745c0172020865a3cc3fcfc3618c8ccb9a042c4a53cb2554",
+      "summary": "Conjunction of exact external checks only; no other field/native constraints are evaluated.",
+      "title": "validateCoreSemanticTypeValue"
+    },
+    {
       "bytes": 903,
       "href": "entries/0fe8f1da9eb40f0448eff72e2ec3f5c0d2d3e1feb90b0e1f6a32447ebf0361c1.json",
       "id": "[\"api\",\".\",\"validateCsvBooleanLexical\"]",
@@ -16048,11 +16327,11 @@
       "title": "validateCsvBooleanLexical"
     },
     {
-      "bytes": 783,
+      "bytes": 785,
       "href": "entries/904068faa8e9c2d14732e38d0b32fc6855f83f2623b18394d6a8c3aa352f2d14.json",
       "id": "[\"api\",\".\",\"validateDocument\"]",
       "kind": "api",
-      "sha256": "bd3b079917069b9eb0b49325b959d1bddcd62bb14fc2b12c247331fd4fe58f9c",
+      "sha256": "08520362743fa7cae7e4f5252847833d11d7ba97318556bf4706c6daa836eee6",
       "summary": "Public export · src/validation/document.ts",
       "title": "validateDocument"
     },
@@ -16109,6 +16388,15 @@
       "sha256": "4bd129d5694bf224ea7636582e3ad9a423660b4813d83889e60724d56cab839b",
       "summary": "Shape/domain validation only. Transport, pins and dispositions do not authenticate or authorize a result.",
       "title": "validateSecurityDisclosure"
+    },
+    {
+      "bytes": 903,
+      "href": "entries/0a807fc012c941fa9bc53e051648189f58f40a9a366fcbf45d59fda7143b9dc1.json",
+      "id": "[\"api\",\".\",\"validateSemanticTypeValue\"]",
+      "kind": "api",
+      "sha256": "47afafc458d359a873c0584be1fd8ffceb6806e9169c6bbac536c1a9315bc9d8",
+      "summary": "Public export · src/extensions/semantic-types/index.ts",
+      "title": "validateSemanticTypeValue"
     },
     {
       "bytes": 1070,
@@ -16271,6 +16559,15 @@
       "sha256": "06cdf3c650a6dc8f48a10f6416114fd4830158afb7c2c81f5700388bf1b96a71",
       "summary": "Public export · src/model/relationships.ts",
       "title": "verifyCoreRelationshipOperation"
+    },
+    {
+      "bytes": 913,
+      "href": "entries/79b07f42ca38459869787306ad229f5c12cc8856576d1ba60c42dd24a408c175.json",
+      "id": "[\"api\",\".\",\"verifyCoreSemanticTypeDeclaration\"]",
+      "kind": "api",
+      "sha256": "f73c210b03688a87570d34f573ffb1638b39e67b31f87e2fdd7d4dd54a1fdaf6",
+      "summary": "Recomputed consistency/provenance check; it cannot authenticate a submitted source.",
+      "title": "verifyCoreSemanticTypeDeclaration"
     },
     {
       "bytes": 939,
@@ -16543,6 +16840,15 @@
       "title": "verifySchemaPropertiesUpgrade"
     },
     {
+      "bytes": 938,
+      "href": "entries/9ac585c3e4b23fdf917daf62782cfe04c2520439d24d19650c13fbd4555f32b2.json",
+      "id": "[\"api\",\".\",\"verifySemanticTypesTransition\"]",
+      "kind": "api",
+      "sha256": "f279a59ac9e7bf90453a128b589d0402e009cc76ffaa8c64145eaf6ef0d26faf",
+      "summary": "Public export · src/model/semantic-types-transition.ts",
+      "title": "verifySemanticTypesTransition"
+    },
+    {
       "bytes": 971,
       "href": "entries/f4cb44403305fbb43a854be1027c7b2851786ed446853a2a797415f73717739b.json",
       "id": "[\"api\",\".\",\"verifySqlServerCardinalityClassification\"]",
@@ -16802,6 +17108,15 @@
       "sha256": "d958a093407bcd8891149c18302af649d2b59b3f3c1a68c5d9c4ee70e484ed5e",
       "summary": "Inspect properties and defaults",
       "title": "core properties"
+    },
+    {
+      "bytes": 992,
+      "href": "entries/0be00419a8041da29fde776de36c99d4033dd865bc00a25ac99b1ea799ecacea.json",
+      "id": "[\"example\",\"core-semantic\"]",
+      "kind": "example",
+      "sha256": "0f99f1809602c09905832e5c5f369a011f42b13e01fa342cd07ec52ba5ea5741",
+      "summary": "Validate a core document",
+      "title": "core semantic"
     },
     {
       "bytes": 982,
@@ -17308,6 +17623,15 @@
       "title": "umf.security.protection · 0.1.0"
     },
     {
+      "bytes": 2602,
+      "href": "entries/41ffce5c4324bcdec2b6dd5412a21b52fc501a50e160a2c4ccd87b16f33a3132.json",
+      "id": "[\"extension\",\"umf.semantic-types\",\"0.1.0\"]",
+      "kind": "extension",
+      "sha256": "bddc3373fc891165d6a782a51c1f92d9af47072e34548043a7c2286452ef7455",
+      "summary": "Exact external semantic term references; meanings and value validators remain vocabulary-owned",
+      "title": "umf.semantic-types · 0.1.0"
+    },
+    {
       "bytes": 11839,
       "href": "entries/0442ead7078a2e2d057c002fa63de0a021d57d094a0298a46d2af834fe54e5eb.json",
       "id": "[\"extension\",\"umf.shacl\",\"0.1.0\"]",
@@ -17470,11 +17794,11 @@
       "title": "Logical models and physical bindings"
     },
     {
-      "bytes": 2251,
+      "bytes": 3023,
       "href": "entries/03dabdf8c17d4291e443be19a01bfc2af261c605952a4e5a8fc14d2b96e39d76.json",
       "id": "[\"guide\",\"concepts\"]",
       "kind": "guide",
-      "sha256": "9b006989b6a5bf5b0cacf24f731e4c56d9b632fed2fbcf72f0e14145e8fc3047",
+      "sha256": "dfb4b8fdec5d66002b614d01db5891ae18ef2bf9a1cdc8f572ef9baedab59397",
       "summary": "UMF keeps shared schema metadata alongside native and unfamiliar meaning. A valid envelope is a container for those meanings; it is not proof that every payload was interpreted.",
       "title": "Core concepts: a shared vocabulary"
     },
@@ -20251,6 +20575,51 @@
       "title": "UMF 0.1.0 document envelope"
     },
     {
+      "bytes": 2657,
+      "href": "entries/f27863cbcea67b1a0119b0e408e51ec2245567e03639396deaac1e225011e3f8.json",
+      "id": "[\"schema\",\"spec/core/semantic-type-reference.schema.json\",\"\"]",
+      "kind": "schema",
+      "sha256": "a4959afbeca26f502f93fe1823a605de21d08f769bce045988d02d63b7ce2ca1",
+      "summary": "spec/core/semantic-type-reference.schema.json",
+      "title": "Exact publisher-owned semantic term reference"
+    },
+    {
+      "bytes": 148805,
+      "href": "entries/3e4c579131b24a19bc79afb3efbc78ac69617170055a806c29088a5319774892.json",
+      "id": "[\"schema\",\"spec/core/semantic-types-document.schema.json\",\"\"]",
+      "kind": "schema",
+      "sha256": "1c42230c6f2833e9038e3432d03ed9105e11f831a92ed6be1b73e58518315598",
+      "summary": "Core 0.10.0 · Explicit semantic references compose with unchanged core0.9 UUID/128-bit domains; no external term or native enforcement inferred.",
+      "title": "UMF 0.10.0 semantic references over exact 128-bit and UUID values"
+    },
+    {
+      "bytes": 33317,
+      "href": "entries/b49de96cd9d290ef72032753c0246b00330b7e5678afe322d41ffb6438bb9fae.json",
+      "id": "[\"schema\",\"spec/core/semantic-types-operation.schema.json\",\"\"]",
+      "kind": "schema",
+      "sha256": "a1d03e4a5a96a3b91ee2a02997537c5fcbd328efff14207dc9ba7a4bf7b7552d",
+      "summary": "spec/core/semantic-types-operation.schema.json",
+      "title": "semantic-types-operation.schema.json"
+    },
+    {
+      "bytes": 186665,
+      "href": "entries/38474274d2a86ce2fa471d27b0fbfaebfc804fcae01f2500c2da54d0c98549e1.json",
+      "id": "[\"schema\",\"spec/core/semantic-types-selection.schema.json\",\"\"]",
+      "kind": "schema",
+      "sha256": "e694859f99c93c3e3447d4f23ecd9f5d081e9d362a51ea963b383c8dec4d40c2",
+      "summary": "spec/core/semantic-types-selection.schema.json",
+      "title": "UMF 0.10.0 retained semantic-type element selection"
+    },
+    {
+      "bytes": 13102,
+      "href": "entries/ee0f79e01c38e09e10965fea302ab915aad576022fbc2cf94e33b6fc3ccc3fbb.json",
+      "id": "[\"schema\",\"spec/core/semantic-types-transition.schema.json\",\"\"]",
+      "kind": "schema",
+      "sha256": "8d529d89b8b50dbc3425a3d4bf1369ff824c349e19585456af5a76709b048efe",
+      "summary": "spec/core/semantic-types-transition.schema.json",
+      "title": "semantic-types-transition.schema.json"
+    },
+    {
       "bytes": 34886,
       "href": "entries/c4947a6a338f22dc5c8b2906ec88ffd1b532254d57bf889754dbce475552dd50.json",
       "id": "[\"schema\",\"spec/core/sqlserver-cardinality-classification.schema.json\",\"\"]",
@@ -21943,6 +22312,15 @@
       "title": "Shared security policy 0.1.0 representation"
     },
     {
+      "bytes": 4513,
+      "href": "entries/66ddd45dce3912ebabb31cb52a1a0b667db8798906c18295eee794159cb618c3.json",
+      "id": "[\"schema\",\"spec/extensions/semantic-types/schema.json\",\"\"]",
+      "kind": "schema",
+      "sha256": "8b45e1ec2a44c794bbd6f74ecad75cc1f6578aaf34842647e6f88b53268623fa",
+      "summary": "spec/extensions/semantic-types/schema.json",
+      "title": "Versioned semantic type annotations"
+    },
+    {
       "bytes": 11900,
       "href": "entries/b5413c3644a5067fcc3aca182ae2eb43ce075ef0ee508588d75fc8eb88504a58.json",
       "id": "[\"schema\",\"spec/extensions/shacl/engine-report-schema.json\",\"\"]",
@@ -22501,6 +22879,6 @@
       "title": "typespec-json-schema.schema.json"
     }
   ],
-  "inputDigest": "744b475c954331dc5d1e8e629bea72f657ce3628b9ecd267c20d6f7cae0b46a1",
+  "inputDigest": "7c99c4a2267d58e90287a0e6f736962f7c154c0e261ab7750fe0d2f2d30fc349",
   "profile": "umf.reference/1"
 }

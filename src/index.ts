@@ -514,3 +514,12 @@ export {validateBit128Dataset,type Bit128DatasetRecord} from './extensions/bindi
 export type {ModelLiteral} from './extensions/binding/model-shape-values';
 
 export {prepareCoreInspection} from './model/prepared-inspection';
+
+// Core0.10 semantic reference metadata; term validators remain caller-installed.
+export * from './extensions/semantic-types';
+export * from './model/semantic-types';
+export * from './model/semantic-types-transition';
+export {default as coreSemanticTypesDocumentSchema} from '../spec/core/semantic-types-document.schema.json';
+export {default as coreSemanticTypeReferenceSchema} from '../spec/core/semantic-type-reference.schema.json';
+export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic-types-operation.schema.json';
+export {default as coreSemanticTypesTransitionSchema} from '../spec/core/semantic-types-transition.schema.json';

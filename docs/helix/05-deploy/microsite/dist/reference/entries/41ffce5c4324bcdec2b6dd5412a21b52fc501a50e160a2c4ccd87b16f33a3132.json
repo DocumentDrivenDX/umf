@@ -1,0 +1,92 @@
+{
+  "data": {
+    "extensionId": "umf.semantic-types",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [
+          "tests/semantic-types/semantic-types.test.ts",
+          "scripts/semantic-types-browser.ts"
+        ],
+        "validation": "semantic"
+      },
+      "coreVersion": "0.1.0",
+      "description": "Exact external semantic term references; meanings and value validators remain vocabulary-owned",
+      "id": "umf.semantic-types",
+      "schema": {
+        "$defs": {
+          "reference": {
+            "properties": {
+              "term": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "vocabulary": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "vocabulary",
+              "version",
+              "term"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:semantic-types:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "types": {
+            "items": {
+              "$ref": "#/$defs/reference"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "types"
+        ],
+        "title": "Versioned semantic type annotations",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "docs/helix/02-design/contracts/CONTRACT-051-semantic-types.md",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"semanticTypesRegistry\"]"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/semantic-types/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.semantic-types\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"semanticTypesRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/semantic-types/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1393,
+      "path": "spec/extensions/semantic-types/package.json",
+      "sha256": "574926f11c679b2eb865d2536872d7c3f61d920289ddf80e5615a5a72d9c3516"
+    }
+  ],
+  "summary": "Exact external semantic term references; meanings and value validators remain vocabulary-owned",
+  "title": "umf.semantic-types · 0.1.0"
+}

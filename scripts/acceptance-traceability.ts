@@ -1,5 +1,6 @@
 import { readdir } from 'node:fs/promises';
 import { relative, sep } from 'node:path';
+import { parse } from 'yaml';
 
 export type AcceptanceStatus =
   | 'SATISFIED'
@@ -62,8 +63,16 @@ export async function buildAcceptanceLedger() {
   const storyAcceptance = new Map<string,boolean>();
   for (const path of storyFiles) {
     const text = await Bun.file(path).text();
+    const frontmatter = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    const storyId = frontmatter ? parse(frontmatter[1]!).ddx?.id : undefined;
+    if (typeof storyId !== 'string' || !/^US-\d{3}$/.test(storyId)) {
+      if (/^US-\d{3}-/.test(path.split('/').at(-1)!) && text.match(criterionPattern)?.length) throw new Error(`Missing governed story identity: ${path}`);
+      continue;
+    }
     for (const match of text.matchAll(criterionPattern)) {
       const id = match[0];
+      // Dependencies may cite another story's AC; only its owner defines it.
+      if (!id.startsWith(storyId + '-AC')) continue;
       const story = repositoryPath(path);
       if (criteria.has(id) && criteria.get(id) !== story) throw new Error(`Duplicate acceptance criterion ${id}`);
       criteria.set(id, story);

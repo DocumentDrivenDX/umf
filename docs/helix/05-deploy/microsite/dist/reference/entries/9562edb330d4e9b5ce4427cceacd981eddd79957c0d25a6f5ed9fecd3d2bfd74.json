@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2854,
-        "line": 32,
+        "bytes": 2995,
+        "line": 33,
         "path": "src/model/types.ts",
-        "sha256": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9"
+        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
       }
     ],
     "entrypoint": ".",
     "exportName": "Document",
     "runtime": "type-only",
     "signatureText": [
-      "export interface Document {\n  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.7.0' | '0.8.0' | '0.9.0'; id: string;\n  vocabularies: Record<string, { version: string; [key: string]: unknown }>;\n  modules: Module[];\n  extensions?: Record<string, Json>;\n  [key: string]: unknown;\n}"
+      "export interface Document {\n  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.7.0' | '0.8.0' | '0.9.0' | '0.10.0'; id: string;\n  vocabularies: Record<string, { version: string; [key: string]: unknown }>;\n  modules: Module[];\n  extensions?: Record<string, Json>;\n  [key: string]: unknown;\n}"
     ]
   },
   "id": "[\"api\",\".\",\"Document\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2854,
-      "line": 32,
+      "bytes": 2995,
+      "line": 33,
       "path": "src/model/types.ts",
-      "sha256": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9"
+      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
     }
   ],
   "summary": "Type declaration · src/model/types.ts",

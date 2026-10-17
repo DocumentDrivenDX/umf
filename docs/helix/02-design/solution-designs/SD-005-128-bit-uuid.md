@@ -262,3 +262,11 @@ public API checks, and negative controls on missing/stale/falsified evidence.
 Earlier model1 evidence remains scoped and is refreshed separately after changes
 to the shared implementation. Consumer concurrency, lifecycle execution, arbitrary
 native edit reconciliation and physical migration remain separately qualified.
+
+## Core0.10 composition boundary — 2026-10-17
+
+US-090 and CONTRACT-078 inherit this design's exact UUID/128-bit domains, literals
+and source preservation. Core0.10.0 adds semantic reference metadata while leaving
+core0.9.0 and its native delivery receipts unchanged. The semantic validator uses
+a private inherited core0.9 view and supplies actual core0.10 source to extension
+callbacks. It does not grant native projection or expand unrelated authoring APIs.

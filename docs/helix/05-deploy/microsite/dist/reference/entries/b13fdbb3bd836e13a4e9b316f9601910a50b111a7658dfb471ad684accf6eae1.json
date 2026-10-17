@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5548,
+        "line": 38,
+        "path": "src/model/semantic-types-transition.ts",
+        "sha256": "aa2231bf97fae5770f6b45454bcfcb9c89cb13f3a448cc7f2333b915b12f2b32"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "rollbackSemanticTypesEnvelope",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: SemanticTypesUpgradeReceipt, current: Document): SemanticTypesRollbackReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"rollbackSemanticTypesEnvelope\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5548,
+      "line": 38,
+      "path": "src/model/semantic-types-transition.ts",
+      "sha256": "aa2231bf97fae5770f6b45454bcfcb9c89cb13f3a448cc7f2333b915b12f2b32"
+    }
+  ],
+  "summary": "Restore the exact legacy source; preserve subsequent edits in the current-source archive.",
+  "title": "rollbackSemanticTypesEnvelope"
+}

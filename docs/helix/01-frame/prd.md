@@ -851,3 +851,12 @@ claim follows. Native refinements and original representations remain recoverabl
 [FEAT-005 IDEAL-09](features/FEAT-005-core-ideals.md),
 [SD-005](../02-design/solution-designs/SD-005-128-bit-uuid.md) and
 [CONTRACT-076](../02-design/contracts/CONTRACT-076-128-bit-uuid.md) define the design.
+
+## Owner integration amendment — semantic references, 2026-10-17
+
+The owner selects restoring the accepted semantic-type pointing feature on a new
+core version during consolidation. Core0.9.0 remains the UUID/128-bit profile.
+Core0.10.0 adds explicit publisher/version/term references over that existing
+model, without changing native or unknown meaning. FEAT-005 SEM-01 through SEM-06,
+US-090 and CONTRACT-078 own the bounded restoration. Catalog discovery, implicit
+validation and native projection/admission remain separate.

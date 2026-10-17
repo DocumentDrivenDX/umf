@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6905,
+        "line": 53,
+        "path": "src/model/semantic-types.ts",
+        "sha256": "20b403d04d4ae51a458c10293e4f5a1a1cb15df031de814a96cd32874899c026"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateCoreSemanticTypeValue",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreSemanticTypeIdentity, valueInput: Json, registry: SemanticTypeRegistry): CoreSemanticTypeValueResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateCoreSemanticTypeValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6905,
+      "line": 53,
+      "path": "src/model/semantic-types.ts",
+      "sha256": "20b403d04d4ae51a458c10293e4f5a1a1cb15df031de814a96cd32874899c026"
+    }
+  ],
+  "summary": "Conjunction of exact external checks only; no other field/native constraints are evaluated.",
+  "title": "validateCoreSemanticTypeValue"
+}

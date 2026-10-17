@@ -782,3 +782,13 @@ native enforcement gaps remain residuals. Host-only composition qualification
 stays under `scripts/uuid/`; public-bundle Chromium execution and current-source
 fingerprint refusal controls verify portability and proof freshness. Library
 functions do not execute transactions or claim native lifecycle equivalence.
+
+## Core0.10 semantic-reference composition — 2026-10-17
+
+CONTRACT-078 adds semantic references over CONTRACT-076's unchanged core0.9.0
+UUID/128-bit envelope. New structural validation inherits the complete core0.9.0
+constraints through a private view; extension callbacks observe the full actual
+core0.10.0 source. No view is a native downgrade or public version conversion.
+Semantic checks use separately supplied exact registries, never remote loading.
+Migration and rollback preserve all source bytes as JSON values and explicit
+residuals. Existing native/version-specific APIs retain their declared limits.

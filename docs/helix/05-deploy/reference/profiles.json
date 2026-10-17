@@ -36,6 +36,10 @@
     {
       "version": "0.9.0",
       "schemaPath": "spec/core/bit128-document.schema.json"
+    },
+    {
+      "version": "0.10.0",
+      "schemaPath": "spec/core/semantic-types-document.schema.json"
     }
   ],
   "registrations": [
@@ -371,6 +375,17 @@
         "deltaRegistry"
       ],
       "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.semantic-types",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "semanticTypesRegistry"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ]
     }
   ],
   "exclusions": []
