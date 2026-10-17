@@ -12942,3 +12942,41 @@ CI, produce valid configured attestations, merge normally, and verify deployed
 bytes against the accepted main revision. The signing account still reports
 not signed in after reopening the installed 1Password app. No attestation gate
 has been bypassed and no final deployment or full SDK acceptance is claimed.
+
+### R19 real Truss correction and remaining adoption — 2026-10-17
+
+The [R19 installed frontend](evidence/typed-persistence/frontend-r19-20261017/README.md)
+passes304 tests without skips and all three pinned checkers pass positive clients
+and74 negative files. Its [public schema/instance E2Es](evidence/typed-persistence/schema-instance-r19-20261017/README.md)
+pass three families, and [isolated real regeneration](evidence/typed-persistence/refactor-installed-r19-20261017/README.md)
+passes three tests without overwriting historical receipts. Each packet names
+its exact frozen source, wheel and original compiler pair.
+
+The [genuine Truss SDK workflow](evidence/typed-persistence/truss-related-r19-20261017/README.md)
+exposed a projected stream shape defect: reads and pages returned `WithKeys`,
+but streams leaked the transport row. The correction preserves the original
+relationship Keys, duplicates, truncation, empty relationships and stream cleanup.
+The full original public generator/compiler/catalog workflow now passes native
+read, page and stream calls against SDK R19 and Weft R16. This is scoped read
+adoption; protected action admission and native manifest control remain unfinished.
+
+`bulk.py` now exposes sync/async generic `ManifestBulkPlan` delegation with
+original host attempt, sealed artifact, recovery and complete result types.
+It has no `execute` or authority constructor. Three custody/unknown/cancellation
+controls, Ruff and all three pinned checkers pass the source module. Native
+Truss providers and their E2Es are still required. The existing
+`ReplayingActionExecutor` is the contracted action interface; protected admission
+is the Truss implementation obligation, not a separately named SDK protocol.
+
+Current bulk-list and original search/action/bulk privilege work has separate
+successor cohorts. A real14-packet compiler replay caught an explicit
+`vectorBinding:null` keyword-search refusal before native qualification; that
+failed immutable precursor is preserved and requires a corrected compiler build.
+No failed precursor or host-only completeness flag grants native qualification.
+
+Latest pushed SDK command/Python/boundary CI passes; the microsite build still
+refuses seven stale reference attestations. Truss's clean hosted Linux capacity
+and full-small run passes124.163s, while macOS CREATE times out in the original
+row validation path. A measured conversion experiment was rejected as too small
+a benefit; no timeout, validation or authority gate is weakened. Temporal
+qualification remains **HELD** throughout continued implementation and release.
