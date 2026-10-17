@@ -47,6 +47,7 @@ def main():
     ap.add_argument("--fixture", type=Path, required=True)
     ap.add_argument("--snapshot", type=Path, required=True)
     ap.add_argument("--pins", type=Path, required=True)
+    ap.add_argument("--capture-owner-requests", action="store_true")
     args = ap.parse_args()
     out = args.out.resolve()
     out.mkdir()
@@ -114,6 +115,11 @@ def main():
             header,
         ]
     }
+    if args.capture_owner_requests:
+        for name in ["pg_owner_privilege_resolver.py", "record-access-privilege-build.py"]:
+            helper = Path(__file__).with_name(name)
+            source_start[str(helper)] = hashlib.sha256(helper.read_bytes()).hexdigest()
+            shutil.copy2(helper, out / name)
     started = False
     checks = []
     status = "FAILED"
@@ -249,14 +255,22 @@ def main():
             }
             (fixture / "config.json").write_text(json.dumps(config, indent=2) + "\n")
             for label, tail in [("catalog-build", []), ("catalog-check", ["--check"])]:
+                entrypoint = ["-m", "umf_access.build.catalog"]
+                if args.capture_owner_requests:
+                    entrypoint = [
+                        str(
+                            Path(__file__).resolve().parent
+                            / "record-access-privilege-build.py"
+                        ),
+                        str(out / (label + "-owner-capture")),
+                    ]
                 run(
                     label,
                     [
                         sys.executable,
                         "-I",
                         "-B",
-                        "-m",
-                        "umf_access.build.catalog",
+                        *entrypoint,
                         "catalog",
                         "--config",
                         fixture / "config.json",
@@ -321,6 +335,62 @@ def main():
                         probe_schema,
                     )
                 )
+            if args.capture_owner_requests:
+                import weft
+                from pg_owner_privilege_resolver import resolve_owner_packet
+
+                captures = json.loads(
+                    (
+                        out
+                        / "catalog-build-owner-capture"
+                        / "original-compile-calls.json"
+                    ).read_text()
+                )
+                assert len(captures) == len(entries)
+                for owner_index, (capture, entry) in enumerate(
+                    zip(captures, entries, strict=True)
+                ):
+                    assert capture["returnBytesUnchanged"] is True
+                    original = json.loads(capture["programText"])
+                    assert (
+                        original["structuralDigest"]
+                        == entry.artifact()["structuralDigest"]
+                    )
+                    with psycopg.connect(
+                        dsn, user="inventory_admin"
+                    ) as owner_connection:
+                        owner_connection.execute(
+                            sql.SQL("SET LOCAL search_path=pg_catalog,{}").format(
+                                sql.Identifier(schema)
+                            )
+                        )
+                        report = resolve_owner_packet(
+                            owner_connection,
+                            capture["originalOwnerProbes"],
+                            weft.check_native_privilege_probes_json,
+                        )
+                        save(
+                            "same-catalog-original-owner-" + str(owner_index) + ".json",
+                            report,
+                        )
+                        for variant_index, observation in enumerate(
+                            report["observations"]
+                        ):
+                            probes.append(
+                                {
+                                    "statement": {
+                                        "id": "owner-var-" + str(owner_index),
+                                        "sql": capture["requestText"],
+                                        "sourceOwner": "exact original owner Var probe",
+                                    },
+                                    "view": "owner_var_"
+                                    + str(owner_index)
+                                    + "_"
+                                    + str(variant_index),
+                                    **observation,
+                                }
+                            )
+                    owner_connection.close()
             save("resolved-probes-before-acl.json", probes)
             metadata = relation_inventory(
                 admin,

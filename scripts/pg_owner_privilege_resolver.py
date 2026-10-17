@@ -66,6 +66,17 @@ def checked_packet(
     return copied
 
 
+def setup_owner_input(connection: Any, probe: Mapping[str, Any]) -> None:
+    """Parameterless owner probes deliberately have no temporary input table."""
+    columns = probe["inputRelation"]["columns"]
+    if type(columns) is not list:
+        raise ValueError("original owner input columns must be a list")
+    if probe["setupSql"] is not None:
+        connection.execute(probe["setupSql"])
+    elif columns:
+        raise ValueError("owner probe parameters require original setup SQL")
+
+
 def resolve_owner_packet(
     connection: Any, packet: Mapping[str, Any], owner_check: Callable[[str], object]
 ) -> dict[str, Any]:
@@ -80,7 +91,7 @@ def resolve_owner_packet(
         for variant, probe in enumerate(statement["probes"]):
             connection.execute("SAVEPOINT umf_owner_privilege_probe")
             try:
-                connection.execute(probe["setupSql"])
+                setup_owner_input(connection, probe)
                 name = f"__umf_privilege_view_{index}_{variant}"
                 connection.execute(
                     sql.SQL("CREATE TEMPORARY VIEW {} ({}) AS ").format(

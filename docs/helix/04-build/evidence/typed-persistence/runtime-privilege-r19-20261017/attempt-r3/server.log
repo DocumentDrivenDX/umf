@@ -1,0 +1,678 @@
+2026-10-17 05:32:57.591 EDT [26778] LOG:  starting PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-17 05:32:57.592 EDT [26778] LOG:  listening on Unix socket "/private/tmp/sdk-runtime-privilege-r19-r3/socket/.s.PGSQL.55505"
+2026-10-17 05:32:57.606 EDT [26784] LOG:  database system was shut down at 2026-10-17 05:32:57 EDT
+2026-10-17 05:32:57.610 EDT [26778] LOG:  database system is ready to accept connections
+2026-10-17 05:32:59.809 EDT [26809] ERROR:  permission denied for function booleq
+2026-10-17 05:32:59.809 EDT [26809] STATEMENT:  SELECT "r"."id" COLLATE pg_catalog."C" AS "col_0", "r"."id" COLLATE pg_catalog."C" AS "__umf_order_0" FROM "sdk_privilege_fixture"."orders" AS "r" WHERE ($1::pg_catalog.bool = FALSE OR (((($2::pg_catalog.text IS NOT NULL AND "r"."id" COLLATE pg_catalog."C" > $3::pg_catalog.text) OR ($4::pg_catalog.text IS NOT NULL AND "r"."id" COLLATE pg_catalog."C" IS NULL))))) ORDER BY "r"."id" COLLATE pg_catalog."C" ASC NULLS LAST LIMIT $5::pg_catalog.int8
+2026-10-17 05:32:59.809 EDT [26809] ERROR:  permission denied for function nameeq
+2026-10-17 05:32:59.809 EDT [26809] STATEMENT:  SELECT current_user, session_user, r.rolsuper, r.rolbypassrls
+	FROM pg_catalog.pg_roles r WHERE r.rolname = current_user
+2026-10-17 05:33:00.001 EDT [26809] ERROR:  permission denied for function int24gt
+2026-10-17 05:33:00.001 EDT [26809] STATEMENT:  SELECT a.attname, tn.nspname, t.typname, a.attnotnull
+	FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	WHERE a.attrelid = $1 AND a.attnum > 0 AND NOT a.attisdropped
+2026-10-17 05:33:00.002 EDT [26809] ERROR:  permission denied for function oideq
+2026-10-17 05:33:00.002 EDT [26809] STATEMENT:  SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,
+	pg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')
+	FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+	WHERE n.nspname = $1 AND c.relname = $2
+	AND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance
+	 WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)
+2026-10-17 05:33:00.175 EDT [26809] ERROR:  permission denied for function nameeqtext
+2026-10-17 05:33:00.175 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:00.176 EDT [26809] ERROR:  permission denied for function int4
+2026-10-17 05:33:00.176 EDT [26809] STATEMENT:  SELECT a.attname, tn.nspname, t.typname, a.attnotnull
+	FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	WHERE a.attrelid = $1 AND a.attnum > 0 AND NOT a.attisdropped
+2026-10-17 05:33:00.294 EDT [26809] ERROR:  permission denied for function text
+2026-10-17 05:33:00.294 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:00.410 EDT [26809] ERROR:  permission denied for function int4
+2026-10-17 05:33:00.410 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:00.421 EDT [26809] ERROR:  permission denied for function int8
+2026-10-17 05:33:00.421 EDT [26809] STATEMENT:  SELECT "r"."id" COLLATE pg_catalog."C" AS "col_0" FROM "sdk_privilege_fixture"."orders" AS "r" ORDER BY "r"."id" COLLATE pg_catalog."C" ASC NULLS LAST LIMIT 20
+2026-10-17 05:33:00.496 EDT [26809] ERROR:  permission denied for function text_gt
+2026-10-17 05:33:00.496 EDT [26809] STATEMENT:  SELECT "r"."id" COLLATE pg_catalog."C" AS "col_0", "r"."id" COLLATE pg_catalog."C" AS "__umf_order_0" FROM "sdk_privilege_fixture"."orders" AS "r" WHERE ($1::pg_catalog.bool = FALSE OR (((($2::pg_catalog.text IS NOT NULL AND "r"."id" COLLATE pg_catalog."C" > $3::pg_catalog.text) OR ($4::pg_catalog.text IS NOT NULL AND "r"."id" COLLATE pg_catalog."C" IS NULL))))) ORDER BY "r"."id" COLLATE pg_catalog."C" ASC NULLS LAST LIMIT $5::pg_catalog.int8
+2026-10-17 05:33:00.568 EDT [26809] ERROR:  permission denied for function int8
+2026-10-17 05:33:00.568 EDT [26809] STATEMENT:  SELECT "r"."id" COLLATE pg_catalog."C" AS "col_0", "r"."id" COLLATE pg_catalog."C" AS "__umf_order_0" FROM "sdk_privilege_fixture"."orders" AS "r" WHERE ($1::pg_catalog.bool = FALSE OR (((($2::pg_catalog.text IS NOT NULL AND "r"."id" COLLATE pg_catalog."C" > $3::pg_catalog.text) OR ($4::pg_catalog.text IS NOT NULL AND "r"."id" COLLATE pg_catalog."C" IS NULL))))) ORDER BY "r"."id" COLLATE pg_catalog."C" ASC NULLS LAST LIMIT $5::pg_catalog.int8
+2026-10-17 05:33:00.602 EDT [26809] ERROR:  permission denied for function current_database
+2026-10-17 05:33:00.602 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:00.777 EDT [26809] ERROR:  permission denied for function textcat
+2026-10-17 05:33:00.777 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:00.778 EDT [26809] ERROR:  permission denied for function int84mi
+2026-10-17 05:33:00.778 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:00.783 EDT [26809] ERROR:  permission denied for function quote_ident
+2026-10-17 05:33:00.783 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:00.784 EDT [26809] ERROR:  permission denied for function oid
+2026-10-17 05:33:00.784 EDT [26809] STATEMENT:  SELECT a.attname, tn.nspname, t.typname, a.attnotnull
+	FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	WHERE a.attrelid = $1 AND a.attnum > 0 AND NOT a.attisdropped
+2026-10-17 05:33:00.788 EDT [26809] ERROR:  permission denied for function current_schemas
+2026-10-17 05:33:00.788 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:00.933 EDT [26809] ERROR:  permission denied for function int82le
+2026-10-17 05:33:00.933 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:00.938 EDT [26809] ERROR:  permission denied for function set_config
+2026-10-17 05:33:00.938 EDT [26809] STATEMENT:  SELECT pg_catalog.set_config('statement_timeout', $1, true)
+2026-10-17 05:33:01.379 EDT [26809] ERROR:  permission denied for function unnest
+2026-10-17 05:33:01.379 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:02.498 EDT [26809] ERROR:  permission denied for function pg_has_role
+2026-10-17 05:33:02.498 EDT [26809] STATEMENT:  SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,
+	pg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')
+	FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+	WHERE n.nspname = $1 AND c.relname = $2
+	AND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance
+	 WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)
+2026-10-17 05:33:02.801 EDT [26809] ERROR:  permission denied for aggregate jsonb_agg
+2026-10-17 05:33:02.801 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:02.804 EDT [26809] ERROR:  permission denied for function jsonb_build_array
+2026-10-17 05:33:02.804 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:02.808 EDT [26809] ERROR:  permission denied for function jsonb_build_object
+2026-10-17 05:33:02.808 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:02.812 EDT [26809] ERROR:  permission denied for function pg_control_system
+2026-10-17 05:33:02.812 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:02.816 EDT [26809] ERROR:  permission denied for function to_regclass
+2026-10-17 05:33:02.816 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:02.819 EDT [26809] ERROR:  permission denied for function to_jsonb
+2026-10-17 05:33:02.819 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:03.359 EDT [26809] ERROR:  permission denied for view pg_roles
+2026-10-17 05:33:03.359 EDT [26809] STATEMENT:  SELECT current_user, session_user, r.rolsuper, r.rolbypassrls
+	FROM pg_catalog.pg_roles r WHERE r.rolname = current_user
+2026-10-17 05:33:03.389 EDT [26809] ERROR:  permission denied for table pg_class
+2026-10-17 05:33:03.389 EDT [26809] STATEMENT:  SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,
+	pg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')
+	FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+	WHERE n.nspname = $1 AND c.relname = $2
+	AND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance
+	 WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)
+2026-10-17 05:33:03.419 EDT [26809] ERROR:  permission denied for table pg_namespace
+2026-10-17 05:33:03.419 EDT [26809] STATEMENT:  SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,
+	pg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')
+	FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+	WHERE n.nspname = $1 AND c.relname = $2
+	AND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance
+	 WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)
+2026-10-17 05:33:03.450 EDT [26809] ERROR:  permission denied for table pg_inherits
+2026-10-17 05:33:03.450 EDT [26809] STATEMENT:  SELECT c.oid, c.relkind, c.relrowsecurity, c.relforcerowsecurity,
+	pg_catalog.pg_has_role(current_user, c.relowner, 'USAGE')
+	FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+	WHERE n.nspname = $1 AND c.relname = $2
+	AND NOT EXISTS (SELECT 1 FROM pg_catalog.pg_inherits inheritance
+	 WHERE inheritance.inhrelid = c.oid OR inheritance.inhparent = c.oid)
+2026-10-17 05:33:03.480 EDT [26809] ERROR:  permission denied for table pg_attribute
+2026-10-17 05:33:03.480 EDT [26809] STATEMENT:  SELECT a.attname, tn.nspname, t.typname, a.attnotnull
+	FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	WHERE a.attrelid = $1 AND a.attnum > 0 AND NOT a.attisdropped
+2026-10-17 05:33:03.514 EDT [26809] ERROR:  permission denied for table pg_type
+2026-10-17 05:33:03.514 EDT [26809] STATEMENT:  SELECT a.attname, tn.nspname, t.typname, a.attnotnull
+	FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	WHERE a.attrelid = $1 AND a.attnum > 0 AND NOT a.attisdropped
+2026-10-17 05:33:03.545 EDT [26809] ERROR:  permission denied for table pg_index
+2026-10-17 05:33:03.545 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:03.576 EDT [26809] ERROR:  permission denied for table pg_am
+2026-10-17 05:33:03.576 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:03.607 EDT [26809] ERROR:  permission denied for table pg_opclass
+2026-10-17 05:33:03.607 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:03.638 EDT [26809] ERROR:  permission denied for table pg_collation
+2026-10-17 05:33:03.638 EDT [26809] STATEMENT:  SELECT ARRAY(SELECT a.attname FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	WHERE k.pos <= i.indnkeyatts ORDER BY k.pos)
+	FROM pg_catalog.pg_index i
+	JOIN pg_catalog.pg_class ix ON ix.oid = i.indexrelid
+	JOIN pg_catalog.pg_am am ON am.oid = ix.relam
+	WHERE i.indrelid = $1 AND i.indisunique AND i.indisvalid AND i.indisready
+	AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indimmediate AND am.amname = 'btree'
+	AND NOT EXISTS (
+	 SELECT 1 FROM pg_catalog.unnest(i.indkey) WITH ORDINALITY AS k(attnum, pos)
+	 JOIN pg_catalog.pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = k.attnum
+	 JOIN pg_catalog.pg_type t ON t.oid = a.atttypid
+	 JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+	 LEFT JOIN pg_catalog.pg_opclass op ON op.oid = i.indclass[(k.pos - 1)::integer]
+	 LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid = op.opcnamespace
+	 LEFT JOIN pg_catalog.pg_collation co ON co.oid = a.attcollation
+	 WHERE k.pos <= i.indnkeyatts AND (
+	  a.attnotnull AND tn.nspname = 'pg_catalog' AND ons.nspname = 'pg_catalog'
+	  AND op.opcmethod = ix.relam
+	  AND op.opcname = CASE t.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops'
+	   WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops'
+	   WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END
+	  AND i.indcollation[(k.pos - 1)::integer] = a.attcollation
+	  AND (a.attcollation = 0 OR co.collisdeterministic)
+	 ) IS NOT TRUE
+	)
+2026-10-17 05:33:03.671 EDT [26809] ERROR:  permission denied for table pg_opfamily
+2026-10-17 05:33:03.671 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:03.704 EDT [26809] ERROR:  permission denied for table pg_amop
+2026-10-17 05:33:03.704 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:03.737 EDT [26809] ERROR:  permission denied for table pg_extension
+2026-10-17 05:33:03.737 EDT [26809] STATEMENT:  SELECT c.oid, n.nspname, c.relname,
+	pg_catalog.jsonb_build_object(
+	 'table', pg_catalog.jsonb_build_array(c.relkind,c.relowner,c.relrowsecurity,c.relforcerowsecurity),
+	 'inheritance', (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(inheritance) ORDER BY inheritance.inhrelid,inheritance.inhseqno)
+	   FROM pg_catalog.pg_inherits inheritance WHERE inheritance.inhrelid=c.oid OR inheritance.inhparent=c.oid),
+	 'columns', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(
+	   a.attnum,a.attname,a.atttypid,a.atttypmod,a.attnotnull,a.attidentity,a.attgenerated,
+	   a.attisdropped,a.atthasdef,a.attcollation,tn.nspname,pg_catalog.to_jsonb(t),pg_catalog.to_jsonb(co)) ORDER BY a.attnum)
+	   FROM pg_catalog.pg_attribute a
+	   LEFT JOIN pg_catalog.pg_type t ON t.oid=a.atttypid
+	   LEFT JOIN pg_catalog.pg_namespace tn ON tn.oid=t.typnamespace
+	   LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation
+	   WHERE a.attrelid=c.oid AND a.attnum>0),
+	 'keys', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(pg_catalog.to_jsonb(i),ix.relam,
+	    (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(k.pos,pg_catalog.to_jsonb(op),ons.nspname,
+	       pg_catalog.to_jsonb(family),fns.nspname,
+	       (SELECT pg_catalog.jsonb_agg(pg_catalog.to_jsonb(member) ORDER BY member.oid)
+	        FROM pg_catalog.pg_amop member WHERE member.amopfamily=op.opcfamily)) ORDER BY k.pos)
+	     FROM pg_catalog.unnest(i.indclass) WITH ORDINALITY k(classoid,pos)
+	     LEFT JOIN pg_catalog.pg_opclass op ON op.oid=k.classoid
+	     LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace
+	     LEFT JOIN pg_catalog.pg_opfamily family ON family.oid=op.opcfamily
+	     LEFT JOIN pg_catalog.pg_namespace fns ON fns.oid=family.opfnamespace),pg_catalog.to_jsonb(am)) ORDER BY i.indexrelid)
+	   FROM pg_catalog.pg_index i JOIN pg_catalog.pg_class ix ON ix.oid=i.indexrelid
+	   JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE i.indrelid=c.oid),
+	 'extensions', (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(e.oid,e.extname,e.extnamespace,e.extversion) ORDER BY e.oid)
+	   FROM pg_catalog.pg_extension e)
+	)::pg_catalog.text
+	FROM pg_catalog.unnest($1::pg_catalog.oid[]) WITH ORDINALITY wanted(id,pos)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid=wanted.id
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace ORDER BY wanted.pos
+2026-10-17 05:33:03.771 EDT [26809] ERROR:  permission denied for table pg_database
+2026-10-17 05:33:03.771 EDT [26809] STATEMENT:  WITH context AS MATERIALIZED (
+	 SELECT pg_catalog.current_database()::pg_catalog.text AS database_name,
+	 (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text AS system_id,
+	 pg_catalog.current_schemas(true) AS schemas, current_user::pg_catalog.text AS actor,
+	 session_user::pg_catalog.text AS session_actor,
+	 (SELECT oid FROM pg_catalog.pg_database WHERE datname=pg_catalog.current_database()) AS database_oid
+	)
+	SELECT context.database_name, context.system_id, context.schemas,
+	 wanted.name, n.nspname, c.oid, context.actor, context.session_actor, context.database_oid
+	FROM context CROSS JOIN pg_catalog.unnest($1::pg_catalog.text[]) WITH ORDINALITY AS wanted(name,position)
+	LEFT JOIN pg_catalog.pg_class c ON c.oid = pg_catalog.to_regclass(
+	 CASE WHEN $2 THEN pg_catalog.quote_ident($3) || '.' || pg_catalog.quote_ident(wanted.name)
+	 ELSE pg_catalog.quote_ident(wanted.name) END)
+	LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ORDER BY wanted.position
+2026-10-17 05:33:03.805 EDT [26809] ERROR:  permission denied for table orders
+2026-10-17 05:33:03.805 EDT [26809] STATEMENT:  LOCK TABLE "sdk_privilege_fixture"."orders" IN ACCESS SHARE MODE
+2026-10-17 05:33:03.913 EDT [26858] ERROR:  canceling statement due to user request
+2026-10-17 05:33:03.913 EDT [26858] STATEMENT:  LOCK TABLE "sdk_privilege_fixture"."orders" IN ACCESS SHARE MODE
+2026-10-17 05:33:03.951 EDT [26778] LOG:  received fast shutdown request
+2026-10-17 05:33:03.951 EDT [26778] LOG:  aborting any active transactions
+2026-10-17 05:33:03.952 EDT [26778] LOG:  background worker "logical replication launcher" (PID 26787) exited with exit code 1
+2026-10-17 05:33:03.953 EDT [26782] LOG:  shutting down
+2026-10-17 05:33:03.953 EDT [26782] LOG:  checkpoint starting: shutdown immediate
+2026-10-17 05:33:04.139 EDT [26782] LOG:  checkpoint complete: wrote 466 buffers (2.8%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.183 s, sync=0.001 s, total=0.186 s; sync files=0, longest=0.000 s, average=0.000 s; distance=4737 kB, estimate=4737 kB; lsn=0/1C2D7C0, redo lsn=0/1C2D7C0
+2026-10-17 05:33:04.150 EDT [26778] LOG:  database system is shut down

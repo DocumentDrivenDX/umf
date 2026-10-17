@@ -5,7 +5,11 @@ import hashlib
 import json
 import unittest
 
-from pg_owner_privilege_resolver import checked_packet, observe_original_protocol
+from pg_owner_privilege_resolver import (
+    checked_packet,
+    observe_original_protocol,
+    setup_owner_input,
+)
 
 
 def packet():
@@ -37,6 +41,33 @@ def packet():
 
 
 class OwnerCustodyTests(unittest.TestCase):
+    def test_parameterless_owner_probe_has_no_setup_statement(self):
+        class Connection:
+            def __init__(self):
+                self.calls = []
+
+            def execute(self, query):
+                self.calls.append(query)
+
+        connection = Connection()
+        setup_owner_input(
+            connection, {"setupSql": None, "inputRelation": {"columns": []}}
+        )
+        self.assertEqual(connection.calls, [])
+        with self.assertRaises(ValueError):
+            setup_owner_input(
+                connection, {"setupSql": None, "inputRelation": {"columns": ["p1"]}}
+            )
+        with self.assertRaises(ValueError):
+            setup_owner_input(
+                connection, {"setupSql": None, "inputRelation": {"columns": None}}
+            )
+        setup_owner_input(
+            connection,
+            {"setupSql": "original owner SQL", "inputRelation": {"columns": ["p1"]}},
+        )
+        self.assertEqual(connection.calls, ["original owner SQL"])
+
     def test_protocol_witness_refuses_unowned_or_writable_execution(self):
         class Connection:
             calls = 0
