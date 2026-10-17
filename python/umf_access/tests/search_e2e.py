@@ -569,9 +569,15 @@ try:
         raise AssertionError("wrong embedder identity accepted")
     assert connection.info.transaction_status == 0
     cases.append("embedder mismatch refuses before native dispatch")
-    admin.execute(
-        "INSERT INTO search_app.docs VALUES ('z','zero','[0,0,0]','search_user')"
-    )
+    if full_record:
+        admin.execute(
+            "INSERT INTO search_app.docs VALUES ('z','zero','[0,0,0]','search_user',%s,%s,%s)",
+            (0, Decimal("0.0000000000"), b"zero"),
+        )
+    else:
+        admin.execute(
+            "INSERT INTO search_app.docs VALUES ('z','zero','[0,0,0]','search_user')"
+        )
     try:
         queries.vector(target, q=(1.0, 0.0, 0.0))
     except SearchError:
