@@ -68,6 +68,8 @@ for index, item in enumerate(access['columns']):
     source = originals[alias]
     sets.append({'columnSet': {'documentId': logical['id'], 'coreVersion': logical['umf'], 'documentSha256': hashlib.sha256(model.encode()).hexdigest(), 'module': 'search', 'pointer': f'/modules/0/extensions/umf.access/columns/{index}'}, 'binding': {'sourceId': alias, 'documentJson': source, 'documentSha256': hashlib.sha256(source.encode()).hexdigest()}})
 binding = {'version': 'umf.raw-read-binding/0.1', 'schema': 'search_app', 'modelJson': model, 'modelSha256': hashlib.sha256(model.encode()).hexdigest(), 'tables': [{'logical': ['search', 'Doc'], 'native': 'docs', 'key': ['id'], 'columns': [{'logical': name, 'native': name, 'carrier': carrier, 'nullable': name == 'tag'} for name, carrier in [('id', 'string'), ('body', 'string'), ('owner', 'string'), ('count', 'integer'), ('amount', 'decimal'), ('tag', 'string'), ('flag', 'boolean')]]}], 'relationships': [], 'nativeColumns': {'target': {'platform': 'postgresql', 'majorVersion': '18'}, 'sets': sets, 'vectorExtension': {'schema': 'public', 'version': '0.8.7'}}, 'nativeCatalogFence': {'version': 'umf.pg-ts-fence/0.1', 'schema': 'native_fence', 'view': 'ts_catalog_lock', 'owner': 'fence_owner', 'ownerProfile': 'non-login-maintainer/0.1'}}
+if os.environ.get('UMF_FILTER_STRICT_CONTEXT') == '1':
+    binding.update(schema=None, schemaBinding='search-path')
 config = {'package': 'search_docs', 'modules': ['search_filter_declarations'], 'weft': {'distribution': 'weft-sql', 'version': version('weft-sql')}, 'targets': [{'id': 'local', 'kind': 'postgresql', 'backendId': 'weft-postgresql', 'backendVersion': 'raw-read/0.1', 'targetProfile': 'weft.raw-read/0.1', 'binding': binding, 'platform': [{'name': 'postgresql', 'versions': ['180006']}], 'vectorBindings': [{'field': {'module': 'search', 'element': 'embedding'}, 'native': 'embedding', 'dimensions': 3, 'extensionSchema': 'public', 'extensionVersion': '0.8.7'}]}], 'umf': {'documents': []}}
 for index, text in enumerate(originals.values()):
     name = f'filter-original-{index}.json'
@@ -136,6 +138,9 @@ try:
     admin.execute('CREATE POLICY own_rows ON search_app.docs USING(owner=current_user)')
     admin.execute('GRANT SELECT ON search_app.docs TO search_user')
     connection = CountingConnection.connect(dsn + ' user=search_user')
+    if os.environ.get('UMF_FILTER_STRICT_CONTEXT') == '1':
+        connection.execute('SET search_path TO pg_catalog, search_app, pg_temp')
+        connection.commit()
     configuration = PostgresConfiguration('search_app', binding_digest(binding), (180006,), timedelta(seconds=5))
     target = PostgresSearchTarget(connection, configuration, search_variants=variants)
     target.verify()
@@ -181,6 +186,9 @@ try:
     async def async_controls():
         async_connection = await psycopg.AsyncConnection.connect(dsn + ' user=search_user')
         try:
+            if os.environ.get('UMF_FILTER_STRICT_CONTEXT') == '1':
+                await async_connection.execute('SET search_path TO pg_catalog, search_app, pg_temp')
+                await async_connection.commit()
             async_target = AsyncPostgresSearchTarget(async_connection, configuration, search_variants=variants)
             result = await queries.string_list(async_target, term='cats', values=[None, 'é%\\'])
             assert sorted(hit.item.id for hit in result) == ['a']
@@ -190,8 +198,12 @@ try:
             await async_connection.close()
     asyncio.run(async_controls())
     checks.append({'kind': 'actual-async-list-nullable-parity'})
-    from pg_search_fence_e2e import exercise_fence
-    checks.extend(exercise_fence(queries, configuration, admin, dsn))
+    if os.environ.get('UMF_FILTER_STRICT_CONTEXT') == '1':
+        from pg_ranked_strict_context_e2e import exercise_ranked_strict_context
+        checks.extend(exercise_ranked_strict_context(queries, configuration, admin, dsn))
+    else:
+        from pg_search_fence_e2e import exercise_fence
+        checks.extend(exercise_fence(queries, configuration, admin, dsn))
     (OUT / 'result.json').write_text(json.dumps({'status': 'pass', 'checks': checks, 'temporal': 'HELD', 'nativeAuthority': False, 'scope': 'owned PostgreSQL18.6/pgvector0.8.7 actual generated search filters only'}, indent=2))
 finally:
     if connection is not None:
