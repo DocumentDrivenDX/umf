@@ -1,0 +1,5 @@
+Native PostgreSQL 18.6 deployment feasibility witness only. Temporal qualification remains HELD. No SDK, Lakebase, search, action, bulk or global privilege qualification transfers from this control.
+
+The non-login, non-superuser, non-BYPASS maintainer initially cannot supply recursive catalog SHARE locks (42501). Explicit MAINTAIN on exactly seven catalogs permits a reader with schema USAGE and MAINTAIN only on the view to lock it. The reader has no SELECT on the view, base catalog MAINTAIN/mutation grants, or owner membership.
+
+Both REPEATABLE READ READ ONLY and SERIALIZABLE retain backend_xmin NULL through BEGIN, SET LOCAL integer statement_timeout utility and LOCK VIEW SHARE NOWAIT. Actual catalog ShareLocks block concurrent ALTER MAPPING (native waiting RowExclusiveLock and 57014). First SELECT then assigns a snapshot. Writer-first contention refuses with 55P03. Canonical native view definitions, exact columns, relation options, owner flags and _RETURN dependencies are retained. The owned cluster stopped. Production integration remains a candidate until the coherent original owner artifact and SDK workflow are qualified.
