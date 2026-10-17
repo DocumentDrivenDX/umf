@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 from datetime import timedelta
+from decimal import Decimal
 from importlib.metadata import version
 from pathlib import Path
 
@@ -46,6 +47,7 @@ if target_kind == "lakebase":
     from umf_access.postgres_search import PostgresSearchTarget as OtherSearchTarget
 else:
     from umf_access.postgres_search import LakebaseSearchTarget as OtherSearchTarget
+full_record = os.environ.get("UMF_SEARCH_FULL_RECORD") == "1"
 partial_profile = os.environ.get("UMF_SEARCH_PARTIAL_PROFILE") == "1"
 vector_version = os.environ.get("UMF_SEARCH_VECTOR_VERSION", "0.8.7")
 if vector_version not in ("0.8.6", "0.8.7"):
@@ -115,6 +117,22 @@ binding = {
     ],
     "relationships": [],
 }
+if full_record:
+    expected = {"id", "body", "embedding", "owner", "count", "amount", "payload"}
+    actual = {
+        member["element"]
+        for element in logical["modules"][0]["elements"]
+        if element["id"] == "Doc"
+        for member in element["members"]
+    }
+    assert actual == expected
+
+    binding["tables"][0]["columns"].extend(
+        [
+            {"logical": field, "native": field, "carrier": carrier, "nullable": False}
+            for field, carrier in [("count", "integer"), ("amount", "decimal")]
+        ]
+    )
 column_sets = []
 for index, columns in enumerate(access["columns"]):
     alias = columns["binding"]["sourceId"]
@@ -292,12 +310,48 @@ try:
     admin.execute("CREATE SCHEMA search_app")
     admin.execute("GRANT USAGE ON SCHEMA search_app TO search_user")
     admin.execute("REVOKE CREATE ON SCHEMA public FROM PUBLIC")
-    admin.execute(
-        'CREATE TABLE search_app.docs (id text COLLATE "C" PRIMARY KEY,body text COLLATE "C" NOT NULL,embedding public.vector(3) NOT NULL,owner text NOT NULL)'
+    extra_columns = (
+        ",count bigint NOT NULL,amount numeric(38,10) NOT NULL,payload bytea NOT NULL"
+        if full_record
+        else ""
     )
     admin.execute(
-        "INSERT INTO search_app.docs VALUES ('a','cats cats','[1,0,0]','search_user'),('b','dogs cats','[0.5,0.5,0]','search_user'),('c','dogs','[0,1,0]','search_user'),('hidden','cats','[1,0,0]','hidden_user')"
+        'CREATE TABLE search_app.docs (id text COLLATE "C" PRIMARY KEY,body text COLLATE "C" NOT NULL,embedding public.vector(3) NOT NULL,owner text NOT NULL'
+        + extra_columns
+        + ")"
     )
+    if full_record:
+        for identity, body, vector, owner, count, amount, payload in [
+            (
+                "a",
+                "cats cats",
+                "[1,0,0]",
+                "search_user",
+                9223372036854775807,
+                "1234567890123456789012345678.1234567890",
+                b"\x00\xffnative",
+            ),
+            (
+                "b",
+                "dogs cats",
+                "[0.5,0.5,0]",
+                "search_user",
+                -9223372036854775808,
+                "-1234567890123456789012345678.1234567890",
+                b"\x80\x00bytes",
+            ),
+            ("c", "dogs", "[0,1,0]", "search_user", 0, "0.0000000000", b""),
+            ("hidden", "cats", "[1,0,0]", "hidden_user", 1, "1.0000000000", b"hidden"),
+        ]:
+            admin.execute(
+                "INSERT INTO search_app.docs VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                (identity, body, vector, owner, count, Decimal(amount), payload),
+            )
+    else:
+        admin.execute(
+            "INSERT INTO search_app.docs(id,body,embedding,owner) VALUES ('a','cats cats','[1,0,0]','search_user'),('b','dogs cats','[0.5,0.5,0]','search_user'),('c','dogs','[0,1,0]','search_user'),('hidden','cats','[1,0,0]','hidden_user')"
+        )
+
     admin.execute(
         "CREATE INDEX doc_text ON search_app.docs USING gin (pg_catalog.to_tsvector('pg_catalog.english'::pg_catalog.regconfig,COALESCE(body,''::text)))"
     )
@@ -365,9 +419,39 @@ try:
     )
     from search_docs.models import Doc
 
-    created = Doc(
-        id="instance", body="cats", embedding=(1.0, 0.0, 0.0), owner="search_user"
+    extra_values = (
+        {"count": 1, "amount": Decimal("1.0000000000"), "payload": b"instance"}
+        if full_record
+        else {}
     )
+    created = Doc(
+        id="instance",
+        body="cats",
+        embedding=(1.0, 0.0, 0.0),
+        owner="search_user",
+        **extra_values,
+    )
+    if full_record:
+        expected_native = connection.execute(
+            "SELECT id,count,amount,payload,embedding::text FROM search_app.docs WHERE id IN ('a','b') ORDER BY id"
+        ).fetchall()
+        assert [
+            (hit.item.id, hit.item.count, hit.item.amount, hit.item.payload)
+            for hit in text
+        ] == [row[:4] for row in expected_native]
+        assert all(
+            type(hit.item.count) is int
+            and type(hit.item.amount) is Decimal
+            and type(hit.item.payload) is bytes
+            for hit in text
+        )
+        assert [hit.item.embedding for hit in text] == [
+            (1.0, 0.0, 0.0),
+            (0.5, 0.5, 0.0),
+        ]
+        cases.append(
+            "actual full-record keyword native Binary Integer64 Decimal38 and Vector float32 decoding"
+        )
     assert created.body == "cats"
     selected = queries.selected(target, term="cats")
     assert [h.item for h in selected] == [("a", "cats cats"), ("b", "dogs cats")]
@@ -394,6 +478,23 @@ try:
     assert [h.item.id for h in vector] == ["a", "b", "c"]
     assert vector[0].score.kind == "cosine-distance" and vector[0].score.value == 0.0
     assert vector[1].item.embedding == (0.5, 0.5, 0.0)
+    if full_record:
+        independent = connection.execute(
+            'SELECT id,count,amount,payload FROM search_app.docs ORDER BY id COLLATE "C"'
+        ).fetchall()
+        assert [
+            (hit.item.id, hit.item.count, hit.item.amount, hit.item.payload)
+            for hit in vector
+        ] == independent
+        assert all(
+            type(hit.item.count) is int
+            and type(hit.item.amount) is Decimal
+            and type(hit.item.payload) is bytes
+            for hit in vector
+        )
+        cases.append(
+            "actual full-record vector native Binary Integer64 Decimal38 decoding matches independent physical rows"
+        )
     from umf_access.postgres_search import _statement
 
     vector_entry = next(
