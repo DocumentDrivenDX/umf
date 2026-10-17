@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import inspect
 import json
 import os
 import runpy
@@ -102,8 +101,9 @@ def main():
     def origins():
         result = []
         runtime = False
-        for frame in inspect.stack(context=0):
-            p = Path(frame.filename)
+        frame = sys._getframe()
+        while frame is not None:
+            p = Path(frame.f_code.co_filename)
             if p.name in RUNTIME_NAMES and p.parent.name == "umf_access":
                 runtime = True
             if (
@@ -117,11 +117,12 @@ def main():
                 result.append(
                     {
                         "path": str(p),
-                        "line": frame.lineno,
-                        "function": frame.function,
+                        "line": frame.f_lineno,
+                        "function": frame.f_code.co_name,
                         "sourceSha256": source_hashes[key],
                     }
                 )
+            frame = frame.f_back
         return result if runtime else []
 
     def record(cursor, query, origin, error):
