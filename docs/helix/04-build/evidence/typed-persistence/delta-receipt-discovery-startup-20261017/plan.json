@@ -1,0 +1,113 @@
+{
+  "version": "umf.delta-receipt-discovery-plan/0.1",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "profile": "aidev-cus",
+  "warehouse": "d4b8eb5b4d6e34b8",
+  "requiredInitialState": "RUNNING_BY_SEPARATE_EXPLICIT_APPROVAL",
+  "startWarehouse": false,
+  "stopWarehouseFinally": true,
+  "existingSchema": "client_dev.umf_sdk_atomic_cf40c0c7aa74",
+  "createSchema": false,
+  "createPrincipal": false,
+  "tables": {
+    "objects": "client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects",
+    "receipts": "client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts",
+    "empty": "client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_empty"
+  },
+  "limits": {
+    "newTables": 3,
+    "seedRows": 2,
+    "sqlStatements": 50,
+    "historyRowsPerTable": 20,
+    "statementSeconds": 60,
+    "overallSeconds": 900,
+    "stopWaitSeconds": 120,
+    "cleanupSqlSeconds": 60
+  },
+  "nativeConfigurationProbe": "DESCRIBE DETAIL properties/tableFeatures only; no guessed empty-commit setting, no configuration changes.",
+  "setup": [
+    {
+      "id": "objects",
+      "statement": "CREATE TABLE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects (id BIGINT, value BIGINT) USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged'='supported','delta.isolationLevel'='Serializable','delta.enableChangeDataFeed'='false')"
+    },
+    {
+      "id": "receipts",
+      "statement": "CREATE TABLE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts (invocation STRING, changed BIGINT, observed BIGINT) USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged'='supported','delta.isolationLevel'='Serializable','delta.enableChangeDataFeed'='false')"
+    },
+    {
+      "id": "empty",
+      "statement": "CREATE TABLE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_empty (id BIGINT, value BIGINT) USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged'='supported','delta.isolationLevel'='Serializable','delta.enableChangeDataFeed'='false')"
+    }
+  ],
+  "seed": "INSERT INTO client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects VALUES (1,10),(2,20)",
+  "cases": [
+    {
+      "id": "two-changed-original009",
+      "sourceFile": "/private/tmp/sdk-managed-atomic-20261016-r1/statement-009.json",
+      "sourceSha256": "a3da55c6526a4c27ef3d50e64d4d554c0767f0c314bf0e0fb7a9203a2f3dec27",
+      "originalSqlSha256": "920e625dc94803d07e9ad3e004ceb5908b4e1918d7f76b653496a2e57dc35149",
+      "statement": "BEGIN ATOMIC UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects SET value=value+1 WHERE id=1; INSERT INTO client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts SELECT 'first',count(*),sum(value) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects; END;",
+      "derivation": "Only two fully qualified original fixture table identifiers relocated; SQL otherwise unchanged.",
+      "expectedDmlTables": [
+        "objects",
+        "receipts"
+      ],
+      "sameUnitMarkers": "Original INSERT SELECT in receipts fixture, unchanged source009. This is an explicitly declared fixture effect, not a generated receipt substitute.",
+      "laterWriter": "BEGIN ATOMIC UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects SET value=value+1 WHERE id=2; INSERT INTO client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts SELECT 'later-first',count(*),sum(value) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects; END;",
+      "readOriginalMarker": "SELECT invocation,changed,observed FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts WHERE invocation='first'"
+    },
+    {
+      "id": "value-preserving-original015",
+      "sourceFile": "/private/tmp/sdk-managed-atomic-20261016-r1/statement-015.json",
+      "sourceSha256": "3d52978aa9840d55e3ad10488c4d7b5fac7562de4f34711a1e9a3f7f2d4e6c14",
+      "originalSqlSha256": "7cac573c946825aae9be7a9f91593fa5df830df45e3e2f2d8823b859dd525c81",
+      "statement": "BEGIN ATOMIC UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects SET value=value WHERE id=1; INSERT INTO client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts SELECT 'noop',0,sum(value) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects; END;",
+      "derivation": "Only two fully qualified original fixture table identifiers relocated; SQL otherwise unchanged.",
+      "expectedDmlTables": [
+        "objects",
+        "receipts"
+      ],
+      "sameUnitMarkers": "Original noop changed=0 marker and observed image retained inside source015 atomic unit; object UPDATE still physically issued.",
+      "laterWriter": "BEGIN ATOMIC UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects SET value=value+1 WHERE id=2; INSERT INTO client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts SELECT 'later-noop',count(*),sum(value) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects; END;",
+      "readOriginalMarker": "SELECT invocation,changed,observed FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_receipts WHERE invocation='noop'"
+    },
+    {
+      "id": "zero-selected-existing",
+      "statement": "BEGIN ATOMIC DECLARE original_before BIGINT; DECLARE original_after BIGINT; SET VAR original_before = (SELECT count(*) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects WHERE id=-1); UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects SET value=value WHERE id=-1; SET VAR original_after = (SELECT count(*) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects WHERE id=-1); SELECT original_before AS original_before,original_after AS original_after; END;",
+      "expectedDmlTables": [
+        "objects"
+      ],
+      "derivation": "Exploratory original-owner variable/image shape from preserved managed_atomic.rs, not a compiled/admitted action artifact.",
+      "sameUnitMarkers": "Final SELECT must expose original_before/after from inside atomic unit; unsupported/missing output remains an explicit prerequisite, no external recomputation or marker ledger.",
+      "mayRefuse": true
+    },
+    {
+      "id": "all-absent-original-key",
+      "statement": "BEGIN ATOMIC DECLARE original_before BIGINT; DECLARE original_after BIGINT; SET VAR original_before = (SELECT count(*) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects WHERE id IN (-10,-11)); UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects SET value=value WHERE id IN (-10,-11); SET VAR original_after = (SELECT count(*) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_objects WHERE id IN (-10,-11)); SELECT original_before AS original_before,original_after AS original_after; END;",
+      "expectedDmlTables": [
+        "objects"
+      ],
+      "derivation": "Exploratory original-owner variable/image shape from preserved managed_atomic.rs, not a compiled/admitted action artifact.",
+      "sameUnitMarkers": "Final SELECT must expose original_before/after from inside atomic unit; unsupported/missing output remains an explicit prerequisite, no external recomputation or marker ledger.",
+      "mayRefuse": true
+    },
+    {
+      "id": "empty-table",
+      "statement": "BEGIN ATOMIC DECLARE original_before BIGINT; DECLARE original_after BIGINT; SET VAR original_before = (SELECT count(*) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_empty WHERE id=1); UPDATE client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_empty SET value=value WHERE id=1; SET VAR original_after = (SELECT count(*) FROM client_dev.umf_sdk_atomic_cf40c0c7aa74.receipt_discovery_20261017_empty WHERE id=1); SELECT original_before AS original_before,original_after AS original_after; END;",
+      "expectedDmlTables": [
+        "empty"
+      ],
+      "derivation": "Exploratory original-owner variable/image shape from preserved managed_atomic.rs, not a compiled/admitted action artifact.",
+      "sameUnitMarkers": "Final SELECT must expose original_before/after from inside atomic unit; unsupported/missing output remains an explicit prerequisite, no external recomputation or marker ledger.",
+      "mayRefuse": true
+    }
+  ],
+  "receiptComponentDomain": "UNRESOLVED: observe every original fixture table separately; never omit an unwritten table or substitute its head/prior version as this commit.",
+  "identityFence": "UNQUALIFIED: retain UUID before/after and fixed owned namespace; no claim that observations alone fence concurrent DROP/recreate or native dependency changes.",
+  "actorScope": "Existing prior actor discovery only; no independent human-role/SCIM authorization qualification.",
+  "lossRule": "Any submission/response uncertainty is Indeterminate; no automatic statement retry or receipt promotion from history.",
+  "nativeAuthority": false,
+  "qualification": false,
+  "temporal": "HELD",
+  "transportReviewRequired": false
+}
