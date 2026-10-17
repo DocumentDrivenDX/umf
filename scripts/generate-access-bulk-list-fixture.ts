@@ -3,6 +3,7 @@ import {profile,request} from '../tests/compilation/access-fixtures';
 if(!process.argv[2])throw new Error('explicit output directory required');
 const original=await Bun.file(process.env.UMF_BULK_LIST_REQUEST??'fixtures/access/native-bulk-list/request.json').json();
 const req=request();req.sources=[{id:'logical',format:'json',text:original.binding.modelJson}];req.records=[{module:'sales',element:'order'}];req.actions=JSON.parse(original.binding.modelJson).modules[0].extensions['umf.actions'].actions.map((a:{id:string})=>({module:'sales',action:a.id}));req.projections=[];req.package='native_sales';
+for(const set of original.binding.nativeColumns?.sets??[]){const b=set.binding;if(req.bindings.includes(b.sourceId))continue;req.bindings.push(b.sourceId);req.sources.push({id:b.sourceId,format:'json',text:b.documentJson});}
 if(process.argv.includes('--reads-only'))req.actions=[];
 const pinned=profile();pinned.dependencies=pinned.dependencies.map(d=>d.distribution==='umf_access'?{...d,version:'0.1.0.dev0'}:d);
 pinned.python.version='3.11.17';pinned.compilerVersion='local-native-actions-0.1';

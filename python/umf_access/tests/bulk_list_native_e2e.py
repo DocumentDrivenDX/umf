@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -29,6 +30,7 @@ from umf_access.protocols import (
 pg = Path(os.environ["UMF_BULK_LIST_OUTPUT"])
 pg.mkdir(parents=True, exist_ok=False)
 (pg / "socket").mkdir()
+(pg / "harness.py").write_bytes(Path(__file__).read_bytes())
 bin = Path("/opt/homebrew/opt/postgresql@18/bin")
 started = False
 cases = []
@@ -110,7 +112,8 @@ try:
     request = json.loads(
         Path(os.environ.get("UMF_BULK_LIST_REQUEST", root / "fixtures/access/native-bulk-list/request.json")).read_text()
     )
-    request["binding"]["schema"] = "native_app"
+    unqualified = os.environ.get("UMF_BULK_LIST_UNQUALIFIED") == "1"
+    request["binding"]["schema"] = None if unqualified else "native_app"
     generated = Path(os.environ["UMF_NATIVE_GENERATED_ROOT"])
     (generated / "native_declarations.py").write_text(
         "from umf_access import command, Param\nfrom native_sales.models import Order\nfrom native_sales.actions import SetStatus\n@command(action=SetStatus)\ndef set_selected(ids: Param[list[str | None]], before: Param[str], after: Param[str]):\n    return Order.objects.filter(Order.c.id.is_in(ids), Order.c.status == before).update(status=after)\n@command(action=SetStatus)\ndef set_outside(ids: Param[list[str | None]], after: Param[str]):\n    return Order.objects.filter(Order.c.id.not_in(ids)).update(status=after)\n"
@@ -148,6 +151,7 @@ try:
             generated,
             *extra,
         )
+    shutil.copytree(generated, pg / "generated", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
     from native_sales import queries
 
     cases.append(
@@ -181,6 +185,8 @@ try:
         "actionInputs": {"status": "after"},
         "parameters": [list_parameter, *scalar_parameters],
     }
+    if request.get("verificationProfile") == "source-exact/0.1":
+        owner_request["selection"]["verificationProfile"] = "source-exact/0.1"
     original_program = json.loads(
         weft.compile_native_bulk_json(json.dumps(owner_request))
     )
@@ -247,10 +253,20 @@ try:
     program = programs[0]
 
     class Admission:
+        shadow = False
+
         def admit(self, conn, program, *, deadline):
             # The owner deployment fixture and the runtime share this transactional
             # fence. The application identity has no owner, DDL, role or bypass power.
             conn.execute("SELECT pg_advisory_xact_lock_shared(8117003)")
+            if unqualified:
+                schema = "shadow_app" if self.shadow else "native_app"
+                conn.execute("SELECT pg_catalog.set_config('search_path',%s,true)",
+                             (f"pg_catalog, {schema}, pg_temp",))
+                assert conn.execute("SELECT current_schema()").fetchone() == ("pg_catalog",)
+                resolved = conn.execute("SELECT to_regclass('orders')::oid='native_app.orders'::regclass::oid").fetchone()
+                if resolved != (True,):
+                    raise ActionRefused("NATIVE_DEPENDENCY_CONTEXT")
             roles = conn.execute(
                 "SELECT session_user::text,current_user::text,rolsuper,rolcreaterole,rolbypassrls FROM pg_roles WHERE rolname=session_user"
             ).fetchone()
@@ -296,6 +312,7 @@ try:
     from umf_access.reviewed import ReadBuildError
     from umf_access.targets import PostgresConfiguration, binding_digest
 
+    admission = Admission()
     target = PostgresBulkTarget(
         conn,
         PostgresConfiguration(
@@ -304,7 +321,7 @@ try:
             (180006,),
             timedelta(seconds=5),
         ),
-        Admission(),
+        admission,
     )
     admin.execute(
         "INSERT INTO native_app.orders VALUES ('o-2','draft'),('o-3','draft')"
@@ -406,6 +423,115 @@ try:
     cases.append(
         "current native role revocation refuses with original outcome and confirmed rollback; new call after grant succeeds"
     )
+    if request.get("verificationProfile") == "source-exact/0.1":
+        from native_sales.actions import Actions
+        from umf_access.native_actions import PostgresActionExecutor
+        from umf_access.reviewed import parameter_style
+
+        actions = Actions(PostgresActionExecutor(conn, tuple(programs), admission, default_timeout=timedelta(seconds=5)))
+        action_input = ApproveInput(order=OrderKey(id="o-1"))
+        before = rows()
+        assert actions.approve.validate(action_input).valid is True
+        assert rows() == before and conn.info.transaction_status == 0
+        approved = actions.approve(action_input)
+        assert admin.execute("SELECT pg_xact_status(%s::xid8)", (approved.receipt.version,)).fetchone() == ("committed",)
+        assert rows() == [(key, "approved" if key == "o-1" else value) for key, value in before]
+        cases.append("actual generated action validate remains read-only; invoke consumes original schema admissions and returns independently committed native receipt")
+
+        admin.execute('ALTER TABLE native_app.orders ALTER COLUMN status TYPE TEXT COLLATE "POSIX"')
+        before = rows()
+        for operation in (
+            lambda: actions.approve(action_input),
+            lambda: queries.set_selected(target, ids=["o-1"], before="approved", after="forbidden").execute(),
+        ):
+            try:
+                operation()
+            except ActionRefused as error:
+                assert error.code == "NATIVE_SCHEMA_MISMATCH"
+            else:
+                raise AssertionError("native source collation mismatch escaped action/bulk admission")
+            assert rows() == before and conn.info.transaction_status == 0
+        admin.execute('ALTER TABLE native_app.orders ALTER COLUMN status TYPE TEXT COLLATE "C"')
+        cases.append("original compiler collation admission refuses action and bulk before business effects while unchanged host dependency/authority fence remains active")
+
+        admin.execute("CREATE FUNCTION native_app.inject_schema_fault() RETURNS void LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$ BEGIN ALTER TABLE native_app.orders ALTER COLUMN status SET DEFAULT 'injected'; END $$")
+        admin.execute("REVOKE ALL ON FUNCTION native_app.inject_schema_fault() FROM PUBLIC")
+        admin.execute("GRANT EXECUTE ON FUNCTION native_app.inject_schema_fault() TO erik")
+        update = program.checked()["effects"][0]["statement"]
+        original_update_sql, _ = parameter_style(update["sql"], len(update["parameters"]))
+
+        class FaultTransport:
+            # Explicit fixture-only transport fault; no production authority claim.
+            def __init__(self, connection, trigger_sql):
+                self.connection = connection
+                self.trigger_sql = trigger_sql
+                self.injected = 0
+
+            def __getattr__(self, name):
+                return getattr(self.connection, name)
+
+            def execute(self, sql, *args, **kwargs):
+                cursor = self.connection.execute(sql, *args, **kwargs)
+                if sql == self.trigger_sql:
+                    self.connection.execute("SELECT native_app.inject_schema_fault()")
+                    self.injected += 1
+                return cursor
+
+        admin.execute("UPDATE native_app.orders SET status='before-fault' WHERE id='o-1'")
+        transport = FaultTransport(conn, original_update_sql)
+        faulty_actions = Actions(PostgresActionExecutor(transport, tuple(programs), admission, default_timeout=timedelta(seconds=5)))
+        before = rows()
+        try:
+            faulty_actions.approve(action_input)
+        except ActionRefused as error:
+            assert error.code == "NATIVE_SCHEMA_MISMATCH"
+        else:
+            raise AssertionError("post-effect original schema admission was not enforced")
+        assert transport.injected == 1
+        assert rows() == before and conn.info.transaction_status == 0
+        assert admin.execute("SELECT count(*) FROM pg_attrdef WHERE adrelid='native_app.orders'::regclass").fetchone() == (0,)
+        cases.append("explicit test-only transport schema fault after original action UPDATE is detected by post-admission and rolls back both business row and default DDL")
+
+        bulk_transport = FaultTransport(conn, None)
+        faulty_target = PostgresBulkTarget(bulk_transport, target.configuration, admission)
+        fault_plan = queries.set_selected(faulty_target, ids=["o-1"], before="before-fault", after="bulk-fault")
+        # Capture the exact immutable original statement carried by this concrete
+        # fixture plan, never infer UPDATE text or alter native program SQL.
+        bulk_original = fault_plan.executor.program
+        assert isinstance(bulk_original, NativeProgram)
+        bulk_transport.trigger_sql = json.loads(bulk_original.statements_json)["/update"]["sql"]
+        before = rows()
+        try:
+            fault_plan.execute()
+        except ActionRefused as error:
+            assert error.code == "NATIVE_SCHEMA_MISMATCH"
+        else:
+            raise AssertionError("post-effect original bulk schema admission was not enforced")
+        assert bulk_transport.injected == 1
+        assert rows() == before and conn.info.transaction_status == 0
+        assert admin.execute("SELECT count(*) FROM pg_attrdef WHERE adrelid='native_app.orders'::regclass").fetchone() == (0,)
+        cases.append("explicit test-only transport schema fault after original bulk UPDATE is detected by post-admission and rolls back both business rows and default DDL")
+
+
+    if unqualified:
+        admin.execute("CREATE SCHEMA shadow_app")
+        admin.execute('CREATE TABLE shadow_app.orders (id TEXT COLLATE "C" PRIMARY KEY,status TEXT COLLATE "C" NOT NULL)')
+        admin.execute("INSERT INTO shadow_app.orders VALUES ('o-1','shadow')")
+        admin.execute("GRANT USAGE ON SCHEMA shadow_app TO erik")
+        admin.execute("GRANT SELECT,UPDATE ON shadow_app.orders TO erik")
+        before = rows()
+        admission.shadow = True
+        try:
+            queries.set_selected(target, ids=["o-1"], before="shadow", after="forbidden").execute()
+        except ActionRefused as error:
+            assert error.code == "NATIVE_DEPENDENCY_CONTEXT"
+        else:
+            raise AssertionError("foreign shadow namespace escaped original owner fence")
+        finally:
+            admission.shadow = False
+        assert rows() == before and conn.info.transaction_status == 0
+        assert admin.execute("SELECT id,status FROM shadow_app.orders").fetchall() == [("o-1", "shadow")]
+        cases.append("unqualified original native context resolves owned table with pg_catalog-first path; conflicting same-shaped shadow namespace refuses at native owner fence")
     (pg / "independent-native-final-rows.json").write_text(json.dumps(rows()))
     (pg / "verification.json").write_text(
         json.dumps(
