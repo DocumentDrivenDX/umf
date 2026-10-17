@@ -125,6 +125,28 @@ def _numeric_parameters(artifact: dict[str, Any], values: dict[str, Any]) -> dic
     return encoded
 
 
+def _runtime_obligations(artifact: dict[str, Any]) -> None:
+    known = {"transaction", "snapshot", "principal", "ansiEnabled", "sparkVersion", "deltaVersion",
+             "binaryStringCollation", "escapedStringLiterals", "rowCap", "timeout", "tableIdentity",
+             "streamPageSize", "numericPredicateParameters"}
+    obligations = artifact.get("obligations")
+    if type(obligations) is not dict or set(obligations) - known:
+        raise TargetMismatch("unrecognized original Spark runtime obligation")
+    fixed = {"principal": "administrative-single-tenant", "ansiEnabled": True,
+             "sparkVersion": "4.0.1", "deltaVersion": "4.0.0", "binaryStringCollation": True,
+             "escapedStringLiterals": False}
+    if any(type(obligations.get(name)) is not type(value) or obligations[name] != value
+           for name, value in fixed.items()):
+        raise TargetMismatch("original Spark runtime profile differs")
+    snapshot = obligations.get("snapshot", True)
+    if (type(snapshot) is not bool
+            or obligations.get("transaction") != ("snapshot-read" if snapshot else "live-read")
+            or obligations.get("tableIdentity") != ("uuid-and-version" if snapshot else "uuid")
+            or obligations.get("timeout") not in ("one-call-deadline", "one-page-deadline")
+            or type(obligations.get("rowCap")) is not int or not 1 <= obligations["rowCap"] <= 1000):
+        raise TargetMismatch("original Spark snapshot or execution obligations differ")
+
+
 def _native_projection(output: dict[str, Any], value: object) -> object:
     if value is None:
         if output.get("nullable") is not True:
@@ -231,6 +253,7 @@ class SparkDeltaTarget:
         continuation: bool = False,
         check_deadline: Callable[[], None] | None = None,
     ) -> SnapshotVersions:
+        _runtime_obligations(artifact)
         if check_deadline is not None:
             check_deadline()
         error = StaleContinuation if continuation else TargetMismatch
@@ -330,6 +353,7 @@ class SparkDeltaTarget:
         artifact = entry.artifact()
         if artifact["target"] != "spark-delta4":
             raise NotCompiledForTarget("original Spark program required")
+        _runtime_obligations(artifact)
         milliseconds = _milliseconds(timeout, self.configuration.default_timeout)
         checked = entry.parameters.model_validate(
             {n: getattr(parameters, n) for n in entry.parameters.model_fields},
@@ -436,6 +460,7 @@ class SparkDeltaTarget:
             artifact = child
         if snapshot_stream and artifact["obligations"].get("snapshot") is not True:
             raise NotCompiledForTarget("original snapshot stream program required")
+        _runtime_obligations(artifact)
         effective_page_size = stream_page_size(artifact, page_size)
         if after is not None and (
             type(after) is not ReadContinuation or after.owner_cursor is not None

@@ -3,7 +3,7 @@ import copy
 import unittest
 from decimal import Decimal, localcontext
 
-from umf_access.delta_read import _numeric_parameters
+from umf_access.delta_read import _numeric_parameters, _runtime_obligations
 from umf_access.targets import TargetMismatch
 
 
@@ -16,6 +16,25 @@ def artifact():
 
 
 class NumericParameterTests(unittest.TestCase):
+    def test_unimplemented_original_obligations_refuse_before_native_dispatch(self):
+        source = artifact()
+        source['obligations'].update({'transaction': 'snapshot-read', 'tableIdentity': 'uuid-and-version',
+            'timeout': 'one-call-deadline', 'rowCap': 50, 'principal': 'administrative-single-tenant',
+            'ansiEnabled': True, 'binaryStringCollation': True, 'escapedStringLiterals': False,
+            'sparkVersion': '4.0.1', 'deltaVersion': '4.0.0'})
+        _runtime_obligations(source)
+        for name in ('listPredicateParameters', 'unknownFutureSemantics'):
+            changed = copy.deepcopy(source)
+            changed['obligations'][name] = {'version': 'unknown'}
+            with self.assertRaises(TargetMismatch):
+                _runtime_obligations(changed)
+        for name, value in (('principal', 'managed'), ('ansiEnabled', 1), ('snapshot', False),
+                            ('rowCap', True), ('sparkVersion', 'future'), ('timeout', 'unbounded')):
+            changed = copy.deepcopy(source)
+            changed['obligations'][name] = value
+            with self.assertRaises(TargetMismatch):
+                _runtime_obligations(changed)
+
     def test_plain_tokens_do_not_use_decimal_context_or_native_numeric_inference(self):
         source = artifact()
         integer = 10**5000 + 17
