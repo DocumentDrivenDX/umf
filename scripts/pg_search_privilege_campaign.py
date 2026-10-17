@@ -581,6 +581,38 @@ def qualify(target, captures, out, source_archive):
                 "inventoryComplete": False,
             },
         )
+        # Fence LOCK is an original owner operation, not a generic utility
+        # exemption. Qualify its reader grant independently of metadata SELECT.
+        fences = {}
+        for variant in target.search_variants:
+            for entry in variant.entries:
+                artifact = entry.artifact()
+                fence = artifact.get("obligations", {}).get("nativeCatalogFence")
+                if fence is not None:
+                    descriptor = fence["deployment"]
+                    key = (descriptor["schema"], descriptor["view"])
+                    fences.setdefault(key, []).append({
+                        "sourceProgramDigest": artifact["structuralDigest"],
+                        "path": "/obligations/nativeCatalogFence/lockSql",
+                        "sql": fence["lockSql"],
+                        "sqlSha256": hashlib.sha256(fence["lockSql"].encode()).hexdigest(),
+                    })
+        fence_controls = []
+        for (schema, view), provenance in fences.items():
+            statement = sql.SQL("{} MAINTAIN ON {}.{} {} search_user")
+            admin.execute(statement.format(sql.SQL("REVOKE"), sql.Identifier(schema), sql.Identifier(view), sql.SQL("FROM")))
+            denied = False
+            try:
+                workload()
+            except BaseException as error:
+                if not permission(error):
+                    raise
+                denied = True
+            finally:
+                admin.execute(statement.format(sql.SQL("GRANT"), sql.Identifier(schema), sql.Identifier(view), sql.SQL("TO")))
+            assert denied and workload() == baseline
+            fence_controls.append({"schema": schema, "view": view, "originalOwnerProvenance": provenance, "native42501Observed": True, "regrantBaselineRecovered": True})
+        save("fence-maintain-revoke-controls.json", fence_controls)
         admin.execute("REVOKE SELECT ON search_app.docs FROM search_user")
         denied = False
         try:

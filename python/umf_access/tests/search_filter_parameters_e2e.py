@@ -18,7 +18,6 @@ from importlib.metadata import version
 from pathlib import Path
 
 import psycopg
-from psycopg import sql
 from umf_access.postgres_search import AsyncPostgresSearchTarget, PostgresSearchTarget
 from umf_access.targets import PostgresConfiguration, binding_digest
 
@@ -28,7 +27,6 @@ OUT = Path(os.environ['UMF_FILTER_RECEIPTS']).resolve()
 OUT.mkdir(parents=True, exist_ok=False)
 sys.path.insert(0, str(GENERATED))
 PG = Path('/opt/homebrew/opt/postgresql@18/bin')
-CATALOGS = {'pg_namespace', 'pg_proc', 'pg_ts_config', 'pg_ts_config_map', 'pg_ts_dict', 'pg_ts_parser', 'pg_ts_template'}
 checks = []
 started = False
 admin = connection = None
@@ -60,7 +58,7 @@ for index, item in enumerate(access['columns']):
     alias = item['binding']['sourceId']
     source = originals[alias]
     sets.append({'columnSet': {'documentId': logical['id'], 'coreVersion': logical['umf'], 'documentSha256': hashlib.sha256(model.encode()).hexdigest(), 'module': 'search', 'pointer': f'/modules/0/extensions/umf.access/columns/{index}'}, 'binding': {'sourceId': alias, 'documentJson': source, 'documentSha256': hashlib.sha256(source.encode()).hexdigest()}})
-binding = {'version': 'umf.raw-read-binding/0.1', 'schema': 'search_app', 'modelJson': model, 'modelSha256': hashlib.sha256(model.encode()).hexdigest(), 'tables': [{'logical': ['search', 'Doc'], 'native': 'docs', 'key': ['id'], 'columns': [{'logical': name, 'native': name, 'carrier': carrier, 'nullable': name == 'tag'} for name, carrier in [('id', 'string'), ('body', 'string'), ('owner', 'string'), ('count', 'integer'), ('amount', 'decimal'), ('tag', 'string'), ('flag', 'boolean')]]}], 'relationships': [], 'nativeColumns': {'target': {'platform': 'postgresql', 'majorVersion': '18'}, 'sets': sets, 'vectorExtension': {'schema': 'public', 'version': '0.8.7'}}, 'nativeCatalogFence': {'version': 'umf.pg-ts-fence/0.1', 'schema': 'native_fence', 'view': 'catalogs', 'owner': 'fence_owner', 'ownerProfile': 'non-login-maintainer/0.1'}}
+binding = {'version': 'umf.raw-read-binding/0.1', 'schema': 'search_app', 'modelJson': model, 'modelSha256': hashlib.sha256(model.encode()).hexdigest(), 'tables': [{'logical': ['search', 'Doc'], 'native': 'docs', 'key': ['id'], 'columns': [{'logical': name, 'native': name, 'carrier': carrier, 'nullable': name == 'tag'} for name, carrier in [('id', 'string'), ('body', 'string'), ('owner', 'string'), ('count', 'integer'), ('amount', 'decimal'), ('tag', 'string'), ('flag', 'boolean')]]}], 'relationships': [], 'nativeColumns': {'target': {'platform': 'postgresql', 'majorVersion': '18'}, 'sets': sets, 'vectorExtension': {'schema': 'public', 'version': '0.8.7'}}, 'nativeCatalogFence': {'version': 'umf.pg-ts-fence/0.1', 'schema': 'native_fence', 'view': 'ts_catalog_lock', 'owner': 'fence_owner', 'ownerProfile': 'non-login-maintainer/0.1'}}
 config = {'package': 'search_docs', 'modules': ['search_filter_declarations'], 'weft': {'distribution': 'weft-sql', 'version': version('weft-sql')}, 'targets': [{'id': 'local', 'kind': 'postgresql', 'backendId': 'weft-postgresql', 'backendVersion': 'raw-read/0.1', 'targetProfile': 'weft.raw-read/0.1', 'binding': binding, 'platform': [{'name': 'postgresql', 'versions': ['180006']}], 'vectorBindings': [{'field': {'module': 'search', 'element': 'embedding'}, 'native': 'embedding', 'dimensions': 3, 'extensionSchema': 'public', 'extensionVersion': '0.8.7'}]}], 'umf': {'documents': []}}
 for index, text in enumerate(originals.values()):
     name = f'filter-original-{index}.json'
@@ -115,18 +113,9 @@ try:
     assert admin.info.server_version == 180006
     admin.execute("CREATE EXTENSION vector VERSION '0.8.7'")
     admin.execute('CREATE ROLE search_user LOGIN NOSUPERUSER NOBYPASSRLS')
-    admin.execute('CREATE ROLE fence_owner NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEROLE NOCREATEDB NOREPLICATION')
-    admin.execute('CREATE SCHEMA native_fence AUTHORIZATION fence_owner')
-    deployment = fences[0]['deploymentProgram']
-    prerequisites = deployment['ownerPrerequisites']
-    assert prerequisites['role'] == 'fence_owner' and prerequisites['superuser'] is False and prerequisites['login'] is False
-    # Execute the exact original owner deployment, not a locally reconstructed view.
-    admin.execute(deployment['createViewSql'])
-    admin.execute(deployment['alterOwnerSql'])
-    for name in sorted(CATALOGS):
-        admin.execute(sql.SQL('GRANT MAINTAIN ON pg_catalog.{} TO fence_owner').format(sql.Identifier(name)))
-    admin.execute('GRANT USAGE ON SCHEMA native_fence TO search_user')
-    admin.execute('GRANT MAINTAIN ON native_fence.catalogs TO search_user')
+    from pg_fence_e2e_support import deploy_owned_fence
+    deployment_receipt = deploy_owned_fence(admin, artifacts)
+    (OUT / "fence-deployment-receipt.json").write_text(json.dumps(deployment_receipt, indent=2))
     admin.execute('CREATE SCHEMA search_app')
     admin.execute('GRANT USAGE ON SCHEMA search_app TO search_user')
     admin.execute('CREATE TABLE search_app.docs(id text COLLATE "C" PRIMARY KEY,body text COLLATE "C" NOT NULL,embedding public.vector(3) NOT NULL,owner text NOT NULL,count bigint NOT NULL,amount numeric(38,10) NOT NULL,payload bytea NOT NULL,tag text COLLATE "C",flag boolean NOT NULL)')

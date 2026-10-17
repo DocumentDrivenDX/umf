@@ -48,6 +48,9 @@ if target_kind == "lakebase":
 else:
     from umf_access.postgres_search import LakebaseSearchTarget as OtherSearchTarget
 full_record = os.environ.get("UMF_SEARCH_FULL_RECORD") == "1"
+fenced_profile = os.environ.get("UMF_SEARCH_CATALOG_FENCE") == "1"
+if fenced_profile and remote_dsn is not None:
+    raise ValueError("candidate catalog-fence fixture is owned-local only")
 partial_profile = os.environ.get("UMF_SEARCH_PARTIAL_PROFILE") == "1"
 vector_version = os.environ.get("UMF_SEARCH_VECTOR_VERSION", "0.8.7")
 if vector_version not in ("0.8.6", "0.8.7"):
@@ -160,6 +163,12 @@ binding["nativeColumns"] = {
     "sets": column_sets,
     "vectorExtension": {"schema": "public", "version": vector_version},
 }
+if fenced_profile:
+    binding["nativeCatalogFence"] = {
+        "version": "umf.pg-ts-fence/0.1", "schema": "native_fence",
+        "view": "ts_catalog_lock", "owner": "fence_owner",
+        "ownerProfile": "non-login-maintainer/0.1",
+    }
 config = {
     "package": "search_docs",
     "modules": ["search_declarations"],
@@ -306,6 +315,15 @@ try:
     ).fetchone() == (vector_version,)
     if remote_dsn is None:
         admin.execute("CREATE ROLE search_user LOGIN NOSUPERUSER NOBYPASSRLS")
+    if fenced_profile:
+        from pg_fence_e2e_support import deploy_owned_fence
+        artifacts = [
+            entry.artifact()
+            for name, value in vars(queries).items() if name.startswith("_S")
+            for variant in value.variants for entry in variant.entries
+        ]
+        fence = deploy_owned_fence(admin, artifacts)
+        (generated / "fence-deployment-receipt.json").write_text(json.dumps(fence, indent=2))
     admin.execute("CREATE ROLE hidden_user NOLOGIN")
     admin.execute("CREATE SCHEMA search_app")
     admin.execute("GRANT USAGE ON SCHEMA search_app TO search_user")
