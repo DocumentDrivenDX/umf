@@ -38,9 +38,28 @@
   "additionalRawReadRefusal": {
     "version": "weft.raw-read/0.2",
     "code": "catalog digest mismatch",
-    "scope": "Actual original nested readTemplate through immutable R24 CatalogRead.artifact gate; no connection or execution",
+    "scope": "Retained failed attempt: direct constructor omitted required SDK catalog wrapper digest. Does not establish version barrier.",
     "businessSQLCalls": 0,
     "connectionConstructed": false,
-    "sha256": "8d3d357f48ba6d542acf8eb7753c2098aa3a442f38fa430ae427691b4980866e"
+    "sha256": "8d3d357f48ba6d542acf8eb7753c2098aa3a442f38fa430ae427691b4980866e",
+    "status": "invalid-wrapper-inconclusive"
+  },
+  "validRawReadWrapperControl": {
+    "scope": "Actual original producer responses via immutable R24 ReviewedSQL.build; standalone reviewed models use valid stageOne=None. No connection or execution.",
+    "results": [
+      {
+        "version": "weft.raw-read/0.1",
+        "status": "accepted",
+        "catalogDigestValid": true
+      },
+      {
+        "version": "weft.raw-read/0.2",
+        "status": "refused",
+        "code": "unsupported catalog artifact",
+        "wrapperConstruction": "old ReviewedSQL.build",
+        "stageOne": null,
+        "businessSQLCalls": 0
+      }
+    ]
   }
 }
