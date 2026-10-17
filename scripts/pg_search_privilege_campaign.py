@@ -16,6 +16,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from pg_fixed_runtime_var_probes import resolve_observed_fixed_sql
 from pg_owner_privilege_resolver import resolve_owner_packet
 from pg_runtime_privilege_resolver import analyze, resolve
+from pg_runtime_utility_provenance import timeout_utility
 
 
 def qualify(target, captures, out, source_archive):
@@ -221,6 +222,13 @@ def qualify(target, captures, out, source_archive):
             if call["outcome"] != "returned":
                 continue
             query = call["sql"]
+            if query.startswith("SET LOCAL statement_timeout"):
+                coverage.append({
+                    "sequence": call["sequence"],
+                    "kind": "observed-runtime-session-utility",
+                    "provenance": timeout_utility(call, source_archive),
+                })
+                continue
             if query in definitions:
                 if query.startswith("BEGIN "):
                     assert (
