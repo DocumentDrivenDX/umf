@@ -314,3 +314,11 @@ with explicit expansion and 17 expanded matching groups after medical search.
 The final combined browser replay passed 44 checks with zero page errors or
 external requests; the installed package asset/workspace parity check and type
 checking passed after the catalog host change.
+
+Publication follow-up: CI's legacy artifact collection driver waited for a button
+inside the initially expanded first catalog group. It now asserts the collapsed
+startup state and explicitly opens that group before continuing. Its full local
+Chromium journey passes 37 checks over six collections and four bookmark aliases,
+including ontology graph interactions and field-filter history, with no external
+data requests. This corrects the driver for the new desired behavior; the catalog
+startup policy is unchanged.
