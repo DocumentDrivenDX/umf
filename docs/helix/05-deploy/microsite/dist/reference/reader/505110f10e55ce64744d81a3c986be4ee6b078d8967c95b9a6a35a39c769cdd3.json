@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"sparkRenameSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as sparkRenameSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; document: { $ref: string; }; complete: { const: boolean; }; validation: { type: string; required: string[]; properties: { valid: { type: string; }; complete: { type: string; }; diagnostics: { type: string; items: { type: string; required: string[]; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; }; renamedCollationPaths: { type: string; items: { type: string; required: string[]; properties: { from: { type: string; }; to: { type: string; }; }; additionalProperties: boolean; }; }; diagnostics: { type: string; items: { type: string; required: string[]; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; }"
+}

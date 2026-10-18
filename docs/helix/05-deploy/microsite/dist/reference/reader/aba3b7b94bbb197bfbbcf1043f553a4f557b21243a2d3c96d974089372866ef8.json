@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"extensionPackageSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as extensionPackageSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Extensions",
+  "type": "{ $schema: string; $id: string; title: string; type: string; required: string[]; properties: { id: { type: string; minLength: number; }; version: { type: string; pattern: string; }; coreVersion: { const: string; }; description: { type: string; minLength: number; }; schema: { type: string[]; }; semantics: { type: string; minLength: number; }; scopes: { type: string; minItems: number; uniqueItems: boolean; items: { enum: string[]; }; }; capabilities: { type: string; required: string[]; properties: { validation: { enum: string[]; }; directions: { type: string; uniqueItems: boolean; items: { enum: string[]; }; }; evidence: { type: string; items: { type: string; minLength: number; }; }; native: { type: string; required: string[]; properties: { system: { type: string; minLength: number; }; version: { type: string; minLength: number; }; subset: { type: string; minLength: number; }; }; }; }; allOf: { if: { properties: { directions: { type: string; minItems: number; }; }; }; then: { properties: { native: boolean; }; required: string[]; }; }[]; }; }; }"
+}

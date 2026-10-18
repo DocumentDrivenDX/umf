@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverTableSpecNullabilitySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecNullabilityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecNullabilityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recover exact original text or split files, including unclaimed native content.",
+  "related": [],
+  "returns": "string | Record<string, string>",
+  "task": "Import and export",
+  "type": "(input: TableSpecNullabilityClassification, current: Document) => string | Record<string, string>"
+}

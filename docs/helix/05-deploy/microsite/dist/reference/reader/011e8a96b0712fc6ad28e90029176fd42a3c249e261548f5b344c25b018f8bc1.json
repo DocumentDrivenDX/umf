@@ -1,0 +1,96 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableSpecFieldClassification\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-tablespec-field\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecFieldRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "TableSpecFieldRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ readonly id: \"umf.tablespec.field\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"647e8e566ad78b864282ec65c0b0b2237aa63084\"; readonly subset: \"Table version 1.0 captured column member role; no scalar/container/native validation claim\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": true,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-native-column-membership\"; outcome: \"exact\" | \"unknown\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; recovery: \"Original assertion and native fragment retained in source; reclassify with corrected provenance\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableSpecFieldClassification is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableSpecFieldClassification"
+}

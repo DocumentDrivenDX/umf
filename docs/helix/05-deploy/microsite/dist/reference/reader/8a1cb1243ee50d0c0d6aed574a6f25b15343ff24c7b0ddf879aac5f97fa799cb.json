@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverAvroCardinalityBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroCardinalityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroCardinalityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverAvroCardinalityBundle accepts input, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
+  "related": [],
+  "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
+  "task": "Import and export",
+  "type": "(input: AvroCardinalityClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+}

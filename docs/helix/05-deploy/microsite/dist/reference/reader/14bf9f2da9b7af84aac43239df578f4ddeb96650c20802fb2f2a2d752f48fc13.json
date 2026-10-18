@@ -1,0 +1,34 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "example": "import { readDocument } from \"@umf/core\";\n\nconst document = readDocument('{\"umf\":\"0.10.0\",\"id\":\"example\",\"vocabularies\":{},\"modules\":[]}');",
+  "id": "[\"api\",\".\",\"readDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Default: 'yaml'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "Parse UMF JSON or YAML text into a Document using the core checks. Choose the input format explicitly when needed; use validateDocument with a registry for extension interpretation.",
+  "related": [
+    "[\"api\",\".\",\"Document\"]",
+    "[\"api\",\".\",\"Registry\"]",
+    "[\"api\",\".\",\"writeDocument\"]",
+    "[\"api\",\".\",\"validateDocument\"]"
+  ],
+  "returns": "Document",
+  "task": "Read and validate",
+  "type": "(text: string, format?: \"json\" | \"yaml\") => Document"
+}

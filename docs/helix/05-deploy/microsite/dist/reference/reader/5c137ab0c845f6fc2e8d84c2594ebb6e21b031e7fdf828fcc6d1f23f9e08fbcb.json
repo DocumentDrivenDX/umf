@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyFieldClassificationInspection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldClassificationInspection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FieldClassificationInspection"
+    }
+  ],
+  "purpose": "verifyFieldClassificationInspection accepts input and returns FieldClassificationInspection.",
+  "related": [],
+  "returns": "FieldClassificationInspection",
+  "task": "Other APIs",
+  "type": "(input: FieldClassificationInspection) => FieldClassificationInspection"
+}

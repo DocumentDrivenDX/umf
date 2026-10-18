@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectStructuredClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeStructuredClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "NativeStructuredClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": true,
+      "type": "PostgresqlBackend | undefined"
+    }
+  ],
+  "purpose": "inspectStructuredClassification accepts input, backend and returns Promise<StructuredClassificationInspection>.",
+  "related": [],
+  "returns": "Promise<StructuredClassificationInspection>",
+  "task": "Inspect and select",
+  "type": "(input: NativeStructuredClassification, backend?: PostgresqlBackend) => Promise<StructuredClassificationInspection>"
+}

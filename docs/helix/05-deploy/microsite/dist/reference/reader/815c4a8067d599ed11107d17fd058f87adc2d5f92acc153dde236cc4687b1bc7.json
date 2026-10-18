@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectCoreSchemaProperties\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSchemaPropertyIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreSchemaPropertyIdentity"
+    }
+  ],
+  "purpose": "inspectCoreSchemaProperties accepts input, identity and returns { operation: \"inspect-core-schema-properties\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }.",
+  "related": [],
+  "returns": "{ operation: \"inspect-core-schema-properties\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreSchemaPropertyIdentity) => { operation: \"inspect-core-schema-properties\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }"
+}

@@ -1,0 +1,71 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlIndexProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reported\" | \"proposed\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "nativeArchive",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": false,
+      "type": "{ system: string; version: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBindingResidual\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "PostgresqlBindingResidual[]"
+    },
+    {
+      "description": "DDL proposal verified by the pinned parser/deparser/codec; execution is a separate oracle.",
+      "links": [],
+      "name": "candidate",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlIndexProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlIndexProjection"
+}

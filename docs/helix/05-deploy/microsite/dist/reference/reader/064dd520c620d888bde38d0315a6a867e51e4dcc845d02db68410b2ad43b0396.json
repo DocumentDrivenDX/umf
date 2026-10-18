@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"writeBindingDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "Default: 'yaml'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "writeBindingDocument accepts binding, logical, format and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(binding: Document, logical: Document, format?: \"json\" | \"yaml\") => string"
+}

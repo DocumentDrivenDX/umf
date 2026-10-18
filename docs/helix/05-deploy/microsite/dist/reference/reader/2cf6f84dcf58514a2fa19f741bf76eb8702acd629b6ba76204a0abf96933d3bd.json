@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlLayoutKeyComponent\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
+      ],
+      "name": "keyField",
+      "optional": false,
+      "type": "CoreKeyFieldReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingFieldRef\"]"
+      ],
+      "name": "boundField",
+      "optional": false,
+      "type": "BindingFieldRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "column",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sqlType",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nullable",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "collation",
+      "optional": false,
+      "type": "\"C\" | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlLayoutKeyComponent is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlLayoutKeyComponent"
+}

@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreSchemaPropertiesTransitionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreSchemaPropertiesTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; $defs: { upgrade: { type: string; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; target: { $ref: string; }; residuals: { type: string; items: { type: string; properties: { path: { type: string; }; value: {}; reason: { const: string; }; }; required: string[]; additionalProperties: boolean; }; }; }; required: string[]; additionalProperties: boolean; }; }; oneOf: ({ $ref: string; type?: never; properties?: never; required?: never; additionalProperties?: never; } | { type: string; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; target: { $ref: string; }; receipt: { $ref: string; }; reason: { const: string; }; }; required: string[]; additionalProperties: boolean; $ref?: never; })[]; }"
+}

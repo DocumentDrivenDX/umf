@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectDddToJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddDocumentBindings\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddDocumentBindings"
+    }
+  ],
+  "purpose": "projectDddToJsonSchema accepts source, input and returns DddDocumentProjection.",
+  "related": [],
+  "returns": "DddDocumentProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: DddDocumentBindings) => DddDocumentProjection"
+}

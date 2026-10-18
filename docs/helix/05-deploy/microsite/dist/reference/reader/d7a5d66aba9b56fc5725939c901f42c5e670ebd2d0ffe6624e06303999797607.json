@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parquetMetadataTransformSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as parquetMetadataTransformSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; status: { enum: string[]; }; complete: { const: boolean; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; required: string[]; additionalProperties: boolean; }; }; output: { $ref: string; }; added: { type: string; minItems: number; maxItems: number; items: { type: string; required: string[]; properties: { key: { type: string; }; value: { type: string; }; }; additionalProperties: boolean; }; }; unchangedPrefixBytes: { type: string; minimum: number; }; }; additionalProperties: boolean; allOf: { if: { properties: { status: { const: string; }; }; }; then: { properties: { output: boolean; added: boolean; unchangedPrefixBytes: boolean; }; required: string[]; }; else: { not: { anyOf: ({ properties: { output: boolean; added?: never; unchangedPrefixBytes?: never; }; required: string[]; } | { properties: { added: boolean; output?: never; unchangedPrefixBytes?: never; }; required: string[]; } | { properties: { unchangedPrefixBytes: boolean; output?: never; added?: never; }; required: string[]; })[]; }; }; }[]; }"
+}

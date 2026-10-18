@@ -1,0 +1,51 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CompiledActionSelector\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "language",
+      "optional": false,
+      "type": "\"umf.actions.keys\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "expression",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "frame",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "ast",
+      "optional": false,
+      "type": "{ entity: string; } | { key: string; components: ({ input: string; } | { literal: CoreLiteral; })[]; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CompiledActionSelector is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CompiledActionSelector"
+}

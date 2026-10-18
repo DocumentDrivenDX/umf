@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ShaclMetadataField\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "predicate",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "values",
+      "optional": false,
+      "type": "Term[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "quadIndexes",
+      "optional": false,
+      "type": "number[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ShaclMetadataField is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ShaclMetadataField"
+}

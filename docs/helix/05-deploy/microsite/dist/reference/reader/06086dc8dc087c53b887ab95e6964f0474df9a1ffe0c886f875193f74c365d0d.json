@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyPostgresqlField\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlFieldRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "PostgresqlFieldRequest"
+    }
+  ],
+  "purpose": "Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding.",
+  "related": [],
+  "returns": "PostgresqlFieldClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: PostgresqlFieldRequest) => PostgresqlFieldClassification"
+}

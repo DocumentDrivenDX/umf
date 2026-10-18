@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectIcebergTransformType\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceType",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "transform",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "inspectIcebergTransformType accepts sourceType, transform and returns IcebergTransformType.",
+  "related": [],
+  "returns": "IcebergTransformType",
+  "task": "Inspect and select",
+  "type": "(sourceType: string, transform: string) => IcebergTransformType"
+}

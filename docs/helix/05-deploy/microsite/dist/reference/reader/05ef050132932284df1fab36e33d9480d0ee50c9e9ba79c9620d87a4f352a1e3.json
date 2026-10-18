@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"actionFieldValueKey\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionReference\"]"
+      ],
+      "name": "reference",
+      "optional": false,
+      "type": "ActionReference"
+    }
+  ],
+  "purpose": "actionFieldValueKey accepts reference and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(reference: ActionReference) => string"
+}

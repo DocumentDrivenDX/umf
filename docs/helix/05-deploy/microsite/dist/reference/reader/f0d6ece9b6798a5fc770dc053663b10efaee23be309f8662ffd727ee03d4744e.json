@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BindingMigrationReceipt\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-binding-migration-1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "original",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "migrated",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingRelationship\"]",
+        "[\"api\",\".\",\"StableBindingRelationship\"]"
+      ],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ path: string; original: BindingRelationship; stable: StableBindingRelationship; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BindingMigrationReceipt is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BindingMigrationReceipt"
+}

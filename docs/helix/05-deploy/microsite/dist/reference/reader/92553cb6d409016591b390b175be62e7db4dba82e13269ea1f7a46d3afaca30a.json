@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OpenapiReferenceResolution\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"link\" | \"parameter\" | \"header\" | \"response\" | \"request-body\" | \"example\" | \"security-scheme\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]",
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "{ uri: string; pointer: string; node: NativeJson; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]",
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "chain",
+      "optional": false,
+      "type": "{ uri: string; pointer: string; reference: NativeJson; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "effectiveAnnotations",
+      "optional": false,
+      "type": "{ summary?: string; description?: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "limitations",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OpenapiReferenceResolution is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OpenapiReferenceResolution"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeProtobufDescriptorEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DescriptorNode\"]"
+      ],
+      "name": "edit",
+      "optional": false,
+      "type": "(node: DescriptorNode) => void"
+    }
+  ],
+  "purpose": "Produces an explicit validation candidate; never claims a compiler-validated edit.",
+  "related": [],
+  "returns": "{ document: Document; diagnostics: Diagnostic[]; }",
+  "task": "Author and edit",
+  "type": "(document: Document, edit: (node: DescriptorNode) => void) => { document: Document; diagnostics: Diagnostic[]; }"
+}

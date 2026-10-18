@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionFrame\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionReference\"]"
+      ],
+      "name": "record",
+      "optional": false,
+      "type": "ActionReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionRule\"]"
+      ],
+      "name": "selector",
+      "optional": false,
+      "type": "ActionRule"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "maxEntities",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionReference\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "ActionReference[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionRelationshipReference\"]"
+      ],
+      "name": "relationships",
+      "optional": false,
+      "type": "ActionRelationshipReference[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "create",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "delete",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionFrame is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionFrame"
+}

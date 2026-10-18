@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectIcebergTableContext\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Checks only retained identities and current selections; never mutates or normalizes metadata.",
+  "related": [],
+  "returns": "IcebergTableContext",
+  "task": "Inspect and select",
+  "type": "(document: Document) => IcebergTableContext"
+}

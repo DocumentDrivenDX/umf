@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TypeSpecJsonSchemaPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "rootFile",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retrievalBase",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JsonObject\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "JsonObject"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "usage",
+      "optional": false,
+      "type": "\"native-emission\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"allow-reported-loss\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "TypeSpecJsonSchemaPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TypeSpecJsonSchemaPolicy"
+}

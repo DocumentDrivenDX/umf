@@ -1,0 +1,76 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreKeyLookup\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"lookup-core-key\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\" | \"4.0.0\" | \"3.0.0\" | \"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreKeyIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyDefinition\"]"
+      ],
+      "name": "key",
+      "optional": false,
+      "type": "CoreKeyDefinition"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "uninterpretedPaths",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreKeyLookup is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreKeyLookup"
+}

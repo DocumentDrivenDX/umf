@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"arrowIpcConsistencySchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as arrowIpcConsistencySchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { layout: { $ref: string; }; complete: { const: boolean; }; footerChecks: { enum: string[]; }; diagnostics: { type: string; items: { type: string; required: string[]; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; }"
+}

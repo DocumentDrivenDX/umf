@@ -1,0 +1,55 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlRelationshipLayoutPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"postgresql-relationship-layout-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetVersion",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutField\"]"
+      ],
+      "name": "fieldLayouts",
+      "optional": false,
+      "type": "PostgresqlLayoutField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutKey\"]"
+      ],
+      "name": "keyLayouts",
+      "optional": false,
+      "type": "PostgresqlLayoutKey[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRelationshipLayout\"]"
+      ],
+      "name": "relationshipLayouts",
+      "optional": false,
+      "type": "PostgresqlRelationshipLayout[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlRelationshipLayoutPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlRelationshipLayoutPolicy"
+}

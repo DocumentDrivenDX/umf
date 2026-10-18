@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getParquetFieldMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Field domains only, not row shape, repetition flattening or instance validation.",
+  "related": [],
+  "returns": "ParquetFieldMetadataResult",
+  "task": "Inspect and select",
+  "type": "(source: Document) => ParquetFieldMetadataResult"
+}

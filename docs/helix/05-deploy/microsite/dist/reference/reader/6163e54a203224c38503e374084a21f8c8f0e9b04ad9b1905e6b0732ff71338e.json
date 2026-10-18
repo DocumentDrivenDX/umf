@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverTableSpecFacetSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverTableSpecFacetSource accepts input, current and returns string | Record<string, string>.",
+  "related": [],
+  "returns": "string | Record<string, string>",
+  "task": "Import and export",
+  "type": "(input: TableSpecFacetClassification, current: Document) => string | Record<string, string>"
+}

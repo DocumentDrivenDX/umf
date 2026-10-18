@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"setSemanticTypes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeAnnotation\"]"
+      ],
+      "name": "annotation",
+      "optional": false,
+      "type": "SemanticTypeAnnotation"
+    }
+  ],
+  "purpose": "Copy-on-write authoring; preserves native payloads and unfamiliar annotations.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(document: Document, module: string, element: string, annotation: SemanticTypeAnnotation) => Document"
+}

@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeRdfDatasetMerge\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "documents",
+      "optional": false,
+      "type": "Document[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; graphPolicy: \"union-by-name\"; blankNodePolicy: \"disjoint-inputs\"; }"
+    }
+  ],
+  "purpose": "Explicit dataset composition policy; equal blankNodeScope strings never establish shared identity.",
+  "related": [],
+  "returns": "RdfMergeReport",
+  "task": "Author and edit",
+  "type": "(documents: Document[], options: { id: string; graphPolicy: \"union-by-name\"; blankNodePolicy: \"disjoint-inputs\"; }) => RdfMergeReport"
+}

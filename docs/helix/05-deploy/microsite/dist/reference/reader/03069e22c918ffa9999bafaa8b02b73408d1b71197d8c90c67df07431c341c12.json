@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipParquetNative\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverRelationshipParquetNative accepts input, current and returns { hex: string; }.",
+  "related": [],
+  "returns": "{ hex: string; }",
+  "task": "Import and export",
+  "type": "(input: RelationshipParquetProjection, current: Document) => { hex: string; }"
+}

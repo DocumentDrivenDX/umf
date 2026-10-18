@@ -1,0 +1,64 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreNullabilityDeclaration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"declare-core-nullability\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\" | \"5.0.0\" | \"4.0.0\" | \"3.0.0\" | \"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreNullabilityIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Nullability\"]"
+      ],
+      "name": "provenance",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; nullability: Nullability; binding: { id: \"umf.core.nullability.authoring\"; version: \"1.0.0\" | \"2.0.0\" | \"3.0.0\" | \"4.0.0\" | \"5.0.0\"; }; basis: \"explicit-author-declaration\"; nativePath: null; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreNullabilityDeclaration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreNullabilityDeclaration"
+}

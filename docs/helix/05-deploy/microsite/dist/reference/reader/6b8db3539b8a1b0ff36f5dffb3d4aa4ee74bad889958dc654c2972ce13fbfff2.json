@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyCoreDatasetValues\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetValueCheck\"]"
+      ],
+      "name": "receiptInput",
+      "optional": false,
+      "type": "CoreDatasetValueCheck"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetInput\"]"
+      ],
+      "name": "expectedInput",
+      "optional": false,
+      "type": "CoreDatasetInput"
+    }
+  ],
+  "purpose": "verifyCoreDatasetValues accepts receiptInput, current, expectedInput and returns CoreDatasetValueCheck.",
+  "related": [],
+  "returns": "CoreDatasetValueCheck",
+  "task": "Other APIs",
+  "type": "(receiptInput: CoreDatasetValueCheck, current: Document, expectedInput: CoreDatasetInput) => CoreDatasetValueCheck"
+}

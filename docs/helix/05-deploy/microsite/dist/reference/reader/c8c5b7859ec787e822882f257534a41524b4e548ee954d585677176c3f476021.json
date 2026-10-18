@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"sameRfc3339ExactInstant\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "left",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "right",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "sameRfc3339ExactInstant accepts left, right and returns boolean.",
+  "related": [],
+  "returns": "boolean",
+  "task": "Other APIs",
+  "type": "(left: string, right: string) => boolean"
+}

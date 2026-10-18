@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"renameSparkField\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ fieldPointer: string; name: string; uninterpretedMetadata: \"preserve-and-report\"; }"
+    }
+  ],
+  "purpose": "renameSparkField accepts document, options and returns { source: Document; document: Document; validation: Validation; complete: false; renamedCollationPaths: { from: string; to: string; }[]; diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "{ source: Document; document: Document; validation: Validation; complete: false; renamedCollationPaths: { from: string; to: string; }[]; diagnostics: Diagnostic[]; }",
+  "task": "Other APIs",
+  "type": "(document: Document, options: { fieldPointer: string; name: string; uninterpretedMetadata: \"preserve-and-report\"; }) => { source: Document; document: Document; validation: Validation; complete: false; renamedCollationPaths: { from: string; to: string; }[]; diagnostics: Diagnostic[]; }"
+}

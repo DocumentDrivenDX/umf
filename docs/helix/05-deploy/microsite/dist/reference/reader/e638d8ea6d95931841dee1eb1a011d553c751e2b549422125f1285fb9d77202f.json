@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"prepareCoreInspection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Invocation-owned metadata only; snapshot reference identifies the exact retained source.",
+  "related": [],
+  "returns": "Readonly<{ operation: \"prepare-core-inspection\"; version: \"1.0.0\"; source: Document; provenance: \"unverified\"; keys: (identity: CoreRecordIdentity) => CoreKeyMeaning; facets: (identity: CoreRecordIdentity) => CoreFacetMeaning; schemaProperties: (identity: CoreRecordIdentity) => Record<string, Json>; }>",
+  "task": "Inspect and select",
+  "type": "(input: Document) => Readonly<{ operation: \"prepare-core-inspection\"; version: \"1.0.0\"; source: Document; provenance: \"unverified\"; keys: (identity: CoreRecordIdentity) => CoreKeyMeaning; facets: (identity: CoreRecordIdentity) => CoreFacetMeaning; schemaProperties: (identity: CoreRecordIdentity) => Record<string, Json>; }>"
+}

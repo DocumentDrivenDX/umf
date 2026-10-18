@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportJsonSchemaResources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportJsonSchemaResources accepts document and returns Record<string, string>.",
+  "related": [],
+  "returns": "Record<string, string>",
+  "task": "Import and export",
+  "type": "(document: Document) => Record<string, string>"
+}

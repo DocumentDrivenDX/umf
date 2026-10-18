@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyFieldProjectionInspection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldProjectionInspection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FieldProjectionInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": true,
+      "type": "PostgresqlBackend | undefined"
+    }
+  ],
+  "purpose": "verifyFieldProjectionInspection accepts input, backend and returns Promise<FieldProjectionInspection>.",
+  "related": [],
+  "returns": "Promise<FieldProjectionInspection>",
+  "task": "Other APIs",
+  "type": "(input: FieldProjectionInspection, backend?: PostgresqlBackend) => Promise<FieldProjectionInspection>"
+}

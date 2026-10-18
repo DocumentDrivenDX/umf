@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"resolveOpenapiDynamicReference\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "{ pointer: string; resourceUri?: string; schemaResources?: string[]; evaluationScope: string[]; }"
+    }
+  ],
+  "purpose": "Resolve one $dynamicRef against an explicit outermost-to-innermost resource stack.",
+  "related": [],
+  "returns": "{ source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: \"static\" | \"dynamic\"; complete: false; limitations: string[]; }",
+  "task": "Inspect and select",
+  "type": "(document: Document, input: { pointer: string; resourceUri?: string; schemaResources?: string[]; evaluationScope: string[]; }) => { source: OpenapiSchemaLocation; initialTarget: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; evaluationScope: string[]; resolution: \"static\" | \"dynamic\"; complete: false; limitations: string[]; }"
+}

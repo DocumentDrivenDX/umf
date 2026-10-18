@@ -1,0 +1,90 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRelationshipLookup\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"lookup-core-relationship\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\" | \"3.0.0\" | \"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "Source"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRelationshipIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationship\"]"
+      ],
+      "name": "relationship",
+      "optional": false,
+      "type": "CoreRelationship"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "uninterpretedPaths",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "residuals",
+      "optional": false,
+      "type": "[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRelationshipLookup is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRelationshipLookup"
+}

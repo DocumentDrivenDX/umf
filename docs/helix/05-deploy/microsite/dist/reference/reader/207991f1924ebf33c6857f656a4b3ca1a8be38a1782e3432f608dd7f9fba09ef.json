@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreCardinality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreCardinalityIdentity"
+    }
+  ],
+  "purpose": "Inspect ideal container/item meaning without inferring native shape or author provenance.",
+  "related": [],
+  "returns": "CoreCardinalityInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreCardinalityIdentity) => CoreCardinalityInspection"
+}

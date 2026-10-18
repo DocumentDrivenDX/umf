@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parquetRowsSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as parquetRowsSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; status: { enum: string[]; }; complete: { const: boolean; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; required: string[]; additionalProperties: boolean; }; }; rows: { type: string; maxItems: number; items: { $ref: string; }; }; }; additionalProperties: boolean; $defs: { rowValue: { oneOf: ({ type: string; required?: never; properties?: never; additionalProperties?: never; } | { type: string; required: string[]; properties: { kind: { const: string; }; value: { oneOf: ({ type: string; required: string[]; properties: { type: { const: string; }; value: { type: string; pattern?: never; maxLength?: never; }; hex?: never; }; additionalProperties: boolean; } | { type: string; required: string[]; properties: { type: { const: string; }; value: { type: string; pattern: string; maxLength: number; }; hex?: never; }; additionalProperties: boolean; } | { type: string; required: string[]; properties: { type: { const: string; }; hex: { type: string; pattern: string; minLength?: never; maxLength?: never; }; value?: never; }; additionalProperties: boolean; } | { type: string; required: string[]; properties: { type: { const: string; }; hex: { type: string; pattern: string; minLength: number; maxLength: number; }; value?: never; }; additionalProperties: boolean; })[]; }; fields?: never; items?: never; }; additionalProperties: boolean; } | { type: string; required: string[]; properties: { kind: { const: string; }; fields: { type: string; items: { type: string; required: string[]; properties: { index: { type: string; minimum: number; }; name: { type: string; }; value: { $ref: string; }; }; additionalProperties: boolean; }; }; value?: never; items?: never; }; additionalProperties: boolean; } | { type: string; required: string[]; properties: { kind: { const: string; }; items: { type: string; maxItems: number; items: { $ref: string; }; }; value?: never; fields?: never; }; additionalProperties: boolean; })[]; }; }; }"
+}

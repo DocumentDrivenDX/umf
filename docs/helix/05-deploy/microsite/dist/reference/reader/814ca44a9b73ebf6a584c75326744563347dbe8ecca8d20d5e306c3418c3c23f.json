@@ -1,0 +1,70 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FacetsPostgresqlRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columnName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"bigint\" | \"boolean\" | \"date\" | \"integer\" | \"time\" | \"timestamp\" | \"smallint\" | \"numeric\" | \"real\" | \"double precision\" | \"text\" | \"bytea\" | \"time with time zone\" | \"timestamp with time zone\" | \"varchar\" | \"char\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "encoding",
+      "optional": false,
+      "type": "\"carrier-only\" | \"checked\" | \"type-modifier\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligation",
+      "optional": false,
+      "type": "\"value-domain\" | \"exact-input\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "FacetsPostgresqlRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FacetsPostgresqlRequest"
+}

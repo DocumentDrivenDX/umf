@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityDisclosureBatch\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"umf.security.disclosure/0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityOutput\"]"
+      ],
+      "name": "rows",
+      "optional": false,
+      "type": "SecurityOutput[][]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityDisclosureBatch is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityDisclosureBatch"
+}

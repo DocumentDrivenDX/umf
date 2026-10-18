@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TypeSpecPayload\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"typespec-1.16.0-sources\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "entrypoint",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "files",
+      "optional": false,
+      "type": "Record<string, string>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "libraries",
+      "optional": true,
+      "type": "Record<string, string>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TypeSpecPayload is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TypeSpecPayload"
+}

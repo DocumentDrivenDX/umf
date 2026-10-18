@@ -1,0 +1,89 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddPostgresqlTableProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reported\" | \"proposed\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlTablePolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "DddPostgresqlTablePolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": false,
+      "type": "{ system: string; version: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlTableResidual\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "DddPostgresqlTableResidual[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlTableMapping\"]"
+      ],
+      "name": "mappings",
+      "optional": false,
+      "type": "DddPostgresqlTableMapping[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "candidate",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "targetArchive",
+      "optional": true,
+      "type": "Document"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddPostgresqlTableProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddPostgresqlTableProjection"
+}

@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"GraphqlInputBindings\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inputType",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "list",
+      "optional": false,
+      "type": "\"array-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "idEncoding",
+      "optional": false,
+      "type": "\"string-or-integer\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"allow-reported-loss\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "GraphqlInputBindings is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "GraphqlInputBindings"
+}

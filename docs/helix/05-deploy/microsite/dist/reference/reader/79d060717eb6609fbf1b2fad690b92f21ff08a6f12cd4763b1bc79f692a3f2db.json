@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"repairParquetDictionaryOffsets\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Explicit correction of a dictionary stored at data_page_offset with no dictionary offset.",
+  "related": [],
+  "returns": "ParquetOffsetRepair",
+  "task": "Other APIs",
+  "type": "(source: Document) => ParquetOffsetRepair"
+}

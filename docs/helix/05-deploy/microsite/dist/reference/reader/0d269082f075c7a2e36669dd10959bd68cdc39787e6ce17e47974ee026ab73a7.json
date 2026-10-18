@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"importProtobufSources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufSourceRequest\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ProtobufSourceRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufSourceCompiler\"]"
+      ],
+      "name": "compiler",
+      "optional": false,
+      "type": "ProtobufSourceCompiler"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "importProtobufSources accepts input, compiler, options and returns Promise<Document>.",
+  "related": [],
+  "returns": "Promise<Document>",
+  "task": "Import and export",
+  "type": "(input: ProtobufSourceRequest, compiler: ProtobufSourceCompiler, options: { id: string; }) => Promise<Document>"
+}

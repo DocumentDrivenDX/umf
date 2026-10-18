@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyParquetRelationshipClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifyParquetRelationshipClassification accepts input, current and returns ParquetRelationshipClassification.",
+  "related": [],
+  "returns": "ParquetRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: ParquetRelationshipClassification, current: Document) => ParquetRelationshipClassification"
+}

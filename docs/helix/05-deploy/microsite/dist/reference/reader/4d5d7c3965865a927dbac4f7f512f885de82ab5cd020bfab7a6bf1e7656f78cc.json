@@ -1,0 +1,93 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DeltaActionState\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "protocol",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "metaData",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "adds",
+      "optional": false,
+      "type": "NativeJson[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "removes",
+      "optional": false,
+      "type": "NativeJson[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "transactions",
+      "optional": false,
+      "type": "NativeJson[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "domains",
+      "optional": false,
+      "type": "NativeJson[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "commitInfo",
+      "optional": false,
+      "type": "NativeJson[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaActionOccurrence\"]"
+      ],
+      "name": "deferred",
+      "optional": false,
+      "type": "DeltaActionOccurrence[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaActionState is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaActionState"
+}

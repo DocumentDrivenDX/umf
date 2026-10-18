@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./loader-contract\",\"createValidator\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "Default: true.",
+      "links": [],
+      "name": "strict",
+      "optional": true,
+      "type": "boolean"
+    }
+  ],
+  "purpose": "createValidator accepts strict and returns Ajv2020.",
+  "related": [],
+  "returns": "Ajv2020",
+  "task": "Author and edit",
+  "type": "(strict?: boolean) => Ajv2020"
+}

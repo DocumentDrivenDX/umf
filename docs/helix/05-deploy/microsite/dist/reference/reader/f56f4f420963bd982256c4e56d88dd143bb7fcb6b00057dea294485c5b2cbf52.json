@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Element\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scalarType",
+      "optional": true,
+      "type": "\"string\" | \"boolean\" | \"date\" | \"integer\" | \"decimal\" | \"float\" | \"binary\" | \"time\" | \"timestamp\" | \"bits128\" | \"uuid\" | (string & {})"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "extensions",
+      "optional": false,
+      "type": "Record<string, Json>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "references",
+      "optional": true,
+      "type": "{ [key: string]: unknown; role: string; module: string; element: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Element is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Element"
+}

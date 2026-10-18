@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getGraphqlAst\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getGraphqlAst accepts document and returns DocumentNode.",
+  "related": [],
+  "returns": "DocumentNode",
+  "task": "Inspect and select",
+  "type": "(document: Document) => DocumentNode"
+}

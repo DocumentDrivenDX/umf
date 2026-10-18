@@ -1,0 +1,45 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RecordTableSpecRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]",
+        "[\"api\",\".\",\"FieldTableSpecRequest\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "{ author: CoreKindDeclaration; columnName: string; nativeType: FieldTableSpecRequest[\"nativeType\"]; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RecordTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RecordTableSpecRequest"
+}

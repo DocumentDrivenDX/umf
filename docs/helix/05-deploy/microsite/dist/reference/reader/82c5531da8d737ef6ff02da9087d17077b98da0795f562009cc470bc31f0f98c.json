@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectTypeSpecToJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TypeSpecJsonSchemaPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TypeSpecJsonSchemaPolicy"
+    }
+  ],
+  "purpose": "Materialize native output with its dependencies; no claim of source-domain equivalence.",
+  "related": [],
+  "returns": "Promise<{ status: \"blocked\" | \"projected\"; source: Document; policy: TypeSpecJsonSchemaPolicy; complete: false; emission: { status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }; issues: ProjectionIssue[]; resources: { file: string; retrievalUri: string; }[]; target?: Document; }>",
+  "task": "Import and export",
+  "type": "(source: Document, input: TypeSpecJsonSchemaPolicy) => Promise<{ status: \"blocked\" | \"projected\"; source: Document; policy: TypeSpecJsonSchemaPolicy; complete: false; emission: { status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }; issues: ProjectionIssue[]; resources: { file: string; retrievalUri: string; }[]; target?: Document; }>"
+}

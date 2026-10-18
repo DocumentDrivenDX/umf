@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectSecSubmissions\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceId",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Local supplied recent arrays only; original JSON remains the source authority.",
+  "related": [],
+  "returns": "{ companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }",
+  "task": "Import and export",
+  "type": "(input: string, sourceId: string) => { companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getProtobufDescriptorSet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getProtobufDescriptorSet accepts document and returns DescriptorNode.",
+  "related": [],
+  "returns": "DescriptorNode",
+  "task": "Inspect and select",
+  "type": "(document: Document) => DescriptorNode"
+}

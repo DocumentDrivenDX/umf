@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"rollbackSchemaPropertiesEnvelope\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SchemaPropertiesUpgradeReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SchemaPropertiesUpgradeReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "rollbackSchemaPropertiesEnvelope accepts input, current and returns { operation: \"rollback-schema-properties-envelope\"; version: \"1.0.0\"; source: Document; target: Document; receipt: SchemaPropertiesUpgradeReceipt; reason: string; }.",
+  "related": [],
+  "returns": "{ operation: \"rollback-schema-properties-envelope\"; version: \"1.0.0\"; source: Document; target: Document; receipt: SchemaPropertiesUpgradeReceipt; reason: string; }",
+  "task": "Author and edit",
+  "type": "(input: SchemaPropertiesUpgradeReceipt, current: Document) => { operation: \"rollback-schema-properties-envelope\"; version: \"1.0.0\"; source: Document; target: Document; receipt: SchemaPropertiesUpgradeReceipt; reason: string; }"
+}

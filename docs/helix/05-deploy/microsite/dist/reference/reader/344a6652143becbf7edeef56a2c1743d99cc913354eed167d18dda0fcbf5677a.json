@@ -1,0 +1,86 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"LinkmlSlotValuesReport\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "className",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "slotName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"document-scalar-slot-values\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"resolved\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "Partial<Record<\"role\" | \"required\" | \"key\" | \"pattern\" | \"description\" | \"domain\" | \"range\" | \"inherited\" | \"readonly\" | \"ifabsent\" | \"list_elements_unique\" | \"list_elements_ordered\" | \"shared\" | \"identifier\" | \"designates_type\" | \"relational_role\" | \"recommended\" | \"multivalued\" | \"inlined\" | \"inlined_as_list\" | \"minimum_value\" | \"maximum_value\" | \"value_presence\" | \"equals_string\" | \"equals_number\" | \"equals_expression\" | \"exact_cardinality\" | \"minimum_cardinality\" | \"maximum_cardinality\", NativeJson>>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"LinkmlScalarSlotField\"]",
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "derivations",
+      "optional": false,
+      "type": "{ field: LinkmlScalarSlotField; path: string; rule: \"base\" | \"slot-inheritance\" | \"slot-usage\" | \"default-range\" | \"identifier-required\" | \"key-required\" | \"list-inlined\"; value: NativeJson; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "LinkmlSlotValuesReport is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "LinkmlSlotValuesReport"
+}

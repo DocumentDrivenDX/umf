@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getPostgresqlCatalogReconstruction\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Original archive only; the caller must still verify correspondence and server prerequisites.",
+  "related": [],
+  "returns": "{ sql: string; complete: false; provenance: \"original-capture-archive\"; }",
+  "task": "Inspect and select",
+  "type": "(document: Document) => { sql: string; complete: false; provenance: \"original-capture-archive\"; }"
+}

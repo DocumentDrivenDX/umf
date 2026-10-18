@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"selectDbtManifestDependencies\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ roots: string[]; includeMacros?: boolean; maxDepth?: number; maxNodes?: number; }"
+    }
+  ],
+  "purpose": "Upstream context selection. Full source accompanies the bounded view; this is not a runnable manifest subset.",
+  "related": [],
+  "returns": "DbtDependencySelection",
+  "task": "Inspect and select",
+  "type": "(document: Document, options: { roots: string[]; includeMacros?: boolean; maxDepth?: number; maxNodes?: number; }) => DbtDependencySelection"
+}

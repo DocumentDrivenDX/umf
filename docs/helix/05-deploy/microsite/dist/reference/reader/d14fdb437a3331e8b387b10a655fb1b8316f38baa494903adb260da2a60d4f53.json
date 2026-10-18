@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"KeyParquetRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "record",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "columns",
+      "optional": false,
+      "type": "{ field: CoreRecordIdentity; name: string; carrier: ParquetFacetCarrier; fieldId?: number; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "KeyParquetRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "KeyParquetRequest"
+}

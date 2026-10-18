@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"validateCoreFieldValue\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fieldInput",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "valueInput",
+      "optional": false,
+      "type": "CoreLiteral"
+    }
+  ],
+  "purpose": "validateCoreFieldValue accepts input, fieldInput, valueInput and returns Validation.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Read and validate",
+  "type": "(input: Document, fieldInput: { module: string; element: string; }, valueInput: CoreLiteral) => Validation"
+}

@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverDddPostgresqlIdeal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverDddPostgresqlIdeal accepts input, current, backend and returns Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>.",
+  "related": [],
+  "returns": "Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>",
+  "task": "Import and export",
+  "type": "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<{ logical: Document; binding: Document; policy: DddPostgresqlPolicy; }>"
+}

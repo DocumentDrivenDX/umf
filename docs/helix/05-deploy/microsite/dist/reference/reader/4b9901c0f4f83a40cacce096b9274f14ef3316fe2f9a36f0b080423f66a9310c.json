@@ -1,0 +1,114 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SecurityFactCut\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "trusted",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "generation",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "expectedGeneration",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policyId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policyRevision",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ontologyDocumentId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ontologyRevision",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFact\"]"
+      ],
+      "name": "subjects",
+      "optional": false,
+      "type": "SecurityFact[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFact\"]"
+      ],
+      "name": "facts",
+      "optional": false,
+      "type": "SecurityFact[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "coverage",
+      "optional": false,
+      "type": "{ type: SecurityRef; complete: boolean; fields: SecurityRef[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]",
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "{ field: SecurityRef; value: CoreLiteral; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "maxFacts",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "maxSteps",
+      "optional": false,
+      "type": "number"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Host attestation, not a credential: never construct this from policy or client input.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityFactCut"
+}

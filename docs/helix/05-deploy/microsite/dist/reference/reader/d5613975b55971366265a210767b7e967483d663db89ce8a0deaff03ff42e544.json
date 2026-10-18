@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"reconcileDeltaCheckpointSidecars\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "checkpoint",
+      "optional": false,
+      "type": "DeltaCommit"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "commits",
+      "optional": false,
+      "type": "DeltaCommit[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaSidecar\"]"
+      ],
+      "name": "sidecars",
+      "optional": false,
+      "type": "DeltaSidecar[]"
+    }
+  ],
+  "purpose": "Exact caller-bound paths, no filesystem/network lookup or URI alias resolution.",
+  "related": [],
+  "returns": "DeltaSidecarReconciliation",
+  "task": "Other APIs",
+  "type": "(checkpoint: DeltaCommit, commits: DeltaCommit[], sidecars: DeltaSidecar[]) => DeltaSidecarReconciliation"
+}

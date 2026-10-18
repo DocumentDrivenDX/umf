@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverParquetNullabilityBytes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetNullabilityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetNullabilityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recover original file bytes, including unclaimed pages and embedded metadata.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Import and export",
+  "type": "(input: ParquetNullabilityClassification, current: Document) => Uint8Array"
+}

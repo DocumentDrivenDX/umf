@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectFieldToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldAvroRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FieldAvroRequest"
+    }
+  ],
+  "purpose": "projectFieldToAvro accepts input, options and returns FieldAvroProjection & { diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "FieldAvroProjection & { diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: FieldAvroRequest) => FieldAvroProjection & { diagnostics: Diagnostic[]; }"
+}

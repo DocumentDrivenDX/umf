@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyRecordProjectionInspection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordProjectionInspection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RecordProjectionInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": true,
+      "type": "PostgresqlBackend | undefined"
+    }
+  ],
+  "purpose": "verifyRecordProjectionInspection accepts input, backend and returns Promise<RecordProjectionInspection>.",
+  "related": [],
+  "returns": "Promise<RecordProjectionInspection>",
+  "task": "Other APIs",
+  "type": "(input: RecordProjectionInspection, backend?: PostgresqlBackend) => Promise<RecordProjectionInspection>"
+}

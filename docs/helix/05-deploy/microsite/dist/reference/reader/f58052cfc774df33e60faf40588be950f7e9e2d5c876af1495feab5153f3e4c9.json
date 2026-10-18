@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"smithySelectionResultSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as smithySelectionResultSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { status: { enum: string[]; }; selector: { type: string; minLength: number; }; assembly: { $ref: string; }; issues: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { code: { type: string; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; }; }; complete: { const: boolean; }; shapeIds: { type: string; uniqueItems: boolean; items: { type: string; minLength: number; pattern: string; }; }; }; allOf: { if: { properties: { status: { const: string; }; }; }; then: { required: string[]; properties: { assembly: { properties: { status: { const: string; }; }; }; issues: { maxItems: number; }; }; }; else: { not: { required: string[]; }; }; }[]; }"
+}

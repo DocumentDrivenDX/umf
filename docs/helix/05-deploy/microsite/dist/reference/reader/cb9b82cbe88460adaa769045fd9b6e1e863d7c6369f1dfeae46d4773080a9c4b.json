@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionFrameState\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "exists",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "Record<string, CoreLiteral>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionFrameState is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionFrameState"
+}

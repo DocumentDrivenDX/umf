@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreSemanticTypeReferenceSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreSemanticTypeReferenceSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; required: string[]; properties: { vocabulary: { type: string; minLength: number; }; version: { type: string; minLength: number; }; term: { type: string; minLength: number; }; }; }"
+}

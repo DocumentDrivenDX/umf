@@ -1,0 +1,116 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerRelationshipObservation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "nativePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "table",
+      "optional": false,
+      "type": "{ schema: string; name: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "nativeForeignKey",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "referencedKeys",
+      "optional": false,
+      "type": "{ path: string; nativeKey: Json; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceFields",
+      "optional": false,
+      "type": "{ module: string; element: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetFields",
+      "optional": false,
+      "type": "{ module: string; element: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "enforcement",
+      "optional": false,
+      "type": "\"unknown\" | \"enabled-trusted\" | \"enabled-untrusted\" | \"disabled\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authorIntent",
+      "optional": false,
+      "type": "\"unknown\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"inferred\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deleteAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "updateAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "notForReplication",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resolution",
+      "optional": false,
+      "type": "\"unresolved\" | \"captured-tuple-candidate\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerRelationshipObservation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerRelationshipObservation"
+}

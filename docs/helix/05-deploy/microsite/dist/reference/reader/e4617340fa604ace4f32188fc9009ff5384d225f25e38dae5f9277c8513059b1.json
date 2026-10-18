@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlLayoutKey\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
+      ],
+      "name": "record",
+      "optional": false,
+      "type": "CoreKeyFieldReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "key",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "table",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "constraint",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutKeyComponent\"]"
+      ],
+      "name": "components",
+      "optional": false,
+      "type": "PostgresqlLayoutKeyComponent[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlLayoutKey is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlLayoutKey"
+}

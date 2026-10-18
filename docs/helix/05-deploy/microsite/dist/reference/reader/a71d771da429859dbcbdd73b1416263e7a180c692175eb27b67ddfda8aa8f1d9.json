@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"editTableSpecColumn\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "index",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "changes",
+      "optional": false,
+      "type": "Record<string, NativeJson>"
+    }
+  ],
+  "purpose": "Merge explicit native field changes on a copy, retaining unspecified fields.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(document: Document, index: number, changes: Record<string, NativeJson>) => Document"
+}

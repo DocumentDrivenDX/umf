@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyPostgresqlRelationshipClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "verifyPostgresqlRelationshipClassification accepts input, current, backend and returns Promise<PostgresqlRelationshipClassification & { [x: string]: {}; }>.",
+  "related": [],
+  "returns": "Promise<PostgresqlRelationshipClassification & { [x: string]: {}; }>",
+  "task": "Other APIs",
+  "type": "(input: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend) => Promise<PostgresqlRelationshipClassification & { [x: string]: {}; }>"
+}

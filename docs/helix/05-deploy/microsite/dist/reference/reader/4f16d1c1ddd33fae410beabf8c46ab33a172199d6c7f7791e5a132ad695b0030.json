@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardDataset\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"dataset\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "grain",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardExpression\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "{ kind: \"table\"; table: string; } | { kind: \"query\"; query: DashboardExpression; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardField\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "Record<string, DashboardField>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardDataset is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardDataset"
+}

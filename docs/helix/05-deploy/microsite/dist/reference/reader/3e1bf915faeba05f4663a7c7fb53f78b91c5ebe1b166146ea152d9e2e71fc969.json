@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RelationshipExtraClassificationRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraSystem\"]"
+      ],
+      "name": "system",
+      "optional": false,
+      "type": "RelationshipExtraSystem"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraArchive\"]"
+      ],
+      "name": "archive",
+      "optional": false,
+      "type": "RelationshipExtraArchive"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RelationshipExtraClassificationRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RelationshipExtraClassificationRequest"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipAvroNative\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverRelationshipAvroNative accepts input, current and returns { schema: string; dependencies: []; }.",
+  "related": [],
+  "returns": "{ schema: string; dependencies: []; }",
+  "task": "Import and export",
+  "type": "(input: RelationshipAvroProjection, current: Document) => { schema: string; dependencies: []; }"
+}

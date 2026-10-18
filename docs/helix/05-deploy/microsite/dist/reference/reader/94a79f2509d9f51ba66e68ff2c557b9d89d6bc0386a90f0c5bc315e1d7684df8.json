@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"securityNot\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityTruth\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "SecurityTruth"
+    }
+  ],
+  "purpose": "securityNot accepts value and returns SecurityTruth.",
+  "related": [],
+  "returns": "SecurityTruth",
+  "task": "Other APIs",
+  "type": "(value: SecurityTruth) => SecurityTruth"
+}

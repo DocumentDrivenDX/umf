@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getTableSpecTable\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Copy the captured table view, including unknown native metadata and exact numbers.\nSplit sidecars and shadowed content remain in the document's source archive.\nThis is inspection, not native validation or a flattened split-file export.",
+  "related": [],
+  "returns": "NativeJson",
+  "task": "Inspect and select",
+  "type": "(document: Document) => NativeJson"
+}

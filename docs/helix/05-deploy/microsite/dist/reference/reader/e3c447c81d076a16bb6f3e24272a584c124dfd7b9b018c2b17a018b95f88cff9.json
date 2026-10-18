@@ -1,0 +1,65 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CardinalityParquetRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fieldName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetCardinalityCarrier\"]"
+      ],
+      "name": "nativeType",
+      "optional": false,
+      "type": "ParquetCardinalityCarrier"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "availability",
+      "optional": false,
+      "type": "\"unresolved\" | \"definition-level\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requireExactValues",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CardinalityParquetRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CardinalityParquetRequest"
+}

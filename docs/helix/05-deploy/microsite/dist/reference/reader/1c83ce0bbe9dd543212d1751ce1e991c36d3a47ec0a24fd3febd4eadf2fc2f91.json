@@ -1,0 +1,85 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardVisual\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"visual\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "trace",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardChart\"]"
+      ],
+      "name": "chart",
+      "optional": false,
+      "type": "DashboardChart"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardReference\"]"
+      ],
+      "name": "dataset",
+      "optional": false,
+      "type": "DashboardReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "rows",
+      "optional": true,
+      "type": "\"detail\" | \"aggregated\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardEncoding\"]"
+      ],
+      "name": "encodings",
+      "optional": false,
+      "type": "DashboardEncoding[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardPosition\"]"
+      ],
+      "name": "position",
+      "optional": false,
+      "type": "DashboardPosition"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardVisual is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardVisual"
+}

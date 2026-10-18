@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateBit128Dataset\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128DatasetRecord\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Bit128DatasetRecord[]"
+    }
+  ],
+  "purpose": "Complete finite snapshot validation. This does not authorize concurrent mutations.",
+  "related": [],
+  "returns": "Bit128DatasetRecord[]",
+  "task": "Read and validate",
+  "type": "(bindingInput: Document, sourceInput: Document, input: Bit128DatasetRecord[]) => Bit128DatasetRecord[]"
+}

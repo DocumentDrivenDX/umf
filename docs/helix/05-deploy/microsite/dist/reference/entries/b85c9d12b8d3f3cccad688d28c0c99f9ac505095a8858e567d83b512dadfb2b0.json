@@ -12,7 +12,7 @@
     "exportName": "observeArrowIpcCapture",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, backend: ArrowIpcObservationBackend): { source: Document; backend: string; complete: false; status: \"observed\" | \"uninterpreted\"; schema?: Json; message?: string; }"
+      "(document: Document, backend: ArrowIpcObservationBackend): { source: Document; backend: string; complete: false; status: \"uninterpreted\" | \"observed\"; schema?: Json; message?: string; }"
     ]
   },
   "id": "[\"api\",\".\",\"observeArrowIpcCapture\"]",

@@ -1,0 +1,20 @@
+{
+  "alternatives": [
+    "{ kind: \"subject\" | \"resource\"; identity: true; }",
+    "{ kind: \"subject\" | \"resource\" | \"context\"; field: SecurityRef; }",
+    "{ kind: \"variable\"; name: string; identity: true; }",
+    "{ kind: \"variable\"; name: string; field: SecurityRef; }",
+    "{ kind: \"variable\"; name: string; endpoint: string; }",
+    "{ kind: \"constant\"; field: SecurityRef; value: CoreLiteral; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityTerm\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "SecurityTerm is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityTerm"
+}

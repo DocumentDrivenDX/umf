@@ -1,13 +1,13 @@
 {
-  "testedManifestSha256": "f6b0ec382e70799b6430f3c63bde3cbcf628da665b98dbca14a9061af980d3e1",
+  "testedManifestSha256": "3073bd98c79a7cd3227df12bc0ee43a36d988ce2f4139720b4caaadc6ef34661",
   "measurements": {
-    "searchP95Ms": 2.899999998509884,
-    "cancellationP95Ms": 0,
+    "searchP95Ms": 0.7999999970197678,
+    "cancellationP95Ms": 0.09999999403953552,
     "trials": 20,
     "longTasks": 0,
-    "layoutShift": 0.0018348143508295114,
-    "navigationDurationMs": 7.199999999254942,
-    "initialPayloadBytes": 4972892
+    "layoutShift": 0.002347483066502463,
+    "navigationDurationMs": 7.200000002980232,
+    "initialPayloadBytes": 6268502
   },
   "profile": "umf.reference.browser-evidence/1",
   "browser": "153.0.8010.12",
@@ -45,7 +45,7 @@
     "Sixteen existing public routes retain headings and layout",
     "Seven routes at 375px without document overflow",
     "Keyboard catalog activation and visible focus",
-    "Tampered detail shard refused"
+    "Tampered startup definition shard refused before reader initialization"
   ],
   "errors": [],
   "externalRequests": [],

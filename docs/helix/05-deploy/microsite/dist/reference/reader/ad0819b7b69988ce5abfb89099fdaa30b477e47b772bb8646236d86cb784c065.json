@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddMapping\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "DddReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "DddReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "direction",
+      "optional": false,
+      "type": "\"source-to-target\" | \"target-to-source\" | \"bidirectional\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "equivalence",
+      "optional": false,
+      "type": "\"partial\" | \"asserted-equivalent\" | \"distinct\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "limitations",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "antiCorruptionLayer",
+      "optional": true,
+      "type": "{ ownerModule: string; description: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddMapping is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddMapping"
+}

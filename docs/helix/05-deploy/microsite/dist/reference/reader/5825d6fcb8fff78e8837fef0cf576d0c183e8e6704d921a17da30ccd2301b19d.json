@@ -1,0 +1,70 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CardinalitySqlServerRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columnName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"bigint\" | \"date\" | \"int\" | \"smallint\" | \"real\" | \"bit\" | \"tinyint\" | \"decimal(38,9)\" | \"float(53)\" | \"nvarchar(max)\" | \"varbinary(max)\" | \"time(7)\" | \"datetime2(7)\" | \"datetimeoffset(7)\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "storage",
+      "optional": false,
+      "type": "\"scalar\" | \"json-array\" | \"json-object\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requireExactValues",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CardinalitySqlServerRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CardinalitySqlServerRequest"
+}

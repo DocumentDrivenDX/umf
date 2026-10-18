@@ -12,7 +12,7 @@
     "exportName": "declareCoreNullability",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identity: CoreNullabilityIdentity, nullability: \"unspecified\" | \"required\" | \"absent-allowed\"): CoreNullabilityDeclaration"
+      "(input: Document, identity: CoreNullabilityIdentity, nullability: \"required\" | \"absent-allowed\" | \"unspecified\"): CoreNullabilityDeclaration"
     ]
   },
   "id": "[\"api\",\".\",\"declareCoreNullability\"]",

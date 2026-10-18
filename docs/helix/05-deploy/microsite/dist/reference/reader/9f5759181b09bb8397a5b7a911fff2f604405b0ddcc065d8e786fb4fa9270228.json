@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCoreNullabilityDeclaration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "related": [],
+  "returns": "CoreNullabilityDeclaration",
+  "task": "Other APIs",
+  "type": "(input: CoreNullabilityDeclaration, current: Document) => CoreNullabilityDeclaration"
+}

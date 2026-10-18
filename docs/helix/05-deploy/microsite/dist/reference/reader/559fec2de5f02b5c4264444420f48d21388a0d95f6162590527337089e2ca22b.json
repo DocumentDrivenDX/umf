@@ -1,0 +1,36 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"Registry\"]",
+  "kind": "Class",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ExtensionPackage\"]",
+        "[\"api\",\".\",\"SemanticValidator\"]"
+      ],
+      "name": "register",
+      "optional": false,
+      "type": "(input: ExtensionPackage, semantics?: SemanticValidator) => Registry"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registration\"]"
+      ],
+      "name": "get",
+      "optional": false,
+      "type": "(id: string, version: string) => Registration | undefined"
+    }
+  ],
+  "parameters": [],
+  "purpose": "A registry of explicitly installed extension packages and their trusted interpretation. Unknown extension payloads remain preserved.",
+  "related": [
+    "[\"api\",\".\",\"createUmfRegistry\"]",
+    "[\"api\",\".\",\"Document\"]"
+  ],
+  "returns": "",
+  "task": "Extensions",
+  "type": "Registry"
+}

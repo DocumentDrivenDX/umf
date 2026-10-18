@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectSecurityPolicy\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolutionInput",
+      "optional": true,
+      "type": "SecurityResolution | undefined"
+    }
+  ],
+  "purpose": "inspectSecurityPolicy accepts input, resolutionInput and returns SecurityInspection.",
+  "related": [],
+  "returns": "SecurityInspection",
+  "task": "Inspect and select",
+  "type": "(input: unknown, resolutionInput?: SecurityResolution) => SecurityInspection"
+}

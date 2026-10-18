@@ -1,0 +1,52 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RecordAvroRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]",
+        "[\"api\",\".\",\"FieldAvroRequest\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "{ author: CoreKindDeclaration; fieldName: string; nativeType: FieldAvroRequest[\"nativeType\"]; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RecordAvroRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RecordAvroRequest"
+}

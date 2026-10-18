@@ -1,0 +1,72 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FacetsTableSpecRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columnName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"BOOLEAN\" | \"INTEGER\" | \"DECIMAL\" | \"FLOAT\" | \"TEXT\" | \"VARCHAR\" | \"CHAR\" | \"DATE\" | \"DATETIME\" | \"TIMESTAMP\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecFacetProfile\"]"
+      ],
+      "name": "profile",
+      "optional": false,
+      "type": "TableSpecFacetProfile"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "\"raw\" | \"model-normalized\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligation",
+      "optional": false,
+      "type": "\"value-domain\" | \"exact-input\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "FacetsTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FacetsTableSpecRequest"
+}

@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreEvolutionOperationSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreEvolutionOperationSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; profile: { const: string; }; before: { $ref: string; }; after: { $ref: string; }; beforeValidation: { type: string; properties: { valid: { type: string; }; complete: { type: string; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; minLength: number; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; required: string[]; additionalProperties: boolean; }; }; }; required: string[]; additionalProperties: boolean; }; afterValidation: { type: string; properties: { valid: { type: string; }; complete: { type: string; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; minLength: number; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; required: string[]; additionalProperties: boolean; }; }; }; required: string[]; additionalProperties: boolean; }; classification: { enum: string[]; }; complete: { type: string; }; changes: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { beforePath: { type: string[]; }; afterPath: { type: string[]; }; kind: { enum: string[]; }; }; }; }; presenceChecks: { type: string; items: { $ref: string; }; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; minLength: number; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; required: string[]; additionalProperties: boolean; }; }; residuals: { type: string; items: { type: string; minLength: number; }; }; }; allOf: { if: { properties: { classification: { const: string; }; }; }; then: { properties: { complete: { const: boolean; }; residuals: { maxItems: number; type: string; }; beforeValidation: { properties: { valid: { const: boolean; }; complete: { const: boolean; }; }; type: string; }; afterValidation: { properties: { valid: { const: boolean; }; complete: { const: boolean; }; }; type: string; }; }; }; else: { properties: { complete: { const: boolean; }; residuals: { minItems: number; type: string; }; }; }; }[]; }"
+}

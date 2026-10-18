@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddField\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "type",
+      "optional": false,
+      "type": "{ kind: \"scalar\"; name: \"string\" | \"boolean\" | \"integer\" | \"decimal\" | \"date-time\" | \"bytes\"; } | { kind: \"concept\"; target: DddReference; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "cardinality",
+      "optional": false,
+      "type": "\"one\" | \"optional\" | \"many\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddField is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddField"
+}

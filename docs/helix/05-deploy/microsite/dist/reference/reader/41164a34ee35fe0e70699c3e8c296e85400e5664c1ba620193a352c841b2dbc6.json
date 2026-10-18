@@ -1,0 +1,98 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetNullabilityClassification\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-parquet-nullability\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetNullabilityRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "ParquetNullabilityRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]",
+        "[\"api\",\".\",\"Nullability\"]",
+        "[\"api\",\".\",\"ParquetNullabilityRequest\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"classified\"; idealPath: string; nativePath: string; nativeFragment: Json; ancestry: { index: number; repetition: \"required\" | \"optional\" | \"repeated\"; definitionLevel: number; repetitionLevel: number; }[]; contextIndex: number | null; absencePaths: string[]; nullability: Nullability; interpretation: \"declared\" | \"unknown\" | \"unsupported\"; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; scope: ParquetNullabilityRequest[\"scope\"]; carrier: ParquetNullabilityRequest[\"carrier\"]; basis: \"Physical definition-level availability in the selected context; repeated cardinality, writer inputs, Arrow metadata and logical refinements remain separate\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; recovery: typeof recovery; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetNullabilityClassification is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetNullabilityClassification"
+}

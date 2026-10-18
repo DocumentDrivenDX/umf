@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverNullabilityFromTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityTableSpecProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "NullabilityTableSpecProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: NullabilityTableSpecProjection, nativeText: string) => Document"
+}

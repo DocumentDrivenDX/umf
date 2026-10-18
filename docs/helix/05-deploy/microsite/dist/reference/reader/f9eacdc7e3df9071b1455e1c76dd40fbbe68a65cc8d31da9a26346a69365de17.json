@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"arrowIpcRenameSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as arrowIpcRenameSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; document: { $ref: string; }; complete: { const: boolean; }; bodyBytesPreserved: { const: boolean; }; validation: { $ref: string; }; diagnostics: { type: string; items: { type: string; required: string[]; properties: { code: { type: string; }; path: { type: string; }; severity: { const: string; }; message: { type: string; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; }"
+}

@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"editDddDefinition\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddDefinition\"]"
+      ],
+      "name": "update",
+      "optional": false,
+      "type": "(definition: DddDefinition) => DddDefinition"
+    }
+  ],
+  "purpose": "editDddDefinition accepts doc, module, element, update and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(doc: Document, module: string, element: string, update: (definition: DddDefinition) => DddDefinition) => Document"
+}

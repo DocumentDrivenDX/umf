@@ -1,0 +1,94 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"AvroRecordTypeClassification\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-avro-record-type\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ readonly id: \"umf.avro.record-type\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"1.12.0\"; readonly subset: \"Direct record/error definitions and qualified named record references; unions and containers require separate bindings\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRecordTypeRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "AvroRecordTypeRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "(Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"qualified-native-record-type\"; })[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; recovery: \"Source and native fragments retained; resolve conflict then recompute whole record classification\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "AvroRecordTypeClassification is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroRecordTypeClassification"
+}

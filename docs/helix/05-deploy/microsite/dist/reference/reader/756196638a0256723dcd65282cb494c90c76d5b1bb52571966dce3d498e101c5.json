@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectLinkmlSlotValues\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "className",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "slotName",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "inspectLinkmlSlotValues accepts document, className, slotName and returns LinkmlSlotValuesReport.",
+  "related": [],
+  "returns": "LinkmlSlotValuesReport",
+  "task": "Inspect and select",
+  "type": "(document: Document, className: string, slotName: string) => LinkmlSlotValuesReport"
+}

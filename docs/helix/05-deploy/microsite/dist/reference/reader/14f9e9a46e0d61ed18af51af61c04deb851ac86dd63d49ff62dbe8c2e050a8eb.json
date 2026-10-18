@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectCoreSemanticTypes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreSemanticTypeIdentity"
+    }
+  ],
+  "purpose": "inspectCoreSemanticTypes accepts input, identity and returns CoreSemanticTypeInspection.",
+  "related": [],
+  "returns": "CoreSemanticTypeInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreSemanticTypeIdentity) => CoreSemanticTypeInspection"
+}

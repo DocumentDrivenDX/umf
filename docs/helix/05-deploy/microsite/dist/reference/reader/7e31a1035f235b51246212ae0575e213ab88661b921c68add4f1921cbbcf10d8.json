@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ArrowIpcObservationBackend\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "\"apache-arrow@21.2.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "observe",
+      "optional": false,
+      "type": "(bytes: Uint8Array) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ArrowIpcObservationBackend is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ArrowIpcObservationBackend"
+}

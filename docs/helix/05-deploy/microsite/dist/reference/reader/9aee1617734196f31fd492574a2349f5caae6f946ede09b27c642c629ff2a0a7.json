@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectFacetsToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Author"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsSqlServerRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FacetsSqlServerRequest"
+    }
+  ],
+  "purpose": "Project verified author intent. Native carrier defaults never become author assertions.",
+  "related": [],
+  "returns": "FacetsSqlServerProjection",
+  "task": "Import and export",
+  "type": "(input: Author, options: FacetsSqlServerRequest) => FacetsSqlServerProjection"
+}

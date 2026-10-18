@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"KeyTableSpecRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "record",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "columns",
+      "optional": false,
+      "type": "{ field: CoreRecordIdentity; name: string; nativeType: \"BOOLEAN\" | \"INTEGER\" | \"DECIMAL\" | \"TEXT\" | \"VARCHAR\" | \"CHAR\" | \"FLOAT\" | \"DATE\" | \"DATETIME\" | \"TIMESTAMP\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "KeyTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "KeyTableSpecRequest"
+}

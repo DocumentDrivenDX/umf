@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipSqlServerIdeal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipSqlServerProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipSqlServerProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
+    }
+  ],
+  "purpose": "recoverRelationshipSqlServerIdeal accepts input, current and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: RelationshipSqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => Document"
+}

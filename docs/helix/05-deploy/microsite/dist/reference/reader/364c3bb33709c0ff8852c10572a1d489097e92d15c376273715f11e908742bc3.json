@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getOwlOntologyHeaders\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getOwlOntologyHeaders accepts document and returns OwlOntologyHeader[].",
+  "related": [],
+  "returns": "OwlOntologyHeader[]",
+  "task": "Inspect and select",
+  "type": "(document: Document) => OwlOntologyHeader[]"
+}

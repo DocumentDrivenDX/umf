@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectBit128CarrierSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logicalInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identityInput",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128ProjectionPolicy\"]"
+      ],
+      "name": "policyInput",
+      "optional": false,
+      "type": "Bit128ProjectionPolicy"
+    }
+  ],
+  "purpose": "Bounded one-Field native schema proposal; native execution/adoption is separately qualified.",
+  "related": [],
+  "returns": "Bit128NativeProjection",
+  "task": "Import and export",
+  "type": "(bindingInput: Document, logicalInput: Document, identityInput: { module: string; element: string; }, policyInput: Bit128ProjectionPolicy) => Bit128NativeProjection"
+}

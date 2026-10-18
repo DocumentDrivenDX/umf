@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parquetFramingSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as parquetFramingSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; properties: { source: { $ref: string; }; status: { enum: string[]; }; complete: { const: boolean; }; byteLength: { type: string; minimum: number; }; footerRegion: { type: string; properties: { offset: { type: string; minimum: number; }; length: { type: string; minimum: number; }; mode: { enum: string[]; }; }; required: string[]; additionalProperties: boolean; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; required: string[]; additionalProperties: boolean; }; }; }; required: string[]; additionalProperties: boolean; }"
+}

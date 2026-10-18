@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateRelationshipCandidate\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "Default: true.",
+      "links": [],
+      "name": "validateBase",
+      "optional": true,
+      "type": "boolean"
+    }
+  ],
+  "purpose": "Explicit candidate validator; never reinterprets an older envelope.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Read and validate",
+  "type": "(input: unknown, validateBase?: boolean) => Validation"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreReferenceLinks\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreReferenceLinkIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "CoreReferenceLinkIdentity"
+    }
+  ],
+  "purpose": "Resolve only direct core links, preserving order, repetition, roles and opaque qualifiers.\nCONTRACT-040 requires separate verified receipts for authored record-type assertions.",
+  "related": [],
+  "returns": "CoreReferenceLinksInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identityInput: CoreReferenceLinkIdentity) => CoreReferenceLinksInspection"
+}

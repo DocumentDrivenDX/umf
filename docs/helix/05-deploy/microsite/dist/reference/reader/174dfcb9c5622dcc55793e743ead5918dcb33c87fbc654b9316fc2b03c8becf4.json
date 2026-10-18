@@ -1,0 +1,17 @@
+{
+  "alternatives": [
+    "CommonRequest & { system: \"graphql\"; root: { typeName: string; fieldName: string; }; field: string; inverseField?: string; forwardUnion?: string; inverseUnion?: string; }",
+    "CommonRequest & { system: \"rdf\"; predicate: string; inversePredicate?: string; unionPolicy: \"owl-union\"; }",
+    "CommonRequest & { system: \"linkml\"; schemaId: string; schemaName: string; slot: string; inverseSlot?: string; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RelationshipExtraRequest\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "RelationshipExtraRequest is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RelationshipExtraRequest"
+}

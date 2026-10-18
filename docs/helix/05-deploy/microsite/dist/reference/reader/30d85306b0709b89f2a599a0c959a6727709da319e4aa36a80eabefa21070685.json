@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyTableSpecKeyClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Check retained input consistency, not authenticity or runtime enforcement.",
+  "related": [],
+  "returns": "TableSpecKeyClassification",
+  "task": "Other APIs",
+  "type": "(input: TableSpecKeyClassification, current: Document) => TableSpecKeyClassification"
+}

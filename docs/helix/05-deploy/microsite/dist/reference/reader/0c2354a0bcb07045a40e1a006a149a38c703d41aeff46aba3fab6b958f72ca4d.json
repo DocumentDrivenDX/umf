@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityWriteState\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFact\"]"
+      ],
+      "name": "resource",
+      "optional": false,
+      "type": "SecurityFact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFactCut\"]"
+      ],
+      "name": "cut",
+      "optional": false,
+      "type": "SecurityFactCut"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityWriteState is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityWriteState"
+}

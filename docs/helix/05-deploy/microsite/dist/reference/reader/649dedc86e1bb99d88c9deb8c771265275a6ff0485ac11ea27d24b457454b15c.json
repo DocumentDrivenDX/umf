@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectArrowIpcCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Validates the capture envelope only. It cannot establish native Arrow validity.",
+  "related": [],
+  "returns": "{ complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }",
+  "task": "Inspect and select",
+  "type": "(document: Document) => { complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }"
+}

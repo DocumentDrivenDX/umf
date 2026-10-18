@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RdfQuad\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "subject",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "predicate",
+      "optional": false,
+      "type": "{ kind: \"iri\"; value: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]",
+        "[\"api\",\".\",\"RdfLiteral\"]"
+      ],
+      "name": "object",
+      "optional": false,
+      "type": "RdfNode | RdfLiteral"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "graph",
+      "optional": false,
+      "type": "RdfNode | { kind: \"default\"; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RdfQuad is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RdfQuad"
+}

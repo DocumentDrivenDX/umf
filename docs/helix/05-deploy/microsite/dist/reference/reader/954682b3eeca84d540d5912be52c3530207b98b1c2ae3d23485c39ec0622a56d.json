@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getCoreSemanticTypes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreSemanticTypeIdentity"
+    }
+  ],
+  "purpose": "getCoreSemanticTypes accepts input, identity and returns CoreSemanticTypeReference[] | undefined.",
+  "related": [],
+  "returns": "CoreSemanticTypeReference[] | undefined",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreSemanticTypeIdentity) => CoreSemanticTypeReference[] | undefined"
+}

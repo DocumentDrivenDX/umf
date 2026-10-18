@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProtobufProjectionOptions\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "packageName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "messageName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fields",
+      "optional": false,
+      "type": "Record<string, { number: number; }>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "integerType",
+      "optional": false,
+      "type": "\"int32\" | \"int64\" | \"uint64\" | \"sint64\" | \"uint32\" | \"sint32\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"allow-reported-loss\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtobufProjectionOptions is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtobufProjectionOptions"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectDeltaParquetActions\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Project representable checkpoint rows into Delta actions, retaining authoritative Parquet source.",
+  "related": [],
+  "returns": "DeltaParquetActions",
+  "task": "Import and export",
+  "type": "(source: Document) => DeltaParquetActions"
+}

@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddGraphqlEntityPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEntityName\"]"
+      ],
+      "name": "entities",
+      "optional": false,
+      "type": "DddGraphqlEntityName[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlFieldName\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "DddGraphqlFieldName[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scalars",
+      "optional": false,
+      "type": "{ string: string; boolean: string; integer: string; decimal: string; 'date-time': string; bytes: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "root",
+      "optional": false,
+      "type": "{ kind: \"synthetic-schema-root\"; typeName: string; fieldName: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceProfile",
+      "optional": true,
+      "type": "\"core-ideals\" | \"ddd-only\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddGraphqlEntityPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddGraphqlEntityPolicy"
+}

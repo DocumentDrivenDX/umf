@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreRecordTypeOperationV2Schema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreRecordTypeOperationV2Schema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; target: { $ref: string; }; fieldAuthor: { $ref: string; }; recordAuthor: { $ref: string; }; reference: { type: string; additionalProperties: boolean; required: string[]; properties: { role: { const: string; }; module: { type: string; minLength: number; }; element: { type: string; minLength: number; }; }; }; provenance: { type: string; additionalProperties: boolean; required: string[]; properties: { origin: { const: string; }; idealPath: { type: string; }; recordPath: { type: string; }; nativePath: { type: string; }; basis: { const: string; }; binding: { const: { id: string; version: string; }; }; }; }; }; }"
+}

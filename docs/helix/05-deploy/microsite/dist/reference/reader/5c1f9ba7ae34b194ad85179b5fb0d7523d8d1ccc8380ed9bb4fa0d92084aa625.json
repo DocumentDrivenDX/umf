@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"reconcileDeltaParquetCheckpoint\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "checkpoint",
+      "optional": false,
+      "type": "DeltaCommit"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "commits",
+      "optional": false,
+      "type": "DeltaCommit[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "spec",
+      "optional": false,
+      "type": "\"v1\" | \"v2\""
+    },
+    {
+      "description": "Default: [].",
+      "links": [
+        "[\"api\",\".\",\"DeltaSidecar\"]"
+      ],
+      "name": "sidecars",
+      "optional": true,
+      "type": "DeltaSidecar[]"
+    }
+  ],
+  "purpose": "Recover one explicit Parquet checkpoint; naming discovery and multipart assembly are separate.",
+  "related": [],
+  "returns": "DeltaParquetCheckpointRecovery",
+  "task": "Other APIs",
+  "type": "(checkpoint: DeltaCommit, commits: DeltaCommit[], spec: \"v1\" | \"v2\", sidecars?: DeltaSidecar[]) => DeltaParquetCheckpointRecovery"
+}

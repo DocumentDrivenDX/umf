@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeArrowFlatbufferEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "replacement",
+      "optional": false,
+      "type": "Json"
+    }
+  ],
+  "purpose": "Atomic edit of an existing logical-model node; validates structure, not Arrow semantics.",
+  "related": [],
+  "returns": "{ document: Document; validation: { complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }; }",
+  "task": "Author and edit",
+  "type": "(document: Document, path: string, replacement: Json) => { document: Document; validation: { complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }; }"
+}

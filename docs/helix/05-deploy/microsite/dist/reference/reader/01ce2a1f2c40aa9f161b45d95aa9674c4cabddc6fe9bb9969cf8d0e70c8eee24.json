@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"deltaLogInspectionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as deltaLogInspectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; complete: { const: boolean; }; parsedAll: { type: string; }; lines: { type: string; items: { type: string; required: string[]; properties: { line: { type: string; minimum: number; }; start: { type: string; minimum: number; }; end: { type: string; minimum: number; }; terminator: { enum: string[]; }; status: { enum: string[]; }; action: { type: string; }; node: { $ref: string; }; }; additionalProperties: boolean; }; }; diagnostics: { type: string; items: { type: string; required: string[]; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; $defs: { node: { oneOf: ({ type: string; required: string[]; properties: { kind: { const: string; }; value?: never; items?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; value: { type: string; pattern?: never; }; items?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; value: { type: string; pattern: string; }; items?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; items: { type: string; items: { $ref: string; }; }; value?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; members: { type: string; additionalProperties: { $ref: string; }; }; value?: never; items?: never; }; })[]; }; }; }"
+}

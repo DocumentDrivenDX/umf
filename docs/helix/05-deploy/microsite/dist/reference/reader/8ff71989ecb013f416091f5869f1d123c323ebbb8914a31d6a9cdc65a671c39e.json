@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"decodeParquetFooter\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Bounded Compact Protocol tree. Field semantics and native Parquet validity remain unverified.",
+  "related": [],
+  "returns": "ParquetFooterDecode",
+  "task": "Serialize",
+  "type": "(document: Document) => ParquetFooterDecode"
+}

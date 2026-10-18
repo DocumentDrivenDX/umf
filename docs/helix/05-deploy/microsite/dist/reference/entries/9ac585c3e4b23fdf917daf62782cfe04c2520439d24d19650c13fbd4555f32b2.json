@@ -12,7 +12,7 @@
     "exportName": "verifySemanticTypesTransition",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: SemanticTypesUpgradeReceipt | SemanticTypesRollbackReceipt): SemanticTypesUpgradeReceipt | SemanticTypesRollbackReceipt"
+      "(input: SemanticTypesRollbackReceipt | SemanticTypesUpgradeReceipt): SemanticTypesRollbackReceipt | SemanticTypesUpgradeReceipt"
     ]
   },
   "id": "[\"api\",\".\",\"verifySemanticTypesTransition\"]",

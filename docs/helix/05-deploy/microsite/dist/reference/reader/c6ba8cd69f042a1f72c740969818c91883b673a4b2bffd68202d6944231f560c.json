@@ -1,0 +1,57 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectDddTablesToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlTablePolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "DddPostgresqlTablePolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "purpose": "Relationship-independent PostgreSQL 17 DDD table proposal checked by the native adapter.",
+  "related": [],
+  "returns": "Promise<DddPostgresqlTableProjection>",
+  "task": "Import and export",
+  "type": "(logical: Document, binding: Document, backend: PostgresqlBackend, policy: DddPostgresqlTablePolicy, lossPolicy: \"strict\" | \"report\") => Promise<DddPostgresqlTableProjection>"
+}

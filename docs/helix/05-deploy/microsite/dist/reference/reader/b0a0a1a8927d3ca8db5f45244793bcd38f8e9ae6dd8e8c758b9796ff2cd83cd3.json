@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeJsonLdFraming\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JsonLdFramingOptions\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "Omit<JsonLdFramingOptions, \"embed\"> & { embed?: JsonLdFramingOptions[\"embed\"] | boolean; frame: string; lossPolicy: \"report\" | \"reject\"; }"
+    }
+  ],
+  "purpose": "proposeJsonLdFraming accepts document, options and returns Promise<JsonLdFramingReport>.",
+  "related": [],
+  "returns": "Promise<JsonLdFramingReport>",
+  "task": "Author and edit",
+  "type": "(document: Document, options: Omit<JsonLdFramingOptions, \"embed\"> & { embed?: JsonLdFramingOptions[\"embed\"] | boolean; frame: string; lossPolicy: \"report\" | \"reject\"; }) => Promise<JsonLdFramingReport>"
+}

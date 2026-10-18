@@ -1,0 +1,33 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"writeDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "Default: 'yaml'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "Serialize a UMF Document, preserving retained metadata and exact literal carriers. Select the desired output format in the options.",
+  "related": [
+    "[\"api\",\".\",\"readDocument\"]",
+    "[\"api\",\".\",\"Document\"]"
+  ],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(value: Document, format?: \"json\" | \"yaml\") => string"
+}

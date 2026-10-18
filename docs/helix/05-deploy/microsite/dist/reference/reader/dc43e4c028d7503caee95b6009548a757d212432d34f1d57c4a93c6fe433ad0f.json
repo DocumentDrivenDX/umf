@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportOpenapiDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\" | undefined"
+    }
+  ],
+  "purpose": "exportOpenapiDocument accepts document, format and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(document: Document, format?: \"json\" | \"yaml\") => string"
+}

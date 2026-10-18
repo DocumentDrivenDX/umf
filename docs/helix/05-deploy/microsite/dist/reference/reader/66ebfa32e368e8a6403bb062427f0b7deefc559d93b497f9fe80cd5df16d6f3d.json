@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectActionManifest\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspectionContext\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "ActionPlanInspectionContext"
+    }
+  ],
+  "purpose": "Portable consistency checks; never issues a guard, snapshot, seal or revision.",
+  "related": [],
+  "returns": "ActionManifestInspection",
+  "task": "Inspect and select",
+  "type": "(input: ActionPlanArtifact, context: ActionPlanInspectionContext) => ActionManifestInspection"
+}

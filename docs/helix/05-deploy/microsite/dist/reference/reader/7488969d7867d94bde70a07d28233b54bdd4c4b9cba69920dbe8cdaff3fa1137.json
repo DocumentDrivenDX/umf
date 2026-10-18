@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"classifyPostgresqlComposite\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlCompositeRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "PostgresqlCompositeRequest"
+    }
+  ],
+  "purpose": "classifyPostgresqlComposite accepts input, options and returns PostgresqlCompositeClassification.",
+  "related": [],
+  "returns": "PostgresqlCompositeClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: PostgresqlCompositeRequest) => PostgresqlCompositeClassification"
+}

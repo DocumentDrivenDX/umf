@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"generateDeltaDDLBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "inputs",
+      "optional": false,
+      "type": "readonly Document[]"
+    }
+  ],
+  "purpose": "Complete ordered proposal; no partial bundle escapes a failed table export.",
+  "related": [],
+  "returns": "{ sql: string; tables: { documentId: string; sql: string; definition: DeltaDefinition; schemaJson: string; qualification: string; }[]; qualification: string; }",
+  "task": "Other APIs",
+  "type": "(inputs: readonly Document[]) => { sql: string; tables: { documentId: string; sql: string; definition: DeltaDefinition; schemaJson: string; qualification: string; }[]; qualification: string; }"
+}

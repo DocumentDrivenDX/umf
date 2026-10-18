@@ -1,0 +1,64 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreSchemaPropertyPatch\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "examples",
+      "optional": true,
+      "type": "CoreLiteral[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "allowedValues",
+      "optional": true,
+      "type": "CoreLiteral[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "default",
+      "optional": true,
+      "type": "{ value: CoreLiteral; on: \"missing\" | \"null\" | \"missing-or-null\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "facets",
+      "optional": true,
+      "type": "{ length?: { min?: number; max?: number; unit: \"unicode-scalar\" | \"byte\"; }; collectionSize?: { min?: number; max?: number; }; range?: { min?: CoreLiteral; max?: CoreLiteral; minInclusive?: boolean; maxInclusive?: boolean; }; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreSchemaPropertyPatch is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreSchemaPropertyPatch"
+}

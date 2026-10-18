@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverFacetsFromTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsTableSpecProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FacetsTableSpecProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Verify the entire operation and exact native text before recovering retained ideal meaning.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: FacetsTableSpecProjection, nativeText: string) => Document"
+}

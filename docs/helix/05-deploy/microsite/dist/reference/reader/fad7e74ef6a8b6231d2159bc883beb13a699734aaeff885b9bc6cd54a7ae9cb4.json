@@ -1,0 +1,33 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipExtraNative\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraClassification\"]",
+        "[\"api\",\".\",\"RelationshipExtraProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipExtraClassification | RelationshipExtraProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverRelationshipExtraNative accepts input, current and returns { document: Document; archive: RelationshipExtraArchive; }.",
+  "related": [],
+  "returns": "{ document: Document; archive: RelationshipExtraArchive; }",
+  "task": "Import and export",
+  "type": "(input: RelationshipExtraProjection | RelationshipExtraClassification, current: Document) => { document: Document; archive: RelationshipExtraArchive; }"
+}

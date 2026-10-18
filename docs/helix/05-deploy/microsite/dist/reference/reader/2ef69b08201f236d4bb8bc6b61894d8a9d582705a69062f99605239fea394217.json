@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"IcebergTransformType\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceType",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "transform",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"incompatible\" | \"uninterpreted\" | \"compatible\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resultType",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "reason",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Pinned Iceberg 1.11.0 single-source transform type rules; no value execution.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "IcebergTransformType"
+}

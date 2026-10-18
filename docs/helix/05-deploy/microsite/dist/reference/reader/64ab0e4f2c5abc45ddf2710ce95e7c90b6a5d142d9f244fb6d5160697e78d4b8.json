@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectFacetsToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Author"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsAvroRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FacetsAvroRequest"
+    }
+  ],
+  "purpose": "Project verified ideal assertions; custom metadata never becomes an implicit validator.",
+  "related": [],
+  "returns": "FacetsAvroProjection",
+  "task": "Import and export",
+  "type": "(input: Author, options: FacetsAvroRequest) => FacetsAvroProjection"
+}

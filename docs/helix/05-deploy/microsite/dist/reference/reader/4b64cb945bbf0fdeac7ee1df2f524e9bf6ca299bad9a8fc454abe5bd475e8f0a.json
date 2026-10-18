@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getOwlSpecialAxioms\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Exposes OWL RDF encodings that must not be lowered into positive storage edges.",
+  "related": [],
+  "returns": "OwlSpecialAxiomView",
+  "task": "Inspect and select",
+  "type": "(document: Document) => OwlSpecialAxiomView"
+}

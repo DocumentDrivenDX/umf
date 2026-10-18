@@ -2,6 +2,9 @@ import ts from 'typescript-api';
 import {resolve,relative} from 'node:path';
 import {identity,canonical,type Entry} from '../../../docs/helix/05-deploy/reference/model';
 import {root,source,read,paths,text} from '../io';
+import {apiGuides,apiTask} from '../reader-content';
+import type {ApiReader,ReaderRow} from '../../../docs/helix/05-deploy/reference/model';
+export const apiDocumentation=new Map<string,ApiReader>();
 import {parseNativeJson} from '../../../src/index';
 export async function schemas(profiles:any):Promise<Entry[]>{
  const entries:Entry[]=[];
@@ -50,7 +53,28 @@ export async function exportsInventory():Promise<Entry[]>{
    const isType=!(symbol.flags&ts.SymbolFlags.Value);const fallback=decls.map(d=>d.getText().slice(0,20000));
    const summary=ts.displayPartsToString(symbol.getDocumentationComment(checker)).slice(0,220)||`${isType?'Type declaration':'Public export'} · ${sources[0]!.path}`;
    entries.push({id:identity('api',entrypoint,exported.name),kind:'api',title:exported.name,summary,sources,links:[],data:{entrypoint,exportName:exported.name,declarations:sources,signatureText:signatures.length?signatures:fallback,runtime:isType?'type-only':'unassessed'}});
+   const flags=ts.TypeFormatFlags.NoTruncation|ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope;
+   const declared=isType||decls.some(ts.isClassDeclaration)?checker.getDeclaredTypeOfSymbol(symbol):type;
+   const typeText=checker.typeToString(declared,decls[0],flags);
+   const guide=apiGuides[exported.name];
+   const kind=signatures.length?'Function':decls.some(ts.isInterfaceDeclaration)?'Interface':decls.some(ts.isTypeAliasDeclaration)?'Type alias':decls.some(ts.isClassDeclaration)?'Class':decls.some(ts.isEnumDeclaration)?'Enum':/Schema$/.test(exported.name)?'Schema':/Package$/.test(exported.name)?'Package':'Constant';
+   const row=(member:ts.Symbol):ReaderRow=>{const declaration=member.valueDeclaration??member.declarations?.[0]??decls[0]!;return {name:member.name,type:checker.typeToString(checker.getTypeOfSymbolAtLocation(member,declaration),declaration,flags),optional:!!(member.flags&ts.SymbolFlags.Optional)||!!(declaration as any).questionToken||!!(declaration as any).initializer,description:[ts.displayPartsToString(member.getDocumentationComment(checker)),(declaration as any).initializer?'Default: '+(declaration as any).initializer.getText()+'.':''].filter(Boolean).join(' '),links:[]};};
+   const calls=type.getCallSignatures();const parameters=calls.flatMap((call,i)=>call.getParameters().map(p=>({...row(p),name:calls.length>1?'Overload '+(i+1)+' · '+p.name:p.name})));
+   const members=['Interface','Class','Type alias'].includes(kind)&&!(declared.flags&ts.TypeFlags.Union)?checker.getPropertiesOfType(declared).filter(p=>!p.name.startsWith('#')&&!p.declarations?.some(d=>ts.canHaveModifiers(d)&&ts.getModifiers(d)?.some(m=>m.kind===ts.SyntaxKind.PrivateKeyword||m.kind===ts.SyntaxKind.ProtectedKeyword))).map(row):[];
+   const returns=calls.map(call=>checker.typeToString(call.getReturnType(),decls[0],flags)).join(' | ');
+   const comment=ts.displayPartsToString(symbol.getDocumentationComment(checker));
+   const purpose=guide?.purpose||comment||(kind==='Schema'?'JSON Schema exported as '+exported.name+'. Follow the related schema definition for object keys, value constraints and conditions.':kind==='Function'?exported.name+' accepts '+(parameters.map(p=>p.name).join(', ')||'no arguments')+' and returns '+returns+'.':exported.name+' is a '+kind.toLowerCase()+' in '+apiTask(exported.name)+'. Its exact structure is documented below.');
+   const doc:ApiReader={id:identity('api',entrypoint,exported.name),kind,task:apiTask(exported.name),purpose,authored:!!(guide||comment),type:typeText,parameters,returns,members,alternatives:declared.isUnion()?declared.types.map(t=>checker.typeToString(t,decls[0],flags)):[],related:(guide?.related??[]).map(n=>identity('api',entrypoint,n))};
+   if(guide?.example)doc.example=guide.example;
+   if(kind==='Constant'&&type.isLiteral())doc.value=type.isStringLiteral()?JSON.stringify(type.value):String(type.value);
+   apiDocumentation.set(doc.id,doc);
+
   }
+ }
+ const names=new Map(entries.map(e=>[e.title,e.id]));
+ for(const doc of apiDocumentation.values()){
+  doc.related=doc.related.filter(id=>entries.some(e=>e.id===id));
+  for(const row of [...doc.parameters,...doc.members])row.links=[...new Set((row.type.match(/\b[A-Za-z_$][\w$]*\b/g)??[]).filter(n=>names.has(n)&&names.get(n)!==doc.id).map(n=>names.get(n)!))];
  }
  return entries;
 }

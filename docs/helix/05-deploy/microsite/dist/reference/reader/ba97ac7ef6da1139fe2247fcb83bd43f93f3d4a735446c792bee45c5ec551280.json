@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyKeysPostgresqlProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeyPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "related": [],
+  "returns": "Promise<KeyPostgresqlProjection>",
+  "task": "Other APIs",
+  "type": "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<KeyPostgresqlProjection>"
+}

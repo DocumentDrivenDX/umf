@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getBinding\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getBinding accepts binding, logical and returns BindingPayload.",
+  "related": [],
+  "returns": "BindingPayload",
+  "task": "Inspect and select",
+  "type": "(binding: Document, logical: Document) => BindingPayload"
+}

@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "Function",
+        "Interface",
+        "Type alias",
+        "Constant",
+        "Schema",
+        "Package",
+        "Class",
+        "Enum"
+      ]
+    },
+    "task": {
+      "enum": [
+        "Read and validate",
+        "Inspect and select",
+        "Author and edit",
+        "Serialize",
+        "Import and export",
+        "Extensions",
+        "Other APIs"
+      ]
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "authored": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "example": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "optional": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "optional",
+          "description",
+          "links"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "returns": {
+      "type": "string"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "optional": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "optional",
+          "description",
+          "links"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "task",
+    "purpose",
+    "authored",
+    "type",
+    "parameters",
+    "returns",
+    "members",
+    "alternatives",
+    "related"
+  ],
+  "additionalProperties": false
+}

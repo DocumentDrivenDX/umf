@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyTableSpecCardinalityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecCardinalityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecCardinalityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "related": [],
+  "returns": "TableSpecCardinalityClassification",
+  "task": "Other APIs",
+  "type": "(input: TableSpecCardinalityClassification, current: Document) => TableSpecCardinalityClassification"
+}

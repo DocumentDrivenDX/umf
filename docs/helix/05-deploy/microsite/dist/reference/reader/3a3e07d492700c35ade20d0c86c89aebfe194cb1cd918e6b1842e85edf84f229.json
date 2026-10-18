@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeLinkmlImportMerge\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"LinkmlImportContext\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "LinkmlImportContext"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ mode: \"view\" | \"merge-imports\"; }"
+    }
+  ],
+  "purpose": "Materialize supplied declarations using an explicitly selected native precedence policy.",
+  "related": [],
+  "returns": "LinkmlImportMergeReport",
+  "task": "Author and edit",
+  "type": "(input: LinkmlImportContext, options: { mode: \"view\" | \"merge-imports\"; }) => LinkmlImportMergeReport"
+}

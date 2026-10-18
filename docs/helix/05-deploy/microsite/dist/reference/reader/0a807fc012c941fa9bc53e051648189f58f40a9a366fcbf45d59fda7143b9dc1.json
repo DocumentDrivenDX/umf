@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"validateSemanticTypeValue\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeReference\"]"
+      ],
+      "name": "reference",
+      "optional": false,
+      "type": "SemanticTypeReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeRegistry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "SemanticTypeRegistry"
+    }
+  ],
+  "purpose": "validateSemanticTypeValue accepts reference, value, registry and returns SemanticTypeValueResult.",
+  "related": [],
+  "returns": "SemanticTypeValueResult",
+  "task": "Read and validate",
+  "type": "(reference: SemanticTypeReference, value: Json, registry: SemanticTypeRegistry) => SemanticTypeValueResult"
+}

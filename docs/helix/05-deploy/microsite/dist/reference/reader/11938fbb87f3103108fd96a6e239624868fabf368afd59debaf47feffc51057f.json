@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parquetOffsetRepairSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as parquetOffsetRepairSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; status: { enum: string[]; }; complete: { const: boolean; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; required: string[]; additionalProperties: boolean; }; }; output: { $ref: string; }; unchangedPrefixBytes: { type: string; minimum: number; }; repairs: { type: string; minItems: number; items: { type: string; required: string[]; properties: { rowGroup: { type: string; minimum: number; }; column: { type: string; minimum: number; }; oldDataOffset: { type: string; minimum: number; }; dataOffset: { type: string; minimum: number; }; dictionaryOffset: { type: string; minimum: number; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; allOf: { if: { properties: { status: { const: string; }; }; }; then: { properties: { output: boolean; repairs: boolean; unchangedPrefixBytes: boolean; }; required: string[]; }; else: { not: { anyOf: ({ properties: { output: boolean; repairs?: never; unchangedPrefixBytes?: never; }; required: string[]; } | { properties: { repairs: boolean; output?: never; unchangedPrefixBytes?: never; }; required: string[]; } | { properties: { unchangedPrefixBytes: boolean; output?: never; repairs?: never; }; required: string[]; })[]; }; }; }[]; }"
+}

@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"pointer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "key",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "pointer accepts key and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(key: string) => string"
+}

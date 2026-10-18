@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerDdlStatement\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "sourcePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"key\" | \"schema\" | \"index\" | \"table\" | \"description\" | \"check\" | \"foreign-key\" | \"disable\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sql",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerDdlStatement is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerDdlStatement"
+}

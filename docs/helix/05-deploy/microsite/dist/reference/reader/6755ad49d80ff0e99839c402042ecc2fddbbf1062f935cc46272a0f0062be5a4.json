@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"encodeParquetWire\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetWireValue\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "ParquetWireValue"
+    }
+  ],
+  "purpose": "Canonical Compact Protocol encoding; preserves wire values/order, not original varint spelling.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Serialize",
+  "type": "(value: ParquetWireValue) => Uint8Array"
+}

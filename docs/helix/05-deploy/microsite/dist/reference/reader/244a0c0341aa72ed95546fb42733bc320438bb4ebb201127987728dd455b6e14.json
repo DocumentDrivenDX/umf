@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"exportProtobufSources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufSourceEmitter\"]"
+      ],
+      "name": "emitter",
+      "optional": false,
+      "type": "ProtobufSourceEmitter"
+    }
+  ],
+  "purpose": "Emit current descriptors; the original source archive is never replayed.",
+  "related": [],
+  "returns": "Promise<{ source: Document; diagnostics: Diagnostic[]; files: Record<string, string>; compiler: string; printer: string; }>",
+  "task": "Import and export",
+  "type": "(document: Document, emitter: ProtobufSourceEmitter) => Promise<{ source: Document; diagnostics: Diagnostic[]; files: Record<string, string>; compiler: string; printer: string; }>"
+}

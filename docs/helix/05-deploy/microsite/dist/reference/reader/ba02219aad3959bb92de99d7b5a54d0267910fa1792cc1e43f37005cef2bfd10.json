@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"encodeBit128FileRecord\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "Bit128Ref"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128RecordValue\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "Bit128RecordValue[]"
+    }
+  ],
+  "purpose": "JSON-safe native datum tokens; driver converts exact decimal/hex tokens to native long/bytes.",
+  "related": [],
+  "returns": "Record<string, Json>",
+  "task": "Serialize",
+  "type": "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, values: Bit128RecordValue[]) => Record<string, Json>"
+}

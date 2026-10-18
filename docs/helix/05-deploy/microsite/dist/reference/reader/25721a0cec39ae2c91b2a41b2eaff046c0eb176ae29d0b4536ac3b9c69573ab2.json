@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseAccessTemporal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AccessTemporalKind\"]"
+      ],
+      "name": "kind",
+      "optional": false,
+      "type": "AccessTemporalKind"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseAccessTemporal accepts kind, token and returns AccessTemporal.",
+  "related": [],
+  "returns": "AccessTemporal",
+  "task": "Read and validate",
+  "type": "(kind: AccessTemporalKind, token: string) => AccessTemporal"
+}

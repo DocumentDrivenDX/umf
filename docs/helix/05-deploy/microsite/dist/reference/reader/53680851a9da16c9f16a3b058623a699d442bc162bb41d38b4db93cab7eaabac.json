@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"encodeCoreKeyTuple\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "CoreKeyIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+      ],
+      "name": "valuesInput",
+      "optional": false,
+      "type": "CoreKeyTupleValue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; } | undefined"
+    }
+  ],
+  "purpose": "Exact current-core encoding; no native uniqueness or author provenance is inferred.",
+  "related": [],
+  "returns": "CoreKeyTupleReceipt",
+  "task": "Serialize",
+  "type": "(input: unknown, identityInput: CoreKeyIdentity, valuesInput: CoreKeyTupleValue[], options?: { profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; }) => CoreKeyTupleReceipt"
+}

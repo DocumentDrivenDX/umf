@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverFacetsFromParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FacetsParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeBytes",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    }
+  ],
+  "purpose": "Recompute the complete author projection and compare exact emitted bytes.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: FacetsParquetProjection, nativeBytes: Uint8Array) => Document"
+}

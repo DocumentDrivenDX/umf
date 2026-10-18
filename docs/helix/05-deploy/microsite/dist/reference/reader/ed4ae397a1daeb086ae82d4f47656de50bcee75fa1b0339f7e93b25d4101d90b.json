@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverPostgresqlCompositeCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlCompositeClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlCompositeClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverPostgresqlCompositeCapture accepts input, current and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(input: PostgresqlCompositeClassification, current: Document) => string"
+}

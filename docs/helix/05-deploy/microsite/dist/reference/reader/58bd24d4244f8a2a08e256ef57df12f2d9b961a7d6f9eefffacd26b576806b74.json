@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyCoreRelationshipOperation\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipOperation\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreRelationshipOperation"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "Source"
+    }
+  ],
+  "purpose": "verifyCoreRelationshipOperation accepts input, current and returns CoreRelationshipOperation.",
+  "related": [],
+  "returns": "CoreRelationshipOperation",
+  "task": "Other APIs",
+  "type": "(input: CoreRelationshipOperation, current: Source) => CoreRelationshipOperation"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectArrowToSpark\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowSparkPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ArrowSparkPolicy"
+    }
+  ],
+  "purpose": "Arrow logical schema to Spark 4.0.1 JSON, retaining source independently of recovery.",
+  "related": [],
+  "returns": "ArrowSparkProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: ArrowSparkPolicy) => ArrowSparkProjection"
+}

@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ExtensionPackage\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "coreVersion",
+      "optional": false,
+      "type": "\"0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JsonObject\"]"
+      ],
+      "name": "schema",
+      "optional": false,
+      "type": "boolean | JsonObject"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "semantics",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Scope\"]"
+      ],
+      "name": "scopes",
+      "optional": false,
+      "type": "Scope[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "capabilities",
+      "optional": false,
+      "type": "{ validation: \"structural\" | \"semantic\"; directions: (\"import\" | \"export\")[]; evidence: string[]; native?: { system: string; version: string; subset: string; }; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ExtensionPackage is a interface in Extensions. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Extensions",
+  "type": "ExtensionPackage"
+}

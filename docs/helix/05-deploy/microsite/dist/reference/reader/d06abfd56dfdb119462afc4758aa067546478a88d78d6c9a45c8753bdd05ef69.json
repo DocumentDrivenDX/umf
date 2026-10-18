@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"encodeSecurityDisclosureV2\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "Default: 'json'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "encodeSecurityDisclosureV2 accepts input, policy, catalog, closure, format and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(input: unknown, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => string"
+}

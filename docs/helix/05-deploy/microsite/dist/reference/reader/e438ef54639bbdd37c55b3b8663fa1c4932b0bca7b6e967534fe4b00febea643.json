@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectProtectionFunction\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "selection",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Signature/domain applicability only; output validity may still depend on input.",
+  "related": [],
+  "returns": "ProtectionFunctionResult",
+  "task": "Inspect and select",
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown) => ProtectionFunctionResult"
+}

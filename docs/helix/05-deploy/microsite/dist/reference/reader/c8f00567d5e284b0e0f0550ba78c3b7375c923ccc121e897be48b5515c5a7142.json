@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectNullabilityToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityPostgresqlRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "NullabilityPostgresqlRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "projectNullabilityToPostgresql accepts input, options, backend and returns Promise<NullabilityPostgresqlProjection>.",
+  "related": [],
+  "returns": "Promise<NullabilityPostgresqlProjection>",
+  "task": "Import and export",
+  "type": "(input: CoreNullabilityDeclaration, options: NullabilityPostgresqlRequest, backend: PostgresqlBackend) => Promise<NullabilityPostgresqlProjection>"
+}

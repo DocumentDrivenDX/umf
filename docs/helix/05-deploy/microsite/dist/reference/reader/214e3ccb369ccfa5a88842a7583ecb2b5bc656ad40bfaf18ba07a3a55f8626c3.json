@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectRawTableBinding\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RawTableBindingTarget\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "RawTableBindingTarget"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Inspect the explicit, direct-column subset; never infer SQL, native types or enforcement.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Inspect and select",
+  "type": "(binding: Document, logical: Document, target: RawTableBindingTarget, module: string) => Validation"
+}

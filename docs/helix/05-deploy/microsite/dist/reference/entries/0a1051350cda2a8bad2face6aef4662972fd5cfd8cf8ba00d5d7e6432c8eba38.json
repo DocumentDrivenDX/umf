@@ -12,7 +12,7 @@
     "exportName": "verifyRelationshipTransition",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: RelationshipUpgradeReceipt | RelationshipRollbackReceipt): RelationshipUpgradeReceipt | RelationshipRollbackReceipt"
+      "(input: RelationshipRollbackReceipt | RelationshipUpgradeReceipt): RelationshipRollbackReceipt | RelationshipUpgradeReceipt"
     ]
   },
   "id": "[\"api\",\".\",\"verifyRelationshipTransition\"]",

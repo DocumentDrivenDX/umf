@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getLinkmlDocumentNode\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "getLinkmlDocumentNode accepts document, path and returns NativeJson.",
+  "related": [],
+  "returns": "NativeJson",
+  "task": "Inspect and select",
+  "type": "(document: Document, path: string) => NativeJson"
+}

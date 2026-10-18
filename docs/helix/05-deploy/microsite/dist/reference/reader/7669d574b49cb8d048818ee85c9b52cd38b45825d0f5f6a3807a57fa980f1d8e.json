@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectDbtSemanticManifest\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "inspectDbtSemanticManifest accepts document and returns Validation.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Inspect and select",
+  "type": "(document: Document) => Validation"
+}

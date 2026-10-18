@@ -342,3 +342,32 @@ A complete matching failed check is **Failed / Matching source**, never supporte
 - [ ] Bun/browser parity, fixed CSP and cancellation/refusal paths pass.
 
 These are implementation exit criteria, not executed evidence.
+
+## Reader companion profile 1
+
+`reader.json` is an optional additive, manifest-bound presentation asset; original
+reference entry/index profiles and IDs remain unchanged. It MUST validate against
+`schemas/reader.json`. The fixed reader consumes only `umf.reference.reader/1`.
+It contains `latest:{id,version}`, `concepts` (ordered `{key,title,pointer,description,role?}`),
+`api` (ordered `{id,title,kind,task,summary,href}`), `propertyText` (key-to-text map),
+`examples` (complete core documents), and `scalarMeanings` (label-to-text map).
+API `href` names a manifest-listed `reader/<entry-id-sha256>.json` detail shard.
+Each shard validates against `schemas/api-reader.json`: `id,kind,task,purpose,
+authored,type,parameters,returns,members,alternatives,related`, with optional
+`value,example`. Parameter/member rows have `name,type,optional,description,links`.
+Links contain exact API IDs. Kind is Function, Interface, Type alias, Constant,
+Schema, Package, Class or Enum. Task is Read and validate, Inspect and select,
+Author and edit, Serialize, Import and export, Extensions or Other APIs.
+
+Every companion join MUST resolve before emission; original exports remain in
+the complete census. `authored:false` identifies generated structural explanation
+without reviewed usage guidance. Unknown runtime availability remains unknown.
+Reader index and detail assets are bounded at 2 MiB and 8 MiB respectively; size
+excess fails generation. Their inputs join the deterministic manifest closure.
+
+Core concept selection adds `concept=<key>` to an existing exact `entry` route;
+its key must map to the selected schema's pointer and optional role. Unknown
+concepts refuse. Latest-only default navigation MUST NOT rewrite explicit older
+entry routes. Source pointer coordinates stay exact. Authored meanings MUST NOT
+override schema admission rules or semantic contracts. Branch conditions remain
+visible; unresolved constraints MUST NOT be presented as unconditional Optional.

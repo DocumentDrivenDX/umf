@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyParquetNullabilityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetNullabilityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetNullabilityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "related": [],
+  "returns": "ParquetNullabilityClassification",
+  "task": "Other APIs",
+  "type": "(input: ParquetNullabilityClassification, current: Document) => ParquetNullabilityClassification"
+}

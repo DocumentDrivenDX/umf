@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectBindingToParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "nativeArchive",
+      "optional": true,
+      "type": "Document | undefined"
+    }
+  ],
+  "purpose": "Parquet's initial file-schema profile preserves physical choices as residuals.",
+  "related": [],
+  "returns": "ParquetBindingReport",
+  "task": "Import and export",
+  "type": "(logical: Document, binding: Document, lossPolicy: \"strict\" | \"report\", nativeArchive?: Document) => ParquetBindingReport"
+}

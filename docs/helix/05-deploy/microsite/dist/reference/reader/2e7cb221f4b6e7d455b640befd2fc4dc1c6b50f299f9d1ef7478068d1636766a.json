@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityWriteRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"create\" | \"delete\" | \"update\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityWriteState\"]"
+      ],
+      "name": "original",
+      "optional": true,
+      "type": "SecurityWriteState"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityWriteState\"]"
+      ],
+      "name": "proposed",
+      "optional": true,
+      "type": "SecurityWriteState"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityWriteRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityWriteRequest"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectPostgresqlToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlAvroPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlAvroPolicy"
+    }
+  ],
+  "purpose": "Schema projection only. Finite/temporal bindings declare a restricted value domain.",
+  "related": [],
+  "returns": "PostgresqlAvroProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: PostgresqlAvroPolicy) => PostgresqlAvroProjection"
+}

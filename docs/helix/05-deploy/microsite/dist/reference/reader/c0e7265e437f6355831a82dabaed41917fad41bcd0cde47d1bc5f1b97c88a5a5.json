@@ -1,0 +1,55 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectBindingToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logicalInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerPhysicalPolicy\"]"
+      ],
+      "name": "policyInput",
+      "optional": false,
+      "type": "SqlServerPhysicalPolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSource",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "Compose complete qualified table, Key, relationship and index DDL without executing it.",
+  "related": [],
+  "returns": "SqlServerPhysicalProjection",
+  "task": "Import and export",
+  "type": "(logicalInput: Document, bindingInput: Document, policyInput: SqlServerPhysicalPolicy, lossPolicy: \"strict\" | \"report\", nativeSource?: string) => SqlServerPhysicalProjection"
+}

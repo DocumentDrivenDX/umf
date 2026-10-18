@@ -1,0 +1,73 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreCardinalityDeclaration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"declare-core-cardinality\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\" | \"4.0.0\" | \"3.0.0\" | \"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreCardinalityIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "CoreCardinalityRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Cardinality\"]"
+      ],
+      "name": "provenance",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; cardinality: Cardinality; binding: { id: \"umf.core.cardinality.authoring\"; version: \"1.0.0\" | \"2.0.0\" | \"3.0.0\" | \"4.0.0\"; }; basis: \"explicit-author-declaration\"; nativePath: null; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreCardinalityDeclaration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreCardinalityDeclaration"
+}

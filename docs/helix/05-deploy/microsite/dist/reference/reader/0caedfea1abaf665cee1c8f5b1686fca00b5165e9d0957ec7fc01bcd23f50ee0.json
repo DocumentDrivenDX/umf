@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectParquetSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Checks physical schema topology and available row-group column links, not logical semantics.",
+  "related": [],
+  "returns": "ParquetSchemaInspection",
+  "task": "Inspect and select",
+  "type": "(source: Document) => ParquetSchemaInspection"
+}

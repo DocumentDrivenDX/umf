@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"GeneralizedRdfLiteral\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "termType",
+      "optional": false,
+      "type": "\"Literal\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "value",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "datatype",
+      "optional": false,
+      "type": "{ termType: \"NamedNode\"; value: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "language",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "GeneralizedRdfLiteral is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "GeneralizedRdfLiteral"
+}

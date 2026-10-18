@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlAnnotationRecord\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "node",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"Axiom\" | \"Annotation\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "{ subject: RdfNode; predicate: RdfNode; object: Term; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "assertedQuadIndexes",
+      "optional": false,
+      "type": "number[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "annotationQuadIndexes",
+      "optional": false,
+      "type": "number[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "nested",
+      "optional": false,
+      "type": "RdfNode[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OwlAnnotationRecord is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlAnnotationRecord"
+}

@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectCoreEvolution\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "before",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "after",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreEvolutionPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "CoreEvolutionPolicy"
+    }
+  ],
+  "purpose": "inspectCoreEvolution accepts before, after, policy and returns Json.",
+  "related": [],
+  "returns": "Json",
+  "task": "Inspect and select",
+  "type": "(before: Document, after: Document, policy: CoreEvolutionPolicy) => Json"
+}

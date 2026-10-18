@@ -1,0 +1,108 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FieldSqlServerProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-field-sqlserver\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "author",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldSqlServerRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "FieldSqlServerRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": true,
+      "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSql",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ readonly id: \"umf.core.field.sqlserver\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"16.0.4295.3\"; readonly subset: \"Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; nativePath: \"/sql\"; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; outcome: \"unknown\" | \"not-expressible\"; recovery: \"Recover source meaning with retained projection receipt; native-only import does not recover author intent\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "FieldSqlServerProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FieldSqlServerProjection"
+}

@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyRelationshipPostgresqlProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "verifyRelationshipPostgresqlProjection accepts input, current, backend and returns Promise<RelationshipPostgresqlProjection>.",
+  "related": [],
+  "returns": "Promise<RelationshipPostgresqlProjection>",
+  "task": "Other APIs",
+  "type": "(input: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<RelationshipPostgresqlProjection>"
+}

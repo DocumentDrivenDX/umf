@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyParquetCardinalityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetCardinalityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetCardinalityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recompute consistency; this is not receipt authentication.",
+  "related": [],
+  "returns": "ParquetCardinalityClassification & { [x: string]: {}; }",
+  "task": "Other APIs",
+  "type": "(input: ParquetCardinalityClassification, current: Document) => ParquetCardinalityClassification & { [x: string]: {}; }"
+}

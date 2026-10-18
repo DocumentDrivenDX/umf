@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"integerFromBigInt\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "value",
+      "optional": false,
+      "type": "bigint"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+      ],
+      "name": "context",
+      "optional": true,
+      "type": "JavascriptNumericContext | undefined"
+    }
+  ],
+  "purpose": "integerFromBigInt accepts value, context and returns { integerToken: string; }.",
+  "related": [],
+  "returns": "{ integerToken: string; }",
+  "task": "Other APIs",
+  "type": "(value: bigint, context?: JavascriptNumericContext) => { integerToken: string; }"
+}

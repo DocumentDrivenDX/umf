@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"declareCoreElementKind\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreKindIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"record\" | \"group\" | \"field\""
+    }
+  ],
+  "purpose": "Explicit author action; archives previous meaning and makes no native classification claim.",
+  "related": [],
+  "returns": "CoreKindDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreKindIdentity, kind: ElementKind) => CoreKindDeclaration"
+}

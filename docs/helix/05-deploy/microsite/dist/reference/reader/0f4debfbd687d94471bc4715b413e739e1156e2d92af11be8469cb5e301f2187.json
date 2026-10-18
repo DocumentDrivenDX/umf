@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"walkJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "walkJsonSchema accepts document and returns SchemaPosition[].",
+  "related": [],
+  "returns": "SchemaPosition[]",
+  "task": "Other APIs",
+  "type": "(document: Document) => SchemaPosition[]"
+}

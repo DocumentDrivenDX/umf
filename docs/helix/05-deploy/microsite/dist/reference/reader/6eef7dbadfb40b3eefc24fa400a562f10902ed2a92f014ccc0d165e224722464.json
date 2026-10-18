@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectNullabilityToParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityParquetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "NullabilityParquetRequest"
+    }
+  ],
+  "purpose": "projectNullabilityToParquet accepts input, options and returns NullabilityParquetProjection & { diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "NullabilityParquetProjection & { diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(input: CoreNullabilityDeclaration, options: NullabilityParquetRequest) => NullabilityParquetProjection & { diagnostics: Diagnostic[]; }"
+}

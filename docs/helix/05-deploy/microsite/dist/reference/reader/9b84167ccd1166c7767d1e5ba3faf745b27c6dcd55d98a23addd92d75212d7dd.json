@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"classifyParquetNullability\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetNullabilityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetNullabilityRequest"
+    }
+  ],
+  "purpose": "classifyParquetNullability accepts input, options and returns ParquetNullabilityClassification.",
+  "related": [],
+  "returns": "ParquetNullabilityClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetNullabilityRequest) => ParquetNullabilityClassification"
+}

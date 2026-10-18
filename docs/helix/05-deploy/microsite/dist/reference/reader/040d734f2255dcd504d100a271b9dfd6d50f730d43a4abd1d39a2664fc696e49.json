@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyAvroCardinalityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroCardinalityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroCardinalityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Consistency checking, not receipt authentication.",
+  "related": [],
+  "returns": "AvroCardinalityClassification & { [x: string]: {}; }",
+  "task": "Other APIs",
+  "type": "(input: AvroCardinalityClassification, current: Document) => AvroCardinalityClassification & { [x: string]: {}; }"
+}

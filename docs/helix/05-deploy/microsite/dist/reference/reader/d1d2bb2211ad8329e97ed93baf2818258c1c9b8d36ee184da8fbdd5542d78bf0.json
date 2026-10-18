@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeDeltaTableNodeEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "proposeDeltaTableNodeEdit accepts document, path, text and returns { document: Document; validation: Validation; }.",
+  "related": [],
+  "returns": "{ document: Document; validation: Validation; }",
+  "task": "Author and edit",
+  "type": "(document: Document, path: string, text: string) => { document: Document; validation: Validation; }"
+}

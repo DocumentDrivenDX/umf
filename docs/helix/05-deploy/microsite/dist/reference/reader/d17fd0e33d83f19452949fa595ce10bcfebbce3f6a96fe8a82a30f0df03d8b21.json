@@ -1,0 +1,84 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"JsonLdFramingOptions\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "embed",
+      "optional": true,
+      "type": "\"@once\" | \"@always\" | \"@never\" | \"@first\" | \"@last\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "explicit",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requireAll",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "omitDefault",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "omitGraph",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "pruneBlankNodeIdentifiers",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "frameDefault",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ordered",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "compactArrays",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "compactToRelative",
+      "optional": true,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "JsonLdFramingOptions is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "JsonLdFramingOptions"
+}

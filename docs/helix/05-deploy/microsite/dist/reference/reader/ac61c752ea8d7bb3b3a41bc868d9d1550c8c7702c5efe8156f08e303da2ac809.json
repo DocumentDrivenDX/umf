@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverTableSpecKeySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverTableSpecKeySource accepts input, current and returns string | Record<string, string>.",
+  "related": [],
+  "returns": "string | Record<string, string>",
+  "task": "Import and export",
+  "type": "(input: TableSpecKeyClassification, current: Document) => string | Record<string, string>"
+}

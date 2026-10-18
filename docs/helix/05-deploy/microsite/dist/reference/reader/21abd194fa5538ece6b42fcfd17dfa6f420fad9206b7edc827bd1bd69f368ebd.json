@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCoreKindDeclaration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "related": [],
+  "returns": "CoreKindDeclaration",
+  "task": "Other APIs",
+  "type": "(input: CoreKindDeclaration, current: Document) => CoreKindDeclaration"
+}

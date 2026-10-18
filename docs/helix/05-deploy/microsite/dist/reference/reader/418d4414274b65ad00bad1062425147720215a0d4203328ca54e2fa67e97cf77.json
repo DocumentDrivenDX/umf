@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"JsonSchemaPayload\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "dialect",
+      "optional": false,
+      "type": "\"https://json-schema.org/draft/2020-12/schema\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "baseUri",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "root",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "resources",
+      "optional": false,
+      "type": "Record<string, NativeJson>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "JsonSchemaPayload is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "JsonSchemaPayload"
+}

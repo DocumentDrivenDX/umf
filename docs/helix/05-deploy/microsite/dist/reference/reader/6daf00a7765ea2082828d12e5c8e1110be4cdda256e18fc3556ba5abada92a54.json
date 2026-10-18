@@ -1,0 +1,51 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DbtManifestGraph\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"checked\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nodes",
+      "optional": false,
+      "type": "{ id: string; collection: string; path: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "edges",
+      "optional": false,
+      "type": "{ dependent: string; dependency: string; kind: \"resource\" | \"macro\"; path: string; resolved: boolean; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DbtManifestGraph is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DbtManifestGraph"
+}

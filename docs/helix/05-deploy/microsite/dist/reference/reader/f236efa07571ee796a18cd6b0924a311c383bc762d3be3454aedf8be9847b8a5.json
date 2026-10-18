@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverPostgresqlRecordCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRecordClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlRecordClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverPostgresqlRecordCapture accepts input, current and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(input: PostgresqlRecordClassification, current: Document) => string"
+}

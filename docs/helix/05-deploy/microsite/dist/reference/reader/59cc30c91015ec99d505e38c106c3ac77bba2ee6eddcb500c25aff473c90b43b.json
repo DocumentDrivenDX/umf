@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeJsonLdExpansion\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ lossPolicy: \"report\" | \"reject\"; }"
+    }
+  ],
+  "purpose": "proposeJsonLdExpansion accepts document, options and returns Promise<JsonLdExpansionReport>.",
+  "related": [],
+  "returns": "Promise<JsonLdExpansionReport>",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { lossPolicy: \"report\" | \"reject\"; }) => Promise<JsonLdExpansionReport>"
+}

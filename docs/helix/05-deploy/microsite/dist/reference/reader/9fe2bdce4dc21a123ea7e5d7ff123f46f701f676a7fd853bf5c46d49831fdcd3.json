@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"reconcileDeltaCheckpoint\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "checkpoint",
+      "optional": false,
+      "type": "DeltaCommit"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "commits",
+      "optional": false,
+      "type": "DeltaCommit[]"
+    },
+    {
+      "description": "Default: 'v2'.",
+      "links": [],
+      "name": "spec",
+      "optional": true,
+      "type": "\"v1\" | \"v2\""
+    }
+  ],
+  "purpose": "Explicit checkpoint action views; V2 is the default, unresolved sidecars block.",
+  "related": [],
+  "returns": "DeltaReconciliation",
+  "task": "Other APIs",
+  "type": "(checkpoint: DeltaCommit, commits: DeltaCommit[], spec?: \"v1\" | \"v2\") => DeltaReconciliation"
+}

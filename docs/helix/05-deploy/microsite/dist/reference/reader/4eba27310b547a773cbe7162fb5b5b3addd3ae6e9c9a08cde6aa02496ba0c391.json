@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"admitActionInputs\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "documentInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "actionInput",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionInputs\"]"
+      ],
+      "name": "inputsInput",
+      "optional": false,
+      "type": "ActionInputs"
+    },
+    {
+      "description": "Default: false.",
+      "links": [],
+      "name": "outputs",
+      "optional": true,
+      "type": "boolean"
+    }
+  ],
+  "purpose": "Typed admission, without store lookup or entity existence checks.",
+  "related": [],
+  "returns": "ActionInputs",
+  "task": "Other APIs",
+  "type": "(documentInput: Document, actionInput: Action, inputsInput: ActionInputs, outputs?: boolean) => ActionInputs"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreNullability\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreNullabilityIdentity"
+    }
+  ],
+  "purpose": "Inspect availability without inferring a native absence carrier or provenance.",
+  "related": [],
+  "returns": "CoreNullabilityInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreNullabilityIdentity) => CoreNullabilityInspection"
+}

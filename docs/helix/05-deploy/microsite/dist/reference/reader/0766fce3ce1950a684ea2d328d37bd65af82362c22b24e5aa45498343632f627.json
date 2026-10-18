@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreDatasetInput\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "{ id: string; closure: \"supplied-dataset-only\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetRecord\"]"
+      ],
+      "name": "records",
+      "optional": false,
+      "type": "CoreDatasetRecord[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetRelationship\"]"
+      ],
+      "name": "relationships",
+      "optional": false,
+      "type": "CoreDatasetRelationship[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "context",
+      "optional": true,
+      "type": "Json"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreDatasetInput is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreDatasetInput"
+}

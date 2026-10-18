@@ -1,0 +1,121 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreDatasetCompactValueCheck\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"validate-core-dataset-values-compact\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCompactRecordValueCheck\"]"
+      ],
+      "name": "records",
+      "optional": false,
+      "type": "{ instanceId: string; result: CoreCompactRecordValueCheck; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCompactKeyTupleReceipt\"]"
+      ],
+      "name": "keys",
+      "optional": false,
+      "type": "{ instanceId: string; result: CoreCompactKeyTupleReceipt; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCompactKeyTupleReceipt\"]"
+      ],
+      "name": "relationships",
+      "optional": false,
+      "type": "{ instanceId: string; identity: { module: string; id: string; }; sourceInstanceId: string; targetInstanceId: string; targetKey: CoreCompactKeyTupleReceipt; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"supplied-dataset-only\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetInput\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreDatasetInput"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "documentValidation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "datasetValidation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligations",
+      "optional": false,
+      "type": "{ id: \"dataset.keys\" | \"dataset.relationships\"; state: \"satisfied\" | \"invalid\" | \"unresolved\"; scope: \"supplied-dataset-only\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreDatasetCompactValueCheck is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreDatasetCompactValueCheck"
+}

@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddPostgresqlPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"ddd-postgresql-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetVersion",
+      "optional": false,
+      "type": "\"17.4\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "objectCheckNaming",
+      "optional": false,
+      "type": "\"ck-table-column-object-v1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlTablePolicy\"]"
+      ],
+      "name": "tablePolicy",
+      "optional": false,
+      "type": "DddPostgresqlTablePolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRelationshipLayoutPolicy\"]"
+      ],
+      "name": "layoutPolicy",
+      "optional": false,
+      "type": "PostgresqlRelationshipLayoutPolicy"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddPostgresqlPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddPostgresqlPolicy"
+}

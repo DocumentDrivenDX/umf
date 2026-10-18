@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"defineDeltaTable\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaDefinition\"]"
+      ],
+      "name": "definition",
+      "optional": false,
+      "type": "DeltaDefinition"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "Author a definition using the existing exact Delta schema profile. No native UUID is invented.",
+  "related": [],
+  "returns": "Document",
+  "task": "Other APIs",
+  "type": "(schemaText: string, definition: DeltaDefinition, options: { id: string; }) => Document"
+}

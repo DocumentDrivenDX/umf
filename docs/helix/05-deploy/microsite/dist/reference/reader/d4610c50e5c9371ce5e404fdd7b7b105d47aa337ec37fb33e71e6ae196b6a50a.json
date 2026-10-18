@@ -1,0 +1,55 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityPolicyV2LegacyAccess\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "subset",
+      "optional": false,
+      "type": "\"legacy-body-0.1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityAccessResult\"]"
+      ],
+      "name": "result",
+      "optional": false,
+      "type": "SecurityAccessResult"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityPolicyV2LegacyAccess is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityPolicyV2LegacyAccess"
+}

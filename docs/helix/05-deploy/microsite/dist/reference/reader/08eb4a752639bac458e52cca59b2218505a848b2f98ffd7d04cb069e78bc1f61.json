@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyPostgresqlRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRelationshipRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "PostgresqlRelationshipRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "Native declarations/observations remain distinct from authored association intent.",
+  "related": [],
+  "returns": "Promise<PostgresqlRelationshipClassification>",
+  "task": "Other APIs",
+  "type": "(input: Document, options: PostgresqlRelationshipRequest, backend: PostgresqlBackend) => Promise<PostgresqlRelationshipClassification>"
+}

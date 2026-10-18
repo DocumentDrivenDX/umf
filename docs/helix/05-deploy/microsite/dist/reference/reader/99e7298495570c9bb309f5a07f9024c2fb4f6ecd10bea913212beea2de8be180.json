@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"decodeParquetLevels\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Decodes level streams only. Dictionary and physical value decoding remain separate.",
+  "related": [],
+  "returns": "ParquetLevels",
+  "task": "Serialize",
+  "type": "(source: Document) => ParquetLevels"
+}

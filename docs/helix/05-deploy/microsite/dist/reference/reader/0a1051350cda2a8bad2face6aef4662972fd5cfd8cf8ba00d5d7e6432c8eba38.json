@@ -1,0 +1,24 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyRelationshipTransition\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipRollbackReceipt\"]",
+        "[\"api\",\".\",\"RelationshipUpgradeReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipRollbackReceipt | RelationshipUpgradeReceipt"
+    }
+  ],
+  "purpose": "verifyRelationshipTransition accepts input and returns RelationshipRollbackReceipt | RelationshipUpgradeReceipt.",
+  "related": [],
+  "returns": "RelationshipRollbackReceipt | RelationshipUpgradeReceipt",
+  "task": "Other APIs",
+  "type": "(input: RelationshipUpgradeReceipt | RelationshipRollbackReceipt) => RelationshipUpgradeReceipt | RelationshipRollbackReceipt"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityAccessResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityDecision\"]"
+      ],
+      "name": "decision",
+      "optional": false,
+      "type": "SecurityDecision"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityOutput\"]"
+      ],
+      "name": "output",
+      "optional": false,
+      "type": "SecurityOutput[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityAccessResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityAccessResult"
+}

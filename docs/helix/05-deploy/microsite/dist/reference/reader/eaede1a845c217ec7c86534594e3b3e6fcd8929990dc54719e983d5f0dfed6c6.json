@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseNativeJson\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseNativeJson accepts text and returns NativeJson.",
+  "related": [],
+  "returns": "NativeJson",
+  "task": "Read and validate",
+  "type": "(text: string) => NativeJson"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getRdfNamedGraphs\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getRdfNamedGraphs accepts document and returns RdfNode[].",
+  "related": [],
+  "returns": "RdfNode[]",
+  "task": "Inspect and select",
+  "type": "(document: Document) => RdfNode[]"
+}

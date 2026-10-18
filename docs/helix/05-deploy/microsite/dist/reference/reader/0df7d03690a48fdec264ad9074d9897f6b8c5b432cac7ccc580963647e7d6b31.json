@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverPostgresqlRelationshipSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverPostgresqlRelationshipSource accepts input, current, backend and returns Promise<string>.",
+  "related": [],
+  "returns": "Promise<string>",
+  "task": "Import and export",
+  "type": "(input: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend) => Promise<string>"
+}

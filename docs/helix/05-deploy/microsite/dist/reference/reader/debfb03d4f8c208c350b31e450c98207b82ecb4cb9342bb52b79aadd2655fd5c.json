@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectKeysToParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreKeyDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyParquetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "KeyParquetRequest"
+    }
+  ],
+  "purpose": "Consume verified declarations by stable ID. Native names never supply authored identity.",
+  "related": [],
+  "returns": "KeyParquetProjection",
+  "task": "Import and export",
+  "type": "(input: Document, authorInput: CoreKeyDeclaration[], options: KeyParquetRequest) => KeyParquetProjection"
+}

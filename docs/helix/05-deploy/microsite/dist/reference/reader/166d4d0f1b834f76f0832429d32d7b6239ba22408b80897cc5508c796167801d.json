@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectCardinalityToParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreCardinalityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalityParquetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "CardinalityParquetRequest"
+    }
+  ],
+  "purpose": "projectCardinalityToParquet accepts input, options and returns CardinalityParquetProjection.",
+  "related": [],
+  "returns": "CardinalityParquetProjection",
+  "task": "Import and export",
+  "type": "(input: CoreCardinalityDeclaration, options: CardinalityParquetRequest) => CardinalityParquetProjection"
+}

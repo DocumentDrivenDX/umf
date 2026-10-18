@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"dddPostgresqlProjectionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as dddPostgresqlProjectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; status: { enum: string[]; }; source: { $ref: string; }; binding: { anyOf: { $ref: string; }[]; }; policy: { $ref: string; }; nativeVersion: { const: string; }; mappings: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { source: { enum: string[]; }; path: { type: string; }; statement: { type: string; minimum: number; }; kind: { enum: string[]; }; target: { type: string; minLength: number; }; outcome: { enum: string[]; }; }; }; }; residuals: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { source: { enum: string[]; }; path: { type: string; }; value: {}; outcome: { enum: string[]; }; reason: { type: string; minLength: number; }; }; }; }; diagnostics: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { code: { type: string; minLength: number; }; path: { type: string; }; message: { type: string; minLength: number; }; severity: { enum: string[]; }; }; }; }; nativeSource: { type: string; minLength: number; }; targetArchive: { anyOf: { $ref: string; }[]; }; }; allOf: { if: { properties: { status: { const: string; }; }; }; then: { required: string[]; properties: { policy: { properties: { mode: { const: string; }; }; }; }; }; else: { properties: { nativeSource: boolean; targetArchive: boolean; }; }; }[]; }"
+}

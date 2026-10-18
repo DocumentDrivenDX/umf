@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BulkOutcomeValidation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "valid",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanDiagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "ActionPlanDiagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BulkOutcomeValidation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BulkOutcomeValidation"
+}

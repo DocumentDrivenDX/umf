@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportAvroBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportAvroBundle accepts document and returns { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }"
+}

@@ -1,0 +1,51 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityFact\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "type",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+      ],
+      "name": "key",
+      "optional": false,
+      "type": "CoreKeyTupleValue[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]",
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "{ field: SecurityRef; value: CoreLiteral; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "absent",
+      "optional": false,
+      "type": "SecurityRef[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityFact is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityFact"
+}

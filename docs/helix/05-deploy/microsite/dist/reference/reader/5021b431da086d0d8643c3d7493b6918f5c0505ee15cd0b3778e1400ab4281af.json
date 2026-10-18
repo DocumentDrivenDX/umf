@@ -1,0 +1,115 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"KeySqlServerProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-keys-sqlserver\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+      ],
+      "name": "authors",
+      "optional": false,
+      "type": "CoreKeyDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeySqlServerRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "KeySqlServerRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requiredSessionOptions",
+      "optional": false,
+      "type": "{ readonly ANSI_NULLS: \"ON\"; readonly QUOTED_IDENTIFIER: \"ON\"; readonly ANSI_PADDING: \"ON\"; readonly ANSI_WARNINGS: \"ON\"; readonly ARITHABORT: \"ON\"; readonly CONCAT_NULL_YIELDS_NULL: \"ON\"; readonly NUMERIC_ROUNDABORT: \"OFF\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": true,
+      "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSql",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ keyId: string; keyName: string; idealPath: string; nativePath: string; columns: string[]; nativeColumns: string[]; primary: boolean; constraintName: string; origin: \"authored\"; enforcement: \"primary-key-not-null\" | \"unique-not-null\"; equality: \"exact-on-representable-values\" | \"unknown\"; outcome: \"not-expressible\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; outcome: \"unknown\" | \"not-expressible\"; recovery: typeof recovery; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "KeySqlServerProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "KeySqlServerProjection"
+}

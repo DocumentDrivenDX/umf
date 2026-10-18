@@ -1,0 +1,104 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RelationshipSqlServerRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipIdentity\"]"
+      ],
+      "name": "relationship",
+      "optional": false,
+      "type": "CoreRelationshipIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"new-key-tables\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipKey\"]"
+      ],
+      "name": "sourceKey",
+      "optional": false,
+      "type": "SqlServerRelationshipKey"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipKey\"]"
+      ],
+      "name": "targetKey",
+      "optional": false,
+      "type": "SqlServerRelationshipKey"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "referenceColumns",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "constraintName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deleteAction",
+      "optional": false,
+      "type": "\"NO_ACTION\" | \"CASCADE\" | \"SET_NULL\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "updateAction",
+      "optional": false,
+      "type": "\"NO_ACTION\" | \"CASCADE\" | \"SET_NULL\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "junction",
+      "optional": true,
+      "type": "{ tableName: string; sourceColumns: string[]; sourceConstraintName: string; pairConstraintName: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RelationshipSqlServerRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RelationshipSqlServerRequest"
+}

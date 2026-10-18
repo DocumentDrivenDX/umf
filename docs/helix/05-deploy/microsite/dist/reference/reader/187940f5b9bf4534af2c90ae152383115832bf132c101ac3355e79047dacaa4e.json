@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverAvroRecordBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRecordClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroRecordClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverAvroRecordBundle accepts input, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
+  "related": [],
+  "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
+  "task": "Import and export",
+  "type": "(input: AvroRecordClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+}

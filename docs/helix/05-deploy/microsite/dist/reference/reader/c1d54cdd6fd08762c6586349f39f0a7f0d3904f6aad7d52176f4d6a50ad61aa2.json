@@ -1,0 +1,76 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlDdlDeclaration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "statementIndex",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"create-table\" | \"create-foreign-table\" | \"alter-table\" | \"create-composite\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaContext",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requiresCatalogExpansion",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "relation",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlDdlColumn\"]"
+      ],
+      "name": "columns",
+      "optional": false,
+      "type": "PostgresqlDdlColumn[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "nativeStatement",
+      "optional": false,
+      "type": "NativeJson"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlDdlDeclaration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlDdlDeclaration"
+}

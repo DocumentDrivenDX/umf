@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyParquetFieldClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetFieldClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetFieldClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recompute the native basis and reject classification receipts after any target edit.",
+  "related": [],
+  "returns": "ParquetFieldClassification",
+  "task": "Other APIs",
+  "type": "(input: ParquetFieldClassification, current: Document) => ParquetFieldClassification"
+}

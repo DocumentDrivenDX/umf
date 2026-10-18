@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DeltaSidecarOrigin\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "line",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "checkpointLine",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sidecar",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "row",
+      "optional": true,
+      "type": "number"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaSidecarOrigin is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaSidecarOrigin"
+}

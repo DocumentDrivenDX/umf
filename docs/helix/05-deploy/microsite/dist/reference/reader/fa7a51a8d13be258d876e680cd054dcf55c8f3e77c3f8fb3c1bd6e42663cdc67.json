@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifySqlServerFacets\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerFacetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "SqlServerFacetRequest"
+    }
+  ],
+  "purpose": "Interpret a selected physical column onto an explicitly selected logical Field.\nNative columns are never relabeled. Results are scoped observations, not authorship.",
+  "related": [],
+  "returns": "SqlServerFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: SqlServerFacetRequest) => SqlServerFacetClassification"
+}

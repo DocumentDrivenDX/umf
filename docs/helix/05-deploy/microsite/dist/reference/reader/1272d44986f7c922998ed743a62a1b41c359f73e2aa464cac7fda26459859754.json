@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"securityOr\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityTruth\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "readonly SecurityTruth[]"
+    }
+  ],
+  "purpose": "securityOr accepts values and returns SecurityTruth.",
+  "related": [],
+  "returns": "SecurityTruth",
+  "task": "Other APIs",
+  "type": "(values: readonly SecurityTruth[]) => SecurityTruth"
+}

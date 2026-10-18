@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverTableSpecRelationshipSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverTableSpecRelationshipSource accepts input, current and returns string | Record<string, string>.",
+  "related": [],
+  "returns": "string | Record<string, string>",
+  "task": "Import and export",
+  "type": "(input: TableSpecRelationshipClassification, current: Document) => string | Record<string, string>"
+}

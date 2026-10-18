@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCoreRecordTypeDeclaration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordTypeDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreRecordTypeDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Checks consistency and current identity resolution, not cryptographic authorship.",
+  "related": [],
+  "returns": "CoreRecordTypeDeclaration",
+  "task": "Other APIs",
+  "type": "(input: CoreRecordTypeDeclaration, current: Document) => CoreRecordTypeDeclaration"
+}

@@ -1,0 +1,64 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlListAxiom\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OwlListAxiomKind\"]"
+      ],
+      "name": "kind",
+      "optional": false,
+      "type": "OwlListAxiomKind"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "node",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "head",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "members",
+      "optional": false,
+      "type": "RdfNode[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "quadIndexes",
+      "optional": false,
+      "type": "number[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "listQuadIndexes",
+      "optional": false,
+      "type": "number[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OwlListAxiom is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlListAxiom"
+}

@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectDddToGraphql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlPolicy\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "DddGraphqlPolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "purpose": "Complete schema-only projection. Endpoint identity is always explicitly paired.",
+  "related": [],
+  "returns": "DddGraphqlProjection",
+  "task": "Import and export",
+  "type": "(input: Document, options: DddGraphqlPolicy, lossPolicy: \"strict\" | \"report\") => DddGraphqlProjection"
+}

@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectSecurityDisclosureV2\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Every check is against detached supplied sources; successful data validation is not admission.",
+  "related": [],
+  "returns": "SecurityDisclosureInspectionV2",
+  "task": "Inspect and select",
+  "type": "(input: unknown, policy: unknown, catalog: unknown, closure: unknown) => SecurityDisclosureInspectionV2"
+}

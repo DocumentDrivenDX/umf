@@ -1,0 +1,15 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"createUmfRegistry\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [],
+  "purpose": "Construct the SDK default registry with its selected extensions. Default registration differs from an explicitly empty Registry.",
+  "related": [
+    "[\"api\",\".\",\"Registry\"]"
+  ],
+  "returns": "Registry",
+  "task": "Extensions",
+  "type": "() => Registry"
+}

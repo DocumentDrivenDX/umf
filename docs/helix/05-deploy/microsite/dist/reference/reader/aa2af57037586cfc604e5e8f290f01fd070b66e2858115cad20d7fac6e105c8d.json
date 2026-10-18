@@ -1,0 +1,54 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RelationshipCandidate\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "umf",
+      "optional": false,
+      "type": "\"0.7.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "vocabularies",
+      "optional": false,
+      "type": "Record<string, { [key: string]: unknown; version: string; }>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Module\"]",
+        "[\"api\",\".\",\"CoreRelationship\"]"
+      ],
+      "name": "modules",
+      "optional": false,
+      "type": "(Module & { relationships?: CoreRelationship[]; })[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "extensions",
+      "optional": true,
+      "type": "Record<string, Json>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RelationshipCandidate is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RelationshipCandidate"
+}

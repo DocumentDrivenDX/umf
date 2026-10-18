@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"structuredClassificationInspectionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as structuredClassificationInspectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; status: { enum: string[]; }; receipt: { oneOf: { $ref: string; }[]; }; residuals: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { sourcePath: { type: string; }; sourceValue: {}; targetPath: { type: string; }; outcome: { const: string; }; reason: { type: string; }; binding: { type: string; additionalProperties: boolean; required: string[]; properties: { id: { type: string; }; version: { type: string; }; nativeVersion: { type: string; }; subset: { type: string; }; }; }; recovery: { type: string; additionalProperties: boolean; required: string[]; properties: { strategy: { const: string; }; receiptPath: { const: string; }; instruction: { type: string; }; }; }; }; }; }; diagnostics: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { code: { type: string; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; }; }; mappings: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { origin: { const: string; }; idealPath: { type: string; }; nativePath: { type: string; }; binding: { type: string; additionalProperties: boolean; required: string[]; properties: { id: { type: string; }; version: { type: string; }; nativeVersion: { type: string; }; subset: { type: string; }; }; }; basis: { type: string; }; outcome: { enum: string[]; }; kind: { enum: string[]; }; nativeFragment: {}; dependencyId: { type: string; minLength: number; }; }; }; }; nativeContext: { oneOf: ({ type: string; additionalProperties?: never; required?: never; properties?: never; } | { type: string; additionalProperties: boolean; required: string[]; properties: { scope: { const: string; }; namespaceResolution: { enum: string[]; }; }; })[]; }; }; }"
+}

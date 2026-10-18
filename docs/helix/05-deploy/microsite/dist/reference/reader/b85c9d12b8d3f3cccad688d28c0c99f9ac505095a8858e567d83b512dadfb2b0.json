@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"observeArrowIpcCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowIpcObservationBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "ArrowIpcObservationBackend"
+    }
+  ],
+  "purpose": "A pinned native schema observation; does not assert complete byte consumption.",
+  "related": [],
+  "returns": "{ source: Document; backend: string; complete: false; status: \"observed\" | \"uninterpreted\"; schema?: Json; message?: string; }",
+  "task": "Other APIs",
+  "type": "(document: Document, backend: ArrowIpcObservationBackend) => { source: Document; backend: string; complete: false; status: \"observed\" | \"uninterpreted\"; schema?: Json; message?: string; }"
+}

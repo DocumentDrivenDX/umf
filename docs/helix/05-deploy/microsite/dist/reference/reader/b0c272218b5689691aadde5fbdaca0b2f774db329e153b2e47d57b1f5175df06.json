@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"integerToBigInt\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "{ integerToken: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+      ],
+      "name": "context",
+      "optional": true,
+      "type": "JavascriptNumericContext | undefined"
+    }
+  ],
+  "purpose": "integerToBigInt accepts input, context and returns bigint.",
+  "related": [],
+  "returns": "bigint",
+  "task": "Other APIs",
+  "type": "(input: { integerToken: string; }, context?: JavascriptNumericContext) => bigint"
+}

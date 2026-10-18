@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectNullabilityToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilitySqlServerRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "NullabilitySqlServerRequest"
+    }
+  ],
+  "purpose": "projectNullabilityToSqlServer accepts input, options and returns NullabilitySqlServerProjection.",
+  "related": [],
+  "returns": "NullabilitySqlServerProjection",
+  "task": "Import and export",
+  "type": "(input: CoreNullabilityDeclaration, options: NullabilitySqlServerRequest) => NullabilitySqlServerProjection"
+}

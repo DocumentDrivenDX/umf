@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"exportArrowIpcCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Exports captured bytes, never a regenerated interpretation or an edited schema.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Import and export",
+  "type": "(document: Document) => Uint8Array"
+}

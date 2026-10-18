@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifySqlServerFacetClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Receipt consistency with retained input and current target, not source authentication.",
+  "related": [],
+  "returns": "SqlServerFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: SqlServerFacetClassification, current: Document) => SqlServerFacetClassification"
+}

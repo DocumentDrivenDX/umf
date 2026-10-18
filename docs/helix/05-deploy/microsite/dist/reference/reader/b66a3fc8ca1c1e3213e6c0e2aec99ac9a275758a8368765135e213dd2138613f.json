@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"assessActionPlan\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspection\"]"
+      ],
+      "name": "inspection",
+      "optional": false,
+      "type": "ActionPlanInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapabilities\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "ActionPlanCapabilities"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspectionContext\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "ActionPlanInspectionContext"
+    }
+  ],
+  "purpose": "assessActionPlan accepts inspection, capabilities, context and returns ActionPlanAssessment.",
+  "related": [],
+  "returns": "ActionPlanAssessment",
+  "task": "Other APIs",
+  "type": "(inspection: ActionPlanInspection, capabilities: ActionPlanCapabilities, context: ActionPlanInspectionContext) => ActionPlanAssessment"
+}

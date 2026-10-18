@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectParquetContainers\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Native reading interpretation only; source structure, names and annotations remain authoritative.",
+  "related": [],
+  "returns": "ParquetContainerInspection",
+  "task": "Inspect and select",
+  "type": "(source: Document) => ParquetContainerInspection"
+}

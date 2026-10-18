@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeOdcsElementRename\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ reference: string; name: string; }"
+    }
+  ],
+  "purpose": "Rename an ID-selected element while preserving the currently resolved local foreign-key endpoints.",
+  "related": [],
+  "returns": "OdcsRenameResult",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { reference: string; name: string; }) => OdcsRenameResult"
+}

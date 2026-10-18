@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectFieldToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldSqlServerRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FieldSqlServerRequest"
+    }
+  ],
+  "purpose": "projectFieldToSqlServer accepts input, options and returns FieldSqlServerProjection.",
+  "related": [],
+  "returns": "FieldSqlServerProjection",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: FieldSqlServerRequest) => FieldSqlServerProjection"
+}

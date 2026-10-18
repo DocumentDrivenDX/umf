@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlFacetRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "column",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSource",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "supplement",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlFacetProfile\"]"
+      ],
+      "name": "profile",
+      "optional": false,
+      "type": "PostgresqlFacetProfile"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "datumFormat",
+      "optional": false,
+      "type": "\"unresolved\" | \"little-endian-datum64\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligation",
+      "optional": false,
+      "type": "\"value-domain\" | \"exact-input\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetDeclaration\"]"
+      ],
+      "name": "author",
+      "optional": true,
+      "type": "CoreFacetDeclaration"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlFacetRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlFacetRequest"
+}

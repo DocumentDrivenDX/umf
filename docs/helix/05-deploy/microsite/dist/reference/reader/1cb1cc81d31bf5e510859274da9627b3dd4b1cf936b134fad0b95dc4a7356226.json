@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyTableSpecKeys\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecKeyRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "TableSpecKeyRequest"
+    }
+  ],
+  "purpose": "Observe native declarations without upgrading the envelope or creating author keys.",
+  "related": [],
+  "returns": "TableSpecKeyClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: TableSpecKeyRequest) => TableSpecKeyClassification"
+}

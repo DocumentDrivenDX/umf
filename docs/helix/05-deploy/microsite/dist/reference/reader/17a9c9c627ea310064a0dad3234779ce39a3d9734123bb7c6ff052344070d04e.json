@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"classifyPostgresqlDdlRecord\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlDdlKindRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "PostgresqlDdlKindRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "classifyPostgresqlDdlRecord accepts input, options, backend and returns Promise<PostgresqlDdlKinds>.",
+  "related": [],
+  "returns": "Promise<PostgresqlDdlKinds>",
+  "task": "Other APIs",
+  "type": "(input: Document, options: PostgresqlDdlKindRequest, backend: PostgresqlBackend) => Promise<PostgresqlDdlKinds>"
+}

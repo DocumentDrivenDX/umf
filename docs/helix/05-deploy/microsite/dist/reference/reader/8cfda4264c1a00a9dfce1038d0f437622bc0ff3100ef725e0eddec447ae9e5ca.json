@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SmithyAssemblyBackend\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "assemble",
+      "optional": false,
+      "type": "(files: Record<string, string>, control?: { signal?: AbortSignal; }) => string | Promise<string>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Trusted installed runtime. It must consume only the explicitly supplied files.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SmithyAssemblyBackend"
+}

@@ -1,0 +1,18 @@
+{
+  "alternatives": [
+    "null",
+    "{ kind: \"record\"; fields: { index: number; name: string; value: ParquetRowValue; }[]; }",
+    "{ kind: \"repeated\"; items: ParquetRowValue[]; }",
+    "{ kind: \"physical\"; value: ParquetPhysicalValue; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetRowValue\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ParquetRowValue is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetRowValue"
+}

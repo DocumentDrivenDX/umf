@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"lookupOpenapiResource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "reference",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fromUri",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "Literal URI + JSON Pointer lookup only; not an OpenAPI/JSON Schema scope resolver.",
+  "related": [],
+  "returns": "{ uri: string; pointer: string; node: NativeJson; interpretation: \"literal-document-pointer-only\"; }",
+  "task": "Other APIs",
+  "type": "(document: Document, reference: string, fromUri?: string) => { uri: string; pointer: string; node: NativeJson; interpretation: \"literal-document-pointer-only\"; }"
+}

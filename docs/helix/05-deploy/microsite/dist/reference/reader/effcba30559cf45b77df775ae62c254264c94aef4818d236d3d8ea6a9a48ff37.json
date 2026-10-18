@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SmithySelectionBackend\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "select",
+      "optional": false,
+      "type": "(modelJson: string, selector: string, control?: { signal?: AbortSignal; }) => string | Promise<string>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "assemble",
+      "optional": false,
+      "type": "(files: Record<string, string>, control?: { signal?: AbortSignal; }) => string | Promise<string>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SmithySelectionBackend is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SmithySelectionBackend"
+}

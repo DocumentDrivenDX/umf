@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyCoreEvolution\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "receiptInput",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "before",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "after",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreEvolutionPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "CoreEvolutionPolicy"
+    }
+  ],
+  "purpose": "verifyCoreEvolution accepts receiptInput, before, after, policy and returns Json.",
+  "related": [],
+  "returns": "Json",
+  "task": "Other APIs",
+  "type": "(receiptInput: unknown, before: Document, after: Document, policy: CoreEvolutionPolicy) => Json"
+}

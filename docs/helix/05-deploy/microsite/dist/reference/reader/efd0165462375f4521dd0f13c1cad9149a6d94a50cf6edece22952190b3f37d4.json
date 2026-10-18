@@ -1,0 +1,21 @@
+{
+  "alternatives": [
+    "{ literal: CoreLiteral; }",
+    "{ input: string; }",
+    "{ output: string; }",
+    "{ state: ActionRulePhase; frame: string; field: ActionReference; }",
+    "{ exists: { state: ActionRulePhase; frame: string; }; }",
+    "{ linked: { state: ActionRulePhase; relationship: { module: string; relationship: string; }; sourceFrame: string; targetFrame: string; }; }",
+    "{ op: \"present\" | \"eq\" | \"lt\" | \"le\" | \"gt\" | \"ge\" | \"add\" | \"sub\" | \"and\" | \"or\" | \"not\"; args: ActionExpression[]; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionExpression\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ActionExpression is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionExpression"
+}

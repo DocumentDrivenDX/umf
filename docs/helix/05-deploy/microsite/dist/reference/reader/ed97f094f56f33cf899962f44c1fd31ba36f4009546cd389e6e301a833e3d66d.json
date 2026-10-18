@@ -1,0 +1,86 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlKeyComponent\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "position",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "attribute",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "notNull",
+      "optional": false,
+      "type": "boolean | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "type",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "typeSchema",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "typeName",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "typeKind",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "operatorClass",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlKeyCollation\"]"
+      ],
+      "name": "collation",
+      "optional": false,
+      "type": "PostgresqlKeyCollation | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlKeyComponent is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlKeyComponent"
+}

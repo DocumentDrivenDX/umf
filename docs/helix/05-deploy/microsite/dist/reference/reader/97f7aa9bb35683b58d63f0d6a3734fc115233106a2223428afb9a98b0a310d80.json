@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectSqlServerToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerAvroPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerAvroPolicy"
+    }
+  ],
+  "purpose": "projectSqlServerToAvro accepts source, input and returns SqlServerAvroProjection.",
+  "related": [],
+  "returns": "SqlServerAvroProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: SqlServerAvroPolicy) => SqlServerAvroProjection"
+}

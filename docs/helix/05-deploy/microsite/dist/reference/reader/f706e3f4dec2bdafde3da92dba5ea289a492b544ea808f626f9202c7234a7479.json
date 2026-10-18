@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectActionPlan\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspectionContext\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "ActionPlanInspectionContext"
+    }
+  ],
+  "purpose": "inspectActionPlan accepts input, context and returns ActionPlanInspection.",
+  "related": [],
+  "returns": "ActionPlanInspection",
+  "task": "Inspect and select",
+  "type": "(input: ActionPlanArtifact, context: ActionPlanInspectionContext) => ActionPlanInspection"
+}

@@ -1,0 +1,70 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CardinalityTableSpecRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columnName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"BOOLEAN\" | \"INTEGER\" | \"DECIMAL\" | \"FLOAT\" | \"TEXT\" | \"VARCHAR\" | \"CHAR\" | \"DATE\" | \"DATETIME\" | \"TIMESTAMP\" | \"EMBEDDING\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dimension",
+      "optional": false,
+      "type": "number | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requireExactValues",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"unresolved\" | \"generated-json\" | \"generated-spark\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CardinalityTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CardinalityTableSpecRequest"
+}

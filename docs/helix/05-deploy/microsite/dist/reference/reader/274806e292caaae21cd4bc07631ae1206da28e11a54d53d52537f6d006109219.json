@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"importJsonLdDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; baseIRI: string; processingMode?: \"json-ld-1.0\" | \"json-ld-1.1\"; contexts?: { url: string; documentUrl?: string; text: string; }[]; expandContext?: string; }"
+    }
+  ],
+  "purpose": "importJsonLdDocument accepts text, options and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(text: string, options: { id: string; baseIRI: string; processingMode?: \"json-ld-1.0\" | \"json-ld-1.1\"; contexts?: { url: string; documentUrl?: string; text: string; }[]; expandContext?: string; }) => Document"
+}
