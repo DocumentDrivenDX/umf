@@ -230,6 +230,10 @@ or getters. Property names such as `__proto__` MUST remain data.
 Limits: 4,000,000 UTF-16 code units per source/output text, nesting depth 128,
 and 100,000 traversed values. Limit failures are explicit errors, never successful
 partial validation. These are bootstrap safety bounds, not performance claims.
+An explicit synchronous catalog resource scope permits up to 1,000,000 traversed
+values while retaining the same text, nesting, numeric and parser restrictions.
+The ordinary 100,000-value profile is restored on success and failure. This
+profile supports large catalog interpretation; it is not a default expansion.
 Trusted semantic validator execution is not sandboxed or time-bounded by this API.
 
 ## Precedence and Compatibility

@@ -1,5 +1,5 @@
 import { parseDocument, isMap, isSeq, isScalar, isAlias, stringify } from 'yaml';
-import { copyJson, LIMITS } from './json';
+import { copyJson, LIMITS, jsonValueLimit } from './json';
 import { UmfError, type Json, pointer } from './types';
 
 // Compare decimal values without rounding, without expanding an exponent.
@@ -30,7 +30,7 @@ export function readJsonValue(text: string, format: 'json' | 'yaml' = 'yaml'): J
   if (doc.directives?.yaml.version !== '1.2') throw new UmfError('SYNTAX', 'Only YAML 1.2 is supported');
   let count = 0;
   function convert(node: unknown, path: string, depth: number): Json {
-    if (++count > LIMITS.maxValues || depth > LIMITS.maxDepth) throw new UmfError('LIMIT', 'Source structural limit exceeded', path);
+    if (++count > jsonValueLimit() || depth > LIMITS.maxDepth) throw new UmfError('LIMIT', 'Source structural limit exceeded', path);
     if (node === null) return null;
     if (isAlias(node)) throw new UmfError('ALIAS', 'YAML aliases are outside the JSON-compatible profile', path);
     if ((isScalar(node) || isMap(node) || isSeq(node)) && node.tag) throw new UmfError('TAG', 'Explicit YAML tags are outside the profile', path);
