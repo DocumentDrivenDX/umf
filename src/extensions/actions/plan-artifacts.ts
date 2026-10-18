@@ -1,3 +1,4 @@
+import {scanJsonFrame} from '../../model/internal/scan-json-frame';
 import {boundedJsonBytes} from '../../model/internal/json-byte-budget';
 import {copyJson} from '../../model/json';
 import {readJsonValue,assertExactJsonNumber} from '../../model/serialization';
@@ -26,12 +27,10 @@ export function sha256Text(text:string,maximum=PLAN_BYTES):string {
  }return h.map(n=>n.toString(16).padStart(8,'0')).join('');
 }
 /** Bound depth/nodes, decode keys for duplicates and validate Unicode BEFORE full parsing/copy. */
-export function scanPlanJson(text:string,maximum=PLAN_BYTES,maxNodes=100000):void {
- utf8Size(text,maximum);let at=0,nodes=0;const ws=()=>{while(/[\t\n\r ]/.test(text[at]??'x'))at++;};
- const string=():string=>{const start=at++;while(at<text.length){const c=text[at++]!;if(c==='"'){let value:string;try{value=JSON.parse(text.slice(start,at));}catch{return planError('PAP_INVALID','Invalid JSON string');}validUnicode(value);return value;}if(c==='\\')at++;}return planError('PAP_INVALID','Unterminated JSON string');};
- const visit=(depth:number):void=>{if(depth>64||++nodes>maxNodes)planError('PAP_LIMIT','JSON depth/node bound exceeded');ws();const c=text[at];if(c==='"'){string();return;}if(c==='{'||c==='['){const object=c==='{',end=object?'}':']',keys=new Set<string>();at++;ws();if(text[at]===end){at++;return;}while(at<text.length){if(object){ws();if(text[at]!=='"')planError('PAP_INVALID','Expected JSON member');const key=string();if(keys.has(key))planError('PAP_INVALID','Duplicate JSON member');keys.add(key);ws();if(text[at++]!==':')planError('PAP_INVALID','Expected colon');}visit(depth+1);ws();if(text[at]===end){at++;return;}if(text[at++]!==',')planError('PAP_INVALID','Expected comma');}planError('PAP_INVALID','Unterminated JSON collection');}
-  const m=/^(?:true|false|null|-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)/.exec(text.slice(at));if(!m)planError('PAP_INVALID','Invalid JSON value');if(/^[0-9-]/.test(m![0])){try{assertExactJsonNumber(m![0]);}catch{planError('PAP_INVALID','Noninteroperable JSON number');}}at+=m![0].length;
- };visit(0);ws();if(at!==text.length)planError('PAP_INVALID','Trailing JSON');
+export function scanPlanJson(text:string,maximum=PLAN_BYTES,maxNodes=100000,maxDepth=64):void {
+ utf8Size(text,maximum);
+ try {scanJsonFrame(text,maxNodes,maxDepth,validUnicode);}
+ catch(error){if(error instanceof UmfError)planError(error.code==='LIMIT'?'PAP_LIMIT':'PAP_INVALID',error.message);throw error;}
 }
 export function parsePlanJson(text:string,maximum=PLAN_BYTES):Json {
  scanPlanJson(text,maximum);try{return readJsonValue(text,'json');}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')planError('PAP_LIMIT','Core JSON limit');return planError('PAP_INVALID','Noninteroperable JSON');}

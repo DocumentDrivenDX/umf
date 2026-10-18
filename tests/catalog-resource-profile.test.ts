@@ -19,3 +19,11 @@ test('catalog profile remains finite and preserves original parser refusal seman
  expect(()=>withCatalogResourceProfile(()=>readJsonValue('['.repeat(130)+'0'+']'.repeat(130),'json'))).toThrow();
  expect(()=>withCatalogResourceProfile(()=>readJsonValue(' '.repeat(4_000_001),'json'))).toThrow();
 });
+
+test('catalog framed JSON retains escaped-key, numeric and opaque metadata semantics',()=>{
+ const valid=['null','true','1.25','1e2','{"__proto__":{"future":[true,null,"é"]}}','["x\\\"y",{},[]]'];
+ for(const text of valid)expect(withCatalogResourceProfile(()=>readJsonValue(text,'json'))).toEqual(readJsonValue(text,'json'));
+ for(const text of ['{"a":0,"\\u0061":1}','[1,]','{"a":}','01','1e999','1e-999','-0','9007199254740993','0.10000000000000001'])
+  expect(()=>withCatalogResourceProfile(()=>readJsonValue(text,'json'))).toThrow();
+ const deep='['.repeat(100)+'0'+']'.repeat(100);expect(withCatalogResourceProfile(()=>readJsonValue(deep,'json'))).toEqual(readJsonValue(deep,'json'));
+});
