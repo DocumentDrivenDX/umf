@@ -13,7 +13,7 @@ import hmac
 import json
 import secrets
 from collections.abc import Awaitable, Callable, Mapping
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from ..dsl import (
     FieldRef,
@@ -87,7 +87,7 @@ def _wire_value(value: object, scalar: str) -> object:
             raise UnifiedAccessError("INVALID", "decimal requires decimalToken")
         try:
             parsed = Decimal(value["decimalToken"])
-        except Exception:
+        except InvalidOperation:
             raise UnifiedAccessError("INVALID", "invalid decimal token") from None
         if not parsed.is_finite():
             raise UnifiedAccessError("INVALID", "decimal must be finite")
@@ -292,7 +292,7 @@ class WeftTableBinding:
         return Node(sql_ops[op], (Node("column", (ref,)), Node("param", (pname,))))
 
     def _compile_request(self, query: Mapping[str, object], size: int) -> tuple[dict[str, object], dict[str, object]]:
-        rec, raw, refs, info = self._record(query.get("record"))
+        rec, _raw, refs, info = self._record(query.get("record"))
         params: list[dict[str, object]] = []
         values: dict[str, object] = {}
         steps: list[Node] = []
@@ -490,7 +490,7 @@ class WeftTableBinding:
             compiler_request, parameter_values = self._compile_request(page_query, size + 1)
         except UnifiedAccessError:
             raise
-        except Exception:
+        except Exception:  # noqa: BLE001 -- sanitize failures from the logical compiler boundary
             raise UnifiedAccessError("UNSUPPORTED", "read query is outside the current logical compiler subset") from None
         compiler_name = "compile_related_read_json" if compiler_request.get("version") == "weft.related-read/0.1" else "compile_raw_read_json"
         method = getattr(self.compiler, compiler_name, None)
@@ -498,7 +498,7 @@ class WeftTableBinding:
             raise UnifiedAccessError("UNSUPPORTED", "installed Weft compiler lacks the required read entry point")
         try:
             raw = method(_canonical(compiler_request))
-        except Exception:
+        except Exception:  # noqa: BLE001 -- native compiler bindings may raise arbitrary exceptions
             raise UnifiedAccessError("UNSUPPORTED", "Weft read compilation failed") from None
         if isinstance(raw, str):
             try:
@@ -521,7 +521,7 @@ class WeftTableBinding:
         host_request["parameters"] = parameter_values
         try:
             response = await self._execute(artifact, host_request)
-        except Exception:
+        except Exception:  # noqa: BLE001 -- host callbacks may raise arbitrary exceptions
             raise UnifiedAccessError("BUSY", "host read execution failed") from None
         if not isinstance(response, Mapping):
             raise UnifiedAccessError("BUSY", "host executor returned an invalid response")
@@ -630,7 +630,7 @@ class WeftTableBinding:
             raise UnifiedAccessError("INVALID", "invalid idempotency key")
         try:
             response = await self._action_executor(action, typed_inputs, key)
-        except Exception:
+        except Exception:  # noqa: BLE001 -- action callbacks may raise arbitrary exceptions
             raise UnifiedAccessError("WRITE_OUTCOME_UNKNOWN", "action response was lost after dispatch") from None
         if not isinstance(response, Mapping):
             raise UnifiedAccessError("INVALID", "action executor returned an invalid response")
