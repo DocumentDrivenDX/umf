@@ -8,7 +8,7 @@ export const concepts:Concept[]=[
  ...[['value-types','Value types','scalarType','Recognized scalar families and the rules for unknown family labels.'],['nullability','Nullability','knownNullability','Whether an ideal value may be absent. Native missing and null carriers need explicit bindings.'],['cardinality','Cardinality','knownCardinality','One value, array items, or string-keyed map values.'],['facets','Facets','facets','Explicit bounds and refinements. Omission imposes no bound.'],['keys','Record identity Keys','key','An ordered tuple of required singular Fields identifying a record within its collection.'],['relationships','Relationships','relationship','Declared links between record populations, distinct from type references.'],['extensions','Extensions','extensions','Vocabulary-keyed metadata retaining independent native and authored meanings.']].map(([key,title,def,description])=>({key:key!,title:title!,pointer:'/$defs/'+def,description:description!}))
 ];
 export const propertyText:Record<string,string>={
- umf:'The exact core schema version used by this document.',id:'Stable identity within the owning scope. Names and display titles do not replace it.',
+ umf:'Required document marker. Use the literal string 0.10.0.',id:'Stable identity within the owning scope. Names and display titles do not replace it.',
  vocabularies:'Vocabulary identifiers mapped to exact independently versioned declarations.',modules:'Modules making up this document.',namespace:'The module namespace; it does not automatically assert domain semantics.',elements:'Definitions carried by a module. Choose an explicit kind to state a UMF role.',
  name:'A name in the model; distinct from stable id and display title.',description:'Human explanation of the authored meaning.',title:'Display title for people reading the model.',aliases:'Alternative authored names; identities remain unchanged.',
  kind:'The role of an element: field, record or group. Missing and unknown labels do not infer a role.',
@@ -45,7 +45,7 @@ export const apiGuides:Record<string,{purpose:string;example?:string;related?:st
  writeDocument:{purpose:'Serialize a UMF Document, preserving retained metadata and exact literal carriers. Select the desired output format in the options.',related:['readDocument','Document']},
  validateDocument:{purpose:'Check core structure and registered extension semantics. Read diagnostics and completeness alongside valid; a valid retained document may contain unknown meaning.',related:['ValidationResult','Registry','readDocument']},
  selectCoreElements:{purpose:'Select copied element metadata by explicit filters and reference traversal policy. Qualified identities remain distinct from names.',related:['Document','SelectionQuery']},
- Document:{purpose:'The programmatic UMF document envelope: core version, stable identity, vocabulary declarations and modules.',related:['readDocument','validateDocument','Module']},
+ Document:{purpose:'The programmatic UMF document envelope: document marker, stable identity, vocabulary declarations and modules.',related:['readDocument','validateDocument','Module']},
  Registry:{purpose:'A registry of explicitly installed extension packages and their trusted interpretation. Unknown extension payloads remain preserved.',related:['createUmfRegistry','Document']},
  createUmfRegistry:{purpose:'Construct the SDK default registry with its selected extensions. Default registration differs from an explicitly empty Registry.',related:['Registry']},
 };

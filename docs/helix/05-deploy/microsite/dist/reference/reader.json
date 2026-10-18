@@ -2444,7 +2444,7 @@
       "href": "reader/9562edb330d4e9b5ce4427cceacd981eddd79957c0d25a6f5ed9fecd3d2bfd74.json",
       "id": "[\"api\",\".\",\"Document\"]",
       "kind": "Interface",
-      "summary": "The programmatic UMF document envelope: core version, stable identity, vocabulary declarations and modules.",
+      "summary": "The programmatic UMF document envelope: document marker, stable identity, vocabulary declarations and modules.",
       "task": "Other APIs",
       "title": "Document"
     },
@@ -15377,7 +15377,7 @@
     "scalarType": "The scalar value family. Recognized labels have UMF meaning; other nonempty labels remain retained with incomplete interpretation.",
     "semanticTypes": "Version-qualified vocabulary term references. Native or external meaning is not inferred from a label alone.",
     "title": "Display title for people reading the model.",
-    "umf": "The exact core schema version used by this document.",
+    "umf": "Required document marker. Use the literal string 0.10.0.",
     "value": "The literal value in its declared carrier, retaining exact numeric spelling.",
     "version": "The exact independently versioned vocabulary declaration.",
     "vocabularies": "Vocabulary identifiers mapped to exact independently versioned declarations."

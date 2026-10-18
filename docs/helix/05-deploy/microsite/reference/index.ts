@@ -11,7 +11,7 @@ export async function verified(path:string):Promise<ArrayBuffer>{
 }
 export const decode=(bytes:ArrayBuffer)=>new TextDecoder().decode(bytes);
 export async function getEntry(id:string):Promise<Entry>{
- if(loaded.has(id))return loaded.get(id)!;const row=index.entries.find(e=>e.id===id);if(!row)throw Error('REFERENCE_LINK unknown entry or version');const bytes=await verified(row.href);if(await digest(bytes)!==row.sha256)throw Error('REFERENCE_INTEGRITY index/detail disagreement');const e=JSON.parse(decode(bytes)) as Entry;if(e.id!==id)throw Error('REFERENCE_INTEGRITY entry identity');loaded.set(id,e);return e;
+ if(loaded.has(id))return loaded.get(id)!;const row=index.entries.find(e=>e.id===id);if(!row)throw Error('REFERENCE_LINK unknown entry');const bytes=await verified(row.href);if(await digest(bytes)!==row.sha256)throw Error('REFERENCE_INTEGRITY index/detail disagreement');const e=JSON.parse(decode(bytes)) as Entry;if(e.id!==id)throw Error('REFERENCE_INTEGRITY entry identity');loaded.set(id,e);return e;
 }
 export function element(tag:string,text?:string,className?:string){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;}
 export function link(text:string,href:string,className?:string){const el=element('a',text,className) as HTMLAnchorElement;el.href=href;return el;}
@@ -36,7 +36,7 @@ export async function show(e:Entry,pointer='',conceptKey=''){
   const m=e.data.manifest;facts(parent,[['Extension version',e.data.version],['Registration',e.data.registration.mode],['Validation declaration',m.capabilities.validation]]);
   parent.append(element('p',m.semantics,'callout'));section(parent,'Participation');parent.append(element('p','Scopes: '+m.scopes.join(', ')),element('p','Declared directions: '+(m.capabilities.directions.join(', ')||'Metadata only; no native interchange direction declared.')));
   if(m.capabilities.native){section(parent,'Native declaration');parent.append(element('p',m.capabilities.native.system+' · '+m.capabilities.native.version),element('p',m.capabilities.native.subset));}
-  parent.append(element('p','Mapped core profiles: '+(e.data.registration.coreProfiles.join(', ')||'Not qualified by this registration mapping.'),'quiet'));if(e.data.registration.mode==='unmapped')parent.append(element('p','Runtime registration has not been mapped in this reference. This does not remove the package or establish validation availability.','callout warning'));
+  if(e.data.registration.mode==='unmapped')parent.append(element('p','Runtime registration has not been mapped in this reference. This does not remove the package or establish validation availability.','callout warning'));
   parent.append(element('p','Declarations describe capabilities. Follow an integration record for observed test outcomes.','quiet'));
  }
  if(e.kind==='integration'){
@@ -70,7 +70,6 @@ async function start(){
  const tasks=['Read and validate','Inspect and select','Author and edit','Serialize','Import and export','Extensions','Other APIs','All exports'];
  const task=$<HTMLSelectElement>('task-filter'),kind=$<HTMLSelectElement>('kind-filter');
  if(view==='api'){for(const name of tasks){const o=element('option',name) as HTMLOptionElement;o.value=name;task.append(o);}for(const name of ['All kinds',...new Set(reader.api.map(a=>a.kind))]){const o=element('option',name) as HTMLOptionElement;o.value=name;kind.append(o);}}
- const profile=$<HTMLSelectElement>('profile-filter');for(const e of index.entries.filter(e=>e.kind==='schema'&&e.summary.startsWith('Core '))){const o=element('option',e.summary.split(' · ')[0]) as HTMLOptionElement;o.value=e.id;profile.append(o);}
  const matchesWords=(text:string,q:string)=>q.toLowerCase().trim().split(/\s+/).filter(Boolean).every(word=>text.toLowerCase().includes(word));
  const refresh=()=>{
   const selected=new URLSearchParams(location.hash.slice(1)),query=$<HTMLInputElement>('search').value;
@@ -84,8 +83,8 @@ async function start(){
   $('more').hidden=matches.length<=limit;return matches;
  };
  let navigation=0;
- const changed=async()=>{const current=++navigation;const params=new URLSearchParams(location.hash.slice(1)),id=params.get('entry');if(view==='api'&&id){const selected=reader.api.find(a=>a.id===id);if(selected){task.value=selected.task;kind.value='All kinds';const searchInput=$<HTMLInputElement>('search');if(!matchesWords(selected.title+' '+selected.summary,searchInput.value))searchInput.value='';}}refresh();if(id)try{const selected=await getEntry(id);if(current!==navigation)return;const rendered=await show(selected,params.get('pointer')??'',params.get('concept')??'');if(current!==navigation)return;$('inspector').replaceChildren(...Array.from(rendered.childNodes));if(keyboardNavigation){const heading=$('inspector').querySelector('h2');heading?.setAttribute('tabindex','-1');(heading as HTMLElement)?.focus();keyboardNavigation=false;}}catch(error){if(current!==navigation)return;$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'),link('Open latest Document',readerRoute(reader.latest.id)));}};
- $('search').oninput=()=>{limit=50;refresh();};task.onchange=kind.onchange=()=>{limit=50;refresh();};profile.onchange=()=>{if(profile.value)location.hash=readerRoute(profile.value);};$('more').onclick=()=>{limit+=50;refresh();};window.addEventListener('hashchange',()=>void changed());
+ const changed=async()=>{const current=++navigation;const params=new URLSearchParams(location.hash.slice(1)),id=params.get('entry');if(view==='api'&&id){const selected=reader.api.find(a=>a.id===id);if(selected){task.value=selected.task;kind.value='All kinds';const searchInput=$<HTMLInputElement>('search');if(!matchesWords(selected.title+' '+selected.summary,searchInput.value))searchInput.value='';}}refresh();if(id)try{let selected=await getEntry(id);if(current!==navigation)return;if(view==='core'&&selected.kind==='schema'&&selected.data.profileVersions.length&&selected.id!==reader.latest.id){location.replace(readerRoute(reader.latest.id,params.get('pointer')??'',params.get('concept')??''));return;}const rendered=await show(selected,params.get('pointer')??'',params.get('concept')??'');if(current!==navigation)return;$('inspector').replaceChildren(...Array.from(rendered.childNodes));if(keyboardNavigation){const heading=$('inspector').querySelector('h2');heading?.setAttribute('tabindex','-1');(heading as HTMLElement)?.focus();keyboardNavigation=false;}}catch(error){if(current!==navigation)return;$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'),link('Open Document',readerRoute(reader.latest.id)));}};
+ $('search').oninput=()=>{limit=50;refresh();};task.onchange=kind.onchange=()=>{limit=50;refresh();};$('more').onclick=()=>{limit+=50;refresh();};window.addEventListener('hashchange',()=>void changed());
  if(!location.hash){const first=view==='core'?allConcepts[0]:refresh()[0];if(first)history.replaceState(null,'',readerRoute(first.id,first.pointer??'',first.concept??''));}await changed();
  $('load-status').textContent=readyMessage;
 }

@@ -57,8 +57,8 @@ Installation guidance and examples can drift independently of the implementation
 - REF-01: The reference must enumerate all discovered core schemas, extension
   package versions and public SDK exports, with stable identities and source
   provenance. Deliberate exclusions must be visible and mechanically checked.
-- REF-02: Core reference must expose structure, constraints, references, profile
-  versions and structural differences, with explanation of native distinctions.
+- REF-02: Core reference must expose current structure, constraints and references
+  without core release browsing, with explanation of native distinctions.
 - REF-03: Extension reference must expose schemas, semantics, scopes, exact
   versions and available registration paths, distinguishing default registration,
   optional registration and declarations with no verified runtime registration.
@@ -148,3 +148,27 @@ prior detail visits. Contextual relations and raw schema graphs are secondary.
 REF-15: Schema examples MUST default to YAML and provide an accessible JSON
 toggle over the same example values. Original schema/source views retain their
 original format; API code examples retain their programming language.
+
+## Current documentation amendment — 2026-10-18
+
+Owner direction supersedes historical core browsing, core-profile selection and
+migration-oriented reader requirements above. Document core 0.10.0 as the single
+current schema: no core version picker, history catalog or version badges. Old
+core links resolve to the current schema and preserve valid pointers; invalid
+pointers refuse visibly. Original source inventories and native/extension evidence
+keep their truthful identities and qualification; historical evidence is not
+relabelled as current support.
+
+Workbench examples use core 0.10.0 and open as YAML, with accessible YAML/JSON
+buttons converting current edited values through the public interoperable
+serialization API. Malformed, duplicate-key or inexact values refuse without
+replacing input. Cancellation and input edits invalidate pending conversion.
+Original bytes remain downloadable. Native Protobuf keeps its own syntax.
+Property/default execution APIs restricted to earlier envelopes are not offered
+by the current workbench; their API declarations retain their original limits.
+Every schema disclosure starts collapsed, including complete examples. Explicit
+user expansion and format switching remain keyboard accessible.
+
+Acceptance: verify all supplied examples execute, format parity after edits,
+conversion refusal and cancellation, current-only navigation, old-link recovery,
+and zero initially open schema disclosures in Chromium at desktop/mobile widths.

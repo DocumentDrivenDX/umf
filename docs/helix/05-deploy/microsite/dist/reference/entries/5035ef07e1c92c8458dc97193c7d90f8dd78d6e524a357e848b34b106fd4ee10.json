@@ -1,6 +1,6 @@
 {
   "data": {
-    "body": "\nStart with an example, select its exact core profile and registry, then run one explicit operation. Your source remains editable and downloadable even after a refusal.\n\nCore validation, serialization, metadata selection and property/default inspection reuse the public library. Native JSON Schema-to-Protobuf projection retains source and reports unenforced constraints. Strict policy refuses lossy output; report policy shows generated proto3 source plus losses. This is schema projection, not instance conversion.\n\nOptional Protobuf compilation uses the pinned local WebAssembly compiler with an explicit source bundle. Missing imports and unsupported source Editions refuse; no remote dependency is fetched. A fixed browser validation profile does not dynamically compile arbitrary native instance validators.\n\nCancel terminates the worker. A late result cannot replace new input. Limit or permission failures are visible. Files, originals and diagnostics stay in the browser; no analytics or input persistence is introduced.\n",
+    "body": "\nStart with a YAML example, choose a registry, then run an operation. Use the JSON toggle to change the input format while keeping edited values. UMF examples use core 0.10.0. Your source remains editable and downloadable even after a refusal. Formatting refuses malformed, duplicate-key or noninteroperable input without replacing it; the original remains downloadable. Protobuf source keeps its native syntax.\n\nCore validation, serialization, metadata selection reuse the public library. Native JSON Schema-to-Protobuf projection retains source and reports unenforced constraints. Strict policy refuses lossy output; report policy shows generated proto3 source plus losses. This is schema projection, not instance conversion.\n\nOptional Protobuf compilation uses the pinned local WebAssembly compiler with an explicit source bundle. Missing imports and unsupported source Editions refuse; no remote dependency is fetched. A fixed browser validation profile does not dynamically compile arbitrary native instance validators.\n\nCancel terminates the worker. A late result cannot replace new input. Limit or permission failures are visible. Files, originals and diagnostics stay in the browser; no analytics or input persistence is introduced.\n",
     "relatedIds": []
   },
   "id": "[\"guide\",\"workbench\"]",
@@ -8,11 +8,11 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1056,
+      "bytes": 1267,
       "path": "docs/helix/05-deploy/reference/guides/workbench.md",
-      "sha256": "6b844251eaace8c7263cc9e270e8baa9050371242798364d40126055cb4e7642"
+      "sha256": "36298bb7b970e3e5fda6205c80ef4585405aa8374880e5b99b8a6e65dbd79070"
     }
   ],
-  "summary": "Start with an example, select its exact core profile and registry, then run one explicit operation. Your source remains editable and downloadable even after a refusal.",
+  "summary": "Start with a YAML example, choose a registry, then run an operation. Use the JSON toggle to change the input format while keeping edited values. UMF examples use core 0.10.0. Your source remains editable and downloadable even after a refusal. Formatting refuses malformed, duplicate-key or noninteroperable input without replacing it; the original remains downloadable. Protobuf source keeps its native syntax.",
   "title": "Use the local workbench"
 }

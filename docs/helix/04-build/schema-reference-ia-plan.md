@@ -271,3 +271,35 @@ coverage, passing named journeys, preserved historical routes and original sourc
 reviewed screenshots, and an explicit account of any unverified human usability.
 Plans, generated counts and green layout assertions alone cannot establish that
 readers understand the reference.
+
+## Current-only reader and workbench follow-up — 2026-10-18
+
+Owner direction supersedes the optional History presentation above. The reader
+now documents core 0.10.0 without release controls or badges; earlier core links
+resolve to the current schema while preserving a valid pointer. Current guides
+explain concepts rather than core release history. Exact inventories, original
+schema sources and native/extension qualifications remain retained.
+
+All authored UMF workbench examples now validate as core 0.10.0. Inputs open as
+YAML; YAML/JSON buttons format current edited values through a verified worker.
+The output serialization choice also defaults to YAML. Malformed, duplicate-key
+and noninteroperable numeric conversions retain the input and selected format.
+The original loaded/edited source remains downloadable after formatting.
+Protobuf source retains native syntax. The public property/default execution API
+still rejects the current envelope, so its workbench operation is unavailable
+rather than relabeling user documents or claiming current support. Its authored
+schema-properties example now demonstrates current validation.
+
+Every schema disclosure, including complete examples, starts closed. Chromium
+checks explicit expansion, keyboard format switching, old links, desktop/mobile
+layout, current validator execution, unknown preservation, native projection,
+strict refusal and cancellation. Both browser suites passed 43 checks with zero
+page errors/external requests. Reference tests passed 18 tests/13,964 assertions;
+type checking and the 19-file boundary checker passed. The separately integrated
+main-branch catalog parser changes passed three additional tests.
+
+Self-description investigation: FR-35 remains a deferred requirement. No authored
+UMF model of the UMF metamodel was found; JSON Schemas and TypeScript declarations
+are the existing machine-readable authorities. A concept graph derived from a
+self-model is distinct from the generated JSON Schema reference graph. No
+self-model or ontology diagram is claimed by this documentation patch.

@@ -3047,14 +3047,14 @@
       "extensionVersions": [],
       "subset": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "limitations": [
-        "Recorded scope only; native equivalence and production adoption are separate."
+        "The public property/default execution API does not yet accept the current document envelope. Its declarations remain available in the API reference."
       ],
       "apiNames": [
         "inspectCoreSchemaProperties"
       ],
       "fixturePaths": [],
       "runtime": {
-        "availability": "browser",
+        "availability": "unavailable",
         "profileId": "core-properties",
         "requirements": []
       }

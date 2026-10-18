@@ -3479,7 +3479,7 @@
       "href": "entries/af7ad732e63c3091319f4a6a77eae0146c37532741806c0425de483c20225c64.json",
       "id": "[\"api\",\".\",\"LIMITS\"]",
       "kind": "api",
-      "sha256": "17041eb99ac4688e48e2cb7c05dbe516035ba5b899797950839f2ea3e5ecc8af",
+      "sha256": "dd1e408e4d3766c02b401f0cacabf9aceed0aad611a4417af592ee1919067aca",
       "summary": "Public export · src/model/json.ts",
       "title": "LIMITS"
     },
@@ -7543,11 +7543,11 @@
       "title": "assembleSmithyDocument"
     },
     {
-      "bytes": 807,
+      "bytes": 821,
       "href": "entries/0c2dbdd6bc79c68b936862ec03aa357d83d927b1310e3e60c2c1f2639c3d0030.json",
       "id": "[\"api\",\".\",\"assertExactJsonNumber\"]",
       "kind": "api",
-      "sha256": "77fb612c9e4aa35d90dedfb5727b6d0d4e46e8e3661d34cdfbe3163c13603759",
+      "sha256": "21efb1dfb957ec34a6c6d0e1dc9cc3aac99b3ff56d20b51cb703956be82eb53f",
       "summary": "Original interoperable JSON-number profile, reusable by larger framed readers.",
       "title": "assertExactJsonNumber"
     },
@@ -8326,11 +8326,11 @@
       "title": "constructActionManifest"
     },
     {
-      "bytes": 741,
+      "bytes": 743,
       "href": "entries/4a35fe44bba974ad2fc38727a3842ef985fa18d82b87d97a6d8429856db8960d.json",
       "id": "[\"api\",\".\",\"copyJson\"]",
       "kind": "api",
-      "sha256": "befa9b6e33e585352cc51b4e637882fdc270e5c0c473f13f162aeb29f3acf9bd",
+      "sha256": "afaeb2cf381810d246268f5ff7e79dab0208b5c77af43194e03546c70c4c1730",
       "summary": "Copy JSON data without invoking getters, toJSON, or custom prototypes.",
       "title": "copyJson"
     },
@@ -14257,11 +14257,11 @@
       "title": "readDocument"
     },
     {
-      "bytes": 777,
+      "bytes": 775,
       "href": "entries/da6a3f9d595b18774514be854399ff2e207523d9766be35ddbec5e84f8064f8c.json",
       "id": "[\"api\",\".\",\"readJsonValue\"]",
       "kind": "api",
-      "sha256": "801ccd62879696ad0a82225f67e99b5b115e209961b31a04f1325bc4a0408d34",
+      "sha256": "ec3bd009ba07673632711ee8ed1af0b582debbf2cd82e956c9b7ee67b2ea6e52",
       "summary": "Public export · src/model/serialization.ts",
       "title": "readJsonValue"
     },
@@ -17024,7 +17024,7 @@
       "href": "entries/ed58d2116fe22145bdf360e0b3ecdf1d1b79b0d108bae48a3dfc5325c50db2ea.json",
       "id": "[\"api\",\".\",\"writeJsonValue\"]",
       "kind": "api",
-      "sha256": "9f2986a5bf3d8660c4f5ee87b4e824eb00062bf63dbd4e6ed4c59825ed009d80",
+      "sha256": "9f5df2fa783e02cc2628a4fadb517e5d3a32ec7d888fe732628f4761906cf28c",
       "summary": "Public export · src/model/serialization.ts",
       "title": "writeJsonValue"
     },
@@ -17083,11 +17083,11 @@
       "title": "inspectDomainPackLoader"
     },
     {
-      "bytes": 809,
+      "bytes": 807,
       "href": "entries/48dd1e30e884e0dc4ce666d27639cb11e6b86c581d1588c9cc9a593692d4ace1.json",
       "id": "[\"api\",\"./loader-contract\",\"readJsonValue\"]",
       "kind": "api",
-      "sha256": "e76df3bdda9751045cd44498a44efd4f0431d365957c1145acf65aec9490d9e6",
+      "sha256": "a553c24332a131530d087ec54b48f569cf0e0b7fc09e0f6e94219b96301e6483",
       "summary": "Public export · src/model/serialization.ts",
       "title": "readJsonValue"
     },
@@ -17096,17 +17096,17 @@
       "href": "entries/2391ff1f36721615fd8f58308f7ee9a4c806cbc7600df06e203bc70dd887d90f.json",
       "id": "[\"example\",\"core-current\"]",
       "kind": "example",
-      "sha256": "bb766f833af61b767ca9ec39af13da044f8566b264c113d1a8e70a382a14f3c2",
+      "sha256": "723725bff98404fffaae9589ab68aaf7637798c971509672aa62a12097d2a94c",
       "summary": "Validate a core document",
       "title": "core current"
     },
     {
-      "bytes": 993,
+      "bytes": 982,
       "href": "entries/94c72d9cf1c560f0a53392067ca76505cab10142d5119ad9a6abf9ed911567c7.json",
       "id": "[\"example\",\"core-properties\"]",
       "kind": "example",
-      "sha256": "d958a093407bcd8891149c18302af649d2b59b3f3c1a68c5d9c4ee70e484ed5e",
-      "summary": "Inspect properties and defaults",
+      "sha256": "3a663d782f649c0ed6fcee59f5998c04b2af2cd91cf339483615a9662937b5ce",
+      "summary": "Validate a core document",
       "title": "core properties"
     },
     {
@@ -17123,7 +17123,7 @@
       "href": "entries/5e17855498a058074a15e1ef651757406b1abddd7ad95e369fa7b6e309e6ddbf.json",
       "id": "[\"example\",\"metadata-selection\"]",
       "kind": "example",
-      "sha256": "2485ed5523711dae286c82e62689b6b794a8f7e7ac23b41e6fefb97e8632c902",
+      "sha256": "fc7af50077a66ed15fb3b9116526c900d8150cf63219375f8997b13563876a70",
       "summary": "Select copied metadata",
       "title": "metadata selection"
     },
@@ -17141,7 +17141,7 @@
       "href": "entries/6dd22821137c3ae306856d53f1526c83825ce7988ddfe8afc7428a643114868f.json",
       "id": "[\"example\",\"unknown-preservation\"]",
       "kind": "example",
-      "sha256": "dc57ab3d0f89ca5dd299285a70ed5e087317d2a8b18c08b568d8598e1ff0ecc8",
+      "sha256": "ca836fad765f996ac11e2d23bb76183bfa069d32f16d6cc6261fcf6c66aacfc3",
       "summary": "Serialize JSON / YAML",
       "title": "unknown preservation"
     },
@@ -17794,11 +17794,11 @@
       "title": "Logical models and physical bindings"
     },
     {
-      "bytes": 3023,
+      "bytes": 2581,
       "href": "entries/03dabdf8c17d4291e443be19a01bfc2af261c605952a4e5a8fc14d2b96e39d76.json",
       "id": "[\"guide\",\"concepts\"]",
       "kind": "guide",
-      "sha256": "dfb4b8fdec5d66002b614d01db5891ae18ef2bf9a1cdc8f572ef9baedab59397",
+      "sha256": "c36a2d620c0ea0f6a148f3cf357bffe48d124b98d5917ccef31485bda514bf3a",
       "summary": "UMF keeps shared schema metadata alongside native and unfamiliar meaning. A valid envelope is a container for those meanings; it is not proof that every payload was interpreted.",
       "title": "Core concepts: a shared vocabulary"
     },
@@ -17830,13 +17830,13 @@
       "title": "Read an integration result correctly"
     },
     {
-      "bytes": 1326,
+      "bytes": 937,
       "href": "entries/c8f92386a1d1062d41e363dd54ea0797c0bc51e3a111bf056c9e25dd900181ab.json",
       "id": "[\"guide\",\"evolution\"]",
       "kind": "guide",
-      "sha256": "2bbef7355b6eed0855c5f76bce0a57e822aaf1d5edb97c9a1150e185b171039d",
-      "summary": "The SDK package version, core document profile, extension version and native tool version are independent. Always select the version whose semantics you intend to use.",
-      "title": "Versions, structural comparison and migration"
+      "sha256": "ba918d4f709e4093c1a9a50d18ec64bf42fca71b8630395f8fd6bc46ce25a46b",
+      "summary": "Structural comparison reports changed positions and retains original values. Use it to review edits to a schema; it cannot prove semantic compatibility or native equivalence.",
+      "title": "Compare schema structure"
     },
     {
       "bytes": 1598,
@@ -17857,12 +17857,12 @@
       "title": "Security metadata and current authority"
     },
     {
-      "bytes": 1592,
+      "bytes": 2046,
       "href": "entries/5035ef07e1c92c8458dc97193c7d90f8dd78d6e524a357e848b34b106fd4ee10.json",
       "id": "[\"guide\",\"workbench\"]",
       "kind": "guide",
-      "sha256": "6ce9f094384f1c9c50875ee7c6398a08f3a8988d7065ba3d45f78bc50eacb48e",
-      "summary": "Start with an example, select its exact core profile and registry, then run one explicit operation. Your source remains editable and downloadable even after a refusal.",
+      "sha256": "60f6afb7222da264e147a5f218b5e70b946cfa445ad0522d4841bd9ad08c2c2a",
+      "summary": "Start with a YAML example, choose a registry, then run an operation. Use the JSON toggle to change the input format while keeping edited values. UMF examples use core 0.10.0. Your source remains editable and downloadable even after a refusa",
       "title": "Use the local workbench"
     },
     {
@@ -17870,7 +17870,7 @@
       "href": "entries/4112d01b2dfac868ba3ef3024d7a5138f1cf03ea105c1f78de85f6584f795361.json",
       "id": "[\"integration\",\"actions-certificate\"]",
       "kind": "integration",
-      "sha256": "03c96b88299eedfa13a3a23f5e4207d076a31fdaab9e57d13a8b905d83990274",
+      "sha256": "c9029b15aeb821c025dfd8dbbcf384c96b02734d28942ad46913f36734c93a5b",
       "summary": "Fixed owned PostgreSQL reference profile; production adoption excluded.",
       "title": "Actions · bounded acceptance certificate"
     },
@@ -17879,7 +17879,7 @@
       "href": "entries/bb32757fb4f1b6b8ffcef69c32fd95a40e2399ce31ae6dc32c2a3b483dbc59aa.json",
       "id": "[\"integration\",\"avro-field-native\"]",
       "kind": "integration",
-      "sha256": "15cef29893f73abec697e499f9068dd6046bed0e4bad4cd5251311dcb26816bc",
+      "sha256": "eac7897beb9485346b714940edd28265f91591849174f79df38719ae42576113",
       "summary": "Original remaining-three Field binding acceptance, scoped to avro.",
       "title": "Avro · native Field checks"
     },
@@ -17888,16 +17888,16 @@
       "href": "entries/0aecfd84874c47ab43d66adabc81436e855c8aa9709219b62e326f18a2059d9b.json",
       "id": "[\"integration\",\"cardinality-gate\"]",
       "kind": "integration",
-      "sha256": "1a0576dc3c0179ae5c0eff69778ae58944e2fae7e70e36b424be41c9a93bc805",
+      "sha256": "66e1865b8a3dd64eed48ba77a1c9da12e6fd957f27cdcf14a8d32831b7dde9e7",
       "summary": "Published cardinality binding subsets; ideal admission and delivery are distinct.",
       "title": "Cardinality · five-priority qualification"
     },
     {
-      "bytes": 1293,
+      "bytes": 1368,
       "href": "entries/2324b6ce81623f5a9266e034f686ce3dbe7ef94780ee18e2bb8397c142545ee7.json",
       "id": "[\"integration\",\"core-properties\"]",
       "kind": "integration",
-      "sha256": "553a259fa5ec390dca3a9d17263fde3490f4a0c86afd4b06080e7c0931f112f0",
+      "sha256": "6fbaf272014cad319526210bdfbd20edbc869a0de4416810f8251fdb97b545e7",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Inspect properties and defaults"
     },
@@ -17906,7 +17906,7 @@
       "href": "entries/5cb826074d2677c23b4dca7cf3ffd827381ad4538654047be6091aa8b84c1c74.json",
       "id": "[\"integration\",\"core-select\"]",
       "kind": "integration",
-      "sha256": "91108bcc243479e9added946e7c1e0188721190b71cce1af364f72bedc9b16c1",
+      "sha256": "776f3d9c8ee164912222e8b6b3679da31e7b80b5a3f1207f3fbd0fc0c16c272b",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Select copied metadata"
     },
@@ -17915,7 +17915,7 @@
       "href": "entries/27dbe98675af3fdf20658f3799410aa9e90939e224e0456c65e2c37d6f05d724.json",
       "id": "[\"integration\",\"core-validate\"]",
       "kind": "integration",
-      "sha256": "164c3f437a517863c0f42a495273b829c719c38949c4d5945ba671618b003f29",
+      "sha256": "955726922e811b520ff4a91726c9742aaf0f7fe56963845522649c7a86f049e9",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Validate a core document"
     },
@@ -17924,7 +17924,7 @@
       "href": "entries/b19825c71fa26cedf3ed25833767a69958e0a52d42715f725135ec23385d1fe7.json",
       "id": "[\"integration\",\"core-write\"]",
       "kind": "integration",
-      "sha256": "72b9e84e11ceac9b4e3cd468cfe9cc221f5f524e2e78778a80b8f3c34f5c87a7",
+      "sha256": "0e1cacf74fe1ef2f51f73cbe9aea3220a68e42b4f5a5c72d89cd512b4f048858",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Serialize JSON / YAML"
     },
@@ -17933,7 +17933,7 @@
       "href": "entries/28b20f830b2beed97aa72a643747e54a1b7a9a61e56a3e2cf448b05b4bdc95dd.json",
       "id": "[\"integration\",\"extension-check\"]",
       "kind": "integration",
-      "sha256": "c695169e96be114fd4fb4c725592dcc8a1c30c6ebc9f8b06120032a8649ea1ee",
+      "sha256": "5a0b7d9010bd2cec01b6ac2dee7229769ef0d3aaefcaa2ee15cdb5d6c781460e",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Validate explicit extension registration"
     },
@@ -17942,7 +17942,7 @@
       "href": "entries/c4c3067391fb06b5d0b0d3d1b51ba1f78a4df6cfb8619bcaa070221ce66bb358.json",
       "id": "[\"integration\",\"facets-gate\"]",
       "kind": "integration",
-      "sha256": "99c6fc11bec352592c41894b6fd757c39ae9b9b39311e46acbdc60f88cfaa1af",
+      "sha256": "f94f6d2253665518c40d7344b87ab10734dc9c0b83cd35f1ede3d0d1b4936557",
       "summary": "Published facets binding subsets; ideal admission and delivery are distinct.",
       "title": "Facets · five-priority qualification"
     },
@@ -17951,7 +17951,7 @@
       "href": "entries/eabeebfc30e116efce95a319f411f528f8f7165f1bd0db0b299a78d5f5cda3af.json",
       "id": "[\"integration\",\"field-gate\"]",
       "kind": "integration",
-      "sha256": "feb8c046136a8b18409d0d2a08e03db2a6d957da8c0b0f1bbfc0d2b696a89d22",
+      "sha256": "79901bab2f1df0dbd323393ee8ed02717085ad0a755b04458f705c5b5477cc49",
       "summary": "Published field binding subsets; ideal admission and delivery are distinct.",
       "title": "Field · five-priority qualification"
     },
@@ -17960,7 +17960,7 @@
       "href": "entries/e60a99e57de9efa458e2975fded30a5a6202611d817c5625d6e478911518e68f.json",
       "id": "[\"integration\",\"json-schema-protobuf\"]",
       "kind": "integration",
-      "sha256": "32e74cd997d1b317c63fca2385a705ee27c242fce7d87224da084834eca96170",
+      "sha256": "2af9b463688104fa426f2e65eded44bb2ede0f10bc5bc4e001cc5a3cf68c0d00",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Project JSON Schema to Protobuf"
     },
@@ -17969,7 +17969,7 @@
       "href": "entries/e2ad5507aef742e18ad294fe4cb1751b2daa224404c891a0db7c49fdf2f54e20.json",
       "id": "[\"integration\",\"json-schema-python\"]",
       "kind": "integration",
-      "sha256": "f379aea2eb01c290fc9ad6606c018062edcd7db20a1c3d38d975c196142b5334",
+      "sha256": "fc838d3df03df84fc8e628483383828be541b10575e6f6e6e74e48db0a2f9bdc",
       "summary": "Recorded exact Decimal/Fraction corpus with individual failures retained.",
       "title": "JSON Schema · independent exact numeric oracle"
     },
@@ -17978,7 +17978,7 @@
       "href": "entries/cae405de14645d2c6f79f5896a21ccff2d991b12ac0dd43f6cafc1376255c0a9.json",
       "id": "[\"integration\",\"json-schema-upstream\"]",
       "kind": "integration",
-      "sha256": "ad75e72afb16a8f393761396c2bed71ad870c16807f89f6d882920ce6d6dcac8",
+      "sha256": "1aa73f0f7cddced1dadaf54769df243873218621d97841fc1fcf7e5a57902e0c",
       "summary": "46 required upstream root files; installed Ajv profile.",
       "title": "JSON Schema · upstream round trips"
     },
@@ -17987,7 +17987,7 @@
       "href": "entries/9b33d6d0ade3b76545f2007e0bd8950be5fe0e5e94c04c70ac4a4eae7a13a9b2.json",
       "id": "[\"integration\",\"key-gate\"]",
       "kind": "integration",
-      "sha256": "3b5257116e015e143123bd781ff4528b4cc9873ec9675e8f8d7345b1665cc524",
+      "sha256": "83ce220f647c51ba7948fc3011b6f2f67e9f82d8c2b50fa6507c5dd0f5bfaf60",
       "summary": "Published key binding subsets; ideal admission and delivery are distinct.",
       "title": "Key · five-priority qualification"
     },
@@ -17996,7 +17996,7 @@
       "href": "entries/a00de4611e9b86c4ea01f1415fa0a902a4e16278df5420b6d35ecd31d0ec7a16.json",
       "id": "[\"integration\",\"nullability-gate\"]",
       "kind": "integration",
-      "sha256": "451707d99f0f2790b2da52c15383e8ef6cf36b8bddd803b13212a32f0881c4e7",
+      "sha256": "b8147c6b3195078542c37c37d24cb15f94426044992114fe2353b7246cb30622",
       "summary": "Published nullability binding subsets; ideal admission and delivery are distinct.",
       "title": "Nullability · five-priority qualification"
     },
@@ -18005,7 +18005,7 @@
       "href": "entries/6e09ec3f896c5eef3f45cbff6bbef70cbbe6cb99009335a28f7c837d0ebd8dec.json",
       "id": "[\"integration\",\"parquet-field-native\"]",
       "kind": "integration",
-      "sha256": "8d80b9a1110e9ea286ff0590545d984f5f3e9eff6c89a57764829eec163b6402",
+      "sha256": "31ece6d4b7881abe854dc3ef9b25354b4e954a9b0fb0a8a59e6330515801e177",
       "summary": "Original remaining-three Field binding acceptance, scoped to parquet.",
       "title": "Parquet · native Field checks"
     },
@@ -18014,7 +18014,7 @@
       "href": "entries/d73813112bb31ada8acbfa7f9b2a99065d0de2b6e211449dbe203feeca0d4c8e.json",
       "id": "[\"integration\",\"postgresql-field-native\"]",
       "kind": "integration",
-      "sha256": "9bd3e05ffc44f4f7517fe7939ae786cda4ab88ecd5ae0f765fe65baeaac9cbe5",
+      "sha256": "1f982811ff1fe2545e5d05a41660245f94461266a6ec3778ea0205efcc090901",
       "summary": "Recorded Field native/browser acceptance; broader semantics remain separate.",
       "title": "Postgresql · native Field checks"
     },
@@ -18023,7 +18023,7 @@
       "href": "entries/e65706bf94566e5896283c15553fcaa0debf56043859963e1b83273060441be1.json",
       "id": "[\"integration\",\"protobuf-behavior\"]",
       "kind": "integration",
-      "sha256": "52f6f358a569d01ad5f02675534a573ab0ebf720843a3539bef66897413a5593",
+      "sha256": "71b5b72de1d55187c2742fb507185e8cc873ac7c520b2c0b54b2e2b89d9efdd1",
       "summary": "Original bounded compiler/behavior record.",
       "title": "Protobuf · behavior"
     },
@@ -18032,7 +18032,7 @@
       "href": "entries/c0f5a263f8040dfac31c69f65fd8214e8168925fc0a7a17bd68472011df165a9.json",
       "id": "[\"integration\",\"protobuf-descriptor\"]",
       "kind": "integration",
-      "sha256": "ecdb306657210999f17500f38b6ee242ca98f2ff92a303c3aec2a6c4925e0c28",
+      "sha256": "9ee43357a713e70a878e56989386594b4a8152bd49b673689452b0f17440990b",
       "summary": "Recorded descriptor corpus; source lexical fidelity is separate.",
       "title": "Protobuf · native descriptor recovery"
     },
@@ -18041,7 +18041,7 @@
       "href": "entries/84fcc03313287c9f228d4d7b88c55d4a6ca9f8a94649cdced2118c9547fd1e19.json",
       "id": "[\"integration\",\"protobuf-emission\"]",
       "kind": "integration",
-      "sha256": "1db7424afa1cee42f24d5ee3dc92e113013d323fcdb72eae45d8ce3e648f5725",
+      "sha256": "29a71cf4de571fdf79f48376873ffc6cafa2340851e47d6a28d91aa83147b937",
       "summary": "Edited proto2/proto3/Edition 2023 emission; Edition 2024 source unsupported.",
       "title": "Protobuf · edited source emission"
     },
@@ -18050,7 +18050,7 @@
       "href": "entries/59461e5ea79f6ab07d8e4cb1ba5d77bc4178b5fd85cad51ac5a8730ed25427f0.json",
       "id": "[\"integration\",\"protobuf-emission-behavior\"]",
       "kind": "integration",
-      "sha256": "b5fb024795863880e0f8d1fd1ba44ec53ad8a651d864065f1bd39cbc30afdccd",
+      "sha256": "2fbfbaf6106fba910e7f16f1bfed2615f4500c469f99979ce501af11c2061544",
       "summary": "Original bounded compiler/behavior record.",
       "title": "Protobuf · emission behavior"
     },
@@ -18059,7 +18059,7 @@
       "href": "entries/97588d771834723507532267245d4ffd2751dec0b3bf75d73c34360a2e9992ea.json",
       "id": "[\"integration\",\"protobuf-emission-corpus\"]",
       "kind": "integration",
-      "sha256": "1162bb3bb70fbfb71a76a722331c7ac7635cf27a5b4ee851ba6a9db113a7908c",
+      "sha256": "801ef5ae683bcd68494ffa81a706a57e74b653a3c3cbd66a812ece6ecf2cdea1",
       "summary": "Original bounded compiler/behavior record.",
       "title": "Protobuf · emission corpus"
     },
@@ -18068,7 +18068,7 @@
       "href": "entries/fe90b19c068e9ad257eaf53bce1b5a1b71e7b701b19ed5102c79c95abcf8dfad.json",
       "id": "[\"integration\",\"protobuf-source\"]",
       "kind": "integration",
-      "sha256": "ffce201727441b190f4aebab78e0d67eaab3a4abfe58031cbbabd960e2822f13",
+      "sha256": "a927c5abf26b71173ce299b908d9e755d624c85e0d2f335526d04731ebddf7cc",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Compile a Protobuf source bundle"
     },
@@ -18077,7 +18077,7 @@
       "href": "entries/0afd6cc4b33fc016f5f35b2a549bc653506f1e670946cd6740520af09b96b0c5.json",
       "id": "[\"integration\",\"protobuf-source-behavior\"]",
       "kind": "integration",
-      "sha256": "d998c1549691a8f8aedd0c2498383422c7ed74aa1ae3ccb4741959cc62150b57",
+      "sha256": "3691430422a968708eafd6e9852246171c3c87d032e711521e8958c20146bf3a",
       "summary": "Original bounded compiler/behavior record.",
       "title": "Protobuf · source behavior"
     },
@@ -18086,7 +18086,7 @@
       "href": "entries/aae3028fbf1ffd593e7ea4dd9fb2d8d9e99d47de9cc30182709614faade349d8.json",
       "id": "[\"integration\",\"protobuf-source-compiler\"]",
       "kind": "integration",
-      "sha256": "760d29188bc9a3da89f6de59a3da43ab403df804ac29ae3d611cb24570b97921",
+      "sha256": "c856a1d3f95c3b4bdd3a30b8ded33100b35d467f655d422c9988637307a3aa25",
       "summary": "Original bounded compiler/behavior record.",
       "title": "Protobuf · source compiler"
     },
@@ -18095,7 +18095,7 @@
       "href": "entries/5183af5139dcf28dc5483c85f57a0a5493b86aaa42feafa9ef77da8807e5d806.json",
       "id": "[\"integration\",\"relationship-gate\"]",
       "kind": "integration",
-      "sha256": "9b691a08489a1829868021813e05081a110fcf3ef3e4856bbbb3424f39deba6f",
+      "sha256": "d6012e95f0f3bedbc1305b1036f8ccf88d2929efc41748f29c3907ad66eb0f13",
       "summary": "Published relationship binding subsets; ideal admission and delivery are distinct.",
       "title": "Relationship · five-priority qualification"
     },
@@ -18104,7 +18104,7 @@
       "href": "entries/7cc4b7b979e1e9608b12cc8292263fb92eb28534c77ed11c43506e5b909b386c.json",
       "id": "[\"integration\",\"schema-diff\"]",
       "kind": "integration",
-      "sha256": "4a59242dd9cb134935a43367a054949e59a1ba86de74ddd933a89f12c8c4bb2d",
+      "sha256": "f1856ffb0f89e95e5a05c9d6544b4b8a949f4a20e7bebba6e4dea971fc534894",
       "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
       "title": "Compare two schema structures"
     },
@@ -18113,7 +18113,7 @@
       "href": "entries/f1b6bf4f32b95d11e61aaebd84cb4edfaf02dddaf6010e71beb5d7a9c1d5d92a.json",
       "id": "[\"integration\",\"sqlserver-field-native\"]",
       "kind": "integration",
-      "sha256": "d718ef6480d89de663ec52a705f0e9959a4ad103def909bd5e66eef618c7d17c",
+      "sha256": "b0a459d6cc76b125d0c0d3abb4a541d15d04f4c6e8a78ee42f78781ddf497b51",
       "summary": "Original remaining-three Field binding acceptance, scoped to sqlserver.",
       "title": "Sqlserver · native Field checks"
     },
@@ -18122,7 +18122,7 @@
       "href": "entries/1ad0b361b1bebee2d576ce369c0b41b94a09045ed359e01253ce9830769d0a12.json",
       "id": "[\"integration\",\"tablespec-field-native\"]",
       "kind": "integration",
-      "sha256": "c1cd89de1d4f8fb357f23938f46e806a4b98f8fab3a90cd724b90a86d25d1cde",
+      "sha256": "b2456955c2442bfe92845aa82e993ca5f5d53280e8277b37951cc89dc207acad",
       "summary": "Recorded Field native/browser acceptance; broader semantics remain separate.",
       "title": "Tablespec · native Field checks"
     },
@@ -18131,7 +18131,7 @@
       "href": "entries/564168fde941debfe0081b8d32ebf48fe39a742b8f049fec4542c5883d29eecf.json",
       "id": "[\"integration\",\"typed-reporting\"]",
       "kind": "integration",
-      "sha256": "86a2a891b00f5258ffbbdff1d80eaf2861afe19b5505b535e40f628cd9bce7bf",
+      "sha256": "5a14000da64516beed25a067df647c5cc173066e0e912fab897062cda26cd9b1",
       "summary": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
       "title": "Typed reporting · native PostgreSQL"
     },
@@ -18140,7 +18140,7 @@
       "href": "entries/a8662c2da851574912709e54f14285326f6f72f6eb79181f6380fff5edd5370b.json",
       "id": "[\"integration\",\"typed-sdk\"]",
       "kind": "integration",
-      "sha256": "1e7273d4d7ddcc75aaa4562b586373e0a7be55b0cc527cd1829d6ab009231b15",
+      "sha256": "77631d274d3de1c348037961b9f3f4e39c5c22cd69f329fb3519d46bc9429287",
       "summary": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
       "title": "Typed SDK · installed native cohort"
     },
@@ -18149,7 +18149,7 @@
       "href": "entries/af30038871d3cf1aec8279bb7b399ec43d5d9ee7369882fbcb4257b2205a9405.json",
       "id": "[\"integration\",\"umf.arrow.flatbuffer@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "c3a4aedacc284ba76bb5f013bc5647cde4de29b7f7340b71456e3621903b2370",
+      "sha256": "62b7475cd945b981a7efca57d6571001235331aaaed923513408e953f24dc493",
       "summary": "All 59 metadata declarations, 85 fields and 64 explicit enum/union members. Raw metadata decoding and guarded encoding preserve known values and physical field presence; unknown wire slots stay in source. No complete IPC dataset rewriting, ",
       "title": "umf.arrow.flatbuffer · export"
     },
@@ -18158,7 +18158,7 @@
       "href": "entries/c4e60274b786fa922f167e70afe04cf954f4bae0689a5ae0bcf57479121ddb5e.json",
       "id": "[\"integration\",\"umf.arrow.flatbuffer@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "eb7b4b28128e17e6dae95d044f38f49bedba36bb82f052ec4ed9c52c026e6ab9",
+      "sha256": "98b8b2f8b2fcd1d9902195db2ae40cefdcb2c3713a9ca7c8938ace794c77f78c",
       "summary": "All 59 metadata declarations, 85 fields and 64 explicit enum/union members. Raw metadata decoding and guarded encoding preserve known values and physical field presence; unknown wire slots stay in source. No complete IPC dataset rewriting, ",
       "title": "umf.arrow.flatbuffer · import"
     },
@@ -18167,7 +18167,7 @@
       "href": "entries/4b3ee72e2540dd496cce3c17ef0859f8b5460745d3089dd7b8125bd7f573c97c.json",
       "id": "[\"integration\",\"umf.arrow.ipc@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "0aaeb53764a1b6d50d799f111c446be754dba8b2fda65cd2d5438ee5242fb86a",
+      "sha256": "efa541ef79bdcdab42f4f1fb945715ecc91696a07be91aec0951959c1c2ee981",
       "summary": "Exact original bytes up to 1000000 bytes, including unrecognized and invalid content. No semantic edits, complete framing validation or decoded data model.",
       "title": "umf.arrow.ipc · export"
     },
@@ -18176,7 +18176,7 @@
       "href": "entries/dfd9193a49ec342e555dfd4901d1735bcc3ae78fa545fd7a3c032763b5fae7c0.json",
       "id": "[\"integration\",\"umf.arrow.ipc@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "edfb3db8c5e9e76c29b4cc39d99fcb6c2bc607f2f541c0668fa83546d5de73b0",
+      "sha256": "95c5eecc17401900aae702ddc066e5ab42534e943888d4957f9ff663e63a5df2",
       "summary": "Exact original bytes up to 1000000 bytes, including unrecognized and invalid content. No semantic edits, complete framing validation or decoded data model.",
       "title": "umf.arrow.ipc · import"
     },
@@ -18185,7 +18185,7 @@
       "href": "entries/41009d61a52678b59a5fdf8c7900f0ffd2dedbb0674a06c9967ebc5ac016fbb7.json",
       "id": "[\"integration\",\"umf.arrow@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "fcca7624dd5ffa98f706e636f4940976925f106c8978328448203146fe217fc9",
+      "sha256": "23497987116a608d2842758cc709d63429ffd3c20b0d9453752870ddc4afcb92",
       "summary": "Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.",
       "title": "umf.arrow · export"
     },
@@ -18194,7 +18194,7 @@
       "href": "entries/927b1a9721d2a5d3468a12711bb4a5a026d090331c4dbb74020587edfb16bdac.json",
       "id": "[\"integration\",\"umf.arrow@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "95196e3141d25a4c68193067b91cc3f09c85c554676eca390292aeab64d77854",
+      "sha256": "42c783c003d81b06bc815cccc12ca99ade2f6e7461246ab9c6926b7c9b14a650",
       "summary": "Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.",
       "title": "umf.arrow · import"
     },
@@ -18203,7 +18203,7 @@
       "href": "entries/d024c645a9adde109d02e829fa2d237787fdbb634201f6bf8951ef33aae405a8.json",
       "id": "[\"integration\",\"umf.avro.cardinality@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "cd5c3de408b77ecf21d062ae90545ca7a6a95a75eff93e0669eac994a90dde2c",
+      "sha256": "b86ca195a7d338f4b5b0071128730c60d42745cd9967e987f84d87ec6f56e832",
       "summary": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
       "title": "umf.avro.cardinality · import"
     },
@@ -18212,7 +18212,7 @@
       "href": "entries/383c03c01e96ea18b16f5d026f20c97a1b12eafb5a8df00916fbe77a222734df.json",
       "id": "[\"integration\",\"umf.avro.facets@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "f3a28c5ea65a3602b3bcc3014bb66e6b5a06afc56020732e8857bd50cced7f57",
+      "sha256": "13e199ebd04413ad5cd78e4c316961cac1546addf8ed29ce0644368c881c4f37",
       "summary": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence",
       "title": "umf.avro.facets · export"
     },
@@ -18221,7 +18221,7 @@
       "href": "entries/8b01f080c7d526871d05f6ff53890e7ab8d0b68ac8e593737ca7e8dc8bba971a.json",
       "id": "[\"integration\",\"umf.avro.facets@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "7314b196973501a6e0e401aa3b929a3403c6379b8baece3fac35ae2eb8d9a1b8",
+      "sha256": "adb61192f48c1335bfa7d79bec5134a777f7b2839d0fc4f8e8c2a242f16adbcf",
       "summary": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence",
       "title": "umf.avro.facets · import"
     },
@@ -18230,7 +18230,7 @@
       "href": "entries/b896e82e723fb7ae3342db13d2034b6ab95281147cda5c6a9570c4f39c584c91.json",
       "id": "[\"integration\",\"umf.avro.keys@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "4baeb19119dd99114adf98cf091a9065a0d964fb85b76c0f249864f14042a8f4",
+      "sha256": "376d26d44e56ef72f5919efd7d377dcc29418917fd45968497589d9ee1a3b6d3",
       "summary": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence",
       "title": "umf.avro.keys · export"
     },
@@ -18239,7 +18239,7 @@
       "href": "entries/35855510c914c7520714cca2084c23f3738bb4a05e5a20c351badd8d39bbb151.json",
       "id": "[\"integration\",\"umf.avro.keys@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "6052b80e0ffd5258ea27a4f9745a703923c9fc74559ce2869854d0c2f4fc7a4b",
+      "sha256": "2f3bb613185986b7c65a08f5af9aed6afb3a33ed6d83a315a93b5b8832c62e0d",
       "summary": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence",
       "title": "umf.avro.keys · import"
     },
@@ -18248,7 +18248,7 @@
       "href": "entries/5cf05c0bd13a9da49b8905fe5653ac8fdb6d75a6684e31a488b999db9aac6fb7.json",
       "id": "[\"integration\",\"umf.avro.nullability@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "9d1f9e6e62d5653135d46f8a146a43b3b0cd1c49c418395d76c16e3bb06e161c",
+      "sha256": "ea6fd076f4eb06af69064f1fa610f53c62b2373046bb213c9952489a6237aea4",
       "summary": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements",
       "title": "umf.avro.nullability · import"
     },
@@ -18257,7 +18257,7 @@
       "href": "entries/e892df456d96235807d150e723511b2aca8dbce5384d76c1ca6e868517d49d13.json",
       "id": "[\"integration\",\"umf.avro.relationships@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "e6982d928c7af2706a816d5cf71bb1c5afd550f6e89fa9a165d32ebdf24358d2",
+      "sha256": "0381d138f4b70b27980222a79e28755a20c41d41fd228b7b6b173dadcd38b891",
       "summary": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence",
       "title": "umf.avro.relationships · export"
     },
@@ -18266,7 +18266,7 @@
       "href": "entries/76f00bbb88135620c2a2888e59e7e5aae9ac17e449e894a5101ddf52aca06b68.json",
       "id": "[\"integration\",\"umf.avro.relationships@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "ddf768b2f226b71ea36873519bca95be770946f39e03a291ccca3fec467dee07",
+      "sha256": "bddce0aa740c8e276e5b6b2d1283d7052952c4d1d9fc49eb4ec6f2398a3ca74b",
       "summary": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence",
       "title": "umf.avro.relationships · import"
     },
@@ -18275,7 +18275,7 @@
       "href": "entries/51d996bf16effe5707348d2643987d6859c2b677dd9948c819b7564706c7b04f.json",
       "id": "[\"integration\",\"umf.avro@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "d1132affc65fc3ca8d2d815265a7f79bbf86d0832a06afec66ab0a27a96b95a3",
+      "sha256": "4948186ff735e22f7302eb0f1f57bf66a57b066a7006dbadafff98c197cf5f0f",
       "summary": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation.",
       "title": "umf.avro · export"
     },
@@ -18284,7 +18284,7 @@
       "href": "entries/a24a0afcde75dc754597e88ac7fc4882cbdd205e10d1e3b393a435e07d5e9f46.json",
       "id": "[\"integration\",\"umf.avro@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "c78beac95af66b18d96245c2c42777a5526243617f467a25e47a8525e176fc57",
+      "sha256": "8f46a6380da588d0727136c916d5a54bdc183a3c6965d99344d468f3bd33be00",
       "summary": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation.",
       "title": "umf.avro · import"
     },
@@ -18293,7 +18293,7 @@
       "href": "entries/7e3ddb023ea6c91ab96fa72b0d3497f8f2e5374bcab0aea5d52b7ac0a59b57be.json",
       "id": "[\"integration\",\"umf.dashboard@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "8780078fc44d6e5da945361e69a1036eb817bdf45d79e74b571a236229f438f5",
+      "sha256": "c60d946fa612c339aaca9c555c29f0fa169ab0b2626cc43f164b5a3030e52638",
       "summary": "Versioned semantic declarations in UMF JSON/YAML; expressions retained, not executed; no Lakeview, Tableau or other BI tool compatibility claimed",
       "title": "umf.dashboard · export"
     },
@@ -18302,7 +18302,7 @@
       "href": "entries/8630e3699f19763dc71e05e0afcd568eaaa5fdbab2080bc49557511d4a20d958.json",
       "id": "[\"integration\",\"umf.dashboard@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "bbb976855849de58bf72080fe4983c6fd134fab1ca51f94f02073fe9d71955b2",
+      "sha256": "5b37d3277f2c0e11819d433bf235e7065f5010c596eb64906b2fe0edb8234736",
       "summary": "Versioned semantic declarations in UMF JSON/YAML; expressions retained, not executed; no Lakeview, Tableau or other BI tool compatibility claimed",
       "title": "umf.dashboard · import"
     },
@@ -18311,7 +18311,7 @@
       "href": "entries/02033e352a8b191b78fc1eaf558ae65fdd0aac34c895c21d78096ac09a166948.json",
       "id": "[\"integration\",\"umf.dbt.artifact@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "fc7d5eda5d414fd444cbba356fbb2e08fac6d5852d17b1e379433704abc5bea9",
+      "sha256": "9d3e939f2dd22b304f45333e37a00478066733d4d1eae54b22d9a163d2e07bf4",
       "summary": "Exact JSON preservation and candidate edits; native schema shapes; no artifact correlation or execution guarantees",
       "title": "umf.dbt.artifact · export"
     },
@@ -18320,7 +18320,7 @@
       "href": "entries/17e6ea6dda5e9dfe3d70476b48c66dcde2e58d12721aafd61fb841efed639e62.json",
       "id": "[\"integration\",\"umf.dbt.artifact@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "e397bb9acd2d298798667a2c3eb2c669f9616398b24a16f4ae3f9214668f402c",
+      "sha256": "672b26efca231833310be1c4ec8b44fbd50f1286a235e3c7f5c7d439b267f4cb",
       "summary": "Exact JSON preservation and candidate edits; native schema shapes; no artifact correlation or execution guarantees",
       "title": "umf.dbt.artifact · import"
     },
@@ -18329,7 +18329,7 @@
       "href": "entries/f6daa10e5c0ebfeaadae1de740d33d8f7917ce9c964911b87928bd6253dc71c2.json",
       "id": "[\"integration\",\"umf.dbt.manifest@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "cc81f13809c9a069c6bd628866e3834645bf321f99b42e9518a22f1fcdf54a23",
+      "sha256": "7e72e8e2295b710e8b646249950a93f664b0f934c8d0ab6ab86c2968cffe2db5",
       "summary": "Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity",
       "title": "umf.dbt.manifest · export"
     },
@@ -18338,7 +18338,7 @@
       "href": "entries/c3b46334bc26ca0025908ed29e2fb984a708143afbb27e290190467a302ef5b2.json",
       "id": "[\"integration\",\"umf.dbt.manifest@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "2570a4f7f21a6f6c389bcb686df9c917e60cc30f31509f948cafe3e3c0edd58f",
+      "sha256": "79fd6fc96e4abb73a1f852b880970671049baa051b4a502c7a8ae27100c9c4cf",
       "summary": "Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity",
       "title": "umf.dbt.manifest · import"
     },
@@ -18347,7 +18347,7 @@
       "href": "entries/73dd4d8a2676b22ddffb79d77b570e45875b2e730f641db23fcb634e4ec167af.json",
       "id": "[\"integration\",\"umf.dbt.semantic@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "8ad8bd66808d660aa935784441b30644ed44837bf6ae5cd379be7cfc51218b3d",
+      "sha256": "5e5b3c874abfb78f1bb68b07806f3af6cc6edc77d4296e8743f2c839b0ffee25",
       "summary": "Exact JSON preservation, copied candidate edits and derived nullable serialized shapes; no metric execution or semantic-validator equivalence",
       "title": "umf.dbt.semantic · export"
     },
@@ -18356,7 +18356,7 @@
       "href": "entries/3c60d73e1e291a7993738686ed809cfac3d2f9324320ba6ed7b955d22381d916.json",
       "id": "[\"integration\",\"umf.dbt.semantic@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "1adda756e1e72112c386ccecb8183db6a162cc4967d939521f87f5352b806322",
+      "sha256": "f22af221e6f3368b047e185bbe12786f19009c334cd447c0d3a57c25eeedbeff",
       "summary": "Exact JSON preservation, copied candidate edits and derived nullable serialized shapes; no metric execution or semantic-validator equivalence",
       "title": "umf.dbt.semantic · import"
     },
@@ -18365,7 +18365,7 @@
       "href": "entries/15490259c18247e3545e456b350bbf8a9046dbbb8a0337d34a1c22297d840c76.json",
       "id": "[\"integration\",\"umf.ddd@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "61899f36e865c7cbe13e43a6fcbf6fdd2427d888ad73f0d53b7a414415d1e825",
+      "sha256": "f94df7a99dda2ed6bc17abc942ce530668888f5793964e0902a47a3f90ca8f79",
       "summary": "Versioned semantic declarations in UMF JSON/YAML; opaque invariant languages are retained, not executed; no external DDD tool compatibility claimed",
       "title": "umf.ddd · export"
     },
@@ -18374,7 +18374,7 @@
       "href": "entries/38c121b77454fa0cb2f4ceea0815713db6a1beb90607a333770b9829c0a7174e.json",
       "id": "[\"integration\",\"umf.ddd@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "536892c146491b304ed27c7fed898e08efb2f25f7ed8b21ebc25bc1d449c605f",
+      "sha256": "ddf1bd042851aa460c9f61abea41070829bcf8a5f911221207cb3b77098d0711",
       "summary": "Versioned semantic declarations in UMF JSON/YAML; opaque invariant languages are retained, not executed; no external DDD tool compatibility claimed",
       "title": "umf.ddd · import"
     },
@@ -18383,7 +18383,7 @@
       "href": "entries/3d0b5a28880c13e88ff443f8aef8eef71ee0b92c14126df4eb0096134558b009.json",
       "id": "[\"integration\",\"umf.delta.definition@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "e5c95155f836205bc163587fd867585f6b0c6a25ffe8794490a3c2d2ba8fb578",
+      "sha256": "f3aacf8b3279abb488680a65cc26d80ee61ae816244de0d956b832e0e04bf486",
       "summary": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, mi",
       "title": "umf.delta.definition · export"
     },
@@ -18392,7 +18392,7 @@
       "href": "entries/7d5f13b6d5821c5a305a3210478d89d9e804d37f351fecff4889edad075d1b56.json",
       "id": "[\"integration\",\"umf.delta.definition@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "283e71bff1069470a00fa968fe1367180f4a6c2c3d4e28cd343fe098555bb0d6",
+      "sha256": "43ed192282da057d1320c55f438050d9d7557ccdf8985aaa6b87ea25113ca554",
       "summary": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, mi",
       "title": "umf.delta.definition · import"
     },
@@ -18401,7 +18401,7 @@
       "href": "entries/e9abcc4ad0b062a2764f844a1f30f23ec57f0ad2fc83d53fe7a6ca8c77be624b.json",
       "id": "[\"integration\",\"umf.delta.log@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "67702239eb4d0304b202c6375fe23526aa89f5b1e6769cf6f795743bb8e4a004",
+      "sha256": "60876d1e18920f29715130b2b16ab705b4e940a845733db844e7d1d703a38545",
       "summary": "Bounded exact text capture and line/action envelope inspection. Native action semantics, commit validity and snapshot reconciliation remain unverified.",
       "title": "umf.delta.log · export"
     },
@@ -18410,7 +18410,7 @@
       "href": "entries/ddf63c2be6c2b873511cbdd2a17b53133677e38ca3480af59fede05aa2daeb5e.json",
       "id": "[\"integration\",\"umf.delta.log@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "9d17c4564e9dbf9379a3f06a434e9e52067123d2463782b5db93903224a8791c",
+      "sha256": "59592ae2fdfaf08317bd353171800bedfec11f51aca1ac2ca03424cacb87f74a",
       "summary": "Bounded exact text capture and line/action envelope inspection. Native action semantics, commit validity and snapshot reconciliation remain unverified.",
       "title": "umf.delta.log · import"
     },
@@ -18419,7 +18419,7 @@
       "href": "entries/b7073b61e85b7058cf3d61c2eaa81f73b3970f0e127899c03db16da4293fd0d4.json",
       "id": "[\"integration\",\"umf.delta.table@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "da0bd0eb6ee420e05dbb03da5efb65bd57b99eec8f1d6af1b2fc8d419ae57a86",
+      "sha256": "592a93ba3eafdf27c517b8944e39b4284ed20ab0f2c526fbe73c6c1808fdf59c",
       "summary": "Exact context preservation, known shape checks, incomplete feature diagnostics and guarded mapped rename candidates. No log reconciliation, transaction commit or general table evolution claim.",
       "title": "umf.delta.table · export"
     },
@@ -18428,7 +18428,7 @@
       "href": "entries/fce6f61c98f90df8d74645a60691c5f90003dba951f2aaf6fc4c27ab33fdea61.json",
       "id": "[\"integration\",\"umf.delta.table@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "2f8241b4160e3aaca5e37279d35c4df33bd70e54801d20b023bd676ed4665078",
+      "sha256": "04fd118e654989ea5830f59ec55f5099f9a612410ba4e4f7175fde623e4f2a59",
       "summary": "Exact context preservation, known shape checks, incomplete feature diagnostics and guarded mapped rename candidates. No log reconciliation, transaction commit or general table evolution claim.",
       "title": "umf.delta.table · import"
     },
@@ -18437,7 +18437,7 @@
       "href": "entries/9c14a011abef39cc3bce30579fc6fd9949476b99e0c561be567e79f25addadcf.json",
       "id": "[\"integration\",\"umf.delta@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "5d86c3c1ba6616c6e082e72b1e718be769c0be019afe33f08cce4a10fee3097d",
+      "sha256": "a62dfeefa9e1c577948569f04f747ba4ccc239e36c409c9bd746d85bd8fcbabf",
       "summary": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate.",
       "title": "umf.delta · export"
     },
@@ -18446,7 +18446,7 @@
       "href": "entries/e16678c0c246ff05ba9b7fc8ea0e425593972f5511ef47e246b0ebd2d9c29532.json",
       "id": "[\"integration\",\"umf.delta@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "4eca881339618c92353d739de0a059d31a38bbebdcdc86eb20a66e3859aa0379",
+      "sha256": "be4a6cdf1db0a6a25ef486d7f029605bfa78954f2c7a8e7263ecac648e4b5ea4",
       "summary": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate.",
       "title": "umf.delta · import"
     },
@@ -18455,7 +18455,7 @@
       "href": "entries/50988de86fab64fc2770022359cf37f870d249b174ff05df6db5773c57590788.json",
       "id": "[\"integration\",\"umf.generalized-rdf@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "9d8824c8eddf371aa2cf6e1262cffb1b4bb53aa247f2daf27e4d99fa62492c27",
+      "sha256": "1a75ed885a89376c9e05e9569139a81287271d03f28d9af1fa559f23a395927a",
       "summary": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export",
       "title": "umf.generalized-rdf · export"
     },
@@ -18464,7 +18464,7 @@
       "href": "entries/01a16ca4bd418c5f04a15735cef6ae816eebeae2062e03cff8dbc1777a908083.json",
       "id": "[\"integration\",\"umf.generalized-rdf@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "2d91e1d0b9c8d929fe0ca1372d47a564cbd4141d72e7097fbc733bc72ac3f06a",
+      "sha256": "0e7ccb9842cdaa0dcb076589209bc547647d4250ee015f8c0607a0fd4446cc8b",
       "summary": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export",
       "title": "umf.generalized-rdf · import"
     },
@@ -18473,7 +18473,7 @@
       "href": "entries/4366d57d59edfc2bf2e58d76b0df2ead8b01e1c8a16b4464175affd29dfc6310.json",
       "id": "[\"integration\",\"umf.graphql@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "bdf89ae55b357a345970b38663f777d064f9312f7745d7b345eba0fd0fc8f2a6",
+      "sha256": "29e9526db4faf4fa1a2eccee319b505596e5b28728d9bdd5922c6fd9598b929c",
       "summary": "Schema definitions/extensions and constant values; executable operations are outside this schema adapter",
       "title": "umf.graphql · export"
     },
@@ -18482,7 +18482,7 @@
       "href": "entries/b8a314ac8a682816eae776a806e47f8563bf45beebc2a670c5b671e139c25469.json",
       "id": "[\"integration\",\"umf.graphql@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "84d28da058d760e623889dfc542994b065b0d7b2739c8c9c435812652d4238c6",
+      "sha256": "53f100ac6f4f59903f6a4f9d739def0f2e14f49283394d49eff3e46e75d2282d",
       "summary": "Schema definitions/extensions and constant values; executable operations are outside this schema adapter",
       "title": "umf.graphql · import"
     },
@@ -18491,7 +18491,7 @@
       "href": "entries/75539c414b402fcd4e0cbd461f608663699608ab3decf2b73f0496d11252e3ad.json",
       "id": "[\"integration\",\"umf.iceberg.table@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "033529d924b8e68aa49f39c4b8e81ab6a5f9647a6145fb8da94d929157fa5dd9",
+      "sha256": "cd0060cdece2ee51c85095c3e93da1f251e73dff8354b521bd7f52b4d26c1593",
       "summary": "Known v1-v3 metadata field shapes, embedded schema consistency, exact integers, preservation and candidate edits; reference/feature/default/history validation remains incomplete",
       "title": "umf.iceberg.table · export"
     },
@@ -18500,7 +18500,7 @@
       "href": "entries/a251754a166e722f50b6729eb2eea3cee146e08f94230101161bf5b3b91e977d.json",
       "id": "[\"integration\",\"umf.iceberg.table@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "598a82c94a598b8aa6a7d2c5055ac3c34acf4b7dfec823a2f5363d98f021bcbe",
+      "sha256": "5c8b4ca7403d165ebf4c58e893e68217b8b3edd8515db81067d651678dcd5789",
       "summary": "Known v1-v3 metadata field shapes, embedded schema consistency, exact integers, preservation and candidate edits; reference/feature/default/history validation remains incomplete",
       "title": "umf.iceberg.table · import"
     },
@@ -18509,7 +18509,7 @@
       "href": "entries/93411301553f9dffd4e54d6752525695496f70283d51ca0ffc750999ae880df1.json",
       "id": "[\"integration\",\"umf.iceberg@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "7cfafa0337b6977cc0939d4cbcaab7a86028a1e7e476ef634d0b17a22fc01c11",
+      "sha256": "f527b4f9ecee36011570a89748515dc56e519743ba5c194c5d4fad31981a3594",
       "summary": "Standalone recursive schema preservation, field-ID and identifier checks, pointer access and candidate edits; no table compatibility or data-reader claim",
       "title": "umf.iceberg · export"
     },
@@ -18518,7 +18518,7 @@
       "href": "entries/9f47f15098c5801c6e1743ceb361956ec92ae0388fd1e86208cc399a25d7994d.json",
       "id": "[\"integration\",\"umf.iceberg@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "96d9d1526b1a8af7fbf47d4cfd79819d21f5ddb8fc5dfe69a636daddb2e001de",
+      "sha256": "c9ddd1c133d8e8cf344b10b0121caf32099313b349a79287cca9a968ffc26a43",
       "summary": "Standalone recursive schema preservation, field-ID and identifier checks, pointer access and candidate edits; no table compatibility or data-reader claim",
       "title": "umf.iceberg · import"
     },
@@ -18527,7 +18527,7 @@
       "href": "entries/f809a1e549c706c568bd4d24b217544a5bc25632efdcd9d6dc91d10908caf01e.json",
       "id": "[\"integration\",\"umf.json-schema@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "d40ed896eeaf040d840e103ba07aef2399fa4ad7552f94585d3205eca95a6d5b",
+      "sha256": "90443e73272bad960ac8364cee432821b94181cee4a61c5fc294120cde569d10",
       "summary": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.",
       "title": "umf.json-schema · export"
     },
@@ -18536,7 +18536,7 @@
       "href": "entries/0169e20006454620c57eb6c63d775814648cb2819de5f834f30b53dd3120547b.json",
       "id": "[\"integration\",\"umf.json-schema@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "907d8dfcad5c87837d01feb5c7b6ec9b67b314cfbdad795738cfb554c6315341",
+      "sha256": "03111288ffd96e94a648ae375a5f097e890b8265451dbd316387596045898261",
       "summary": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.",
       "title": "umf.json-schema · import"
     },
@@ -18545,7 +18545,7 @@
       "href": "entries/a46057db52b049c01da2bb4c44c84b47d12abfab0a6ac3944888c9083ea1642b.json",
       "id": "[\"integration\",\"umf.jsonld@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "dd7816a5f5ccaf4a9f97eacf6685be76d47639808ef45592d90c0fd5f434226d",
+      "sha256": "f4f86b361e4858f3a1ee656e1581eb37a49938bed0e601edd6ae3107d4fe16de",
       "summary": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag valid",
       "title": "umf.jsonld · export"
     },
@@ -18554,7 +18554,7 @@
       "href": "entries/9453442e94a4944146a5a24ca15ca0bf2de3eecaed58dca20ee93a7885d88a7f.json",
       "id": "[\"integration\",\"umf.jsonld@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "fb8c14280acf2faf1384a2fe21c9efd0a3c272dfea120dfef83ba8f211415a3c",
+      "sha256": "895e5142b1ab26accba80b9a74767c2be199b83c210e5d9a67052e820649ad77",
       "summary": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag valid",
       "title": "umf.jsonld · import"
     },
@@ -18563,7 +18563,7 @@
       "href": "entries/38afae09b9a50e8c7937d70c7765922f0ca339aa90704382fc462b360806d9fd.json",
       "id": "[\"integration\",\"umf.linkml@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "5c75c0b05667cd43ed7d826c52b003c1473ba73acff19a550cc93dd4f69a0062",
+      "sha256": "8a4c0f4d5653c4e4daea2d8dfc3f4003ba74ade8e0d499000a18e4cbfe510536",
       "summary": "JSON/YAML schema source, complete pinned metamodel JSON Schema, copied metadata edits, explicit supplied import graph, document-local class-slot membership and 29-field scalar induction; explicit import merge modes; no native retrieval, ind",
       "title": "umf.linkml · export"
     },
@@ -18572,7 +18572,7 @@
       "href": "entries/951fa39da27d2d065e4f578e9bd233b4d3c173469845e85bae2da8fcecdb1d11.json",
       "id": "[\"integration\",\"umf.linkml@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "18c1fbefdeed6e391f71283fc53c440d587ae26f7e15252c4924542c8610c26b",
+      "sha256": "f27ca12d3ac15e10dd7965439cb63cc4b3cb4677a3ccc7e59bf98782dec8aa02",
       "summary": "JSON/YAML schema source, complete pinned metamodel JSON Schema, copied metadata edits, explicit supplied import graph, document-local class-slot membership and 29-field scalar induction; explicit import merge modes; no native retrieval, ind",
       "title": "umf.linkml · import"
     },
@@ -18581,7 +18581,7 @@
       "href": "entries/f57524cd39a85e4f0e4e49747a38967cee8a75e07171869bd60fc31c29dded3c.json",
       "id": "[\"integration\",\"umf.odcs@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "ceb4b5d77cba460bdd03e9ecc2393bab65e2eca7fb76f915bb3c58bf09607ebf",
+      "sha256": "a08b617b02d62a2a9c3b813362e34482e19efb406a78f8b193ba49fbe48ad759",
       "summary": "JSON/YAML preservation and native shapes; local v3.2.0 reference/relationship checks and ID-selected rename candidates; no external resolution, quality/SLA execution or physical lowering",
       "title": "umf.odcs · export"
     },
@@ -18590,7 +18590,7 @@
       "href": "entries/9d1883c41481966cdc96574f808ecf715a4e78e036d891d25251d1e70d2055aa.json",
       "id": "[\"integration\",\"umf.odcs@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "678dc05940cbbfa0d4a0e6b742cfcc4e28a7d871fdae5531947e5bf11c0fe8d6",
+      "sha256": "6500d91bfa16a71149bd8d7b197300ff7c4d27d17443ebed4d8e3399c7b2401b",
       "summary": "JSON/YAML preservation and native shapes; local v3.2.0 reference/relationship checks and ID-selected rename candidates; no external resolution, quality/SLA execution or physical lowering",
       "title": "umf.odcs · import"
     },
@@ -18599,7 +18599,7 @@
       "href": "entries/bf8ede8b5af5f27d7203fc2dedeeee47c37b35149163d8fab522e2917a1905f8.json",
       "id": "[\"integration\",\"umf.openapi@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "7025b0a344e1d9d1db8b999a2e236928afe8b561641d83b22563336614caf783",
+      "sha256": "b57724779caf5b60c3206e3c38223ff6079094f9279493aa5f64aca7b239fa38",
       "summary": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; reference",
       "title": "umf.openapi · export"
     },
@@ -18608,7 +18608,7 @@
       "href": "entries/3e1c223901cfc33e015c849ec1e4beffa71afcf1f15c9f23e017b81fbed142bf.json",
       "id": "[\"integration\",\"umf.openapi@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "f99d061c27a2a28a08ba8de1cd53b2f7e324eaeb9e1982a8abc9901f44541c51",
+      "sha256": "12260cb6b24ddd407a8c43abd3b36915799647cc3b336b08a8e06c5f722c77c7",
       "summary": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; reference",
       "title": "umf.openapi · import"
     },
@@ -18617,7 +18617,7 @@
       "href": "entries/c1a4c40b4dbcfaf6438864d7b6164ca409622be6abd91414b24e3bd947a935e8.json",
       "id": "[\"integration\",\"umf.owl@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "11606fa630f5279369a763478c67bdf17893bea8eb7ea0740e6daf6f2ba7d18b",
+      "sha256": "f9fad0ae554b867f557e2a35219dc93df148766d30299409c77a953ee24704ec",
       "summary": "Turtle RDF graph preservation; explicit headers/declarations, local expressions, axiom annotations, negative/n-ary assertions and chain/key/disjoint-union lists. No complete structural OWL mapping, validity, profile, import execution or ent",
       "title": "umf.owl · export"
     },
@@ -18626,7 +18626,7 @@
       "href": "entries/3c3e4e3bdf1274e25cdaffa25c74e289db61049d08747e3ef42077a8743275ea.json",
       "id": "[\"integration\",\"umf.owl@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "ea6aa46916aeae3a4b091b5721cf256df6183a98c939f94eb113ca678cdd1702",
+      "sha256": "014a8e186edcc15987eaa714e5bda28fd37ca01e95f06321df8ce328a0ace945",
       "summary": "Turtle RDF graph preservation; explicit headers/declarations, local expressions, axiom annotations, negative/n-ary assertions and chain/key/disjoint-union lists. No complete structural OWL mapping, validity, profile, import execution or ent",
       "title": "umf.owl · import"
     },
@@ -18635,7 +18635,7 @@
       "href": "entries/a389b9c9fb5673537152223e984370ce6600af81e984e6e86a1b8488920907b4.json",
       "id": "[\"integration\",\"umf.parquet.cardinality@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "9851b72bab1d86c5db4d012464974d8d82c8dc14cfa3b4ffc1df02b7471742b1",
+      "sha256": "1f25c907dbda2ea3d87d0cca28039a51df7132b03c4afbb7cdc3ca975f7a26db",
       "summary": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native",
       "title": "umf.parquet.cardinality · import"
     },
@@ -18644,7 +18644,7 @@
       "href": "entries/e980d40da807560563fee4b978d1d8ee8787d69a47ecad191a05a124e41ea0e6.json",
       "id": "[\"integration\",\"umf.parquet.facets@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "039aa623148fd90fa5ad6aa235fe1c046eb64a6716b740f295a5c294a4b31a25",
+      "sha256": "83900c9a4b986dccabeab931593d0cbc2d050751bf62619e887184332e553702",
       "summary": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate",
       "title": "umf.parquet.facets · export"
     },
@@ -18653,7 +18653,7 @@
       "href": "entries/509b042adad251af86f1808cf38a875cc3ee148dd1cf24ccc78f0294cfb790ab.json",
       "id": "[\"integration\",\"umf.parquet.facets@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "94c6924fbf78afd2d15f56594e040972c61473dc3a0dac4fe4c6809d21d5d685",
+      "sha256": "5e963dddcdc33509c09388fc74c452830b8d09edbd6f9f188ad6e378af161892",
       "summary": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate",
       "title": "umf.parquet.facets · import"
     },
@@ -18662,7 +18662,7 @@
       "href": "entries/ecb6d2dc960ff7cf1e711d8ad44c165a339016f346a6fb0dbf92a66abed3fbb3.json",
       "id": "[\"integration\",\"umf.parquet.keys@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "df8b6c13e43e0db1f973312fa78f529133675b93182d2c6523af87d382087592",
+      "sha256": "ea882159b945366d54166181e12b814039b0677b8261ba7a2c1b25f125f5fd6f",
       "summary": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence",
       "title": "umf.parquet.keys · export"
     },
@@ -18671,7 +18671,7 @@
       "href": "entries/46082c534c1714b3082b47e0c06722dbf757ae489d0ac7d1774a9c7ebf8d70b3.json",
       "id": "[\"integration\",\"umf.parquet.keys@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "092988ebedb7c8e4d6c1104bc948209823efca816b8c3fac1ed88fca1d464ae4",
+      "sha256": "c5edbfa3b30caf017a29032a94fb07c3c29b1f0d6f4a619520978cc5a3c01931",
       "summary": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence",
       "title": "umf.parquet.keys · import"
     },
@@ -18680,7 +18680,7 @@
       "href": "entries/9266598bd49e0331287fe66f84befb71d49c3cd30fea02bb0e6b302e7774e0df.json",
       "id": "[\"integration\",\"umf.parquet.nullability@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "a54c5ce45ba9a4cf7ba8d6cce46ec3d15f2b663eb7fdba0e307ff5fecdfa9273",
+      "sha256": "fd6d5bfaf873a88115d1a2005081bcf385f467f013e135f833b7fc4d6b07e8f8",
       "summary": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence",
       "title": "umf.parquet.nullability · import"
     },
@@ -18689,7 +18689,7 @@
       "href": "entries/e1a2bc0412a39615349564d1e1940a753e7ec8a3b8158b1a6dc71968360d71e8.json",
       "id": "[\"integration\",\"umf.parquet.relationships@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "054d8fb9c9261d4812ea4e2c8ae54cbead159c2b586c652ebe6940911d2d4864",
+      "sha256": "b82fc52c63c2c1789dd39d0abbf7c41c54e72b9712c9060b276e8618463bfbe4",
       "summary": "Physical schema observations with original file bytes; no target existence, graph identity, reverse multiplicity or collection uniqueness, authored identity inference, page validation or native equivalence",
       "title": "umf.parquet.relationships · export"
     },
@@ -18698,7 +18698,7 @@
       "href": "entries/514d215779d4c04ab54bdf030ef89cdfba941ec64f97e5a267a9b44113d6be45.json",
       "id": "[\"integration\",\"umf.parquet.relationships@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "99b07a13fd47c0151cc6b339dcbcb6903400a1c93d6221adbf4205155d6b88ca",
+      "sha256": "aef312f0e855ed87a59282b26a7025ec4cc0e733bdcd99215d67d608cfca62cd",
       "summary": "Physical schema observations with original file bytes; no target existence, graph identity, reverse multiplicity or collection uniqueness, authored identity inference, page validation or native equivalence",
       "title": "umf.parquet.relationships · import"
     },
@@ -18707,7 +18707,7 @@
       "href": "entries/85a9864cf0ceca32178ea275b346efb692f0a4b4299dd55b7d6605c01af8b236.json",
       "id": "[\"integration\",\"umf.parquet@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "1053230c9f187606d775660a89a4c272accdf71fbb1349396f40c92698d5871c",
+      "sha256": "6d7934b2bb3486abf46981ea22f18158f6dc4f5df187c77d6b3d6a1d59279389",
       "summary": "Exact source capture up to 1000000 bytes and footer-region bounds. No complete Parquet schema, codec, encryption, row decoding or editing claim.",
       "title": "umf.parquet · export"
     },
@@ -18716,7 +18716,7 @@
       "href": "entries/89e30a8253af3e22d2d6e026650e8d465d65d26731ac5b74f5b29f9138269729.json",
       "id": "[\"integration\",\"umf.parquet@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "f4cfb33b944e01cadceec1486b5674754652db85bf72933b3f826d8b781d912d",
+      "sha256": "b93871f593c7aa2fce5c93ca083057b0e8c9ce962171f2b5da57aa040cf68bab",
       "summary": "Exact source capture up to 1000000 bytes and footer-region bounds. No complete Parquet schema, codec, encryption, row decoding or editing claim.",
       "title": "umf.parquet · import"
     },
@@ -18725,7 +18725,7 @@
       "href": "entries/8e2f887f86cfdc7af9e2781f4c3553d349bcc771af7cb1aef2a0227086872859.json",
       "id": "[\"integration\",\"umf.postgresql.cardinality@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "749873d178b831b07c2d9ec933dc70c9a9c5155fa399063dc7065da945098eab",
+      "sha256": "383d61d22036e86dbb2482664d825883c03c1dda9b011b876c08d2eab6180396",
       "summary": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
       "title": "umf.postgresql.cardinality · import"
     },
@@ -18734,7 +18734,7 @@
       "href": "entries/7b5fd76de882af29eb4637b5874c60e2ea55a23ea56be2a5ee836e4bf09a6d0a.json",
       "id": "[\"integration\",\"umf.postgresql.catalog@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "cbbd9562dde04d232b75952bb063d329bb85a91252b0a921e416a84c53de2032",
+      "sha256": "dd329f07b0691adc8efea5ddc82541294a43daf61b8e853e39e689b575282115",
       "summary": "The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation",
       "title": "umf.postgresql.catalog · export"
     },
@@ -18743,7 +18743,7 @@
       "href": "entries/cbb57bb84f9fffd5c9a91214628f994a2c52554fcd900b934bacc3416fe40731.json",
       "id": "[\"integration\",\"umf.postgresql.catalog@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "f14a4b7d2b2038fd6d9f95099153754163f75c45a6b7b5ac4133737f80eb92f1",
+      "sha256": "e7f5977fc53987983de0f7ce3f0dba7939278fb1d9107dbe9b8ef5ce9acf2a0a",
       "summary": "The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation",
       "title": "umf.postgresql.catalog · import"
     },
@@ -18752,7 +18752,7 @@
       "href": "entries/37a238e3c20a73768b225db56311e107aed4bb1863c8f28e4066dacea13e666f.json",
       "id": "[\"integration\",\"umf.postgresql.facets@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "d511cffc0b45a549a216ef477d8e69892278f300a7171b09bb07a905b3da5af6",
+      "sha256": "29055e9f91aef1756e0d4908d431901183a91a8b20832dad4dd3ca2b563f44dc",
       "summary": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence; authored projection uses explicit checked, type-modifier or carrier-only SQL with resource l",
       "title": "umf.postgresql.facets · export"
     },
@@ -18761,7 +18761,7 @@
       "href": "entries/5110725e2a36238b93bc727fe769af436ef9d4b2371d2554a409df18fcc427b7.json",
       "id": "[\"integration\",\"umf.postgresql.facets@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "2347c3f7c883f914f7d928e6e4518cf19c0f468589eb6625db6b8732127c006c",
+      "sha256": "5174b82dbaca7275aa25f9a78548509e3d1ef644f35080d824d331e11de43b69",
       "summary": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence; authored projection uses explicit checked, type-modifier or carrier-only SQL with resource l",
       "title": "umf.postgresql.facets · import"
     },
@@ -18770,7 +18770,7 @@
       "href": "entries/95707ab0f46d243dc79a590ff3944996ae2acd8959573c001d954cd36567ecc2.json",
       "id": "[\"integration\",\"umf.postgresql.keys@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "c076740aac60a30ecf465fdf39271db1e8c35bd0cca1f037113919c8039af5e5",
+      "sha256": "d1888fbc1d5b1dd5ac595a9f61c4cee57fb4e78db9ed7c419f17b1c9bb10f69a",
       "summary": "Correlated captured indexes over relations including descendants; observed enforcement/equality only, no authored identity, authentication, exact-input conversion or native equivalence",
       "title": "umf.postgresql.keys · export"
     },
@@ -18779,7 +18779,7 @@
       "href": "entries/bd7539fa5482ff327b3513ed51f1afd10db1616a5b9661f485a3098139e8b0c4.json",
       "id": "[\"integration\",\"umf.postgresql.keys@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "d80074e47732070cd95e035ff8466f1a4f148dc4a72ce9c654754ad30514c0d9",
+      "sha256": "cf39c5d24fd4ac64202f1e12ab1f836f5520e4df2b39b5a3e1cf2d176d0adc94",
       "summary": "Correlated captured indexes over relations including descendants; observed enforcement/equality only, no authored identity, authentication, exact-input conversion or native equivalence",
       "title": "umf.postgresql.keys · import"
     },
@@ -18788,7 +18788,7 @@
       "href": "entries/a26ab5d7b8a59697139535a4191e69f99c3ddf77198b1a9298c2a9e328a1b66f.json",
       "id": "[\"integration\",\"umf.postgresql.nullability@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "0d1054028293068f976720d4931147c91bbd97247d0a15c2147bf0adc29f540f",
+      "sha256": "82dced0666a4b360fb5c29d80a3f743bef66895ef1c1896e6686667e137ea4e4",
       "summary": "Captured PostgreSQL 17.4 stored-column declarations; excludes query results and input omission; not live enforcement verification",
       "title": "umf.postgresql.nullability · import"
     },
@@ -18797,7 +18797,7 @@
       "href": "entries/0af4ae3b1106022aadf5d6427ab472a05c79b2d51f984c96de074b74cdb86375.json",
       "id": "[\"integration\",\"umf.postgresql.relationships@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "7016cc66dc07a4fb553be06b7d7d1e45608fe8f613d5218f4a9ce71dbebef82b",
+      "sha256": "1a81f8dde2250f6c06ace3795637dad1e53e7741915a88f242a4efcd00f3b56f",
       "summary": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee",
       "title": "umf.postgresql.relationships · export"
     },
@@ -18806,7 +18806,7 @@
       "href": "entries/816f8c8f62450251e5309839783b8d80ad1bf5f9f992d5e1ebfe8fbe9e8b67ad.json",
       "id": "[\"integration\",\"umf.postgresql.relationships@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "1c7de8c844665500bc063db279a01b26bc2d3bcb80c1cbf65fa8b611f24f5205",
+      "sha256": "0655862611e615950313b73e99f3b274300b9ff8aae9c0e8919444508e2da34b",
       "summary": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee",
       "title": "umf.postgresql.relationships · import"
     },
@@ -18815,7 +18815,7 @@
       "href": "entries/61e346dcf467b7f076267de1805a0e2997c8b8d9cc1bd1a65b50999d364ff6a2.json",
       "id": "[\"integration\",\"umf.postgresql@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "c6879bd2e698d0c2465f221722bcb657ee87548d3c84988c009517bb93ec0aea",
+      "sha256": "e3217e0630ac44b704a723a538268f0d2a9da54df1cc94a0fd6a33bcaa107c28",
       "summary": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim.",
       "title": "umf.postgresql · export"
     },
@@ -18824,7 +18824,7 @@
       "href": "entries/cda93741d3d3b8447e52fb55109ca7ab4eeb8d9456797f6fd95b6ae351854d03.json",
       "id": "[\"integration\",\"umf.postgresql@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "97a05976ae9e05073b116baa35167dcdc5b492631ea73e26545d31625b0eddd0",
+      "sha256": "f3f9cd5b3f7b334ad3a68dd55a963d80753deec9e02dd4e740e71ca57d75c104",
       "summary": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim.",
       "title": "umf.postgresql · import"
     },
@@ -18833,7 +18833,7 @@
       "href": "entries/3cf7f934a944cf063f0366b1c832cf346fc2431b1272a7477c497de0db82c8af.json",
       "id": "[\"integration\",\"umf.protobuf@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "e8ebbe3e0b41f07e4e259c3602a8edd1359a1ba79a87a26418afab39961837be",
+      "sha256": "70c145a2cd0652708c4b7b8b0934c4593b21767695fdc5c6f0f2c0863c9d0eb5",
       "summary": "Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native c",
       "title": "umf.protobuf · export"
     },
@@ -18842,7 +18842,7 @@
       "href": "entries/dd422d22357c8b73f9ba9ef31342f7e6d7dc23f534452a80ee5aad427901c4d0.json",
       "id": "[\"integration\",\"umf.protobuf@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "37264b058dabc56ff82d2b035e66075045acd65f7ca22f51aa4f6f263bc06939",
+      "sha256": "26bdf94edf0f66bf69f44904e2fa5f881c40eb72eecc675b012317b66dcbe9e1",
       "summary": "Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native c",
       "title": "umf.protobuf · import"
     },
@@ -18851,7 +18851,7 @@
       "href": "entries/321ae10b9427f6a3a2e89b54f205b1530c5fefc17cc5a44c22182c5685cbfbb1.json",
       "id": "[\"integration\",\"umf.rdf@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "db19a93386d2c79ff3e98ab0043ff7b9603b19714f6e7ed507dbd69129168e76",
+      "sha256": "74eebf9bf09a26158218e12e372a5945d4d76de600da0bca45d2db73ff940973",
       "summary": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes",
       "title": "umf.rdf · export"
     },
@@ -18860,7 +18860,7 @@
       "href": "entries/7c7acd41c374f09209f8d52a91df34db023e27a0ea993b9e13f280c2763928fe.json",
       "id": "[\"integration\",\"umf.rdf@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "4d573bf72e0a52cdbf813c72bbf8f9abbacf85e4a3eeabcede70901615135798",
+      "sha256": "a436a4c4a918cccc4bf32279438803e8404961f2ece9b56fec2daebf9735e606",
       "summary": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes",
       "title": "umf.rdf · import"
     },
@@ -18869,7 +18869,7 @@
       "href": "entries/4b569475c6a69af23d5eadf08657403927eebbb016e3debd8464767d4c9e9185.json",
       "id": "[\"integration\",\"umf.security.protection@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "5426f811604250f5f34cc718609255e31d6c8b36bf5d9bd3773f5e5d8974462d",
+      "sha256": "e38774d4b5250e084d59d935bcc19eec6eaa982fd35d6d812cb65b9ce267c82f",
       "summary": "Catalog wire structure, exact identities and literal bounds only; no domain closure, function/query interpretation, verified custody or native enforcement",
       "title": "umf.security.protection · export"
     },
@@ -18878,7 +18878,7 @@
       "href": "entries/2a0cebfb4ffb1e17600845862d3e3ec41b2f9a12daee0d4e99e9d35abff9c3a0.json",
       "id": "[\"integration\",\"umf.security.protection@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "ce379fc4b0e920257809b38b340f8778b34aa1409f2e509790b4b01d43c0ad56",
+      "sha256": "84eb8d8d432483603aa3f0b4c11ad9567ba3a77d6de27128ceecf3d91c0d0940",
       "summary": "Catalog wire structure, exact identities and literal bounds only; no domain closure, function/query interpretation, verified custody or native enforcement",
       "title": "umf.security.protection · import"
     },
@@ -18887,7 +18887,7 @@
       "href": "entries/cb096c2cebdcb19e793a6e8c84bc5e3855a949e135149eeba95eb870e203de90.json",
       "id": "[\"integration\",\"umf.security@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "03138b0958e7d2158d69df01acd7d7df879aba8af83963177bf4a0ab6334caf3",
+      "sha256": "77700a062acfa9df7458f41920e15d331cd1caf79874dd0b9ca7c722ccc144e6",
       "summary": "Policy representation, preservation and bounded syntax inspection; external typed closure and enforcement are separate gates",
       "title": "umf.security · export"
     },
@@ -18896,7 +18896,7 @@
       "href": "entries/0e20e6558efc7b7f7135cbfe49081cb232aadd521b5e396a182f2874054f67be.json",
       "id": "[\"integration\",\"umf.security@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "fdf2dadb03c8f913754d363dc22a0a98ea077889b222da5660a137f7dfffd610",
+      "sha256": "ac60092b4e1b285470c283c8967ee87ae79753bf1fead13ee2186193ab1295a1",
       "summary": "Policy representation, preservation and bounded syntax inspection; external typed closure and enforcement are separate gates",
       "title": "umf.security · import"
     },
@@ -18905,7 +18905,7 @@
       "href": "entries/7b69a3e7cfbfa462eb9412531ea104b3c3f18d9d3cb0ef8e7add5a50fb021c5f.json",
       "id": "[\"integration\",\"umf.security@0.2.0:export\"]",
       "kind": "integration",
-      "sha256": "2c6cae6911bf09f99b9833f2790dab1e424d26c10fc28dacda86571270567aa3",
+      "sha256": "84c310321fbffc22879e09fa517d3e5af0d1e3474091e4c121ee832d3d263cb3",
       "summary": "Wire grammar, immutable representation migration and exact catalog source lookup only; no typed domain/function/query closure or native enforcement",
       "title": "umf.security · export"
     },
@@ -18914,7 +18914,7 @@
       "href": "entries/4e325d3f26538baab7e41da35a72d906111f8b8477ab13d147a03d818e2603dc.json",
       "id": "[\"integration\",\"umf.security@0.2.0:import\"]",
       "kind": "integration",
-      "sha256": "60b9b4a06c3757e26e8143b66819d0e1ef99efd45684e73cf1c0ec558b698cf5",
+      "sha256": "74cdcc324825bfd1817ed8bbd519c50f8593cbecfa4dd2446e11dd95d3578657",
       "summary": "Wire grammar, immutable representation migration and exact catalog source lookup only; no typed domain/function/query closure or native enforcement",
       "title": "umf.security · import"
     },
@@ -18923,7 +18923,7 @@
       "href": "entries/db5320865b55c5a03557027fffa51a8b95e0cd2c9e74e74d91567b81aba5ed46.json",
       "id": "[\"integration\",\"umf.shacl@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "1add005a11d701b8b2ab80435371a9a205661e0e7cf752218e3b897857b93f4a",
+      "sha256": "695137e2ccec5a1fb52a7552491f060fcc185d92a168feaef87e60ebec6d8192",
       "summary": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim",
       "title": "umf.shacl · export"
     },
@@ -18932,7 +18932,7 @@
       "href": "entries/20d01a9cacd0d5bf5194c8f2341f7a3a6ced8bc94b5ff0b42ab869c61e3debf3.json",
       "id": "[\"integration\",\"umf.shacl@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "5b06cafd1fb7899f4a0a7c25b35b77a2e442e74e3cb6a3d4e3bbff5173fab644",
+      "sha256": "7b7846b26d98fc1ab69f87b7280458103307f7f8dce8e2353af1bcaf700d084e",
       "summary": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim",
       "title": "umf.shacl · import"
     },
@@ -18941,7 +18941,7 @@
       "href": "entries/9d65b5dc8aea69012b1f9ca08354b25cdf35b1c67a58f2e32ba6e6a4e68b2d6d.json",
       "id": "[\"integration\",\"umf.smithy@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "392ac9bf9d30c695486cb3283e9379d1096ed8d88d544da8286d3693983a96fb",
+      "sha256": "cae0400b0427253758dc2a959452ce08d584f7afa1673a8cbb87fc1bdf349312",
       "summary": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned Java",
       "title": "umf.smithy · export"
     },
@@ -18950,7 +18950,7 @@
       "href": "entries/ebc68fa9ac0522adac7ad1a3e54c73f683498424849504d64e8b55819d23666a.json",
       "id": "[\"integration\",\"umf.smithy@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "779df71bb6308e51537346cc786674b3414c61fc73539db696c150057dd9eac5",
+      "sha256": "7bddd8997a6d35749b5aeaa20c211b0a2c8486ccf7257566c290831be4386a0d",
       "summary": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned Java",
       "title": "umf.smithy · import"
     },
@@ -18959,7 +18959,7 @@
       "href": "entries/8ee43e62a57659b2007ff96039a3d7cac64b22221cbc4e0c6c67b0a8372ee5c5.json",
       "id": "[\"integration\",\"umf.spark@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "dcbc5db269814e954081d36eccc0da93abb5484b77bc020b2363d4cbd9ad278b",
+      "sha256": "5375251c0b7db870c0d266ad07efeab7902ff8ae989399f7f537294fef3f7f57",
       "summary": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
       "title": "umf.spark · export"
     },
@@ -18968,7 +18968,7 @@
       "href": "entries/8202498c5fe994f022af4ec9c045254eda425caed586b906d31a970dd2e09ad6.json",
       "id": "[\"integration\",\"umf.spark@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "c96707833f378bdaa9cb7763af364e6a08f17622bdbee910bc86caccc08c95cf",
+      "sha256": "39285031fc98f2a06b16cd80882caed0016cecb44ae27c7ee9e8fd2f9431fed2",
       "summary": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
       "title": "umf.spark · import"
     },
@@ -18977,7 +18977,7 @@
       "href": "entries/701e777fde3a8d8ca8bdf9ecb61bd426c6b7396123cc93e0abf667bac1042e40.json",
       "id": "[\"integration\",\"umf.sqlserver.cardinality@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "8f85ec93006bc4a478b7a6d3a6fe6da5ce8a602d88ab790bbafa9aa0d4378d98",
+      "sha256": "f7eb2633c942eaad8e5bdf2f7a7abe34b6ca89e827832d5988eb0a1dc58a7a5e",
       "summary": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
       "title": "umf.sqlserver.cardinality · import"
     },
@@ -18986,7 +18986,7 @@
       "href": "entries/b9461c1caacf3d56d95568c62fe12f7b5cfb5a2492678d9924b62a06dc5af477.json",
       "id": "[\"integration\",\"umf.sqlserver.facets@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "536ef8f88c031f603d2dd7579102c215416beaf2620720bfec7d392f53a29038",
+      "sha256": "7e834034f91572068e1e3db6461528b9e17ae83bf8e387884f9af4d8c95962de",
       "summary": "Scalar catalog-column facets with explicit stored/ordinary-checked-write non-null value scope, bounded catalog CHECKs and retained native refinements; no native equivalence",
       "title": "umf.sqlserver.facets · export"
     },
@@ -18995,7 +18995,7 @@
       "href": "entries/5545bafea45935f5444c6e32c3312b280324ead22ed4d2dc6d5f1c7dbc2e0eff.json",
       "id": "[\"integration\",\"umf.sqlserver.facets@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "bed6af07eb0fe16b1329d18c09d6d495117cee82f6aefc3930f69374ec7e2f47",
+      "sha256": "bec0fa3152964567bc8377e2096352b5075d8adfbac13376b1ab02e644d6a87a",
       "summary": "Scalar catalog-column facets with explicit stored/ordinary-checked-write non-null value scope, bounded catalog CHECKs and retained native refinements; no native equivalence",
       "title": "umf.sqlserver.facets · import"
     },
@@ -19004,7 +19004,7 @@
       "href": "entries/db4714d457e993a0d5323fa68fe97a82c879f4a2c3c700550936dfb56b30605c.json",
       "id": "[\"integration\",\"umf.sqlserver.keys@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "e9ea8b247b20e30a4b73a0575b9b71e0347d6279b916de9e97f78e9f41cad7f5",
+      "sha256": "342252d26e6c98f76044bae311bae39b9983d2ed80b4c255d5299c8055fa392b",
       "summary": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence",
       "title": "umf.sqlserver.keys · export"
     },
@@ -19013,7 +19013,7 @@
       "href": "entries/1ee49e0f536d965e1efb1649510b7730eb0514775ff3479b7e83bd0c595599b8.json",
       "id": "[\"integration\",\"umf.sqlserver.keys@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "be7189a8d0ca968db664047e5343b145872c2a63f7af693de135277b9d033d89",
+      "sha256": "4964e20f890ff1670b67c3e30c7262918000520b1b63e5b7e7b16faf1ed7964a",
       "summary": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence",
       "title": "umf.sqlserver.keys · import"
     },
@@ -19022,7 +19022,7 @@
       "href": "entries/b21ac02badb40f261afbd175d29c1d82a3d9a04ad7e45d87f29ffac1a5646c74.json",
       "id": "[\"integration\",\"umf.sqlserver.nullability@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "d113aab17283aa0a87c4d5f0e96be9f1baf3c41c54ef7ea7daab1eba929db0a9",
+      "sha256": "682a60803110e38005ac2697274d5216d1ff8648abcbf88d3e0a30cf1aded35d",
       "summary": "Captured SQL Server 16.0.4295.3 stored-column declarations; excludes query results and input omission; not live enforcement verification",
       "title": "umf.sqlserver.nullability · import"
     },
@@ -19031,7 +19031,7 @@
       "href": "entries/e9109f0640a42e135185430264e3e441f1669b13aee17d6f7d28f14466d92121.json",
       "id": "[\"integration\",\"umf.sqlserver.relationships@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "8047cf46906cd1a1d9752e2baa02b7a3b53ba388c13a774c6971058d042aed4c",
+      "sha256": "c825760474961e31226f28253be87ac45fa783cda570c95c10fab12c8629ff30",
       "summary": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference",
       "title": "umf.sqlserver.relationships · export"
     },
@@ -19040,7 +19040,7 @@
       "href": "entries/d4c745dbd34a8e97ee08ecfd81bc502dcea27d9b95c4bce00c83d92ff7896469.json",
       "id": "[\"integration\",\"umf.sqlserver.relationships@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "aefa0a506c5fa400c6e7beb9026820b31bcdbf458f7414a24c24bf66912cacbb",
+      "sha256": "f7e0ae015173a1c5dd3eea6f44ca5a961afaeba2bdd1ff4068ceda2d89a74df5",
       "summary": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference",
       "title": "umf.sqlserver.relationships · import"
     },
@@ -19049,7 +19049,7 @@
       "href": "entries/8ddfe97fd67f45067a0f1390a7eb976a595ac80d708bd537c7661d030bb3b261.json",
       "id": "[\"integration\",\"umf.sqlserver@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "21b866d21a3155de812cf0881d8ebd9d21f4e6dc4800b5c800d8465f97ae3371",
+      "sha256": "a2e54a1c64491302d74b3e158ebc5643bd7e666e21eed4896b7517e36f338d0f",
       "summary": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction.",
       "title": "umf.sqlserver · export"
     },
@@ -19058,7 +19058,7 @@
       "href": "entries/63b0650156677fb330bf62980ff132ac9f5f519e5773d649f5f6aa0ea63efab8.json",
       "id": "[\"integration\",\"umf.sqlserver@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "e8b8c4b1da6e54123a3cc8b752d2ff8cb629009c0bd0193efdc46dc764d6ac35",
+      "sha256": "54b4ab3214010e6f5cc8f7ab089924ebc59cedbc1c0ca4b6c6493a54c91c7dd2",
       "summary": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction.",
       "title": "umf.sqlserver · import"
     },
@@ -19067,7 +19067,7 @@
       "href": "entries/ee45847b028bf774c4576dd79c9a268704680cee913320b7dd7eee580512cfd9.json",
       "id": "[\"integration\",\"umf.tablespec.cardinality@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "b205e013573d2c1e4845ea4641c8f3fe95a0e020276a820f65e487121368fb29",
+      "sha256": "bb49de620530e821fd2b2237c08656ab0ca643bb0009e8671b53123dc6fd4062",
       "summary": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
       "title": "umf.tablespec.cardinality · import"
     },
@@ -19076,7 +19076,7 @@
       "href": "entries/7524707da2eecb8e6d2430a86d558ee4ee0226fdb197f4355861b53d714a04c6.json",
       "id": "[\"integration\",\"umf.tablespec.facets@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "cfeed4d255a43a7b0bfb77a707890b89e45aac5478d5a1dc08c303ea0f3626c1",
+      "sha256": "e8b0f86ed8d97d2f013c80fa7a4757bcbf471dbefddaaf573405b6100ae121ca",
       "summary": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses",
       "title": "umf.tablespec.facets · export"
     },
@@ -19085,7 +19085,7 @@
       "href": "entries/459125e5a25d89a56529cc653b3fa4dcd76a4406d53dab4849ff8fdfc10e65de.json",
       "id": "[\"integration\",\"umf.tablespec.facets@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "fcb1aec8279f031fc99735cc7e479adaf9f8785b960adbc5ca88a5736ae3d274",
+      "sha256": "f798feb744e4b80ff83a79cf47b2ccada356d37351d7d370d809561142b01e96",
       "summary": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses",
       "title": "umf.tablespec.facets · import"
     },
@@ -19094,7 +19094,7 @@
       "href": "entries/52d64438b71171231a13e7f3d7b5e351db90ee1196a79df80755f2e4f0f768a6.json",
       "id": "[\"integration\",\"umf.tablespec.keys@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "b4e0a4edfd47afa3fae80ddf116f1a41c46256311670ffdff9cbd8b032eee237",
+      "sha256": "717ce452da3f194032edd945e939abfeb8c0043071ff8ff9b378a7d34ed98e4b",
       "summary": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference",
       "title": "umf.tablespec.keys · export"
     },
@@ -19103,7 +19103,7 @@
       "href": "entries/dd011c324f48fffec68537805dea7afe06fac10afe009e77dd3c05549ff64cea.json",
       "id": "[\"integration\",\"umf.tablespec.keys@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "e032f7d862094d7579f0818077450c20beefc1ff1c5bad1df86920538e7e78af",
+      "sha256": "36d06b95dec6295bc7331379c57404aa2f42d466de28f8579ad852a2289d3391",
       "summary": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference",
       "title": "umf.tablespec.keys · import"
     },
@@ -19112,7 +19112,7 @@
       "href": "entries/0222a9764563d5335414668cf3fc2811dac742bcb5a15765b308c8626ba1d25b.json",
       "id": "[\"integration\",\"umf.tablespec.nullability@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "43677a886e84249fd628df7863d83c11928022d165f6a74f9461e60b737893f8",
+      "sha256": "944fc90af246206e73fd4c97c2c3b622456c6e0e16c014cdcfabbb8402989de9",
       "summary": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee",
       "title": "umf.tablespec.nullability · import"
     },
@@ -19121,7 +19121,7 @@
       "href": "entries/f7f08e2827e2f5656bdb1b496de8999be5ef96ae12eef98834444bde18ee869b.json",
       "id": "[\"integration\",\"umf.tablespec.relationships@1.0.0:export\"]",
       "kind": "integration",
-      "sha256": "dd1a652bc7b3a414ca7c0cef3f8cac5b2d1de2888d855c17e65eeae91eb57668",
+      "sha256": "3cde4ae94f99f3f9cf3393c66656d50e019d6edfdb6227819adf4685dc984d59",
       "summary": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement",
       "title": "umf.tablespec.relationships · export"
     },
@@ -19130,7 +19130,7 @@
       "href": "entries/64ff26746dfd64812fd05d509f87627c12e8679a76e678d413054aa57273d4f3.json",
       "id": "[\"integration\",\"umf.tablespec.relationships@1.0.0:import\"]",
       "kind": "integration",
-      "sha256": "1802f06ec5bcc89cf920cacbbd9d16009fb0eac8523df2343b5743918ebdbf90",
+      "sha256": "81be87e04c8a1ab568e884f914515fd039965d1bae8a0638f3a1b16eb9969b44",
       "summary": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement",
       "title": "umf.tablespec.relationships · import"
     },
@@ -19139,7 +19139,7 @@
       "href": "entries/de7d4d222e8f20225f9e70710a4c768e9d6b05796fe4e301731e5f5c3a197cd9.json",
       "id": "[\"integration\",\"umf.tablespec@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "c0608bd2af04472e7d67f75fd6da3cd93e5f9033662e122e33b95e6b79a76029",
+      "sha256": "954738899ee4f7e84283bb6d63707e4f6a06f41b606d817d40d007be472e5cbd",
       "summary": "Monolithic JSON/YAML ingestion and split file-bundle capture; copied table/column metadata access and edits, core scalar families and native recovery. Schema projections are separately qualified by CONTRACT-033, CONTRACT-038 and CONTRACT-03",
       "title": "umf.tablespec · export"
     },
@@ -19148,7 +19148,7 @@
       "href": "entries/f93e514592d45f735ec9ba0aa68165fc72f8a3391245f6f7327f0ad99e5b90fb.json",
       "id": "[\"integration\",\"umf.tablespec@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "77110ea8282d1682a996b65837fc0111b2a9dcc27728e8d6d0700a2e49c460be",
+      "sha256": "76a134ffed9c23dc3b5acab2f4ceb5dcf63450a514858deb2f95d923cf8c1b5b",
       "summary": "Monolithic JSON/YAML ingestion and split file-bundle capture; copied table/column metadata access and edits, core scalar families and native recovery. Schema projections are separately qualified by CONTRACT-033, CONTRACT-038 and CONTRACT-03",
       "title": "umf.tablespec · import"
     },
@@ -19157,7 +19157,7 @@
       "href": "entries/48ba60d474ace6c8f009ee2dd6e3d8e38620c9506d5b2b8bebbd8037b1d185fc.json",
       "id": "[\"integration\",\"umf.typespec@0.1.0:export\"]",
       "kind": "integration",
-      "sha256": "8191924b123a8a88057c075694518af2361d49ecf5cb358910a4d09621792cac",
+      "sha256": "926d95390fb765b8131da78dda84297c058338714c1e9669b19737baad75b56e",
       "summary": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossles",
       "title": "umf.typespec · export"
     },
@@ -19166,7 +19166,7 @@
       "href": "entries/0ea2899cb8ea561ec21ad55a858e2125dafafc325ee2604b8dda5c106835b53d.json",
       "id": "[\"integration\",\"umf.typespec@0.1.0:import\"]",
       "kind": "integration",
-      "sha256": "ae3be9b22702f3d9785b4ff5ef080930c4a2ec0edce1a51f664f58fc6fa6feb0",
+      "sha256": "c6d5b577e845ff502d79a5e0ae443f15f3fc0c3a6377d8f37a4fd1f61b525114",
       "summary": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossles",
       "title": "umf.typespec · import"
     },
@@ -19175,7 +19175,7 @@
       "href": "entries/642c27604377c3599a05f9cf26e02ded9a7bd82dc57660871af18437a87d7163.json",
       "id": "[\"integration\",\"uuid\"]",
       "kind": "integration",
-      "sha256": "8df09c83d227d93c64589e15386e163a3cbf8e7f5b60ddf5b5631e6a17d9de9d",
+      "sha256": "f5230824c5a4104ce622d41a8a0e409273c65428f044d1388d9ee2f320d64ae0",
       "summary": "Original scoped implementation and qualification narrative; inspect its companion receipts.",
       "title": "UUID / bits128 · five-adapter completion"
     },
@@ -22879,6 +22879,6 @@
       "title": "typespec-json-schema.schema.json"
     }
   ],
-  "inputDigest": "86634ecdd0001355a552ba839449cace9d7259dc883e203d5272c529cf2ee62a",
+  "inputDigest": "feb0f6b7e4c44f53beaf942ae3f4ff24fb1304e851cd230bdbd13c3b1f741083",
   "profile": "umf.reference/1"
 }

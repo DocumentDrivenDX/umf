@@ -11,26 +11,26 @@
     ],
     "inputs": [
       {
-        "bytes": 3877,
+        "bytes": 3878,
         "path": "docs/helix/05-deploy/reference/examples/orders.json",
-        "sha256": "6167aa09f8de98ed33c2a870f91db213c231d2803f0a622b33b799ba743de76b"
+        "sha256": "325a9ac00e17bbddbc04712cf2c80a6b83afac3343e755c6d065b633721d9ffc"
       }
     ],
-    "operationId": "core-properties"
+    "operationId": "core-validate"
   },
   "id": "[\"example\",\"core-properties\"]",
   "kind": "example",
   "links": [
     "[\"guide\",\"concepts\"]",
-    "[\"integration\",\"core-properties\"]"
+    "[\"integration\",\"core-validate\"]"
   ],
   "sources": [
     {
-      "bytes": 3877,
+      "bytes": 3878,
       "path": "docs/helix/05-deploy/reference/examples/orders.json",
-      "sha256": "6167aa09f8de98ed33c2a870f91db213c231d2803f0a622b33b799ba743de76b"
+      "sha256": "325a9ac00e17bbddbc04712cf2c80a6b83afac3343e755c6d065b633721d9ffc"
     }
   ],
-  "summary": "Inspect properties and defaults",
+  "summary": "Validate a core document",
   "title": "core properties"
 }

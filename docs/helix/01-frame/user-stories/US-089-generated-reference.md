@@ -47,8 +47,8 @@ must connect those facts without inventing stronger support.
 
 - [ ] **US-089-AC1** — Given the repository discovery inventory, when the reference
   is built, then every discovered item is represented or has an explicit checked exclusion.
-- [ ] **US-089-AC2** — Given two core profiles, when a reader inspects a definition,
-  then its constraints and structural differences remain qualified by profile.
+- [ ] **US-089-AC2** — Given the core reference, when a reader inspects a definition,
+  then current constraints appear without a release choice.
 - [ ] **US-089-AC3** — Given a shipped extension version, when its entry is opened,
   then registration availability is distinguished from its manifest declarations.
 - [ ] **US-089-AC4** — Given native evidence for an operation, when its integration
@@ -77,7 +77,7 @@ Semantic operation contracts continue to govern their results.
 - Missing evidence mapping: preserve the declaration and report unassessed evidence.
 - A newer successful record contradicts an earlier failure: retain both unless
   explicit, scope-matched supersession resolves the contradiction.
-- A URL points to an unknown version: explain the miss and offer version selection.
+- A URL points to an unknown version: explain the miss and offer the current Document.
 - Input contains HTML or external references: show inert text; never execute or fetch it.
 
 ## Test Scenarios
@@ -126,3 +126,27 @@ complete example, then follow a related SDK operation to parameters and usage.
 - **US-089-AC16:** Complete and inline schema examples open as YAML. The reader
   can switch to JSON and back using labeled keyboard-operable controls without
   changing values, selected definition or source records.
+
+## Current documentation amendment — 2026-10-18
+
+Owner direction supersedes historical core browsing, core-profile selection and
+migration-oriented reader requirements above. Document core 0.10.0 as the single
+current schema: no core version picker, history catalog or version badges. Old
+core links resolve to the current schema and preserve valid pointers; invalid
+pointers refuse visibly. Original source inventories and native/extension evidence
+keep their truthful identities and qualification; historical evidence is not
+relabelled as current support.
+
+Workbench examples use core 0.10.0 and open as YAML, with accessible YAML/JSON
+buttons converting current edited values through the public interoperable
+serialization API. Malformed, duplicate-key or inexact values refuse without
+replacing input. Cancellation and input edits invalidate pending conversion.
+Original bytes remain downloadable. Native Protobuf keeps its own syntax.
+Property/default execution APIs restricted to earlier envelopes are not offered
+by the current workbench; their API declarations retain their original limits.
+Every schema disclosure starts collapsed, including complete examples. Explicit
+user expansion and format switching remain keyboard accessible.
+
+Acceptance: verify all supplied examples execute, format parity after edits,
+conversion refusal and cancellation, current-only navigation, old-link recovery,
+and zero initially open schema disclosures in Chromium at desktop/mobile widths.

@@ -6,7 +6,7 @@ import {_} from 'ajv/dist/compile/codegen';
 import {_Code} from 'ajv/dist/compile/codegen/code';
 import {root,config,read,text,source,sha} from './io';
 import {canonical,type Entry} from '../../docs/helix/05-deploy/reference/model';
-const names=['readDocument','writeDocument','validateDocument','Registry','createUmfRegistry','dddRegistry','jsonSchemaRegistry','protobufRegistry','selectCoreElements','inspectCoreSchemaProperties','resolveCoreDefault','importJsonSchema','projectJsonSchemaToProtobuf','importProtobufSources','parseNativeJson'];
+const names=['readJsonValue','writeJsonValue','readDocument','writeDocument','validateDocument','Registry','createUmfRegistry','dddRegistry','jsonSchemaRegistry','protobufRegistry','selectCoreElements','inspectCoreSchemaProperties','resolveCoreDefault','importJsonSchema','projectJsonSchemaToProtobuf','importProtobufSources','parseNativeJson'];
 export async function runtimeBuild(output:string,apiEntries:Entry[]){
  await mkdir(output,{recursive:true});
  const facade=names.map(name=>{const e=apiEntries.find(e=>e.data.entrypoint==='.'&&e.title===name);if(!e)throw Error('REFERENCE_LINK public runtime export '+name);return `export {${name}} from ${JSON.stringify(resolve(root,e.sources[0]!.path))};`;}).join('\n');
