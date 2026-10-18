@@ -10,8 +10,8 @@ from typing import Generic, Literal, TypeVar, cast, get_args
 
 from pydantic import MISSING, BaseModel
 
-from ._context import CaptureError
 from ..generated_core import CURRENT_CORE_VERSION, CoreVersion
+from ._context import CaptureError
 
 
 @dataclass(frozen=True)

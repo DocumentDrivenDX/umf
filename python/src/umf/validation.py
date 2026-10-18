@@ -1,10 +1,10 @@
 """Current-core structural and model-program validation."""
 
 from .constraint_kernel import run_core_constraints
+from .json import copy_json
 from .models import Document
 from .registry import Diagnostic, Registry, Validation
 from .schemas import core_structure_diagnostics
-from .json import copy_json
 
 
 def validate_document(value, registry: Registry | None = None) -> Validation:

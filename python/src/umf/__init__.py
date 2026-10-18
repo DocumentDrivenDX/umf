@@ -28,10 +28,10 @@ from .validation import validate_document
 
 __version__ = "0.9.0"
 __all__ = [
-    "Diagnostic",
-    "Document",
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",
+    "Diagnostic",
+    "Document",
     "Element",
     "Extension",
     "Module",

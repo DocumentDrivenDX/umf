@@ -33,10 +33,8 @@ def _model_fields(schema: dict, nested: dict[str, Any] | None = None) -> dict[st
     properties = schema.get("properties", {})
     required = set(schema.get("required", []))
     fields: dict[str, Any] = {}
-    for name, declaration in properties.items():
+    for name in properties:
         if name in nested:
-            annotation = nested[name]
-        elif declaration.get("type") == "array" and name in nested:
             annotation = nested[name]
         else:
             # The generated JSON Schema performs exact structure admission;
@@ -111,7 +109,7 @@ class DocumentBase(OpenModel):
         """Return the generated current canonical UMF schema."""
         return core_schema()
 
-    def checked_copy(self) -> "Document":
+    def checked_copy(self) -> Document:
         """Revalidate mutable model state and return an isolated document."""
         return Document.model_validate(self.to_dict())
 

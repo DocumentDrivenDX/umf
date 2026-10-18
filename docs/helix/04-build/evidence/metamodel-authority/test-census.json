@@ -85,6 +85,10 @@
     {
       "path": "docs/helix/04-build/evidence/generated-reference/consumer-b-pg18-catalog/receipt.json",
       "sha256": "c3993fd0c35f844a255f9b2e10da7f0618771a1aa88d043b8e7069a572a98faf"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/generated-reference/ci-followup/typed-access-boundaries/receipt.json",
+      "sha256": "eee2c5cfc27f844c60d80b193147e3e96b7e7bf2b1db647cc3e40912491cea1c"
     }
   ],
   "files": [
@@ -2141,19 +2145,40 @@
     },
     {
       "path": "tests/compilation/boundaries.test.ts",
-      "currentTestSourceSha256": "b2b700e947cbdd473510f223809d8ae9824c06a12e8621598eae6183900846a8",
+      "currentTestSourceSha256": "d1f79319590dd8660b147d7b95435e8b083bd3f7c02e1d79b480bf719d027afb",
       "owner": "Root",
       "status": "observed-pass",
       "observation": {
         "testProcess": "tests/compilation/boundaries.test.ts",
         "exitCode": 0,
-        "pass": 17,
+        "pass": 21,
         "fail": 0,
-        "assertions": 99,
+        "assertions": 130,
         "completeSummary": true,
-        "logSha256": "6af3d8906875a4ec7b541dea93c4e7ad83f39b98741217167bc97a22303b8e82",
-        "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
-      }
+        "runtime": "Bun1.4.2",
+        "executor": "Sol",
+        "log": "docs/helix/04-build/evidence/generated-reference/ci-followup/typed-access-boundaries/tests.log",
+        "logSha256": "2d50efbb98e85b2695716a38279af10a6e8903590ee37d08b603cea9502f2910",
+        "observedTestSourceSha256": "d1f79319590dd8660b147d7b95435e8b083bd3f7c02e1d79b480bf719d027afb",
+        "receipt": "docs/helix/04-build/evidence/generated-reference/ci-followup/typed-access-boundaries/receipt.json",
+        "qualification": "Fresh local CI-follow-up observation for the host-only checker policy and added private-symbol/metadata/type-boundary negative controls; prior integration observation is retained separately. Remote Ubuntu CI rerun is not inferred."
+      },
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "b2b700e947cbdd473510f223809d8ae9824c06a12e8621598eae6183900846a8",
+          "status": "observed-pass",
+          "observation": {
+            "testProcess": "tests/compilation/boundaries.test.ts",
+            "exitCode": 0,
+            "pass": 17,
+            "fail": 0,
+            "assertions": 99,
+            "completeSummary": true,
+            "logSha256": "6af3d8906875a4ec7b541dea93c4e7ad83f39b98741217167bc97a22303b8e82",
+            "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/consumers/orders.test.ts",

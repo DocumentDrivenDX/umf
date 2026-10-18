@@ -74,7 +74,7 @@ def _js_string(value: Any) -> str:
 
 def _get(value: Any, path: Any) -> Any:
     if not isinstance(path, list):
-        raise ValueError("get path must be an array")
+        raise ValueError("get path must be an array")  # noqa: TRY004 -- invalid constraint data uses the public ValueError contract
     for part in path:
         if isinstance(value, Mapping) and type(part) is str:
             if part not in value:
@@ -94,7 +94,7 @@ def _truthy(value: Any) -> bool:
         return False
     if type(value) in (int, float) and value == 0:
         return False
-    if isinstance(value, str) and not value:
+    if isinstance(value, str) and not value:  # noqa: SIM103 -- explicit ordered truthiness cases mirror the portable kernel
         return False
     return True
 
@@ -143,7 +143,7 @@ def _collection(expr: Mapping[str, Any], env: dict[str, Any], registry: Registry
     if source is MISSING or source is None:
         source = []
     if not isinstance(source, (list, tuple)):
-        raise ValueError(f"{op} input must be a sequence")
+        raise ValueError(f"{op} input must be a sequence")  # noqa: TRY004 -- invalid constraint data uses the public ValueError contract
     name = expr.get("as")
     index_name = expr.get("index")
     if type(name) is not str or not name:
@@ -333,7 +333,7 @@ def _extension_errors(args: list[Any], registry: Registry | None):
                 if not isinstance(returned, (list, tuple)) or any(not isinstance(d, Diagnostic) or d.severity not in ("error", "warning") for d in returned):
                     raise ValueError("Extension callback must return Diagnostic objects")
                 result.extend(returned)
-            except Exception as error:
+            except Exception as error:  # noqa: BLE001 -- consumer callback failures become scoped diagnostics
                 add("failure", at, str(error))
         elif not errors:
             add("unchecked", at)
@@ -344,7 +344,7 @@ def _run_steps(steps: list[Any], env: dict[str, Any], registry: Registry | None,
     for step in steps:
         charge()
         if not isinstance(step, Mapping):
-            raise ValueError("Constraint step must be an object")
+            raise ValueError("Constraint step must be an object")  # noqa: TRY004 -- invalid constraint data uses the public ValueError contract
         op = step.get("op")
         if op == "let":
             name = step.get("name")
@@ -428,7 +428,7 @@ def _check_program(program: Mapping[str, Any]) -> None:
 
     def check_steps(sequence: Any):
         if not isinstance(sequence, list):
-            raise ValueError("Constraint step body must be an array")
+            raise ValueError("Constraint step body must be an array")  # noqa: TRY004 -- invalid constraint data uses the public ValueError contract
         for step in sequence:
             if not isinstance(step, Mapping) or step.get("op") not in steps:
                 raise ValueError(f"Unknown constraint step: {step.get('op') if isinstance(step, Mapping) else None}")

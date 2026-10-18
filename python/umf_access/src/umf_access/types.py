@@ -7,6 +7,7 @@ from typing import ClassVar, Generic, TypeAlias, TypeVar, final
 # Explicit public re-export is required by static consumers.
 from pydantic import MISSING as MISSING  # noqa: PLC0414
 from pydantic import BaseModel, ConfigDict
+
 from .generated_core import CURRENT_CORE_VERSION, CoreVersion
 
 RUNTIME_ABI = "umf-access-runtime/0.1"

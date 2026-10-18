@@ -1,11 +1,11 @@
-import json
 import copy
+import json
 from pathlib import Path
 
 import pytest
 from umf import (
-    Document,
     Diagnostic,
+    Document,
     Extension,
     Registry,
     core_schema,
@@ -18,7 +18,6 @@ from umf import (
 )
 from umf.generated_resources import generated_resource
 from umf.literal_kernel import literal_errors, numeric_interval
-
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFORMANCE = json.loads(

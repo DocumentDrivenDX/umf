@@ -49,7 +49,7 @@ def core_validator(version: str | None = None) -> Draft202012Validator:
     reference_schema = semantic_type_reference_schema()
     reference_id = reference_schema.get("$id")
     if not isinstance(reference_id, str):
-        raise ValueError("Generated semantic reference schema has no identifier")
+        raise ValueError("Generated semantic reference schema has no identifier")  # noqa: TRY004 -- invalid resource data remains ValueError
     resources = ResourceRegistry().with_resource(
         reference_id,
         Resource.from_contents(reference_schema),

@@ -15,8 +15,6 @@ import secrets
 from collections.abc import Awaitable, Callable, Mapping
 from decimal import Decimal, InvalidOperation
 
-from ..generated_core import CURRENT_CORE_VERSION
-
 from ..dsl import (
     FieldRef,
     Node,
@@ -26,6 +24,7 @@ from ..dsl import (
     render_logical,
     render_related_logical,
 )
+from ..generated_core import CURRENT_CORE_VERSION
 
 
 class UnifiedAccessError(RuntimeError):

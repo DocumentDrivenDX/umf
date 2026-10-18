@@ -4,7 +4,6 @@ from pathlib import Path
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
-
 CORE_RESOURCES = (
     "schema.json",
     "semantic-type-reference.schema.json",

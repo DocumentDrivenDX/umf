@@ -8,8 +8,8 @@ from dataclasses import replace
 from typing import Any, cast
 
 from ..capture import CapturedDeclaration, ProjectionRef
-from ..generated_core import CURRENT_CORE_VERSION
 from ..dsl import FieldRef, Node, SearchLeg, render_logical
+from ..generated_core import CURRENT_CORE_VERSION
 from ..native_program import NativeProgram
 from ..reviewed import parameter_signature
 from ..types import StrictModel
