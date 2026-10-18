@@ -1,4 +1,6 @@
 import {search,schemaNode,resolveSchema,propertyPresence,shape,type ReaderCatalog,type Entry,type ReferenceIndex,type Summary} from '../../reference/model';
+import {showOntology} from './ontology';
+import type {SelfModelCatalog} from '../../reference/model';
 import {mountWorkbench} from './workbench';
 import {schemaReader,apiReader,readerRoute} from './reader-view';
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
@@ -83,9 +85,17 @@ async function start(){
   $('more').hidden=matches.length<=limit;return matches;
  };
  let navigation=0;
- const changed=async()=>{const current=++navigation;const params=new URLSearchParams(location.hash.slice(1)),id=params.get('entry');if(view==='api'&&id){const selected=reader.api.find(a=>a.id===id);if(selected){task.value=selected.task;kind.value='All kinds';const searchInput=$<HTMLInputElement>('search');if(!matchesWords(selected.title+' '+selected.summary,searchInput.value))searchInput.value='';}}refresh();if(id)try{let selected=await getEntry(id);if(current!==navigation)return;if(view==='core'&&selected.kind==='schema'&&selected.data.profileVersions.length&&selected.id!==reader.latest.id){location.replace(readerRoute(reader.latest.id,params.get('pointer')??'',params.get('concept')??''));return;}const rendered=await show(selected,params.get('pointer')??'',params.get('concept')??'');if(current!==navigation)return;$('inspector').replaceChildren(...Array.from(rendered.childNodes));if(keyboardNavigation){const heading=$('inspector').querySelector('h2');heading?.setAttribute('tabindex','-1');(heading as HTMLElement)?.focus();keyboardNavigation=false;}}catch(error){if(current!==navigation)return;$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'),link('Open Document',readerRoute(reader.latest.id)));}};
+ let selfModel:SelfModelCatalog|undefined;
+ const changed=async()=>{const current=++navigation;
+ if(view==='core'){
+  const params=new URLSearchParams(location.hash.slice(1));const ontology=params.get('view')==='ontology'||!params.has('view')&&!params.has('entry');
+  $('ontology').hidden=!ontology;document.querySelector<HTMLElement>('.workspace')!.hidden=ontology;
+  for(const a of document.querySelectorAll<HTMLAnchorElement>('.schema-views a')){if((ontology?'ontology':'reference')===a.dataset.view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}
+  if(ontology){try{selfModel??=JSON.parse(decode(await verified('metamodel.json')));if(current!==navigation)return;showOntology($('ontology'),selfModel!,reader);}catch(error){$('ontology').replaceChildren(element('h2','Ontology unavailable'),element('p',String(error),'callout warning'),link('Open object reference','#'+new URLSearchParams({view:'reference',entry:reader.latest.id,concept:'document'})));}return;}
+ }
+const params=new URLSearchParams(location.hash.slice(1));if(view==='core'&&!params.has('entry')){history.replaceState(null,'',readerRoute(reader.latest.id,'','document')+'&view=reference');params.set('entry',reader.latest.id);params.set('concept','document');}const id=params.get('entry');if(view==='api'&&id){const selected=reader.api.find(a=>a.id===id);if(selected){task.value=selected.task;kind.value='All kinds';const searchInput=$<HTMLInputElement>('search');if(!matchesWords(selected.title+' '+selected.summary,searchInput.value))searchInput.value='';}}refresh();if(id)try{let selected=await getEntry(id);if(current!==navigation)return;if(view==='core'&&selected.kind==='schema'&&selected.data.profileVersions.length&&selected.id!==reader.latest.id){location.replace(readerRoute(reader.latest.id,params.get('pointer')??'',params.get('concept')??''));return;}const rendered=await show(selected,params.get('pointer')??'',params.get('concept')??'');if(current!==navigation)return;$('inspector').replaceChildren(...Array.from(rendered.childNodes));if(keyboardNavigation){const heading=$('inspector').querySelector('h2');heading?.setAttribute('tabindex','-1');(heading as HTMLElement)?.focus();keyboardNavigation=false;}}catch(error){if(current!==navigation)return;$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'),link('Open Document',readerRoute(reader.latest.id)));}};
  $('search').oninput=()=>{limit=50;refresh();};task.onchange=kind.onchange=()=>{limit=50;refresh();};$('more').onclick=()=>{limit+=50;refresh();};window.addEventListener('hashchange',()=>void changed());
- if(!location.hash){const first=view==='core'?allConcepts[0]:refresh()[0];if(first)history.replaceState(null,'',readerRoute(first.id,first.pointer??'',first.concept??''));}await changed();
+ if(!location.hash&&view!=='core'){const first=refresh()[0];if(first)history.replaceState(null,'',readerRoute(first.id,first.pointer??'',first.concept??''));}await changed();
  $('load-status').textContent=readyMessage;
 }
 void start().catch(error=>{$('load-status').textContent=String(error);$('load-status').className='callout warning';document.querySelectorAll('button').forEach(b=>b.disabled=true);});

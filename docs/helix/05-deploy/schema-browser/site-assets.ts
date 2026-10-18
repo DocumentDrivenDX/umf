@@ -24,6 +24,8 @@ export async function installSiteAssets(packageRoot:string,site:string,expectedV
  // Site presentation policy remains outside the integrity-locked renderer.
  await cp(new URL('../microsite/catalog-defaults.js',import.meta.url).pathname,join(site,'catalog-defaults.js'));
  const installedHtml=await Bun.file(explorer).text();if(!installedHtml.includes('src="catalog-defaults.js"'))await Bun.write(explorer,installedHtml.replace(/<script type="module" src="explorer.js"><\/script>/,'<script type="module" src="catalog-defaults.js"></script><script type="module" src="explorer.js"></script>'));
+ await cp(new URL('../microsite/schema-navigation.js',import.meta.url).pathname,join(site,'schema-navigation.js'));
+ const navigationHtml=await Bun.file(explorer).text();if(!navigationHtml.includes('src="schema-navigation.js"'))await Bun.write(explorer,navigationHtml.replace('<script type="module" src="catalog-defaults.js">','<script type="module" src="schema-navigation.js"></script><script type="module" src="catalog-defaults.js">'));
  const manifest=await verifySiteAssets(packageRoot,site,expectedVersion);
  await Bun.write(join(site,'schema-browser-release.json'),JSON.stringify(manifest,null,2)+'\n');return manifest;
 }

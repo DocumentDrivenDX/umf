@@ -172,3 +172,12 @@ user expansion and format switching remain keyboard accessible.
 Acceptance: verify all supplied examples execute, format parity after edits,
 conversion refusal and cancellation, current-only navigation, old-link recovery,
 and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Self-description and unified Schemas workspace — 2026-10-18
+
+Owner direction adds FR-35: publish a current UMF-for-UMF model and graphical
+ontology. Expose one primary Schemas destination with Ontology, Object reference
+and Model catalog views. The ontology connects readable type definitions to
+valid object keys and accepted values. Keep API reference separate. Preserve
+existing object/property/catalog bookmarks and collapsed disclosure defaults.
+Do not present this descriptive projection as a replacement instance validator.

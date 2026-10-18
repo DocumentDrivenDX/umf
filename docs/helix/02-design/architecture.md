@@ -481,7 +481,7 @@ resource limits and transparent expensive operations remain required.
 | TypeSpec as interchange, not defining metamodel | Owner-directed | Avoid privileging its model absent fidelity evidence | Reconsider only with metamodel-wide evidence |
 | LinkML as interchange and benchmark | Owner-directed | Learn from existing generators and compliance evidence | Measure actual semantic gaps; do not assert superiority |
 | Runtime execution outside UMF | Required by NFR-50 | Preserve interchange boundary | Axon/TableSpec execution remains downstream |
-| Self-description | Later capability, FR-35 | Test the model with its own vocabulary | Compare to bootstrap authority before any authority transition |
+| Self-description | Current descriptive core projection, FR-35 | Test the model with its own vocabulary | Retain exact bootstrap constraints; no authority transition |
 
 ### Ecosystem direction and remaining expansion
 
@@ -705,7 +705,7 @@ ADR-002 and the current DOM-based site; no new service or framework is introduce
 | --- | --- | --- | --- |
 | `docs/helix/05-deploy/reference/model/` | Reference records, joins, search, structural comparison; `index.ts` | Own internals, type-only public UMF types | DOM, host globals, network, registry compilation, native execution |
 | `scripts/reference/` | Discovery, TypeScript export analysis, evidence readers, standalone validator generation, deterministic staging; `build.ts` entry | Model public barrel, public UMF APIs, pinned compiler API, host I/O | Importing browser UI; artifact-selected execution; rewriting evidence |
-| `docs/helix/05-deploy/microsite/reference/` | Rendering, routing, search, workbench controller; `index.ts` | Model barrel, runtime protocol types, DOM, explicit same-origin bundle loader | UMF internals, host APIs, dynamic validator compilation, native executors |
+| `docs/helix/05-deploy/microsite/reference/` | Rendering, routing, search, workbench controller; `index.ts` | Model barrel, runtime protocol types, DOM, explicit same-origin bundle loader, pinned schema-browser public graph API | UMF internals, host APIs, dynamic validator compilation, native executors |
 | `docs/helix/05-deploy/reference/runtime/` | Fixed operation dispatch and cancellable worker; `index.ts` | Model barrel, public `src/index.ts` APIs, build-supplied fixed validators | UI imports, host APIs, arbitrary imports/network, artifact-supplied code |
 
 The build may reuse the existing schema-browser `notices.ts` host utility to

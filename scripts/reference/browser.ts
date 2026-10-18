@@ -11,7 +11,7 @@ const browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_
 const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(page.url().includes('/reference/')&&!r.url().startsWith(origin)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:'))requests.push(r.url());});
 await page.addInitScript(()=>{const measurements={longTasks:0,layoutShift:0};(window as any).__referenceMetrics=measurements;try{new PerformanceObserver(list=>{measurements.longTasks+=list.getEntries().length;}).observe({type:'longtask',buffered:true});new PerformanceObserver(list=>{for(const e of list.getEntries())if(!(e as any).hadRecentInput)measurements.layoutShift+=(e as any).value;}).observe({type:'layout-shift',buffered:true});}catch{}});
 const assert=(v:unknown,msg:string)=>{if(!v)throw Error(msg);};
-async function ready(view:string,hash=''){await page.goto(origin+'reference/'+view+'.html'+hash);await page.locator('#load-status').filter({hasText:'entries · assets verified'}).waitFor();}
+async function ready(view:string,hash=''){if(view==='core'&&!hash)hash='#view=reference';await page.goto(origin+'reference/'+view+'.html'+hash);await page.locator('#load-status').filter({hasText:'entries · assets verified'}).waitFor();}
 async function run(){await page.locator('#run').click();await page.locator('#run-status').filter({hasText:/Completed|Refused|Timed out|REFERENCE_UNAVAILABLE/}).waitFor({timeout:20000});}
 try{
  // @covers US-089-AC1 @covers US-089-AC2 @covers US-089-AC3 @covers US-089-AC9 @covers US-089-AC11

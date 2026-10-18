@@ -150,3 +150,15 @@ user expansion and format switching remain keyboard accessible.
 Acceptance: verify all supplied examples execute, format parity after edits,
 conversion refusal and cancellation, current-only navigation, old-link recovery,
 and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Self-description acceptance — 2026-10-18
+
+- **US-089-AC17:** A downloadable YAML-first UMF model describes current core
+  language objects, their keys, retained constraints and conceptual connections.
+  It validates as UMF, composes an explicit metadata vocabulary, preserves unknown
+  content and compares mechanically to its bootstrap sources. Differences fail
+  the build; no validation authority or native-equivalence transition is implied.
+- **US-089-AC18:** One Schemas entry point exposes Ontology, Object reference and
+  Model catalog. Graph nodes and connections work with keyboard input and link
+  to the relevant key/value explanation. Old deep links, refresh, Back, mobile
+  containment and initially collapsed sections remain usable.

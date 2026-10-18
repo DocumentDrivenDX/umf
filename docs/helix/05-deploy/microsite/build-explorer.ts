@@ -58,5 +58,6 @@ for(const root of roots){const allPaths=await files(root);const paths=root===joi
 // Family closure and hashes must resolve before publishing a catalog.
 for(const root of roots){for(const path of (await files(root)).filter(p=>p.endsWith('pack.json'))){const pack=await Bun.file(path).json();if(!pack.composition)continue;const members=await resolveDomainFamily(path);for(const member of members)if(!entries.some(e=>e.id===`pack:${member.pack.id}@${member.pack.version}`))throw Error('Family component missing from catalog');}}
 const path='fixtures/core/schema-properties.json',text=await Bun.file(join(repo,path)).text();entries.push({id:path,title:'Orders · core schema properties',category:'example',path,text,format:'json'});
+const selfPath='spec/metamodel/umf.yaml';entries.push({id:selfPath,title:'UMF for UMF',category:'example',path:selfPath,text:await Bun.file(join(repo,selfPath)).text(),format:'yaml',description:'The current UMF language modeled in UMF. Use the Ontology view for conceptual connections; JSON Schema and core validators remain authoritative.'});
 await Bun.write(join(dist,'schema-catalog.json'),JSON.stringify({version:1,entries},null,2)+'\n');
 console.log(`Catalog built: ${entries.filter(e=>e.id.startsWith('pack:')).length} packs, ${entries.length} catalog entries.`);

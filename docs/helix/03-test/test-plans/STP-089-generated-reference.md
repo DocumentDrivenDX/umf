@@ -146,3 +146,19 @@ user expansion and format switching remain keyboard accessible.
 Acceptance: verify all supplied examples execute, format parity after edits,
 conversion refusal and cancellation, current-only navigation, old-link recovery,
 and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Self-description and consolidation verification — 2026-10-18
+
+US-089-AC17: validate the authored YAML with its registered metadata vocabulary,
+compare all projected keys and retained fragments to bootstrap schemas, round-trip
+both serializations with unknown content, check graph closure and reject missing
+targets. Build drift checks remain mandatory; green counts are not equivalence.
+
+US-089-AC18: Chromium cold ontology landing, node/edge keyboard activation,
+reference key and scalar/item value links, refresh/Back, full and neighborhood
+focus, invalid-route recovery, download parity, all three views and one primary
+Schemas destination. Verify closed startup catalog/reference disclosures, mobile
+containment and screenshots; replay existing reader/workbench and artifact suites.
+Deploy only after local qualification and automated signing, then repeat the
+critical journeys and signature/manifest checks on live served bytes. Human
+comprehension remains unverified without recruited participants.

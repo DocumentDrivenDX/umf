@@ -45,7 +45,7 @@
     "test:access-e2e": "bun scripts/access-e2e.ts",
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
-    "test:reference:browser": "bun scripts/reference/browser.ts && bun scripts/reference/reader-browser.ts",
+    "test:reference:browser": "bun scripts/reference/browser.ts && bun scripts/reference/reader-browser.ts && bun scripts/reference/ontology-browser.ts",
     "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts"
   },
   "dependencies": {

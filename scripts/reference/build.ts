@@ -54,11 +54,13 @@ try{
  for(let offset=0;offset<sortedEvidence.length;offset+=32)inventory.push(...await Promise.all(sortedEvidence.slice(offset,offset+32).map(async path=>{const mapped=allocations.allocations.filter((a:any)=>a.recordPath===path);return {source:await source(path,false),allocationIds:mapped.map((a:any)=>a.id),assessment:mapped.length?'mapped':'unassessed'};})));
  await Bun.write(join(stage,'evidence-inventory.json'),json({profile:'umf.reference.evidence-inventory/1',items:inventory,exclusions:evidenceExclusions}));
  const runtimeInputs=await runtimeBuild(join(stage,'assets'),api);
- await Bun.write(join(stage,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(root,runtimeInputs));
+ await Bun.write(join(stage,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(root,[...runtimeInputs,'node_modules/@documentdrivendx/umf-schema-browser/index.js']));
  await source('docs/helix/05-deploy/schema-browser/notices.ts',false);
  for(const path of [...await paths('spec/**/LICENSE*'),...await paths('spec/**/NOTICE*'),...await paths('LICENSE*')]){const s=await source(path,false);await Bun.write(join(stage,'licenses',s.sha256+'-'+path.split('/').at(-1)),await Bun.file(resolve(root,path)).bytes());}
  const ui=await Bun.build({entrypoints:[resolve(root,'docs/helix/05-deploy/microsite/reference/index.ts')],target:'browser',format:'esm',minify:true,metafile:true});if(!ui.success)throw Error(ui.logs.join('\n'));await Bun.write(join(stage,'assets/reference.js'),await ui.outputs[0]!.text());
- await Bun.write(join(stage,'assets/reference.css'),await text('docs/helix/05-deploy/microsite/reference/style.css'));
+ await Bun.write(join(stage,'assets/reference.css'),await text('node_modules/@documentdrivendx/umf-schema-browser/assets/components.css')+'\n'+await text('docs/helix/05-deploy/microsite/reference/style.css'));
+ await source('node_modules/@documentdrivendx/umf-schema-browser/assets/components.css',false);
+ await source('node_modules/@documentdrivendx/umf-schema-browser/index.js',false);
  for(const pattern of ['scripts/reference/**/*.ts',config+'/**/*','docs/helix/05-deploy/microsite/reference/**/*','src/**/*.ts','spec/**/*.json']){const discovered=await paths(pattern);for(let offset=0;offset<discovered.length;offset+=32)await Promise.all(discovered.slice(offset,offset+32).map(path=>source(path,false)));}
  for(const path of ['package.json','bun.lock','tsconfig.json','tsconfig.tools.json','.github/workflows/microsite.yml','.innsigle/config.json','scripts/build-protobuf.ts','scripts/build-postgresql.ts','scripts/protobuf-module-notices.ts',...await paths('native/protobuf/*.go'),...await paths('native/protobuf/go.*'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')])await source(path,false);
  const inputList=[...inputs.values()].sort((a,b)=>a.path<b.path?-1:1),inputDigest=sha(canonical(inputList.map(s=>[s.path,s.sha256])));

@@ -313,3 +313,34 @@ user expansion and format switching remain keyboard accessible.
 Acceptance: verify all supplied examples execute, format parity after edits,
 conversion refusal and cancellation, current-only navigation, old-link recovery,
 and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Self-model construction and browser boundary — 2026-10-18
+
+`spec/metamodel/umf.yaml` is the inspectable current self-model;
+`spec/metamodel/package.json` declares its annotation vocabulary. Its package
+coreVersion is the existing extension-package envelope profile, not the model's
+current document marker. `scripts/reference/self-model.ts` projects canonical
+current core and semantic-reference schemas, role filtering and curated meaning;
+`--write` updates the reviewed YAML. Normal builds compare exact JSON values and
+refuse drift, invalid UMF and unresolved graph targets before emitting assets.
+The entire original constraint fragments survive; unions/conditional rules are
+not approximated as universal scalar or required-key claims.
+
+The pure reference-model barrel owns `SelfModelCatalog` and `selfModelGraph`.
+The reference UI alone may consume the exact pinned schema-browser package's
+public `renderRecordMap` export. No package private paths or adapter imports are
+allowed. Its published component CSS is included with exact input hashes and
+existing package notices. `check:reference-boundaries` enforces this single
+additional public dependency. The catalog host adds navigation outside the
+integrity-locked `<main>`; renderer bytes, CSS and package workspace stay exact.
+
+Graph routes use `view=ontology`, stable node ID, optional focus and connection
+ID. Object-reference routes keep entry/pointer/concept identities; old routes
+without a view select Object reference. Empty landing selects Ontology. Unknown
+nodes/connections or missing assets fail visibly with an object-reference escape.
+
+Catalog integration qualification: the exact released catalog parser predates the
+current document marker. The site's host routes the self-model catalog identity
+to the current ontology view before catalog inspection. It never downgrades the
+source or claims expanded package parser support. Ordinary catalog models retain
+the released parser and original routes; self-model downloads remain current.

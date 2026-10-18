@@ -42,3 +42,5 @@ export function structuralDiff(before:unknown,after:unknown,pointer='',depth=0):
 }
 export {compareVersions,latestProfile,treeValue,pointerPart,schemaNode,resolveSchema,shape,schemaRules,propertyPresence,unknownKeyPolicy} from './reader';
 export type {ReaderCatalog,ApiReader,ReaderRow,Concept} from './reader';
+export {selfModelGraph} from './metamodel';
+export type {SelfModelCatalog} from './metamodel';

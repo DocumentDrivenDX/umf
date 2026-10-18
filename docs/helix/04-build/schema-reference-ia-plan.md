@@ -350,3 +350,26 @@ a trap confirmed zero 1Password invocations. Public claims were synchronized
 before verification. No production private material was accessed by this test.
 Type checking passes; the reference was regenerated for the changed publication
 configuration, workflow and governing contract.
+
+## Authorized self-description and consolidation execution — 2026-10-18
+
+The owner now authorizes FR-35's current core projection, a graphical ontology,
+one Schemas entry point, browser verification and deployment. This supersedes
+the deferred-self-description investigation above. Governing PRD, feature,
+story, solution/technical design, contract and test plan are amended in place.
+
+Build the traceable YAML model and explicit annotation vocabulary first; refuse
+bootstrap drift. Reuse the pinned public graph renderer. Add Ontology/Object
+reference/Model catalog navigation while preserving legacy routes and exact
+catalog workspace. Verify Bun, boundaries, typing, Chromium, screenshots and
+live signatures after automated publication. Record outcomes under
+`evidence/generated-reference/ontology/`; no recruited-reader proof is assumed.
+
+Self-description local execution is complete: 21 reference tests /13,998 assertions,
+13 ontology Chromium journeys, 44 existing reader/workbench checks and 37 catalog
+checks pass. Type checking, the 23-file boundary scan, exact package workspace/asset
+parity, guide regeneration and the 24-page signing inventory pass. Required-key
+presence is retained separately from nullability; the null-literal regression
+prevents an overstrong self-model claim. A four-minute deterministic-test timeout
+was raised to ten minutes without weakening its assertions; final full replay
+passes in94.51 seconds. Live publication remains a subsequent gated action.

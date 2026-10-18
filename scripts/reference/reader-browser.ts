@@ -7,12 +7,12 @@ const browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_
 const page=await browser.newPage({viewport:{width:1280,height:960}}),origin=`http://127.0.0.1:${server.port}/umf/reference/`,errors:string[]=[],requests:string[]=[],checks:string[]=[];
 page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(`http://127.0.0.1:${server.port}/`)&&!r.url().startsWith(`blob:http://127.0.0.1:${server.port}/`)&&!r.url().startsWith('data:'))requests.push(r.url());});
 const assert=(ok:unknown,message:string)=>{if(!ok)throw Error(message);};
-const ready=async(view:string,hash='')=>{await page.goto(origin+view+'.html'+hash);await page.locator('#load-status').filter({hasText:'entries · assets verified'}).waitFor();if(view!=='workbench')await page.locator('#inspector h2').waitFor();};
+const ready=async(view:string,hash='')=>{if(view==='core'&&!hash)hash='#view=reference';await page.goto(origin+view+'.html'+hash);await page.locator('#load-status').filter({hasText:'entries · assets verified'}).waitFor();if(view!=='workbench')await page.locator('#inspector h2').waitFor();};
 const choose=async(name:string)=>{await page.locator('#catalog').getByRole('button',{name:new RegExp('^'+name+'(?: |$)')}).first().click();await page.locator('#inspector h2').filter({hasText:new RegExp('^'+name+'$')}).waitFor();};
 const api=async(name:string)=>{await ready('api','#'+new URLSearchParams({entry:JSON.stringify(['api','.',name])}));};
 try{
  // @covers US-089-AC12 @covers US-089-AC13 @covers US-089-AC15
- await ready('core');assert(await page.locator('#inspector h2').innerText()==='Document','Document not initial');assert(await page.locator('#profile-filter').count()===0,'History selector remains');assert(await page.locator('#inspector details[open]').count()===0,'Schema disclosure starts open');checks.push('Cold visit opens latest Document without a version choice');
+ await ready('core');assert(await page.locator('#inspector h2').innerText()==='Document','Document not initial');assert(await page.locator('#profile-filter').count()===0,'History selector remains');assert(await page.locator('#inspector details[open]').count()===0,'Schema disclosure starts open');checks.push('Object reference opens current Document without a version choice');
  // @covers US-089-AC16
  await page.locator('summary').filter({hasText:'Show complete valid UMF document'}).click();
  const complete=page.locator('.schema-example').first(),routeBefore=page.url();

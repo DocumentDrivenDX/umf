@@ -174,3 +174,19 @@ user expansion and format switching remain keyboard accessible.
 Acceptance: verify all supplied examples execute, format parity after edits,
 conversion refusal and cancellation, current-only navigation, old-link recovery,
 and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Current core self-description — 2026-10-18
+
+Implement FR-35 / US-089-AC17–18 as a descriptive projection with exact schema
+fragments retained in the explicit `umf.metamodel` vocabulary. Model language
+objects as UMF Records and their properties as Fields; model collection items
+through itemType and typed record references. Conceptual connections distinguish
+serialized containment, role specialization and reference resolution. They are
+not population relationships and assert no instance cardinality. Bootstrap
+JSON Schema and semantic validators remain authoritative (ADR-001).
+
+The canonical Schemas landing page is `reference/core.html`. Ontology and Object
+reference are views there; the released model catalog keeps its existing URL and
+bookmark grammar as the third view with matching host navigation. All first-party
+Schemas navigation uses the landing page. This preserves catalog/package behavior
+without an iframe or a new competing entry point. API reference remains separate.

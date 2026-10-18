@@ -233,7 +233,10 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 - **FR-35** — **Self-description.** UMF must eventually be able to represent its
   own metamodel and vocabularies, exercising the same extension and composition
   mechanisms as external schemas. Bootstrap validation may remain authoritative
-  while self-description is introduced; this is beyond the first slice.
+  while self-description is introduced. The owner now requests a current core
+  self-model and graphical ontology integrated with the schema reference. This
+  bounded projection must retain bootstrap constraints and disclose unrepresented
+  enforcement; it does not transfer validation authority.
 
 ### Subsystem: Extensions and Partial Participation
 

@@ -1,0 +1,21 @@
+{
+  "target": "http://127.0.0.1:49956/umf/",
+  "checks": [
+    "Cold Schemas landing opens a focused, collapsed Document ontology",
+    "Graph node keyboard activation, exact refresh and Back retain context",
+    "Labeled graph connections expose their source and navigable target",
+    "Full graph and bounded neighborhood controls preserve focus on refresh",
+    "Field graph → itemType and scalarType exact key/value reference, closed on arrival",
+    "External semantic-term definition opens its own schema rather than Document",
+    "Downloaded YAML and JSON have identical valid UMF meaning",
+    "Unknown graph route fails visibly with working object-reference recovery",
+    "Model catalog starts closed, searches the self-model and routes it to the current ontology view",
+    "All three Schema views navigate through the same visible controls",
+    "390/798/1280px screenshots and containment; graph/table scrolling stays local",
+    "Actual self-model validates in browser workbench and survives YAML/JSON conversion",
+    "Tampered self-model asset is refused with usable object-reference recovery"
+  ],
+  "passed": 13,
+  "pageErrors": [],
+  "unexpectedExternalRequests": []
+}

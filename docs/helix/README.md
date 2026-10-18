@@ -10,6 +10,12 @@ Python adoption and other version-specific authoring expansion remain separate.
 
 ## Generated reference and microsite expansion
 
+The [current core self-model](../../spec/metamodel/umf.yaml) drives the unified
+Schemas ontology, object reference and model catalog navigation.
+[Self-description evidence](04-build/evidence/generated-reference/ontology/README.md)
+records browser journeys and qualifications. Bootstrap JSON Schema and core
+semantic validators remain authoritative; the model retains their exact rules.
+
 [Schema and API reference organization plan](04-build/schema-reference-ia-plan.md)
 defines latest-first concept navigation, key/value explanations and task-based
 API pages following the owner's 2026-10-17 feedback.

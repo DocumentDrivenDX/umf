@@ -419,3 +419,29 @@ cryptographic signatures, expected colophons, key roles and exact byte digests.
 Historical public keys/endorsements remain valid verification material; retaining
 them does not make human signing a prerequisite for new publication. This
 supersedes earlier curated/human signer requirements without relaxing integrity.
+
+## Self-model companion and unified entry — 2026-10-18
+
+`metamodel.json` uses `profile:umf.metamodel/1`, `document` (a valid current UMF
+Document) and `sources` (exact path/hash/byte source records). `umf.yaml` and
+`umf.json` are equivalent downloadable document serializations. All are
+manifest-bound. The `umf.metamodel` vocabulary carries source `{path,pointer}`,
+exact schema fragment, optional presence/role/concept/coverage and conceptual
+`connections:[{target:{module,element},label}]`. Connections MUST resolve to
+qualified metamodel Record definitions; they are not instance relationships.
+Its separately shipped package validates metadata shape; source drift and graph
+closure require the build comparison. Omitted or unfamiliar vocabulary meanings
+remain retained and incomplete under the ordinary UMF API.
+
+Primary Schemas navigation MUST use `reference/core.html`, initially Ontology.
+Its Object reference view retains entry/pointer/concept links. Existing
+`explorer.html` catalog routes are the Model catalog view under the same schema
+navigation. No separate competing schema destination appears in primary menus.
+The exact released renderer is consumed through its public component API; the
+catalog's released workspace/assets remain byte-identical to the pinned package.
+
+Required object-key presence MUST stay distinct from ideal value availability.
+The self-model retains required/conditional presence in its annotation metadata;
+it MUST NOT infer Field nullability from JSON Schema required. In particular, a
+required default.value key can carry a null literal. Native absence bindings and
+complete instance enforcement are not inferred by this projection.

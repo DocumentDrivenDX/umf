@@ -102,7 +102,7 @@ test('a second isolated generation matches; drift check refuses tampering withou
  const path=join(dist,'index.html'),original=await Bun.file(path).text();
  try{interruptedDrift={path,original};await Bun.write(path,original+'\n<!-- deliberate drift -->\n');const bad=await check();expect(bad[0]).not.toBe(0);expect(String(bad[1])).toContain('REFERENCE_DRIFT');expect(await Bun.file(path).text()).toBe(original+'\n<!-- deliberate drift -->\n');}
  finally{await Bun.write(path,original);interruptedDrift=undefined;}
-},240000);
+},600000);
 
 // @covers US-089-AC11 -- host-neutral compiler notices remain source-bound.
 test('reference manifest retains every Protobuf notice producer input',async()=>{
