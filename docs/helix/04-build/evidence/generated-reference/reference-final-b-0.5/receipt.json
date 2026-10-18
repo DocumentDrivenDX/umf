@@ -1,0 +1,55 @@
+{
+  "profile": "umf.final-reference-installed-release/1",
+  "sourceFreezeRevision": "8b4594d1c119ae42b892f711def13d7a7c70812e",
+  "runtime": "Bun1.4.2",
+  "renderer": {
+    "version": "2.0.0",
+    "mode": "default exact installed published release",
+    "candidateOverrides": false,
+    "completeMountedPayloadParity": true
+  },
+  "artifact": {
+    "inputDigest": "ed847c6767527a3eaf5eeffa62e486cebae0257e1df9a3a6af12232567229d70",
+    "manifestSha256": "c61a76c41459a3de3b6f11209cbc5c5e21ebcac042d0e732320332a925a6eb9e",
+    "sourceInputs": 13557,
+    "outputFilesByteVerifiedAfterBrowser": 5107,
+    "entries": 2415,
+    "catalogSchemas": 357,
+    "extensions": 70,
+    "publicExports": 1826,
+    "operations": 146,
+    "evidenceFiles": 9614
+  },
+  "gates": {
+    "buildExitCode": 0,
+    "independentCheckExitCode": 0,
+    "authority": {
+      "files": 3139,
+      "retiredPaths": 79
+    },
+    "metamodelDriftAndSelfAdmission": "passed",
+    "actualSiteDistribution": {
+      "files": 5563
+    },
+    "canonicalHostCustody": "Verified selected installedentry/style input hashes, canonical JS/CSS output hashes and HTMLSRI; complete mounted payload parity"
+  },
+  "browser": {
+    "receipt": "browser-proof/receipt.json",
+    "main": 30,
+    "reader": 14,
+    "ontology": 14,
+    "errors": 0,
+    "unexpectedExternalRequests": 0,
+    "screenshots": 40,
+    "chromium": "153.0.8010.12"
+  },
+  "deliveryQualification": "Unsigned local generated site qualification only; SDK/wheel asset publication and main CI HTML build-role signatures/deployment are separate subsequent gates. No live deployment claim.",
+  "files": {
+    "metamodel-check.log": "9ab63bb2f2db14e86adf9128a4bef6eb315f1b700c74ad9093364564cac31f35",
+    "distribution-custody.log": "46694194fba0f72b898e4da3e0c54498681cf4f938613b6a504532abd268d672",
+    "authority.log": "df49f8a46da1ddf266517a9342f7f608999a478d9f5aa4c9c66551f7b4c5097c",
+    "manifest.json": "c61a76c41459a3de3b6f11209cbc5c5e21ebcac042d0e732320332a925a6eb9e",
+    "check.log": "dac9ae0c8f9e12053bd1ffd8b07256221ce9cb826b99e88736034dc50d64c635",
+    "build.log": "dcc538022b5cdc06c6db68ca7148203ac34f67bf1981bc8237840d69c2bfa3d4"
+  }
+}
