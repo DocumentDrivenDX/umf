@@ -117,7 +117,7 @@ asyncio.run(main())
   if(exit!==0)throw new Error(stderr);
   const result=JSON.parse(stdout);
   expect(result.status).toBe('pass');
-  expect(result.weft).toBe('0.4.43');
+  expect(result.weft).toBe('0.4.44');
   expect(result.postgresql).toBe('18');
   expect(result.compiledReads).toBe(8);
   expect(result.result).toEqual(['Ada','shipped','postgresql18-unified-commit-1']);

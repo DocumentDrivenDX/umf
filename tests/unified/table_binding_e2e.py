@@ -22,6 +22,7 @@ parser.add_argument("--dsn", required=True)
 parser.add_argument("--weft", required=True)
 parser.add_argument("--psycopg", required=True)
 args = parser.parse_args()
+expected_weft_version = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.44")
 
 repo = Path(__file__).resolve().parents[2]
 sys.path[:0] = [
@@ -183,8 +184,8 @@ async def apply(action: str, inputs: dict[str, object], idempotency_key: str | N
 
 
 async def main() -> None:
-    if weft.__version__ != "0.4.43":
-        raise AssertionError(f"expected isolated Weft0.4.43, got {weft.__version__}")
+    if weft.__version__ != expected_weft_version:
+        raise AssertionError(f"expected isolated Weft{expected_weft_version}, got {weft.__version__}")
     with psycopg.connect(args.dsn) as connection, connection.cursor() as cursor:
         cursor.execute('DROP TABLE IF EXISTS "orders"')
         cursor.execute('DROP TABLE IF EXISTS "customers"')
