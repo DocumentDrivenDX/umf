@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import importlib.metadata
 import json
 import os
 import re
@@ -23,21 +24,20 @@ parser.add_argument("--weft", required=True)
 parser.add_argument("--psycopg", required=True)
 args = parser.parse_args()
 expected_weft_version = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.44")
+expected_host_version = os.environ.get("UMF_UNIFIED_EXPECTED_HOST_VERSION", "0.1.0.dev1")
 
 repo = Path(__file__).resolve().parents[2]
 sys.path[:0] = [
     args.generated,
-    str(repo / "python/umf_access/src"),
     args.weft,
     args.psycopg,
 ]
 
 import psycopg
 import weft
-from shop import Actions, Client, Customer, CustomerKey, Order, OrderKey, WriteOutcomeUnknown
-from umf_access.unified import WeftTableBinding
 from application import application, assert_shared_edge_cases
-
+from shop import Actions, Client, Customer, CustomerKey, OrderKey, WriteOutcomeUnknown
+from umf_access.unified import WeftTableBinding
 
 SOURCE = (repo / "tests/unified/commerce.json").read_text(encoding="utf-8")
 DIGEST = __import__("hashlib").sha256(SOURCE.encode("utf-8")).hexdigest()
@@ -184,6 +184,9 @@ async def apply(action: str, inputs: dict[str, object], idempotency_key: str | N
 
 
 async def main() -> None:
+    host_version = importlib.metadata.version("umf_access")
+    if host_version != expected_host_version:
+        raise AssertionError(f"expected installed umf_access{expected_host_version}, got {host_version}")
     if weft.__version__ != expected_weft_version:
         raise AssertionError(f"expected isolated Weft{expected_weft_version}, got {weft.__version__}")
     with psycopg.connect(args.dsn) as connection, connection.cursor() as cursor:
@@ -267,6 +270,7 @@ async def main() -> None:
         json.dumps(
             {
                 "status": "pass",
+                "hostRuntime": host_version,
                 "weft": weft.__version__,
                 "postgresql": "18",
                 "compiledReads": len(compiled),
