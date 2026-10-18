@@ -89,6 +89,10 @@
     {
       "path": "docs/helix/04-build/evidence/generated-reference/ci-followup/typed-access-boundaries/receipt.json",
       "sha256": "eee2c5cfc27f844c60d80b193147e3e96b7e7bf2b1db647cc3e40912491cea1c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/receipt.json",
+      "sha256": "b54541d6db9825867ae1fde1c0e25103dab6f48dde9fe6e52e1d10ffd022afb7"
     }
   ],
   "files": [
@@ -998,27 +1002,69 @@
         "exitCode": 0,
         "pass": 7,
         "fail": 0,
-        "assertions": 140,
+        "assertions": null,
         "completeSummary": true,
-        "logSha256": "7bfcca453b00f506cb8d2e663556ca091448231902618fdec124ff6e7276590d",
-        "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
-      }
+        "runtime": "Bun1.4.2",
+        "executor": "Sol",
+        "log": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/native-tests.log",
+        "logSha256": "a3166bbf9348627ae6edba6b87820aedbae67fd386e3d2945d8f430daf1a5224",
+        "observedTestSourceSha256": "c3c2e5c334c35d3e406afd267d186791cb0e4448dfc8986ee1785aae5210c0c9",
+        "receipt": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/receipt.json",
+        "qualification": "Fresh local host-cleanup follow-up. Prior integration observation retained; exact host source hashes in receipt. Existing two native files passed in one process:167 aggregate assertions, no per-file assertion count inferred. No remote CI success inferred."
+      },
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "c3c2e5c334c35d3e406afd267d186791cb0e4448dfc8986ee1785aae5210c0c9",
+          "status": "observed-pass",
+          "observation": {
+            "testProcess": "tests/actions-reference/sandbox-security.test.ts",
+            "exitCode": 0,
+            "pass": 7,
+            "fail": 0,
+            "assertions": 140,
+            "completeSummary": true,
+            "logSha256": "7bfcca453b00f506cb8d2e663556ca091448231902618fdec124ff6e7276590d",
+            "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/actions-reference/sandbox-state.test.ts",
-      "currentTestSourceSha256": "1b40a0a62b5b2c692d4b832e92d52309686c9799e24d8223b93d95c2fe5b4e37",
+      "currentTestSourceSha256": "90f2f96f998e6ca78086124ffc01c7f7913e2bc75d7dacfd93357817a573c2ec",
       "owner": "Root",
       "status": "observed-pass",
       "observation": {
         "testProcess": "tests/actions-reference/sandbox-state.test.ts",
         "exitCode": 0,
-        "pass": 2,
+        "pass": 4,
         "fail": 0,
-        "assertions": 14,
+        "assertions": 31,
         "completeSummary": true,
-        "logSha256": "031fde818d1aff84dff0f3f68594711589f56147e0211e2f1cae64149787791b",
-        "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
-      }
+        "runtime": "Bun1.4.2",
+        "executor": "Sol",
+        "log": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/state-tests.log",
+        "logSha256": "1141907203538e3519690d47c7d096c43ff79e009c34ced0271215008a3a8b48",
+        "observedTestSourceSha256": "90f2f96f998e6ca78086124ffc01c7f7913e2bc75d7dacfd93357817a573c2ec",
+        "receipt": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/receipt.json",
+        "qualification": "Fresh local host-cleanup follow-up. Prior integration observation retained; exact host source hashes in receipt. Focused deterministic timeout classification checks."
+      },
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "1b40a0a62b5b2c692d4b832e92d52309686c9799e24d8223b93d95c2fe5b4e37",
+          "status": "observed-pass",
+          "observation": {
+            "testProcess": "tests/actions-reference/sandbox-state.test.ts",
+            "exitCode": 0,
+            "pass": 2,
+            "fail": 0,
+            "assertions": 14,
+            "completeSummary": true,
+            "logSha256": "031fde818d1aff84dff0f3f68594711589f56147e0211e2f1cae64149787791b",
+            "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/actions-reference/sandbox.test.ts",
@@ -1030,11 +1076,32 @@
         "exitCode": 0,
         "pass": 9,
         "fail": 0,
-        "assertions": 27,
+        "assertions": null,
         "completeSummary": true,
-        "logSha256": "f244d6b03964cbee5ed6167f535d8c176b02b96922ef0fb0def4cb476abf0e4b",
-        "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
-      }
+        "runtime": "Bun1.4.2",
+        "executor": "Sol",
+        "log": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/native-tests.log",
+        "logSha256": "a3166bbf9348627ae6edba6b87820aedbae67fd386e3d2945d8f430daf1a5224",
+        "observedTestSourceSha256": "bf25102cfe9e624762f7aa961bef2aa3963f301c8dc96750b237f423ad3c78e2",
+        "receipt": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/receipt.json",
+        "qualification": "Fresh local host-cleanup follow-up. Prior integration observation retained; exact host source hashes in receipt. Existing two native files passed in one process:167 aggregate assertions, no per-file assertion count inferred. No remote CI success inferred."
+      },
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "bf25102cfe9e624762f7aa961bef2aa3963f301c8dc96750b237f423ad3c78e2",
+          "status": "observed-pass",
+          "observation": {
+            "testProcess": "tests/actions-reference/sandbox.test.ts",
+            "exitCode": 0,
+            "pass": 9,
+            "fail": 0,
+            "assertions": 27,
+            "completeSummary": true,
+            "logSha256": "f244d6b03964cbee5ed6167f535d8c176b02b96922ef0fb0def4cb476abf0e4b",
+            "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/actions-reference/state.test.ts",

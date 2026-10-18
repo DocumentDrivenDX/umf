@@ -13,6 +13,10 @@ CORE_RESOURCES = (
 
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
+        # The sdist target already includes canonical spec/ paths. Wheel-only
+        # destinations must not replace those paths when packaging the sdist.
+        if self.target_name != "wheel":
+            return
         package_root = Path(self.root)
         repository = package_root if (package_root / "spec/core").is_dir() else package_root.parent
         core = repository / "spec/core"
