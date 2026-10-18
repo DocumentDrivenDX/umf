@@ -1,10 +1,11 @@
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/rdf/merge-schema.json';
 import {importRdfNQuads,importRdfTurtle,importRdfTriG,exportRdfTriG,exportRdfNQuads,getRdfQuads,getRdfNamedGraphs,proposeRdfDatasetMerge,readDocument,writeDocument} from '../../src';
 const options={id:'merged',graphPolicy:'union-by-name',blankNodePolicy:'disjoint-inputs'} as const;
-const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);
+const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-025-AC7: all positive RDF source datasets merge with independent blank scopes',async()=>{
  const fixture=await Bun.file('fixtures/rdf/merge/results.json').json(),oracle=await Bun.file('fixtures/rdf/merge/oracle-results.json').json(),anchor=importRdfTriG(await Bun.file('native/rdf/examples/empty-graphs.trig').text(),{id:'same-id',baseIRI:'https://example.org/schema.trig'});expect(fixture.cases).toHaveLength(516);expect(oracle.results).toHaveLength(1032);
  for(const profile of ['nquads','turtle','trig']){const original=(await Bun.file('fixtures/rdf/'+profile+'/results.json').json()).results.filter((c:any)=>c.positive);expect(fixture.cases.filter((c:any)=>c.profile===profile).map((c:any)=>c.id)).toEqual(original.map((c:any)=>profile+'-'+c.id));}

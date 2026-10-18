@@ -2,7 +2,7 @@
   "alternatives": [],
   "authored": false,
   "id": "[\"api\",\".\",\"CoreKeyDefinition\"]",
-  "kind": "Interface",
+  "kind": "Type alias",
   "members": [
     {
       "description": "",
@@ -20,12 +20,10 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
-      ],
+      "links": [],
       "name": "fields",
       "optional": false,
-      "type": "CoreKeyFieldReference[]"
+      "type": "KeyFieldReference[]"
     },
     {
       "description": "",
@@ -36,9 +34,9 @@
     }
   ],
   "parameters": [],
-  "purpose": "CoreKeyDefinition is a interface in Other APIs. Its exact structure is documented below.",
+  "purpose": "CoreKeyDefinition is a type alias in Other APIs. Its exact structure is documented below.",
   "related": [],
   "returns": "",
   "task": "Other APIs",
-  "type": "CoreKeyDefinition"
+  "type": "Key"
 }

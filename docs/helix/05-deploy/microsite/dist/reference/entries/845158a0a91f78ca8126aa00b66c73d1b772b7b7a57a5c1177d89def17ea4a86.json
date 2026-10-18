@@ -6,72 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.5.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.5.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "other",
@@ -967,73 +907,9 @@
             "source": {
               "kind": "object",
               "members": {
-                "anyOf": {
-                  "items": [
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.2.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.3.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.4.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.5.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.6.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.7.0"
-                        }
-                      }
-                    }
-                  ],
-                  "kind": "array"
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1058,73 +934,9 @@
             "target": {
               "kind": "object",
               "members": {
-                "anyOf": {
-                  "items": [
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.2.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.3.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.4.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.5.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.6.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.7.0"
-                        }
-                      }
-                    }
-                  ],
-                  "kind": "array"
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1190,19 +1002,13 @@
   "id": "[\"schema\",\"spec/core/sqlserver-relationship-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7759,
+      "bytes": 6943,
       "path": "spec/core/sqlserver-relationship-classification.schema.json",
-      "sha256": "7c551a2bd1db4d33454543f507bf3bdc868617a9d164fd1fec08a633d2ab757e"
+      "sha256": "a72f97d7b0509f1cba25b6423a10ce54e08786fdd2611d381c3e856b997eb4f5"
     }
   ],
   "summary": "spec/core/sqlserver-relationship-classification.schema.json",

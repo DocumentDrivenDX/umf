@@ -26,12 +26,13 @@ keeping their extension definitions and execution semantics outside UMF core.
 
 ## Scope and Boundaries
 
-Distribution `umf-core`, import namespace `umf`, resides under `python/` in UMF.
-Canonical `spec/core` JSON Schemas own structure; Pydantic MUST NOT create a
-competing document schema. No TableSpec import or JavaScript runtime is allowed.
-The initial Python semantic subset covers identity, references, scalar/role labels
-and extension registration. Facets, keys, relationships and literal constraints
-MUST report unchecked semantics, not semantic completeness. Package version and
+Distribution `umf-core`, import namespace `umf`, resides under `python/src/umf/` in UMF.
+The authored metamodel generates canonical `spec/core` JSON Schemas and Python
+shapes; Pydantic MUST NOT create a competing definition (CONTRACT-080). No TableSpec import or JavaScript runtime is allowed.
+Current Python validation MUST execute the shared generated current-core
+constraint/domain program, including facets, keys, relationships, literals and
+semantic references. The historical incomplete 0.8 subset is not the parity
+target. Unknown interpretation still reports incomplete. Package version and
 core document version are separate identities even when their numbers coincide.
 
 ## Normative Surface
@@ -40,7 +41,7 @@ core document version are separate identities even when their numbers coincide.
 | --- | --- |
 | `Document.model_validate(mapping)` | Apply exact version's canonical structure and portable JSON admission; preserve unknown content; reject unsupported core versions and coercion. |
 | `Document.to_dict()` / `checked_copy()` | Retain absent versus explicit null and unknown content. Copies MUST be isolated; checked_copy revalidates mutable state. |
-| `Document.model_json_schema()` / `core_schema(version)` | Return canonical schema copies; default schema is core 0.8.0. |
+| `Document.model_json_schema()` / `core_schema(version)` | Return canonical schema copies; default and only active core schema is 0.10.0. |
 | `Element`, `Module`, `Reference`, `Vocabulary` | Pydantic access models; canonical Document admission is required before claiming document validity. |
 | `read_document(text,format)` / `write_document(document,format)` | JSON or YAML 1.2. Preserve data; reject duplicate keys, aliases, explicit tags, unsafe integers, negative zero and decimal parsing loss. |
 | `read_json_value` / `write_json_value` | Same portable JSON boundary for consumer payloads. Exact larger numbers use explicit string carriers. |

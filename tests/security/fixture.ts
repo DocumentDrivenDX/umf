@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import type {Document} from '../../src/model/types';
 import type {SecurityRef,SecurityEntity,SecurityAssociation,SecurityResolution,SecurityPolicy,SecurityExpr} from '../../src/extensions/security/types';
 export const ref=(elementId:string):SecurityRef=>({documentId:'domain',moduleId:'m',elementId});
@@ -12,7 +13,7 @@ export function securityFixture():{policy:SecurityPolicy;resolution:SecurityReso
     {id:name,kind:'record',members:fields.map(([id])=>({module:'m',element:id})),keys:[{id:'pk',name:'Key',fields:[{module:'m',element:fields[0]![0]}]}],extensions:{}},
     ...fields.map(([id,scalarType])=>({id,kind:'field',scalarType,nullability:'required',cardinality:'one',extensions:{}})),
   ]);
-  const document:Document={umf:'0.8.0',id:'domain',vocabularies:{},modules:[{id:'m',namespace:'',elements}]};
+  const document:Document={umf:CURRENT_CORE_VERSION,id:'domain',vocabularies:{},modules:[{id:'m',namespace:'',elements}]};
   const entity=(name:string):SecurityEntity=>({type:ref(name),keyId:'pk',fields:
     definitions.find(d=>d[0]===name)![1].map(([id])=>({ref:ref(id),protection:id==='salary'?'protected':'unprotected'}))});
   const association=(name:string,endpoints:SecurityAssociation['endpoints']):SecurityAssociation=>({...entity(name),endpoints});

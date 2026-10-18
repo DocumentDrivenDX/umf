@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from './json';
 import {UmfError,type Document,type Element} from './types';
 import {validateDocument} from '../validation/document';
@@ -8,7 +9,7 @@ import type {CoreRecordIdentity} from './keys';
 export function prepareCoreInspection(input:Document) {
  const source=copyJson(input) as unknown as Document;
  const validation=validateDocument(source);
- if(!['0.8.0','0.9.0'].includes(source.umf)||!validation.valid)throw new UmfError('CORE_INSPECTION_SOURCE','Expected valid core 0.8.0 or 0.9.0 source');
+ if(source.umf!==CURRENT_CORE_VERSION||!validation.valid)throw new UmfError('CORE_INSPECTION_SOURCE','Expected valid current core 0.10.0 source');
  const elements=new Map<string,{element:Element;path:string}>();
  for(const [mi,module] of source.modules.entries())for(const [ei,element] of module.elements.entries())elements.set(JSON.stringify([module.id,element.id]),{element,path:`/modules/${mi}/elements/${ei}`});
  const freeze=(v:unknown):void=>{if(v!==null&&typeof v==='object'){for(const child of Object.values(v))freeze(child);Object.freeze(v);}};

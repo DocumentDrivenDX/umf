@@ -16,12 +16,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -410,7 +410,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -584,7 +584,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -663,9 +663,9 @@
   ],
   "sources": [
     {
-      "bytes": 3944,
+      "bytes": 3946,
       "path": "spec/extensions/jsonld/compaction-schema.json",
-      "sha256": "dc8e294c6a4921e6f2dcdfe27f68e702fec5605d07c1aab5046a70819b19f83b"
+      "sha256": "a3559c5d07c6164d21c9bbc1318d337a1e1636eff308bac32958f587fc7a52d7"
     }
   ],
   "summary": "spec/extensions/jsonld/compaction-schema.json",

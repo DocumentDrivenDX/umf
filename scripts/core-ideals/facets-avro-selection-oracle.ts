@@ -1,7 +1,7 @@
 import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {importAvroSchema,getAvroNode,readDocument,writeDocument} from '../../src';
+import {importAvroSchema, getAvroNode, readDocument, writeDocument} from '../../src';
 import {parseNativeJson} from '../../src/model/native-json';
 import {inspectAvroFacetSelection} from '../../src/core-ideals/avro-facet-selection';
 const child=Bun.spawn(['.venv/bin/python','scripts/core-ideals/facets-avro-selection-native.py'],{stdout:'inherit',stderr:'inherit'});assert.equal(await child.exited,0);

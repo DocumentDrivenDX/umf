@@ -1,0 +1,55 @@
+{"testProcess":"tests/uuid-file-model.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-file-model.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid-file-model.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":81,"completeSummary":true,"logSha256":"362c058011bc775eb267ce91127bf51f648322f15e830b5e44e35efd25c60980"}
+{"testProcess":"tests/uuid-mixed-model.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-mixed-model.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid-mixed-model.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":78,"completeSummary":true,"logSha256":"827090987368e0a368f1feec89ea9068480c595a741322fb5c3950bbafb078bc"}
+{"testProcess":"tests/uuid-model.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-model.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid-model.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":90,"completeSummary":true,"logSha256":"6c649b688d33d2ba083035c31eb8b24610a4713f083783b951bacc4512afd803"}
+
+
+tests/uuid-file-model.test.ts:
+(pass) file/model bundles retain unenforced Keys/relations and pair absence uses one nullable group [210.38ms]
+(pass) TableSpec refuses unqualified carriers; native pair group collisions and unsigned Avro refuse [2.69ms]
+(pass) native pair paths are explicit and named Avro types cannot collide with root Records [0.98ms]
+(pass) Parquet paired groups retain explicitly unsigned64 words without number conversion [10.14ms]
+(pass) TableSpec CSV requiredness remains an explicit residual and complete-row decode rejects native invalid data [7.98ms]
+
+ 5 pass
+ 0 fail
+ 81 expect() calls
+Ran 5 tests across 1 file. [10.71s]
+
+tests/uuid-mixed-model.test.ts:
+(pass) mixed flat records compose exact scalars with UUID carriers across five targets [312.93ms]
+(pass) nested arrays/maps and explicit groups preserve order, duplicates, null and empty [759.05ms]
+(pass) association attributes and identities survive; distinct endpoints, not link rows, determine multiplicity [2951.21ms]
+(pass) composition refuses malformed shapes and unsupported meaning atomically [82.06ms]
+(pass) association endpoint alternatives are exclusive and do not invent pair uniqueness [576.62ms]
+(pass) mixed scalar keys use exact mathematical equality and integer128 stays distinct from UUID [41.49ms]
+(pass) association bounds count distinct endpoints and include zero-degree records [707.44ms]
+(pass) composite mappings distinguish dynamic map values and refuse forged recovery reports [66.94ms]
+
+ 8 pass
+ 0 fail
+ 78 expect() calls
+Ran 8 tests across 1 file. [5.88s]
+
+tests/uuid-model.test.ts:
+(pass) complete model expands Keys, indexes and foreign keys into every paired slot [106.20ms]
+(pass) no unbound meaning, carrier mismatch, index cross-owner or foreign layout can disappear [8.29ms]
+(pass) declared participation/lifecycle and NULL defaults are residuals, never implicit enforcement [6.62ms]
+(pass) empty allowed-value declarations refuse before native output [0.55ms]
+(pass) full-row codecs cannot bypass unsupported target/carrier or native name checks [2.26ms]
+(pass) SQL Server filtered-index session conditions are part of the public model result and DDL [0.91ms]
+
+ 6 pass
+ 0 fail
+ 90 expect() calls
+Ran 6 tests across 1 file. [6.46s]
+
+ 19 pass
+ 0 fail
+ 249 expect() calls
+Ran 19 tests across 3 files. [23.13s]

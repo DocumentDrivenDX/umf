@@ -1,4 +1,4 @@
-import {buildAvroRelationshipCarrier,type AvroRelationshipCarrier} from '../../src/core-ideals/relationship-avro-carrier';
+import {buildAvroRelationshipCarrier, type AvroRelationshipCarrier} from '../../src/core-ideals/relationship-avro-carrier';
 const base:AvroRelationshipCarrier={recordName:'Order',namespace:'sales',fieldName:'customer',keyRecordName:'CustomerKey',shape:'one',components:[{name:'id',type:'long'}]};
 const rows:{id:string;request:AvroRelationshipCarrier;values:unknown[];expectedWrite:boolean;expectedValues:unknown[]}[]=[];
 function add(id:string,patch:Partial<AvroRelationshipCarrier>,values:unknown[],expectedWrite=true,expectedValues=values){rows.push({id,request:{...base,...patch},values,expectedWrite,expectedValues});}

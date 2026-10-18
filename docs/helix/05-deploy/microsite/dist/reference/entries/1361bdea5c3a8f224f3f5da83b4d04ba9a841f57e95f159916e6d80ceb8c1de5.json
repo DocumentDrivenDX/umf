@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 5,
+        "bytes": 1306,
+        "line": 7,
         "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "sha256": "74d776d2837c2476b1721eab933002b8526049cbae7368eb339022bef8306c71"
       }
     ],
     "entrypoint": ".",
     "exportName": "SCALAR_TYPES",
     "runtime": "unassessed",
     "signatureText": [
-      "SCALAR_TYPES=Object.freeze(['boolean','integer','decimal','float','string','binary','date','time','timestamp'] as const)"
+      "SCALAR_TYPES=Object.freeze(coreVocabulary.scalarType)"
     ]
   },
   "id": "[\"api\",\".\",\"SCALAR_TYPES\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 5,
+      "bytes": 1306,
+      "line": 7,
       "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "sha256": "74d776d2837c2476b1721eab933002b8526049cbae7368eb339022bef8306c71"
     }
   ],
-  "summary": "Value family only; native refinements determine the actual domain and behavior.",
+  "summary": "Shared model-owned current value families; native refinements remain separate.",
   "title": "SCALAR_TYPES"
 }

@@ -23,10 +23,10 @@
       "const": "0.1.0"
     },
     "base": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "source": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "events": {
       "type": "array",
@@ -125,7 +125,7 @@
                 "pattern": "^/modules/[0-9]+/elements/[0-9]+/references/[0-9]+$"
               },
               "reference": {
-                "$ref": "urn:umf:core:0.7.0#/$defs/reference",
+                "$ref": "urn:umf:core:0.10.0#/$defs/reference",
                 "properties": {
                   "role": {
                     "const": "record-type"

@@ -1,7 +1,8 @@
 import {scanJsonFrame} from './internal/scan-json-frame';
 import { parseDocument, isMap, isSeq, isScalar, isAlias, stringify } from 'yaml';
 import { copyJson, LIMITS, jsonValueLimit } from './json';
-import { UmfError, type Json, pointer } from './types';
+import {UmfError,pointer} from './errors';
+import type {Json} from './types';
 
 import {decimal,assertExactJsonNumber} from './internal/json-number';
 export {assertExactJsonNumber} from './internal/json-number';

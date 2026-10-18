@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9953,
-        "line": 30,
+        "bytes": 7556,
+        "line": 15,
         "path": "src/model/cardinality.ts",
-        "sha256": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651"
+        "sha256": "9b1c89d0528af524a56d115c3f0471250b9b9ecf04d020d8d9e132c3f90f3541"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreCardinalityDeclaration",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreCardinalityDeclaration {operation:'declare-core-cardinality';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0';source:Document;target:Document;identity:CoreCardinalityIdentity;request:CoreCardinalityRequest;provenance:{origin:'authored';idealPath:string;cardinality:Cardinality;binding:{id:'umf.core.cardinality.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'};basis:'explicit-author-declaration';nativePath:null}}"
+      "export interface CoreCardinalityDeclaration {operation:'declare-core-cardinality';version:'4.0.0';source:Document;target:Document;identity:CoreCardinalityIdentity;request:CoreCardinalityRequest;provenance:{origin:'authored';idealPath:string;cardinality:Cardinality;binding:{id:'umf.core.cardinality.authoring';version:'4.0.0'};basis:'explicit-author-declaration';nativePath:null}}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreCardinalityDeclaration\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9953,
-      "line": 30,
+      "bytes": 7556,
+      "line": 15,
       "path": "src/model/cardinality.ts",
-      "sha256": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651"
+      "sha256": "9b1c89d0528af524a56d115c3f0471250b9b9ecf04d020d8d9e132c3f90f3541"
     }
   ],
   "summary": "Type declaration · src/model/cardinality.ts",

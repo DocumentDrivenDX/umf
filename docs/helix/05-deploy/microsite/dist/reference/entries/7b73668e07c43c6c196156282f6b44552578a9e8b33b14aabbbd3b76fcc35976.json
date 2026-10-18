@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6188,
-        "line": 17,
-        "path": "src/validation/relationships.ts",
-        "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+        "bytes": 1361,
+        "line": 8,
+        "path": "src/validation/document.ts",
+        "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateRelationshipCandidate",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, validateBase?: boolean): Validation"
+      "(input: unknown, registry?: Registry, meter?: ConstraintMeter | undefined): Validation"
     ]
   },
   "id": "[\"api\",\".\",\"validateRelationshipCandidate\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6188,
-      "line": 17,
-      "path": "src/validation/relationships.ts",
-      "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+      "bytes": 1361,
+      "line": 8,
+      "path": "src/validation/document.ts",
+      "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
     }
   ],
-  "summary": "Explicit candidate validator; never reinterprets an older envelope.",
+  "summary": "Current structural admission followed by the authored ordered rule program.",
   "title": "validateRelationshipCandidate"
 }

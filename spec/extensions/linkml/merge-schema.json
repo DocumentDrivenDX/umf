@@ -24,7 +24,7 @@
                 "maxLength": 4096
               },
               "document": {
-                "$ref": "urn:umf:core:0.1.0"
+                "$ref": "urn:umf:core:0.10.0"
               }
             },
             "required": [
@@ -132,7 +132,7 @@
       }
     },
     "candidate": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "diagnostics": {
       "type": "array",

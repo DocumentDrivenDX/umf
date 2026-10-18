@@ -19,118 +19,78 @@ ddx:
       kind: informed_by
 ---
 
-# ADR-004: Schema-first typed data access SDK over UMF and Weft
+# ADR-004: One generated Python data access API
 
 ## Problem
 
-Python applications need typed, refactor-safe access to data described by UMF:
-models, queries, search and mutations, against raw Postgres, Lakebase and Unity
-Catalog/Spark tables as well as Truss ontologies and Ashlar publications. They
-must not hand-maintain types or SQL, must not run SQL built from customer input,
-and must not bypass Truss's or Ashlar's protected execution paths.
+Applications need typed reads, relationship traversal and actions over UMF
+schemas regardless of whether data lives in tables, an ontology or a remote
+service. Separate generated query functions for tables and direct clients for
+ontologies expose execution details as two application APIs.
 
 ## Decision
 
-Build a schema-first data access SDK in three layers:
+Generate one schema-derived model/query/action API for all storage backends.
+Developers compose expressions directly from `Model.objects` and generated
+field/relationship references. Key selection, filtering, ordering and traversal
+compose; terminals execute against an explicitly supplied client binding.
+Generated typed action methods use that same binding.
 
-1. **Generated types (CONTRACT-067/068/070).** A portable TypeScript generator in
-   UMF emits Pydantic models, Key DTOs, typed column and search-index
-   expressions, and typed action clients from UMF documents and the `umf.access`
-   extension.
-2. **Precompiled catalog (CONTRACT-071/074).** Developers declare queries,
-   searches and bulk commands in an expression-first Python DSL. A build step
-   captures them and compiles each through Weft for every selected target into a
-   checked-in catalog. At runtime only catalog entries execute, with validated
-   values bound as parameters.
-3. **Runtime targets (CONTRACT-072/073/069).** A hand-written `umf_access`
-   runtime defines target protocols. Raw-table targets run catalog statements on
-   the host's native SQL connection under the native SQL action profile; Truss
-   and Ashlar implement the same protocols over their own protected paths.
+No decorated query wrapper, separate parameter declaration or checked-in query
+catalog is required to make an ordinary read executable. The generated client
+builds typed request data and uses only the Python standard library. The host
+binding validates the request and owns execution, SQL lowering through Weft where
+applicable, bound parameters and storage-specific preparation/caching. Optional
+prepared/reusable queries must preserve the same public query semantics.
 
-Writes go only through UMF actions (CONTRACT-900) or catalog bulk commands.
+Typed expressions do not authorize execution. Backend capability checks,
+authorization, transactions, freshness and durable replay remain host obligations.
+Unsupported operations fail explicitly without silently weakening their meaning.
 
 ## Why We Chose This
 
-### Over a conventional ORM (SQLAlchemy ORM, Django, SQLModel)
+### Over mandatory generated query functions
 
-Change tracking, identity maps, lazy loading and `save()` would bypass Truss's
-protected mutations and do not exist on Spark. A single entity class also merges
-row, create and patch presence rules that UMF keeps distinct. The DSL borrows the
-naming of these libraries, not their execution model.
+The expression already names the schema, types and desired operation. Requiring
+an application-authored wrapper plus parameter declarations duplicates that
+information and makes table access unnecessarily different from ontology access.
+Precompilation can optimize or restrict a deployment internally without defining
+the universal public API.
 
-### Over runtime query building (SQLAlchemy Core, Polars or Ibis expressions executed directly)
+### Over storage-specific model APIs
 
-Runtime building would generate SQL from whatever code paths run in production.
-Precompiling every declaration through Weft at build time catches unsupported
-forms before deployment, keeps customer input in bound parameters, and lets the
-catalog be reviewed. Apex static SOQL and Scala Quill show the same trade-off.
+Table and ontology bindings can interpret the same typed requests. Applications
+should change their injected binding rather than rewrite reads and actions.
+Real differences in capabilities remain explicit errors or declared constraints.
 
-### Over string-based query languages (Django lookups, pandas `query`, Polars `col("x")`)
+### Over SQL strings or conventional ORM persistence
 
-String references defeat type checking and schema-driven refactoring. Every
-column, relationship and index is a generated typed attribute instead.
-
-### Over generating SQL in UMF
-
-Weft already owns logical SQL lowering for Truss and Ashlar. Adding raw-table
-backends to Weft keeps one lowering implementation per target.
-
-### Prior art: Palantir Ontology SDK
-
-The OSDK generates a per-application typed client from an ontology, allows writes
-only through named actions, and since 2.0 keeps the generated layer thin over a
-shared client library. This design follows those choices (generated code is typed
-classes plus metadata; validation and conversion live in `umf_access`). It differs
-in compiling queries at build time, in leaving authorization with the target
-platform (with a generated least-privilege report instead of a scoped platform
-token), and in stating null, ordering and exactness semantics explicitly.
-See [the OSDK research note](../../00-discover/research-palantir-osdk.md).
-
-### Over generating SQLAlchemy or PySpark mappings
-
-Those mappings are write paths in their own right and duplicate Weft's physical
-bindings. Generated code holds no table handles.
+Generated fields, relationships and entity keys keep refactoring/type checking
+schema-driven. Named actions preserve the host's mutation path without identity
+maps, lazy I/O, change tracking or generic save methods. Client values never
+become executable SQL text.
 
 ## Consequences
 
-**Good:**
+Developers learn one model/query/action surface. The shared generator and client
+are storage-independent, while backend code stays behind consumer bindings.
+A host compiling requests dynamically must validate every expression and bind
+values; build-only validation is no longer the universal safety boundary.
 
-- One schema drives types, queries, search and actions.
-- Errors move left in order: static type checking, catalog build, target
-  verification, value validation.
-- No runtime SQL from input.
-- Truss and Ashlar keep their protocols.
+Existing catalog/compiler/runtime work can support bindings or optional prepared
+queries. It must be adapted to the common API; its presence does not establish
+that the unified API is implemented. Tests must run unchanged application calls
+against table and ontology bindings, including unsupported-capability refusals.
 
-**Trade-offs:**
-
-- Two build stages (TypeScript generation, then Python capture and Weft
-  compilation).
-- The DSL can express only what Weft can lower for every selected target.
-- Bulk commands still call Weft at runtime to instantiate plans until Weft offers
-  plan templates.
-- A new Python distribution, `umf_access`, is maintained in UMF.
-
-**Dependencies:**
-
-- **Weft:** query-form extensions, raw-table backends for Postgres, Lakebase and
-  Spark/Unity Catalog, action and search lowering, and plan templates, requested in
-  [the Weft requirements](../../04-build/weft-requirements-typed-access.md). Weft is
-  the only SQL lowering; UMF builds no interim lowering and proceeds in parallel.
-- **Truss:** a public action admission path.
-- **Ashlar:** resolver-pinned read execution for adapters.
-
-**Drift signals:**
-
-- String column references.
-- Runtime SQL assembly.
-- Generated table handles or sessions.
-- Latest-table Ashlar reads.
-- Actions bypassing Truss admission.
-- Unsupported semantics disappearing from manifests.
+Drift signals: required `@query`/`Param` scaffolding, separate table/ontology
+call sites, model-global connection state, client SQL assembly or silently
+weakened backend guarantees.
 
 ## Concern Impact
 
-Retains ADR-002 for the TypeScript generator. Python is a target language plus
-the `umf_access` runtime distribution; this ADR selects that distribution and its
-optional extras. Exact dependency pins (Pydantic 2.14 or later, pinned pyright and
-mypy, drivers and platform versions) are recorded per profile and target.
+Retain ADR-002 for the TypeScript generator and browser execution. Generated
+Python is stdlib-only; backend drivers and compiler/runtime packages belong to
+consumer bindings. Exact values, unknown-content preservation and consumer-owned
+execution remain requirements. This replaces the earlier public requirement for
+Pydantic models and mandatory catalog capture; historical implementation evidence
+still describes the exact artifacts it tested.

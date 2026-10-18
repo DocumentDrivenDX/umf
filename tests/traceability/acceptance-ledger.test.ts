@@ -30,9 +30,35 @@ test('partial security citations never close the open backend acceptance gate', 
   expect(security.find(row=>row.id==='US-079-AC3')?.evidence.length).toBeGreaterThan(0);
 }, 60_000);
 
+test('partial native qualification cannot be promoted by functional test citations',async()=>{
+  const ledger=await buildAcceptanceLedger();
+  const policy=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/current-native-qualification.json').json();
+  expect(policy.criteria).toHaveLength(12);
+  for(const disposition of policy.criteria){
+    const row=ledger.criteria.find(item=>item.id===disposition.criterion);
+    expect(row?.status).toBe('UNTESTED');
+    expect(row?.evidence).toContain('docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json');
+  }
+  expect(ledger.criteria.find(row=>row.id==='US-045-AC9')?.evidence.some(path=>path.startsWith('tests/'))).toBe(true);
+  expect(ledger.criteria.find(row=>row.id==='US-045-AC1')?.status).toBe('SATISFIED');
+},60_000);
+
 test('the PostgreSQL generator browser-parity criterion retains reviewed harness evidence', async () => {
   const ledger = await buildAcceptanceLedger();
   const row = ledger.criteria.find(item => item.id === 'US-048-AC9');
   expect(row?.status).toBe('REVIEWED_EXCEPTION');
   expect(row?.evidence.some(path => path.startsWith('scripts/projections/ddd-postgresql-browser.ts:'))).toBe(true);
 }, 60_000);
+
+test('retired core migration criteria cannot become satisfied through current citations',async()=>{
+  const ledger=await buildAcceptanceLedger();
+  for(let story=40;story<=45;story++){
+    const prefix=`US-${String(story).padStart(3,'0')}`;
+    const row=ledger.criteria.find(item=>item.id===prefix+'-AC10');
+    expect(row?.status).toBe('REVIEWED_EXCEPTION');
+    expect(row?.evidence).toContain('docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md');
+    expect(row?.rationale).toContain('historical');
+    expect(ledger.criteria.find(item=>item.id===prefix+'-AC1')?.rationale).not.toContain('ADR-005 retires');
+  }
+  expect(ledger.criteria.find(item=>item.id==='US-045-AC1')?.status).toBe('SATISFIED');
+},60_000);

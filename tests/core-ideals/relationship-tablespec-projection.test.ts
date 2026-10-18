@@ -1,8 +1,8 @@
 import {test,expect} from 'bun:test';
-import {projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources} from '../../src/core-ideals/relationship-tablespec-projection';
-import {classifyTableSpecRelationships,recoverTableSpecRelationshipSource} from '../../src/core-ideals/relationship-tablespec';
-import {importTableSpec,exportTableSpec,importTableSpecBundle,exportTableSpecBundle,getTableSpecTable} from '../../src/adapters/tablespec';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {projectRelationshipToTableSpec, verifyRelationshipTableSpecProjection, recoverRelationshipTableSpecIdeal, recoverRelationshipTableSpecNativeSources} from '../../src/core-ideals/relationship-tablespec-projection';
+import {classifyTableSpecRelationships, recoverTableSpecRelationshipSource} from '../../src/core-ideals/relationship-tablespec';
+import {importTableSpec, exportTableSpec, importTableSpecBundle, exportTableSpecBundle, getTableSpecTable} from '../../src/adapters/tablespec';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {relationshipTableSpecProjectionCases,relationshipTableSpecCase} from '../../scripts/core-ideals/relationship-tablespec-projection-cases';
 const archive=(d:any)=>d.extensions['umf.tablespec'].splitFiles?exportTableSpecBundle(d):exportTableSpec(d);
 // @covers US-045-AC4

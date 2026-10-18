@@ -1,13 +1,12 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata} from '../adapters/sqlserver';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import core from '../../spec/core/cardinality-document.schema.json';
+
+import core from '../../spec/core/schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/sqlserver-cardinality-classification.schema.json';
 import manifest from '../../spec/extensions/sqlserver-cardinality/package.json';
@@ -23,7 +22,7 @@ export interface SqlServerCardinalityClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;cardinality:Cardinality;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'approximated'|'unknown'|'not-expressible';basis:typeof basis};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,core,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const str=(n:NativeJson|undefined)=>n?.kind==='string'?n.value:undefined;
@@ -32,7 +31,7 @@ const falseFlag=(n:NativeJson|undefined)=>n?.kind==='boolean'&&!n.value;
 export function classifySqlServerCardinality(input:Document,options:SqlServerCardinalityRequest):SqlServerCardinalityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as SqlServerCardinalityRequest;
  if(!checkRequest(request))throw new UmfError('SQLSERVER_CARDINALITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(source.umf!=='0.4.0'||!validateDocument(source).valid)throw new UmfError('SQLSERVER_CARDINALITY_SOURCE','Valid core 0.4.0 required; migrate explicitly');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('SQLSERVER_CARDINALITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const root=parseNativeJson(request.nativeSource);
  if(renderTree(root)+'\n'!==exportSqlServerCatalog(source))throw new UmfError('SQLSERVER_CARDINALITY_ARCHIVE','Native text differs from retained capture');
  if(root.kind!=='object'||str(root.members.serverVersion)!=='16.0.4295.3'||str(root.members.profile)!=='sqlserver-catalog-v3'||str(root.members.state)!=='captured')throw new UmfError('SQLSERVER_CARDINALITY_PROFILE','Pinned captured catalog-v3 required');

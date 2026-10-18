@@ -1,13 +1,12 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage,type Element} from '../model/types';
 import {exportParquetCapture} from '../adapters/parquet';
 import {inspectParquetCardinalityShape,type ParquetCardinalityNode} from './parquet-cardinality-shape';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import core from '../../spec/core/cardinality-document.schema.json';
+
+import core from '../../spec/core/schema.json';
 import schema from '../../spec/core/parquet-cardinality-classification.schema.json';
 import manifest from '../../spec/extensions/parquet-cardinality/package.json';
 export const PARQUET_CARDINALITY_EXTENSION='umf.parquet.cardinality';
@@ -22,14 +21,14 @@ export interface ParquetCardinalityClassification {
  mapping:{origin:'classified';cardinality:Cardinality;outcome:'exact'|'approximated'|'unknown';basis:typeof basis;nodes:Node[]};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,core])validator.addSchema(s);
+const validator=createValidator();for(const s of [core])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 /** Publish logical Fields while retaining the physical archive and all existing meaning. */
 export function classifyParquetCardinality(input:Document,options:ParquetCardinalityRequest):ParquetCardinalityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as ParquetCardinalityRequest;
  if(!checkRequest(request))throw new UmfError('PARQUET_CARDINALITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(source.umf!=='0.4.0'||!validateDocument(source).valid)throw new UmfError('PARQUET_CARDINALITY_SOURCE','Valid core 0.4.0 required; migrate explicitly');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('PARQUET_CARDINALITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const original=exportParquetCapture(source),shape=inspectParquetCardinalityShape(source,request.index);
  const observed:ParquetCardinalityNode[]=request.profile==='present-value-schema'?shape.nodes:[{
   index:request.index,path:shape.nodes[0]!.path,nativeFragment:shape.nodes[0]!.nativeFragment,

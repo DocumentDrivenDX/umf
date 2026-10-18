@@ -21,7 +21,7 @@ def fixture():
   if kind=='hash':transform.update(algorithm='sha256-utf8-lowerhex',saltCustody=dict(kind='none'))
   transforms.append(transform);bindings.append(dict(transform=dict(id=name,version='1'),column=incoming,outputColumn=name))
  elements.append(dict(id='Resource',kind='record',members=[dict(module='m',element=n) for n in ['resource_id',*inputs]],keys=[dict(id='pk',name='Primary',fields=[dict(module='m',element='resource_id')])],extensions={}))
- document=dict(umf='0.8.0',id='pg18-protection',vocabularies={},modules=[dict(id='m',namespace='',elements=elements)])
+ document=dict(umf='0.10.0',id='pg18-protection',vocabularies={},modules=[dict(id='m',namespace='',elements=elements)])
  return dict(catalog=dict(vocabulary='umf.security.protection',version='0.1.0',id='pg18-catalog',revision='c1',transforms=transforms,native=dict(archive='opaque retained\r\n😀')),closure=dict(pins=[dict(documentId=document['id'],revision='d1')],documents=[dict(revision='d1',document=document)]),profile=dict(version='umf.security.pg18-catalog-projection/0.1',catalog=dict(id='pg18-catalog',revision='c1'),source=dict(schema='security_projection',table='resource',view='disclosed'),resource=dict(type=REF('Resource'),keyField=REF('resource_id'),keyColumn='id'),bindings=bindings))
 def scalar(row,family,name=None):return row.get('fields',{}).get(name,row[{'string':'text','integer':'integer','decimal':'decimal','date':'day'}[family]])
 def expected_value(row,name,kind,function,params,family):

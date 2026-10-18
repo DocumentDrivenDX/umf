@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -204,7 +204,7 @@
                   "members": {
                     "$ref": {
                       "kind": "string",
-                      "value": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+                      "value": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
                     }
                   }
                 },
@@ -1155,7 +1155,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.6.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1182,7 +1182,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1256,15 +1256,14 @@
   "id": "[\"schema\",\"spec/core/key-postgresql-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8866,
+      "bytes": 8868,
       "path": "spec/core/key-postgresql-projection.schema.json",
-      "sha256": "b5cf3d0cab8e128ed225c855bec1ce1cd19d8ced578a65c291f4807d84c317fe"
+      "sha256": "3025f2fa4a92b46ce0c44a52527b75819b4fd1c9b749bd1341d791aadcdb76c0"
     }
   ],
   "summary": "spec/core/key-postgresql-projection.schema.json",

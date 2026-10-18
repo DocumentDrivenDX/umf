@@ -30,32 +30,10 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "binding": {
-      "anyOf": [
-        {
-          "$ref": "urn:umf:core:0.1.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.2.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.3.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.4.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.5.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.6.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.7.0"
-        }
-      ]
+      "$ref": "urn:umf:core:0.10.0"
     },
     "policy": {
       "$ref": "urn:umf:ddd-postgresql-policy:1.0.0"
@@ -191,29 +169,7 @@
       "minLength": 1
     },
     "targetArchive": {
-      "anyOf": [
-        {
-          "$ref": "urn:umf:core:0.1.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.2.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.3.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.4.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.5.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.6.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.7.0"
-        }
-      ]
+      "$ref": "urn:umf:core:0.10.0"
     }
   },
   "allOf": [

@@ -1,0 +1,424 @@
+{"testProcess":"tests/projections/json-schema-protobuf.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/projections/json-schema-protobuf.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/projections/json-schema-protobuf.test.ts:
+(pass) US-004-AC1: explicit mapping reports every unsupported constraint and retains exact source [1120.79ms]
+(pass) US-004-AC2: strict policy, missing/conflicting bindings and ambiguous shapes block explicitly [262.16ms]
+(pass) US-004-AC3: nested referenced objects compile without merging native identity [796.32ms]
+(pass) US-004-AC4: independent target compiler/runtime demonstrates reported source-to-target mismatches [1776.74ms]
+(pass) US-004-AC2: unknown dialect and nested resource scope cannot be guessed away [58.63ms]
+
+ 5 pass
+ 0 fail
+ 43 expect() calls
+Ran 5 tests across 1 file. [14.74s]
+{"testProcess":"tests/projections/json-schema-protobuf.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":43,"completeSummary":true,"logSha256":"036884fad58c9b10156998f232a814f1d3a98634b37095cb31a92085fe5dcbd2"}
+{"testProcess":"tests/projections/postgresql-relationship-layout.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/projections/postgresql-relationship-layout.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/projections/postgresql-relationship-layout.test.ts:
+(pass) @covers US-048-AC3 @covers US-048-AC4 @covers US-048-AC8: exact endpoint policy matrix validates atomically and retains every source [4222.79ms]
+(pass) policy result copies retained sources and candidate; NULL composite is explicitly residualized [1473.58ms]
+(pass) reordered composite endpoint and extra maps refuse, including duplicated aliases [1931.04ms]
+(pass) public validator does not invoke hostile getters [62.29ms]
+(pass) anonymous carrier cannot collide with backing Key or declared index relations [1739.06ms]
+(pass) unknown qualifier residual carries the exact pointed value and retains full source separately [93.72ms]
+(pass) canonical identifiers and SQL types reject terminal line separators [901.75ms]
+(pass) published policy and complete result schemas reject partial success and candidate leakage [263.80ms]
+(pass) shared edge cannot switch unconditional FK endpoint identity with its discriminator [1933.96ms]
+
+ 9 pass
+ 0 fail
+ 317 expect() calls
+Ran 9 tests across 1 file. [18.20s]
+{"testProcess":"tests/projections/postgresql-relationship-layout.test.ts","exitCode":0,"pass":9,"fail":0,"assertions":317,"completeSummary":true,"logSha256":"b3f250c9dd95643a8665fbd4429ff2839147b502f387de4b25a32d8949394a31"}
+{"testProcess":"tests/relationship-native/observations.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/relationship-native/observations.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/relationship-native/observations.test.ts:
+(pass) CONTRACT-041: native observations retain browser recovery evidence [0.38ms]
+(pass) CONTRACT-041: RDF union-class domain is retained without authored inference [80.35ms]
+(pass) CONTRACT-041: RDF domain and range remain native observations [56.41ms]
+(pass) CONTRACT-041: TableSpec foreign-key metadata stays a native observation [44.22ms]
+(pass) CONTRACT-041: LinkML slot and range remain native observations [167.53ms]
+
+ 5 pass
+ 0 fail
+ 31 expect() calls
+Ran 5 tests across 1 file. [6.75s]
+{"testProcess":"tests/relationship-native/observations.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":31,"completeSummary":true,"logSha256":"c53e769f1a57aef9b35ef86afbe307490dcb8575238792c2a053509869136036"}
+{"testProcess":"tests/smithy/assembly.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/assembly.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/assembly.test.ts:
+(pass) US-014-AC10: assembly contract retains exact model/source and isolates trusted backend input [94.93ms]
+(pass) US-014-AC11: native rejection, runtime errors and malformed output expose no assembled model [152.37ms]
+(pass) US-014-AC10: AST dependency IDs map to explicit supplied native files [42.87ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [4.56s]
+{"testProcess":"tests/smithy/assembly.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"641d13860eeb17ec5fcb4617812f10444cbcf981f039b6f400347ec97d8bf8b9"}
+{"testProcess":"tests/smithy/bundle.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/bundle.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/bundle.test.ts:
+(pass) US-014-AC5: supplied dependency models survive bundle and UMF round trips [263.18ms]
+(pass) US-014-AC6: duplicate IDs, malformed dependency AST and unknown representation are explicit [90.23ms]
+
+ 2 pass
+ 0 fail
+ 16 expect() calls
+Ran 2 tests across 1 file. [5.27s]
+{"testProcess":"tests/smithy/bundle.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":16,"completeSummary":true,"logSha256":"53bd22adbbbb372433ffb846140034c477890b45b980e528bcc38e4b0135e2d9"}
+{"testProcess":"tests/smithy/native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/native.test.ts:
+(pass) US-014-AC1: exact native metadata and recursive service shapes survive JSON/YAML [175.76ms]
+(pass) US-014-AC2: unknown native meaning survives; unknown representation blocks export [55.91ms]
+(pass) US-014-AC3: every pinned upstream valid-loader JSON fixture round-trips [2763.58ms]
+
+ 3 pass
+ 0 fail
+ 142 expect() calls
+Ran 3 tests across 1 file. [7.35s]
+{"testProcess":"tests/smithy/native.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":142,"completeSummary":true,"logSha256":"af378482d026427cc8af889e49d87342d042c975bac413d44722a56db3e74154"}
+{"testProcess":"tests/smithy/projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/projection.test.ts:
+(pass) US-014-AC16: explicit native projection retains source and blocks strict claims [181.34ms]
+(pass) US-014-AC16: dangling native references and failed emission cannot expose a target [218.21ms]
+(pass) US-014-AC17: explicit root-definition profile retains both outputs and refuses missing capability [260.40ms]
+(pass) US-014-AC18: service context is explicit, preserved and capability checked [190.93ms]
+
+ 4 pass
+ 0 fail
+ 40 expect() calls
+Ran 4 tests across 1 file. [4.94s]
+{"testProcess":"tests/smithy/projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":40,"completeSummary":true,"logSha256":"c61dc3c065565f22e1945e5ad039c7c869c3dc304204036e62dc7684e8fa5309"}
+{"testProcess":"tests/smithy/selection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/selection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/selection.test.ts:
+(pass) US-014-AC14: shape-set query preserves source and validates complete result schema [117.85ms]
+(pass) US-014-AC14: invalid responses, failed assembly and selector exceptions expose no shape set [218.70ms]
+(pass) US-014-AC15: cancellation between assembly and selection prevents query results [84.94ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [6.03s]
+{"testProcess":"tests/smithy/selection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"f3ce07b185cfaf2ac234f7f297517c86a29937ae5e701adfda005ee028736add"}
+{"testProcess":"tests/smithy/sources.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/sources.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/sources.test.ts:
+(pass) US-014-AC7: IDL/JSON source bundles preserve exact text and candidate edits [239.43ms]
+(pass) US-014-AC8: source path constraints and unknown representation remain explicit [81.72ms]
+(pass) US-014-AC9: all pinned valid-loader IDL fixtures survive exact source round trips [3221.22ms]
+(pass) US-014-AC13: pinned invalid-loader inventory and every fixture hash remain intact [201.88ms]
+(pass) US-014-AC13: apply/apply-block-missing-closing.smithy retains exact source without claiming validity [61.48ms]
+(pass) US-014-AC13: apply/apply-missing-newline.smithy retains exact source without claiming validity [53.36ms]
+(pass) US-014-AC13: apply/apply-missing-space.smithy retains exact source without claiming validity [71.50ms]
+(pass) US-014-AC13: apply/apply-missing-trait-value.smithy retains exact source without claiming validity [63.44ms]
+(pass) US-014-AC13: control/control-colon-newline.smithy retains exact source without claiming validity [63.41ms]
+(pass) US-014-AC13: control/control-missing-value.smithy retains exact source without claiming validity [73.27ms]
+(pass) US-014-AC13: control/control-newline.smithy retains exact source without claiming validity [67.51ms]
+(pass) US-014-AC13: control/control-statement-before-others.smithy retains exact source without claiming validity [59.58ms]
+(pass) US-014-AC13: control/control-version-defined-twice.smithy retains exact source without claiming validity [66.24ms]
+(pass) US-014-AC13: control/control-with-invalid-key.smithy retains exact source without claiming validity [62.30ms]
+(pass) US-014-AC13: control/control-with-invalid-key2.smithy retains exact source without claiming validity [68.03ms]
+(pass) US-014-AC13: control/control-with-no-colon.smithy retains exact source without claiming validity [61.20ms]
+(pass) US-014-AC13: control/no-newline-after-control.smithy retains exact source without claiming validity [67.73ms]
+(pass) US-014-AC13: defaults/default-in-v1.smithy retains exact source without claiming validity [60.74ms]
+(pass) US-014-AC13: defaults/default-incomplete-node.smithy retains exact source without claiming validity [62.62ms]
+(pass) US-014-AC13: defaults/default-missing-structure-close.smithy retains exact source without claiming validity [54.37ms]
+(pass) US-014-AC13: defaults/default-missing-value.smithy retains exact source without claiming validity [55.54ms]
+(pass) US-014-AC13: defaults/default-with-newline-before-value.smithy retains exact source without claiming validity [57.65ms]
+(pass) US-014-AC13: defaults/missing-newline-after-assignment.smithy retains exact source without claiming validity [53.54ms]
+(pass) US-014-AC13: elision/elide-nonexistent-id.smithy retains exact source without claiming validity [62.56ms]
+(pass) US-014-AC13: elision/elided-property-type-conflicts.smithy retains exact source without claiming validity [53.76ms]
+(pass) US-014-AC13: elision/elided-type-conflicts.smithy retains exact source without claiming validity [57.93ms]
+(pass) US-014-AC13: elision/eliding-with-resources-in-v1.smithy retains exact source without claiming validity [53.09ms]
+(pass) US-014-AC13: elision/eliding-without-resources-v1.smithy retains exact source without claiming validity [60.87ms]
+(pass) US-014-AC13: elision/for-after-with.smithy retains exact source without claiming validity [52.27ms]
+(pass) US-014-AC13: elision/for-referencing-non-resource.smithy retains exact source without claiming validity [58.71ms]
+(pass) US-014-AC13: elision/list-member-elision-in-v1.smithy retains exact source without claiming validity [57.28ms]
+(pass) US-014-AC13: elision/structure-member-elision-in-v1.smithy retains exact source without claiming validity [57.20ms]
+(pass) US-014-AC13: enums/enum-with-bad-values.smithy retains exact source without claiming validity [63.47ms]
+(pass) US-014-AC13: enums/enum-with-duplicates.smithy retains exact source without claiming validity [65.21ms]
+(pass) US-014-AC13: enums/enum-with-newline-before-value.smithy retains exact source without claiming validity [53.79ms]
+(pass) US-014-AC13: enums/enum-without-member.smithy retains exact source without claiming validity [57.96ms]
+(pass) US-014-AC13: enums/idl-enums-in-v1.smithy retains exact source without claiming validity [52.21ms]
+(pass) US-014-AC13: enums/int-enum-without-member.smithy retains exact source without claiming validity [59.01ms]
+(pass) US-014-AC13: enums/intEnum-with-bad-value.smithy retains exact source without claiming validity [56.16ms]
+(pass) US-014-AC13: enums/intEnum-with-duplicates.smithy retains exact source without claiming validity [53.60ms]
+(pass) US-014-AC13: enums/intEnum-with-float.smithy retains exact source without claiming validity [51.60ms]
+(pass) US-014-AC13: enums/intEnum-with-long.smithy retains exact source without claiming validity [55.99ms]
+(pass) US-014-AC13: enums/missing-newline-after-assignment.smithy retains exact source without claiming validity [47.07ms]
+(pass) US-014-AC13: inline-io/inline-error.smithy retains exact source without claiming validity [59.76ms]
+(pass) US-014-AC13: inline-io/inline-io-in-explicit-1-0.smithy retains exact source without claiming validity [51.56ms]
+(pass) US-014-AC13: inline-io/inline-io-in-implicit-1-0.smithy retains exact source without claiming validity [59.19ms]
+(pass) US-014-AC13: inline-io/inline-name-override.smithy retains exact source without claiming validity [54.90ms]
+(pass) US-014-AC13: inline-io/inline-single-error.smithy retains exact source without claiming validity [52.67ms]
+(pass) US-014-AC13: inline-io/inline-structure-member.smithy retains exact source without claiming validity [53.79ms]
+(pass) US-014-AC13: inline-io/walrus-operator-in-node.smithy retains exact source without claiming validity [52.50ms]
+(pass) US-014-AC13: lists/list-empty-members.smithy retains exact source without claiming validity [51.62ms]
+(pass) US-014-AC13: lists/no-sets-in-v2.smithy retains exact source without claiming validity [59.23ms]
+(pass) US-014-AC13: lists/set-empty-members.smithy retains exact source without claiming validity [56.55ms]
+(pass) US-014-AC13: maps/map-empty-members.smithy retains exact source without claiming validity [51.87ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters1.smithy retains exact source without claiming validity [56.60ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters2.smithy retains exact source without claiming validity [56.34ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters3.smithy retains exact source without claiming validity [59.53ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters4.smithy retains exact source without claiming validity [56.04ms]
+(pass) US-014-AC13: metadata/invalid-object-shape-id-key.smithy retains exact source without claiming validity [53.30ms]
+(pass) US-014-AC13: metadata/invalid-object-text-block-key.smithy retains exact source without claiming validity [71.33ms]
+(pass) US-014-AC13: metadata/invalid-unquoted-shape-id.smithy retains exact source without claiming validity [50.76ms]
+(pass) US-014-AC13: metadata/metadata-multiple-lines.smithy retains exact source without claiming validity [60.98ms]
+(pass) US-014-AC13: metadata/metadata-must-come-before-namespace.smithy retains exact source without claiming validity [55.49ms]
+(pass) US-014-AC13: metadata/metadata-with-invalid-key.smithy retains exact source without claiming validity [57.03ms]
+(pass) US-014-AC13: metadata/no-newline-after-metadata.smithy retains exact source without claiming validity [50.97ms]
+(pass) US-014-AC13: metadata/not-newline-after-metadata.smithy retains exact source without claiming validity [48.95ms]
+(pass) US-014-AC13: metadata/space-after-metadata-quoted.smithy retains exact source without claiming validity [47.38ms]
+(pass) US-014-AC13: metadata/space-after-metadata-unquoted.smithy retains exact source without claiming validity [49.74ms]
+(pass) US-014-AC13: metadata/space-after-node-array-keyword.smithy retains exact source without claiming validity [52.06ms]
+(pass) US-014-AC13: mixins/dangling-with.smithy retains exact source without claiming validity [50.03ms]
+(pass) US-014-AC13: mixins/invalid-statement-after-structure-name.smithy retains exact source without claiming validity [50.27ms]
+(pass) US-014-AC13: mixins/member-mixin-conflict-1.smithy retains exact source without claiming validity [49.61ms]
+(pass) US-014-AC13: mixins/member-mixin-conflict-2.smithy retains exact source without claiming validity [48.21ms]
+(pass) US-014-AC13: mixins/missing-rest-of-with-word.smithy retains exact source without claiming validity [48.78ms]
+(pass) US-014-AC13: mixins/mix-types.smithy retains exact source without claiming validity [55.42ms]
+(pass) US-014-AC13: mixins/mixins-trait-in-explicit-1-0.smithy retains exact source without claiming validity [59.66ms]
+(pass) US-014-AC13: mixins/mixins-trait-in-implicit-1-0.smithy retains exact source without claiming validity [60.25ms]
+(pass) US-014-AC13: mixins/mixins-usage-in-explicit-1-0.smithy retains exact source without claiming validity [58.87ms]
+(pass) US-014-AC13: mixins/mixins-usage-in-implicit-1-0.smithy retains exact source without claiming validity [68.63ms]
+(pass) US-014-AC13: mixins/operation-mixin-with-io.smithy retains exact source without claiming validity [52.16ms]
+(pass) US-014-AC13: mixins/resource-mixin-with-properties.smithy retains exact source without claiming validity [65.03ms]
+(pass) US-014-AC13: mixins/with-but-no-ids.smithy retains exact source without claiming validity [51.01ms]
+(pass) US-014-AC13: mixins/with-on-next-line-bigDecimal.smithy retains exact source without claiming validity [55.73ms]
+(pass) US-014-AC13: mixins/with-on-next-line-bigInteger.smithy retains exact source without claiming validity [55.59ms]
+(pass) US-014-AC13: mixins/with-on-next-line-blob.smithy retains exact source without claiming validity [51.02ms]
+(pass) US-014-AC13: mixins/with-on-next-line-boolean.smithy retains exact source without claiming validity [54.93ms]
+(pass) US-014-AC13: mixins/with-on-next-line-byte.smithy retains exact source without claiming validity [52.98ms]
+(pass) US-014-AC13: mixins/with-on-next-line-document.smithy retains exact source without claiming validity [50.41ms]
+(pass) US-014-AC13: mixins/with-on-next-line-double.smithy retains exact source without claiming validity [49.52ms]
+(pass) US-014-AC13: mixins/with-on-next-line-float.smithy retains exact source without claiming validity [51.13ms]
+(pass) US-014-AC13: mixins/with-on-next-line-integer.smithy retains exact source without claiming validity [49.55ms]
+(pass) US-014-AC13: mixins/with-on-next-line-list.smithy retains exact source without claiming validity [57.98ms]
+(pass) US-014-AC13: mixins/with-on-next-line-long.smithy retains exact source without claiming validity [52.51ms]
+(pass) US-014-AC13: mixins/with-on-next-line-map.smithy retains exact source without claiming validity [53.30ms]
+(pass) US-014-AC13: mixins/with-on-next-line-resource.smithy retains exact source without claiming validity [52.05ms]
+(pass) US-014-AC13: mixins/with-on-next-line-service.smithy retains exact source without claiming validity [57.42ms]
+(pass) US-014-AC13: mixins/with-on-next-line-short.smithy retains exact source without claiming validity [50.11ms]
+(pass) US-014-AC13: mixins/with-on-next-line-string.smithy retains exact source without claiming validity [75.02ms]
+(pass) US-014-AC13: mixins/with-on-next-line-structure.smithy retains exact source without claiming validity [57.70ms]
+(pass) US-014-AC13: mixins/with-on-next-line-timestamp.smithy retains exact source without claiming validity [56.77ms]
+(pass) US-014-AC13: mixins/with-on-next-line-union.smithy retains exact source without claiming validity [61.95ms]
+(pass) US-014-AC13: namespace/namespace-before-shapes.smithy retains exact source without claiming validity [57.75ms]
+(pass) US-014-AC13: namespace/namespace-before-traits.smithy retains exact source without claiming validity [59.63ms]
+(pass) US-014-AC13: namespace/namespace-defined-twice.smithy retains exact source without claiming validity [62.85ms]
+(pass) US-014-AC13: namespace/namespace-multiple-lines.smithy retains exact source without claiming validity [49.43ms]
+(pass) US-014-AC13: namespace/namespace-no-newline.smithy retains exact source without claiming validity [56.35ms]
+(pass) US-014-AC13: namespace/namespace-syntax-error.smithy retains exact source without claiming validity [51.63ms]
+(pass) US-014-AC13: namespace/unclosed-string1.smithy retains exact source without claiming validity [53.12ms]
+(pass) US-014-AC13: namespace/unclosed-string2-invalid-single-quote.smithy retains exact source without claiming validity [57.91ms]
+(pass) US-014-AC13: namespace/unclosed-string3.smithy retains exact source without claiming validity [48.18ms]
+(pass) US-014-AC13: numbers/decimal-with-no-digit-after.smithy retains exact source without claiming validity [46.00ms]
+(pass) US-014-AC13: numbers/exponent-with-no-digit.smithy retains exact source without claiming validity [59.73ms]
+(pass) US-014-AC13: numbers/exponent-with-sign-then-no-digit.smithy retains exact source without claiming validity [52.62ms]
+(pass) US-014-AC13: numbers/leading-decimal.smithy retains exact source without claiming validity [58.21ms]
+(pass) US-014-AC13: numbers/negative-with-no-digit.smithy retains exact source without claiming validity [60.29ms]
+(pass) US-014-AC13: operations/input-defined-twice.smithy retains exact source without claiming validity [67.61ms]
+(pass) US-014-AC13: operations/invalid-operation-properties.smithy retains exact source without claiming validity [64.80ms]
+(pass) US-014-AC13: operations/missing-ws-after-input.smithy retains exact source without claiming validity [53.39ms]
+(pass) US-014-AC13: parse-errors/absolute-shape-name.smithy retains exact source without claiming validity [49.30ms]
+(pass) US-014-AC13: parse-errors/expected-shape-id-after-type.smithy retains exact source without claiming validity [56.79ms]
+(pass) US-014-AC13: parse-errors/expected-shape-name-but-eof.smithy retains exact source without claiming validity [53.11ms]
+(pass) US-014-AC13: parse-errors/invalid-newline-after-shape-type.smithy retains exact source without claiming validity [54.67ms]
+(pass) US-014-AC13: parse-errors/missing-space-after-string.smithy retains exact source without claiming validity [60.61ms]
+(pass) US-014-AC13: parse-errors/missing-space-after-structure.smithy retains exact source without claiming validity [52.94ms]
+(pass) US-014-AC13: parse-errors/shape-name-syntax.smithy retains exact source without claiming validity [62.46ms]
+(pass) US-014-AC13: parse-errors/shape-name-syntax2.smithy retains exact source without claiming validity [56.49ms]
+(pass) US-014-AC13: parse-errors/shape-name-syntax3.smithy retains exact source without claiming validity [60.38ms]
+(pass) US-014-AC13: parse-errors/statement-unknown.smithy retains exact source without claiming validity [55.40ms]
+(pass) US-014-AC13: parse-errors/syntax-error-token.smithy retains exact source without claiming validity [57.06ms]
+(pass) US-014-AC13: strings/invalid-escape-apostrophe.smithy retains exact source without claiming validity [51.11ms]
+(pass) US-014-AC13: strings/invalid-escape-space.smithy retains exact source without claiming validity [56.85ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape.smithy retains exact source without claiming validity [59.00ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape2.smithy retains exact source without claiming validity [75.82ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape3.smithy retains exact source without claiming validity [60.86ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape4.smithy retains exact source without claiming validity [54.89ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape5.smithy retains exact source without claiming validity [63.03ms]
+(pass) US-014-AC13: strings/text-block-empty.smithy retains exact source without claiming validity [50.36ms]
+(pass) US-014-AC13: strings/text-block-invalid-unicode.smithy retains exact source without claiming validity [64.47ms]
+(pass) US-014-AC13: strings/text-block-missing-newline.smithy retains exact source without claiming validity [55.30ms]
+(pass) US-014-AC13: strings/unclosed-string.smithy retains exact source without claiming validity [47.93ms]
+(pass) US-014-AC13: strings/unclosed-string2.smithy retains exact source without claiming validity [54.50ms]
+(pass) US-014-AC13: strings/unclosed-string3.smithy retains exact source without claiming validity [60.48ms]
+(pass) US-014-AC13: strings/unclosed-text-block.smithy retains exact source without claiming validity [53.92ms]
+(pass) US-014-AC13: traits/annotation-invalid-object-key1.smithy retains exact source without claiming validity [64.81ms]
+(pass) US-014-AC13: traits/annotation-invalid-object-key2.smithy retains exact source without claiming validity [56.39ms]
+(pass) US-014-AC13: traits/annotation-invalid-object-key3.smithy retains exact source without claiming validity [61.65ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list1.smithy retains exact source without claiming validity [53.70ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list2.smithy retains exact source without claiming validity [61.44ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list3.smithy retains exact source without claiming validity [53.99ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list4.smithy retains exact source without claiming validity [67.82ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object1.smithy retains exact source without claiming validity [61.08ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object2.smithy retains exact source without claiming validity [64.43ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object3.smithy retains exact source without claiming validity [54.91ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object4.smithy retains exact source without claiming validity [62.80ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object5.smithy retains exact source without claiming validity [64.35ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object6.smithy retains exact source without claiming validity [67.64ms]
+(pass) US-014-AC13: traits/invalid-trait-shape-id-key.smithy retains exact source without claiming validity [57.12ms]
+(pass) US-014-AC13: traits/invalid-trait-textblock-key.smithy retains exact source without claiming validity [57.47ms]
+(pass) US-014-AC13: traits/trait-name-syntax.smithy retains exact source without claiming validity [54.10ms]
+(pass) US-014-AC13: traits/trait-on-eof.smithy retains exact source without claiming validity [49.57ms]
+(pass) US-014-AC13: traits/trait-trailing.smithy retains exact source without claiming validity [52.61ms]
+(pass) US-014-AC13: traits/traits-on-apply.smithy retains exact source without claiming validity [51.26ms]
+(pass) US-014-AC13: traits/traits-on-metadata.smithy retains exact source without claiming validity [52.82ms]
+(pass) US-014-AC13: traits/traits-on-namespace.smithy retains exact source without claiming validity [50.28ms]
+(pass) US-014-AC13: use/conflicting-shape-def.smithy retains exact source without claiming validity [55.28ms]
+(pass) US-014-AC13: use/conflicting-trait-def.smithy retains exact source without claiming validity [53.36ms]
+(pass) US-014-AC13: use/conflicting-use.smithy retains exact source without claiming validity [64.87ms]
+(pass) US-014-AC13: use/use-after-shape.smithy retains exact source without claiming validity [66.11ms]
+(pass) US-014-AC13: use/use-after-traitdef.smithy retains exact source without claiming validity [56.32ms]
+(pass) US-014-AC13: use/use-empty-namespace.smithy retains exact source without claiming validity [63.91ms]
+(pass) US-014-AC13: use/use-invalid-namespace.smithy retains exact source without claiming validity [55.32ms]
+(pass) US-014-AC13: use/use-missing-after-namespace.smithy retains exact source without claiming validity [61.88ms]
+(pass) US-014-AC13: use/use-missing-namespace.smithy retains exact source without claiming validity [65.53ms]
+(pass) US-014-AC13: use/use-missing-newline.smithy retains exact source without claiming validity [68.40ms]
+(pass) US-014-AC13: use/use-missing-space.smithy retains exact source without claiming validity [66.46ms]
+(pass) US-014-AC13: use/use-multiple-lines-comment.smithy retains exact source without claiming validity [64.55ms]
+(pass) US-014-AC13: use/use-multiple-lines.smithy retains exact source without claiming validity [67.38ms]
+(pass) US-014-AC13: use/use-must-come-after-namespace.smithy retains exact source without claiming validity [63.60ms]
+(pass) US-014-AC13: use/use-statement-invalid-id.smithy retains exact source without claiming validity [70.96ms]
+(pass) US-014-AC13: use/use-with-member.smithy retains exact source without claiming validity [65.41ms]
+(pass) US-014-AC13: version/idl-int-enums-in-v1.smithy retains exact source without claiming validity [52.51ms]
+(pass) US-014-AC13: version/invalid-version-type.smithy retains exact source without claiming validity [54.91ms]
+(pass) US-014-AC13: version/properties-v2-only.json retains exact source without claiming validity [60.93ms]
+(pass) US-014-AC13: version/properties-v2-only.smithy retains exact source without claiming validity [54.35ms]
+(pass) US-014-AC13: version/unsupported-version.smithy retains exact source without claiming validity [63.26ms]
+(pass) US-014-AC13: version/version-set-more-than-once.smithy retains exact source without claiming validity [67.99ms]
+
+ 186 pass
+ 0 fail
+ 724 expect() calls
+Ran 186 tests across 1 file. [20.63s]
+{"testProcess":"tests/smithy/sources.test.ts","exitCode":0,"pass":186,"fail":0,"assertions":724,"completeSummary":true,"logSha256":"0dd71dd233495475c3c4f7be6c51f357590c4afb1470925a7262298be6392fc2"}
+{"testProcess":"tests/smithy/worker.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/smithy/worker.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/smithy/worker.test.ts:
+(pass) US-014-AC12: worker lifecycle terminates successful, cancelled, timed out and malformed jobs [382.58ms]
+(pass) US-014-AC12: worker options reject invalid deadlines and URLs [0.16ms]
+(pass) US-014-AC15: selection workers isolate payloads, cancel, time out and recover [20.64ms]
+
+ 3 pass
+ 0 fail
+ 25 expect() calls
+Ran 3 tests across 1 file. [9.63s]
+{"testProcess":"tests/smithy/worker.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":25,"completeSummary":true,"logSha256":"4ec72a1ad16e6edf95afdbc7cbd4dacfa4f334964b2d3fce43ecf6c16ed234e4"}
+{"testProcess":"tests/sqlserver/avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [516.27ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [635.72ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [1740.32ms]
+
+ 3 pass
+ 0 fail
+ 48 expect() calls
+Ran 3 tests across 1 file. [10.78s]
+{"testProcess":"tests/sqlserver/avro-projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":48,"completeSummary":true,"logSha256":"62a2a4c306d075117c20be84389da638dbd64f3cf4e4bb3a5c2fb25d7e9ef909"}
+{"testProcess":"tests/sqlserver/catalog.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/catalog.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [347.87ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [488.61ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [152.03ms]
+
+ 3 pass
+ 0 fail
+ 41 expect() calls
+Ran 3 tests across 1 file. [9.34s]
+{"testProcess":"tests/sqlserver/catalog.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":41,"completeSummary":true,"logSha256":"5cc621caf1761b9366d173d65b378abeb12d60995af247ea576c5e0f285cfd97"}
+{"testProcess":"tests/sqlserver/constraint-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/constraint-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/constraint-projection.test.ts:
+(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [1317.01ms]
+(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [207.99ms]
+
+ 2 pass
+ 0 fail
+ 63 expect() calls
+Ran 2 tests across 1 file. [7.79s]
+{"testProcess":"tests/sqlserver/constraint-projection.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":63,"completeSummary":true,"logSha256":"1a58ae3c5c3d9a9c7a0aa981ea651a521e6d5f082f5cfe857353549cae610e1e"}
+{"testProcess":"tests/sqlserver/constraints.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/constraints.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/constraints.test.ts:
+(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [367.98ms]
+(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [598.93ms]
+
+ 2 pass
+ 0 fail
+ 29 expect() calls
+Ran 2 tests across 1 file. [9.22s]
+{"testProcess":"tests/sqlserver/constraints.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":29,"completeSummary":true,"logSha256":"55b4258a31b743813de1c102f78d1344855530c2f42275a4aea90e772de5ddae"}
+{"testProcess":"tests/sqlserver/ddl.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/sqlserver/ddl.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/sqlserver/ddl.test.ts:
+(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [1299.29ms]
+(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [947.70ms]
+(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [73.21ms]
+11 | const literal=(s:string)=>"N'"+s.replace(/'/g,"''")+"'";
+12 | /** Reviewable lowering to new ordinary tables. Never executes source expressions or generated SQL. */
+13 | export function projectSqlServerToDdl(input:Document,options:SqlServerDdlPolicy):SqlServerDdlProjection{
+14 |  const source=copyJson(input) as Document,policy=copyJson(options) as unknown as SqlServerDdlPolicy;
+15 |  if(!policy||!['reject','base-type'].includes(policy.aliases)||policy.physicalLayout!=='default-rowstore'||policy.nativeExpressions!=='verbatim'||!['captured-only','allow-candidate'].includes(policy.sourceState)||!['strict','allow-reported-loss'].includes(policy.lossPolicy)||Object.keys(policy).some(k=>!['aliases','physicalLayout','nativeExpressions','sourceState','lossPolicy'].includes(k)))throw new UmfError('SQLSERVER_DDL_POLICY','Explicit alias, layout, expression, source-state and loss policies required');
+16 |  const checked=inspectSqlServer(source);if(!checked.valid)throw new UmfError('SQLSERVER_DDL_SOURCE','Invalid source capture');
+                                                                     ^
+UmfError: Invalid source capture
+ path: "",
+ code: "SQLSERVER_DDL_SOURCE"
+
+      at projectSqlServerToDdl (/Users/erik/.codex/worktrees/d8be/umf/src/projections/sqlserver-ddl.ts:16:65)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/sqlserver/ddl.test.ts:41:10)
+(fail) CONTRACT-037 native evidence matches current generation and records declared physical losses [18.83ms]
+59 |  return out;
+60 | }
+61 | export function sqlserverRegistry(){return new Registry().register(sqlserverPackage,inspect);}
+62 | export function inspectSqlServer(document:Document){return validateDocument(document,sqlserverRegistry());}
+63 | function payload(document:Document):Payload{
+64 |  const result=inspectSqlServer(document);if(!result.valid||document.vocabularies[SQLSERVER_EXTENSION]?.version!=='0.1.0')throw new UmfError('SQLSERVER_CAPTURE',JSON.stringify(result.diagnostics));
+                                                                                                                                    ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/umf","message":"must pass \"const\" keyword validation","severity":"error"}]
+ path: "",
+ code: "SQLSERVER_CAPTURE"
+
+      at payload (/Users/erik/.codex/worktrees/d8be/umf/src/adapters/sqlserver/index.ts:64:128)
+      at getSqlServerColumnMetadata (/Users/erik/.codex/worktrees/d8be/umf/src/adapters/sqlserver/index.ts:75:77)
+      at consistent (/Users/erik/.codex/worktrees/d8be/umf/src/adapters/sqlserver/index.ts:95:113)
+      at exportSqlServerCatalog (/Users/erik/.codex/worktrees/d8be/umf/src/adapters/sqlserver/index.ts:100:2)
+      at proposeSqlServerCatalogEdit (/Users/erik/.codex/worktrees/d8be/umf/src/adapters/sqlserver/index.ts:103:2)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/sqlserver/ddl.test.ts:62:64)
+(fail) CONTRACT-037 copied edits survive native DDL execution without changing original captures [15.64ms]
+
+ 3 pass
+ 2 fail
+ 70 expect() calls
+Ran 5 tests across 1 file. [12.13s]
+{"testProcess":"tests/sqlserver/ddl.test.ts","exitCode":1,"pass":3,"fail":2,"assertions":70,"completeSummary":true,"logSha256":"2d478ffc7407977b8fd73a92d40b6f7e93fcb17a2308cb22e397d4e7154c5c44"}
+Complete test file failed or terminated: tests/sqlserver/ddl.test.ts
+
+ 236 pass
+ 2 fail
+ 1643 expect() calls
+Ran 238 tests across 15 files. [147.73s]

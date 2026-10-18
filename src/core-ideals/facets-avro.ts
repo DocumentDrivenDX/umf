@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
@@ -7,7 +8,7 @@ import {inspectAvroFacetSelection,type AvroFacetSelection} from './avro-facet-se
 import type {AvroTypeLocation} from './avro-cardinality-type';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import core from '../../spec/core/facet-document.schema.json';import authorSchema from '../../spec/core/facet-operation.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
+import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/avro-facet-classification.schema.json';
 import manifest from '../../spec/extensions/avro-facets/package.json';
 export const AVRO_FACETS_EXTENSION='umf.avro.facets';
@@ -25,7 +26,7 @@ export interface AvroFacetClassification {
  mapping:{origin:'classified';idealPath:string;location:AvroTypeLocation;nativeFragment:NativeJson;facets:CoreFacetPatch;branches:Branch[];observations:Observation[]};
  residuals:{path:string;location:AvroTypeLocation;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 /** Add scoped facet observations to an explicit logical Field, preserving the
@@ -33,7 +34,7 @@ const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')
 export function classifyAvroFacets(input:Document,options:AvroFacetRequest):AvroFacetClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as AvroFacetRequest;
  if(!checkRequest(request))throw new UmfError('AVRO_FACET_REQUEST',JSON.stringify(checkRequest.errors));
- if(source.umf!=='0.5.0'||!validateDocument(source).valid)throw new UmfError('AVRO_FACET_SOURCE','Valid core 0.5.0 required; migrate explicitly');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('AVRO_FACET_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const exported=exportAvroBundle(source),dependencies=request.dependencies??[];
  if(exported.schema!==renderTree(parseNativeJson(request.nativeSource))+'\n'||exported.dependencies.length!==dependencies.length||exported.dependencies.some((d,i)=>d.id!==dependencies[i]!.id||d.schema!==renderTree(parseNativeJson(dependencies[i]!.schema))+'\n'))throw new UmfError('AVRO_FACET_ARCHIVE','Retained source texts differ from native bundle');
  const roots:{root:NativeJson;dependencyId?:string}[]=[...dependencies.map(d=>({root:getAvroNode(source,'',d.id),dependencyId:d.id})),{root:getAvroNode(source,'')}];
@@ -121,7 +122,7 @@ export function classifyAvroFacets(input:Document,options:AvroFacetRequest):Avro
  if(conflict||request.mode==='strict'&&result.residuals.length)result.status='blocked';
  else{
   const target=copyJson(source) as unknown as Document,field=target.modules[mi]!.elements[ei]!;
-  if(!request.author&&Object.keys(result.mapping.facets).length)field.facets=copyJson(result.mapping.facets);
+  if(!request.author&&Object.keys(result.mapping.facets).length)field.facets=copyJson(result.mapping.facets) as unknown as NonNullable<typeof field.facets>;
   target.vocabularies[AVRO_FACETS_EXTENSION]??={version:'1.0.0'};
   field.extensions[AVRO_FACETS_EXTENSION]=copyJson({origin:'classified',location:request.location,binding:{id:binding.id,version:binding.version},profile:request.profile,obligation:request.obligation,outcome:result.outcome,observations:result.mapping.observations});
   if(!validateDocument(target).valid)throw new UmfError('AVRO_FACET_TARGET','Classification would violate core constraints');result.target=target;

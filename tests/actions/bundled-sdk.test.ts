@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import {createUmfRegistry,Registry,inspectActions,assessAction,readDocument,writeDocument} from '../../src/index';
 import fixture from '../../fixtures/actions/approve.json';
@@ -9,7 +10,7 @@ test('normal SDK interprets bundled actions without a separate registration or e
  expect(inspection.actions[0]?.action.id).toBe('approve');
  expect(inspection.validation.valid).toBe(true);
  expect(inspection.validation.complete).toBe(false);
- expect(assessAction(source,{module:'sales',action:'approve'},{id:'sdk-no-executor',version:'1',actionVersion:'0.1.0',coreVersion:'0.8.0',source,identity:{module:'sales',action:'approve'},claims:[]},registry).executionVerified).toBe(false);
+ expect(assessAction(source,{module:'sales',action:'approve'},{id:'sdk-no-executor',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source,identity:{module:'sales',action:'approve'},claims:[]},registry).executionVerified).toBe(false);
  expect(JSON.stringify(source)).toBe(JSON.stringify(fixture));
  const invalid=structuredClone(source);invalid.modules[0]!.extensions!['umf.actions']={actions:[{id:42}]};
  expect(()=>inspectActions(invalid,registry)).toThrow();

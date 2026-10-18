@@ -43,7 +43,7 @@ class Output(StrictModel):
 
 SOURCE = ActionSource(
     "test",
-    "0.8.0",
+    "0.10.0",
     "test",
     "change",
     "a" * 64,

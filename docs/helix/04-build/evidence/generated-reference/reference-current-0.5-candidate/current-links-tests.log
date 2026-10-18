@@ -1,0 +1,29 @@
+{"testProcess":"tests/reference/reference.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/reference/reference.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/reference/reference.test.ts:
+(pass) every extension version and its exact manifest/schema are present [29.33ms]
+(pass) all schema files and exact core profiles are accounted for [132.28ms]
+(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [1368.79ms]
+(pass) real independent oracle failures and qualified priority results remain separate [3.52ms]
+(pass) source hash changes and missing dependency closures cannot become current evidence [0.09ms]
+(pass) ambient distribution artifacts never enter evidence observations [0.77ms]
+(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.26ms]
+(pass) schema comparison is structural, bounded and preserves exact token spelling [0.30ms]
+(pass) exclusions require an existing source and nonempty reason [0.08ms]
+(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [15.90ms]
+(pass) boundary checker rejects actual forbidden source and import cycle injections [94.53ms]
+(pass) a second isolated generation matches; drift check refuses tampering without rewriting [56651.72ms]
+(pass) reference manifest retains every Protobuf notice producer input [16.86ms]
+(pass) reference renderer candidate arguments reject missing, repeated and unknown options [0.27ms]
+
+ 14 pass
+ 0 fail
+ 13222 expect() calls
+Ran 14 tests across 1 file. [62.54s]
+{"testProcess":"tests/reference/reference.test.ts","exitCode":0,"pass":14,"fail":0,"assertions":13222,"completeSummary":true,"logSha256":"6bb3650fa18477412bc56b0b6f225b70d71872c1a20415fe60093b1130b34fcf"}
+
+ 14 pass
+ 0 fail
+ 13222 expect() calls
+Ran 14 tests across 1 files. [62.56s]

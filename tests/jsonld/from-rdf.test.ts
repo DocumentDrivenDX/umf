@@ -1,3 +1,4 @@
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020';
@@ -5,7 +6,7 @@ import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/from-rdf-schema.json';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
 import {importRdfNQuads,importRdfTriG,exportRdfNQuads,exportRdfTriG,getRdfQuads,proposeRdfQuadEdit,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../../src';
-const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);
+const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/fromRdf-manifest.jsonld').json(),sources=await Bun.file('native/jsonld/sources/manifest.json').json(),cases=(await Bun.file('fixtures/jsonld/from-rdf/results.json').json()).cases,oracle=(await Bun.file('fixtures/jsonld/from-rdf/oracle-results.json').json()).results;
  expect(cases).toHaveLength(54);expect(oracle).toHaveLength(54);expect(cases.map((c:any)=>c.id)).toEqual(manifest.sequence.map((c:any)=>c['@id'].slice(1)));let candidates=0;

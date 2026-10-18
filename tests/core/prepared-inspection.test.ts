@@ -4,8 +4,8 @@ import {request} from '../compilation/access-fixtures';
 const fixture=()=>readDocument(request().sources[0]!.text,'json');
 // @covers US-080-AC3 @covers US-080-AC4
 test('prepared selectors exactly match ordinary core meanings for every fixture element',()=>{
- for(const version of ['0.8.0','0.9.0'] as const){
- const doc=fixture();doc.umf=version;const prepared=prepareCoreInspection(doc);
+ {
+ const doc=fixture();const prepared=prepareCoreInspection(doc);
  for(const module of doc.modules)for(const element of module.elements){
   const identity={module:module.id,element:element.id};
   expect(prepared.keys(identity)).toEqual(inspectCoreKeys(doc,identity).meaning);
@@ -46,7 +46,7 @@ test('preparation and selectors refuse invalid sources and malformed or unresolv
   expect(()=>select({module:'',element:'Order'})).toThrow();
  }
  doc.modules[0]!.elements.push(doc.modules[0]!.elements[0]!);expect(()=>prepareCoreInspection(doc)).toThrow();
- const old=fixture();old.umf='0.7.0';expect(()=>prepareCoreInspection(old)).toThrow();
+ const old={...fixture(),umf:'0.7.0'} as any;expect(()=>prepareCoreInspection(old)).toThrow();
 });
 
 // @covers US-080-AC4

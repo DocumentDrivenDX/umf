@@ -4,18 +4,18 @@ You will read the actual approve fixture and inspect its declaration. No databas
 
 ## Get the normal SDK
 
-[Download UMF 0.2.0](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.2.0). One SDK contains the browser library, TypeScript declarations and schemas, including action declaration support. There is no separate actions package to install.
+[Download the current UMF SDK](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.0). One SDK contains the browser library, TypeScript declarations and schemas, including action declaration support. There is no separate actions package to install.
 
 Use Bun 1.4.2 for this example. In a new project directory, download and install the released SDK:
 
 ```sh
-curl -fL https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.2.0/umf-sdk.tgz -o umf-sdk.tgz
+curl -fL https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.0/umf-sdk.tgz -o umf-sdk.tgz
 bun init -y
 bun add ./umf-sdk.tgz
-curl -fL https://raw.githubusercontent.com/DocumentDrivenDX/umf/umf-v0.2.0/fixtures/actions/approve.json -o approve.json
+curl -fL https://raw.githubusercontent.com/DocumentDrivenDX/umf/umf-v0.5.0/fixtures/actions/approve.json -o approve.json
 ```
 
-The release includes [SHA256SUMS](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.2.0/SHA256SUMS) for checking the downloaded archive. The SDK is distributed as this release archive; it is not published to npm.
+The release includes [SHA256SUMS](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.0/SHA256SUMS) for checking the downloaded archive. The SDK is distributed as this release archive; it is not published to npm.
 
 Create `inspect.ts` with the following code:
 
@@ -34,7 +34,7 @@ console.log(JSON.stringify({
 
 Run `bun inspect.ts`. It prints the output explained below: action approve, valid true, complete false and zero business writes. `createUmfRegistry()` supplies the built-in action vocabulary. A host application selects its executor and credentials separately; inspecting a declaration never executes it.
 
-SDK version 0.2.0, core document format 0.8.0 and action vocabulary 0.1.0 identify different compatibility boundaries.
+The SDK includes the current core format and action vocabulary. Vocabulary declarations remain explicit in the document.
 
 ## Work from source instead
 

@@ -1,5 +1,5 @@
 import {nullabilityTableSpecCases} from './nullability-tablespec-cases';
-import {classifyTableSpecNullability,verifyTableSpecNullabilityClassification,recoverTableSpecNullabilitySource,writeJsonValue,readJsonValue,copyJson} from '../../src';
+import {classifyTableSpecNullability, verifyTableSpecNullabilityClassification, recoverTableSpecNullabilitySource, writeJsonValue, readJsonValue, copyJson} from '../../src';
 const rows=[];
 for(const c of nullabilityTableSpecCases()){
  const result=classifyTableSpecNullability(c.source,c.request),recovered=[];

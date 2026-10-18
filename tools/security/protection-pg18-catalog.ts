@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 /** Private catalog projection compiler. Row eligibility remains a separately
  * installed native profile; this does not compile policy permission or mint it. */
 import {copyJson} from '../../src/model/json';
@@ -28,7 +29,7 @@ export function compilePg18ProtectionCatalog(catalogInput:unknown,closureInput:u
   let sourceText=0;const pending=[catalog,closure,profile];while(pending.length){const v=pending.pop();if(typeof v==='string')sourceText+=v.length;else if(v!==null&&typeof v==='object')for(const [k,x] of Object.entries(v)){sourceText+=k.length;pending.push(x);}if(sourceText>4_000_000)fail('Aggregate source text bound exceeded');}
   const inspected=inspectProtectionCatalog(catalog);if(!inspected.valid||inspected.diagnostics.some(d=>d.code==='PROTECTION_UNKNOWN'))fail('Known catalog structure required');
   exact(closure,['pins','documents']);if(!Array.isArray(closure.pins)||!Array.isArray(closure.documents)||closure.documents.length<1||closure.documents.length>16)fail('Bounded exact core closure required');
-  const seen=new Set<string>();for(const entry of closure.documents){exact(entry,['revision','document']);if(typeof entry.revision!=='string'||!entry.revision.length||entry.revision.length>4096)fail('Exact nonempty core revision required');const d=entry.document,v=validateDocument(d);if(d.umf!=='0.8.0'||!v.valid||!v.complete||seen.has(d.id))fail('Complete original core0.8 definitions required');seen.add(d.id);}
+  const seen=new Set<string>();for(const entry of closure.documents){exact(entry,['revision','document']);if(typeof entry.revision!=='string'||!entry.revision.length||entry.revision.length>4096)fail('Exact nonempty core revision required');const d=entry.document,v=validateDocument(d);if(d.umf!==CURRENT_CORE_VERSION||!v.valid||!v.complete||seen.has(d.id))fail('Complete current core definitions required');seen.add(d.id);}
   if(closure.pins.length!==seen.size)fail('Exact pin coverage required');const pins=new Set<string>();
   for(const pin of closure.pins){exact(pin,['documentId','revision']);if(typeof pin.documentId!=='string'||!pin.documentId.length||typeof pin.revision!=='string'||!pin.revision.length||pin.revision.length>4096)fail('Exact nonempty document/revision pin required');if(pins.has(pin.documentId)||!closure.documents.some((d:any)=>d.document.id===pin.documentId&&d.revision===pin.revision))fail('Stale/duplicate/missing core pin');pins.add(pin.documentId);}
   exact(profile,['version','catalog','source','resource','bindings']);if(profile.version!==VERSION)fail('Exact native projection profile required');

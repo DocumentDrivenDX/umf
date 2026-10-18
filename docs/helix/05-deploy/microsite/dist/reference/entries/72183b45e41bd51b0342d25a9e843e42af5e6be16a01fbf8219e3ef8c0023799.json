@@ -9,7 +9,7 @@
         ],
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Explicit exact 128-bit physical carrier metadata; native enforcement separately qualified",
       "id": "umf.binding",
       "schema": {
@@ -498,7 +498,7 @@
           "logical": {
             "properties": {
               "coreVersion": {
-                "const": "0.9.0"
+                "const": "0.10.0"
               },
               "documentId": {
                 "minLength": 1,
@@ -600,9 +600,9 @@
   ],
   "sources": [
     {
-      "bytes": 14360,
+      "bytes": 14362,
       "path": "spec/extensions/binding-128/package.json",
-      "sha256": "e19490b9e71698d0a008e8fcb6fce0a2734a2539146c0aaa636de7ce1a566488"
+      "sha256": "231c092be67a426a151c365c728ac44de8368966c8fcc12bc3f184099e38ab59"
     }
   ],
   "summary": "Explicit exact 128-bit physical carrier metadata; native enforcement separately qualified",

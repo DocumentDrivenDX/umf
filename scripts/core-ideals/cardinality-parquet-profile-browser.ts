@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importParquetSchema,inspectParquetContainers} from '../../src';
+import {importParquetSchema, inspectParquetContainers} from '../../src';
 import {inspectParquetCardinalityShape} from '../../src/core-ideals/parquet-cardinality-shape';
 
 const proof='fixtures/validation/cardinality-parquet-profile-native.json';

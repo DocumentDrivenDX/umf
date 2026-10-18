@@ -8,6 +8,7 @@ from dataclasses import replace
 from typing import Any, cast
 
 from ..capture import CapturedDeclaration, ProjectionRef
+from ..generated_core import CURRENT_CORE_VERSION
 from ..dsl import FieldRef, Node, SearchLeg, render_logical
 from ..native_program import NativeProgram
 from ..reviewed import parameter_signature
@@ -240,7 +241,7 @@ def emit_search(
                     "version": "weft.search/0.1",
                     "source": {
                         "documentId": source["documentId"],
-                        "coreVersion": "0.8.0",
+                        "coreVersion": CURRENT_CORE_VERSION,
                         "documentSha256": source["documentSha256"],
                         "module": source["module"],
                         "pointer": source["pointer"],

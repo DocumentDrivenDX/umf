@@ -36,7 +36,7 @@ def main():
                                 for name, carrier in [('id', 'string'), ('big', 'integer'), ('amount', 'decimal'), ('label', 'string'), ('active', 'boolean')]]}],
         'relationships': [],
         'nativeColumns': {'target': {'platform': 'spark-delta', 'majorVersion': 'spark4-delta4'},
-                          'sets': [{'columnSet': {'documentId': 'sdk-spark-list', 'coreVersion': '0.8.0',
+                          'sets': [{'columnSet': {'documentId': 'sdk-spark-list', 'coreVersion': '0.10.0',
                                                  'documentSha256': sha(logical), 'module': 'numeric',
                                                  'pointer': '/modules/0/extensions/umf.access/columns/0'},
                                     'binding': {'sourceId': 'physical', 'documentJson': physical,

@@ -230,13 +230,13 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   and zero native/unknown-content regressions. A core label alone never deletes
   an extension payload. Any removal requires an explicitly authorized, versioned
   migration after the equivalence gate; preservation remains the default.
-- **FR-35** — **Self-description.** UMF must eventually be able to represent its
-  own metamodel and vocabularies, exercising the same extension and composition
-  mechanisms as external schemas. Bootstrap validation may remain authoritative
-  while self-description is introduced. The owner now requests a current core
-  self-model and graphical ontology integrated with the schema reference. This
-  bounded projection must retain bootstrap constraints and disclose unrepresented
-  enforcement; it does not transfer validation authority.
+- **FR-35** — **Self-description.** UMF must represent its own metamodel and
+  vocabularies using the same extension and composition mechanisms as external
+  schemas. Owner direction, 2026-10-18, replaces bootstrap projection authority:
+  one authored current UMF metamodel must generate the core JSON Schema, public
+  shapes, semantic validation program and reference/ontology views. Remove
+  duplicate rule definitions and historical runtime paths after migrating active
+  consumers. Unknown/native meanings and dated evidence retain their identity.
 
 ### Subsystem: Extensions and Partial Participation
 
@@ -337,6 +337,10 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   semantics when shapes are incomplete. New vocabularies must coexist with earlier
   consumers without losing uninterpreted content. Generated consumer artifacts
   must expose unsupported semantics rather than imply validation or enforcement.
+  Owner direction on 2026-10-18 requires the current core metamodel itself to
+  drive structural schemas and portable validation, with generated TS/Python
+  shapes and a single schema-browser route. Independent native and extension
+  versions remain exact; core history must not be an active compatibility layer.
   Owner direction on 2026-10-07 adds shared JavaScript numeric admission and
   explicit lossless value conversion for Truss, Ashlar and TableSpec consumers.
   Consumers must be able to retain exact decimal spelling, use bigint for large
@@ -627,7 +631,7 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-32 | Generate a support matrix from known passing and failing compatibility cases | Claims identify versions, tested features, fidelity, and evidence gaps |
 | FR-33 | Reopen a retained artifact after the original conversion ends | A later consumer can recover its native meaning from the durable representation |
 | FR-34 | Register a versioned extension and inspect its validation and interchange declarations | Identity, rules, scope, available directions, and evidence are discoverable without executing artifact-supplied code |
-| FR-35 | Represent a versioned UMF vocabulary in UMF and compare against the bootstrap definition | Meaning and validation expectations agree; differences are explicit |
+| FR-35 | Compile current schemas and portable validators from the authored UMF metamodel | Self-validation, deterministic fixed point, independent behavioral parity and retired duplicate authority |
 | FR-36 | Validate or migrate the inspected TableSpec baseline | Existing meaning survives; migrations reproduce deterministically |
 | FR-37 | Run the two native corpora and the cross-system projection | Native fidelity passes within scope; every known projection mismatch is reported |
 | FR-38 | Exercise independently scoped interchanges and consumer workflows | Ecosystems retain native meaning without becoming UMF's mandatory worldview |
@@ -863,3 +867,44 @@ Core0.10.0 adds explicit publisher/version/term references over that existing
 model, without changing native or unknown meaning. FEAT-005 SEM-01 through SEM-06,
 US-090 and CONTRACT-078 own the bounded restoration. Catalog discovery, implicit
 validation and native projection/admission remain separate.
+
+## Generated ontology access — owner direction, 2026-10-18
+
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
+
+- **FR-56 — Generated ontology access.** Developers must be able to generate
+  typed access code directly from schemas using the latest UMF, with useful
+  defaults and no additional access-view or compatibility selection. Alongside
+  table access, ontology access must provide typed entities, keys, links, bounded
+  reads and declared actions. Python 3.11+ clients use only the standard library;
+  TypeScript uses the same machine-readable API description. Clients work across
+  host/worker placement through a shared transport contract. Exact values and
+  absence/null distinctions are preserved; unsupported meanings are diagnosed.
+  Output supports checked-in use, drift checking and compatibility comparison.
+  UMF supplies generation, a test fake and shared binding assertions; consumers
+  own production transport, execution, authorization, storage, audit and plugins.
+
+[FEAT-033](features/FEAT-033-generated-ontology-access.md),
+[US-091](user-stories/US-091-ontology-access-description.md) and
+[US-092](user-stories/US-092-portable-ontology-client.md) define the capability.
+The current UMF model remains the target as UMF evolves. This owner direction
+supersedes the original Praxis request's old-version scope. FR-52–FR-55 retain
+their existing table/native SDK requirements.
+
+## One generated access API — owner clarification, 2026-10-18
+
+Tables and ontologies must expose the same generated Python API for typed reads,
+relationship traversal and actions. Developers compose model expressions directly;
+query-wrapper functions, decorators, separate parameter declarations and query
+catalog generation must not be prerequisites for ordinary reads. The host binding
+owns storage-specific compilation/execution and may prepare or cache requests.
+The generated client remains stdlib-only and sends typed request data.
+
+This clarification governs FR-52–FR-56 and supersedes their earlier mandatory
+Pydantic/client-runtime and build-only catalog requirements where they constrain
+the public API. Existing backend implementations may reuse those mechanisms
+internally. Exact values, bounded results, schema-derived typing, bound SQL
+parameters, authorization and explicit unsupported-capability failures remain.
+ADR-004 and FEAT-033 record the common API direction. FR-56 now covers generated
+table and ontology access together; changing storage changes the binding, not
+application query or action code.

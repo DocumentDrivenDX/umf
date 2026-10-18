@@ -109,7 +109,7 @@ def main():
                 {
                     "columnSet": {
                         "documentId": "sdk-spark-list",
-                        "coreVersion": "0.8.0",
+                        "coreVersion": "0.10.0",
                         "documentSha256": sha(logical),
                         "module": "numeric",
                         "pointer": "/modules/0/extensions/umf.access/columns/0",

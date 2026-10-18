@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 19,
-        "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "bytes": 4966,
+        "line": 16,
+        "path": "src/generated/core-model.ts",
+        "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
       }
     ],
     "entrypoint": ".",
     "exportName": "Element",
     "runtime": "type-only",
     "signatureText": [
-      "export interface Element {\n  id: string;\n  name?: string;\n  description?: string;\n  scalarType?: ScalarType | (string & {});\n  extensions: Record<string, Json>;\n  references?: { role: string; module: string; element: string; [key: string]: unknown }[];\n  [key: string]: unknown;\n}"
+      "export type Element = {\"id\":Id;\"name\"?:string;\"description\"?:string;\"scalarType\"?:ScalarType;\"extensions\":Extensions;\"references\"?:(Reference)[];\"kind\"?:string;\"nullability\"?:string;\"cardinality\"?:string;\"itemType\"?:CoreItemTypeReference;\"facets\"?:Facets;\"members\"?:(KeyFieldReference)[];\"keys\"?:(Key)[];\"title\"?:string;\"aliases\"?:(string)[];\"examples\"?:(Literal)[];\"allowedValues\"?:(Literal)[];\"default\"?:{\"value\":Literal;\"on\":\"missing\" | \"null\" | \"missing-or-null\";[key:string]:unknown;};\"semanticTypes\"?:(CoreSemanticTypeReference)[];[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"Element\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 19,
-      "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "bytes": 4966,
+      "line": 16,
+      "path": "src/generated/core-model.ts",
+      "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
     }
   ],
-  "summary": "Type declaration · src/model/types.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "Element"
 }

@@ -6,17 +6,17 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -547,7 +547,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -958,7 +958,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -985,7 +985,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -1038,9 +1038,9 @@
   ],
   "sources": [
     {
-      "bytes": 7130,
+      "bytes": 7133,
       "path": "spec/projections/typespec-json-schema.schema.json",
-      "sha256": "b35d479450c5c05ffd6c85362302465e474f5b09ed76337fd5cce31dd4c89982"
+      "sha256": "1d8ec354b4832c38a03e75acdd75dc778fae6911345fb76517ddf5dfe5f1a2cc"
     }
   ],
   "summary": "spec/projections/typespec-json-schema.schema.json",

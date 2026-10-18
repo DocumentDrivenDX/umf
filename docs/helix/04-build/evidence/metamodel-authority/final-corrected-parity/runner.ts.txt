@@ -1,0 +1,12 @@
+import {validateDocument} from '/Users/erik/.codex/worktrees/d8be/umf/src/validation/document';
+import {Registry} from '/Users/erik/.codex/worktrees/d8be/umf/src/registry/registry';
+const root='/Users/erik/.codex/worktrees/d8be/umf';
+const cases=(await Bun.file(root+'/docs/helix/04-build/evidence/metamodel-authority/baseline-current/cases.json').json()).cases;
+const expected=(await Bun.file(root+'/docs/helix/04-build/evidence/metamodel-authority/baseline-current/ts-results.json').json()).results;
+const stable=(v:any):any=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;
+const differences:any[]=[],exceptions:any[]=[];
+for(let i=0;i<cases.length;i++){
+ const row=cases[i],registry=new Registry();if(row.registry){const spec=row.registry;registry.register({id:spec.id,version:spec.version,coreVersion:'0.10.0',description:'Frozen cross-runtime baseline callback',schema:true,semantics:'Baseline callback that exposes exact source context',scopes:[spec.scope],capabilities:{validation:'semantic',directions:[],evidence:['metamodel-authority-baseline']}},(payload,context)=>[{code:'BASELINE_CALLBACK',path:context.path,message:`${context.document.id}:${context.scope}:${(payload as any).kind}`,severity:'warning'}]);}
+ try{const actual=validateDocument(row.document,registry),want={valid:expected[i].valid,complete:expected[i].diagnostics.filter((d:any)=>d.code!=='EXPERIMENTAL_CORE_SEMANTIC_TYPES').length===0,diagnostics:expected[i].diagnostics.filter((d:any)=>d.code!=='EXPERIMENTAL_CORE_SEMANTIC_TYPES')};if(JSON.stringify(stable(actual))!==JSON.stringify(stable(want)))differences.push({id:row.id,actual,want});}catch(error){exceptions.push({id:row.id,error:String(error),stack:error instanceof Error?error.stack:undefined});}
+}
+await Bun.write('/private/tmp/umf-full-corrected-parity.json',JSON.stringify({cases:cases.length,differences,exceptions},null,2));console.log(JSON.stringify({cases:cases.length,differences:differences.length,exceptions:exceptions.length}));if(differences.length||exceptions.length)process.exitCode=1;

@@ -43,4 +43,4 @@ CREATE TABLE [sales].[Types] (
   [computed] AS ([ordinary]+(1))
 );
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Exact decimal amount', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'exact';
-ALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83FF3BFB29D] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);
+ALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83F2C31356E] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);

@@ -1,15 +1,16 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {inspectCoreRecordTypeReceipt} from '../../src/model/record-type-inspection';
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import {declareCoreRecordType} from '../../src/model/record-type';
 import {inspectCoreReferenceLinks} from '../../src/model/reference-links';
 import type {Document} from '../../src/model/types';
-import sourceSchema from '../../spec/core/relationship-document.schema.json';
+import sourceSchema from '../../spec/core/schema.json';
 import kindsSchema from '../../spec/core/kind-operation-v6.schema.json';
 import receiptSchema from '../../spec/core/record-type-operation-v6.schema.json';
 import resultSchema from '../../spec/core/record-type-inspection.schema.json';
 import {createValidator} from '../../src/validation/schema';
 export function recordTypeOwnerFixture(){
- const source:Document={umf:'0.7.0',id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind:'field',extensions:{},'future/field':{values:['b','a']},references:[{role:'future-role',module:'m',element:'R','future/qualifier':{values:['b','a']}}]},{id:'R',kind:'record',members:[],extensions:{}}]},{id:'other',namespace:'other',elements:[{id:'R',kind:'record',members:[{module:'m',element:'v'}],extensions:{}},{id:'v',kind:'field',extensions:{}}]}]};
+ const source:Document={umf:CURRENT_CORE_VERSION,id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind:'field',extensions:{},'future/field':{values:['b','a']},references:[{role:'future-role',module:'m',element:'R','future/qualifier':{values:['b','a']}}]},{id:'R',kind:'record',members:[],extensions:{}}]},{id:'other',namespace:'other',elements:[{id:'R',kind:'record',members:[{module:'m',element:'v'}],extensions:{}},{id:'v',kind:'field',extensions:{}}]}]};
  const identity={module:'m',element:'v'},field=declareCoreElementKind(source,identity,'field'),record=declareCoreElementKind(field.target,{module:'other',element:'R'},'record'),receipt=declareCoreRecordType(field,record);
  return {identity,source,receipt,current:receipt.target};
 }
@@ -52,12 +53,12 @@ export function runRecordTypeOwnerCases(){
  ] as const){const changed=structuredClone(receipt);change(changed);refuse('receipt-substitution-'+id,()=>inspectCoreRecordTypeReceipt(current,identity,changed),['CORE_RECORD_TYPE_RECEIPT','CORE_KIND_RECEIPT','CORE_RECORD_TYPE_KIND','CORE_KIND_CONFLICT'])}
  for(const version of ['1.0.0','5.0.0','7.0.0','future'])refuse('unadmitted-receipt-'+version,()=>inspectCoreRecordTypeReceipt(current,identity,{...receipt,version} as any),'CORE_RECORD_TYPE_INSPECTION_VERSION');
  for(const umf of ['0.1.0','0.6.0','0.8.0','0.9.0'])refuse('unadmitted-source-'+umf,()=>inspectCoreRecordTypeReceipt({...current,umf} as Document,identity,receipt),'CORE_RECORD_TYPE_INSPECTION_SOURCE_VERSION');
- check('generic-current-reference-support-does-not-promote-legacy-receipts',inspectCoreReferenceLinks({...current,umf:'0.8.0'},identity).version==='0.2.0');
+ check('generic-current-reference-support-does-not-promote-bare-links',inspectCoreReferenceLinks(current,identity).version==='0.3.0'&&(inspectCoreReferenceLinks(current,identity).meaning as any).links.every((link:any)=>link.typeAssertion==='unverified'));
  for(const requested of [null,[],{}, {...identity,extra:true}])refuse('invalid-identity-'+JSON.stringify(requested),()=>inspectCoreRecordTypeReceipt(current,requested as any,receipt),'CORE_REFERENCE_LINKS_IDENTITY');
  refuse('missing-qualified-owner',()=>inspectCoreRecordTypeReceipt(current,{module:'m',element:'missing'},receipt),'CORE_REFERENCE_LINKS_MISSING');
  let getters=0;const hostile={...receipt};Object.defineProperty(hostile,'source',{enumerable:true,get(){getters++;return receipt.source}});refuse('receipt-getter-refused',()=>inspectCoreRecordTypeReceipt(current,identity,hostile),'NON_JSON');check('receipt-getter-not-invoked',getters===0);
  const copied=recordTypeOwnerFixture(),isolated=inspectCoreRecordTypeReceipt(copied.current,copied.identity,copied.receipt);(copied.receipt.source.modules[0]!.elements[0]!['future/field'] as any).values.reverse();check('input-copy-isolation',(isolated.receipt.source.modules[0]!.elements[0]!['future/field'] as any).values[0]==='b');isolated.source.id='changed';isolated.receipt.target.id='changed';check('output-copy-isolation',copied.current.id==='d');
- const initial:Document={umf:'0.7.0',id:'kind-transitions',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{}},{id:'R',extensions:{}}]}]};
+ const initial:Document={umf:CURRENT_CORE_VERSION,id:'kind-transitions',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{}},{id:'R',extensions:{}}]}]};
  const oldField=declareCoreElementKind(initial,identity,'field'),newRecord=declareCoreElementKind(oldField.target,{module:'m',element:'R'},'record'),renewedField=declareCoreElementKind(newRecord.target,identity,'field'),transition=declareCoreRecordType(renewedField,newRecord);
  check('real-kind-transitions-and-renewed-context',inspectCoreRecordTypeReceipt(transition.target,identity,transition).receiptConsistency==='verified'&&!Object.hasOwn(initial.modules[0]!.elements[0]!,'kind')&&!Object.hasOwn(initial.modules[0]!.elements[1]!,'kind')&&oldField.target.modules[0]!.elements[0]!.kind==='field'&&newRecord.target.modules[0]!.elements[1]!.kind==='record');
  refuse('individually-valid-pre-Record-Field-author-stale',()=>inspectCoreRecordTypeReceipt(transition.target,identity,{...transition,fieldAuthor:oldField}),'CORE_KIND_STALE');

@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from './json';
 import {UmfError,type Document,type CoreSemanticTypeReference,type Diagnostic,type Json} from './types';
 import {validateDocument} from '../validation/document';
@@ -5,7 +6,7 @@ import {checkSemanticTypeReferences} from '../validation/semantic-types';
 import {checkSemanticTypeOperation,checkSemanticTypeIdentity,semanticTypesCanonical} from './semantic-types-receipts';
 import {SemanticTypeRegistry,type SemanticTypeValueResult} from '../extensions/semantic-types';
 export interface CoreSemanticTypeIdentity {module:string;element:string}
-export type CoreSemanticTypeMeaning={state:'missing'}|{state:'legacy';value:Json}|{state:'declared';types:CoreSemanticTypeReference[]};
+export type CoreSemanticTypeMeaning={state:'missing'}|{state:'declared';types:CoreSemanticTypeReference[]};
 export interface CoreSemanticTypeInspection {operation:'inspect-core-semantic-types';version:'2.0.0';source:Document;identity:CoreSemanticTypeIdentity;path:string;meaning:CoreSemanticTypeMeaning;diagnostics:Diagnostic[]}
 export interface CoreSemanticTypeDeclaration {operation:'declare-core-semantic-types';version:'2.0.0';source:Document;target:Document;identity:CoreSemanticTypeIdentity;request:{types:CoreSemanticTypeReference[]|null};diagnostics:Diagnostic[];provenance:{origin:'authored';path:string;basis:'explicit-author-declaration'}}
 function locate(input:Document,identityInput:CoreSemanticTypeIdentity){
@@ -16,11 +17,11 @@ function locate(input:Document,identityInput:CoreSemanticTypeIdentity){
  if(mi<0||ei<0)throw new UmfError('SEMANTIC_TYPE_MISSING','Element identity is absent');
  return {source,identity,mi,ei,element:source.modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}/semanticTypes`,validation};
 }
-function requireCore(source:Document){if(source.umf!=='0.10.0')throw new UmfError('SEMANTIC_TYPE_VERSION','Explicit 0.10.0 migration required; older semanticTypes fields are opaque');}
+function requireCore(source:Document){if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('SEMANTIC_TYPE_VERSION','Explicit 0.10.0 migration required; older semanticTypes fields are opaque');}
 function finish<T>(receipt:T):T {const copied=copyJson(receipt);if(!checkSemanticTypeOperation(copied))throw new UmfError('SEMANTIC_TYPE_RECEIPT',JSON.stringify(checkSemanticTypeOperation.errors));return copied as unknown as T;}
 export function inspectCoreSemanticTypes(input:Document,identity:CoreSemanticTypeIdentity):CoreSemanticTypeInspection {
  const l=locate(input,identity);
- const meaning:CoreSemanticTypeMeaning=!Object.hasOwn(l.element,'semanticTypes')?{state:'missing'}:l.source.umf==='0.10.0'?{state:'declared',types:copyJson(l.element.semanticTypes) as unknown as CoreSemanticTypeReference[]}:{state:'legacy',value:copyJson(l.element.semanticTypes)};
+ const meaning:CoreSemanticTypeMeaning=!Object.hasOwn(l.element,'semanticTypes')?{state:'missing'}:{state:'declared',types:copyJson(l.element.semanticTypes) as unknown as CoreSemanticTypeReference[]};
  return finish({operation:'inspect-core-semantic-types',version:'2.0.0',source:l.source,identity:l.identity,path:l.path,meaning,diagnostics:l.validation.diagnostics});
 }
 export function getCoreSemanticTypes(input:Document,identity:CoreSemanticTypeIdentity):CoreSemanticTypeReference[]|undefined {

@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {historicalCoreFacetPatch} from '../model/facets';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
@@ -8,7 +9,7 @@ import {importParquetSchema,getParquetFieldMetadata} from '../adapters/parquet/f
 import {exportParquetCapture} from '../adapters/parquet';
 import {inspectParquetFacetType} from '../adapters/parquet/facet-type';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import facetAuthor from '../../spec/core/facet-operation.schema.json';import kindAuthor from '../../spec/core/kind-operation-v4.schema.json';
+import legacy from '../../spec/core/schema.json';import facetAuthor from '../../spec/core/facet-operation-v3.schema.json';import kindAuthor from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/facets-parquet-projection.schema.json';
 export {default as facetsParquetProjectionSchema} from '../../spec/core/facets-parquet-projection.schema.json';
 export interface FacetsParquetRequest {id:string;recordName:string;fieldName:string;nullable:boolean;fieldId?:number;carrier:ParquetFacetCarrier;mode:'strict'|'report';encoding:'native-type'|'metadata-only'|'carrier-only';profile:'declared-schema'|'pyarrow-21';obligation:'value-domain'|'exact-input';}
@@ -21,7 +22,7 @@ export interface FacetsParquetProjection {
  mapping:{origin:'authored';idealPath:string;nativeIndex:1;facets:CoreFacetPatch;encoding:FacetsParquetRequest['encoding'];profile:FacetsParquetRequest['profile'];outcome:Outcome};
  residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,facetAuthor,kindAuthor])validator.addSchema(s);
+const validator=createValidator();for(const s of [legacy,facetAuthor,kindAuthor])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 /** Project verified ideal assertions; custom metadata never becomes an implicit validator. */
@@ -30,7 +31,7 @@ export function projectFacetsToParquet(input:Author,options:FacetsParquetRequest
  if(!checkRequest(request))throw new UmfError('FACETS_PARQUET_REQUEST',JSON.stringify(checkRequest.errors));
  const author=copied?.operation==='declare-core-facets'?verifyCoreFacetDeclaration(copied,copied.target):verifyCoreKindDeclaration(copied as CoreKindDeclaration,copied?.target);
  const source=copyJson(author.target) as unknown as Document;
- if(source.umf!=='0.5.0')throw new UmfError('FACETS_PARQUET_VERSION','Explicit core 0.5.0 declaration required');
+ if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('FACETS_PARQUET_VERSION','Current core 0.10.0 declaration required');
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),module=source.modules[mi]!,ei=module.elements.findIndex(e=>e.id===author.identity.element),element=module.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;
  if(element.kind!=='field')throw new UmfError('FACETS_PARQUET_FIELD','Selected author must identify a Field');
  const result:FacetsParquetProjection={operation:'project-facets-parquet',version:'1.0.0',status:'projected',source,author,request,binding,mapping:{origin:'authored',idealPath:path+'/facets',nativeIndex:1,facets:{},encoding:request.encoding,profile:request.profile,outcome:'exact'},residuals:[],diagnostics:[]};

@@ -1,9 +1,9 @@
 import native from '../../fixtures/validation/cardinality-tablespec-profile-native.json';
-import {importTableSpec,upgradeFieldEnvelope,classifyTableSpecField,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,writeJsonValue,copyJson,type Document,type TableSpecCardinalityRequest} from '../../src';
+import {importTableSpec, classifyTableSpecField, writeJsonValue, copyJson, type Document, type TableSpecCardinalityRequest} from '../../src';
 export function tableSpecCardinalitySource(text:string,format:'json'|'yaml'='json'):Document{
  const imported=importTableSpec(text,{id:'cardinality',format});
- const fields=classifyTableSpecField(upgradeFieldEnvelope(imported).target,{column:0,mode:'strict'}).target!;
- return upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(fields).target).target;
+ const fields=classifyTableSpecField(imported,{column:0,mode:'strict'}).target!;
+ return fields;
 }
 export function cardinalityTableSpecCases(){
  const scalarNames=new Set(['VARCHAR','DECIMAL','INTEGER','DATE','DATETIME','TIMESTAMP','BOOLEAN','TEXT','CHAR','FLOAT']);

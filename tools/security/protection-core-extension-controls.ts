@@ -1,11 +1,12 @@
 import {createCandidateCoreExtensionClosure} from '../../src/extensions/security/core-extension-closure-candidate';
 import {captureCandidateCoreSource,readCandidateCoreSource} from '../../src/extensions/security/core-source-candidate';
 import {compileCandidateCatalogProgram,readCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
-import {originalProductsSourceFixture} from '../../tests/security/core-extension-closure-fixture';
+import {currentProductsSourceFixture} from '../../tests/security/core-extension-closure-fixture';
 import {actionsPackage} from '../../src/extensions/actions';
 export function run(){
- const rows:{id:string;pass:boolean}[]=[],add=(id:string,pass:boolean)=>rows.push({id,pass}),refuses=(fn:()=>unknown)=>{try{fn();return false;}catch{return true;}},f=originalProductsSourceFixture(),extensions=createCandidateCoreExtensionClosure([{id:'umf.actions',version:'0.1.0'}]);
- add('original-model-preserved',JSON.stringify(readCandidateCoreSource(captureCandidateCoreSource(f.model,extensions)))===f.original.request.model.utf8);
+ const rows:{id:string;pass:boolean}[]=[],add=(id:string,pass:boolean)=>rows.push({id,pass}),refuses=(fn:()=>unknown)=>{try{fn();return false;}catch{return true;}},f=currentProductsSourceFixture(),extensions=createCandidateCoreExtensionClosure([{id:'umf.actions',version:'0.1.0'}]);
+ add('authored-current-model-preserved',JSON.stringify(readCandidateCoreSource(captureCandidateCoreSource(f.model,extensions)))===JSON.stringify(f.model));
+ add('historical-native-model-refused',refuses(()=>captureCandidateCoreSource(JSON.parse(f.original.request.model.utf8),extensions)));
  const h=compileCandidateCatalogProgram(f.policy,null,f.closure,f.ontology,[],extensions),p=readCandidateCatalogProgram(h);
  add('two-real-source-conditions',p.conditions.length===2&&p.conditions.every((c:any)=>c.condition.expression.op==='literal'&&c.condition.expression.value===true));
  add('original-actions-retained',p.closure.documents[0].document.modules[0].extensions['umf.actions'].actions[0].authorization.roles[0]==='bulk-editor');

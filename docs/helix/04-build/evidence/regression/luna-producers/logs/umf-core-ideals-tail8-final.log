@@ -1,0 +1,85 @@
+{"testProcess":"tests/core-ideals/facets-parquet-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-parquet-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-parquet-projection.test.ts:
+(pass) integer widths and decimal carriers project only matched declared domains [3349.54ms]
+(pass) native validity, reader limitations and non-enforcing length metadata stay separate [855.28ms]
+(pass) profile/mode/encoding matrix recovers full authored ideals in both serializations [14990.00ms]
+(pass) unknown content, false authorship, changed bytes and unsafe inputs cannot pass recovery [473.80ms]
+
+ 4 pass
+ 0 fail
+ 153 expect() calls
+Ran 4 tests across 1 file. [28.00s]
+{"testProcess":"tests/core-ideals/facets-parquet-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":153,"completeSummary":true,"logSha256":"bf9c7b32b857970b48b0b2ac87020d3c4e082fe0a071fc37270743f15094d09c"}
+{"testProcess":"tests/core-ideals/facets-parquet.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-parquet.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-parquet.test.ts:
+(pass) classifies declaration widths while retaining explicit input-conversion limits [6951.13ms]
+(pass) unknown embedded metadata remains residual with exact native byte recovery [1618.45ms]
+(pass) fixed lengths and author provenance do not invent or overwrite assertions [1639.81ms]
+(pass) closed schemas, source identity and profile refusals remain explicit [1080.27ms]
+(pass) decimal declarations and explicit array member selection preserve context [1500.35ms]
+
+ 5 pass
+ 0 fail
+ 81 expect() calls
+Ran 5 tests across 1 file. [22.14s]
+{"testProcess":"tests/core-ideals/facets-parquet.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":81,"completeSummary":true,"logSha256":"a92aabb07085e4eba3161bf49c0ff7dfb245edf4b7872f36684bd59f4929391d"}
+{"testProcess":"tests/core-ideals/facets-postgresql-catalog.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-catalog.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-postgresql-catalog.test.ts:
+(pass) complete catalog correspondence preserves sources and verifies overlapping CHECKs [1083.99ms]
+(pass) omitted, extra, duplicate and inconsistent native observations cannot qualify [2120.06ms]
+(pass) unknown source content and unsafe unknown numbers remain exact while owned integers reject rounding [387.35ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [4.06s]
+{"testProcess":"tests/core-ideals/facets-postgresql-catalog.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"7107cba9662a3d42f01e8afefa3b47ed144c48c57b8fcc743f3b1d771cb673a9"}
+{"testProcess":"tests/core-ideals/facets-postgresql-predicate.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-predicate.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-postgresql-predicate.test.ts:
+(pass) closed predicate syntax retains exact bounds without claiming resolved enforcement [4.90ms]
+(pass) lookalikes and extra syntax stay native; conjuncts never produce partial claims [1.92ms]
+(pass) unknown AST content, forged versions and unsafe objects are never interpreted [0.41ms]
+
+ 3 pass
+ 0 fail
+ 107 expect() calls
+Ran 3 tests across 1 file. [74.00ms]
+{"testProcess":"tests/core-ideals/facets-postgresql-predicate.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":107,"completeSummary":true,"logSha256":"dffede84305bea400e722dc48e42c9034971230f7edafa767958faeaa1998ef7"}
+{"testProcess":"tests/core-ideals/facets-postgresql-projection-native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-projection-native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-postgresql-projection-native.test.ts:
+1 | import {test,expect} from 'bun:test';
+2 | import {createHash} from 'node:crypto';
+3 | test('emitted PostgreSQL DDL and independent values have current pinned evidence',async()=>{
+4 |  const proof=await Bun.file('fixtures/validation/facets-postgresql-projection-native.json').json();
+5 |  expect(proof.serverVersion).toBe(170004);expect(proof.encoding).toBe('UTF8');expect(proof.ambientOperatorShadow).toBe(true);expect(proof.counts).toEqual({cases:232,emitted:145,blocked:87,probes:479,rejections:166,catalogRecoveries:2});
+6 |  for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(sha);
+                                                                                                                                                                                         ^
+error: expect(received).toBe(expected)
+
+Expected: "14b171761d661519fe46cc0a93780a28538e64936b35b9d95318fd47597dd2a5"
+Received: "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-postgresql-projection-native.test.ts:6:182)
+(fail) emitted PostgreSQL DDL and independent values have current pinned evidence [6.23ms]
+
+ 0 pass
+ 1 fail
+ 8 expect() calls
+Ran 1 test across 1 file. [14.00ms]
+{"testProcess":"tests/core-ideals/facets-postgresql-projection-native.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":8,"completeSummary":true,"logSha256":"4b27d911c2bcad82d99b9fcef2bdfcd2c149ca33b11ad9f1ad0d3c33a0587221"}
+Complete test file failed or terminated: tests/core-ideals/facets-postgresql-projection-native.test.ts
+
+ 15 pass
+ 1 fail
+ 376 expect() calls
+Ran 16 tests across 5 files. [54.39s]

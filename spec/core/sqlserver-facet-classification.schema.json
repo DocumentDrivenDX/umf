@@ -38,10 +38,10 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.5.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "target": {
-      "$ref": "urn:umf:core:0.5.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "request": {
       "type": "object",
@@ -83,7 +83,7 @@
           ]
         },
         "author": {
-          "$ref": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+          "$ref": "urn:umf:core:facet-operation:3.0.0#/$defs/declaration"
         },
         "identity": {
           "type": "object",

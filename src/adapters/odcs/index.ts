@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/odcs/package.json';
 import Ajv2019 from 'ajv/dist/2019';
 import {installJsonEquality} from '../../validation/schema';
@@ -41,7 +42,7 @@ function payload(document:Document):Payload{
 export function importOdcsDocument(text:string,options:{id:string;format:'json'|'yaml'}):Document{
  if(!['json','yaml'].includes(options.format))throw new UmfError('ODCS_FORMAT','Explicit JSON or YAML format required');
  const value:Payload={profile:'odcs-json-yaml',root:parse(text,options.format),originalSource:text,originalFormat:options.format};
- const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[ODCS_EXTENSION]:{version:'0.1.0'}},modules:[{id:'contract',namespace:'',elements:[{id:'contract',extensions:{[ODCS_EXTENSION]:value as unknown as Json}}]}]};payload(d);return d;
+ const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[ODCS_EXTENSION]:{version:'0.1.0'}},modules:[{id:'contract',namespace:'',elements:[{id:'contract',extensions:{[ODCS_EXTENSION]:value as unknown as Json}}]}]};payload(d);return d;
 }
 export function exportOdcsDocument(document:Document,format?:'json'|'yaml'){
  const p=payload(document);if(format!==undefined&&!['json','yaml'].includes(format))throw new UmfError('ODCS_FORMAT','Unsupported native format');

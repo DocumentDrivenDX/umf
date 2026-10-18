@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6188,
-        "line": 8,
-        "path": "src/validation/relationships.ts",
-        "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+        "bytes": 4966,
+        "line": 25,
+        "path": "src/generated/core-model.ts",
+        "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
       }
     ],
     "entrypoint": ".",
     "exportName": "RelationshipEndpoint",
     "runtime": "type-only",
     "signatureText": [
-      "export interface RelationshipEndpoint {module:string;element:string;[key:string]:unknown}"
+      "export type RelationshipEndpoint = {\"module\":Id;\"element\":Id;[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"RelationshipEndpoint\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6188,
-      "line": 8,
-      "path": "src/validation/relationships.ts",
-      "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+      "bytes": 4966,
+      "line": 25,
+      "path": "src/generated/core-model.ts",
+      "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
     }
   ],
-  "summary": "Type declaration · src/validation/relationships.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "RelationshipEndpoint"
 }

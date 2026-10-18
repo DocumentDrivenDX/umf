@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {importAvroSchema} from '../../src/adapters/avro';
-import {classifyAvroKeys,type AvroKeyRequest} from '../../src/core-ideals/key-avro';
+import {classifyAvroKeys, type AvroKeyRequest} from '../../src/core-ideals/key-avro';
 const fixtures=(await Bun.file('fixtures/avro/key-discovery-cases.json').json()).cases;
 const cases=fixtures.map((c:any)=>{const source=importAvroSchema(c.schemaText,{id:c.id}),request:AvroKeyRequest={mode:'report',profile:'schema-declarations',nativeSource:{schema:c.schemaText,dependencies:[]}};return {source,request,expected:classifyAvroKeys(source,request)};});
 const bundleRequest:AvroKeyRequest={mode:'report',profile:'schema-declarations',nativeSource:{schema:' "sales.Order" \n',dependencies:[{id:'orders',schema:fixtures[0].schemaText}]}},bundleSource=importAvroSchema(bundleRequest.nativeSource.schema,{id:'bundle-browser',dependencies:bundleRequest.nativeSource.dependencies});

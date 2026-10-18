@@ -1,0 +1,333 @@
+{"testProcess":"tests/graphql/corpus.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/graphql/corpus.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/graphql/corpus.test.ts:
+(pass) US-009-AC7: pinned upstream full schema survives JSON/YAML and all declarations [3355.46ms]
+(pass) US-009-AC8: upstream grammar positives, negatives and incomplete schemas stay distinguished [5089.17ms]
+
+ 2 pass
+ 0 fail
+ 196 expect() calls
+Ran 2 tests across 1 file. [13.59s]
+{"testProcess":"tests/graphql/corpus.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":196,"completeSummary":true,"logSha256":"a31c5fd30e9020168cca081432c7ac1bf9854eebf9f76d374be33872d0f9df51"}
+{"testProcess":"tests/graphql/native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/graphql/native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/graphql/native.test.ts:
+(pass) US-009-AC1: complete SDL declarations, extensions and original layout round-trip [442.62ms]
+(pass) US-009-AC2: editable AST stays isolated; current source replaces stale defaults with explicit layout loss [278.27ms]
+(pass) US-009-AC3: invalid native schemas and destructive AST edits fail [302.93ms]
+(pass) US-009-AC4: exact custom-scalar literals remain AST strings and block unsupported edits [146.35ms]
+
+ 4 pass
+ 0 fail
+ 28 expect() calls
+Ran 4 tests across 1 file. [5.15s]
+{"testProcess":"tests/graphql/native.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":28,"completeSummary":true,"logSha256":"ee4c8378ee5144a8ad46361a5e96fa5e1a89b4b5cccc5ece62130f6fc211c188"}
+{"testProcess":"tests/graphql/projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/graphql/projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/graphql/projection.test.ts:
+(pass) US-010-AC1: input nullability, defaults, recursive lists and OneOf remain explicit [308.01ms]
+(pass) US-010-AC2: fragments, output types, unbound scalars and strict policies block [558.89ms]
+(pass) US-010-AC5: pinned GitHub mutation input examples project without treating outputs as inputs [2173.42ms]
+
+ 3 pass
+ 0 fail
+ 40 expect() calls
+Ran 3 tests across 1 file. [8.34s]
+{"testProcess":"tests/graphql/projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":40,"completeSummary":true,"logSha256":"f1ae1d4a52342bba36826a910f18aad806d12efb0bd9aee31aa7fb473789eba6"}
+{"testProcess":"tests/jsonld/compaction.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/compaction.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/compaction.test.ts:
+(pass) US-026-AC9: every pinned compact case, source preservation and explicit corpus discrepancies [72115.48ms]
+(pass) US-026-AC9: compact exact values, list/JSON ordering, target context, options and copied edits [4632.11ms]
+(pass) US-026-AC9: required context, explicit policies, unknown content and isolated target contexts [223.93ms]
+
+ 3 pass
+ 0 fail
+ 2854 expect() calls
+Ran 3 tests across 1 file. [84.06s]
+{"testProcess":"tests/jsonld/compaction.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":2854,"completeSummary":true,"logSha256":"2ba328abd092de211c49d0e7dac08e47320a6564e72a03631e4671ca14b4ed89"}
+{"testProcess":"tests/jsonld/flatten.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/flatten.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/flatten.test.ts:
+(pass) US-026-AC8: full pinned flatten corpus, archives, report schema and qualified oracle [14994.14ms]
+(pass) US-026-AC8: precision, lists, graph merging, remote compaction, duplicates and copied edits [3264.00ms]
+(pass) US-026-AC8: explicit options, null context, unknown preservation and isolated contexts [446.72ms]
+
+ 3 pass
+ 0 fail
+ 998 expect() calls
+Ran 3 tests across 1 file. [23.55s]
+{"testProcess":"tests/jsonld/flatten.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":998,"completeSummary":true,"logSha256":"e30efb042b5826790a07c861b85fc1fe81b707a3a2ddf53dde65ad0b9accafb1"}
+{"testProcess":"tests/jsonld/framing.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/framing.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/framing.test.ts:
+(pass) US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies [21685.08ms]
+(pass) US-026-AC10/11: exact values, views, edits, invalid unmatched frames and opaque controls [5401.00ms]
+(pass) US-026-AC10: framing option validation, unknown representation and context isolation [491.11ms]
+
+ 3 pass
+ 0 fail
+ 1741 expect() calls
+Ran 3 tests across 1 file. [32.63s]
+{"testProcess":"tests/jsonld/framing.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":1741,"completeSummary":true,"logSha256":"56bcc5927d9d2b41ee7a114512ff56c9988b9d5d62454096326710a0b10525c2"}
+{"testProcess":"tests/jsonld/from-rdf.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/from-rdf.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/from-rdf.test.ts:
+(pass) US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences [15514.54ms]
+(pass) US-026-AC12: exact literals, graph inventory, loss policies, compound literals and edits [4270.88ms]
+(pass) US-026-AC12: unknown RDF encoding blocks, options validate and normalized syntax preserves terms [129.23ms]
+
+ 3 pass
+ 0 fail
+ 714 expect() calls
+Ran 3 tests across 1 file. [25.56s]
+{"testProcess":"tests/jsonld/from-rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":714,"completeSummary":true,"logSha256":"0ba0a5c22ffe33861dbb8d46f294ae7139d2e684401ffef473bff7edb6068818"}
+{"testProcess":"tests/jsonld/jsonld.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/jsonld.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/jsonld.test.ts:
+(pass) US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons [73832.51ms]
+(pass) US-026-AC4: loss policy, exact numbers, copies and explicit missing contexts [755.25ms]
+(pass) US-026-AC4: supplied contexts are isolated per operation and recover across formats [489.85ms]
+
+ 3 pass
+ 0 fail
+ 5054 expect() calls
+Ran 3 tests across 1 file. [80.21s]
+{"testProcess":"tests/jsonld/jsonld.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":5054,"completeSummary":true,"logSha256":"2da5b3e7de626ebd3b40bafea4f54ec7ea4d9cc5b03192997af334ef77d1e19a"}
+{"testProcess":"tests/jsonld/legacy.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/legacy.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/legacy.test.ts:
+(pass) US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode [3452.52ms]
+(pass) US-026-AC6: checked-in patch and installed sources match fresh-install evidence [37.64ms]
+
+ 2 pass
+ 0 fail
+ 124 expect() calls
+Ran 2 tests across 1 file. [10.45s]
+{"testProcess":"tests/jsonld/legacy.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":124,"completeSummary":true,"logSha256":"3c77342b66543b2f8926b24b69632a76ada36132fdcc5f64481b177c66a4ffd4"}
+{"testProcess":"tests/jsonld/nest.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/nest.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/nest.test.ts:
+(pass) US-026-AC5: scoped nesting uses its own context without changing siblings or JSON literals [1662.78ms]
+
+ 1 pass
+ 0 fail
+ 43 expect() calls
+Ran 1 test across 1 file. [8.80s]
+{"testProcess":"tests/jsonld/nest.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":43,"completeSummary":true,"logSha256":"0e19c0f5a26a78358fe953e55710397516089dc8d110dbea06f4e872791d6c21"}
+{"testProcess":"tests/jsonld/numeric-rdf.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/numeric-rdf.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/numeric-rdf.test.ts:
+(pass) US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding [522.97ms]
+(pass) US-026-AC17: independent native numeric outcomes are qualified rather than coerced into agreement [9.85ms]
+(pass) US-026-AC17: numeric lexical forms retain their intended RDF datatypes [2351.30ms]
+
+ 3 pass
+ 0 fail
+ 49 expect() calls
+Ran 3 tests across 1 file. [8.04s]
+{"testProcess":"tests/jsonld/numeric-rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":49,"completeSummary":true,"logSha256":"f80902a5cf43bd17203591a798e0d5221a80e8fe54eff1c58da63e4cacdaf5c2"}
+{"testProcess":"tests/jsonld/numeric.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/numeric.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/numeric.test.ts:
+(pass) US-026-AC7: exact numbers retain numeric semantics through expansion and edits [2733.80ms]
+(pass) US-026-AC7: conformance comparison cannot conceal rounded decimals or opaque literal changes [1.43ms]
+
+ 2 pass
+ 0 fail
+ 79 expect() calls
+Ran 2 tests across 1 file. [7.96s]
+{"testProcess":"tests/jsonld/numeric.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":79,"completeSummary":true,"logSha256":"dbdaa572c8af75e0a87c2f3c0639b67a15bc7cd9af74f51773188776fc02c916"}
+{"testProcess":"tests/jsonld/rdf-terms.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/rdf-terms.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/rdf-terms.test.ts:
+(pass) US-026-AC15: RFC IRI components preserve valid spellings and reject malformed boundaries [0.60ms]
+(pass) US-026-AC15: BCP47 syntax handles private, grandfathered and duplicate subtags [0.14ms]
+
+ 2 pass
+ 0 fail
+ 57 expect() calls
+Ran 2 tests across 1 file. [36.00ms]
+{"testProcess":"tests/jsonld/rdf-terms.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":57,"completeSummary":true,"logSha256":"778344d39d515f481c3c60808bb231aed9169104868ebe01afd4a2c84589e0c5"}
+{"testProcess":"tests/jsonld/to-rdf.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/to-rdf.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/to-rdf.test.ts:
+(pass) US-026-AC13: complete toRDF corpus retains sources, candidates and every gap [126089.96ms]
+(pass) US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied edits [15583.32ms]
+(pass) US-026-AC13: native comparisons retain mismatches and non-comparable generalized datasets [2.95ms]
+
+ 3 pass
+ 0 fail
+ 4509 expect() calls
+Ran 3 tests across 1 file. [149.28s]
+{"testProcess":"tests/jsonld/to-rdf.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":4509,"completeSummary":true,"logSha256":"f93b74ae9ea5a6a998823dd14e95140aa54fd9dd17af92b43a7362db3a06501b"}
+{"testProcess":"tests/jsonld/unicode-iri.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/jsonld/unicode-iri.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/jsonld/unicode-iri.test.ts:
+(pass) US-026-AC16: Unicode IRIs retain their spelling across processing and selected framing [4394.39ms]
+(pass) US-026-AC16: independent parser limitations and escaped term evidence remain explicit [14.06ms]
+
+ 2 pass
+ 0 fail
+ 97 expect() calls
+Ran 2 tests across 1 file. [10.42s]
+{"testProcess":"tests/jsonld/unicode-iri.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":97,"completeSummary":true,"logSha256":"251a6792d295a5b71c61bbf21c56352133ac22425042845ce7ddc4c09933fe8a"}
+{"testProcess":"tests/openapi/bundle.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/bundle.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/bundle.test.ts:
+(pass) US-011-AC8: external resources retain URI identity, source formats and edits in complete bundles [1451.87ms]
+(pass) US-011-AC9: URI collisions, missing resources and unsupported anchor scopes fail explicitly [320.09ms]
+
+ 2 pass
+ 0 fail
+ 43 expect() calls
+Ran 2 tests across 1 file. [8.05s]
+{"testProcess":"tests/openapi/bundle.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":43,"completeSummary":true,"logSha256":"a6a046c6a80900658f7860c850c93cc96051de71cb86b742db90790f4d6cb011"}
+{"testProcess":"tests/openapi/corpus.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/corpus.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/corpus.test.ts:
+(pass) US-011-AC6: all pinned official examples retain content; fragments stay distinct from full descriptions [8120.31ms]
+(pass) US-011-AC7: legacy object validation catches version-specific shape errors without changing native semantics [326.80ms]
+
+ 2 pass
+ 0 fail
+ 256 expect() calls
+Ran 2 tests across 1 file. [14.37s]
+{"testProcess":"tests/openapi/corpus.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":256,"completeSummary":true,"logSha256":"b66068e4e9ef9b3dd2246fd355777661965e19ba1adf48828d7010c4e1edafe4"}
+{"testProcess":"tests/openapi/dynamic.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/dynamic.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/dynamic.test.ts:
+(pass) US-011-AC19: dynamic anchors choose outermost resource; ordinary targets remain static [2433.21ms]
+(pass) US-011-AC20: missing, invalid and mismatched evaluation contexts are rejected [1095.26ms]
+
+ 2 pass
+ 0 fail
+ 30 expect() calls
+Ran 2 tests across 1 file. [10.65s]
+{"testProcess":"tests/openapi/dynamic.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":30,"completeSummary":true,"logSha256":"4696fc128cf3dcbdb79d57a97f47a28932b835f04446a03b5f474f1da9e0ad95"}
+{"testProcess":"tests/openapi/extraction.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/extraction.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/extraction.test.ts:
+(pass) US-011-AC15: extraction retains exact numbers, references and complete source context [171.10ms]
+(pass) US-011-AC16: dialect provenance and contextual extraction boundaries [307.60ms]
+
+ 2 pass
+ 0 fail
+ 18 expect() calls
+Ran 2 tests across 1 file. [5.62s]
+{"testProcess":"tests/openapi/extraction.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":18,"completeSummary":true,"logSha256":"4c3f1845af67c8c4cd7066360b7dd5f21afabb4cb482a6147f38b24e4f16c1cf"}
+{"testProcess":"tests/openapi/native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/native.test.ts:
+(pass) US-011-AC1: OpenAPI JSON/YAML preserves native operations, schemas, extension content and source [356.30ms]
+(pass) US-011-AC2: candidate edits validate object structure and retain original archive [232.19ms]
+(pass) US-011-AC3: exact native YAML numbers and unsupported versions stay preserved without false interpretation [136.58ms]
+(pass) US-011-AC4: object validation profile rejects structural errors but discloses embedded-schema limits [220.85ms]
+
+ 4 pass
+ 0 fail
+ 41 expect() calls
+Ran 4 tests across 1 file. [6.56s]
+{"testProcess":"tests/openapi/native.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":41,"completeSummary":true,"logSha256":"e77acfb3667959f66250632156c5df30d4d590e91c51d61c9ed773e8d8bb5779"}
+{"testProcess":"tests/openapi/projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/projection.test.ts:
+(pass) US-012-AC1: static schema projection retains recursive validation, annotations and source [652.95ms]
+(pass) US-012-AC2: strict losses and unsupported semantics block projection [769.96ms]
+(pass) US-012-AC3: all six pinned Tic Tac Toe schema components project [4228.60ms]
+(pass) US-012-AC2: unavailable target compilation blocks a support claim [171.11ms]
+
+ 4 pass
+ 0 fail
+ 44 expect() calls
+Ran 4 tests across 1 file. [10.28s]
+{"testProcess":"tests/openapi/projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":44,"completeSummary":true,"logSha256":"927cb976ba5b72a751fba1c7ebca3e0e8f4c8a4a38054cfa967f71fe17d6e4ee"}
+{"testProcess":"tests/openapi/references.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/references.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/references.test.ts:
+(pass) US-011-AC12: typed reference chains retain source siblings and target origin [513.88ms]
+(pass) US-011-AC13: target mismatches, cycles and unsupported scope never masquerade as resolved references [907.61ms]
+(pass) US-011-AC14: each supported Reference Object target role validates its own shape [1022.76ms]
+
+ 3 pass
+ 0 fail
+ 30 expect() calls
+Ran 3 tests across 1 file. [7.42s]
+{"testProcess":"tests/openapi/references.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":30,"completeSummary":true,"logSha256":"4513e26dd20a58a161cce652ebec0f443b869ea0c552d83b8c561bb5c455708f"}
+{"testProcess":"tests/openapi/schemas.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/schemas.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/schemas.test.ts:
+(pass) US-011-AC10: embedded dialect boundaries and literal examples remain distinct [226.76ms]
+(pass) US-011-AC11: schema positions cover 3.2 media item schemas and nested encoding headers [56.89ms]
+
+ 2 pass
+ 0 fail
+ 20 expect() calls
+Ran 2 tests across 1 file. [4.78s]
+{"testProcess":"tests/openapi/schemas.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":20,"completeSummary":true,"logSha256":"75f9341b97e74ca17527106f286b6b3918d63cbe37859ef2277236cb4a8f2781"}
+{"testProcess":"tests/openapi/scope.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/openapi/scope.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/openapi/scope.test.ts:
+(pass) US-011-AC17: nested IDs, anchors, pointer aliases and $self preserve source location [849.96ms]
+(pass) US-011-AC18: ambiguity, unknown dialect and non-schema targets fail explicitly [419.44ms]
+
+ 2 pass
+ 0 fail
+ 27 expect() calls
+Ran 2 tests across 1 file. [5.02s]
+{"testProcess":"tests/openapi/scope.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"0837302bbb0f19e18c218ed3cf344653323b83c77f16e58cac3104723b16ecd5"}
+{"testProcess":"tests/protobuf/behavior.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/protobuf/behavior.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/protobuf/behavior.test.ts:
+27 |      (message.fields.oneof_decl as unknown as DescriptorNode[]).splice(index,1);
+28 |     }
+29 |    });
+30 |    const path=join(directory,mutation+'.pb');await Bun.write(path,exportProtobufDescriptorSet(changed.document));paths.push(path);
+31 |   }
+32 |   const process=Bun.spawn([globalThis.process.env.UMF_PYTHON_PATH??'.venv/bin/python','scripts/protobuf-behavior-oracle.py',original,emitted,...paths],{stdout:'pipe',stderr:'pipe'});
+                         ^
+ENOENT: no such file or directory, posix_spawn '.venv/bin/python'
+    path: ".venv/bin/python",
+ syscall: "posix_spawn",
+   errno: -2,
+    code: "ENOENT"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/protobuf/behavior.test.ts:32:21)
+(fail) US-003-AC6: independent native runtime behavior survives and detects semantic mutations [1057.54ms]
+
+ 0 pass
+ 1 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [4.75s]
+{"testProcess":"tests/protobuf/behavior.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":1,"completeSummary":true,"logSha256":"47090e3ff5258b4c80ae024734cb7295e804e13b485fbed7fe3865a0786c73df"}
+Complete test file failed or terminated: tests/protobuf/behavior.test.ts
+
+ 62 pass
+ 1 fail
+ 17093 expect() calls
+Ran 63 tests across 25 files. [546.74s]

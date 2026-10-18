@@ -2,10 +2,11 @@ import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues,validateCoreRecordValues,validateDocument} from '../src/index';
 import {commerceDataset} from './helpers/commerce-dataset';
+import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 const source=readDocument(readFileSync('spec/domain-packs/commerce/ontology.json','utf8'),'json');
 const graph=JSON.parse(readFileSync('spec/domain-packs/commerce/graph/fixture.json','utf8'));const input=commerceDataset(source,graph);
 const clone=<T>(v:T):T=>structuredClone(v);
-test('original commerce0.8 has complete finite dataset context with unchanged public receipts',()=>{
+test('current commerce has complete finite dataset context with unchanged public receipts',()=>{
  const before=JSON.stringify({source,input}),result=validateCoreDatasetValues(source,input);
  expect(result.datasetValidation).toEqual({valid:true,complete:true,diagnostics:[]});expect(result.records.length).toBe(11);expect(result.keys.length).toBe(11);expect(result.relationships.length).toBe(10);
  expect(result.documentValidation).toEqual(validateDocument(source));expect(result.source).toEqual(source);expect(result.input).toEqual(input);
@@ -71,7 +72,7 @@ test('closed scope, unknown executable input, accessors, budgets and forged/stal
 test('actual many-key receipt budget counts repeated public values and hex carriers',()=>{
  const fields=[{id:'large',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}},...Array.from({length:20},(_,i)=>({id:'b'+i,kind:'field',scalarType:'boolean',nullability:'required',cardinality:'one',extensions:{}}))];
  const members=fields.map(f=>({module:'m',element:f.id}));
- const model={umf:'0.8.0',id:'budget-many-keys',vocabularies:{},modules:[{id:'m',namespace:'urn:budget:',elements:[{id:'R',kind:'record',members,keys:Array.from({length:20},(_,i)=>({id:'key'+i,name:'Key'+i,fields:[members[0],members[i+1]]})),extensions:{}},...fields]}]} as any;
+ const model={umf:CURRENT_CORE_VERSION,id:'budget-many-keys',vocabularies:{},modules:[{id:'m',namespace:'urn:budget:',elements:[{id:'R',kind:'record',members,keys:Array.from({length:20},(_,i)=>({id:'key'+i,name:'Key'+i,fields:[members[0],members[i+1]]})),extensions:{}},...fields]}]} as any;
  expect(validateDocument(model)).toEqual({valid:true,complete:true,diagnostics:[]});
  const request=(length:number)=>({scope:{id:'bounded-many-keys',closure:'supplied-dataset-only' as const},records:[{instanceId:'one',identity:{module:'m',element:'R'},values:fields.map((f,i)=>({field:{module:'m',element:f.id},state:'present' as const,value:i===0?{string:'a'.repeat(length)}:{boolean:false}}))}],relationships:[]});
  const result=validateCoreDatasetValues(model,request(1000));expect(result.datasetValidation.complete).toBe(true);expect(result.keys.length).toBe(20);

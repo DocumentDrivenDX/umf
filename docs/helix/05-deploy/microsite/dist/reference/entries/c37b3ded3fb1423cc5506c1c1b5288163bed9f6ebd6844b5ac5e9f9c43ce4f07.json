@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -495,7 +495,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -513,7 +513,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -588,9 +588,9 @@
   ],
   "sources": [
     {
-      "bytes": 3512,
+      "bytes": 3514,
       "path": "spec/extensions/smithy/assembly-result.schema.json",
-      "sha256": "b941d3252d4bdd8579ad8b765af5fa3826260920302ef56d668cc1ee7edc73cd"
+      "sha256": "e5a55f24e854e25bec1c554af72f35f2d2fe8c1da26c9c0578cc6bdd77a9452d"
     }
   ],
   "summary": "spec/extensions/smithy/assembly-result.schema.json",

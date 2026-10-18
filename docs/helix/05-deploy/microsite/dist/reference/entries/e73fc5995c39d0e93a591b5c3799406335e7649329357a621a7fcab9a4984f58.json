@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8837,
-        "line": 46,
-        "path": "src/validation/schema-properties.ts",
-        "sha256": "2cc0fd6a1e0d32a053027ac07450fb23af1d0d78053e3b1d18f3ea95d8a8119e"
+        "bytes": 1361,
+        "line": 8,
+        "path": "src/validation/document.ts",
+        "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateSchemaPropertiesDocument",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, registry?: Registry): Validation"
+      "(input: unknown, registry?: Registry, meter?: ConstraintMeter | undefined): Validation"
     ]
   },
   "id": "[\"api\",\".\",\"validateSchemaPropertiesDocument\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8837,
-      "line": 46,
-      "path": "src/validation/schema-properties.ts",
-      "sha256": "2cc0fd6a1e0d32a053027ac07450fb23af1d0d78053e3b1d18f3ea95d8a8119e"
+      "bytes": 1361,
+      "line": 8,
+      "path": "src/validation/document.ts",
+      "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
     }
   ],
-  "summary": "Public export · src/validation/schema-properties.ts",
+  "summary": "Current structural admission followed by the authored ordered rule program.",
   "title": "validateSchemaPropertiesDocument"
 }

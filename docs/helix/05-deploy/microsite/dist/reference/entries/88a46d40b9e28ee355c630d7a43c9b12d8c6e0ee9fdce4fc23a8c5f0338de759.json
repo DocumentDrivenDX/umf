@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -101,7 +101,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -248,7 +248,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -315,9 +315,9 @@
   ],
   "sources": [
     {
-      "bytes": 1682,
+      "bytes": 1684,
       "path": "spec/extensions/jsonld/expansion-schema.json",
-      "sha256": "82b5d680827d9350a50902029041dabe0f8368133d98c94f7d378dd99e141db0"
+      "sha256": "86583300fe934607d95f17324505bd4b47f66da0aec4f57e92f820aa513a0766"
     }
   ],
   "summary": "spec/extensions/jsonld/expansion-schema.json",

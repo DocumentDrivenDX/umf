@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:record-members-inspection:0.3.0",
+  "title": "Core 0.9.0 record-members-inspection-v0.3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "source",
+    "identity",
+    "path",
+    "meaning",
+    "provenance"
+  ],
+  "properties": {
+    "operation": {
+      "const": "inspect-core-record-members"
+    },
+    "version": {
+      "const": "0.3.0"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.10.0"
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^/modules/[0-9]+/elements/[0-9]+/members$"
+    },
+    "meaning": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "members",
+            "uninterpretedPaths"
+          ],
+          "properties": {
+            "state": {
+              "const": "known"
+            },
+            "members": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:core:0.10.0#/$defs/keyFieldReference"
+              }
+            },
+            "uninterpretedPaths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "members",
+            "uninterpretedPaths"
+          ],
+          "properties": {
+            "state": {
+              "const": "partial"
+            },
+            "members": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:core:0.10.0#/$defs/keyFieldReference"
+              }
+            },
+            "uninterpretedPaths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "const": "missing"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "const": "inapplicable"
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "const": "unverified"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "fixtures/postgresql/avro-projection.json",
+      "sha256": "a74c25ee59a789107cf69209e12fb4760cc0d2f48bcff499e30def6a1bbc3f0b",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/projection-chain-original/fixtures/postgresql/avro-projection.json.txt",
+      "qualification": "Exact historical source; current projection tests will regenerate from unchanged native inputs, not requalify historical execution."
+    },
+    {
+      "path": "fixtures/sqlserver/avro-projection.json",
+      "sha256": "032920d0059e45e233a74031a524c2ad0a720b725c5c185c9276be4aeffd4672",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/projection-chain-original/fixtures/sqlserver/avro-projection.json.txt",
+      "qualification": "Exact historical source; current projection tests will regenerate from unchanged native inputs, not requalify historical execution."
+    },
+    {
+      "path": "fixtures/sqlserver/index-projection.json",
+      "sha256": "10b4ccf02f7a3b74755dc9fb5ca13513980e5438e6110b2c921a23061d178b1b",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/projection-chain-original/fixtures/sqlserver/index-projection.json.txt",
+      "qualification": "Exact historical source; current projection tests will regenerate from unchanged native inputs, not requalify historical execution."
+    },
+    {
+      "path": "fixtures/parquet/avro/projection.json",
+      "sha256": "e2a2fe56a55a7c48db907a1ec63721b15cf6c6d665aacc2abde4090a6671aeb6",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/projection-chain-original/fixtures/parquet/avro/projection.json.txt",
+      "qualification": "Exact historical source; current projection tests will regenerate from unchanged native inputs, not requalify historical execution."
+    },
+    {
+      "path": "fixtures/validation/tablespec-chains.json",
+      "sha256": "e0e1372487227ab2e19b639d878f50f5edb4bbf85468388b4e515eb0be593a85",
+      "archive": "docs/helix/04-build/evidence/metamodel-authority/history/projection-chain-original/fixtures/validation/tablespec-chains.json.txt",
+      "qualification": "Exact historical source; current projection tests will regenerate from unchanged native inputs, not requalify historical execution."
+    }
+  ]
+}

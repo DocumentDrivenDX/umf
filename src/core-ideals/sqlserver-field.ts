@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
@@ -5,7 +6,7 @@ import {getSqlServerColumnMetadata,exportSqlServerCatalog} from '../adapters/sql
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/sqlserver-field-classification.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/sqlserver-field-classification.schema.json';
 export {default as sqlserverFieldClassificationSchema} from '../../spec/core/sqlserver-field-classification.schema.json';
 export interface SqlServerFieldRequest {column:string;nativeSource:string;mode:'strict'|'report';author?:CoreKindDeclaration}
 const binding={id:'umf.sqlserver.catalog.field',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Captured catalog column membership; excludes raw DDL and native constraint/value equivalence'} as const;
@@ -14,12 +15,12 @@ export interface SqlServerFieldClassification {
  mapping:{origin:'classified';kind:'field';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-catalog-column-membership';outcome:'exact'|'unknown'};
  residuals:{path:string;value:Json;reason:string;recovery:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 /** Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding. */
 export function classifySqlServerField(input:Document,options:SqlServerFieldRequest):SqlServerFieldClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as SqlServerFieldRequest;
  if(!checkRequest(request))throw new UmfError('SQLSERVER_FIELD_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('SQLSERVER_FIELD_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('SQLSERVER_FIELD_VERSION','Valid current 0.10.0 envelope required');
  const exported=exportSqlServerCatalog(source);
  const archive=parseNativeJson(request.nativeSource);
  if(renderTree(archive)+'\n'!==exported)throw new UmfError('SQLSERVER_FIELD_ARCHIVE','Native archive differs from captured tree');

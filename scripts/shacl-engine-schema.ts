@@ -1,5 +1,5 @@
 export {};
-const document={$ref:'urn:umf:core:0.1.0'};
+const document={$ref:'urn:umf:core:0.10.0'};
 const diagnostic={type:'object',required:['code','path','severity','message'],properties:{code:{type:'string'},path:{type:'string'},severity:{enum:['warning','error','info']},message:{type:'string'}}};
 const schema={
  $schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:shacl:engine-report:0.1.0',type:'object',

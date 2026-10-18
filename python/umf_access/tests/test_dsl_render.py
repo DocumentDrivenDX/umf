@@ -24,7 +24,7 @@ class UnitCompositeKey(BaseModel):
     KEY_IDENTITY: ClassVar[Mapping[str, str]] = MappingProxyType(
         {
             "documentId": "unit-fixture",
-            "coreVersion": "0.8.0",
+            "coreVersion": "0.10.0",
             "module": "commerce",
             "element": "Order",
             "key": "unit-composite-key",

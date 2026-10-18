@@ -46,7 +46,7 @@ class GeneratedActionTypes(unittest.TestCase):
             get_type_hints(ShipOrderRejected)["code"],
             Literal["NOT_READY", "ENTITY_MISSING"],
         )
-        self.assertEqual(ShipOrder.source.coreVersion, "0.8.0")
+        self.assertEqual(ShipOrder.source.coreVersion, "0.10.0")
         self.assertEqual(len(ShipOrder.source.documentSha256), 64)
         self.assertFalse(ShipOrderRejected("ENTITY_MISSING").retryable)
         self.assertIs(ShipOrder.input_type, ShipOrderInput)

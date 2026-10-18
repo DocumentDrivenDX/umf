@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlRelationshipCases} from './relationship-postgresql-cases';
-import {classifyPostgresqlRelationships,importPostgresqlCatalogCapture,projectRelationshipsToPostgresql,recoverPostgresqlRelationshipSource,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative,readDocument,writeDocument} from '../../src';
+import {classifyPostgresqlRelationships, importPostgresqlCatalogCapture, projectRelationshipsToPostgresql, recoverPostgresqlRelationshipSource, recoverRelationshipPostgresqlIdeal, recoverRelationshipPostgresqlNative, readDocument, writeDocument} from '../../src';
 import {literal} from '../../src/core-ideals/postgresql-syntax';
 const name='umf-relationship-binding-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,err||out);return out;}

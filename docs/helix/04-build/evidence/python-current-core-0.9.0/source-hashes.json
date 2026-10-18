@@ -1,0 +1,95 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "python/pyproject.toml",
+      "sha256": "fc6d293fe94016c0d7223284bbeaf3ac2c4ae36a03774b8b3bcf707a1992e809",
+      "bytes": 1196
+    },
+    {
+      "path": "python/src/umf/__init__.py",
+      "sha256": "5e70b42fe8cdd013e2778ec2ebf9117b1fe30b8cd4a4c7885fb8a46b7b1927e8",
+      "bytes": 1156
+    },
+    {
+      "path": "python/src/umf/constraint_kernel.py",
+      "sha256": "ac4e5cfb5bd28854744c9069fcdccb3da154e625b0844bae867976d1ed443921",
+      "bytes": 20190
+    },
+    {
+      "path": "python/src/umf/generated_resources.py",
+      "sha256": "ff15995aeb84f66fd8a54ec6b05c39e4bc9daefaa164ccc1a6c87e425c6b2319",
+      "bytes": 1634
+    },
+    {
+      "path": "python/src/umf/json.py",
+      "sha256": "8ce0f0d261f507a51d4dfd28859f2e5a8d3f1e8a309f834c55852cf46f658678",
+      "bytes": 1704
+    },
+    {
+      "path": "python/src/umf/literal_kernel.py",
+      "sha256": "4459d6cc762e9cf151b5756343331a6daaf11147f0bd93f22b9ec04f99840e63",
+      "bytes": 14533
+    },
+    {
+      "path": "python/src/umf/models.py",
+      "sha256": "46b310de0a17a200260a8e45d5f810e1738d3a32ba9320ba2aa68aa96440287b",
+      "bytes": 4234
+    },
+    {
+      "path": "python/src/umf/registry.py",
+      "sha256": "79c4e701debcd664477b5fb3a41b25fbd4ed35be03d4b228445cabfc224b2d99",
+      "bytes": 1887
+    },
+    {
+      "path": "python/src/umf/schemas.py",
+      "sha256": "f3e84f0e12f883929ecf7edfdb8b6b98987ece5a7013e55b75227efc17375e16",
+      "bytes": 7934
+    },
+    {
+      "path": "python/src/umf/serialization.py",
+      "sha256": "6c002e3b637e622321b9eb74d5106ac223f6de9de22e2656264beff73d404ead",
+      "bytes": 5344
+    },
+    {
+      "path": "python/src/umf/validation.py",
+      "sha256": "40a8bcbb241596938dadf4b361246deda3dd05f5cb153efd23bece91d12cdb4d",
+      "bytes": 984
+    },
+    {
+      "path": "python/tests/test_core.py",
+      "sha256": "d95402e4743735f8ed3759c874fd1afc6db91f0f9eea3004cb62a956794df7d2",
+      "bytes": 8707
+    },
+    {
+      "path": "python/tests/test_domain_packs.py",
+      "sha256": "f08bbeca0132b630334fcbd158074663568e885fcfe551f924a7289b9f7972a4",
+      "bytes": 2764
+    },
+    {
+      "path": "fixtures/metamodel/current-conformance.json",
+      "sha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+      "bytes": 748625
+    },
+    {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "sha256": "e7b2f551aef9f771a61fdc4b2cc203dbb6430b89c6cd8eb4873704d9920b6020",
+      "bytes": 190252
+    },
+    {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "sha256": "f9ff3c8f5bfcc43664609bd72ce77fc6e0073cdea929fcc44c88bd969f8f3ee8",
+      "bytes": 14016
+    },
+    {
+      "path": "spec/metamodel/generated/manifest.json",
+      "sha256": "271b85e34ed392ef8ae6d9eed6ffa7289ea977933461a4c3a2868717d3c2fdda",
+      "bytes": 3399
+    },
+    {
+      "path": "spec/metamodel/generated/python-shapes.json",
+      "sha256": "21c050210aecf48541a00923419940c61ef05d00f331e9bc4d32916fdc70c647",
+      "bytes": 75560
+    }
+  ]
+}

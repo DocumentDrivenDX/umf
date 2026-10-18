@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {inspectSmithySourcesPayload} from './source-profile';
 import manifest from '../../../spec/extensions/smithy/package.json';
 import nativeStructure from '../../../spec/extensions/smithy/native-structure.schema.json';
@@ -55,7 +56,7 @@ function payload(document:Document):Payload{
  return copyJson(value) as unknown as Payload;
 }
 export function importSmithyJson(text:string,options:{id:string;dependencies?:{id:string;schema:string}[]}):Document{
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[SMITHY_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[SMITHY_EXTENSION]:{profile:'smithy-json-ast',root:parseNativeJson(text),...(options.dependencies?{dependencies:options.dependencies.map(d=>({id:d.id,root:parseNativeJson(d.schema)}))}:{})} as unknown as Json}}]}]};payload(doc);return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[SMITHY_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[SMITHY_EXTENSION]:{profile:'smithy-json-ast',root:parseNativeJson(text),...(options.dependencies?{dependencies:options.dependencies.map(d=>({id:d.id,root:parseNativeJson(d.schema)}))}:{})} as unknown as Json}}]}]};payload(doc);return doc;
 }
 function exportable(document:Document):Payload{
  const p=payload(document);if(inspectSmithy(document).diagnostics.some(d=>d.code==='SMITHY_REPRESENTATION'))throw new UmfError('SMITHY_REPRESENTATION','Unknown representation content cannot be discarded');

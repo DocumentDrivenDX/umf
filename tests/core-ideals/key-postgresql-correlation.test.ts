@@ -2,7 +2,7 @@ import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import {correlatePostgresqlKeyCatalog} from '../../src/adapters/postgresql/key-correlation';
 import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import type {Document} from '../../src/model/types';
 import proof from '../../fixtures/validation/key-postgresql-discovery-native.json';
 const capture=await Bun.file('fixtures/validation/key-postgresql-catalog-capture.json').text(),query=await Bun.file('native/postgresql/keys/query.sql').text();

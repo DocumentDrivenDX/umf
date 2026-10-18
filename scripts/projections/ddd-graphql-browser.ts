@@ -35,14 +35,14 @@ try{
    let refused=false;try{u.projectDddToGraphql(f.logical,bad,'report');}catch{refused=true;}if(!refused)throw Error('Accessor accepted');
   }
   if(forgedRefusals!==cases.length||staleRefusals!==cases.length||getterReads!==0)throw Error('Receipt/accessor refusal failed');
-  const f=cases[0],legacy=structuredClone(f.logical);legacy.umf='0.6.0';legacy.modules[0].relationships={futureLegacy:['opaque',1]};
-  const upgraded=u.upgradeRelationshipEnvelope(legacy),rollback=u.rollbackRelationshipEnvelope(upgraded,u.recoverDddFromGraphql(f.expected,f.expected.targetArchive));
-  if(JSON.stringify(rollback.target)!==JSON.stringify(legacy)||JSON.stringify(rollback.source)!==JSON.stringify(f.logical))throw Error('Migration/rollback changed content');
+  const f=cases[0],retained=structuredClone(f.logical);retained.extensions={...(retained.extensions??{}),future:{opaque:['retained',1]}};
+  const projected=u.projectDddToGraphql(retained,f.policy,'report');
+  if(JSON.stringify(u.recoverDddFromGraphql(projected,projected.targetArchive))!==JSON.stringify(retained))throw Error('Current source recovery changed unknown extension content');
   const original='# retained native comment\nscalar Mystery\ntype Query { value: Mystery }\n',native=u.importGraphqlSchema(original,{id:'native',mode:'schema'});
   native.vocabularies.future={version:'1.0.0'};native.extensions={future:{unknown:[null,'9007199254740993']}};
   for(const format of ['json','yaml']){const decoded=u.readJsonValue(u.writeJsonValue(native,format),format);if(JSON.stringify(decoded)!==JSON.stringify(native)||u.exportGraphqlSchema(decoded)!==original)throw Error('Native unknown-content round trip');}
   if('Bun'in globalThis||'process'in globalThis||'buildDddEntityGraphql'in u)throw Error('Host API/internal helper leaked into public browser API');
-  return {cases:cases.length,idealRecoveries,nativeRecoveries,strictBlocks,forgedRefusals,staleRefusals,getterReads,migrationRollback:true,nativeUnknownRecoveries:2};
+  return {cases:cases.length,idealRecoveries,nativeRecoveries,strictBlocks,forgedRefusals,staleRefusals,getterReads,currentSourceCustody:true,nativeUnknownRecoveries:2};
  });
  if(external.length)throw Error('External request');
  const paths=['src/index.ts','spec/projections/ddd-graphql.schema.json','src/projections/ddd-graphql/index.ts','src/projections/ddd-graphql/entities.ts','scripts/projections/ddd-graphql-cases.ts','scripts/projections/ddd-graphql-browser.ts','fixtures/projections/ddd-graphql/case.json','fixtures/projections/ddd-authored-relationships/base.json','dist/umf.js'];

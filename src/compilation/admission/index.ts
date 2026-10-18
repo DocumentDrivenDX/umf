@@ -1,4 +1,16 @@
-import {prepareCoreInspection,copyJson,readDocument,validateDocument,inspectCoreRelationships,inspectCoreKeys,inspectCoreFacets,inspectCoreSchemaProperties,inspectCoreElementKind,validateCoreFieldValue,inspectActions,registerActions,Registry,UmfError,type InspectedAction,type Document} from '../../index';
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
+import {prepareCoreInspection} from '../../model/prepared-inspection';
+import {copyJson} from '../../model/json';
+import {readDocument} from '../../model/document';
+import {validateDocument} from '../../validation/document';
+import {inspectCoreRelationships} from '../../model/relationships';
+import {inspectCoreKeys} from '../../model/keys';
+import {inspectCoreFacets} from '../../model/facets';
+import {inspectCoreSchemaProperties,validateCoreFieldValue} from '../../model/schema-properties';
+import {inspectCoreElementKind} from '../../model/field-kind';
+import {inspectActions,registerActions,type InspectedAction} from '../../extensions/actions';
+import {Registry} from '../../registry/registry';
+import {UmfError,type Document} from '../../model/types';
 import {inspectSelectedSearch} from './search';
 import {inspectAccessViews,type SuppliedBinding} from './access/index';
 import type {AccessRequest,AccessProfile,AccessDiagnostic,Disposition,Obligation,ResolvedAccess,ResolvedActionParameter,Ref} from '../ir/index';
@@ -14,7 +26,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  let request:AccessRequest,profile:AccessProfile;
  try{request=copyJson(input) as unknown as AccessRequest;profile=copyJson(profileInput) as unknown as AccessProfile;}catch{throw new AccessInputError('INPUT','');}
  const required=['contract','sources','logical','bindings','records','actions','projections','package','names','mode','profileId','profileVersion','coreVersion'];
- if(!keys(request,required)||request.contract!=='umf-access-generate/0.1'||request.coreVersion!=='0.8.0'||!['strict','report'].includes(request.mode)||typeof request.package!=='string'||!/^[a-z][a-z0-9_]*$/.test(request.package)||!['logical','profileId','profileVersion'].every(k=>typeof (request as unknown as Record<string,unknown>)[k]==='string')||!['sources','bindings','records','actions','projections','names'].every(k=>Array.isArray((request as unknown as Record<string,unknown>)[k])))throw new AccessInputError('INPUT','');
+ if(!keys(request,required)||request.contract!=='umf-access-generate/0.1'||request.coreVersion!==CURRENT_CORE_VERSION||!['strict','report'].includes(request.mode)||typeof request.package!=='string'||!/^[a-z][a-z0-9_]*$/.test(request.package)||!['logical','profileId','profileVersion'].every(k=>typeof (request as unknown as Record<string,unknown>)[k]==='string')||!['sources','bindings','records','actions','projections','names'].every(k=>Array.isArray((request as unknown as Record<string,unknown>)[k])))throw new AccessInputError('INPUT','');
  if(!request.sources.length||!request.records.length||request.sources.some(s=>!keys(s,['id','format','text'])||typeof s.id!=='string'||!s.id||!['json','yaml'].includes(s.format)||typeof s.text!=='string')||new Set(request.sources.map(s=>s.id)).size!==request.sources.length||request.records.some(r=>!ref(r))||new Set(request.records.map(identity)).size!==request.records.length||request.bindings.some(b=>typeof b!=='string')||new Set(request.bindings).size!==request.bindings.length)throw new AccessInputError('INPUT','');
  if(request.actions.some(a=>!keys(a,['module','action'])||typeof a.module!=='string'||typeof a.action!=='string')||new Set(request.actions.map(a=>JSON.stringify(a))).size!==request.actions.length||request.projections.some(p=>!keys(p,['name','record','fields'])||typeof p.name!=='string'||!ref(p.record)||!Array.isArray(p.fields)||p.fields.some(f=>!ref(f)))||request.names.some(n=>!keys(n,['sourceId','pointer','python'])||typeof n.sourceId!=='string'||typeof n.pointer!=='string'||typeof n.python!=='string'))throw new AccessInputError('INPUT','');
  const diagnostics:AccessDiagnostic[]=[],dispositions:Disposition[]=[],obligations:Obligation[]=[];
@@ -22,7 +34,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
  const empty:ResolvedAccess={documentId:'',sourceId:request.logical,records:[]};
  const finish=(ir=empty)=>({request,profile,ir,diagnostics,dispositions,obligations});
  const profileKeys=['id','version','compilerVersion','coreVersions','vocabularies','python','dependencies','checkers','reservedNames','importedNames','assertionKinds','subset','codeSha256'];
- if(!keys(profile,profileKeys)||profile.id!==request.profileId||profile.version!==request.profileVersion||typeof profile.codeSha256!=='string'||!/^[0-9a-f]{64}$/.test(profile.codeSha256)||!Array.isArray(profile.coreVersions)||!profile.coreVersions.includes('0.8.0')||!Array.isArray(profile.dependencies)||!Array.isArray(profile.checkers)||!Array.isArray(profile.assertionKinds)||profile.assertionKinds.some(k=>!(ASSERTION_KINDS as readonly string[]).includes(k))||!Array.isArray(profile.reservedNames)||!Array.isArray(profile.importedNames)){add('PROFILE','/profile');return finish();}
+ if(!keys(profile,profileKeys)||profile.id!==request.profileId||profile.version!==request.profileVersion||typeof profile.codeSha256!=='string'||!/^[0-9a-f]{64}$/.test(profile.codeSha256)||!Array.isArray(profile.coreVersions)||!profile.coreVersions.includes(CURRENT_CORE_VERSION)||!Array.isArray(profile.dependencies)||!Array.isArray(profile.checkers)||!Array.isArray(profile.assertionKinds)||profile.assertionKinds.some(k=>!(ASSERTION_KINDS as readonly string[]).includes(k))||!Array.isArray(profile.reservedNames)||!Array.isArray(profile.importedNames)){add('PROFILE','/profile');return finish();}
  if(!['id','version','compilerVersion','subset'].every(k=>typeof (profile as unknown as Record<string,unknown>)[k]==='string')||!keys(profile.python,['version'])||typeof profile.python.version!=='string'||!Array.isArray(profile.vocabularies)||profile.vocabularies.some(v=>!keys(v,['id','version'])||typeof v.id!=='string'||typeof v.version!=='string')||profile.dependencies.some(d=>!keys(d,['distribution','version'])||typeof d.distribution!=='string'||!d.distribution||typeof d.version!=='string'||!/^\d+(?:\.\d+)*(?:(?:a|b|rc|\.dev|\.post)\d+)?(?:\+[A-Za-z0-9.]+)?$/.test(d.version))||new Set(profile.dependencies.map(d=>d.distribution.replace(/[-_.]+/g,'-').toLowerCase())).size!==profile.dependencies.length||profile.checkers.some(c=>!keys(c,['name','version','configuration'])||typeof c.name!=='string'||typeof c.version!=='string'||!object(c.configuration))||[...profile.reservedNames,...profile.importedNames,...profile.coreVersions].some(x=>typeof x!=='string')){add('PROFILE','/profile');return finish();}
  if(!profile.vocabularies.some(v=>v.id==='umf.access'&&v.version==='0.1.0')||request.actions.length>0&&!profile.vocabularies.some(v=>v.id==='umf.actions'&&v.version==='0.1.0')){add('PROFILE','/profile/vocabularies');return finish();}
  if(!profile.dependencies.some(d=>d.distribution==='pydantic'&&/^2\.(?:1[4-9]|[2-9]\d|\d{3,})\.[0-9]+$/.test(d.version))||!profile.dependencies.some(d=>['umf_access','umf-access'].includes(d.distribution)&&typeof d.version==='string'&&!!d.version)||!profile.checkers.some(c=>c.name==='mypy'&&c.configuration?.check_untyped_defs===true)||!profile.checkers.some(c=>c.name==='pyright'&&typeof c.configuration?.typeCheckingMode==='string'&&typeof c.configuration?.environment==='string')){add('PROFILE','/profile');return finish();}
@@ -32,7 +44,7 @@ export function admitAccessRequest(input:unknown,profileInput:unknown):Admission
   try{documents.set(source.id,readDocument(source.text,source.format));}catch(error){if(error instanceof UmfError&&error.code==='LIMIT'){add('LIMIT',`/sources/${i}/text`,source.id);return finish();}throw new AccessInputError('INPUT',`/sources/${i}/text`);}
  }
  const document=documents.get(request.logical);
- if(!document||document.umf!=='0.8.0'){throw new AccessInputError('INPUT','/logical');}
+ if(!document||document.umf!==CURRENT_CORE_VERSION){throw new AccessInputError('INPUT','/logical');}
  const bindings:SuppliedBinding[]=[];
  for(const id of request.bindings){const d=documents.get(id);if(!d){add('REFERENCE','/bindings');continue;}bindings.push({sourceId:id,document:d});}
  if(diagnostics.length)return finish();

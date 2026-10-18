@@ -1,10 +1,10 @@
 import {expect,test} from 'bun:test';
 import {declareCoreCardinality} from '../../src/model/cardinality';
-import type {Document,Cardinality} from '../../src/model/types';
-import {projectCardinalityToAvro,recoverCardinalityFromAvro,type CardinalityAvroRequest} from '../../src/core-ideals/cardinality-avro-projection';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import type {Document, Cardinality} from '../../src/model/types';
+import {projectCardinalityToAvro, recoverCardinalityFromAvro, type CardinalityAvroRequest} from '../../src/core-ideals/cardinality-avro-projection';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const base:CardinalityAvroRequest={id:'projection',recordName:'Example',namespace:'',fieldName:'value',nativeType:'"long"',dependencies:[],availability:'avro-null-value',requireExactValues:false,mode:'strict'};
-function doc():Document{return {umf:'0.4.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]};}
+function doc():Document{return {umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]};}
 const author=(shape:Cardinality)=>declareCoreCardinality(doc(),{module:'m',element:'f'},{cardinality:shape});
 test('explicit native shape mismatches and absent item meaning are residuals with exact ideal recovery',()=>{
  for(const cardinality of ['one','array','map','unspecified'] as const)for(const nativeType of ['"long"','{"type":"array","items":"long"}','{"type":"map","values":"long"}'])for(const mode of ['strict','report'] as const){

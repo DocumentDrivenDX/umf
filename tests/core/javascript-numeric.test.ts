@@ -1,6 +1,6 @@
 import {test,expect} from 'bun:test';
 import {admitJavascriptNumber,exactDecimal,integerFromBigInt,integerToBigInt,numericToNumberLossless,writeDocument,readDocument,type Document} from '../../src/index';
-const context=()=>({document:{umf:'0.8.0',id:'numeric',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'n',kind:'field',scalarType:'integer',facets:{integerWidth:{bits:64,signed:true},range:{min:{integerToken:'0'},max:{integerToken:'9223372036854775807'}}},extensions:{}}]}]} as Document,field:{module:'m',element:'n'}});
+const context=()=>({document:{umf:'0.10.0',id:'numeric',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'n',kind:'field',scalarType:'integer',facets:{integerWidth:{bits:64,signed:true},range:{min:{integerToken:'0'},max:{integerToken:'9223372036854775807'}}},extensions:{}}]}]} as Document,field:{module:'m',element:'n'}});
 // @covers US-054-AC1
 // @covers US-054-AC2
 // @covers US-054-AC5
@@ -51,5 +51,5 @@ test('declared decimals, exclusions, unknown qualifiers and JSON/YAML carriers',
  const before=JSON.stringify(c.document),literal=exactDecimal('1.2500',c);expect(JSON.stringify(c.document)).toBe(before);field.examples=[literal];
  for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(c.document,format),format)).toEqual(c.document);
  (field.facets as any).future='unknown';expect(()=>exactDecimal('1.25',c)).toThrow();
- c.document.umf='0.7.0';expect(()=>exactDecimal('1.25',c)).toThrow();
+ const retired={...c,document:{...c.document,umf:'0.7.0'}} as unknown as typeof c;expect(()=>exactDecimal('1.25',retired)).toThrow();
 });

@@ -37,7 +37,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "constraints",
           "vocabularies": {
             "umf.sqlserver": {
@@ -1791,7 +1791,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Child\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"parent_b\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"parent_a\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"qty\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"other\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "avro-Child",
           "vocabularies": {
             "umf.avro": {
@@ -2015,7 +2015,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "constraints",
           "vocabularies": {
             "umf.sqlserver": {
@@ -3742,7 +3742,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Parent\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"b\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "avro-Parent",
           "vocabularies": {
             "umf.avro": {
@@ -3897,7 +3897,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "constraints",
           "vocabularies": {
             "umf.sqlserver": {
@@ -5607,7 +5607,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Untrusted\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"parent_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "avro-Untrusted",
           "vocabularies": {
             "umf.avro": {

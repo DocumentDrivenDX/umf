@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 33,
-        "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "bytes": 4966,
+        "line": 32,
+        "path": "src/generated/core-model.ts",
+        "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
       }
     ],
     "entrypoint": ".",
     "exportName": "Document",
     "runtime": "type-only",
     "signatureText": [
-      "export interface Document {\n  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.7.0' | '0.8.0' | '0.9.0' | '0.10.0'; id: string;\n  vocabularies: Record<string, { version: string; [key: string]: unknown }>;\n  modules: Module[];\n  extensions?: Record<string, Json>;\n  [key: string]: unknown;\n}"
+      "export type Document = {\"umf\":\"0.10.0\";\"id\":Id;\"vocabularies\":{[key:string]:{\"version\":Version;[key:string]:unknown;};};\"modules\":(Module)[];\"extensions\"?:Extensions;\"title\"?:string;\"aliases\"?:(string)[];[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"Document\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 33,
-      "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "bytes": 4966,
+      "line": 32,
+      "path": "src/generated/core-model.ts",
+      "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
     }
   ],
-  "summary": "Type declaration · src/model/types.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "Document"
 }

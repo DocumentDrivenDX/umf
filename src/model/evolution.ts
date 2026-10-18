@@ -3,9 +3,9 @@ import {createValueContext,ValueWork,WorkExceeded,preflightBytes} from './intern
 import {snapshotSchema} from '../validation/internal-schema';
 import {createValidator} from '../validation/schema';
 import {reserveSchemaWork} from './internal/schema-work';
-import coreSchema from '../../spec/core/schema-properties-document.schema.json';
+import coreSchema from '../../spec/core/schema.json';
 import datasetSchema from '../../spec/core/dataset-value-operation.schema.json';
-import keySchema from '../../spec/core/key-tuple-operation-v3.schema.json';
+import keySchema from '../../spec/core/key-tuple-operation-v4.schema.json';
 import policyInput from '../../spec/core/evolution-policy.schema.json';
 import receiptInput from '../../spec/core/evolution-operation.schema.json';
 const policySchema=snapshotSchema(policyInput),receiptSchema=snapshotSchema(receiptInput);

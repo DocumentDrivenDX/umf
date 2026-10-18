@@ -1,7 +1,13 @@
 """Generate security representation schemas; typed closure is a separate validator."""
 import json
 from pathlib import Path
+CURRENT_CORE_VERSION = json.loads(Path('spec/metamodel/generated/python-shapes.json').read_text())['currentVersion']
 
+# Security 0.1 keeps its independently bounded twelve-carrier wire codec.
+# Derive those shapes from current output without expanding the codec release.
+core_literal = json.loads(Path('spec/core/schema.json').read_text())['$defs']['literal']
+security_literal = {'oneOf': [branch for branch in core_literal['oneOf'] if branch.get('type') == 'null' or branch.get('required') in [[name] for name in ['boolean','integerToken','decimalToken','string','binaryHex','floatToken','date','time','timestamp','array','map']]]}
+assert len(security_literal['oneOf']) == 12, 'Security codec shapes require explicit review'
 text = {"type": "string", "minLength": 1}
 ref = lambda name: {"$ref": "#/$defs/" + name}
 def obj(properties, required=None):
@@ -12,7 +18,7 @@ def array(items, maximum, minimum=0):
     return {"type": "array", "items": items, "minItems": minimum, "maxItems": maximum}
 
 defs = {"ref": obj({"documentId": text, "moduleId": text, "elementId": text}),
-        "literal": json.loads(Path('spec/core/schema-properties-document.schema.json').read_text())['$defs']['literal']}
+        "literal": security_literal}
 defs['term'] = {"oneOf": [
     obj({"kind": {"enum": ['subject', 'resource']}, "identity": {"const": True}}),
     obj({"kind": {"enum": ['subject', 'resource', 'context']}, "field": ref('ref')}),
@@ -59,9 +65,9 @@ ontology = {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'u
       'subject': ref('ref'), 'entities': array(ref('entity'), 256, 1),
       'associations': array(ref('association'), 256), 'context': array(ref('ref'), 256),
       'actions': array(text, 256, 1)}), '$defs': ontology_defs}
-manifest = {'id': 'umf.security', 'version': '0.1.0', 'coreVersion': '0.1.0',
+manifest = {'id': 'umf.security', 'version': '0.1.0', 'coreVersion': CURRENT_CORE_VERSION,
     'description': 'Finite shared security policies independent of table or graph storage', 'schema': schema,
-    'semantics': 'CONTRACT-052; explicit ontology and immutable document resolution required; native enforcement is CONTRACT-053',
+    'semantics': 'CONTRACT-062; explicit ontology and immutable document resolution required; native enforcement is CONTRACT-063',
     'scopes': ['document'], 'capabilities': {'validation': 'semantic', 'directions': ['import', 'export'],
       'evidence': ['tests/security/policy.test.ts'],
       'native': {'system': 'UMF-authored security', 'version': '0.1.0',

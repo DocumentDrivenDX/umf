@@ -1,23 +1,61 @@
 {
   "id": "umf.metamodel",
-  "version": "0.1.0",
-  "coreVersion": "0.1.0",
-  "description": "Traceable self-description of UMF language objects",
+  "version": "1.0.0",
+  "coreVersion": "0.10.0",
+  "description": "Authored UMF language definitions and inert ordered constraints",
   "schema": {
     "type": "object",
-    "required": ["source", "schema"],
     "properties": {
-      "source": {"type":"object","required":["path","pointer"],"properties":{"path":{"type":"string"},"pointer":{"type":"string"}}},
-      "schema": {"type":["object","boolean"]},
-      "coverage": {"type":"string"},
-      "presence": {"type":"string"},
-      "concept": {"type":"string"},
-      "specializes": {"type":"string"},
-      "role": {"type":"string"},
-      "connections": {"type":"array","items":{"type":"object","required":["target","label"],"properties":{"target":{"type":"object","required":["module","element"],"properties":{"module":{"type":"string"},"element":{"type":"string"}}},"label":{"type":"string"}}}}
-    }
+      "language": {
+        "type": "object"
+      },
+      "constraints": {
+        "type": "object"
+      },
+      "domains": {
+        "type": "object"
+      },
+      "description": {
+        "type": "string"
+      },
+      "definition": {
+        "type": "string"
+      },
+      "shape": {
+        "type": [
+          "object",
+          "boolean"
+        ]
+      },
+      "presence": {
+        "enum": [
+          "required",
+          "optional"
+        ]
+      },
+      "concept": {
+        "type": "string"
+      },
+      "connections": {
+        "type": "array"
+      },
+      "specializes": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
   },
-  "semantics": "Source pointers and retained schema fragments explain a descriptive metamodel projection. Connections describe containment, specialization or reference resolution, not instance relationship cardinalities. Structural registration validates annotation shape only; source comparison and target resolution are separately checked by the reference build. JSON Schema and the core validators remain authoritative.",
-  "scopes": ["document", "element"],
-  "capabilities": {"validation":"structural","directions":[],"evidence":[]}
+  "semantics": "Closed declarations are interpreted by the independently bounded metamodel compiler; no raw JSON Schema or executable per-rule callbacks are accepted.",
+  "scopes": [
+    "document",
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [],
+    "evidence": []
+  }
 }

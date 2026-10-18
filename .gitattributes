@@ -23,3 +23,22 @@ docs/helix/04-build/evidence/typed-persistence/foundation-r5b-20261016/**/*.log 
 # Release diagnostic hashes retain exact compiler code frames and patch context.
 docs/helix/04-build/evidence/generated-reference/release-r2/*.log -text whitespace=-blank-at-eol,-blank-at-eof
 docs/helix/04-build/evidence/generated-reference/release-r2/*.diff -text whitespace=-blank-at-eol
+
+# Current qualification hashes cover exact native stdout/stderr, including
+# progress carriage returns, code-frame spacing and final blank lines.
+fixtures/validation/uuid/model-runs/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+fixtures/validation/uuid/composition-runs/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+docs/helix/04-build/evidence/metamodel-authority/**/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+# Generated reference notices retain the exact bundled third-party license text.
+docs/helix/05-deploy/microsite/dist/reference/THIRD_PARTY_NOTICES.md whitespace=-blank-at-eol
+# Captured candidate/replay logs are hashed as observed, including code frames.
+docs/helix/04-build/evidence/regression/luna-producers/logs/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+docs/helix/04-build/evidence/generated-reference/*candidate*/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+
+# Archived diagnostics retain exact original code-frame whitespace and hashes.
+docs/helix/04-build/evidence/metamodel-authority/history/**/*.log.txt -text whitespace=-blank-at-eol,-blank-at-eof
+docs/helix/04-build/evidence/python-current-core-0.9.0/*.log -text whitespace=-blank-at-eol,-blank-at-eof
+# Preserve qualified portable-kernel and compiler output bytes, including final blank lines.
+python/src/umf/constraint_kernel.py whitespace=-blank-at-eof
+python/src/umf/literal_kernel.py whitespace=-blank-at-eof
+python/src/umf/generated_resources.py whitespace=-blank-at-eof

@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/reference"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/reference"
       }
     ],
     "role": "other",
@@ -186,7 +186,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:0.9.0#/$defs/reference"
+                                              "value": "urn:umf:core:0.10.0#/$defs/reference"
                                             }
                                           }
                                         },
@@ -445,7 +445,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -507,13 +507,13 @@
   "id": "[\"schema\",\"spec/core/reference-links-inspection-v0.3.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 4129,
+      "bytes": 4131,
       "path": "spec/core/reference-links-inspection-v0.3.schema.json",
-      "sha256": "214ab8aec70c8e05e24900c0e91356e3a255c148afca6ed88e0be7b081730995"
+      "sha256": "c45de7d4fd54f640d8af86d088ebe8aab90138311245a6faac05840de9bdbe56"
     }
   ],
   "summary": "spec/core/reference-links-inspection-v0.3.schema.json",

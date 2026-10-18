@@ -1,7 +1,7 @@
 {
   "id": "umf.binding",
   "version": "0.3.0",
-  "coreVersion": "0.1.0",
+  "coreVersion": "0.10.0",
   "description": "Explicit exact 128-bit physical carrier metadata; native enforcement separately qualified",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33,7 +33,7 @@
             "minLength": 1
           },
           "coreVersion": {
-            "const": "0.9.0"
+            "const": "0.10.0"
           }
         }
       },

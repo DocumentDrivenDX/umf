@@ -9,11 +9,11 @@ const read: FacetEvidenceReader = async path => new Uint8Array(await Bun.file(pa
 const file = (name: string) => `fixtures/validation/${name}.json`;
 const digest = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 
-/** Checks retained proof consistency, not authentication or fresh native execution.
+/** Checks retained historical proofs, not authentication or fresh native execution.
  * Passing this check alone does not admit the ideal: executable round trips and
  * useful nonempty authored mappings remain separate admission requirements.
  */
-export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
+export async function verifyFacetEvidence(reader: FacetEvidenceReader = read, options: {allowUnqualifiedHistorical?: boolean} = {}) {
  const bytes = new Map<string, Uint8Array>();
  const proofs = new Map<string, any>();
  const pending: {path: string; record: any}[] = [];
@@ -49,6 +49,7 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
   assert.notEqual(row.currentSha256, row.historicalSha256);
  }
  const revalidated = new Set<string>();
+ const unlocated: {proof: string; path: string; pinnedSha256: string; observedSha256: string}[] = [];
  function required(record: any, path: string) {
   assert.ok(Object.hasOwn(record.sha256 ?? {}, path), `missing required proof: ${path}`);
  }
@@ -123,16 +124,35 @@ export async function verifyFacetEvidence(reader: FacetEvidenceReader = read) {
  // Validate all structural requirements first so omitted proofs cannot hide behind
  // unrelated stale fingerprints. Every actual file is read once per verification.
  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
-  const current = digest(await content(p)), expected = String(h);
+  let current:string;const expected=String(h);
+  try{current=digest(await content(p));}catch(error){
+   if(!options.allowUnqualifiedHistorical||!String(error).includes('ENOENT'))throw error;
+   unlocated.push({proof:path,path:local(p),pinnedSha256:expected,observedSha256:'MISSING'});continue;
+  }
   if (current !== expected) {
    const key = local(p), row = replay.changes[key];
-   assert.ok(row, `${path}: stale ${p}`);
+   if (!row) {
+    if (!options.allowUnqualifiedHistorical) assert.ok(row, `${path}: stale ${p}`);
+    unlocated.push({proof:path,path:key,pinnedSha256:expected,observedSha256:current});
+    continue;
+   }
    assert.equal(row.historicalSha256, expected, `${path}: unapproved historical hash ${p}`);
-   assert.equal(row.currentSha256, current, `${path}: stale revalidated ${p}`);
+   if (row.currentSha256 !== current) {
+    if (!options.allowUnqualifiedHistorical) assert.equal(row.currentSha256, current, `${path}: stale revalidated ${p}`);
+    unlocated.push({proof:path,path:key,pinnedSha256:expected,observedSha256:current});
+    continue;
+   }
    revalidated.add(key);
   }
   fingerprints++;
  }
- assert.deepEqual([...revalidated].sort(), Object.keys(replay.changes).sort(), 'Unused or missing revalidation entry');
- return {systems: [...facetSystems], records, fingerprints, revalidated: [...revalidated].sort(), refreshSha256: digest(await content(refreshPath)), idealAdmitted: false, nativeEquivalence: false};
+ const revalidationPaths=Object.keys(replay.changes).sort();
+ if (options.allowUnqualifiedHistorical) assert.deepEqual([...new Set([...revalidated,...unlocated.filter(row=>Object.hasOwn(replay.changes,row.path)).map(row=>row.path)])].sort(),revalidationPaths,'Unused or missing revalidation entry');
+ else assert.deepEqual([...revalidated].sort(), revalidationPaths, 'Unused or missing revalidation entry');
+ return {systems: [...facetSystems], records, fingerprints, revalidated: [...revalidated].sort(), unlocated, historicalQualification:unlocated.length?'PARTIALLY_REVALIDATED':'COMPLETE', currentCoreQualification:'UNQUALIFIED', refreshSha256: digest(await content(refreshPath)), idealAdmitted: false, nativeEquivalence: false};
+}
+
+/** Historical native/browser observations cannot establish present-core qualification. */
+export function requireCurrentCoreFacetQualification(evidence: {currentCoreQualification: string}): void {
+ if (evidence.currentCoreQualification !== 'QUALIFIED') throw new Error('Fresh current-core facet qualification evidence is required');
 }

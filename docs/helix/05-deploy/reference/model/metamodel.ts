@@ -1,14 +1,49 @@
-export interface SelfModelCatalog {profile:'umf.metamodel/1';document:{modules:{id:string;elements:Record<string,any>[]}[]};sources:{path:string;sha256:string;bytes:number}[]}
+export interface SelfModelCatalog {
+ profile:'umf.metamodel/1';
+ document:{umf:string;id:string;modules:{id:string;elements:Record<string,any>[]}[]};
+ sources:{path:string;sha256:string;bytes:number}[];
+ provenance:{modelSha256:string;compilerSha256:string};
+}
+
+/**
+ * Project only relationships actually declared by the authored language model.
+ * A Field is listed once under its owning Record; shape links add edges only
+ * when their target resolves to another authored Record definition.
+ */
 export function selfModelGraph(catalog:SelfModelCatalog){
- if(catalog.profile!=='umf.metamodel/1')throw Error('SELF_MODEL_PROTOCOL');
- const elements:(Record<string,any>&{module:string})[]=catalog.document.modules.flatMap(m=>m.elements.map(e=>({...e,module:m.id}))),records=elements.filter(e=>e.kind==='record');
- const qualified=(e:{module:string;element:string})=>JSON.stringify([e.module,e.element]);
- const find=(r:{module:string;element:string})=>elements.find(e=>e.module===r.module&&e.id===r.element);
+ if(catalog.profile!=='umf.metamodel/1'||catalog.document.umf!=='0.10.0')throw Error('SELF_MODEL_PROTOCOL');
+ const elements:(Record<string,any>&{module:string})[]=catalog.document.modules.flatMap(m=>m.elements.map(e=>({...e,module:m.id}))),
+  records=elements.filter(e=>e.kind==='record'),fields=elements.filter(e=>e.kind==='field');
+ const qualified=(module:string,element:string)=>JSON.stringify([module,element]);
+ const find=(module:string,element:string)=>elements.find(e=>e.module===module&&e.id===element);
+ const recordByDefinition=new Map(records.map(r=>[r.extensions?.['umf.metamodel']?.definition??r.id,r]));
  const edges:{id:string;source:string;target:string;label:string;directed:boolean}[]=[];
- for(const record of records){const source=qualified({module:record.module,element:record.id});
-  const add=(ref:any,label:string)=>{if(!find(ref)||find(ref)!.kind!=='record')throw Error('SELF_MODEL_UNRESOLVED '+JSON.stringify(ref));edges.push({id:JSON.stringify([source,label,qualified(ref)]),source,target:qualified(ref),label,directed:true});};
-  for(const member of record.members??[]){const field=find(member);if(!field)throw Error('SELF_MODEL_UNRESOLVED member');const value=field.itemType?find(field.itemType):field;for(const ref of value?.references??[])if(ref.role==='record-type')add(ref,field.name+(field.itemType?'[]':''));}
-  for(const connection of record.extensions?.['umf.metamodel']?.connections??[])add(connection.target,connection.label);
+ const targets=(shape:any,out:string[]=[]):string[]=>{
+  if(!shape||typeof shape!=='object'||Array.isArray(shape))return out;
+  if(shape.tag==='link'&&typeof shape.target==='string')out.push(shape.target);
+  for(const [key,value]of Object.entries(shape))if(key!=='target'){
+   if(Array.isArray(value))for(const item of value)targets(item,out);else targets(value,out);
+  }
+  return out;
+ };
+ for(const record of records){
+  const source=qualified(record.module,record.id);
+  for(const member of record.members??[]){
+   const field=find(member.module,member.element);if(!field||field.kind!=='field')throw Error('SELF_MODEL_UNRESOLVED member '+JSON.stringify(member));
+   const meta=field.extensions?.['umf.metamodel']??{};
+   const declared=field.references?.filter((r:any)=>r.role==='record-type').map((r:any)=>r.element)??[];
+   const shapeTargets=targets(meta.shape);
+   for(const targetName of [...new Set([...declared,...shapeTargets])]){
+    const target=recordByDefinition.get(targetName);if(!target)continue;
+    const targetId=qualified(target.module,target.id),label=field.name+(field.cardinality==='array'?'[]':'');
+    edges.push({id:JSON.stringify([source,label,targetId]),source,target:targetId,label,directed:true});
+   }
+  }
  }
- return {records:records.map(r=>({id:qualified({module:r.module,element:r.id}),label:r.name,properties:r.members?.length??0})),edges};
+ const ids=new Set<string>();for(const edge of edges){if(ids.has(edge.id))throw Error('SELF_MODEL_DUPLICATE_EDGE '+edge.id);ids.add(edge.id);}
+ return {
+  records:records.map(r=>({id:qualified(r.module,r.id),label:r.name??r.id,properties:r.members?.length??0})),
+  fields:fields.map(f=>({id:qualified(f.module,f.id),label:f.name??f.id,owner:records.find(r=>(r.members??[]).some((m:any)=>m.module===f.module&&m.element===f.id))?.id??null})),
+  edges,
+ };
 }

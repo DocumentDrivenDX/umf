@@ -16,6 +16,10 @@ on:
       - 'fixtures/actions/**'
       - 'scripts/actions-docs/**'
       - 'scripts/reference/**'
+      - 'scripts/metamodel/**'
+      - 'scripts/metamodel-browser.ts'
+      - 'scripts/check-core-authority.ts'
+      - 'tests/metamodel/**'
       - 'tests/reference/**'
       - 'docs/helix/05-deploy/reference/**'
       - 'docs/helix/04-build/evidence/**'
@@ -46,6 +50,7 @@ on:
       - 'docs/helix/04-build/evidence/supreme-court-*'
       - 'docs/helix/04-build/evidence/public-company-live-qualification.*'
       - 'scripts/build-document-research-release.py'
+      - 'scripts/document-research-history.json'
       - 'scripts/domain-packs/supreme-court-*.py'
       - 'scripts/domain-packs/qualify-sec-acquisition.py'
       - 'scripts/qualification/**'
@@ -73,6 +78,10 @@ on:
       - 'fixtures/actions/**'
       - 'scripts/actions-docs/**'
       - 'scripts/reference/**'
+      - 'scripts/metamodel/**'
+      - 'scripts/metamodel-browser.ts'
+      - 'scripts/check-core-authority.ts'
+      - 'tests/metamodel/**'
       - 'tests/reference/**'
       - 'docs/helix/05-deploy/reference/**'
       - 'docs/helix/04-build/evidence/**'
@@ -103,6 +112,7 @@ on:
       - 'docs/helix/04-build/evidence/supreme-court-*'
       - 'docs/helix/04-build/evidence/public-company-live-qualification.*'
       - 'scripts/build-document-research-release.py'
+      - 'scripts/document-research-history.json'
       - 'scripts/domain-packs/supreme-court-*.py'
       - 'scripts/domain-packs/qualify-sec-acquisition.py'
       - 'scripts/qualification/**'
@@ -134,6 +144,11 @@ jobs:
           bun-version: '1.4.2'
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      - name: Verify generated metamodel authority and retirement boundaries
+        run: |
+          bun run check:metamodel
+          bun run check:core-authority
+          bun test tests/metamodel
       - name: Select immutable schema browser producer runtime
         uses: oven-sh/setup-bun@v2
         with:
@@ -193,6 +208,8 @@ jobs:
           bun run test:reference
       - name: Install browser qualification runtime
         run: bun x playwright install --with-deps chromium
+      - name: Qualify generated validators in strict-CSP Chromium
+        run: bun scripts/metamodel-browser.ts
       - name: Qualify reference completeness and desktop/mobile presentation
         run: bun run test:reference:browser
       - name: Qualify browser SQL-to-actions compiler
@@ -212,6 +229,7 @@ jobs:
           bun run test:docs:browser
       - name: Verify tools-only distribution
         run: |
+          bun scripts/check-core-authority.ts --distribution docs/helix/05-deploy/microsite/dist
           python3 - <<'PY'
           from pathlib import Path
           archives = list(Path('docs/helix/05-deploy/microsite/dist').rglob('*.zip'))

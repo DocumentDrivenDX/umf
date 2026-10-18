@@ -1,3 +1,4 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -6,7 +7,7 @@ import {importLinkmlDocument,inspectLinkmlClassSlots,exportLinkmlDocument,readDo
 const base='fixtures/linkml/class-slots/';
 test('US-024-AC6: all pinned example/metamodel local memberships match native evidence',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).cases,oracle=(await Bun.file(base+'oracle-results.json').json()).results;
- const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);let count=0,nativeCount=0;
+ const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core).compile(schema);let count=0,nativeCount=0;
  for(const c of cases){const raw=await Bun.file(c.path).text(),d=importLinkmlDocument(raw,{id:c.path,format:c.format}),native=oracle.find((x:any)=>x.path===c.path);
   for(const row of c.reports){const r=inspectLinkmlClassSlots(readDocument(writeDocument(d,row.format),row.format),row.report.className),{source,...report}=r;expect(report).toEqual(row.report);expect(check(r)).toBe(true);expect(exportLinkmlDocument(source)).toBe(raw);count++;
    if(native.comparison==='native'){const n=native.results.find((x:any)=>x.className===r.className&&x.format===row.format);if(n.comparison==='ordered-membership'){expect(r.ancestors).toEqual(n.ancestors);expect(r.slots.map(s=>s.name)).toEqual(n.slots);}else expect(r.status).toBe('blocked');nativeCount++;}

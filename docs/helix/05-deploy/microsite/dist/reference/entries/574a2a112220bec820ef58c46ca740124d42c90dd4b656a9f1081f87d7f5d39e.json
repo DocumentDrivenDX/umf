@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -317,7 +317,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -392,9 +392,9 @@
   ],
   "sources": [
     {
-      "bytes": 2381,
+      "bytes": 2382,
       "path": "spec/extensions/linkml/class-slots-schema.json",
-      "sha256": "8a6611d63b334d842c2471a78e065ab2af1ff007755a7f0ac1f09be84fbd4ed2"
+      "sha256": "a60aa7b633d527fd2176ded359d9c4f519c386bfcc9b9c52c7e002693a49ba51"
     }
   ],
   "summary": "spec/extensions/linkml/class-slots-schema.json",

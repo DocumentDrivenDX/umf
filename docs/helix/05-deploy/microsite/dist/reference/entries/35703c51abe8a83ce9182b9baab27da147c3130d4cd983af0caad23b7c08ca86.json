@@ -195,8 +195,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -3524,7 +3524,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.7.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -3735,13 +3735,13 @@
   "id": "[\"schema\",\"spec/core/relationship-selection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 26244,
+      "bytes": 26245,
       "path": "spec/core/relationship-selection.schema.json",
-      "sha256": "c9f1f537bb64326b0e8e622b29d51c5af9c9f8b9ae78f4cf3b46cd6a628c2287"
+      "sha256": "d8bf01dcad908e19a26ee9f83c3b1da5e092d0f6055b283cb54d6997c32a1e9c"
     }
   ],
   "summary": "spec/core/relationship-selection.schema.json",

@@ -7,8 +7,8 @@ import {reserveCompactSchemaWork} from './internal/schema-work';
 import {snapshotSchema} from '../validation/internal-schema';
 import {createValueContext,ValueWork,WorkExceeded} from './internal/value-context';
 import {createValidator} from '../validation/schema';
-import keySchema from '../../spec/core/key-tuple-operation-v3.schema.json';
-import coreSchema from '../../spec/core/schema-properties-document.schema.json';
+import keySchema from '../../spec/core/key-tuple-operation-v4.schema.json';
+import coreSchema from '../../spec/core/schema.json';
 import operationSchema from '../../spec/core/dataset-value-compact-operation.schema.json';
 export {operationSchema as coreDatasetValueCompactOperationSchema};
 export type CoreCompactRecordValueCheck=Omit<CoreRecordValueCheck,'source'>&{sourceRef:'#/source'};
@@ -42,15 +42,17 @@ export function verifyCompactWithWork(receiptInput:CoreDatasetCompactValueCheck,
   reserveCompactSchemaWork(receipt,work);
   if(!check(receipt))throw new UmfError('CORE_DATASET_COMPACT_RECEIPT','Compact receipt violates its versioned schema');
   const source=work.copy(current),input=work.copy(expectedInput);
-  work.walk('verify-source-comparison',receipt.source);work.walk('verify-source-comparison',source);
-  work.walk('verify-input-comparison',receipt.input);work.walk('verify-input-comparison',input);
   if(canonical(receipt.source as unknown as Json,work)!==canonical(source,work)||canonical(receipt.input as unknown as Json,work)!==canonical(input,work))throw new UmfError('CORE_DATASET_COMPACT_RECEIPT','Invalid/stale original compact dataset receipt');
   // Candidate schema admission plus complete equality below proves the fresh
   // result's schema too; avoid validating that identical result a second time.
   const context=createValueContext(source as unknown as Document,input as unknown as CoreDatasetInput,work);
   const expected=composeCoreDatasetValues(context.source,context.input,context) as CoreDatasetCompactValueCheck;
-  work.walk('verify-result-comparison',receipt);work.walk('verify-result-comparison',expected);
-  if(canonical(receipt as unknown as Json,work)!==canonical(expected as unknown as Json,work))throw new UmfError('CORE_DATASET_COMPACT_RECEIPT','Compact receipt differs from complete recomputation');
+  // Source and input were compared exactly above. Compare the recomputed result
+  // fields separately so verification does not traverse those large values a
+  // second time merely because both receipts retain them.
+  const {source:_receiptSource,input:_receiptInput,...actualResult}=receipt;
+  const {source:_expectedSource,input:_expectedInput,...expectedResult}=expected;
+  if(canonical(actualResult as unknown as Json,work)!==canonical(expectedResult as unknown as Json,work))throw new UmfError('CORE_DATASET_COMPACT_RECEIPT','Compact receipt differs from complete recomputation');
   return {receipt:expected,work:work.snapshot()};
  }catch(error){return limit(error);}
 }

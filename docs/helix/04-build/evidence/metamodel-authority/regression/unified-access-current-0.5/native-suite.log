@@ -1,0 +1,32 @@
+bun test v1.4.2 (744846f84)
+
+tests/access-unified-generation.test.ts:
+(pass) current model generation preserves UUID/128/semantic metadata and closes selection [29.72ms]
+(pass) unsupported selected meanings and naming collisions refuse before producing code [25.77ms]
+(pass) existing output writer checks drift, refuses hand edits and restores failed swaps [245.47ms]
+
+tests/access-unified.test.ts:
+(pass) latest UMF unified Python access > generates an isolated stdlib client usable by the independent ontology host [111.11ms]
+(pass) latest UMF unified Python access > runs the same application through compiled Weft SQL on PostgreSQL 18 when configured [1134.60ms]
+
+tests/access-unified-browser.test.ts:
+(pass) current UMF client generation has exact Chromium parity without host globals [567.96ms]
+
+tests/metamodel/authority-boundaries.test.ts:
+(pass) current-core authority boundaries > rejects static and dynamic imports of retired resources [3.92ms]
+(pass) current-core authority boundaries > retired source cannot quietly remain distributed [0.03ms]
+(pass) current-core authority boundaries > compiler cannot depend on generated core admission [0.93ms]
+(pass) current-core authority boundaries > runtime cannot reach host compiler or inert historical evidence [0.25ms]
+(pass) current-core authority boundaries > old dispatch and constructed core markers reject, independent native versions survive [1.75ms]
+(pass) current-core authority boundaries > transitive compiler bootstrap dependencies reject while erased type dependencies do not [0.45ms]
+(pass) current-core authority boundaries > host producers and schema generators cannot reintroduce old core authority [2.38ms]
+(pass) current-core authority boundaries > explicit refusal controls cannot exempt unguarded or changed producers [1.11ms]
+(pass) current-core authority boundaries > Python host producers reject explicit retired marker pins and refs [0.27ms]
+(pass) current-core authority boundaries > schema document refs and package core identity reject independently versioned receipts do not [0.25ms]
+(pass) current-core authority boundaries > published inventories reject stale hosts, wheel schemas and inert archives [0.64ms]
+(pass) current-core authority boundaries > browser enforcement rejects host and dynamic code primitives [0.48ms]
+
+ 18 pass
+ 0 fail
+ 154 expect() calls
+Ran 18 tests across 4 files. [3.82s]

@@ -47,7 +47,7 @@ test('canonical identifiers and SQL types reject terminal line separators',()=>{
 
 test('published policy and complete result schemas reject partial success and candidate leakage',async()=>{
  const {createValidator}=await import('../../src/validation/schema'),v=createValidator(false);
- v.addSchema(await Bun.file('spec/core/relationship-document.schema.json').json());
+ v.addSchema(await Bun.file('spec/core/schema.json').json());
  v.addSchema(await Bun.file('spec/projections/postgresql-relationship-layout.schema.json').json());
  const check=v.compile(await Bun.file('spec/projections/postgresql-relationship-layout-result.schema.json').json());
  const f=postgresqlLayoutCase(),r=validatePostgresqlRelationshipLayout(f.logical,f.binding,f.policy,'report');expect(check(r),JSON.stringify(check.errors)).toBe(true);

@@ -17,7 +17,7 @@
         },
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Qualified PostgreSQL column shape observations with native refinements retained",
       "id": "umf.postgresql.cardinality",
       "schema": {
@@ -74,7 +74,7 @@
       "scopes": [
         "element"
       ],
-      "semantics": "CONTRACT-040 and TD-042; core 0.4.0 shape classification, not native replacement",
+      "semantics": "CONTRACT-040 and TD-042; shape classification, not native replacement",
       "version": "1.0.0"
     },
     "registration": {
@@ -94,9 +94,9 @@
   ],
   "sources": [
     {
-      "bytes": 1961,
+      "bytes": 1951,
       "path": "spec/extensions/postgresql-cardinality/package.json",
-      "sha256": "668dba5c1b987bf52b5a3ff7fff0302fe79c844166a32ddc4fcfb87cef1ffa26"
+      "sha256": "9fbc522b4eee9427eebb12436b577aac4d2d205ea3aa8e82ef1d4c51472d68cd"
     }
   ],
   "summary": "Qualified PostgreSQL column shape observations with native refinements retained",

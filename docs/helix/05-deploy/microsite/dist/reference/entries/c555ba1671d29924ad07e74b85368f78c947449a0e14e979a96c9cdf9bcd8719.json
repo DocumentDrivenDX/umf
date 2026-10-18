@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -1978,7 +1978,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -2027,9 +2027,9 @@
   ],
   "sources": [
     {
-      "bytes": 19022,
+      "bytes": 19023,
       "path": "spec/extensions/owl/special-axioms-schema.json",
-      "sha256": "6626181ab3fd7f02752979d48de4e8be17d29b13b32dc131521d7973786d66b2"
+      "sha256": "e3ba3a721db760b14b5a618700acbeae3b008504c00e7d3a91b28bff3a0bcb96"
     }
   ],
   "summary": "spec/extensions/owl/special-axioms-schema.json",

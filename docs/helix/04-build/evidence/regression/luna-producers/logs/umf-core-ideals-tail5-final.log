@@ -1,0 +1,72 @@
+{"testProcess":"tests/core-ideals/facets-parquet-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-parquet-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-parquet-projection.test.ts:
+(pass) integer widths and decimal carriers project only matched declared domains [3213.53ms]
+(pass) native validity, reader limitations and non-enforcing length metadata stay separate [853.58ms]
+(pass) profile/mode/encoding matrix recovers full authored ideals in both serializations [15489.83ms]
+(pass) unknown content, false authorship, changed bytes and unsafe inputs cannot pass recovery [474.66ms]
+
+ 4 pass
+ 0 fail
+ 153 expect() calls
+Ran 4 tests across 1 file. [27.21s]
+{"testProcess":"tests/core-ideals/facets-parquet-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":153,"completeSummary":true,"logSha256":"9cab47914444bfff525d72cd25b4a4e59c78fb6b49be55bb38a2ec86a82caa9e"}
+{"testProcess":"tests/core-ideals/facets-parquet.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-parquet.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-parquet.test.ts:
+(pass) classifies declaration widths while retaining explicit input-conversion limits [7084.03ms]
+(pass) unknown embedded metadata remains residual with exact native byte recovery [1824.32ms]
+(pass) fixed lengths and author provenance do not invent or overwrite assertions [1763.40ms]
+(pass) closed schemas, source identity and profile refusals remain explicit [1162.92ms]
+(pass) decimal declarations and explicit array member selection preserve context [1684.09ms]
+
+ 5 pass
+ 0 fail
+ 81 expect() calls
+Ran 5 tests across 1 file. [20.50s]
+{"testProcess":"tests/core-ideals/facets-parquet.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":81,"completeSummary":true,"logSha256":"5cc54f2a6bf7ad172995eeb2b5aa180a342108a3f6f99f3252f77c111c4bcda1"}
+{"testProcess":"tests/core-ideals/facets-postgresql-catalog.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-catalog.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-postgresql-catalog.test.ts:
+(pass) complete catalog correspondence preserves sources and verifies overlapping CHECKs [1210.68ms]
+(pass) omitted, extra, duplicate and inconsistent native observations cannot qualify [2750.99ms]
+(pass) unknown source content and unsafe unknown numbers remain exact while owned integers reject rounding [482.78ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [4.84s]
+{"testProcess":"tests/core-ideals/facets-postgresql-catalog.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"bc54b141431d38b90c78ea1add45ff82cf433b9d6c9e4e20e8cc1273d796e204"}
+{"testProcess":"tests/core-ideals/facets-postgresql-composition.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-composition.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-postgresql-composition.test.ts:
+3 | test('native emitted schemas recover authored facets or explicit residuals and retain native refinements',async()=>{
+4 |  const proof=await Bun.file('fixtures/validation/facets-postgresql-composition.json').json();
+5 |  expect(proof.serverVersion).toBe(170004);expect(proof.bindingAccepted).toBe(false);
+6 |  expect(proof.counts.cases).toBe(145);expect(proof.counts.idealRecoveries).toBe(145);expect(proof.counts.nativeRecoveries).toBe(145);
+7 |  expect(proof.counts.exactFacetRecoveries+proof.counts.explicitResiduals).toBe(145);
+8 |  for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),path).toBe(sha);
+                                                                                                                                                                                              ^
+error: scripts/core-ideals/facets-postgresql-composition.ts
+
+Expected: "d84d74380a576f9cdd6da3c3096e92256e4714b859805c88c2fb9d0cf0dfc201"
+Received: "747c905fe1bd370d6617c4f6d209031a9292fdc5a983bf90dd746c0ea7ac4db2"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-postgresql-composition.test.ts:8:187)
+(fail) native emitted schemas recover authored facets or explicit residuals and retain native refinements [2.34ms]
+
+ 0 pass
+ 1 fail
+ 7 expect() calls
+Ran 1 test across 1 file. [16.00ms]
+{"testProcess":"tests/core-ideals/facets-postgresql-composition.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":7,"completeSummary":true,"logSha256":"7a31f07828f316e6264746f51e30a62b2243fb7e3fdd075dacbd348f7d0f3893"}
+Complete test file failed or terminated: tests/core-ideals/facets-postgresql-composition.test.ts
+
+ 12 pass
+ 1 fail
+ 268 expect() calls
+Ran 13 tests across 4 files. [52.66s]

@@ -10,7 +10,7 @@ for(const [path,sha] of Object.entries(proof.sha256))assert.equal(createHash('sh
 assert.equal(proof.serverVersion,170004);
 const nativeSource=JSON.stringify(proof.capture),supplement=JSON.stringify(proof.supplement);
 let source=u.importPostgresqlCatalogCapture(nativeSource,{id:'postgresql-facet-composition'});
-source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target).target;
+
 for(const element of source.modules.find(m=>m.id==='postgresql.columns')!.elements)element.kind='field';
 const columns=u.getPostgresqlColumnMetadata(source),results=[];
 let idealRecoveries=0,nativeRecoveries=0,exactFacetRecoveries=0,explicitResiduals=0;

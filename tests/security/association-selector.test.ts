@@ -1,3 +1,4 @@
+import currentGraphFixture from './fixtures/current-graph-qualifier.json';
 import {resolveCandidateRecordAssociationChecks,resolveCandidateGraphRelationshipChecks,resolveCandidateAssociationChecks} from '../../src/extensions/security/association-checks';
 import {resolveCandidateRecordAssociation,requireCandidateEndpointDomainCorrespondence,requireCandidateAssociationClassifications,checkCandidateRecordClassifications} from '../../src/extensions/security/association-candidate';
 import {test,expect} from 'bun:test';
@@ -114,13 +115,13 @@ test('classification utility refuses a foreign scoped Record even when local lab
  expect(()=>checkCandidateRecordClassifications(document,[staff.type],[{type:staff.type,fields:staff.fields}])).not.toThrow();
 });
 
-test('original graph qualifier requires explicit draft Key-agreement interpretation',async()=>{
+test('current graph qualifier requires explicit draft Key-agreement interpretation',async()=>{
  const r=await Bun.file('docs/helix/04-build/evidence/security/truss-graph-compiler-input.json').json(),s=await Bun.file('docs/helix/04-build/evidence/security/relationship-selector-spike.json').json(),ontology=JSON.parse(r.request.ontologyJson),classifications=[...ontology.entities,...ontology.associations].map((e:any)=>({type:e.type,fields:e.fields})),profile={profile:'association-record-key-agreement/0.1'} as const;
- const result=resolveCandidateGraphRelationshipChecks(s.original,r.transition.target,s.entities,classifications,profile);
+ const result=resolveCandidateGraphRelationshipChecks(s.original,currentGraphFixture,s.entities,classifications,profile);
  expect(result.interpretedQualifier).toEqual({profile:profile.profile,path:'/modules/0/relationships/1/associationRecord/key',keyId:'code-key'});expect((result.plan.sourceRelationship as any).associationRecord.key).toBe('code-key');
- const unknown=structuredClone(r.transition.target);unknown.modules[0].relationships[1].future=true;expect(()=>resolveCandidateGraphRelationshipChecks(s.original,unknown,s.entities,classifications,profile)).toThrow();
- const mismatch=structuredClone(s.original);mismatch.witness.keyId='missing';expect(()=>resolveCandidateGraphRelationshipChecks(mismatch,r.transition.target,s.entities,classifications,profile)).toThrow();
- expect(()=>resolveCandidateGraphRelationshipChecks(s.bare,r.transition.target,s.entities,classifications.slice(0,2),profile)).toThrow();
+ const unknown=structuredClone(currentGraphFixture);Object.assign(unknown.modules[0]!.relationships[1]!,{future:true});expect(()=>resolveCandidateGraphRelationshipChecks(s.original,unknown,s.entities,classifications,profile)).toThrow();
+ const mismatch=structuredClone(s.original);mismatch.witness.keyId='missing';expect(()=>resolveCandidateGraphRelationshipChecks(mismatch,currentGraphFixture,s.entities,classifications,profile)).toThrow();
+ expect(()=>resolveCandidateGraphRelationshipChecks(s.bare,currentGraphFixture,s.entities,classifications.slice(0,2),profile)).toThrow();
 });
 
 test('shared checked association entrypoint keeps branch semantics and refuses wrong-scope interpretations',async()=>{
@@ -130,5 +131,5 @@ test('shared checked association entrypoint keeps branch semantics and refuses w
  expect(()=>resolveCandidateAssociationChecks({...selector,kind:'future'},resolution.documents[0]!.document,entities,classifications)).toThrow();
  let calls=0;const hostile:any={};Object.defineProperty(hostile,'kind',{enumerable:true,get(){calls++;return 'record-members';}});expect(()=>resolveCandidateAssociationChecks(hostile,resolution.documents[0]!.document,entities,classifications)).toThrow();expect(calls).toBe(0);
  const r=await Bun.file('docs/helix/04-build/evidence/security/truss-graph-compiler-input.json').json(),s=await Bun.file('docs/helix/04-build/evidence/security/relationship-selector-spike.json').json(),o=JSON.parse(r.request.ontologyJson),c=[...o.entities,...o.associations].map((e:any)=>({type:e.type,fields:e.fields}));
- expect(resolveCandidateAssociationChecks(s.original,r.transition.target,s.entities,c,profile).kind).toBe('candidate-graph-relationship-checks/0.1');
+ expect(resolveCandidateAssociationChecks(s.original,currentGraphFixture,s.entities,c,profile).kind).toBe('candidate-graph-relationship-checks/0.1');
 });

@@ -67,7 +67,7 @@ test('reused declaration checks preserve optional absence, output checks and per
  }
 });
 
-test('prepared core0.8 verification preserves foreign core0.9 receipt refusals without admitting core0.9 scopes',()=>{
+test('prepared current scopes preserve foreign-source refusals and exact codec-profile verification',()=>{
  const document=tupleDocument([{id:'x',scalarType:'string'}]),scope=prepareCoreKeyTuples(document);
  for(const profile of ['umf-key-tuple-v1','umf-key-tuple-v2'] as const){
   const foreign=encodeCoreKeyTuple(uuidDocument('string'),KEY,[{string:'foreign'}],{profile});
@@ -76,5 +76,7 @@ test('prepared core0.8 verification preserves foreign core0.9 receipt refusals w
  }
  const foreign=encodeCoreKeyTuple(uuidDocument(),KEY,[{uuid:UUID}],{profile:'umf-key-tuple-v2'});
  expect(outcome(()=>scope.verify(foreign))).toEqual(outcome(()=>verifyCoreKeyTuple(foreign,document)));
- expect(()=>prepareCoreKeyTuples(uuidDocument())).toThrow();
+ const currentUuid=uuidDocument(),sameSourceScope=prepareCoreKeyTuples(currentUuid);
+ expect(outcome(()=>sameSourceScope.verify(foreign))).toEqual(outcome(()=>verifyCoreKeyTuple(foreign,currentUuid)));
+ expect(()=>prepareCoreKeyTuples({...currentUuid,umf:'0.9.0'})).toThrow();
 });

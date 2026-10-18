@@ -1,7 +1,7 @@
 {
   "status": "projected",
   "source": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "source",
     "vocabularies": {
       "umf.json-schema": {
@@ -375,7 +375,7 @@
   ],
   "nativeSource": "syntax = \"proto3\";\npackage umf.projection;\nmessage Record {\n  optional string field_1 = 1 [json_name = \"id\"];\n  optional int64 field_2 = 2 [json_name = \"count\"];\n  optional string field_3 = 3 [json_name = \"note\"];\n  repeated string field_4 = 4 [json_name = \"tags\"];\n  optional string field_5 = 5 [json_name = \"choice\"];\n  optional double field_6 = 6 [json_name = \"ratio\"];\n}\n",
   "target": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "projected",
     "vocabularies": {
       "umf.protobuf": {

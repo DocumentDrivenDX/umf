@@ -16,7 +16,7 @@
         ],
         "validation": "semantic"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Declarative action metadata over UMF core 0.8.0; executor qualification remains separate.",
       "id": "umf.actions",
       "schema": {
@@ -1198,7 +1198,7 @@
         "[\"api\",\".\",\"registerActions\"]"
       ],
       "coreProfiles": [
-        "0.8.0"
+        "0.10.0"
       ],
       "mode": "sdk-default"
     },
@@ -1215,9 +1215,9 @@
   ],
   "sources": [
     {
-      "bytes": 11490,
+      "bytes": 11491,
       "path": "spec/extensions/actions/package.json",
-      "sha256": "42324e4a70f0728f13a79408104673801cf96ea90a9720fa779a724b34c0e048"
+      "sha256": "77006f8c094af31c4c1f5c95424ff15eb97da6de6e969f8b3a91150960f200b8"
     }
   ],
   "summary": "Declarative action metadata over UMF core 0.8.0; executor qualification remains separate.",

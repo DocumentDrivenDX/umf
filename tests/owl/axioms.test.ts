@@ -1,9 +1,10 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
 import {importOwlTurtle,exportOwlTurtle,getOwlSpecialAxioms,readDocument,writeDocument,getOwlQuads,proposeOwlQuadEdit} from '../../src';
 test('US-029 special axioms preserve negative polarity, lists and source through recovery and edits',async()=>{
  const raw=await Bun.file('native/owl/special-axioms.ttl').text(),doc=importOwlTurtle(raw,{id:'s',baseIRI:'https://example.org/',blankNodeScope:'scope'});
- const ajv=new Ajv({strict:false});ajv.addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/special-axioms-schema.json').json());
+ const ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/special-axioms-schema.json').json());
  for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(doc,format),format),view=getOwlSpecialAxioms(restored);expect(check(view)).toBe(true);expect(view.axioms).toHaveLength(6);expect(view.malformed).toHaveLength(3);expect(view.complete).toBe(false);expect(view.blankNodeScope).toBe('scope');expect(exportOwlTurtle(view.source)).toBe(raw);
  const neg=view.axioms[0]!;expect(neg.kind).toBe('negativePropertyAssertion');if(neg.kind!=='negativePropertyAssertion')throw Error('Expected negative assertion');expect(neg.target.value).toBe('https://example.org/carol');const qs=getOwlQuads(restored),i=qs.findIndex(q=>q.subject.value===neg.node.value&&q.predicate.value.endsWith('#targetIndividual'));const changed=proposeOwlQuadEdit(restored,i,{...qs[i]!,object:{kind:'iri',value:'https://example.org/dana'}}).document;const n=getOwlSpecialAxioms(changed).axioms[0]!;expect(n.kind==='negativePropertyAssertion'&&n.target.value).toBe('https://example.org/dana');expect(exportOwlTurtle(restored)).toBe(raw);expect(getOwlQuads(changed).filter(q=>q.predicate.value==='https://example.org/knows')).toHaveLength(1);
  }

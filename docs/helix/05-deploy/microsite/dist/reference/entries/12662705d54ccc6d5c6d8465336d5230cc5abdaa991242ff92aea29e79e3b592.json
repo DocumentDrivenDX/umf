@@ -16,12 +16,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -348,7 +348,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -415,7 +415,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -619,9 +619,9 @@
   ],
   "sources": [
     {
-      "bytes": 3941,
+      "bytes": 3943,
       "path": "spec/extensions/avro/node-edit-proposal.schema.json",
-      "sha256": "71b11d4b4b499896fec3d9c20eab271dbf91ed8c71c8c282f6a403434305a8dd"
+      "sha256": "374309f1885c71c851b315d34a4a563cb4b96ceb1c3e82b93e5451e83a6834d3"
     }
   ],
   "summary": "spec/extensions/avro/node-edit-proposal.schema.json",

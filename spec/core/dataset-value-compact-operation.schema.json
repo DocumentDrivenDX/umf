@@ -17,7 +17,7 @@
       "const": "unverified"
     },
     "source": {
-      "$ref": "urn:umf:core:0.8.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "input": {
       "$ref": "#/$defs/input"
@@ -284,7 +284,7 @@
               "const": "present"
             },
             "value": {
-              "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+              "$ref": "urn:umf:core:0.10.0#/$defs/literal"
             }
           },
           "required": [
@@ -364,12 +364,12 @@
                 "type": "object",
                 "properties": {
                   "identity": {
-                    "$ref": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/identity"
+                    "$ref": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/identity"
                   },
                   "values": {
                     "type": "array",
                     "items": {
-                      "$ref": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/value"
+                      "$ref": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/value"
                     }
                   }
                 },
@@ -406,7 +406,7 @@
           "const": "validate-core-record-values"
         },
         "version": {
-          "const": "1.0.0"
+          "const": "2.0.0"
         },
         "identity": {
           "$ref": "#/$defs/identity"
@@ -573,7 +573,7 @@
           "const": "encode-core-key-tuple"
         },
         "version": {
-          "const": "3.0.0"
+          "const": "4.0.0"
         },
         "profile": {
           "const": "umf-key-tuple-v1"

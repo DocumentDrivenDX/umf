@@ -6,29 +6,7 @@
     "original": {
       "allOf": [
         {
-          "anyOf": [
-            {
-              "$ref": "urn:umf:core:0.1.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.2.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.3.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.4.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.5.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.6.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.7.0"
-            }
-          ]
+          "$ref": "urn:umf:core:0.10.0"
         },
         {
           "type": "object",
@@ -74,29 +52,7 @@
     "migrated": {
       "allOf": [
         {
-          "anyOf": [
-            {
-              "$ref": "urn:umf:core:0.1.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.2.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.3.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.4.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.5.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.6.0"
-            },
-            {
-              "$ref": "urn:umf:core:0.7.0"
-            }
-          ]
+          "$ref": "urn:umf:core:0.10.0"
         },
         {
           "type": "object",
@@ -157,7 +113,7 @@
           "$ref": "#/$defs/original"
         },
         "logical": {
-          "$ref": "urn:umf:core:0.7.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "migrated": {
           "$ref": "#/$defs/migrated"

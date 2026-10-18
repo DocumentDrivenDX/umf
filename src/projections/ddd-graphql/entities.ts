@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {pointer,UmfError,type Document} from '../../model/types';
 import {inspectDdd,type DddEntity} from '../../extensions/ddd';
@@ -36,7 +37,7 @@ export function buildDddEntityGraphql(logical:Document,policy:DddGraphqlEntityPo
   if(!policy||!Array.isArray(policy.entities)||!Array.isArray(policy.fields)||!policy.scalars||!policy.root||Object.keys(policy).some(k=>!['entities','fields','scalars','root','sourceProfile'].includes(k)))throw new UmfError('GRAPHQL_POLICY','Explicit entity, field, scalar and root policy required');
   const coreProfile=policy.sourceProfile==='core-ideals';
   if(policy.sourceProfile!==undefined&&!['ddd-only','core-ideals'].includes(policy.sourceProfile))throw new UmfError('GRAPHQL_POLICY','Unknown source profile');
-  if(coreProfile&&logical.umf!==(full?'0.7.0':'0.5.0'))throw new UmfError('GRAPHQL_CORE_VERSION','Core Field/Nullability/Cardinality profile requires UMF 0.5.0');
+  if(coreProfile&&logical.umf!==CURRENT_CORE_VERSION)throw new UmfError('GRAPHQL_CORE_VERSION','Core Field/Nullability/Cardinality profile requires current UMF');
   if(policy.root.kind!=='synthetic-schema-root'||!valid(policy.root.typeName)||!valid(policy.root.fieldName)||Object.keys(policy.root).some(k=>!['kind','typeName','fieldName'].includes(k)))throw new UmfError('GRAPHQL_ROOT','Invalid synthetic schema root policy');
   const scalarFamilies=['string','boolean','integer','decimal','date-time','bytes'] as const;
   if(Object.keys(policy.scalars).length!==scalarFamilies.length||scalarFamilies.some(f=>!valid(policy.scalars[f])))throw new UmfError('GRAPHQL_SCALAR_POLICY','Every DDD scalar family needs one valid GraphQL name');

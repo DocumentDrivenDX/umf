@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Json} from '../../model/types';
 import {inspectSmithy,SMITHY_EXTENSION} from './index';
@@ -11,7 +12,7 @@ function payload(document:Document):SmithySourcePayload{
 /** Preserve supplied IDL/JSON text. No browser syntax or semantic validity claim. */
 export function importSmithySources(input:{files:Record<string,string>},options:{id:string}):Document{
  const supplied=copyJson(input) as unknown as typeof input;if(Object.keys(supplied).some(k=>k!=='files'))throw new UmfError('SMITHY_SOURCE_INPUT','Unknown source-bundle option');
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[SMITHY_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[SMITHY_EXTENSION]:{profile:'smithy-idl-sources',files:supplied.files} as unknown as Json}}]}]};payload(doc);return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[SMITHY_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[SMITHY_EXTENSION]:{profile:'smithy-idl-sources',files:supplied.files} as unknown as Json}}]}]};payload(doc);return doc;
 }
 export function exportSmithySources(document:Document){const p=payload(document);if(inspectSmithy(document).diagnostics.some(d=>d.code==='SMITHY_REPRESENTATION'))throw new UmfError('SMITHY_REPRESENTATION','Native source export would discard unknown content');return {files:p.files};}
 export function proposeSmithySourceEdit(document:Document,path:string,text:string){

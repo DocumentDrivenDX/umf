@@ -1,9 +1,9 @@
 import {test,expect} from 'bun:test';
 import {tableSpecKeyProjectionCases,tableSpecKeyAuthors,keyRecord,keyId,keyCode} from '../../scripts/core-ideals/key-tablespec-projection-cases';
-import {projectKeysToTableSpec,verifyKeysTableSpecProjection,recoverKeysTableSpecIdeal} from '../../src/core-ideals/key-tablespec-projection';
-import {classifyTableSpecKeys,recoverTableSpecKeySource} from '../../src/core-ideals/key-tablespec';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {projectKeysToTableSpec, verifyKeysTableSpecProjection, recoverKeysTableSpecIdeal} from '../../src/core-ideals/key-tablespec-projection';
+import {classifyTableSpecKeys, recoverTableSpecKeySource} from '../../src/core-ideals/key-tablespec';
+import {importTableSpec, exportTableSpec} from '../../src/adapters/tablespec';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {declareCoreKey} from '../../src/model/keys';
 for(const row of tableSpecKeyProjectionCases())test('authored TableSpec projection: '+row.name,()=>{
  const before=JSON.stringify(row),r=projectKeysToTableSpec(row.source,row.authors,row.request);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);const count=(row.source.modules[0]!.elements[0]!.keys as unknown[]).length;expect(r.mappings).toHaveLength(count);expect(r.residuals.filter(l=>l.path.includes('/keys/'))).toHaveLength(count);

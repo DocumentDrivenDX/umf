@@ -234,11 +234,11 @@ def binding(schema: str | None = None, *, platform: str = "postgresql") -> dict[
     # Authored fixture facts precede compilation: every physical column is
     # represented, including the RLS owner column. No compiler output is edited.
     target = {"platform": platform, "majorVersion": "18"}
-    physical = {"umf": "0.8.0", "id": "praxis-read-binding",
+    physical = {"umf": "0.10.0", "id": "praxis-read-binding",
                 "vocabularies": {"umf.binding": {"version": "0.2.0"}},
                 "modules": [], "extensions": {"umf.binding": {
                     "profile": "umf-binding-2",
-                    "logical": {"documentId": "praxis-read-test", "coreVersion": "0.8.0"},
+                    "logical": {"documentId": "praxis-read-test", "coreVersion": "0.10.0"},
                     "target": {"system": platform, "version": "18", "subset": "typed-access-columns/0.1"},
                     "elements": [], "fields": [], "relationships": [], "indexes": []}}}
     storage = physical["extensions"]["umf.binding"]
@@ -265,7 +265,7 @@ def binding(schema: str | None = None, *, platform: str = "postgresql") -> dict[
         module["extensions"] = {"umf.access": {"views": views, "columns": [{
             "binding": {"sourceId": physical["id"], "module": module["id"]}, "target": target, "columns": columns}]}}
     document = {
-        "umf": "0.8.0",
+        "umf": "0.10.0",
         "id": "praxis-read-test",
         "vocabularies": {"umf.access": {"version": "0.1.0"}},
         "modules": modules,
@@ -288,7 +288,7 @@ from dataclasses import replace
 from umf_access.dsl import GeneratedSource
 
 _source_binding = binding()
-SOURCE = GeneratedSource("praxis-read-test", "0.8.0", str(_source_binding["modelSha256"]), "a" * 64, "umf-access-runtime/0.1")
+SOURCE = GeneratedSource("praxis-read-test", "0.10.0", str(_source_binding["modelSha256"]), "a" * 64, "umf-access-runtime/0.1")
 OID = replace(OID, source=SOURCE)
 CID = replace(CID, source=SOURCE)
 NAME = replace(NAME, source=SOURCE)
@@ -822,7 +822,7 @@ class Native(unittest.TestCase):
             source_id = column_set["binding"]["sourceId"]
             original = next(source["text"] for source in request["sources"] if source["id"] == source_id)
             bound["nativeColumns"]["sets"].append({
-                "columnSet": {"documentId": document["id"], "coreVersion": "0.8.0", "documentSha256": bound["modelSha256"], "module": "commerce", "pointer": f"/modules/0/extensions/umf.access/columns/{index}"},
+                "columnSet": {"documentId": document["id"], "coreVersion": "0.10.0", "documentSha256": bound["modelSha256"], "module": "commerce", "pointer": f"/modules/0/extensions/umf.access/columns/{index}"},
                 "binding": {"sourceId": source_id, "documentJson": original, "documentSha256": hashlib.sha256(original.encode()).hexdigest()},
             })
         return bound

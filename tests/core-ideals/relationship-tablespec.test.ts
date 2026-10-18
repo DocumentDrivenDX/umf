@@ -1,7 +1,7 @@
 import {describe,test,expect} from 'bun:test';
-import {classifyTableSpecRelationships,verifyTableSpecRelationshipClassification,recoverTableSpecRelationshipSource,tableSpecRelationshipsPackage,TABLESPEC_RELATIONSHIPS_EXTENSION} from '../../src/core-ideals/relationship-tablespec';
-import {importTableSpec,importTableSpecBundle} from '../../src/adapters/tablespec';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyTableSpecRelationships, verifyTableSpecRelationshipClassification, recoverTableSpecRelationshipSource, tableSpecRelationshipsPackage, TABLESPEC_RELATIONSHIPS_EXTENSION} from '../../src/core-ideals/relationship-tablespec';
+import {importTableSpec, importTableSpecBundle} from '../../src/adapters/tablespec';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {validateDocument} from '../../src/validation/document';
 import {Registry} from '../../src/registry/registry';
 import type {Document} from '../../src/model/types';
@@ -36,10 +36,9 @@ describe('TableSpec relationship classification',()=>{
    if(Object.hasOwn(Object(relationships),'x/y~z'))expect(r.observations[0]!.nativePath).toEndWith('/x~1y~0z');
   }
  });
- test('preserves authored 0.7 relationships without replacing their intent',()=>{
-  const source=imported();source.umf='0.7.0';const ideal=relationshipCandidate();source.modules.push(...ideal.modules);
-  const r=classifyTableSpecRelationships(source,request);expect(r.target!.modules).toEqual(source.modules);expect(r.target!.umf).toBe('0.7.0');
-  expect(verifyTableSpecRelationshipClassification(r,r.target!)).toEqual(r);
+ test('refuses retired core markers before classifying native relationships',()=>{
+  const source=imported(),legacy={...source,umf:'0.7.0'} as any;
+  expect(()=>classifyTableSpecRelationships(legacy,request)).toThrow();
  });
  test('split bundles and unknown exact-number metadata survive classification',()=>{
   const files={'table.yaml':'version: "1.0"\ntable_name: orders\nrelationships: {future: {n: 9007199254740993, decimal: 1.2300}}\n','columns/id.yaml':'column: {name: id, data_type: INTEGER}\n','notes.txt':'untouched\n'};

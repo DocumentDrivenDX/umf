@@ -10,8 +10,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -388,7 +388,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -408,7 +408,7 @@
         },
         "title": {
           "kind": "string",
-          "value": "Core 0.9.0 kind-operation-v8"
+          "value": "Core kind inspection receipt"
         }
       }
     }
@@ -416,15 +416,15 @@
   "id": "[\"schema\",\"spec/core/kind-operation-v8.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 2684,
+      "bytes": 2685,
       "path": "spec/core/kind-operation-v8.schema.json",
-      "sha256": "b0ea478865567f2ee6c3b060df5eda10723cb4bdeaa4ff26eb7e0bba6d7b063e"
+      "sha256": "3f7cc27f133f0a242b42ae2f41b665d046d0e069668235c82b0b2cd38c8bd68c"
     }
   ],
   "summary": "spec/core/kind-operation-v8.schema.json",
-  "title": "Core 0.9.0 kind-operation-v8"
+  "title": "Core kind inspection receipt"
 }

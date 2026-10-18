@@ -5,7 +5,7 @@ import {canonicalSchemaJson} from './schema-literals';
 import {inspectCoreSchemaProperties,validateCoreFieldValue} from './schema-properties';
 import {createValidator} from '../validation/schema';
 import {snapshotSchema} from '../validation/internal-schema';
-import coreSchema from '../../spec/core/schema-properties-document.schema.json';
+import coreSchema from '../../spec/core/schema.json';
 import operationSchema from '../../spec/core/csv-boolean-lexical-operation.schema.json';
 
 export {operationSchema as csvBooleanLexicalOperationSchema};

@@ -11,7 +11,7 @@ import {facetsAvroProjectionCases} from './facets-avro-projection-cases';
 import {avroFacetCase} from './facets-avro-cases';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
 
-const upgrade = (d: u.Document) => u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(d).target).target).target).target;
+const upgrade = (d: u.Document) => d;
 const serialized = (r: any, format: 'json'|'yaml') => u.readJsonValue(u.writeJsonValue(u.copyJson(r), format), format) as any;
 type Row = {author: u.CoreFacetDeclaration|u.CoreKindDeclaration; request: any; name?: string; id?: string};
 type Classified = {source: u.Document; classify: (mode: 'strict'|'report') => any; recover: (r: any) => any; native: unknown};

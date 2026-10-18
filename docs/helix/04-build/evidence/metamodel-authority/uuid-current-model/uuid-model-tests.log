@@ -1,0 +1,121 @@
+{"testProcess":"tests/binding-uuid.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/binding-uuid.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/binding-uuid.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":62,"completeSummary":true,"logSha256":"f2b708c857a093af5b025e3ba8606ebebb51261f2b5a564f6f5c1d562c87ef10"}
+{"testProcess":"tests/bit128.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/bit128.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/bit128.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":4702,"completeSummary":true,"logSha256":"884ee8944c42e8faa6a3989e4fe7b6cc584bbb663f7f50321f2111f986453fe2"}
+{"testProcess":"tests/core-uuid-key.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-uuid-key.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/core-uuid-key.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":397,"completeSummary":true,"logSha256":"c0f39d74ded1c264b00b4432cd7ca8cd5792ead52fbd93accf191e99e667ac6f"}
+{"testProcess":"tests/core-uuid.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-uuid.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/core-uuid.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":47,"completeSummary":true,"logSha256":"595ec2f5ab9212e6ca2754bb941130aaa86c7737f655ce0074348f90a7109c7d"}
+{"testProcess":"tests/uuid-file-model.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-file-model.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid-file-model.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":81,"completeSummary":true,"logSha256":"d54a7349d18d495883da77cde8bc2d40ddc9b824eede18d01a8adae4c8732c7e"}
+{"testProcess":"tests/uuid-model.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-model.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid-model.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":90,"completeSummary":true,"logSha256":"5ed1be7d6c6602b687214b1deb64fe679cd3b867f123afaf8ecd2a186555ce32"}
+{"testProcess":"tests/uuid-native-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-native-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid-native-projection.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":61,"completeSummary":true,"logSha256":"15e98739e112a5306bd911e1a90dfda0ba6a23952e206ebcdbfe2927cf0635f2"}
+{"testProcess":"tests/uuid.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid.test.ts"]}
+bun test v1.4.2 (744846f84)
+{"testProcess":"tests/uuid.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":1564,"completeSummary":true,"logSha256":"20389b766cb6da0de78a92a14b9cc5bd21803a447a4b560033074ca4e5a268a4"}
+
+
+tests/binding-uuid.test.ts:
+(pass) explicit UUID carriers preserve bits; paired signed words retain exact native transport tokens [83.19ms]
+(pass) partial pairs, collisions, unknown carrier, domain conflicts, nulls and stale logical bindings [4.16ms]
+(pass) dispatch rejects getters before reading profile and relevant unknown logical facets block codecs [1.62ms]
+(pass) unqualified native index layouts remain serializable but cannot authorize generation or values [8.13ms]
+(pass) carrier validation and encoding use the same copied literal and binding snapshots [3.20ms]
+
+ 5 pass
+ 0 fail
+ 62 expect() calls
+Ran 5 tests across 1 file. [10.24s]
+
+tests/bit128.test.ts:
+(pass) all bit positions, sign boundaries and seeded values match independent Python oracle [11.58ms]
+(pass) strict grammar, bounds, two-complement ordering, forged snapshots and accessors [0.49ms]
+(pass) byte bridge checks intrinsic length before copying and never invokes user iterators [0.09ms]
+
+ 3 pass
+ 0 fail
+ 4702 expect() calls
+Ran 3 tests across 1 file. [9.63s]
+
+tests/core-uuid-key.test.ts:
+(pass) versioned tuples match independent oracle and reject old codec, stale or forged framing [199.90ms]
+
+ 1 pass
+ 0 fail
+ 397 expect() calls
+Ran 1 test across 1 file. [10.49s]
+
+tests/core-uuid.test.ts:
+(pass) version-scoped validation, copied authoring, allowed values, defaults and serialization [35.12ms]
+(pass) current metadata inspectors, selection, containers and unknown refinement boundaries [32.56ms]
+(pass) explicit Field-domain authoring preserves the source and validates collisions [1.70ms]
+(pass) extension validators receive the current UUID document directly [19.72ms]
+(pass) signed and unsigned integer128 keep mathematical equality and lossless bigint context [2.76ms]
+
+ 5 pass
+ 0 fail
+ 47 expect() calls
+Ran 5 tests across 1 file. [9.90s]
+
+tests/uuid-file-model.test.ts:
+(pass) file/model bundles retain unenforced Keys/relations and pair absence uses one nullable group [283.03ms]
+(pass) TableSpec refuses unqualified carriers; native pair group collisions and unsigned Avro refuse [3.94ms]
+(pass) native pair paths are explicit and named Avro types cannot collide with root Records [1.58ms]
+(pass) Parquet paired groups retain explicitly unsigned64 words without number conversion [22.37ms]
+(pass) TableSpec CSV requiredness remains an explicit residual and complete-row decode rejects native invalid data [7.43ms]
+
+ 5 pass
+ 0 fail
+ 81 expect() calls
+Ran 5 tests across 1 file. [8.54s]
+
+tests/uuid-model.test.ts:
+(pass) complete model expands Keys, indexes and foreign keys into every paired slot [169.42ms]
+(pass) no unbound meaning, carrier mismatch, index cross-owner or foreign layout can disappear [12.59ms]
+(pass) declared participation/lifecycle and NULL defaults are residuals, never implicit enforcement [10.42ms]
+(pass) empty allowed-value declarations refuse before native output [3.82ms]
+(pass) full-row codecs cannot bypass unsupported target/carrier or native name checks [3.61ms]
+(pass) SQL Server filtered-index session conditions are part of the public model result and DDL [1.20ms]
+
+ 6 pass
+ 0 fail
+ 90 expect() calls
+Ran 6 tests across 1 file. [8.42s]
+
+tests/uuid-native-projection.test.ts:
+(pass) explicit five-target carrier proposals and full retained-source recovery [35.12ms]
+(pass) unsupported pairs, text enforcement, external nulls, constraints and names cannot be silently omitted [4.47ms]
+(pass) native classification requires exact identity/annotation and retains unknown refinements [2.73ms]
+(pass) native identifier bounds and unknown qualifiers refuse before SQL generation [3.31ms]
+(pass) native name collisions and partition choices are explicit [1.97ms]
+(pass) expanded native output must fit the ordinary text bound before publication [36.09ms]
+(pass) known text and model limits remain visible even under a bits-only request [0.89ms]
+(pass) oversized retained source is refused before allocating its full JSON serialization [10.91ms]
+
+ 8 pass
+ 0 fail
+ 61 expect() calls
+Ran 8 tests across 1 file. [8.71s]
+
+tests/uuid.test.ts:
+(pass) UUID identity preserves every layout and original spelling without generation claims [3.67ms]
+(pass) no implicit syntax, truncation, rewriting or forged UUID snapshot [0.20ms]
+
+ 2 pass
+ 0 fail
+ 1564 expect() calls
+Ran 2 tests across 1 file. [8.45s]
+
+ 35 pass
+ 0 fail
+ 7004 expect() calls
+Ran 35 tests across 8 files. [74.83s]

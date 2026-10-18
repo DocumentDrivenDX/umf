@@ -8,7 +8,7 @@
       "minItems": 1,
       "maxItems": 100,
       "items": {
-        "$ref": "urn:umf:core:0.1.0"
+        "$ref": "urn:umf:core:0.10.0"
       }
     },
     "id": {
@@ -82,7 +82,7 @@
       }
     },
     "candidate": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "diagnostics": {
       "type": "array",

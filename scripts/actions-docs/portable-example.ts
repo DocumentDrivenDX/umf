@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {createUmfRegistry,readDocument,inspectActions,assessAction,writeDocument} from '../../src/index';
 import type {ActionExecutorProfile} from '../../src/index';
 import fixture from '../../fixtures/actions/approve.json';
@@ -8,7 +9,7 @@ export function runPortableExample() {
  const before=JSON.stringify(source);
  const inspection=inspectActions(source,registry);
  const identity={module:'sales',action:'approve'};
- const profile:ActionExecutorProfile={id:'tutorial-no-claims',version:'1',actionVersion:'0.1.0',coreVersion:'0.8.0',source,identity,claims:[]};
+ const profile:ActionExecutorProfile={id:'tutorial-no-claims',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source,identity,claims:[]};
  const assessment=assessAction(source,identity,profile,registry);
  if(!inspection.validation.valid||inspection.validation.complete||assessment.declaredCompatible||assessment.executionVerified)throw Error('Unexpected tutorial interpretation');
  if(JSON.stringify(source)!==before)throw Error('Inspection changed source');

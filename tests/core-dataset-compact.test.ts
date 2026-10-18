@@ -61,7 +61,7 @@ test('forged compact references, original inputs/source and any changed result a
 });
 test('copy/accessor/version and structural/byte/semantic work limits refuse without partial receipts or raised full guards',()=>{
  const {source,input}=pack('commerce');let calls=0;const accessor=clone(input);Object.defineProperty(accessor,'context',{enumerable:true,get(){calls++;return 'bad';}});expect(()=>validateCoreDatasetValuesCompact(source,accessor)).toThrow();expect(calls).toBe(0);
- const old=clone(source);old.umf='0.7.0';expect(()=>validateCoreDatasetValuesCompact(old,input)).toThrow();
+ const old={...clone(source),umf:'0.7.0'} as any;expect(()=>validateCoreDatasetValuesCompact(old,input)).toThrow();
  const bytes=clone(input);bytes.context='x'.repeat(4_000_001);expect(()=>validateCoreDatasetValuesCompact(source,bytes)).toThrow(/bytes exceeded/);
  const structural=clone(input);structural.context=Array.from({length:100001},()=>null);expect(()=>validateCoreDatasetValuesCompact(source,structural)).toThrow(/structural limit/);
  const work=clone(input);work.records=Array.from({length:1000},(_,i)=>({...clone(input.records[0]!),instanceId:'distinct-'+i}));expect(()=>validateCoreDatasetValuesCompact(source,work)).toThrow(/budget exceeded/);

@@ -1,11 +1,19 @@
 import {test, expect} from 'bun:test';
 import {facetSystems, verifyFacetEvidence} from '../../scripts/core-ideals/facets-evidence';
+import {facetConformanceStatus} from '../../scripts/core-ideals/facets-conformance';
 import {verifyFacetRoundTrips} from '../../scripts/core-ideals/facets-roundtrips';
+
+test('facet status emitter cannot promote partial historical evidence to native admission', async () => {
+ const evidence=await verifyFacetEvidence(undefined,{allowUnqualifiedHistorical:true});
+ expect(facetConformanceStatus(evidence,facetSystems)).toMatchObject({idealAdmitted:false,sourceOperationsVerified:true,currentNativeQualification:'UNQUALIFIED',historicalQualification:'PARTIALLY_REVALIDATED',priorityDelivery:false,qualifiedBindings:0,nativeEquivalence:false});
+});
 
 test('all five facet bindings preserve authored ideals, native refinements and explicit losses', async () => {
  // Require current independent native/browser qualification before interpreting
  // the captured SQL catalogs as observations of emitted targets.
- await verifyFacetEvidence();
+ const historical=await verifyFacetEvidence(undefined,{allowUnqualifiedHistorical:true});
+ expect(historical.historicalQualification).toBe('PARTIALLY_REVALIDATED');
+ expect(historical.currentCoreQualification).toBe('UNQUALIFIED');
  const coverage = await verifyFacetRoundTrips((system, index) => console.log(`facets ${system} ${index}`));
  const expected = {tablespec: [540, 331], postgresql: [232, 145], sqlserver: [238, 145], avro: [576, 397], parquet: [216, 177]};
  expect(Object.keys(coverage)).toEqual([...facetSystems]);

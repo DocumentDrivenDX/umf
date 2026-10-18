@@ -1,9 +1,10 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
 import {importOwlTurtle,exportOwlTurtle,getOwlListAxioms,getOwlQuads,getOwlAxiomAnnotations,proposeOwlQuadEdit,readDocument,writeDocument} from '../../src';
 test('US-029 list axioms preserve ordering, duplicate occurrences, annotation anchors and malformed source',async()=>{
  const raw=await Bun.file('native/owl/list-axioms.ttl').text(),doc=importOwlTurtle(raw,{id:'lists',baseIRI:'https://example.org/',blankNodeScope:'list-scope'});
- const ajv=new Ajv({strict:false});ajv.addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/list-axioms-schema.json').json());
+ const ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/list-axioms-schema.json').json());
  for(const format of ['json','yaml'] as const){
   const d=readDocument(writeDocument(doc,format),format),v=getOwlListAxioms(d);expect(check(v)).toBe(true);expect(v.axioms).toHaveLength(6);expect(v.malformed).toHaveLength(8);expect(v.complete).toBe(false);expect(v.blankNodeScope).toBe('list-scope');expect(exportOwlTurtle(v.source)).toBe(raw);
   const chain=v.axioms[0]!;expect(chain.kind).toBe('propertyChain');expect(chain.members.map(t=>t.value)).toEqual(['https://example.org/parent','https://example.org/ancestor']);expect(chain.quadIndexes).toHaveLength(2);expect(chain.listQuadIndexes).toHaveLength(5);expect(getOwlAxiomAnnotations(v.source,chain.quadIndexes[0]!).roots).toHaveLength(1);

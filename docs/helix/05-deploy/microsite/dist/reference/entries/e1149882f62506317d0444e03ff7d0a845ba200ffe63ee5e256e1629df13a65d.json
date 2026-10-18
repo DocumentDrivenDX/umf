@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
       }
     ],
     "role": "operation",
@@ -199,7 +199,7 @@
                   "members": {
                     "$ref": {
                       "kind": "string",
-                      "value": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+                      "value": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
                     }
                   }
                 },
@@ -1292,7 +1292,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.6.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1441,14 +1441,14 @@
   "id": "[\"schema\",\"spec/core/key-sqlserver-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 10374,
+      "bytes": 10375,
       "path": "spec/core/key-sqlserver-projection.schema.json",
-      "sha256": "8350853615336e06bcaeeaf22ace1efa0e7431f2008610a8c7a2505ff8fc3a2c"
+      "sha256": "bf27c2c9094243721dfafc161f0c00430c18eff6b60479f02c3262a469ea8a3c"
     }
   ],
   "summary": "spec/core/key-sqlserver-projection.schema.json",

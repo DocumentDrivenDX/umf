@@ -1,0 +1,513 @@
+{
+  "scope": "Authored current test fixtures; independent native/operation/vocabulary versions unchanged; no native requalification claim.",
+  "entries": [
+    {
+      "path": "fixtures/actions/ddd-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "3a93b5b14b68568afd209e92ddd1ae93beffc4ca0d04bea2dd5478d931a42494",
+      "currentSha256": "210af89db1298802ca442b3fc7098cbaac4d0cb1ddce16794bccdf509a4f760e",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/approve.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "fecab4a981c7c58db9a99e8467ef50b06d6dcf75c4903902a9f9edd9b0bd2f48",
+      "currentSha256": "ede6efff944596bf143e6681b9f6fba1600d10b83b924e31967c56901a31cf27",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/create-link.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "e533ce7aaa4c191c31d77512349110017c8b64beb303816526c11c0885820542",
+      "currentSha256": "f427ae4338dd484a86ee26b63b7d179a91c04b2988b513ef56df1d1730e2c756",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/tutorial-postcondition.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "6faf398d94e862d2aa497fad9053cfb05f756e83b1b9327b5b27826d69999bc9",
+      "currentSha256": "ff46f42fdb1c3076496bb889aee2ba5c8997421e90bfa1c9e63b4c2f2c0117a0",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/association-record.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "7b2a0c042078493b6203ce80728b5a384d652e9a5a26047dba0086ab364993ad",
+      "currentSha256": "751c563318e3df39177666347a2625139a9d752a3391534b2449fbcad6ef6cd0",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/cases.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "daf3e206563c9bda3b459566af479b788fb738e779f28816ed72b5afb0c9ed1c",
+      "currentSha256": "a08df50264619339c24cccfbd9c8ea0fa307a9fa535e077a8716a87e8f8d1135",
+      "changes": [
+        {
+          "path": "/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/composite-key.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "ef9ec6bcce0ab32e853b607d2c52f8e30d6abab9d3d37d33d258d41c2448bda0",
+      "currentSha256": "074226c7b3bdffaf6e05f44b33d728de32f70ad56712e5ed66cbc8caf18e79de",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/actions/browser.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "7b27be8b047e1f0b0b94d366de9ad1870a4fefbfe8ed515c3fd36c2652261ba5",
+      "currentSha256": "03f4ab25217f857640e5cb1c76a448422826831c961b44c1f44225f1dda8b7c8",
+      "changes": [
+        {
+          "path": "/result/edited/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/inspections/0/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/inspections/1/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/inspections/2/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/roundTrips/0/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/roundTrips/1/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/assessment/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/assessment/profile/source/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/assessment/profile/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/authored/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/result/future/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/named.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "9c35ea6c7669958a67c963040f5467214a2b094635af32b68bd9f68bf324fd0a",
+      "currentSha256": "f05241a45bbf7263fe780aabd450ec2d606890fb5441be792646b8cdc408f472",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/postgresql18.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "a2b54818ab2a125431d7f0eb4afc18e1430c6283200ed464a4355873c561368a",
+      "currentSha256": "c9953e08769a4c144c5700a118a04f1eaf31d9dc5799732b9dfc70733d866c95",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/containers.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "3b12e28f5e3154379976261b48092086e9323bd38bd965e6dab9e07cbfef1f1f",
+      "currentSha256": "8eba5bc8271504564f29c5faefa650205e7755805a379b1ce1da34c1b8f02c10",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/engine-only.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "e16b17bfa07a5b10d2dfbc9a8d17473dfe1bdeb47fdf47d3608b5b0ee149809c",
+      "currentSha256": "9d0aa35ac4ff97895f3c6c8f710cb96336f5c202e94d7a581162462c36ae0294",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/census-completeness.expected.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "64ab3e48dc1fcc53249cdeddecd3db06e93a2345ded28fe0366757d0d84eadca",
+      "currentSha256": "fd6ddcbf2b30541458330ca697bd8c9c068e63bb881877bc0f9b474a972daf71",
+      "changes": [
+        {
+          "path": "/sourceSha256/logical",
+          "before": "322a49e7512fba982eeab8d4d3300cba3e7c4509687190b01cd61ac0fe1621ce",
+          "after": "dc8ce54ad13eea3d62885f3a5e53516c1d9b5e240b4b129691d3b77108c6b82f"
+        },
+        {
+          "path": "/sourceSha256/binding",
+          "before": "a8d523d74def9a8e9c795071a3297c2cfb775ecda914b5eaf2ce3d7bd872dc04",
+          "after": "f35559b60070beb5312ee57ebeec8bf9ac5065eecf97a3f5a9f017a5ade1064c"
+        },
+        {
+          "path": "/logical/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/review",
+          "before": "Authored independently from core0.8 PostgreSQL18 model, its explicit binding and declared shipOrder action. Expected leaves enumerated from these authored scope roots, never generator dispositions. Native execution and temporal qualification are not claimed.",
+          "after": "Current-core fixture constructed from the independently authored PostgreSQL18 logical model, explicit binding and shipOrder action; core markers/references updated, authored scope roots and expected leaf census retained. Native execution and temporal qualification are not claimed."
+        },
+        {
+          "path": "/binding/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/binding/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/relationships.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "83d4faec71f93ccf7efb023bb3b23277451182e9cb6dbaea23bdc27ebe7c2bba",
+      "currentSha256": "bb42a87d1e865564ee2df238f73a6bbf35430b8b7bf14855ee4c30edceec9687",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/actions.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "0e6b0ece13fe5ef18ca1655ab4829bee4e8ea68b2e90d11d13dd26ac3b5b41bc",
+      "currentSha256": "4f171afe6d650d6a3ff287bbc3a136d85ab94df30faffccb7444e772db5765c3",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/commerce/postgresql18-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "a8d523d74def9a8e9c795071a3297c2cfb775ecda914b5eaf2ce3d7bd872dc04",
+      "currentSha256": "f35559b60070beb5312ee57ebeec8bf9ac5065eecf97a3f5a9f017a5ade1064c",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/golden-vectors/core-carriers.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "fdad48d32f30da8a66f6d72e7124debbb78442192cb8e3107e224957bb768e8a",
+      "currentSha256": "d3f3ec23d5cfac8295ffa2e8d8a36927ea16c0f2d9cbc1b121b758ebbcc07488",
+      "changes": [
+        {
+          "path": "/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "4fb27f1ac4b0d8f178a29bb4d955f82f57e519a8717ad2ce860a20b60939fa91",
+      "currentSha256": "8e82b20df5197b7b2919bb878fa7dbda262397fa9111579da4d5acd636191704",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-full-source-exact-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "0bb628e802a47290f28b0c498f23b8c3681564119f0417edf8fefc35ffbadf91",
+      "currentSha256": "c586d28b267bdc3b9174b87f2be294d3a0fb4e06508e243892193aac1c6c968b",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-full-source-exact-binding.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-filter-parameters-model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "8b0f48a0702cddc0726f8e24f5d7bb811e3e90effa6840ed5b50b20ba76d50e9",
+      "currentSha256": "4b8849878d1dbbea25fe985c6360b7f8e4cbef945b493523832f0125e83cf3d4",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-filter-parameters-model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/unity-catalog-model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "e551c726d302f26d1fb81d8d9e97792875bdd39cfe0c3f1e9d620a0045a5ad64",
+      "currentSha256": "c77e339db207d859adf20dfaca3044ead8d16a12898529f1a3ef171345372c81",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__unity-catalog-model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-full-source-exact-model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "3dfe3e28ba1d4fc15c0a11c3b7eb2427bb8689a4a93191b9cdf6220a46a14453",
+      "currentSha256": "6e739f3f1902c4139ca45d86cb78d052192dd6521eecd74b8507348346da65a5",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-full-source-exact-model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/unity-catalog-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "f3fd6785f052c867dd289dc40bff49c03d49a052be6b4f2af386c19d974a9b50",
+      "currentSha256": "979e823b0d4855efcdd83c583fe0bc698f734efb093e6ad1a695fc80c5572234",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__unity-catalog-binding.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-source-exact-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "1c083a3eed32d5340866c980eb47a64dcaec7742056b328bad24c1250cee98e8",
+      "currentSha256": "9e356cf53b0aac1b98ad102ea45baeebd6f91639b33bbc82acdb92d5822aaf8f",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-source-exact-binding.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-full-model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "f9a2a943c009063aa41d5ef0a66be5ee2a1b056c63e0b3b8430c2f358d2b2022",
+      "currentSha256": "ee88e9651121f4a860f00bfb4476db8b056bdd1c42ad5eb88d6fa657a93fd346",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-full-model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-source-exact-model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "62dac138cfb2b9bbf2dab72ff965b4aff4844a9d71b7b953a9874ca6c2301d18",
+      "currentSha256": "0b9d90c1b75786e7122952483a735b4330a1d62c23b1401f299bcd65bed24bce",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-source-exact-model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/lakebase-model.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "d3009650e5b20ed4271b3dfd0ea4497ead619dbc7923691b971f1db76397715e",
+      "currentSha256": "6727ecf6fa50c5b37e0e874931557aeb17051e7d687e3132b4767607b0f38aa4",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__lakebase-model.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-full-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "485a92ab3078ab0177a5577d97d21102c80f9574cf1599f062bdb498712dfdb9",
+      "currentSha256": "48a526d2a213d01bbea85c5c46fbbc09faf8ecd401ba9e255a87e4de7cd72d5f",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-full-binding.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/access/search/postgresql18-filter-parameters-binding.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "51dad3d85a2bb5dfb11d5474bef1c786def664989a5d43f0c2ecca6758fd49ac",
+      "currentSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/fixtures__access__search__postgresql18-filter-parameters-binding.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        },
+        {
+          "path": "/extensions/umf.binding/logical/coreVersion",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/fixtures/many-navigation.json",
+      "originalSource": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+      "originalSha256": "d9baa7200a64b674336ec649a08bda246ff6ecebb4485e10e070d21d74761bb9",
+      "currentSha256": "bc1f97ce26e2c808797af9860425d6346e096455ab36707c1260a2e2af319138",
+      "originalBytes": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/search-and-navigation-originals/tests__compilation__fixtures__many-navigation.json.txt",
+      "changes": [
+        {
+          "path": "/umf",
+          "before": "0.8.0",
+          "after": "0.10.0"
+        }
+      ]
+    }
+  ]
+}

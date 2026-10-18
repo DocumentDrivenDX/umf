@@ -1,7 +1,7 @@
 {
-  "scope": "Preparatory Key 0.6.0 shared DDD graph; relationships and ID-based binding await admission",
+  "scope": "Authored current shared DDD graph; relationship proposals retain explicit ID-based bindings",
   "logical": {
-    "umf": "0.6.0",
+    "umf": "0.10.0",
     "id": "ddd-postgresql-graph",
     "vocabularies": {
       "umf.ddd": {
@@ -507,7 +507,7 @@
     }
   ],
   "postgresqlBinding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddd-keyed-postgresql-binding",
     "vocabularies": {
       "umf.binding": {
@@ -520,7 +520,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "ddd-postgresql-graph",
-          "coreVersion": "0.6.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "postgresql",
@@ -787,7 +787,7 @@
     }
   },
   "deltaBinding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddd-keyed-delta-binding",
     "vocabularies": {
       "umf.binding": {
@@ -800,7 +800,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "ddd-postgresql-graph",
-          "coreVersion": "0.6.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "delta",

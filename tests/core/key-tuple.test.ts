@@ -1,8 +1,9 @@
 import {test,expect} from 'bun:test';
-import {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes} from '../../src/model/key-tuple';
+import {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes,prepareCoreKeyTuples} from '../../src/model/key-tuple';
 import {tupleCases,tupleDocument,tupleIdentity} from '../../scripts/core-key-tuple-cases';
 import {copyJson} from '../../src/model/json';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {uuidDocument,UUID,KEY} from '../helpers/uuid-fixtures';
 
 test('key tuple vectors and domain boundaries produce exact frames or atomic refusals',()=>{
  for(const row of tupleCases()){
@@ -65,8 +66,13 @@ test('resource bounds and a bad later component refuse the whole tuple',()=>{
 test('current document context and result schema reject prior versions without downgrading',()=>{
  const d=tupleDocument([{id:'x',scalarType:'integer',title:'Identifier',aliases:['legacy'],examples:[{integerToken:'7'}],default:{on:'missing',value:{integerToken:'7'}}}]);
  const before=copyJson(d),receipt=encodeCoreKeyTuple(d,tupleIdentity,[{integerToken:'7'}]);
- expect(receipt.version).toBe('3.0.0');expect(receipt.source).toEqual(before);expect(d).toEqual(before);
+ expect(receipt.version).toBe('4.0.0');expect(receipt.source).toEqual(before);expect(d).toEqual(before);
  expect(()=>encodeCoreKeyTuple(d,tupleIdentity,[])).toThrow('one value per key component');
- for(const version of ['0.6.0','0.7.0'])expect(()=>encodeCoreKeyTuple({...d,umf:version},tupleIdentity,[{integerToken:'7'}])).toThrow('Expected current core 0.8.0');
+ for(const version of ['0.6.0','0.7.0'])expect(()=>encodeCoreKeyTuple({...d,umf:version},tupleIdentity,[{integerToken:'7'}])).toThrow('Expected current core 0.10.0');
  for(const version of ['1.0.0','2.0.0'])expect(()=>verifyCoreKeyTuple({...receipt,version} as any,d)).toThrow('Malformed encoding receipt');
+});
+
+test('prepared scope verifies current UUID v2 receipts with their retained codec profile',()=>{
+ const source=uuidDocument(),scope=prepareCoreKeyTuples(source),receipt=encodeCoreKeyTuple(source,KEY,[{uuid:UUID}],{profile:'umf-key-tuple-v2'});
+ expect(receipt.profile).toBe('umf-key-tuple-v2');expect(scope.verify(receipt)).toEqual(receipt);
 });

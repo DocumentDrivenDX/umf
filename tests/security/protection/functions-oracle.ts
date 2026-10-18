@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
 import {evaluateProtectionValue,inspectProtectionFunction,inspectProtectionCatalog,parseGregorianDate,truncateGregorianDate} from '../../../src/index';
 import packet from './functions-fixtures.json';
 const clone=(x:any)=>structuredClone(x);
@@ -12,7 +13,7 @@ export function makeFixture(c:any){
  const catalog={vocabulary:'umf.security.protection',version:'0.1.0',id:'oracle-catalog',revision:'c1',transforms:[transform],native:{opaque:'preserve\r\n😀'}};
  const policy={vocabulary:'umf.security',version:'0.2.0',id:'oracle-policy',revision:'p1',ontology:{documentId:'ontology',revision:'o1'},protection:{id:catalog.id,revision:catalog.revision},rules:[{id:'r',effect:'permit',actions:['read'],target:[ref('record')],condition:{op:'literal',value:true},disclosure:[{field:ref('input'),disposition:{kind:'transformed',vocabulary:'umf.security.protection',transform:'transform',version:'1',field:ref('output')}}]}]};
  if(c.fieldSubstitution){const sub=c.fieldSubstitution;fields.push({...clone(sub.domain),id:'other'});if(sub.side==='input')policy.rules[0]!.disclosure[0]!.field=ref('other');else policy.rules[0]!.disclosure[0]!.disposition.field=ref('other');}
- const document={umf:'0.8.0',id:'oracle-domains',vocabularies:{},modules:[{id:'m',namespace:'',elements:fields}]};
+ const document={umf:CURRENT_CORE_VERSION,id:'oracle-domains',vocabularies:{},modules:[{id:'m',namespace:'',elements:fields}]};
  const closure={pins:[{documentId:document.id,revision:'d1'}],documents:[{revision:'d1',document}]};
  const selection:any={ruleIndex:0,disclosureIndex:0};if(Object.hasOwn(c,'input'))selection.value=clone(c.input);
  return {policy,catalog,closure,selection};

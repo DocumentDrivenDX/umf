@@ -1,14 +1,14 @@
 import {test,expect} from 'bun:test';
-import {classifyTableSpecRecord,verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
+import {classifyTableSpecRecord, verifyTableSpecRecordClassification} from '../../src/core-ideals/tablespec-record';
 import {declareCoreElementKind} from '../../src/model/field-kind';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {importTableSpec,importTableSpecBundle,exportTableSpec,exportTableSpecBundle} from '../../src/adapters/tablespec';
+
+import {importTableSpec, importTableSpecBundle, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
 import {selectCoreElements} from '../../src/model/selection';
 import {copyJson} from '../../src/model/json';
-import {readDocument,writeDocument} from '../../src/model/document';
+import {readDocument, writeDocument} from '../../src/model/document';
 import {type Document} from '../../src/model/types';
 const text=' {"version":"1.0","table_name":"sales.Order","context_column":"provider","columns":[{"name":"id","data_type":"INTEGER"},{"name":"payload","data_type":"FUTURE","unknown":9007199254740993}]}\n';
-const source=()=>upgradeFieldEnvelope(importTableSpec(text,{id:'record',format:'json'})).target;
+const source=()=>importTableSpec(text,{id:'record',format:'json'});
 const options={recordModule:'records',recordId:'Order',mode:'strict' as const};
 test('whole native table becomes a record with ordered explicit member references and unknown type preservation',()=>{
  const input=source(),result=classifyTableSpecRecord(input,options);expect(result.status).toBe('classified');expect(result.mappings.map(m=>m.kind)).toEqual(['field','field','record']);
@@ -40,9 +40,9 @@ test('verified member authors are retained; stale, duplicate and unrelated recei
 });
 test('record classification retains split files and empty tables without inventing grouping semantics',()=>{
  const files={'table.yaml':'version: "1.0"\ntable_name: T\ncolumns: [{shadowed: true}]\n','columns/x.yaml':'column: {name: x, data_type: INTEGER}\n','future.bin':'opaque\u0000'};
- const result=classifyTableSpecRecord(upgradeFieldEnvelope(importTableSpecBundle(files,{id:'split'})).target,options);
+ const result=classifyTableSpecRecord(importTableSpecBundle(files,{id:'split'}),options);
  expect(exportTableSpecBundle(result.target!)).toEqual(files);
- const empty=upgradeFieldEnvelope(importTableSpec('{"version":"1.0","table_name":"Empty","columns":[]}',{id:'empty',format:'json'})).target;
+ const empty=importTableSpec('{"version":"1.0","table_name":"Empty","columns":[]}',{id:'empty',format:'json'});
  const record=classifyTableSpecRecord(empty,options);expect(record.target!.modules[1]!.elements[0]!.references).toEqual([]);
 });
 test('changed member references, receipts and native content invalidate classification',()=>{

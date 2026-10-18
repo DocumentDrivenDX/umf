@@ -1,9 +1,10 @@
 {
-  "scope": "Qualified Cardinality admission and five-system delivery; retained evidence consistency is not native re-execution or authentication",
+  "scope": "Current Cardinality source behavior and retained native meaning pass; historical evidence consistency does not establish current native qualification.",
   "idealAdmission": {
-    "outcome": "passed",
+    "outcome": "source-functional-only; native qualification UNQUALIFIED",
+    "sourceOperationsVerified": true,
+    "idealAdmitted": false,
     "requiredBindings": 2,
-    "usefulBindings": 5,
     "systems": [
       "tablespec",
       "postgresql",
@@ -12,12 +13,20 @@
       "parquet"
     ],
     "meaning": "CONTRACT-040 / Element.cardinality and itemType",
-    "nativeEquivalence": false
+    "nativeEquivalence": false,
+    "sourceUsefulBindings": 5
   },
   "delivery": {
-    "outcome": "passed",
-    "requiredBindings": 5,
-    "qualifiedBindings": 5,
+    "outcome": "unqualified",
+    "priorityDelivery": false,
+    "qualifiedBindings": 0,
+    "sourceBindingsVerified": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
     "systems": [
       "tablespec",
       "postgresql",
@@ -25,7 +34,7 @@
       "avro",
       "parquet"
     ],
-    "scope": "Explicit supported profiles, including residuals and refusals; no general row conversion"
+    "scope": "Current authored/round-trip behavior remains covered; historical native delivery is not promoted without a fresh current-native qualification."
   },
   "evidence": {
     "systems": [
@@ -147,8 +156,8 @@
     }
   },
   "fingerprints": {
-    "scripts/core-ideals/cardinality-conformance.ts": "7596e4d4dd405d2d11e3d0cd402df29ef7585e7b2a13f970a1c1c4ac2373c891",
-    "tests/core-ideals/cardinality-conformance.test.ts": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e"
+    "scripts/core-ideals/cardinality-conformance.ts": "ba145dc7ced5c159f4291451d58d4bbf58d0dfbdf118f190cb9b04a89b27999b",
+    "tests/core-ideals/cardinality-conformance.test.ts": "369c1a168204cd65d946dab079236c1b0c48a3b03cde13fbf79f0995f400c2f4"
   },
   "testOnlyQualification": {
     "ledger": "fixtures/validation/relationship-gate-test-only-qualification.json",
@@ -202,5 +211,7 @@
       "semanticResultsRetainedFrom": "fixtures/validation/relationship-integrated-final/doc-links-28695092b89040a58a717759c550b504/before/fixtures/validation/cardinality-conformance.json",
       "semanticResultsSourceSha256": "00bea96570bf3176829b7221dbbbbfb303beb16fd44774086a6f1a94436f4068"
     }
-  ]
+  ],
+  "historicalQualification": "PARTIALLY_REVALIDATED",
+  "currentNativeQualification": "UNQUALIFIED"
 }

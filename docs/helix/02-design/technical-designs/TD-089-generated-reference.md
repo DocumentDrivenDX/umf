@@ -344,3 +344,14 @@ current document marker. The site's host routes the self-model catalog identity
 to the current ontology view before catalog inspection. It never downgrades the
 source or claims expanded package parser support. Ordinary catalog models retain
 the released parser and original routes; self-model downloads remain current.
+
+## Authority cutover amendment — 2026-10-18
+
+Owner direction supersedes the descriptive bootstrap projection and separate
+explorer-host arrangement above. ADR-005 and CONTRACT-080 require one authored
+current UMF metamodel generating schemas, shapes, portable semantic rules and
+reference/ontology data. TD-091 and STP-091 govern the current-core migration,
+retirement of duplicated rules/old runtime paths, and one route owner for
+ontology/reference/catalog. Native and extension release meanings and historical
+evidence remain exact. No raw authored JSON Schema fragment or handwritten
+per-core-rule callback may remain the model's hidden enforcement authority.

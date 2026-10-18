@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -25,8 +25,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0#/$defs/reference"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/reference"
       },
       {
         "keyword": "$ref",
@@ -59,7 +59,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.7.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -191,7 +191,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.7.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -323,7 +323,7 @@
                                   "members": {
                                     "$ref": {
                                       "kind": "string",
-                                      "value": "urn:umf:core:0.7.0#/$defs/reference"
+                                      "value": "urn:umf:core:0.10.0#/$defs/reference"
                                     },
                                     "properties": {
                                       "kind": "object",
@@ -673,13 +673,13 @@
   "links": [
     "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/record-type-operation-v6.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 5128,
+      "bytes": 5131,
       "path": "spec/core/record-type-journal.schema.json",
-      "sha256": "c1915e531e8d44944236cde10e104cfc4ce69801d886be107a9f166948d02f12"
+      "sha256": "0126fc14797372308d2f4154ebd46d4f5b6b389e061d70e6c81c05278de576d3"
     }
   ],
   "summary": "spec/core/record-type-journal.schema.json",

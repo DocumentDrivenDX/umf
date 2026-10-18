@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
 import {inspectAvroFacetSelection} from '../../src/core-ideals/avro-facet-selection';
 import {inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
-import {parseNativeJson,renderTree} from '../../src/model/native-json';
+import {parseNativeJson, renderTree} from '../../src/model/native-json';
 import fixture from '../../fixtures/avro/facet-selection-cases.json';
 const roots=(row:typeof fixture.cases[number])=>[...(row.dependencies??[]).map(d=>({root:parseNativeJson(d.schema),dependencyId:d.id})),{root:parseNativeJson(row.schema)}];
 

@@ -634,6 +634,14 @@ runtime are a new Python distribution, `umf_access`, in this repository. Weft ow
 all SQL lowering; Truss and Ashlar own their adapters.
 [Design entry point](../04-build/typed-persistence-design.md).
 
+FR-56 and [FEAT-033](../01-frame/features/FEAT-033-generated-ontology-access.md)
+add typed ontology access generated directly from current UMF schemas. A shared
+API description drives standard-library Python and TypeScript clients; consumers
+implement transport and execution. [SD-033](solution-designs/SD-033-generated-ontology-access.md)
+explains generation, async plugin calls, values and failures. Tables and ontologies share the generated model/query/action API; the binding
+owns storage-specific execution. ADR-004 replaces mandatory query capture with
+direct expression composition and optional backend preparation.
+
 ## Module Boundaries
 
 **Source Applicability**: source; the stage-one compiler and Python access SDK
@@ -792,3 +800,19 @@ core0.10.0 source. No view is a native downgrade or public version conversion.
 Semantic checks use separately supplied exact registries, never remote loading.
 Migration and rollback preserve all source bytes as JSON values and explicit
 residuals. Existing native/version-specific APIs retain their declared limits.
+
+## Authoritative metamodel boundary — 2026-10-18
+
+ADR-005 / CONTRACT-080 / TD-091 supersede layered core schema authority. The
+host-side `scripts/metamodel/` compiler independently loads authored
+`spec/metamodel/umf.yaml`, checks its closed vocabulary and emits current schema,
+TS/Python shapes, portable ordered constraints/domain policy and provenance.
+`src/generated/core-model.ts` exposes data/types; browser-compatible
+`src/validation/constraint-kernel.ts` executes generic operations. Python executes
+the same inert program. No runtime imports compiler/filesystem modules, and no
+compiler bootstrap imports generated document admission. Reference/ontology and
+current browser consumers read generated/model data, never reverse-author rules
+from schema fragments. Inert historical archives cannot enter current packages.
+Architecture checks must enforce these boundaries and retired import families.
+One `reference/core.html` host owns ontology/reference/catalog; reusable current
+renderer behavior belongs in a qualified released package, not host shims.

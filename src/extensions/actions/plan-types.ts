@@ -1,9 +1,10 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import type {Registry} from '../../registry/registry';
 import type {Document} from '../../model/types';
 import type {CoreLiteral} from '../../model/schema-literals';
 import type {ActionReference,ActionKeyReference,ActionIdentity,ActionExecutorProfile,ActionProfileIdentity} from './types';
 export interface ActionPlanArtifact {mediaType:string;utf8:string;sha256:string;[key:string]:unknown}
-export interface ActionPlanModelPin {documentId:string;revision:string;umfVersion:'0.8.0';sha256:string;[key:string]:unknown}
+export interface ActionPlanModelPin {documentId:string;revision:string;umfVersion:typeof CURRENT_CORE_VERSION;sha256:string;[key:string]:unknown}
 export interface PortableActionPin {identity:ActionIdentity;documentSha256:string;invocation:ActionProfileIdentity;[key:string]:unknown}
 export interface ActionPlanDiagnostic {code:string;path:string;message:string}
 export interface PortableActionPlan {

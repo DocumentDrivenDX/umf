@@ -1,0 +1,45 @@
+{
+  "profile": "umf.python-core-current-wheel/1",
+  "qualification": "Fresh local unpublished official Python0.9.0 integration candidate; no PyPI publication or future final consumerpinB qualification is claimed. Installed tests use isolated Python-I and actual site-packages, without repository PYTHONPATH.",
+  "runtime": {
+    "python": "3.13.16",
+    "pydantic": "2.14.1",
+    "jsonschema": "4.26.0",
+    "ruamel.yaml": "0.19.1",
+    "pytest": "9.1.1",
+    "build": "uv0.13.1 offline cache; hatchling",
+    "wheelGenerator": "hatchling 1.32.4"
+  },
+  "version": "0.9.0",
+  "currentCore": "0.10.0",
+  "tests": {
+    "passed": 166,
+    "failed": 0,
+    "currentCoreConformanceVectors": 139,
+    "installedImport": "/private/tmp/umf-core-wheel-sol-venv/lib/python3.13/site-packages/umf/__init__.py"
+  },
+  "wheel": {
+    "path": "umf_core-0.9.0-py3-none-any.whl",
+    "sha256": "4c1dd88e00af464724678984c7f6cbfd0324292f17c7467add17013253a65289",
+    "members": 23,
+    "exactCurrentSourceComparisons": 19
+  },
+  "distribution": {
+    "status": "passed",
+    "files": 23
+  },
+  "sourceComparison": "Every included Python module and generated resource matches the current source bytes. Dist-info metadata declares0.9.0; no execution-time source hash is invented.",
+  "initialAttempts": "Empty offline build cache lackedhatchling; defaultvenv cachelock sandbox refusal. Successfulcommands used existing offline cache and a fresh temporaryvenv; all logs retained.",
+  "sha256": {
+    "build-empty-cache.log": "db06fd0cc679daf85b2756b0a27a4c7d1549309c9a706e6e31779f749a45d926",
+    "build.log": "fab624571643efaff8847b59a55fc74ed99e5fb097bceef7646d37f83bd9f600",
+    "venv-default-cache-refusal.log": "f4ff0fa5f57c904f58d5310c15c3f3e49791a9ab5facf719792b2d035b0c7a7b",
+    "venv.log": "2745e7dbea45d718973147f5a41f8adb0d10b039371b6d965855163d44266591",
+    "install.log": "d794f4f600c2308bc14cb808d96e415f7c55e4b8b635073b33319f63d4e0a5e0",
+    "installed-import.log": "c7b6e62fc82e1bc1bfd04b4cc639b12594a229fc912016e14ea1e24c90c888cf",
+    "pytest.log": "e0c4a428210c0dbdcf5b649e06e21a7a97364a15db3e17703a427a0a357801e8",
+    "distribution.log": "c6290c6e16ae8079b47e9f7f4ada26dc50297c0e6cd692c95466ece9f4e9051f",
+    "inventory.json": "60c80d84a463b20bd9246d731eaf589dfac95403a31276019a96559009b849fc",
+    "umf_core-0.9.0-py3-none-any.whl": "4c1dd88e00af464724678984c7f6cbfd0324292f17c7467add17013253a65289"
+  }
+}

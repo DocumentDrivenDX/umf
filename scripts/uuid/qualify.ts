@@ -1,3 +1,4 @@
+import {uuidModelQualificationTests} from './qualification-inventory';
 /** Host-only reproducible fresh qualification. No dependency installation or production deployment. */
 import {mkdtemp} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
@@ -9,9 +10,10 @@ if(process.argv.includes('--verify-only')){
  const runDir=await mkdtemp(join(tmpdir(),'umf-uuid-qualification-'));
  const env={...process.env,UMF_UUID_QUALIFICATION_RUN_DIR:runDir};
  const bun=process.execPath,python=process.env.UMF_UUID_PYTHON??'python3',tablespecPython=process.env.UMF_TABLESPEC_PYTHON??'python3';
- const uuidTests=['tests/uuid-model.test.ts','tests/uuid-file-model.test.ts','tests/bit128.test.ts','tests/uuid.test.ts','tests/core-uuid.test.ts','tests/core-uuid-key.test.ts','tests/core-uuid-transition.test.ts','tests/binding-uuid.test.ts','tests/uuid-native-projection.test.ts'];
+ const uuidTests=uuidModelQualificationTests;
  const steps:{key:string;command:string[];log:string;extraEnv?:Record<string,string>}[]=[
   {key:'build',command:[bun,'run','build'],log:'uuid-model-build.log'},
+  {key:'testPrerequisites',command:[bun,'scripts/build-test-prerequisites.ts'],log:'uuid-model-test-prerequisites.log'},
   {key:'typecheck',command:[bun,'run','typecheck'],log:'uuid-model-typecheck.log'},
   {key:'schemas',command:[bun,'run','test:schemas'],log:'uuid-model-schemas.log'},
   {key:'tests',command:[bun,'scripts/run-tests.ts',...uuidTests],log:'uuid-model-tests.log'},

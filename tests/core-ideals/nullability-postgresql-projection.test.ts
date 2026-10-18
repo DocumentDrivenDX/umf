@@ -1,9 +1,9 @@
 import {test,expect} from 'bun:test';
 import {postgresqlNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-postgresql-projection-cases';
-import {projectNullabilityToPostgresql,recoverNullabilityFromPostgresql} from '../../src/core-ideals/nullability-postgresql-projection';
+import {projectNullabilityToPostgresql, recoverNullabilityFromPostgresql} from '../../src/core-ideals/nullability-postgresql-projection';
 import {backend} from '../../native/postgresql/runtime';
 import {getPostgresqlSource} from '../../src/adapters/postgresql';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('authored availability projects with explicit scope and recovers every residual through both formats',async()=>{
  for(const c of postgresqlNullabilityProjectionCases()){

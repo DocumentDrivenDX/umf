@@ -1,3 +1,4 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -7,7 +8,7 @@ import {parseNativeJson} from '../../src/model/native-json';
 const base='fixtures/linkml/slot-values/',fixture=await Bun.file(base+'results.json').json(),raw=await Bun.file(fixture.path).text();
 const document=()=>importLinkmlDocument(raw,{id:fixture.path,format:'json'});
 test('US-024-AC7: scalar effective values match native induction across both UMF formats',async()=>{
- const oracle=await Bun.file(base+'oracle-results.json').json(),check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema),d=document();
+ const oracle=await Bun.file(base+'oracle-results.json').json(),check=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core).compile(schema),d=document();
  expect(Object.keys(LINKML_SCALAR_SLOT_FIELDS)).toEqual(oracle.scalarFields);expect(oracle.results).toHaveLength(54);
  for(const row of fixture.reports){const r=inspectLinkmlSlotValues(readDocument(writeDocument(d,row.format),row.format),row.report.className,row.report.slotName),{source,...report}=r,native=oracle.results.find((n:any)=>n.className===r.className&&n.slotName===r.slotName&&n.format===row.format);expect(report).toEqual(row.report);expect(check(r)).toBe(true);expect(r.status).toBe('resolved');expect(r.fields).toEqual(Object.fromEntries(Object.entries(native.encodedFields).map(([k,v])=>[k,parseNativeJson(v as string)])));expect(exportLinkmlDocument(source)).toBe(raw);}
 },30000);

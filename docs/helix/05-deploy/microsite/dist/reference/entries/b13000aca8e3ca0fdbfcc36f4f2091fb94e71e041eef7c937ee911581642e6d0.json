@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -196,7 +196,7 @@
                   "members": {
                     "$ref": {
                       "kind": "string",
-                      "value": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+                      "value": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
                     }
                   }
                 },
@@ -1381,7 +1381,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.6.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1408,7 +1408,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1482,15 +1482,14 @@
   "id": "[\"schema\",\"spec/core/key-parquet-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 11945,
+      "bytes": 11947,
       "path": "spec/core/key-parquet-projection.schema.json",
-      "sha256": "6f20b105839cb176c178ccec4add0c130b503ab80d280392a3388170874c9ff4"
+      "sha256": "6eb02e00a3d1ecc55d845d4325e5956e99edf3a8f492255efb23c01b3d8cba4d"
     }
   ],
   "summary": "spec/core/key-parquet-projection.schema.json",

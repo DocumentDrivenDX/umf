@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:umf:core:element-selection:0.1.0",
+  "$id": "urn:umf:core:element-selection:0.10.0",
   "type": "object",
   "required": [
     "scope",
@@ -9,7 +9,10 @@
     "query",
     "sourceValidation",
     "selection",
-    "boundaryReferences"
+    "boundaryReferences",
+    "boundaryItemTypes",
+    "boundaryMembers",
+    "boundaryKeyFields"
   ],
   "additionalProperties": false,
   "properties": {
@@ -17,10 +20,10 @@
       "const": "core-elements"
     },
     "referenceScope": {
-      "const": "explicit-core-references"
+      "const": "explicit-core-references-item-types-members-and-keys"
     },
     "source": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "query": {
       "type": "object",
@@ -221,9 +224,69 @@
           }
         }
       }
+    },
+    "boundaryItemTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "reference", "path", "targetPath"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {"$ref": "#/$defs/selectionIdentity"},
+          "reference": {"$ref": "#/$defs/itemType"},
+          "path": {"type": "string"},
+          "targetPath": {"type": "string"}
+        }
+      }
+    },
+    "boundaryMembers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "reference", "path", "targetPath"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {"$ref": "#/$defs/selectionIdentity"},
+          "reference": {"$ref": "#/$defs/itemType"},
+          "path": {"type": "string"},
+          "targetPath": {"type": "string"}
+        }
+      }
+    },
+    "boundaryKeyFields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "key", "reference", "path", "targetPath"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {"$ref": "#/$defs/selectionIdentity"},
+          "key": {"type": "string", "minLength": 1},
+          "reference": {"$ref": "#/$defs/itemType"},
+          "path": {"type": "string"},
+          "targetPath": {"type": "string"}
+        }
+      }
     }
   },
   "$defs": {
+    "selectionIdentity": {
+      "type": "object",
+      "required": ["module", "element"],
+      "additionalProperties": false,
+      "properties": {
+        "module": {"type": "string", "minLength": 1},
+        "element": {"type": "string", "minLength": 1}
+      }
+    },
+    "itemType": {
+      "type": "object",
+      "required": ["module", "element"],
+      "properties": {
+        "module": {"$ref": "#/$defs/id"},
+        "element": {"$ref": "#/$defs/id"}
+      }
+    },
     "id": {
       "type": "string",
       "minLength": 1

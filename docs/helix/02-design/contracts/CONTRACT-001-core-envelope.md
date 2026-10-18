@@ -319,3 +319,14 @@ samples in two native codecs, while both codecs measure binary64
 1.0000000000000002 narrowing to binary32 1.0. Shared float classification therefore
 does not justify promoting width, rounding or overflow behavior as identical.
 Native refinements and explicit representation policies remain required.
+
+## Current authority amendment — 2026-10-18
+
+ADR-005 / CONTRACT-080 supersede this document's bootstrap structural authority
+and historical envelope runtime assumptions. Current structure and ordered rules
+are generated from the authored UMF metamodel; active APIs accept core 0.10.0.
+Historical runtime dispatch and migration-only core APIs retire after active
+producers and classifiers migrate. Preservation, explicit interpretation limits,
+identity, references and extension fidelity requirements continue to govern.
+Historical receipts retain their exact source meanings and are not current
+support evidence. Native and independent vocabulary versions are unaffected.

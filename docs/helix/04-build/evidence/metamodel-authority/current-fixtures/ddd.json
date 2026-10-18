@@ -1,0 +1,14 @@
+{
+  "path": "fixtures/ddd/sales.json",
+  "archive": "docs/helix/04-build/evidence/metamodel-authority/current-fixtures/ddd-original.json.txt",
+  "originalSha256": "b75f3643d926ec47e273f14cd81dca6c75250237db6ee98028e48add6e7a28ca",
+  "currentSha256": "4c0a57ae64045560dff7e37e5d9e1ecf80668f3af253e59ab78b90ce927db16a",
+  "deltas": [
+    {
+      "pointer": "/umf",
+      "before": "0.1.0",
+      "after": "0.10.0"
+    }
+  ],
+  "qualification": "Authored DDD fixture only; unknown invariants, native payload and independent extension versions unchanged."
+}

@@ -1,4 +1,5 @@
 import {generateAccessPackage} from '../src/compilation/index';
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {profile,request,mutateSource} from '../tests/compilation/access-fixtures';
 const output=process.argv[2];if(!output)throw new Error('temporary output directory required');
 const req=request();req.package='commerce';req.records.push({module:'commerce',element:'Customer'},{module:'commerce',element:'OrderLine'});
@@ -20,7 +21,7 @@ if(process.argv.includes('--native-reviewed')){
   access.columns=[{binding:{sourceId:bindingId,module:'commerce'},target:{platform:'postgresql',majorVersion:'18'},columns:['orderId','orderOwnerRole','customerId','name','customerOwnerRole'].map(element=>({field:{module:'commerce',element},type:'text',notNull:true,generation:null,collation:{schema:'pg_catalog',name:'default'}}))}];
  });
  const logical=JSON.parse(req.sources[0]!.text);
- const physical={umf:'0.8.0',id:bindingId,vocabularies:{'umf.binding':{version:'0.2.0'}},modules:[],extensions:{'umf.binding':{profile:'umf-binding-2',logical:{documentId:logical.id,coreVersion:'0.8.0'},target:{system:'postgresql',version:'18',subset:'typed-access-columns/0.1'},elements:[{module:'commerce',element:'Order',table:'generated_orders'},{module:'commerce',element:'Customer',table:'generated_customers'}],fields:[['orderId','order_id'],['orderOwnerRole','owner_role'],['customerId','customer_id'],['name','name'],['customerOwnerRole','owner_role']].map(([element,column])=>({module:'commerce',element,storage:'column',column})),relationships:[],indexes:[]}}};
+ const physical={umf:CURRENT_CORE_VERSION,id:bindingId,vocabularies:{'umf.binding':{version:'0.2.0'}},modules:[],extensions:{'umf.binding':{profile:'umf-binding-2',logical:{documentId:logical.id,coreVersion:CURRENT_CORE_VERSION},target:{system:'postgresql',version:'18',subset:'typed-access-columns/0.1'},elements:[{module:'commerce',element:'Order',table:'generated_orders'},{module:'commerce',element:'Customer',table:'generated_customers'}],fields:[['orderId','order_id'],['orderOwnerRole','owner_role'],['customerId','customer_id'],['name','name'],['customerOwnerRole','owner_role']].map(([element,column])=>({module:'commerce',element,storage:'column',column})),relationships:[],indexes:[]}}};
  req.bindings.push(bindingId);req.sources.push({id:bindingId,format:'json',text:JSON.stringify(physical)});
 }
 if(process.argv.includes('--reads-only'))req.actions=[];

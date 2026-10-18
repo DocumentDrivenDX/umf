@@ -20,8 +20,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -257,7 +257,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.8.0#/$defs/literal"
+                          "value": "urn:umf:core:0.10.0#/$defs/literal"
                         }
                       }
                     }
@@ -655,7 +655,7 @@
                       "members": {
                         "const": {
                           "kind": "string",
-                          "value": "0.8.0"
+                          "value": "0.10.0"
                         }
                       }
                     }
@@ -1204,13 +1204,13 @@
   "id": "[\"schema\",\"spec/extensions/actions/plan.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7328,
+      "bytes": 7330,
       "path": "spec/extensions/actions/plan.schema.json",
-      "sha256": "6ab8bf676e60724792cf2ac41c7c3cd1c143a5c3173e9b63b334672e92547089"
+      "sha256": "b809454aff9865d455e3658eef507b2664633477c73cb848d93da524d8757766"
     }
   ],
   "summary": "spec/extensions/actions/plan.schema.json",

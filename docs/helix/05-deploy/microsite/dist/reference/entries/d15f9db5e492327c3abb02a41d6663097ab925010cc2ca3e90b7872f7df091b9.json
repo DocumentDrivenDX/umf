@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -338,7 +338,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.8.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -387,14 +387,14 @@
   "id": "[\"schema\",\"spec/extensions/actions/assessment.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]",
     "[\"schema\",\"spec/extensions/actions/executor-profile.schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 2345,
+      "bytes": 2346,
       "path": "spec/extensions/actions/assessment.schema.json",
-      "sha256": "bde208cfe43796718cb88a84cc18d8679dc724c4f868cc8ba6ad75649deceed1"
+      "sha256": "011ac90d5c45d52044cf6cc5257a49520af86576b5962313f94efa2524d24255"
     }
   ],
   "summary": "spec/extensions/actions/assessment.schema.json",

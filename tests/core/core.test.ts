@@ -1,8 +1,8 @@
 // @covers US-001-AC1 US-001-AC2 US-001-AC3 US-001-AC4
 import { test, expect } from 'bun:test';
 import { Registry, copyJson, readJsonValue, writeJsonValue, validateDocument, readDocument, writeDocument, editExtension, type Document, type ExtensionPackage } from '../../src';
-const sample = (): Document => ({umf:'0.1.0', id:'fixture:domain', vocabularies:{'fixture.note':{version:'1.0.0'}}, modules:[{id:'sales',namespace:'sales', elements:[{id:'Customer',name:'Customer', extensions:{'fixture.note':{label:'Buyer'}}}]},{id:'support',namespace:'support',elements:[{id:'Customer',extensions:{'fixture.note':{label:'Contact'}}}]}]});
-const pkg: ExtensionPackage = {id:'fixture.note',version:'1.0.0',coreVersion:'0.1.0',description:'Synthetic test vocabulary; not a native system',schema:{type:'object',required:['label'],properties:{label:{type:'string'}},additionalProperties:false}, semantics:'label is a literal descriptive string, with no other invariants.',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}};
+const sample = (): Document => ({umf:'0.10.0', id:'fixture:domain', vocabularies:{'fixture.note':{version:'1.0.0'}}, modules:[{id:'sales',namespace:'sales', elements:[{id:'Customer',name:'Customer', extensions:{'fixture.note':{label:'Buyer'}}}]},{id:'support',namespace:'support',elements:[{id:'Customer',extensions:{'fixture.note':{label:'Contact'}}}]}]});
+const pkg: ExtensionPackage = {id:'fixture.note',version:'1.0.0',coreVersion:'0.10.0',description:'Synthetic test vocabulary; not a native system',schema:{type:'object',required:['label'],properties:{label:{type:'string'}},additionalProperties:false}, semantics:'label is a literal descriptive string, with no other invariants.',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}};
 const registry = () => new Registry().register(pkg, () => []);
 
 test('US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding', () => {

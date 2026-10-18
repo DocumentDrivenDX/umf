@@ -2,9 +2,9 @@ import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {sqlserverCardinalityProjectionCases} from './cardinality-sqlserver-projection-cases';
-import {projectCardinalityToSqlServer,recoverCardinalityFromSqlServer} from '../../src/core-ideals/cardinality-sqlserver-projection';
-import {importSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,classifySqlServerCardinality,recoverSqlServerCardinalitySource} from '../../src';
-import {sqlServerIdentifier as identifier,sqlServerLiteral as literal} from '../../src/core-ideals/sqlserver-syntax';
+import {projectCardinalityToSqlServer, recoverCardinalityFromSqlServer} from '../../src/core-ideals/cardinality-sqlserver-projection';
+import {importSqlServerCatalog, getSqlServerColumnMetadata, getSqlServerConstraintMetadata, classifySqlServerCardinality, recoverSqlServerCardinalitySource} from '../../src';
+import {sqlServerIdentifier as identifier, sqlServerLiteral as literal} from '../../src/core-ideals/sqlserver-syntax';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-cardinality-down-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
@@ -40,7 +40,7 @@ try{
  assert.equal(narrowing.narrowed,1);
  const query=await Bun.file('native/sqlserver/catalog-v3.sql').text(),capture=await json(query);capture.query=query;
  assert.equal(capture.serverVersion,'16.0.4295.3');
- const nativeSource=JSON.stringify(capture),source=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importSqlServerCatalog(nativeSource,{id:'emitted'})).target).target).target;
+ const nativeSource=JSON.stringify(capture),source=importSqlServerCatalog(nativeSource,{id:'emitted'});
  const observations=[];
  for(const row of rows){
   const column=getSqlServerColumnMetadata(source).find(c=>c.table.name===row.request.tableName);

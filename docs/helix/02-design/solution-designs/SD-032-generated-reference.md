@@ -190,3 +190,14 @@ reference are views there; the released model catalog keeps its existing URL and
 bookmark grammar as the third view with matching host navigation. All first-party
 Schemas navigation uses the landing page. This preserves catalog/package behavior
 without an iframe or a new competing entry point. API reference remains separate.
+
+## Authority cutover amendment — 2026-10-18
+
+Owner direction supersedes the descriptive bootstrap projection and separate
+explorer-host arrangement above. ADR-005 and CONTRACT-080 require one authored
+current UMF metamodel generating schemas, shapes, portable semantic rules and
+reference/ontology data. TD-091 and STP-091 govern the current-core migration,
+retirement of duplicated rules/old runtime paths, and one route owner for
+ontology/reference/catalog. Native and extension release meanings and historical
+evidence remain exact. No raw authored JSON Schema fragment or handwritten
+per-core-rule callback may remain the model's hidden enforcement authority.

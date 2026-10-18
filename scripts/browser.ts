@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 // @covers US-001-AC5 US-002-AC6
 import {chromium} from 'playwright';
 const build=Bun.spawn(['bun','run','build'],{stdout:'inherit',stderr:'inherit'});
@@ -42,7 +43,7 @@ try {
  browser=await chromium.launch({headless:true, ...(process.env.UMF_CHROMIUM_PATH ? {executablePath:process.env.UMF_CHROMIUM_PATH} : {})});
  const page=await browser.newPage();
  await page.goto(`http://127.0.0.1:${server.port}`);
- const result=await page.evaluate(async()=>{
+ const result=await page.evaluate(async(coreVersion:string)=>{
   const modulePath='/umf.js';
   const umf=await import(modulePath);
   const arrowCases=await(await fetch('/arrow-cases.json')).json();for(const c of arrowCases){const doc=umf.importArrowSchema(JSON.stringify(c.input),{id:c.id});const restored=umf.readDocument(umf.writeDocument(doc,'yaml'),'yaml');if(umf.exportArrowSchema(restored)!==umf.exportArrowSchema(doc)||umf.inspectArrow(doc).complete)throw new Error('Arrow schema fidelity failed');}
@@ -221,7 +222,7 @@ try {
   if(domainProjection.status!=='projected'||!domainProjection.issues.some((i:any)=>i.code==='AGGREGATE_UNENFORCED'))throw new Error('DDD document projection hid aggregate semantics');
   if(!umf.inspectJsonSchema(domainProjection.target).valid)throw new Error('DDD document schema invalid');
   if(JSON.stringify(domainProjection.source)!==JSON.stringify(domain))throw new Error('DDD projection source changed');
-  const doc={umf:'0.1.0',id:'browser',vocabularies:{future:{version:'1.0.0'}},modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{future:{nested:[1,false,null,'雪']}}}]}]};
+  const doc={umf:coreVersion,id:'browser',vocabularies:{future:{version:'1.0.0'}},modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{future:{nested:[1,false,null,'雪']}}}]}]};
   const source=JSON.stringify(doc);
   const back=umf.readDocument(umf.writeDocument(doc,'yaml'),'yaml');
   if(JSON.stringify(back)!==source) throw new Error('Browser unknown-content loss');
@@ -231,8 +232,8 @@ try {
    let rejected=false;try{umf.readJsonValue(input)}catch{rejected=true}if(!rejected)throw new Error('Unsafe input accepted');
   }
   if('Bun' in globalThis || 'process' in globalThis) throw new Error('Host globals leaked');
-  const registry=new umf.Registry().register({id:'label',version:'1.0.0',coreVersion:'0.1.0',description:'Synthetic browser fixture',schema:{type:'string'},semantics:'A literal label with no further rules',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[]);
-  const known={umf:'0.1.0',id:'known',vocabularies:{label:{version:'1.0.0'}},modules:[{id:'m',namespace:'n',elements:[{id:'e',extensions:{label:'before'}}]}]};
+  const registry=new umf.Registry().register({id:'label',version:'1.0.0',coreVersion:coreVersion,description:'Synthetic browser fixture',schema:{type:'string'},semantics:'A literal label with no further rules',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[]);
+  const known={umf:coreVersion,id:'known',vocabularies:{label:{version:'1.0.0'}},modules:[{id:'m',namespace:'n',elements:[{id:'e',extensions:{label:'before'}}]}]};
   const edited=umf.editExtension(known,registry,'m','e','label',()=> 'after');
   if(known.modules[0]!.elements[0]!.extensions.label!=='before' || edited.modules[0].elements[0].extensions.label!=='after') throw new Error('Atomic edit failed');
   if(!umf.validateDocument(edited,registry).complete) throw new Error('Known semantics not validated');
@@ -285,6 +286,6 @@ try {
    if('process'in globalThis||'Bun'in globalThis)throw new Error('WASM worker polluted application globals');
   }finally{compilerWorker.terminate();}
   return {arrowGuardedIpc:true,arrowSchemaRoundTrip:true,postgresqlRowProjection:true,postgresqlCatalogDependencies:true,postgresqlCatalogCapture:true,postgresqlUpstreamCorpus:true,postgresqlBooleanCodecRepair:true,postgresqlTypedAst:true,postgresqlNativeRoundTripAndEdit:true,smithyServiceContextProjection:true,smithyRootDefinitionProjection:true,smithyJsonSchemaProjection:true,smithyWorkerSelection:true,smithyWorkerSelectionCancellationAndDeadline:true,smithyShapeSelection:true,smithyWorkerAssembly:true,smithyWorkerCancellationAndDeadline:true,smithyPublicAssembly:true,smithyIdlSourceBundles:true,smithyDependencyBundles:true,smithyNativeAstRoundTripAndEdit:true,typespecJsonSchemaProjection:true,typespecNumericEmissionLoss:true,typespecNativeJsonSchemaEmission:true,typespecSourceCompileAndEdit:true,typespecSemanticGraph:true,typespecUpstreamTemplates:true,typespecRegisteredLibraries:true,typespecGraphqlLibraryConfig:true,openapiRoundTripAndEdit:true,openapiLegacyValidation:true,openapiResources:true,openapiEmbeddedSchemas:true,openapiObjectReferences:true,openapiSchemaExtraction:true,openapiSchemaScope:true,openapiDynamicScope:true,openapiJsonSchemaProjection:true,graphqlRoundTripAndEdit:true,graphqlFragment:true,graphqlInputProjection:true,avroRoundTripAndEdit:true,avroDependencies:true,avroDocumentProjection:true,roundTrip:true,unknownPreservation:true,unsafeInputsRejected:true,hostGlobalsAbsent:true,knownExtensionEdit:true,jsonSchemaRoundTrip:true,jsonSchemaEdit:true,exactNativeNumbers:true,protobufDescriptorRoundTrip:true,protobufCandidateEdit:true,protobufWasmSourceImport:true,protobufWasmInvalidRejected:true,protobufWasmEditedSourceRoundTrip:true,jsonSchemaProtobufProjection:true,dddRoundTrip:true,dddSemanticEdit:true,dddDocumentProjection:true};
- });
+ },CURRENT_CORE_VERSION);
  console.log(JSON.stringify({browser:browser.version(),checks:result},null,2));
 } finally {await browser?.close(); server.stop(true);}

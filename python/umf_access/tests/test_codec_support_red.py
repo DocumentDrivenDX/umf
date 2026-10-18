@@ -125,7 +125,7 @@ class CodecBoundaryTests(unittest.TestCase):
 
     # @covers US-081-AC4 -- immutable type-reference subset only; no executor.
     def test_action_reference_is_immutable_and_typed(self):
-        action = ActionRef(module="commerce", action="shipOrder", input_type=Patch, output_type=Nested, source=ActionSource("unit", "0.8.0", "commerce", "shipOrder", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
+        action = ActionRef(module="commerce", action="shipOrder", input_type=Patch, output_type=Nested, source=ActionSource("unit", "0.10.0", "commerce", "shipOrder", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
         self.assertIs(action.input_type, Patch)
         self.assertIs(action.output_type, Nested)
         with self.assertRaises(FrozenInstanceError):
@@ -137,12 +137,12 @@ class CodecBoundaryTests(unittest.TestCase):
             {"module": "m", "action": "x", "input_type": dict, "output_type": Nested},
         ):
             with self.assertRaises((ValueError, TypeError)):
-                ActionRef(**kwargs, source=ActionSource("unit", "0.8.0", kwargs["module"] or "m", "x", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
+                ActionRef(**kwargs, source=ActionSource("unit", "0.10.0", kwargs["module"] or "m", "x", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
         with self.assertRaises(ValueError):
             ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None),
-                      source=ActionSource("unit", "0.8.0", "other", "recipe", "a" * 64,
+                      source=ActionSource("unit", "0.10.0", "other", "recipe", "a" * 64,
                                           "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1"))
-        self.assertIs(ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None), source=ActionSource("unit", "0.8.0", "m", "recipe", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1")).output_type, type(None))
+        self.assertIs(ActionRef(module="m", action="recipe", input_type=Patch, output_type=type(None), source=ActionSource("unit", "0.10.0", "m", "recipe", "a" * 64, "/modules/0/extensions/umf.actions/actions/0", "umf.actions.tx", "1")).output_type, type(None))
 
     # @covers US-081-AC5
     def test_inventory_is_checked_before_mapping(self):

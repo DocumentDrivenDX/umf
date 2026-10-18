@@ -1,4 +1,4 @@
-# UMF microsite schema explorer
+# UMF microsite schema reference
 
 ## Browser SQL-to-actions compiler
 
@@ -26,10 +26,11 @@ not qualify that different library build as the original producer. Replacing the
 frozen artifact requires a separately constructed and qualified source cohort,
 as tracked in the [shared implementation ledger](https://github.com/DocumentDrivenDX/umf/blob/e05e67365e03a374af0e56008263acce47307edd/docs/helix/04-build/typed-persistence-design.md#coordinated-sql-to-actions-implementation-ledger).
 
-Owner direction (2026-10-08): build a browsable schema explorer for domain
-packs in the existing microsite. This delivers a read-only metadata consumer
-under PRD FR-39/FR-41. Domain-pack ownership and definitions remain with the
-parallel pack work; this slice introduces no pack generator or backend execution.
+The schema package remains reusable. The public site has one schema host at
+`reference/core.html`; its Ontology, Object reference and Model catalog views
+share one route. The catalog is mounted from the exact released package under
+`/schema-browser/assets/`; the site build does not patch its renderer or ship a
+second explorer page.
 
 ## Build and preview
 
@@ -37,13 +38,16 @@ From the UMF repository root:
 
 ```sh
 bun docs/helix/05-deploy/microsite/build-explorer.ts
+bun docs/helix/05-deploy/schema-browser/publish-site.ts
+bun run build:reference
 bun docs/helix/05-deploy/microsite/serve.ts
-bun docs/helix/05-deploy/microsite/verify-explorer.ts
+bun docs/helix/05-deploy/microsite/verify-schema-views.ts
 ```
 
-The preview opens at `http://127.0.0.1:4178/explorer.html`. The last command
-requires installed Playwright Chromium and the running preview. Override its
-origin with `UMF_EXPLORER_URL` and Chromium with `UMF_CHROMIUM_PATH` when needed.
+The preview opens at `http://127.0.0.1:4178/reference/core.html#view=ontology`.
+The last command requires installed Playwright Chromium and the running preview.
+Override its origin with `UMF_REFERENCE_URL` and Chromium with `UMF_CHROMIUM_PATH`
+when needed.
 
 Catalog generation scans `domain-packs/`, `packs/`, `spec/domain-packs/`,
 `examples/domain-packs/` and retained `catalog-sources/`. Explicit source
@@ -96,14 +100,14 @@ fetch the datasets or certify their schema profiles as instance validators.
 
 ## Acceptance and evidence
 
-`verify-explorer.ts` exercises pack links, native foreign keys, field details,
-search/empty states, exact decimals, unknown extension retention, inert source
-text, source download, invalid/unresolved input, deep links, mobile layout and
-navigation on existing routes. Scoped results live in
-`../schema-explorer-evidence.json`. These checks do not refresh library/native
+`verify-schema-views.ts` exercises the single-host ontology, object-reference,
+and embedded-catalog routes in Chromium under strict CSP. The package browser
+tests continue to cover pack links, field details, source preservation, search,
+downloads and deep links. These checks do not refresh library/native
 conformance, certify all possible packs, or qualify data generation.
 
-The publishing workflow rebuilds the explorer catalog from canonical pack files.
+The publishing workflow rebuilds the catalog from canonical pack files and
+installs the exact reusable package without rewriting its page or scripts.
 Page signatures must be renewed after published HTML changes; CI verifies them
 and copies the public attestations into the site artifact.
 

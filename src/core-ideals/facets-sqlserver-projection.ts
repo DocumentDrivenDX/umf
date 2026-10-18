@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {historicalCoreFacetPatch} from '../model/facets';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
@@ -6,7 +7,7 @@ import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field
 import {sqlServerIdentifier as identifier,sqlServerLiteral as literal} from './sqlserver-syntax';
 const nativeCarriers={bit:'boolean',tinyint:'integer',smallint:'integer',int:'integer',bigint:'integer',decimal:'decimal',real:'float','float(53)':'float',nvarchar:'string',nchar:'string',varchar:'string',char:'string',varbinary:'binary',binary:'binary',date:'date','time(7)':'time','datetime2(7)':'timestamp','datetimeoffset(7)':'timestamp'} as const;
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import facetAuthor from '../../spec/core/facet-operation.schema.json';import kindAuthor from '../../spec/core/kind-operation-v4.schema.json';
+import legacy from '../../spec/core/schema.json';import facetAuthor from '../../spec/core/facet-operation-v3.schema.json';import kindAuthor from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/facets-sqlserver-projection.schema.json';
 export {default as facetsSqlServerProjectionSchema} from '../../spec/core/facets-sqlserver-projection.schema.json';
 export interface FacetsSqlServerRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof nativeCarriers;mode:'strict'|'report';encoding:'checked'|'type-modifier'|'carrier-only';obligation:'value-domain'|'exact-input'}
@@ -19,7 +20,7 @@ export interface FacetsSqlServerProjection {
  mapping:{origin:'authored';idealPath:string;nativePath:'/sql';facets:CoreFacetPatch;encoding:FacetsSqlServerRequest['encoding'];outcome:Outcome};
  residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,facetAuthor,kindAuthor])validator.addSchema(s);
+const validator=createValidator();for(const s of [legacy,facetAuthor,kindAuthor])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
 /** Project verified author intent. Native carrier defaults never become author assertions. */
@@ -28,7 +29,7 @@ export function projectFacetsToSqlServer(input:Author,options:FacetsSqlServerReq
  if(!checkRequest(request))throw new UmfError('FACETS_SQLSERVER_REQUEST',JSON.stringify(checkRequest.errors));
  const author=copied?.operation==='declare-core-facets'?verifyCoreFacetDeclaration(copied,copied.target):verifyCoreKindDeclaration(copied as CoreKindDeclaration,copied?.target);
  const source=copyJson(author.target) as unknown as Document;
- if(source.umf!=='0.5.0')throw new UmfError('FACETS_SQLSERVER_VERSION','Explicit core 0.5.0 declaration required');
+ if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('FACETS_SQLSERVER_VERSION','Current core 0.10.0 declaration required');
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),module=source.modules[mi]!,ei=module.elements.findIndex(e=>e.id===author.identity.element),element=module.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;
  if(element.kind!=='field')throw new UmfError('FACETS_SQLSERVER_FIELD','Selected author must identify a Field');
  const result:FacetsSqlServerProjection={operation:'project-facets-sqlserver',version:'1.0.0',status:'projected',source,author,request,binding,mapping:{origin:'authored',idealPath:path+'/facets',nativePath:'/sql',facets:{},encoding:request.encoding,outcome:'exact'},residuals:[],diagnostics:[]};

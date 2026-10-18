@@ -1,6 +1,6 @@
 {
   "name": "@umf/core",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "packageManager": "bun@1.4.2",
@@ -46,7 +46,12 @@
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
     "test:reference:browser": "bun scripts/reference/browser.ts && bun scripts/reference/reader-browser.ts && bun scripts/reference/ontology-browser.ts",
-    "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts"
+    "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts",
+    "build:metamodel": "bun scripts/metamodel/build.ts",
+    "check:metamodel": "bun scripts/metamodel/build.ts --check",
+    "test:metamodel": "bun test tests/metamodel && bun scripts/metamodel-browser.ts",
+    "check:core-authority": "bun scripts/check-core-authority.ts",
+    "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

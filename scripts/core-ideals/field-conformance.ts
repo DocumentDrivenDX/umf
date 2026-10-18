@@ -4,12 +4,7 @@ import {createHash} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {fieldReportCases} from './field-report-cases';
 import {classificationReportCases} from './classification-report-cases';
-import {
- copyJson,readJsonValue,writeJsonValue,exportTableSpec,exportAvroSchema,exportParquetCapture,
- recoverFieldFromTableSpec,recoverFieldFromPostgresql,recoverFieldFromSqlServer,recoverFieldFromAvro,recoverFieldFromParquet,
- recoverPostgresqlFieldCapture,recoverSqlServerFieldCapture,recoverAvroFieldBundle,recoverParquetFieldBytes,
- verifyTableSpecFieldClassification,inspectFieldProjection,inspectFieldClassification,
-} from '../../src';
+import {copyJson, readJsonValue, writeJsonValue, exportTableSpec, exportAvroSchema, exportParquetCapture, recoverFieldFromTableSpec, recoverFieldFromPostgresql, recoverFieldFromSqlServer, recoverFieldFromAvro, recoverFieldFromParquet, recoverPostgresqlFieldCapture, recoverSqlServerFieldCapture, recoverAvroFieldBundle, recoverParquetFieldBytes, verifyTableSpecFieldClassification, inspectFieldProjection, inspectFieldClassification} from '../../src';
 import type {AuthoredFieldProjection} from '../../src/core-ideals/field-report';
 import type {NativeFieldClassification} from '../../src/core-ideals/classification-report';
 import type {Element} from '../../src/model/types';
@@ -30,9 +25,36 @@ const requiredProofs:Record<string,string[]>={
 };
 type Reader=(path:string)=>Promise<Uint8Array>;
 const read:Reader=async path=>new Uint8Array(await Bun.file(path).arrayBuffer());
+type HistoricalFieldEvidence={historicalQualification:'COMPLETE'|'PARTIALLY_REVALIDATED';currentCoreQualification:'UNQUALIFIED'|'QUALIFIED';unqualified:{proof:string;path:string;pinnedSha256:string;observedSha256:string}[]};
+export function requireCurrentCoreFieldQualification(evidence:{currentCoreQualification:string}):void {if(evidence.currentCoreQualification!=='QUALIFIED')throw new Error('Field native evidence is not qualified for the current core');}
+export function fieldConformanceStatus(evidence:{historicalQualification:string;currentCoreQualification:string}){return {
+ scope:'Current Field authoring and receipt behavior is reported separately from partially revalidated historical native evidence; current-core native qualification is unavailable',
+ idealAdmitted:false,sourceOperationsVerified:true,sourceUsefulSystems:[...fieldSystems],
+ historicalQualification:evidence.historicalQualification,currentNativeQualification:evidence.currentCoreQualification,
+ priorityDelivery:false,qualifiedBindings:0,nativeEquivalence:false,
+};}
 /** Integrity/consistency check of retained evidence, not authentication or a native engine rerun. */
-export async function verifyFieldEvidence(reader:Reader=read){
- const records:any[]=[];let fingerprints=0;
+export async function verifyFieldEvidence(reader:Reader=read,options:{allowUnqualifiedHistorical?:boolean}={}){
+ const records:any[]=[];let fingerprints=0;const unqualified:HistoricalFieldEvidence['unqualified']=[];
+ const recoveryPath='docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json';
+ const recovery=JSON.parse(new TextDecoder().decode(await reader(recoveryPath)));
+ const historyPath='docs/helix/04-build/evidence/metamodel-authority/history/manifest.json',history=JSON.parse(new TextDecoder().decode(await reader(historyPath)));
+ assert.equal(recovery.scope,'Bounded recovery attempt for frozen historical field/facet artifacts; no old observation or hash was relabelled.');
+ assert.equal(recovery.outcome,'No missing historical artifact recovered: SDK lacks standalone test bundles; only the already-available libpg-query.wasm matches. Current native qualification remains unknown for those original artifact pins.');
+ async function compare(proof:string,path:string,expected:string,actual:string){
+  if(actual===expected)return;
+  if(options.allowUnqualifiedHistorical){
+   if(path.startsWith('dist/')){const artifact=recovery.comparisons.find((entry:any)=>entry.path===path&&entry.expected===expected);assert.ok(artifact&&!artifact.matches,'Only unrecovered historical build artifacts may be left unqualified');}
+   unqualified.push({proof,path,pinnedSha256:expected,observedSha256:actual});return;
+  }
+  assert.equal(actual,expected,`${proof}: stale ${path}`);
+ }
+ async function observedHash(path:string,expected:string){
+  let actual:string;
+  try{actual=createHash('sha256').update(await reader(path)).digest('hex');}catch(error){if(!options.allowUnqualifiedHistorical||!String(error).includes('ENOENT'))throw error;actual='MISSING';}
+  if(actual!==expected){const archived=history.entries.find((entry:any)=>entry.path===path&&entry.sha256===expected)?.archive;if(archived&&createHash('sha256').update(await reader(archived)).digest('hex')===expected)return expected;}
+  return actual;
+ }
  for(const name of evidenceFiles){
   const path=`fixtures/validation/${name}.json`,bytes=await reader(path),record=JSON.parse(new TextDecoder().decode(bytes));
   assert.equal(record.results.failures,0,`${name}: failures`);
@@ -42,8 +64,8 @@ export async function verifyFieldEvidence(reader:Reader=read){
   for(const [file,expected] of Object.entries(record.sha256)){
    assert.ok(!file.startsWith('/')&&!file.split('/').includes('..'),'Evidence path must be relative');
    assert.match(String(expected),/^[0-9a-f]{64}$/);
-   const actual=createHash('sha256').update(await reader(file)).digest('hex');
-   assert.equal(actual,expected,`${name}: stale ${file}`);fingerprints++;
+   const actual=await observedHash(file,String(expected));
+   await compare(name,file,String(expected),actual);fingerprints++;
   }
   records.push({path,sha256:createHash('sha256').update(bytes).digest('hex'),record});
  }
@@ -52,7 +74,7 @@ export async function verifyFieldEvidence(reader:Reader=read){
  assert.equal(refreshed.regression.failures,0);assert.ok(refreshed.runs.length>=26);
  for(const run of refreshed.runs)assert.equal(run.exitCode,0,`Failed refresh ${run.command}`);
  for(const [file,expected] of Object.entries(refreshed.sha256)){
-  assert.equal(createHash('sha256').update(await reader(file)).digest('hex'),expected,`Stale refresh proof ${file}`);fingerprints++;
+  await compare('field-gate-refresh-evidence',file,String(expected),await observedHash(file,String(expected)));fingerprints++;
  }
  assert.equal(ts.bead,'umf-97221618-8beaed05');assert.equal(pg.bead,'umf-97221618-920262ff');
  assert.ok(ts.results.nativeFieldOutputsAccepted>0&&ts.results.nativeRecordOutputsAccepted>0);
@@ -72,7 +94,7 @@ export async function verifyFieldEvidence(reader:Reader=read){
   const browser=record as any;assert.equal(browser.browser,refreshed.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);
   assert.ok(Object.keys(browser.checks).length>0);
  }
- return {records:records.map(({path,sha256})=>({path,sha256})),fingerprints,systems:[...fieldSystems]};
+ return {records:records.map(({path,sha256})=>({path,sha256})),fingerprints,systems:[...fieldSystems],historicalQualification:unqualified.length?'PARTIALLY_REVALIDATED':'COMPLETE',currentCoreQualification:'UNQUALIFIED' as const,unqualified,artifactRecovery:{path:recoveryPath,archiveSha256:recovery.archiveSha256,outcome:recovery.outcome}};
 }
 
 async function recoverAuthored(receipt:AuthoredFieldProjection){
@@ -138,10 +160,11 @@ export async function verifyFieldRoundTrips(){
 }
 
 if(import.meta.main){
- const evidence=await verifyFieldEvidence(),roundTrips=await verifyFieldRoundTrips();
- const result={scope:'Qualified Field ideal gate; native evidence retained and fingerprint-checked, not rerun by this command',
-  idealAdmission:{systems:[...fieldSystems],usefulBindings:5,meaning:'CONTRACT-040 / Element.kind',nativeEquivalence:false},
-  delivery:{systems:[...fieldSystems],scope:'Published Field binding subsets only; not general native-language conformance'},evidence,roundTrips};
+ const evidence=await verifyFieldEvidence(read,{allowUnqualifiedHistorical:true}),roundTrips=await verifyFieldRoundTrips();
+ const status=fieldConformanceStatus(evidence);
+ const result={...status,nativeEvidenceSystems:[...fieldSystems],
+  sourceCoverage:{meaning:'CONTRACT-040 / Element.kind',roundTrips},evidence,
+  limits:['Source authoring and round trips do not establish current-core native equivalence','Historical native subsets remain bounded by their original acceptance records']};
  await Bun.write('fixtures/validation/field-conformance.json',JSON.stringify(result,null,2)+'\n');
- console.log(JSON.stringify({systems:fieldSystems.length,fingerprints:evidence.fingerprints,idealRecoveries:30,nativeRecoveries:10,nativeEquivalence:false}));
+ console.log(JSON.stringify({...status,systems:fieldSystems.length,fingerprints:evidence.fingerprints,sourceRecoveries:30,nativeRecoveries:10}));
 }

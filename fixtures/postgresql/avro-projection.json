@@ -94,7 +94,7 @@
   "result": {
     "status": "projected",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "postgresql-avro",
       "vocabularies": {
         "umf.postgresql.catalog": {
@@ -14030,7 +14030,7 @@
     ],
     "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"PgRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": [\n        \"null\",\n        \"boolean\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"large\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ],\n      \"doc\": \"Exact amount with native precision and scale\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bounded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"padded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"data\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"time-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"domain_value\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
     "target": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "avro-record",
       "vocabularies": {
         "umf.avro": {

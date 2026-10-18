@@ -1,17 +1,18 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {inspectCoreScalarType} from '../../src/model/scalar-type';
 import {SCALAR_TYPES,type Document} from '../../src/model/types';
-import sourceSchema from '../../spec/core/relationship-document.schema.json';
-import resultSchema from '../../spec/core/scalar-type-inspection.schema.json';
+import sourceSchema from '../../spec/core/schema.json';
+import resultSchema from '../../spec/core/scalar-type-inspection-v0.3.schema.json';
 import {createValidator} from '../../src/validation/schema';
 export function runScalarOwnerCases(){
  const rows:{id:string;passed:boolean}[]=[];
- const source=(properties:Record<string,unknown>):Document=>({umf:'0.7.0',id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{},...properties}]}]});
+ const source=(properties:Record<string,unknown>):Document=>({umf:CURRENT_CORE_VERSION,id:'d',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{},...properties}]}]});
  const identity={module:'m',element:'v'};
  const validator=createValidator();validator.addSchema(sourceSchema);const validResult=validator.compile(resultSchema);
  const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
  function check(id:string,passed:boolean){rows.push({id,passed});if(!passed)throw Error(id)}
  function refused(id:string,run:()=>unknown,code:string){let actual='';try{run()}catch(error){actual=(error as {code:string}).code}check(id,actual===code)}
- const expectedFamilies=['boolean','integer','decimal','float','string','binary','date','time','timestamp'] as const;
+ const expectedFamilies=['boolean','integer','decimal','float','string','binary','date','time','timestamp','bits128','uuid'] as const;
  check('exact-independent-family-inventory',same(SCALAR_TYPES,expectedFamilies));
  for(const scalarType of expectedFamilies){const d=source({kind:'field',scalarType}),r=inspectCoreScalarType(d,identity);check('known-'+scalarType,same(r.meaning,{state:'known',scalarType})&&same(r.source,d)&&same(r.identity,identity)&&r.path==='/modules/0/elements/0/scalarType'&&r.provenance==='unverified')}
  for(const [id,properties,meaning] of [
@@ -50,8 +51,9 @@ export function runScalarOwnerCases(){
  refused('duplicate-source-identity',()=>inspectCoreScalarType(duplicate,identity),'CORE_SCALAR_TYPE_SOURCE');
  refused('group-label-forbidden-by-source',()=>inspectCoreScalarType(source({kind:'group',scalarType:'string'}),identity),'CORE_SCALAR_TYPE_SOURCE');
  refused('invalid-source-label',()=>inspectCoreScalarType(source({kind:'field',scalarType:3}),identity),'CORE_SCALAR_TYPE_SOURCE');
- for(const umf of ['0.8.0','0.9.0']){const doc={...d,umf} as Document,result=inspectCoreScalarType(doc,identity);check('supported-envelope-'+umf,same(result.meaning,honest.meaning)&&same(result.source,doc)&&result.version===(umf==='0.8.0'?'0.2.0':'0.3.0')&&result.provenance==='unverified')}
- for(const umf of ['0.1.0','0.6.0','0.10.0','future'])refused('unsupported-envelope-'+umf,()=>inspectCoreScalarType({...d,umf} as Document,identity),'CORE_SCALAR_TYPE_VERSION');
+ check('current-inspection-format',honest.version==='0.3.0');
+ check('current-source-marker',honest.source.umf===CURRENT_CORE_VERSION);
+ for(const umf of ['0.1.0','0.6.0','0.7.0','0.8.0','0.9.0','future'])refused('unsupported-envelope-'+umf,()=>inspectCoreScalarType({...d,umf} as Document,identity),'CORE_SCALAR_TYPE_VERSION');
  let callbacks=0;const hostile={...d};Object.defineProperty(hostile,'modules',{enumerable:true,get(){callbacks++;return d.modules}});
  refused('getter-refusal',()=>inspectCoreScalarType(hostile,identity),'NON_JSON');check('getter-not-invoked',callbacks===0);
  return rows;

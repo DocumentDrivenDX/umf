@@ -1,8 +1,8 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {classifyAvroKeys,recoverAvroKeySource,verifyAvroKeyClassification} from '../../src/core-ideals/key-avro';
-import {importAvroSchema,exportAvroBundle} from '../../src/adapters/avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyAvroKeys, recoverAvroKeySource, verifyAvroKeyClassification} from '../../src/core-ideals/key-avro';
+import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const cases=(await Bun.file('fixtures/avro/key-discovery-cases.json').json()).cases as {id:string;schemaText:string}[];
 for(const c of cases)test('Avro Key classification: '+c.id,()=>{
  const source=importAvroSchema(c.schemaText,{id:c.id}),before=JSON.stringify(source),nativeSource={schema:c.schemaText,dependencies:[]};

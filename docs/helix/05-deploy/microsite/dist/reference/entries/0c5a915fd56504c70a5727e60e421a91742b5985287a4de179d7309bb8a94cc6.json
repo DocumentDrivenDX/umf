@@ -16,12 +16,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -410,7 +410,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -594,7 +594,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -669,9 +669,9 @@
   ],
   "sources": [
     {
-      "bytes": 3953,
+      "bytes": 3955,
       "path": "spec/extensions/jsonld/flatten-schema.json",
-      "sha256": "02e887c7dcf8baec5293b52ab95e60357b92de709e3e00302720ddb448f87a9e"
+      "sha256": "5687924398199375ce399524881b73ef7a2f204ff85a97daa8f274a4ed648223"
     }
   ],
   "summary": "spec/extensions/jsonld/flatten-schema.json",

@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "other",
@@ -1013,7 +1013,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1040,7 +1040,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.2.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1118,13 +1118,13 @@
   "id": "[\"schema\",\"spec/core/postgresql-ddl-kinds.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8045,
+      "bytes": 8047,
       "path": "spec/core/postgresql-ddl-kinds.schema.json",
-      "sha256": "4ba3786e32c08c3c60e631e06e8ec394a5533b7ef04f468b639000fef2cc1c10"
+      "sha256": "02b0683aaf108b3a691ae11bbd344ec07e9fb0ba6dfde16d10e958e67d428455"
     }
   ],
   "summary": "spec/core/postgresql-ddl-kinds.schema.json",

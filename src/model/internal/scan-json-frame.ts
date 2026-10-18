@@ -1,5 +1,5 @@
 import {assertExactJsonNumber} from './json-number';
-import {UmfError} from '../types';
+import {UmfError} from '../errors';
 /** Original action-frame scanner, shared with explicitly scoped catalog reads. */
 export function scanJsonFrame(text:string,maxNodes:number,maxDepth:number,onString:(value:string)=>void=()=>{}):void {
  const fail=(code:string,message:string):never=>{throw new UmfError(code,message);};

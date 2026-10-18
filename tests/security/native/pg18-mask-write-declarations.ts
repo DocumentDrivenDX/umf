@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
 /** Authored fixed native profile. Decisions remain logical, never SQL credentials. */
 import type {CoreLiteral} from '../../../src/model/schema-literals';
 import type {SecurityWriteState} from '../../../src/extensions/security/write';
@@ -10,7 +11,7 @@ export function maskWriteSources(){
  const fields:any[]=[['staffId','string','required'],['readClass','string','required'],['normal','boolean','required'],['field','boolean','required'],['blind','boolean','required'],['resourceId','string','required'],['amount','integer','absent-allowed']].map(([id,scalarType,nullability])=>({id,kind:'field',scalarType,nullability,cardinality:'one',extensions:{},...(id==='amount'?{facets:{integerWidth:{bits:64,signed:true}}}:id==='readClass'?{allowedValues:['original','masked','withheld','denied'].map(string=>({string}))}:{})}));
  const members={Staff:['staffId','readClass','normal','field','blind'],Resource:['resourceId','amount']};
  const entities=Object.entries(members).map(([name,names])=>({type:ref(name),keyId:'pk',fields:names.map(name=>({ref:ref(name),protection:name==='amount'?'protected':'unprotected'}))}));
- const document:any={umf:'0.8.0',id:'mask-write',vocabularies:{},modules:[{id:'m',namespace:'',elements:[...fields,...Object.entries(members).map(([id,names])=>({id,kind:'record',members:names.map(element=>({module:'m',element})),keys:[{id:'pk',name:'Key',fields:[{module:'m',element:names[0]}]}],extensions:{}}))]}]};
+ const document:any={umf:CURRENT_CORE_VERSION,id:'mask-write',vocabularies:{},modules:[{id:'m',namespace:'',elements:[...fields,...Object.entries(members).map(([id,names])=>({id,kind:'record',members:names.map(element=>({module:'m',element})),keys:[{id:'pk',name:'Key',fields:[{module:'m',element:names[0]}]}],extensions:{}}))]}]};
  const actions=['read','create','update','delete','writeKey','writeAmount','changePolicy','changeOwner','blindAmount'];
  const ontology:any={version:'0.1.0',documentId:'mask-write-ontology',revision:'legacy1',documents:[{documentId:document.id,revision:'schema1'}],subject:ref('Staff'),entities,associations:[],context:[],actions};
  const eq=(field:string,value:any)=>({op:'eq',left:{kind:'subject',field:ref(field)},right:{kind:'constant',field:ref(field),value}});

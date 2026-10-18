@@ -3,7 +3,7 @@ const str={type:'string',minLength:1,maxLength:4096};
 const obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
 const context={...obj({
  entry:str,
- schemas:{type:'array',minItems:1,maxItems:128,items:{...obj({key:str,document:{$ref:'urn:umf:core:0.1.0'}}),additionalProperties:true}},
+ schemas:{type:'array',minItems:1,maxItems:128,items:{...obj({key:str,document:{$ref:'urn:umf:core:0.10.0'}}),additionalProperties:true}},
  bindings:{type:'array',maxItems:4096,items:{...obj({from:str,import:str,target:str}),additionalProperties:true}}
 }),additionalProperties:true};
 const diagnostic=obj({code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{enum:['error','warning']}});

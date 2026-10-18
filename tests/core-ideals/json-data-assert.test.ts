@@ -1,4 +1,4 @@
-import {importAvroSchema,getAvroNode,readDocument,writeDocument,copyJson} from '../../src';
+import {importAvroSchema, getAvroNode, readDocument, writeDocument, copyJson} from '../../src';
 import {parseNativeJson} from '../../src/model/native-json';
 import {test,expect} from 'bun:test';
 import {assertJsonDataEqual,assertNativeRepresentationEqual} from '../../scripts/core-ideals/json-data-assert';

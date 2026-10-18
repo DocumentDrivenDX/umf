@@ -1,6 +1,6 @@
 import {relationshipCandidate} from '../core-relationship-cases';
 import {declareCoreRelationship} from '../../src/model/relationships';
-import {projectRelationshipToAvro,type RelationshipAvroRequest} from '../../src/core-ideals/relationship-avro-projection';
+import {projectRelationshipToAvro, type RelationshipAvroRequest} from '../../src/core-ideals/relationship-avro-projection';
 export function relationshipAvroCase(name='many-to-one'){
  const logical=relationshipCandidate(),r=logical.modules[0].relationships[0];
  if(name==='one-to-one')r.sourceMultiplicity={min:0,max:1};

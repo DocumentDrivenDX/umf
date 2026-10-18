@@ -5,13 +5,13 @@
     "liveTests": "tests",
     "conformanceHarnesses": "scripts"
   },
-  "total": 779,
+  "total": 815,
   "counts": {
-    "SATISFIED": 163,
-    "UNTESTED": 387,
-    "UNCITED_COVERAGE": 223,
+    "SATISFIED": 168,
+    "UNTESTED": 405,
+    "UNCITED_COVERAGE": 226,
     "ASSERTED_UNBACKED": 0,
-    "REVIEWED_EXCEPTION": 6
+    "REVIEWED_EXCEPTION": 16
   },
   "danglingCitations": [],
   "criteria": [
@@ -68,7 +68,7 @@
       "story": "docs/helix/01-frame/user-stories/US-001-preserve-versioned-documents.md",
       "status": "REVIEWED_EXCEPTION",
       "evidence": [
-        "scripts/browser.ts:1"
+        "scripts/browser.ts:2"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
@@ -214,7 +214,7 @@
       "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/json-schema-protobuf.test.ts:1"
+        "tests/projections/json-schema-protobuf.test.ts:2"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -223,9 +223,9 @@
       "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/json-schema-protobuf.test.ts:1",
-        "tests/projections/json-schema-protobuf.test.ts:35",
-        "tests/projections/json-schema-protobuf.test.ts:75"
+        "tests/projections/json-schema-protobuf.test.ts:2",
+        "tests/projections/json-schema-protobuf.test.ts:36",
+        "tests/projections/json-schema-protobuf.test.ts:76"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -234,8 +234,8 @@
       "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/json-schema-protobuf.test.ts:1",
-        "tests/projections/json-schema-protobuf.test.ts:47"
+        "tests/projections/json-schema-protobuf.test.ts:2",
+        "tests/projections/json-schema-protobuf.test.ts:48"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -244,8 +244,8 @@
       "story": "docs/helix/01-frame/user-stories/US-004-json-schema-protobuf-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/json-schema-protobuf.test.ts:1",
-        "tests/projections/json-schema-protobuf.test.ts:57"
+        "tests/projections/json-schema-protobuf.test.ts:2",
+        "tests/projections/json-schema-protobuf.test.ts:58"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -304,7 +304,7 @@
       "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/ddd-json-schema.test.ts:9"
+        "tests/projections/ddd-json-schema.test.ts:10"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -313,7 +313,7 @@
       "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/ddd-json-schema.test.ts:20"
+        "tests/projections/ddd-json-schema.test.ts:21"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -322,7 +322,7 @@
       "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/ddd-json-schema.test.ts:32"
+        "tests/projections/ddd-json-schema.test.ts:33"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -331,7 +331,7 @@
       "story": "docs/helix/01-frame/user-stories/US-006-ddd-document-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/projections/ddd-json-schema.test.ts:40"
+        "tests/projections/ddd-json-schema.test.ts:41"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -534,7 +534,7 @@
       "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/graphql/projection.test.ts:6"
+        "tests/graphql/projection.test.ts:7"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -543,7 +543,7 @@
       "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/graphql/projection.test.ts:20"
+        "tests/graphql/projection.test.ts:21"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -566,7 +566,7 @@
       "story": "docs/helix/01-frame/user-stories/US-010-graphql-input-projection.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/graphql/projection.test.ts:32"
+        "tests/graphql/projection.test.ts:33"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2169,9 +2169,9 @@
       "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/linkml/imports.test.ts:13",
-        "tests/linkml/imports.test.ts:19",
-        "tests/linkml/imports.test.ts:8"
+        "tests/linkml/imports.test.ts:14",
+        "tests/linkml/imports.test.ts:20",
+        "tests/linkml/imports.test.ts:9"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2180,10 +2180,10 @@
       "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/linkml/class-slots.test.ts:17",
-        "tests/linkml/class-slots.test.ts:24",
-        "tests/linkml/class-slots.test.ts:29",
-        "tests/linkml/class-slots.test.ts:7"
+        "tests/linkml/class-slots.test.ts:18",
+        "tests/linkml/class-slots.test.ts:25",
+        "tests/linkml/class-slots.test.ts:30",
+        "tests/linkml/class-slots.test.ts:8"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2192,11 +2192,11 @@
       "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/linkml/slot-values.test.ts:14",
-        "tests/linkml/slot-values.test.ts:22",
-        "tests/linkml/slot-values.test.ts:26",
-        "tests/linkml/slot-values.test.ts:32",
-        "tests/linkml/slot-values.test.ts:9"
+        "tests/linkml/slot-values.test.ts:10",
+        "tests/linkml/slot-values.test.ts:15",
+        "tests/linkml/slot-values.test.ts:23",
+        "tests/linkml/slot-values.test.ts:27",
+        "tests/linkml/slot-values.test.ts:33"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2214,10 +2214,10 @@
       "story": "docs/helix/01-frame/user-stories/US-024-linkml.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/linkml/merge.test.ts:12",
-        "tests/linkml/merge.test.ts:18",
-        "tests/linkml/merge.test.ts:23",
-        "tests/linkml/merge.test.ts:7"
+        "tests/linkml/merge.test.ts:13",
+        "tests/linkml/merge.test.ts:19",
+        "tests/linkml/merge.test.ts:24",
+        "tests/linkml/merge.test.ts:8"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2261,9 +2261,9 @@
       "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/rdf/rename.test.ts:11",
-        "tests/rdf/rename.test.ts:14",
-        "tests/rdf/rename.test.ts:7"
+        "tests/rdf/rename.test.ts:12",
+        "tests/rdf/rename.test.ts:15",
+        "tests/rdf/rename.test.ts:8"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2294,9 +2294,9 @@
       "story": "docs/helix/01-frame/user-stories/US-025-rdf.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/rdf/merge.test.ts:14",
-        "tests/rdf/merge.test.ts:17",
-        "tests/rdf/merge.test.ts:8"
+        "tests/rdf/merge.test.ts:15",
+        "tests/rdf/merge.test.ts:18",
+        "tests/rdf/merge.test.ts:9"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2305,7 +2305,7 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/jsonld.test.ts:8"
+        "tests/jsonld/jsonld.test.ts:9"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2328,8 +2328,8 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/jsonld.test.ts:15",
-        "tests/jsonld/jsonld.test.ts:21"
+        "tests/jsonld/jsonld.test.ts:16",
+        "tests/jsonld/jsonld.test.ts:22"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2367,9 +2367,9 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/flatten.test.ts:17",
-        "tests/jsonld/flatten.test.ts:27",
-        "tests/jsonld/flatten.test.ts:9"
+        "tests/jsonld/flatten.test.ts:10",
+        "tests/jsonld/flatten.test.ts:18",
+        "tests/jsonld/flatten.test.ts:28"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2378,9 +2378,9 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/compaction.test.ts:19",
-        "tests/jsonld/compaction.test.ts:30",
-        "tests/jsonld/compaction.test.ts:9"
+        "tests/jsonld/compaction.test.ts:10",
+        "tests/jsonld/compaction.test.ts:20",
+        "tests/jsonld/compaction.test.ts:31"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2389,9 +2389,9 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/framing.test.ts:10",
-        "tests/jsonld/framing.test.ts:19",
-        "tests/jsonld/framing.test.ts:29"
+        "tests/jsonld/framing.test.ts:11",
+        "tests/jsonld/framing.test.ts:20",
+        "tests/jsonld/framing.test.ts:30"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2407,9 +2407,9 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/from-rdf.test.ts:16",
-        "tests/jsonld/from-rdf.test.ts:26",
-        "tests/jsonld/from-rdf.test.ts:9"
+        "tests/jsonld/from-rdf.test.ts:10",
+        "tests/jsonld/from-rdf.test.ts:17",
+        "tests/jsonld/from-rdf.test.ts:27"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2418,9 +2418,9 @@
       "story": "docs/helix/01-frame/user-stories/US-026-jsonld.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/jsonld/to-rdf.test.ts:13",
-        "tests/jsonld/to-rdf.test.ts:29",
-        "tests/jsonld/to-rdf.test.ts:8"
+        "tests/jsonld/to-rdf.test.ts:14",
+        "tests/jsonld/to-rdf.test.ts:30",
+        "tests/jsonld/to-rdf.test.ts:9"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2467,7 +2467,7 @@
       "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/generalized-rdf/dataset.test.ts:8"
+        "tests/generalized-rdf/dataset.test.ts:9"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2476,7 +2476,7 @@
       "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/generalized-rdf/dataset.test.ts:15"
+        "tests/generalized-rdf/dataset.test.ts:16"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2485,7 +2485,7 @@
       "story": "docs/helix/01-frame/user-stories/US-027-generalized-rdf.md",
       "status": "UNCITED_COVERAGE",
       "evidence": [
-        "tests/generalized-rdf/dataset.test.ts:24"
+        "tests/generalized-rdf/dataset.test.ts:25"
       ],
       "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
     },
@@ -2745,22 +2745,31 @@
       "id": "US-040-AC8",
       "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/field-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-040-AC9",
       "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/field-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-040-AC10",
       "story": "docs/helix/01-frame/user-stories/US-040-core-field.md",
-      "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
     },
     {
       "id": "US-041-AC1",
@@ -2815,22 +2824,31 @@
       "id": "US-041-AC8",
       "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/nullability-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-041-AC9",
       "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/nullability-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-041-AC10",
       "story": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
-      "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
     },
     {
       "id": "US-042-AC1",
@@ -2885,22 +2903,31 @@
       "id": "US-042-AC8",
       "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/cardinality-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-042-AC9",
       "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/cardinality-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-042-AC10",
       "story": "docs/helix/01-frame/user-stories/US-042-core-cardinality.md",
-      "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
     },
     {
       "id": "US-043-AC1",
@@ -2955,22 +2982,31 @@
       "id": "US-043-AC8",
       "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/facets-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-043-AC9",
       "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/facets-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-043-AC10",
       "story": "docs/helix/01-frame/user-stories/US-043-core-facets.md",
-      "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
     },
     {
       "id": "US-044-AC1",
@@ -3025,22 +3061,31 @@
       "id": "US-044-AC8",
       "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/key-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-044-AC9",
       "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/key-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-044-AC10",
       "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
-      "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
     },
     {
       "id": "US-044-AC11",
@@ -3060,8 +3105,11 @@
       "id": "US-044-AC13",
       "story": "docs/helix/01-frame/user-stories/US-044-core-key.md",
       "status": "UNTESTED",
-      "evidence": [],
-      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+      "evidence": [
+        "fixtures/validation/key-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-045-AC1",
@@ -3090,8 +3138,8 @@
         "tests/core/relationship-operations.test.ts:37",
         "tests/core/relationship-public.test.ts:11",
         "tests/core/relationship-public.test.ts:5",
-        "tests/relationship/authored-corpus.test.ts:5",
-        "tests/relationship/keyed-ddd-graph.test.ts:9"
+        "tests/relationship/authored-corpus.test.ts:6",
+        "tests/relationship/keyed-ddd-graph.test.ts:10"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3211,23 +3259,25 @@
     {
       "id": "US-045-AC9",
       "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
-      "status": "SATISFIED",
+      "status": "UNTESTED",
       "evidence": [
-        "tests/core-ideals/relationship-conformance.test.ts:12",
-        "tests/core-ideals/relationship-conformance.test.ts:16"
+        "tests/core-ideals/relationship-conformance.test.ts:13",
+        "tests/core-ideals/relationship-conformance.test.ts:17",
+        "scripts/core-ideals/relationship-conformance.ts:55",
+        "fixtures/validation/relationship-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
     },
     {
       "id": "US-045-AC10",
       "story": "docs/helix/01-frame/user-stories/US-045-relationship.md",
-      "status": "SATISFIED",
+      "status": "REVIEWED_EXCEPTION",
       "evidence": [
-        "tests/core-ideals/relationship-conformance.test.ts:5",
-        "tests/core/relationship-transition.test.ts:25",
-        "tests/core/relationship-transition.test.ts:8"
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
       ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
     },
     {
       "id": "US-046-AC1",
@@ -3236,7 +3286,7 @@
       "evidence": [
         "tests/binding/multi-target.test.ts:7",
         "tests/binding/package.test.ts:17",
-        "tests/relationship/keyed-ddd-graph.test.ts:9"
+        "tests/relationship/keyed-ddd-graph.test.ts:10"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3500,9 +3550,9 @@
       "evidence": [
         "tests/projections/ddd-postgresql-tables-indexes.test.ts:8",
         "tests/projections/ddd-postgresql-tables.test.ts:8",
-        "tests/projections/ddd-postgresql.test.ts:14",
-        "tests/projections/ddd-postgresql.test.ts:7",
-        "tests/relationship/keyed-ddd-graph.test.ts:9",
+        "tests/projections/ddd-postgresql.test.ts:15",
+        "tests/projections/ddd-postgresql.test.ts:8",
+        "tests/relationship/keyed-ddd-graph.test.ts:10",
         "tests/relationship/postgresql-layout-proposal.test.ts:9"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -3512,7 +3562,7 @@
       "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/ddd-postgresql.test.ts:7"
+        "tests/projections/ddd-postgresql.test.ts:8"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3527,7 +3577,7 @@
         "tests/projections/ddd-postgresql-tables.test.ts:35",
         "tests/projections/ddd-postgresql-tables.test.ts:47",
         "tests/projections/ddd-postgresql-tables.test.ts:8",
-        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/projections/ddd-postgresql.test.ts:8",
         "tests/projections/postgresql-relationship-layout.test.ts:5"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -3539,7 +3589,7 @@
       "evidence": [
         "tests/projections/ddd-postgresql-tables.test.ts:22",
         "tests/projections/ddd-postgresql-tables.test.ts:47",
-        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/projections/ddd-postgresql.test.ts:8",
         "tests/projections/postgresql-relationship-layout.test.ts:5"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -3550,7 +3600,7 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/projections/ddd-postgresql-tables.test.ts:8",
-        "tests/projections/ddd-postgresql.test.ts:14",
+        "tests/projections/ddd-postgresql.test.ts:15",
         "tests/relationship/postgresql-target.test.ts:8"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -3560,7 +3610,7 @@
       "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/ddd-postgresql.test.ts:14"
+        "tests/projections/ddd-postgresql.test.ts:15"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3569,7 +3619,7 @@
       "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/ddd-postgresql.test.ts:14",
+        "tests/projections/ddd-postgresql.test.ts:15",
         "tests/relationship/postgresql-target.test.ts:8"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -3579,7 +3629,7 @@
       "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/ddd-postgresql.test.ts:7",
+        "tests/projections/ddd-postgresql.test.ts:8",
         "tests/projections/postgresql-relationship-layout.test.ts:5",
         "tests/relationship/postgresql-layout-proposal.test.ts:9"
       ],
@@ -3599,7 +3649,7 @@
       "story": "docs/helix/01-frame/user-stories/US-048-ddd-postgresql.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/ddd-postgresql.test.ts:16"
+        "tests/projections/ddd-postgresql.test.ts:17"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3608,9 +3658,9 @@
       "story": "docs/helix/01-frame/user-stories/US-049-ddd-graphql.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/projections/ddd-graphql.test.ts:75",
+        "tests/projections/ddd-graphql.test.ts:72",
         "tests/projections/ddd-graphql.test.ts:8",
-        "tests/relationship/keyed-ddd-graph.test.ts:9"
+        "tests/relationship/keyed-ddd-graph.test.ts:10"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3648,8 +3698,8 @@
         "tests/projections/ddd-graphql-entities.test.ts:29",
         "tests/projections/ddd-graphql.test.ts:19",
         "tests/projections/ddd-graphql.test.ts:49",
-        "tests/projections/ddd-graphql.test.ts:81",
-        "tests/projections/ddd-graphql.test.ts:91"
+        "tests/projections/ddd-graphql.test.ts:78",
+        "tests/projections/ddd-graphql.test.ts:88"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -3675,7 +3725,7 @@
       "evidence": [
         "tests/projections/ddd-graphql-core-fields.test.ts:7",
         "tests/projections/ddd-graphql-entities.test.ts:7",
-        "tests/projections/ddd-graphql.test.ts:75",
+        "tests/projections/ddd-graphql.test.ts:72",
         "tests/projections/ddd-graphql.test.ts:8"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -3687,7 +3737,7 @@
       "evidence": [
         "tests/projections/ddd-graphql.test.ts:28",
         "tests/projections/ddd-graphql.test.ts:40",
-        "tests/projections/ddd-graphql.test.ts:81"
+        "tests/projections/ddd-graphql.test.ts:78"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -4082,7 +4132,7 @@
       "story": "docs/helix/01-frame/user-stories/US-054-javascript-numeric.md",
       "status": "REVIEWED_EXCEPTION",
       "evidence": [
-        "scripts/javascript-numeric-browser.ts:3"
+        "scripts/javascript-numeric-browser.ts:4"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
@@ -5834,7 +5884,7 @@
         "tests/compilation/access-generator.test.ts:114",
         "tests/compilation/access-generator.test.ts:12",
         "tests/compilation/access-generator.test.ts:65",
-        "tests/compilation/access-schemas.test.ts:9"
+        "tests/compilation/access-schemas.test.ts:10"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -5855,7 +5905,7 @@
         "tests/compilation/access-generator.test.ts:201",
         "tests/compilation/access-generator.test.ts:22",
         "tests/compilation/access-generator.test.ts:226",
-        "tests/compilation/access-matrix.test.ts:23",
+        "tests/compilation/access-matrix.test.ts:24",
         "tests/compilation/access-raw-columns.test.ts:21",
         "tests/compilation/access-raw-columns.test.ts:27",
         "tests/compilation/access-raw-columns.test.ts:36",
@@ -5959,7 +6009,7 @@
       "status": "SATISFIED",
       "evidence": [
         "tests/access-temporal-profile.test.ts:1",
-        "tests/compilation/access-golden-vectors.test.ts:9"
+        "tests/compilation/access-golden-vectors.test.ts:10"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6541,11 +6591,11 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:16",
-        "tests/reference/reference.test.ts:22",
-        "tests/reference/reference.test.ts:28",
-        "tests/reference/reference.test.ts:75",
-        "tests/reference/reference.test.ts:89"
+        "tests/reference/reference.test.ts:17",
+        "tests/reference/reference.test.ts:23",
+        "tests/reference/reference.test.ts:30",
+        "tests/reference/reference.test.ts:77",
+        "tests/reference/reference.test.ts:91"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6554,8 +6604,8 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:22",
-        "tests/reference/reference.test.ts:69"
+        "tests/reference/reference.test.ts:23",
+        "tests/reference/reference.test.ts:71"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6564,7 +6614,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:16"
+        "tests/reference/reference.test.ts:17"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6573,7 +6623,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:35"
+        "tests/reference/reference.test.ts:37"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6582,10 +6632,10 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:35",
-        "tests/reference/reference.test.ts:42",
-        "tests/reference/reference.test.ts:51",
-        "tests/reference/reference.test.ts:62"
+        "tests/reference/reference.test.ts:37",
+        "tests/reference/reference.test.ts:44",
+        "tests/reference/reference.test.ts:53",
+        "tests/reference/reference.test.ts:64"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6594,7 +6644,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:80"
+        "tests/reference/reference.test.ts:82"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6603,7 +6653,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:80"
+        "tests/reference/reference.test.ts:82"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6612,7 +6662,7 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:80"
+        "tests/reference/reference.test.ts:82"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6622,7 +6672,7 @@
       "status": "REVIEWED_EXCEPTION",
       "evidence": [
         "scripts/reference/browser.ts:17",
-        "scripts/reference/browser.ts:48"
+        "scripts/reference/browser.ts:49"
       ],
       "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
     },
@@ -6631,8 +6681,8 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:89",
-        "tests/reference/reference.test.ts:97"
+        "tests/reference/reference.test.ts:91",
+        "tests/reference/reference.test.ts:99"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6641,27 +6691,153 @@
       "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/reference/reference.test.ts:107",
-        "tests/reference/reference.test.ts:28"
+        "tests/reference/reference.test.ts:109",
+        "tests/reference/reference.test.ts:30"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
     {
-      "id": "US-090-AC1",
-      "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
+      "id": "US-089-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/semantic-types/composition.test.ts:26",
-        "tests/semantic-types/composition.test.ts:46"
+        "tests/reference/reader.test.ts:5"
       ],
       "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC13",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/reference/reader.test.ts:24",
+        "tests/reference/reader.test.ts:38",
+        "tests/reference/reader.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC14",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/reference/reader.test.ts:24",
+        "tests/reference/reader.test.ts:38"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC15",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/reference/reader-browser.ts:14",
+        "scripts/reference/reader-browser.ts:34"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-089-AC16",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/reference/reader.test.ts:48",
+        "tests/reference/reader.test.ts:56"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC17",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/reference/ontology-browser.ts:16"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-089-AC18",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/reference/ontology-browser.ts:16"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-089-AC19",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/metamodel/authority-boundaries.test.ts:4",
+        "tests/metamodel/compiler-kernel.test.ts:1",
+        "tests/metamodel/constraint-review.test.ts:10"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC20",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/metamodel/compiler-kernel.test.ts:1",
+        "tests/metamodel/constraint-review.test.ts:10"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC21",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-089-AC22",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/metamodel/authority-boundaries.test.ts:4"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC23",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-089-AC24",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/metamodel/authority-boundaries.test.ts:4",
+        "tests/metamodel/compiler-kernel.test.ts:1",
+        "tests/metamodel/constraint-review.test.ts:10"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-089-AC25",
+      "story": "docs/helix/01-frame/user-stories/US-089-generated-reference.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-090-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-090-AC2",
       "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/semantic-types/core.test.ts:1",
         "tests/semantic-types/semantic-types.test.ts:1",
         "tests/semantic-types/semantic-types.test.ts:85"
       ],
@@ -6670,51 +6846,209 @@
     {
       "id": "US-090-AC3",
       "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/semantic-types/composition.test.ts:26",
-        "tests/semantic-types/composition.test.ts:60",
-        "tests/semantic-types/core.test.ts:1"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-090-AC4",
       "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/semantic-types/composition.test.ts:26",
-        "tests/semantic-types/composition.test.ts:69",
-        "tests/semantic-types/core.test.ts:1"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-090-AC5",
       "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
-      "status": "SATISFIED",
-      "evidence": [
-        "tests/semantic-types/composition.test.ts:60",
-        "tests/semantic-types/composition.test.ts:69",
-        "tests/semantic-types/composition.test.ts:78"
-      ],
-      "rationale": "A live Bun test carries a canonical citation."
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-090-AC6",
       "story": "docs/helix/01-frame/user-stories/US-090-core-semantic-types.md",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "scripts/core-semantic-types-browser.ts:1"
+      ],
+      "rationale": "A native or browser harness carries the canonical citation; the harness is executed by the conformance workflow rather than bun:test."
+    },
+    {
+      "id": "US-091-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/semantic-types/composition.test.ts:46"
+        "tests/access-unified-generation.test.ts:11"
       ],
       "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-091-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-091-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/access-unified-generation.test.ts:11"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-091-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/access-unified-generation.test.ts:11"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-091-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-091-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-091-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/access-unified-generation.test.ts:28"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-091-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-091-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/access-unified-browser.test.ts:5"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-091-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-091-ontology-access-description.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC1",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC2",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC3",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC4",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC5",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC6",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC7",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC8",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNCITED_COVERAGE",
+      "evidence": [
+        "tests/access-unified-browser.test.ts:5",
+        "tests/access-unified-generation.test.ts:11",
+        "tests/access-unified-generation.test.ts:28"
+      ],
+      "rationale": "A live test names the criterion, but its title/comment has not yet been promoted to canonical @covers form."
+    },
+    {
+      "id": "US-092-AC9",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "SATISFIED",
+      "evidence": [
+        "tests/access-unified-generation.test.ts:47"
+      ],
+      "rationale": "A live Bun test carries a canonical citation."
+    },
+    {
+      "id": "US-092-AC10",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC11",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
+    },
+    {
+      "id": "US-092-AC12",
+      "story": "docs/helix/01-frame/user-stories/US-092-portable-ontology-client.md",
+      "status": "UNTESTED",
+      "evidence": [],
+      "rationale": "No criterion-specific executable evidence was found; this is a traceability gap, not an implementation claim."
     },
     {
       "id": "US-900-AC1",
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/contracts.test.ts:15",
+        "tests/actions/contracts.test.ts:16",
         "tests/actions/corpus.test.ts:5"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -6724,7 +7058,7 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/contracts.test.ts:23"
+        "tests/actions/contracts.test.ts:24"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6733,7 +7067,7 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/contracts.test.ts:29",
+        "tests/actions/contracts.test.ts:30",
         "tests/actions/corpus.test.ts:5"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -6743,9 +7077,9 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/contracts.test.ts:37",
-        "tests/actions/contracts.test.ts:54",
-        "tests/actions/contracts.test.ts:65",
+        "tests/actions/contracts.test.ts:38",
+        "tests/actions/contracts.test.ts:55",
+        "tests/actions/contracts.test.ts:66",
         "tests/actions/corpus.test.ts:5"
       ],
       "rationale": "A live Bun test carries a canonical citation."
@@ -6755,13 +7089,13 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/assessment.test.ts:11",
-        "tests/actions/assessment.test.ts:18",
-        "tests/actions/assessment.test.ts:23",
-        "tests/actions/assessment.test.ts:28",
-        "tests/actions/contracts.test.ts:65",
-        "tests/actions/contracts.test.ts:71",
-        "tests/actions/reports.test.ts:14"
+        "tests/actions/assessment.test.ts:12",
+        "tests/actions/assessment.test.ts:19",
+        "tests/actions/assessment.test.ts:24",
+        "tests/actions/assessment.test.ts:29",
+        "tests/actions/contracts.test.ts:66",
+        "tests/actions/contracts.test.ts:72",
+        "tests/actions/reports.test.ts:15"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -6770,7 +7104,7 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/contracts.test.ts:65",
+        "tests/actions/contracts.test.ts:66",
         "tests/actions/corpus.test.ts:5",
         "tests/actions/preservation.test.ts:11",
         "tests/actions/preservation.test.ts:17"
@@ -6782,7 +7116,7 @@
       "story": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions/contracts.test.ts:46"
+        "tests/actions/contracts.test.ts:47"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7002,11 +7336,11 @@
       "story": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-plan.test.ts:103",
-        "tests/actions-plan.test.ts:24",
-        "tests/actions-plan.test.ts:62",
-        "tests/actions-plan.test.ts:75",
-        "tests/actions-plan.test.ts:98"
+        "tests/actions-plan.test.ts:104",
+        "tests/actions-plan.test.ts:25",
+        "tests/actions-plan.test.ts:63",
+        "tests/actions-plan.test.ts:76",
+        "tests/actions-plan.test.ts:99"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7015,7 +7349,7 @@
       "story": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-plan.test.ts:31"
+        "tests/actions-plan.test.ts:32"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7024,7 +7358,7 @@
       "story": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-plan.test.ts:36"
+        "tests/actions-plan.test.ts:37"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7033,8 +7367,8 @@
       "story": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-plan.test.ts:41",
-        "tests/actions-plan.test.ts:72"
+        "tests/actions-plan.test.ts:42",
+        "tests/actions-plan.test.ts:73"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7043,9 +7377,9 @@
       "story": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-plan.test.ts:51",
-        "tests/actions-plan.test.ts:61",
-        "tests/actions-plan.test.ts:85"
+        "tests/actions-plan.test.ts:52",
+        "tests/actions-plan.test.ts:62",
+        "tests/actions-plan.test.ts:86"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },
@@ -7054,12 +7388,12 @@
       "story": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
       "status": "SATISFIED",
       "evidence": [
-        "tests/actions-plan.test.ts:45",
-        "tests/actions-plan.test.ts:61",
-        "tests/actions-plan.test.ts:67",
-        "tests/actions-plan.test.ts:81",
-        "tests/actions-plan.test.ts:88",
-        "tests/actions-plan.test.ts:91"
+        "tests/actions-plan.test.ts:46",
+        "tests/actions-plan.test.ts:62",
+        "tests/actions-plan.test.ts:68",
+        "tests/actions-plan.test.ts:82",
+        "tests/actions-plan.test.ts:89",
+        "tests/actions-plan.test.ts:92"
       ],
       "rationale": "A live Bun test carries a canonical citation."
     },

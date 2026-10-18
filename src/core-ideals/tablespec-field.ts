@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
@@ -5,8 +6,8 @@ import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,TABLESPEC_EXTEN
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/kind-operation.schema.json';
+
+import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/tablespec-field-classification.schema.json';
 export {default as tableSpecFieldClassificationSchema} from '../../spec/core/tablespec-field-classification.schema.json';
 export interface TableSpecFieldRequest {column:number;mode:'strict'|'report';author?:CoreKindDeclaration}
@@ -16,12 +17,12 @@ export interface TableSpecFieldClassification {
  mapping:{origin:'classified';kind:'field';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-native-column-membership';outcome:'exact'|'unknown'};
  residuals:{path:string;value:Json;reason:string;recovery:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 /** Classify one checked native member. Does not infer scalar family, cardinality, requiredness or author intent. */
 export function classifyTableSpecField(input:Document,options:TableSpecFieldRequest):TableSpecFieldClassification & {diagnostics:Diagnostic[]} {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as TableSpecFieldRequest;
  if(!request||typeof request!=='object'||Array.isArray(request)||Object.keys(request).some(k=>!['column','mode','author'].includes(k))||!Number.isSafeInteger(request.column)||request.column<0||!['strict','report'].includes(request.mode))throw new UmfError('FIELD_CLASSIFICATION_REQUEST','Expected column index and strict/report policy');
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('FIELD_CLASSIFICATION_VERSION','Valid 0.2.0 envelope required; migrate explicitly');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('FIELD_CLASSIFICATION_VERSION','Valid 0.2.0 envelope required; migrate explicitly');
  const payload=source.extensions?.[TABLESPEC_EXTENSION];
  if(payload&&typeof payload==='object'&&!Array.isArray(payload)&&Object.hasOwn(payload,'splitFiles'))exportTableSpecBundle(source);else exportTableSpec(source);
  const nativeFragment=copyJson(getTableSpecColumn(source,request.column));

@@ -1,8 +1,8 @@
 /** Host-only pinned native discovery. No ideal classification or binding admission. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
 const name='umf-facets-postgresql-'+randomUUID();let created=false;

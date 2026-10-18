@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -499,7 +499,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -526,7 +526,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -664,9 +664,9 @@
   ],
   "sources": [
     {
-      "bytes": 4113,
+      "bytes": 4115,
       "path": "spec/projections/json-schema-protobuf.schema.json",
-      "sha256": "c273adaa4bcf3fa96841aa82d25f46dfc1da0a49e2b1ea0418940d0c0b1c1ed4"
+      "sha256": "aa50ec243ca3c00259ae5eccfcd3755f35cf428afc48343eeb8201651f7af795"
     }
   ],
   "summary": "spec/projections/json-schema-protobuf.schema.json",

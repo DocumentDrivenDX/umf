@@ -22,7 +22,7 @@
         },
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Profile-qualified TableSpec facet classification and authored projection with retained source meaning",
       "id": "umf.tablespec.facets",
       "schema": {
@@ -140,7 +140,7 @@
       "scopes": [
         "element"
       ],
-      "semantics": "CONTRACT-040 and TD-043; core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
+      "semantics": "CONTRACT-040 and TD-043; facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
       "version": "1.0.0"
     },
     "registration": {
@@ -161,9 +161,9 @@
   ],
   "sources": [
     {
-      "bytes": 3922,
+      "bytes": 3912,
       "path": "spec/extensions/tablespec-facets/package.json",
-      "sha256": "396215e5874f3f5ac15eea4db04e50828143c61786b361ccab64ef74301220d9"
+      "sha256": "5b66357bc01b5551337c090785c6b5906728724bc0d90cfbd16a89137bb2214f"
     }
   ],
   "summary": "Profile-qualified TableSpec facet classification and authored projection with retained source meaning",

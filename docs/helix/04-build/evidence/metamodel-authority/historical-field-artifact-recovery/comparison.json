@@ -1,0 +1,117 @@
+{
+  "sdkTag": "umf-v0.3.0",
+  "releaseCommit": "b832a897f5cafb5dbbc4f80ece99ae24ec9b2b4e",
+  "assetId": 649191792,
+  "assetUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.3.0/umf-sdk.tgz",
+  "archiveSha256": "a60ab9c3c190fc18a11ffd6968f6b6defc15c934e417979dee506f3cf425c943",
+  "comparisons": [
+    {
+      "path": "dist/avro-facet-selection.js",
+      "expected": "41585d6429f89433c7a411da50bdbf16dc6443b1df8aba9369ea08acd0f6a311",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/avro-facet-type.js",
+      "expected": "9a3aa9017c56f8035ec7d9bc34a82d5cbceb207c00365bc2d8335844e003b88c",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/facet-node-tree.js",
+      "expected": "a645f2b0e5bf508c5ecffbbec429ce3dc18779682903b390eb9143931ec59f84",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/facet-resolved-predicate.js",
+      "expected": "576516b438d43f38bd97ef178dfd08866cf063d0ee710e143458a1a5baf367be",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/parquet-facet-carrier.js",
+      "expected": "2ed245fbef1fad01031a3ac63be47297cddce4104f01b40335ce33e94d1462c7",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/parquet-facet-type.js",
+      "expected": "6a4b78cc200e1b2620a95bf8e3e4dd97600b06918823a65f4bad9ffeb574bc9e",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/postgresql-facet-catalog.js",
+      "expected": "4c543a78817ce838aaa77360ea876c8e5e1f8b2be3301244f1e7c124d54e2231",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/postgresql-facet-predicate.js",
+      "expected": "b56d7872a2a65fbc051526862c5eb61ab4293e6cfcb52bb69595e6d176d43d31",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/postgresql-facet-type.js",
+      "expected": "979a8b73b8b42d188a1e401b4b2cd02eaf63dd741125d2a4f0e03b42ccfe2d16",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/postgresql/libpg-query.wasm",
+      "expected": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
+      "archivedSdkSha256": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
+      "matches": true,
+      "present": true
+    },
+    {
+      "path": "dist/postgresql/runtime.js",
+      "expected": "22c52b9b6c371edce19b91dd87ab2b34ca4702c455e7fd04720703019e97870f",
+      "archivedSdkSha256": "83c28cb4e8f7288c66e2d242abcc093559052798c31d7752a907731208ab4abe",
+      "matches": false,
+      "present": true
+    },
+    {
+      "path": "dist/sqlserver-facet-constraints.js",
+      "expected": "b8762418bd201ebefa5f8c0226d027dabd7985c6e0a5e5eab76400d65c32bec8",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/sqlserver-facet-predicate.js",
+      "expected": "c395bae7e5cd101d835025ebcc62f66a20bb333935de1350f84941ea44a28878",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/sqlserver-facet-type.js",
+      "expected": "f2e1495438a3ab389ed5ba6442af178e50d6b4f9adabb4377907483768124d56",
+      "archivedSdkSha256": null,
+      "matches": false,
+      "present": false
+    },
+    {
+      "path": "dist/umf.js",
+      "expected": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b",
+      "archivedSdkSha256": "6f6e5bd9dde6fe49735f1e8ab1643cd39940c04ed6099c51f3e9b782b1b0c5c5",
+      "matches": false,
+      "present": true
+    }
+  ],
+  "createdAt": "2026-10-18T20:57:07.950409+00:00",
+  "scope": "Bounded recovery attempt for frozen historical field/facet artifacts; no old observation or hash was relabelled.",
+  "outcome": "No missing historical artifact recovered: SDK lacks standalone test bundles; only the already-available libpg-query.wasm matches. Current native qualification remains unknown for those original artifact pins."
+}

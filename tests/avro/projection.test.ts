@@ -1,12 +1,12 @@
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {importAvroSchema,projectAvroToJsonSchema,exportAvroBundle,importJsonSchema,coreSchema,avroJsonSchemaProjectionSchema} from '../../src';
+import {importAvroSchema,projectAvroToJsonSchema,exportAvroBundle,importJsonSchema,coreSchema,coreSemanticTypeReferenceSchema,avroJsonSchemaProjectionSchema} from '../../src';
 const policy={id:'avro-document',schemaId:'https://example.test/avro-order',long:'decimal-string',bytes:'hex-string',union:'untagged',lossPolicy:'allow-reported-loss'} as const;
 const text=await Bun.file('fixtures/avro/order.avsc').text();
 test('US-008-AC1: Avro shapes project with explicit losses and independently validated instances',async()=>{
  const source=importAvroSchema(text,{id:'order'});const result=projectAvroToJsonSchema(source,policy);
  expect(result.status).toBe('projected');expect(result.source).toEqual(source);
- const ajv=new Ajv({strict:false});ajv.addSchema(coreSchema);expect(ajv.compile(avroJsonSchemaProjectionSchema)(result)).toBe(true);
+ const ajv=new Ajv({strict:false});ajv.addSchema(coreSemanticTypeReferenceSchema);ajv.addSchema(coreSchema);expect(ajv.compile(avroJsonSchemaProjectionSchema)(result)).toBe(true);
  const validate=ajv.compile(JSON.parse(result.nativeSchema!));
  const datum={id:'9223372036854775807',status:'NEW',token:'00000000',tags:['雪'],labels:{label:'x'},parent:null,amount:'01',created:'1',payload:'00ff',active:true,score:1.5,ratio:2.25,count:1};
  expect(validate(datum)).toBe(true);expect(validate({...datum,parent:datum})).toBe(true);

@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
 /** Independent S15 component oracle. Expected values are authored here, not copied from engine output. */
 import * as api from '../../../src/index';
 const ref=(elementId:string)=>({documentId:'review-domain',moduleId:'model',elementId});
@@ -8,7 +9,7 @@ function fixture(kind='string',literal:any={string:'masked'},facets:any=undefine
  const field=(id:string,scalarType:string,nullability='required')=>({id,kind:'field',scalarType,nullability,cardinality:'one',extensions:{}});
  const key=(id:string)=>[{id:'pk',name:'Primary',fields:[{module:'model',element:id}]}];
  const elements:any[]=[{id:'Person',kind:'record',members:[{module:'model',element:'personId'}],keys:key('personId'),extensions:{}},field('personId','string'),{id:'Asset',kind:'record',members:['assetId','amount','active'].map(element=>({module:'model',element})),keys:key('assetId'),extensions:{}},field('assetId','string'),field('amount','integer'),field('active','boolean'),{...field('output',kind,literal===null?'absent-allowed':'required'),...(facets?{facets}: {})}];
- const document={umf:'0.8.0',id:'review-domain',vocabularies:{},modules:[{id:'model',namespace:'',elements}]};
+ const document={umf:CURRENT_CORE_VERSION,id:'review-domain',vocabularies:{},modules:[{id:'model',namespace:'',elements}]};
  const entity=(name:string,fields:string[])=>({type:ref(name),keyId:'pk',fields:fields.map(n=>({ref:ref(n),protection:n==='amount'?'protected':'unprotected'}))});
  const ontology={version:'0.1.0',documentId:'review-domain',revision:'ontology-original',documents:[{documentId:'review-domain',revision:'schema-original'}],subject:ref('Person'),entities:[entity('Person',['personId']),entity('Asset',['assetId','amount','active'])],associations:[],context:[],actions:['read','inspect-original']};
  const disposition={kind:'transformed',transform:'constant',version:'0.1.0',field:ref('output'),value:literal};

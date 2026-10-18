@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {fromBinary,createFileRegistry} from '@bufbuild/protobuf';
 import {FileDescriptorSetSchema} from '@bufbuild/protobuf/wkt';
 import Ajv2020 from 'ajv/dist/2020';
@@ -44,7 +45,7 @@ function payload(document:Document):ProtobufPayload {
  return copyJson(value) as unknown as ProtobufPayload;
 }
 export function importProtobufDescriptorSet(binary:Uint8Array,options:{id:string}):Document {
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[PROTOBUF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[PROTOBUF_EXTENSION]:{descriptorProfile:'protobuf-es-2.15.0',descriptorSet:readDescriptorSet(binary)} as unknown as Json}}]}]};
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[PROTOBUF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[PROTOBUF_EXTENSION]:{descriptorProfile:'protobuf-es-2.15.0',descriptorSet:readDescriptorSet(binary)} as unknown as Json}}]}]};
  payload(doc);return doc;
 }
 export function exportProtobufDescriptorSet(document:Document):Uint8Array {

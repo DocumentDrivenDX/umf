@@ -1,6 +1,6 @@
 import {test,expect} from 'bun:test';
 import {nullabilityTableSpecCases,tableSpecAvailabilitySource} from '../../scripts/core-ideals/nullability-tablespec-cases';
-import {classifyTableSpecNullability,verifyTableSpecNullabilityClassification,recoverTableSpecNullabilitySource,declareCoreNullability,writeJsonValue,readJsonValue,copyJson,importTableSpecBundle,upgradeFieldEnvelope,classifyTableSpecField,upgradeNullabilityEnvelope,TABLESPEC_NULLABILITY_EXTENSION,tableSpecNullabilityPackage,Registry,validateDocument} from '../../src';
+import {classifyTableSpecNullability, verifyTableSpecNullabilityClassification, recoverTableSpecNullabilitySource, declareCoreNullability, writeJsonValue, readJsonValue, copyJson, importTableSpecBundle, classifyTableSpecField, TABLESPEC_NULLABILITY_EXTENSION, tableSpecNullabilityPackage, Registry, validateDocument} from '../../src';
 import type {TableSpecNullabilityRequest} from '../../src';
 const request:TableSpecNullabilityRequest={column:0,profile:'runtime-model',context:null,carrier:'null-value',mode:'strict'};
 const source=()=>tableSpecAvailabilitySource('{"version":"1.0","table_name":"Orders","columns":[{"name":"id","data_type":"INTEGER","nullable":false}]}\n');
@@ -29,7 +29,7 @@ test('author provenance, role conflicts, stale models and forged binding metadat
  const changed=structuredClone(r.target!);changed.future=true;expect(()=>verifyTableSpecNullabilityClassification(r,changed)).toThrow();
  const scoped=structuredClone(s);scoped.modules[0]!.elements[0]!.extensions[TABLESPEC_NULLABILITY_EXTENSION]={future:true};scoped.vocabularies[TABLESPEC_NULLABILITY_EXTENSION]={version:'1.0.0'};expect(classifyTableSpecNullability(scoped,{...request,mode:'report'}).status).toBe('blocked');
  const incompatible=structuredClone(s);incompatible.vocabularies[TABLESPEC_NULLABILITY_EXTENSION]={version:'2.0.0'};expect(classifyTableSpecNullability(incompatible,{...request,mode:'report'}).status).toBe('blocked');
- const legacy=structuredClone(s);legacy.umf='0.2.0';expect(()=>classifyTableSpecNullability(legacy,request)).toThrow();
+ const legacy={...structuredClone(s),umf:'0.2.0'} as any;expect(()=>classifyTableSpecNullability(legacy,request)).toThrow();
  let invoked=false;const unsafe=Object.defineProperty({},'column',{enumerable:true,get(){invoked=true;return 0;}});expect(()=>classifyTableSpecNullability(s,unsafe as TableSpecNullabilityRequest)).toThrow();expect(invoked).toBe(false);
 });
 test('unknown native precision, escaped context keys and split sidecars remain exact',()=>{
@@ -37,6 +37,6 @@ test('unknown native precision, escaped context keys and split sidecars remain e
  const s=tableSpecAvailabilitySource(text);s.vocabularies.future={version:'1.0.0'};s.modules[0]!.elements[0]!.extensions.future={opaque:[null,'keep']};const r=classifyTableSpecNullability(s,{...request,context:'EU/~'});expect(r.target!.modules[0]!.elements[0]!.extensions.future).toEqual(s.modules[0]!.elements[0]!.extensions.future);const malformed=structuredClone(r.target!);delete (malformed.modules[0]!.elements[0]!.extensions[TABLESPEC_NULLABILITY_EXTENSION] as Record<string,unknown>).context;expect(validateDocument(malformed,new Registry().register(tableSpecNullabilityPackage)).valid).toBe(false);expect(r.mapping.nativePath).toEndWith('/members/EU~1~0');expect(recoverTableSpecNullabilitySource(r,r.target!)).toBe(text);
  expect(classifyTableSpecNullability(s,{...request,context:'__proto__'}).mapping.nullability).toBe('absent-allowed');
  const files={'table.yaml':'version: "1.0"\ntable_name: Orders\n','columns/id.yaml':'column:\n  name: id\n  data_type: INTEGER\n  nullable:\n    MD: false\n','notes.txt':'unknown sidecar\n'};
- const initial=importTableSpecBundle(files,{id:'split'}),field=classifyTableSpecField(upgradeFieldEnvelope(initial).target,{column:0,mode:'strict'}),upgraded=upgradeNullabilityEnvelope(field.target!).target;
+ const initial=importTableSpecBundle(files,{id:'split'}),field=classifyTableSpecField(initial,{column:0,mode:'strict'}),upgraded=field.target!;
  const split=classifyTableSpecNullability(upgraded,{...request,context:'MD'});expect(recoverTableSpecNullabilitySource(split,split.target!)).toEqual(files);
 });

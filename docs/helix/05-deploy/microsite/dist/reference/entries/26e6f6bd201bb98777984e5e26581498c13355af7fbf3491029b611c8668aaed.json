@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+        "target": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
       }
     ],
     "role": "operation",
@@ -450,7 +450,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
                 }
               }
             },
@@ -1154,7 +1154,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.3.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1299,14 +1299,14 @@
   "id": "[\"schema\",\"spec/core/nullability-sqlserver-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8990,
+      "bytes": 8991,
       "path": "spec/core/nullability-sqlserver-projection.schema.json",
-      "sha256": "129aee0fd3580dc3ca41a43b59f7899a33a33c5fcdd347cfd2ab8a7f664ee043"
+      "sha256": "6f9ab8d0ced0456ba4c6b5ec825959b1a4395a0fa568275db2fb5941ec10fd8a"
     }
   ],
   "summary": "spec/core/nullability-sqlserver-projection.schema.json",

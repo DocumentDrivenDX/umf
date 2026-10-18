@@ -1,15 +1,8 @@
 {
-  "scope": "Qualified scalar facet bindings across the five priority systems; retained recovery does not establish native equivalence",
-  "idealAdmitted": true,
-  "priorityDelivery": true,
+  "scope": "Current source round trips verified; historical native evidence is partially revalidated and current-core native qualification is unavailable",
+  "idealAdmitted": false,
+  "priorityDelivery": false,
   "nativeEquivalence": false,
-  "usefulSystems": [
-    "tablespec",
-    "postgresql",
-    "sqlserver",
-    "avro",
-    "parquet"
-  ],
   "evidence": {
     "systems": [
       "tablespec",
@@ -138,16 +131,17 @@
     }
   },
   "limits": [
-    "Profiles and native versions remain bounded by each binding acceptance record",
+    "Source round trips preserve authored meanings but do not establish current native qualification",
+    "Profiles and native versions remain bounded by each historical binding acceptance record",
     "Matching facets do not erase native refinements, execution differences or other residuals",
     "SQL recovery preserves captured catalogs; arbitrary DDL or live database discovery is not claimed",
     "Unknown extension content remains attached; no native concept is replaced"
   ],
   "sha256": {
-    "scripts/core-ideals/facets-conformance.ts": "2493daf433d6fcb92e504968a0d96b3c88d8df9348ab1aafb1314cb07799c162",
+    "scripts/core-ideals/facets-conformance.ts": "e618834a109cf6d5163a084a9ae6cff82ace82ecba682d7324073a6aa67f6509",
     "scripts/core-ideals/facets-evidence.ts": "6fd3dda475ea08e27bfe68500770193d5280d3d888c5ca63f5226a7af35db189",
     "scripts/core-ideals/facets-roundtrips.ts": "2222a522c8aa08f59aabcb5dee2821dead2bb718f8ea1cdd9daa78ac7e435216",
-    "tests/core-ideals/facets-conformance.test.ts": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
+    "tests/core-ideals/facets-conformance.test.ts": "695d2bdc16167ca978bfbf2c2afa151ebc684a0baab726a0bd8c28860cf34659",
     "tests/core-ideals/facets-evidence.test.ts": "f35220a245c517e60efd2d2fa59e00187a205bb79c3cd345d91273720893a6bf",
     "fixtures/validation/facets-worktree-revalidation.json": "e6c06c9ac1a4e7b18cefc422a1c0efda3f138e6f20f3826a8a79a83d3947e354",
     "fixtures/validation/facets-avro-exact-input-browser.json": "0c33d46947757f0f77e521ed695302aeee942eaa9adc0d20514318d9cb63ab50",
@@ -220,5 +214,23 @@
       "semanticResultsRetainedFrom": "fixtures/validation/relationship-integrated-final/doc-links-28695092b89040a58a717759c550b504/before/fixtures/validation/facets-conformance.json",
       "semanticResultsSourceSha256": "56e89302539ac05938b58859358368549c23f7902af4473cf09624c8ee379017"
     }
+  ],
+  "sourceOperationsVerified": true,
+  "sourceUsefulSystems": [
+    "tablespec",
+    "postgresql",
+    "sqlserver",
+    "avro",
+    "parquet"
+  ],
+  "historicalQualification": "PARTIALLY_REVALIDATED",
+  "currentNativeQualification": "UNQUALIFIED",
+  "qualifiedBindings": 0,
+  "nativeEvidenceSystems": [
+    "tablespec",
+    "postgresql",
+    "sqlserver",
+    "avro",
+    "parquet"
   ]
 }

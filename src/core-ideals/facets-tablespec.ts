@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {readJsonValue} from '../model/serialization';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
@@ -7,7 +8,7 @@ import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,getTableSpecTab
 import {inspectTableSpecFacetSuite} from './tablespec-facet-suite';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import core from '../../spec/core/facet-document.schema.json';import authorSchema from '../../spec/core/facet-operation.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
+import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/tablespec-facet-classification.schema.json';
 import manifest from '../../spec/extensions/tablespec-facets/package.json';
 export const TABLESPEC_FACETS_EXTENSION='umf.tablespec.facets';
@@ -25,7 +26,7 @@ export interface TableSpecFacetClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;facets:CoreFacetPatch;observations:Observation[]};
  residuals:{path:string;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 function nativeArchive(source:Document):string|Record<string,string>{const p=source.extensions?.[TABLESPEC_EXTENSION];return p&&typeof p==='object'&&!Array.isArray(p)&&Object.hasOwn(p,'splitFiles')?exportTableSpecBundle(source):exportTableSpec(source);}
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
@@ -39,7 +40,7 @@ function count(n:NativeJson|undefined,min:number):number|undefined{
 export function classifyTableSpecFacets(input:Document,options:TableSpecFacetRequest):TableSpecFacetClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as TableSpecFacetRequest;
  if(!checkRequest(request))throw new UmfError('TABLESPEC_FACET_REQUEST',JSON.stringify(checkRequest.errors));
- if(source.umf!=='0.5.0'||!validateDocument(source).valid)throw new UmfError('TABLESPEC_FACET_SOURCE','Valid core 0.5.0 required; migrate explicitly');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('TABLESPEC_FACET_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  nativeArchive(source);const fragment=getTableSpecColumn(source,request.column);if(fragment.kind!=='object')throw new UmfError('TABLESPEC_FACET_COLUMN','Expected native column');
  const mi=source.modules.findIndex(m=>m.id==='table'),element=source.modules[mi]!.elements[request.column]!,members=fragment.members;
  const base=`/extensions/umf.tablespec/root/members/columns/items/${request.column}`,idealPath=`/modules/${mi}/elements/${request.column}/facets`;
@@ -128,7 +129,7 @@ export function classifyTableSpecFacets(input:Document,options:TableSpecFacetReq
  if(conflict||request.mode==='strict'&&result.residuals.length)result.status='blocked';
  else{
   const target=copyJson(source) as unknown as Document,selected=target.modules[mi]!.elements[request.column]!;
-  if(!request.author&&Object.keys(result.mapping.facets).length)selected.facets=copyJson(result.mapping.facets);
+  if(!request.author&&Object.keys(result.mapping.facets).length)selected.facets=copyJson(result.mapping.facets) as unknown as NonNullable<typeof selected.facets>;
   target.vocabularies[TABLESPEC_FACETS_EXTENSION]??={version:'1.0.0'};
   selected.extensions[TABLESPEC_FACETS_EXTENSION]=copyJson({origin:'classified',binding:{id:binding.id,version:binding.version},profile:request.profile,input:request.input,obligation:request.obligation,outcome:result.outcome,observations:result.mapping.observations});
   if(!validateDocument(target).valid)throw new UmfError('TABLESPEC_FACET_TARGET','Classification would violate core facet constraints');result.target=target;

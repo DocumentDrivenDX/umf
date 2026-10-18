@@ -1,0 +1,83 @@
+{"testProcess":"tests/metamodel/authority-boundaries.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/metamodel/authority-boundaries.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/metamodel/authority-boundaries.test.ts:
+(pass) current-core authority boundaries > rejects static and dynamic imports of retired resources [3.04ms]
+(pass) current-core authority boundaries > retired source cannot quietly remain distributed [0.03ms]
+(pass) current-core authority boundaries > compiler cannot depend on generated core admission [1.03ms]
+(pass) current-core authority boundaries > runtime cannot reach host compiler or inert historical evidence [0.30ms]
+(pass) current-core authority boundaries > old dispatch and constructed core markers reject, independent native versions survive [1.62ms]
+(pass) current-core authority boundaries > transitive compiler bootstrap dependencies reject while erased type dependencies do not [0.38ms]
+(pass) current-core authority boundaries > host producers and schema generators cannot reintroduce old core authority [1.41ms]
+(pass) current-core authority boundaries > explicit refusal controls cannot exempt unguarded or changed producers [1.48ms]
+(pass) current-core authority boundaries > Python host producers reject explicit retired marker pins and refs [2.72ms]
+(pass) current-core authority boundaries > schema document refs and package core identity reject independently versioned receipts do not [0.34ms]
+(pass) current-core authority boundaries > published inventories reject stale hosts, wheel schemas and inert archives [1.21ms]
+(pass) current-core authority boundaries > browser enforcement rejects host and dynamic code primitives [2.98ms]
+
+ 12 pass
+ 0 fail
+ 76 expect() calls
+Ran 12 tests across 1 file. [379.00ms]
+{"testProcess":"tests/metamodel/authority-boundaries.test.ts","exitCode":0,"pass":12,"fail":0,"assertions":76,"completeSummary":true,"logSha256":"532a62f6689d3b340a42b716d8d16c265571bb5d9e28c1f57b2bff40253843ef"}
+{"testProcess":"tests/security-record-type-journal.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/security-record-type-journal.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/security-record-type-journal.test.ts:
+(pass) explicit transition journal reconciles multiple typed Fields without issuer authority [289.04ms]
+
+ 1 pass
+ 0 fail
+ 48 expect() calls
+Ran 1 test across 1 file. [1.52s]
+{"testProcess":"tests/security-record-type-journal.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":48,"completeSummary":true,"logSha256":"10f2c9c237cb5b1836348cd5a2201cf80960a0a71ce32ee6c986419cb4471514"}
+{"testProcess":"tests/security/core-extension-closure.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/security/core-extension-closure.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/security/core-extension-closure.test.ts:
+(pass) current products action extension survives explicit source custody and real policy compilation [216.86ms]
+(pass) absent or forged closure cannot grant extension interpretation [1.95ms]
+(pass) only exact original selected extension version is admitted, not callback or hash claims [0.06ms]
+(pass) unregistered vocabulary and malformed actions retain fail-closed behavior [106.21ms]
+(pass) registry access cannot mutate subsequent captures or original source snapshots [113.12ms]
+(pass) selection accessors never execute and mutable public package cannot drift from retained closure [36.19ms]
+(pass) actions metadata cannot be widened before the closure module loads in a fresh process [1530.28ms]
+
+ 7 pass
+ 0 fail
+ 32 expect() calls
+Ran 7 tests across 1 file. [4.10s]
+{"testProcess":"tests/security/core-extension-closure.test.ts","exitCode":0,"pass":7,"fail":0,"assertions":32,"completeSummary":true,"logSha256":"19884b096139b3bedc573e7f25ebba4a38a7787a389ec7fb9db85fff0d4f3110"}
+{"testProcess":"tests/security/preparation-sources.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/security/preparation-sources.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/security/preparation-sources.test.ts:
+(pass) authored owner profile actually passes existing logical write consumer for original/proposed products [258.56ms]
+(pass) native Subject carrier uses original String Key codec with exact Unicode and explicit refusal domains [46.56ms]
+(pass) historical native preparation cannot qualify the authored current logical declaration [120.04ms]
+(pass) current Subject codec retains accessor and refined-domain refusals without native authority [2.28ms]
+(pass) host CLI refuses unsupported native preparation and malformed UTF8 without issuing output [2826.97ms]
+
+ 5 pass
+ 0 fail
+ 26 expect() calls
+Ran 5 tests across 1 file. [4.92s]
+{"testProcess":"tests/security/preparation-sources.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":26,"completeSummary":true,"logSha256":"3092019834e966121d47a59b703d5fbe33867a47262f2dd14af072c3581b5374"}
+{"testProcess":"tests/traceability/acceptance-ledger.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/traceability/acceptance-ledger.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/traceability/acceptance-ledger.test.ts:
+(pass) every governed acceptance criterion has one auditable traceability classification [2999.66ms]
+(pass) partial security citations never close the open backend acceptance gate [1607.43ms]
+(pass) the PostgreSQL generator browser-parity criterion retains reviewed harness evidence [1666.00ms]
+
+ 3 pass
+ 0 fail
+ 1136 expect() calls
+Ran 3 tests across 1 file. [6.69s]
+{"testProcess":"tests/traceability/acceptance-ledger.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":1136,"completeSummary":true,"logSha256":"cf98e1a22442268e0f72f65fc4b20b689301cf76ea904012ac018300f8d33322"}
+
+ 28 pass
+ 0 fail
+ 1318 expect() calls
+Ran 28 tests across 5 files. [17.74s]

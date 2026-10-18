@@ -1,6 +1,7 @@
 """Original Rust fixture source/IR Boolean correspondence; conditional, not induction."""
 import copy,hashlib,json,os,subprocess
 from pathlib import Path
+CURRENT_CORE_VERSION = json.loads(Path('spec/metamodel/generated/python-shapes.json').read_text())['currentVersion']
 import z3
 SELF=Path('tools/security/prove-original-graph-ir.py')
 if Path(__file__).resolve()!=SELF.resolve():raise RuntimeError('Unknown formal generator source')
@@ -8,6 +9,7 @@ ROOT=Path('/Users/erik/Projects/weft');TOOL=Path('/private/tmp/weft-toolchain/ru
 def sha(b):return hashlib.sha256(b).hexdigest()
 def text(v):return json.dumps(v,separators=(',',':'))
 paths=[SELF,Path('tests/security/weft-source-fixture.json'),ROOT/'Cargo.toml',ROOT/'Cargo.lock',ROOT/'crates/weft-core/Cargo.toml',ROOT/'.cargo/config.toml']+sorted(p for p in (ROOT/'vendor/ahash').rglob('*') if p.is_file())+sorted((ROOT/'crates/weft-core/src').glob('*.rs'))+sorted((ROOT/'spec/upstream').glob('*.json'))+[ROOT/'crates/weft-core/examples/security_candidate_ir.rs',ROOT/'docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md',Path('docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md'),Path('docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md')]
+paths += [Path('spec/metamodel/generated/python-shapes.json').resolve()]
 pins={str(p):sha(p.read_bytes()) for p in paths}
 env={**os.environ,'PATH':str(TOOL)+os.pathsep+os.environ.get('PATH',''),'CARGO_HOME':'/private/tmp/weft-toolchain/cargo'}
 command=[str(TOOL/'cargo'),'build','--offline','--locked','-p','weft-core','--example','security_candidate_ir','--target-dir','/private/tmp/umf-security-weft-bridge-target']
@@ -15,6 +17,7 @@ r=subprocess.run(command,cwd=ROOT,env=env,capture_output=True,text=True,timeout=
 if r.returncode:raise RuntimeError(r.stderr)
 binary=Path('/private/tmp/umf-security-weft-bridge-target/debug/examples/security_candidate_ir');binary_digest=sha(binary.read_bytes())
 f=json.loads(Path('tests/security/weft-source-fixture.json').read_text());doc=f['resolution']['documents'][0]['document'];ontology=f['resolution']['ontology'];policy=f['policy'];ontology['version']='0.2.0';policy['version']='0.2.0';ontology['revision']='draft2';policy['ontology']['revision']='draft2'
+if doc.get('umf') != CURRENT_CORE_VERSION:raise RuntimeError('Current-core native qualification unavailable: upstream source fixture uses a retired core envelope')
 original=ontology['associations'];ontology['entities'] += [{k:v for k,v in a.items() if k!='endpoints'} for a in original];ontology['associations']=[{'kind':'record-members','type':a['type'],'keyId':a['keyId'],'endpoints':a['endpoints']} for a in original]
 ref={'documentId':'domain','moduleId':'m','relationshipId':'WorksOn'}
 doc['modules'][0]['relationships']=[{'id':'WorksOn','name':'WorksOn','source':[{'module':'m','element':'Staff'}],'target':[{'module':'m','element':'Project','key':'pk'}],'sourceMultiplicity':{'min':0,'max':'*'},'targetMultiplicity':{'min':0,'max':'*'},'targetLifecycle':'independent','directed':True}]
@@ -57,7 +60,7 @@ def ir(e,bindings):
  raise AssertionError(op)
 cases=[];artifacts=[]
 for name,condition in [('nested',nested),('negated',{'op':'not','arg':nested})]:
- policy['rules'][0]['condition']=condition;doc_json=text(doc);request={'modules':[{'documentJson':doc_json,'pin':{'documentId':'domain','revision':'schema-1','umfVersion':'0.8.0','sha256':sha(doc_json.encode())},'selectedModuleIds':['m']}],'policyJson':text(policy),'ontologyJson':text(ontology)}
+ policy['rules'][0]['condition']=condition;doc_json=text(doc);request={'modules':[{'documentJson':doc_json,'pin':{'documentId':'domain','revision':'schema-1','umfVersion':CURRENT_CORE_VERSION,'sha256':sha(doc_json.encode())},'selectedModuleIds':['m']}],'policyJson':text(policy),'ontologyJson':text(ontology)}
  assert sha(binary.read_bytes())==binary_digest
  run=subprocess.run([str(binary)],input=text(request),text=True,capture_output=True,timeout=10)
  assert sha(binary.read_bytes())==binary_digest
@@ -126,7 +129,7 @@ def mixed_ir(e,bindings):
 mixed={'op':'exists','association':raw_ref,'as':'owner','where':{'op':'and','args':[eq(endpoint('owner','resource'),{'kind':'resource','identity':True}),{'op':'exists','association':ref,'as':'assignment','where':{'op':'and','args':[eq(endpoint('assignment','staff'),{'kind':'subject','identity':True}),eq(endpoint('assignment','project'),endpoint('owner','project'))]}}]}}
 for name,condition in [('mixed',mixed),('mixed-negated',{'op':'not','arg':mixed})]:
  policy['rules'][0]['condition']=condition;doc_json=text(doc)
- request={'modules':[{'documentJson':doc_json,'pin':{'documentId':'domain','revision':'schema-1','umfVersion':'0.8.0','sha256':sha(doc_json.encode())},'selectedModuleIds':['m']}],'policyJson':text(policy),'ontologyJson':text(ontology)}
+ request={'modules':[{'documentJson':doc_json,'pin':{'documentId':'domain','revision':'schema-1','umfVersion':CURRENT_CORE_VERSION,'sha256':sha(doc_json.encode())},'selectedModuleIds':['m']}],'policyJson':text(policy),'ontologyJson':text(ontology)}
  assert sha(binary.read_bytes())==binary_digest
  run=subprocess.run([str(binary)],input=text(request),text=True,capture_output=True,timeout=10)
  assert sha(binary.read_bytes())==binary_digest

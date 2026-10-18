@@ -48,9 +48,9 @@ function requireReciprocal(result:Pick<AccessResult,'dispositions'|'obligations'
 }
 
 // @covers US-080-AC3
-// Independently authored core0.8 + actual PostgreSQL18 declaration; NOT native execution.
+// Independently authored current core + PostgreSQL18 declaration; NOT native execution.
 test('authored selected/reached census scope is frozen independently of generator output',async()=>{
- expect(sha(await Bun.file(fixturePath).text())).toBe('64ab3e48dc1fcc53249cdeddecd3db06e93a2345ded28fe0366757d0d84eadca');
+ expect(sha(await Bun.file(fixturePath).text())).toBe('fd6ddcbf2b30541458330ca697bd8c9c068e63bb881877bc0f9b474a972daf71');
  expect(authored.counts).toEqual({headers:6,metadata:5,selected:135,dependency:37});
  expect(allExpected.length).toBe(183);expect(new Set(allExpected).size).toBe(183);
  expect(sha(exactSource(authored.logical))).toBe(authored.sourceSha256.logical);

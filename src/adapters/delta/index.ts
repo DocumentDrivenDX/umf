@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/delta/package.json';
 import grammar from '../../../spec/extensions/delta/datatype-schema.json';
 import {Registry} from '../../registry/registry';
@@ -40,7 +41,7 @@ function payload(document:Document):Payload{
  const checked=inspectDelta(document);if(!checked.valid)throw new UmfError('DELTA_DOCUMENT',JSON.stringify(checked.diagnostics));
  const value=document.modules.find(m=>m.id==='schema')?.elements.find(e=>e.id==='schema')?.extensions[DELTA_EXTENSION];if(!value||document.vocabularies[DELTA_EXTENSION]?.version!=='0.1.0')throw new UmfError('DELTA_PAYLOAD','Expected pinned Delta schema payload');return copyJson(value) as unknown as Payload;
 }
-export function importDeltaSchema(text:string,options:{id:string}):Document{const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[DELTA_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[DELTA_EXTENSION]:{profile:'delta-schema-json',root:parseNativeJson(text)} as unknown as Json}}]}]};payload(document);return document;}
+export function importDeltaSchema(text:string,options:{id:string}):Document{const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[DELTA_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[DELTA_EXTENSION]:{profile:'delta-schema-json',root:parseNativeJson(text)} as unknown as Json}}]}]};payload(document);return document;}
 export function exportDeltaSchema(document:Document){const p=payload(document);if(inspectDelta(document).diagnostics.some(d=>d.code==='DELTA_REPRESENTATION'))throw new UmfError('DELTA_EXPORT','Unknown representation fields cannot be discarded');return renderTree(p.root);}
 export function getDeltaNode(document:Document,path:string){let n=payload(document).root;for(const key of nativePointer(path))n=treeChild(n,key);return copyJson(n) as unknown as NativeJson;}
 export function proposeDeltaNodeEdit(document:Document,path:string,text:string){const p=payload(document),parts=nativePointer(path),replacement=parseNativeJson(text);if(!parts.length)p.root=replacement;else{let n=p.root;for(const key of parts.slice(0,-1))n=treeChild(n,key);const key=parts.at(-1)!;treeChild(n,key);if(n.kind==='object')n.members[key]=replacement;else if(n.kind==='array')n.items[Number(key)]=replacement;else throw new UmfError('DELTA_EDIT','Expected existing node');}const next=copyJson(document) as unknown as Document;next.modules.find(m=>m.id==='schema')!.elements.find(e=>e.id==='schema')!.extensions[DELTA_EXTENSION]=p as unknown as Json;payload(next);return {document:next,validation:inspectDelta(next)};}

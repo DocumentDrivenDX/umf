@@ -29,8 +29,8 @@ the representation direction without claiming backward compatibility evidence.
 
 Use YAML-first, JSON-compatible artifacts with JSON Schema as the starting
 structural validation mechanism. Keep semantic validation separate and operate
-translators against a shared programmatic model. JSON Schema may remain the
-mechanically authoritative bootstrap definition when self-description is added.
+translators against a shared programmatic model. ADR-005 supersedes permanent bootstrap-schema authority: the authored UMF
+metamodel generates current JSON Schema and portable semantic rules.
 
 This decision selects a bootstrap representation boundary, not a host language,
 JSON Schema dialect, model class hierarchy, or exact serialization contract.

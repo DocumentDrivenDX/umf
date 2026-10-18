@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
 import {sqlserverKeyAuthors,sqlserverKeyProjectionCases} from '../../scripts/core-ideals/key-sqlserver-projection-cases';
-import {projectKeysToSqlServer,verifyKeysSqlServerProjection,recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {projectKeysToSqlServer, verifyKeysSqlServerProjection, recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const row of sqlserverKeyProjectionCases())test('SQL Server authored keys: '+row.name,()=>{
  const before=JSON.stringify(row),r=projectKeysToSqlServer(row.source,row.authors,row.request);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings.length).toBe(row.authors.length);expect(r.residuals.filter(x=>/\/keys\//.test(x.path)).length).toBeGreaterThanOrEqual(row.authors.length);if(row.expectedEquality)expect(r.mappings[0]!.equality).toBe(row.expectedEquality);
  if(r.status==='blocked'){expect(r.nativeSql).toBeUndefined();expect(r.target).toBeUndefined();return;}
@@ -32,10 +32,10 @@ test('forged receipts, altered SQL, session settings and missing residuals refus
  expect(()=>recoverKeysSqlServerIdeal(r,{format:'sqlserver-ddl',sql:r.nativeSql!.replace('PRIMARY KEY','UNIQUE')})).toThrow();
 });
 test('generated native evidence records actual enforcement and source fingerprints',async()=>{
- const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-sqlserver-projection-native.json').json();
+ const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-sqlserver-projection-native.json').json(),history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
  expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.projected).toBe(19);expect(proof.blocked).toBe(7);expect(proof.verifiedConstraints).toBe(39);expect(proof.rows.length).toBe(73);expect(proof.recoveryCount).toBe(21);
  for(const row of proof.rows)expect(row.actual.error).toBe(row.error);
- for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(hash as string);
+ for(const [path,hash] of Object.entries(proof.sha256)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(hash as string);}
 });
 test('expanded key column limit includes encoding helpers and preserves blocked source',async()=>{
  const {declareCoreKey,declareCoreRecordMembers}=await import('../../src/model/keys'),c=sqlserverKeyAuthors();

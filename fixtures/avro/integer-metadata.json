@@ -3,7 +3,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.0000000000000000001,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "precision1.0000000000000000001",
         "vocabularies": {
           "umf.avro": {
@@ -163,7 +163,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1e-400,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "precision1e-400",
         "vocabularies": {
           "umf.avro": {
@@ -323,7 +323,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":9007199254740993,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "precision9007199254740993",
         "vocabularies": {
           "umf.avro": {
@@ -483,7 +483,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":-0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "precision-0",
         "vocabularies": {
           "umf.avro": {
@@ -643,7 +643,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.00e0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "precision1.00e0",
         "vocabularies": {
           "umf.avro": {
@@ -806,7 +806,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.0000000000000000001}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "scale1.0000000000000000001",
         "vocabularies": {
           "umf.avro": {
@@ -966,7 +966,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1e-400}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "scale1e-400",
         "vocabularies": {
           "umf.avro": {
@@ -1126,7 +1126,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":9007199254740993}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "scale9007199254740993",
         "vocabularies": {
           "umf.avro": {
@@ -1286,7 +1286,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":-0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "scale-0",
         "vocabularies": {
           "umf.avro": {
@@ -1446,7 +1446,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.00e0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "scale1.00e0",
         "vocabularies": {
           "umf.avro": {
@@ -1609,7 +1609,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.0000000000000000001,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "size1.0000000000000000001",
         "vocabularies": {
           "umf.avro": {
@@ -1769,7 +1769,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1e-400,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "size1e-400",
         "vocabularies": {
           "umf.avro": {
@@ -1929,7 +1929,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":9007199254740993,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "size9007199254740993",
         "vocabularies": {
           "umf.avro": {
@@ -2089,7 +2089,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":-0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "size-0",
         "vocabularies": {
           "umf.avro": {
@@ -2249,7 +2249,7 @@
     {
       "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.00e0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "size1.00e0",
         "vocabularies": {
           "umf.avro": {

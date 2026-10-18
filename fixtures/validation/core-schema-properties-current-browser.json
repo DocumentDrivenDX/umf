@@ -1,0 +1,30 @@
+{
+  "scope": "Current core validation, public authoring/default operations, and retired-marker refusal; native bindings/admission not claimed",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "cases": 38,
+    "recoveries": 2,
+    "refusals": 13,
+    "getterCalls": 0,
+    "extensionChecks": 6,
+    "unknownUnitChecks": 4
+  },
+  "externalRequests": [],
+  "bundleSha256": "753cdb246cbecdeea02cf481a8fa6e3d43428d92e22c1ed90b0e378970b9172a",
+  "sha256": {
+    "src/model/selection.ts": "27b1fe936fc1ddaf5fdb3f57226950c303984e1de67100d2e223e6db60711a00",
+    "src/model/selection-schemas.ts": "58edce1a1e4a88866f13ff56431776ccdaade6c4ac3c2a8705dade3b82de6a58",
+    "spec/core/schema-properties-selection.schema.json": "893cf29692b0ba9c21037a90e0361b8adc19a2c3007cee84f22092276004f641",
+    "src/model/schema-literals.ts": "fefe6634e8b81d5bc8a51af2e6f03215a6a39d7f168b2b5c319eed7fe55703e9",
+    "src/model/schema-properties.ts": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41",
+    "src/validation/schema-properties.ts": "6d2ab83d0753d201f9f13e112d3ef247dbc54905c705b619ad9a8b072b36fd94",
+    "src/validation/document.ts": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe",
+    "src/model/types.ts": "74d776d2837c2476b1721eab933002b8526049cbae7368eb339022bef8306c71",
+    "src/index.ts": "c02a73ee76fb10097f9de6f047fb1dd6f27ee828f5e9369cc4595c9f167300a9",
+    "spec/core/schema.json": "58d8de05c1f684017e8c426aae934c37485ee4728e9d9c1b5e743ada02a154d7",
+    "scripts/core-schema-properties-browser.ts": "f4b343df40176688d20b71aa32576b80e8ebd3f4513d5685e63612dd6cbea31c",
+    "scripts/core-schema-properties-cases.ts": "0dc59aeb527e1cd163a0b97a4e8dc584dd1f8aa9935a851c3761941579db4a90",
+    "tests/core/schema-properties.test.ts": "7b04cc37c5a3475450a340ce66b917c5d5901428a2d7084bf5e61a61d49d7f7e",
+    "tests/core/schema-properties-review.test.ts": "1aa5db04a4ee09063db66722b3bbc560daf421681c4491d0784fce24b35fed66"
+  }
+}

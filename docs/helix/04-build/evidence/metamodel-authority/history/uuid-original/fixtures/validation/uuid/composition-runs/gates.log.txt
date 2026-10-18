@@ -1,0 +1,10 @@
+{
+  profile: "uuid-model2",
+  fiveTargetCompositionDelivery: true,
+  nativeEquivalence: false,
+  consumerRuntimeAdoption: false,
+  stages: [ "mixed", "containers", "associations", "associations-polymorphic" ],
+  systems: [ "postgresql", "sqlserver", "avro", "parquet", "tablespec" ],
+  nativeReturnedRows: 72,
+  sourceRecoveries: 116,
+}

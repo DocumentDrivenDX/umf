@@ -6,7 +6,7 @@ export class ProtectionLiteralBudget {
  step(units=1){this.work+=units;if(this.work>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: literal work exceeds100000 units');}
  reserveText(units:number):void{if(!Number.isSafeInteger(units)||units<0)throw new UmfError('PROTECTION_LITERAL_BOUND','Invalid retained text charge');this.text+=units;if(this.text>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: retained identity text exceeds100000 units');}
  retain(identity:string):string{this.reserveText(identity.length);return identity;}
- private numeric(field:Element,value:CoreLiteral){
+ private numeric(field:Element,value:unknown){
   if(value===null||typeof value!=='object')return;
   const token=(value as any)[field.scalarType==='decimal'?'decimalToken':'integerToken'];
   if(typeof token!=='string'){for(const v of Object.values(value))if(typeof v==='string')this.step(v.length);if((value as any).map)for(const key of Object.keys((value as any).map))this.step(key.length);return;}this.step(token.length);
@@ -21,7 +21,7 @@ export class ProtectionLiteralBudget {
   if(size>BigInt(100_000-this.text))throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: normalized coefficient text exceeds100000 units');
   this.text+=Number(size);
  }
- check(doc:Document,field:Element,value:CoreLiteral){
+ check(doc:Document,field:Element,value:unknown){
   checkSchemaLiteralTracked(doc,field,value,(_doc,f,v)=>{
    this.step();this.numeric(f,v);if((f.facets as any)?.integerWidth)this.numeric(f,v);
    const facets=f.facets as any;
@@ -29,7 +29,7 @@ export class ProtectionLiteralBudget {
    for(const candidate of (f.allowedValues??[]) as CoreLiteral[]){this.step();this.numeric(f,candidate);this.numeric(f,v);}
   });
  }
- identity(doc:Document,field:Element,value:CoreLiteral):string{
+ identity(doc:Document,field:Element,value:unknown):string{
   this.check(doc,field,value);this.numeric(field,value);this.step();
   return this.retain(literalIdentity(field,value));
  }

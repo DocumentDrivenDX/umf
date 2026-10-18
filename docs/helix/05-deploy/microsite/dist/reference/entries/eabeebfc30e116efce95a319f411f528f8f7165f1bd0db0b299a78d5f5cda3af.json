@@ -12,16 +12,18 @@
         "inputHashes": [],
         "limitations": [
           "Recorded scope only; native equivalence and production adoption are separate.",
+          "Source authoring and round trips do not establish current-core native equivalence",
+          "Historical native subsets remain bounded by their original acceptance records",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
-        "outcome": "passed",
+        "outcome": "failed",
         "readerId": "core-gate",
-        "scope": "Qualified Field ideal gate; native evidence retained and fingerprint-checked, not rerun by this command",
+        "scope": "Current Field authoring and receipt behavior is reported separately from partially revalidated historical native evidence; current-core native qualification is unavailable",
         "selector": "",
         "source": {
-          "bytes": 2458,
+          "bytes": 811170,
           "path": "fixtures/validation/field-conformance.json",
-          "sha256": "370bae1ea9f66ff435762e00044c2479a29129af3451a17451599ccc134b2141"
+          "sha256": "8206fed43f56b5f368f97cef3336a294405aed1f0058c2689197a3ebd84937b7"
         },
         "supersedes": [],
         "versions": {}

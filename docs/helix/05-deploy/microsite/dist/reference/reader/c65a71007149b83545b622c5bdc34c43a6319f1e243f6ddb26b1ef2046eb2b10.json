@@ -23,6 +23,24 @@
     },
     {
       "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "validation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordFieldValue\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "CoreRecordFieldValue[]"
+    },
+    {
+      "description": "",
       "links": [],
       "name": "operation",
       "optional": false,
@@ -40,27 +58,9 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreRecordFieldValue\"]"
-      ],
-      "name": "values",
-      "optional": false,
-      "type": "CoreRecordFieldValue[]"
-    },
-    {
-      "description": "",
-      "links": [
         "[\"api\",\".\",\"Validation\"]"
       ],
       "name": "documentValidation",
-      "optional": false,
-      "type": "Validation"
-    },
-    {
-      "description": "",
-      "links": [
-        "[\"api\",\".\",\"Validation\"]"
-      ],
-      "name": "validation",
       "optional": false,
       "type": "Validation"
     },

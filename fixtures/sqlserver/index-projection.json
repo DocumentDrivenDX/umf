@@ -1,6 +1,6 @@
 {
   "source": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "indexes",
     "vocabularies": {
       "umf.sqlserver": {
@@ -2867,7 +2867,7 @@
   "result": {
     "status": "projected",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "indexes",
       "vocabularies": {
         "umf.sqlserver": {
@@ -5824,7 +5824,7 @@
     ],
     "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Item\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"email\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"active\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"payload\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
     "target": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "index-projection",
       "vocabularies": {
         "umf.avro": {

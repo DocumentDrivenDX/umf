@@ -4,20 +4,19 @@ import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import {CARDINALITIES,type Document} from '../../src/model/types';
 const identity={module:'m',element:'e'};
-function model(umf:Document['umf']='0.4.0'):Document{return {umf,id:'author',vocabularies:{future:{version:'1.0.0'}},modules:[{id:'m',namespace:'',elements:[{id:'e',kind:'field',nullability:'required',extensions:{future:{unknown:'9007199254740993'}}},{id:'value',kind:'field',scalarType:'integer',extensions:{}}]}]};}
-test('original0.8 cardinality inspection retains shape and item references without authoring admission',()=>{
+function model(umf='0.10.0'):Document{return {umf,id:'author',vocabularies:{future:{version:'1.0.0'}},modules:[{id:'m',namespace:'',elements:[{id:'e',kind:'field',nullability:'required',extensions:{future:{unknown:'9007199254740993'}}},{id:'value',kind:'field',scalarType:'integer',extensions:{}}]}]} as Document;}
+test('current cardinality inspection retains shape and item references while authoring explicit meaning',()=>{
  for(const label of [...CARDINALITIES,'future-container'] as const){
-  const source=model('0.8.0');source.modules[0]!.elements[0]!.cardinality=label;
+  const source=model();source.modules[0]!.elements[0]!.cardinality=label;
   if(label==='array'||label==='map')source.modules[0]!.elements[0]!.itemType={module:'m',element:'value',future:{opaque:true}};
   const result=inspectCoreCardinality(source,identity);
-  expect(result.version).toBe('5.0.0');expect(result.source).toEqual(source);
+  expect(result.version).toBe('6.0.0');expect(result.source).toEqual(source);
   expect<unknown>(result.meaning).toEqual(label==='future-container'?{state:'unknown',value:label}:{state:'known',cardinality:label,...(['array','map'].includes(label)?{itemType:source.modules[0]!.elements[0]!.itemType}:{})});
  }
- expect(inspectCoreCardinality(model('0.8.0'),identity).meaning).toEqual({state:'missing'});
- const record=model('0.8.0');record.modules[0]!.elements[0]!.kind='record';delete record.modules[0]!.elements[0]!.nullability;
+ expect(inspectCoreCardinality(model(),identity).meaning).toEqual({state:'missing'});
+ const record=model();record.modules[0]!.elements[0]!.kind='record';delete record.modules[0]!.elements[0]!.nullability;
  expect(inspectCoreCardinality(record,identity).meaning).toEqual({state:'inapplicable'});
- expect(()=>declareCoreCardinality(model('0.8.0'),identity,{cardinality:'one'})).toThrow('Explicit envelope migration');
- expect(inspectCoreCardinality(model('0.7.0'),identity).version).toBe('4.0.0');
+ expect(declareCoreCardinality(model(),identity,{cardinality:'one'}).target.umf).toBe('0.10.0');
 });
 test('authored Cardinality and item meaning survive serialized verified receipts without source mutation',()=>{
  for(const cardinality of CARDINALITIES)for(const withItem of [false,true]){
@@ -36,8 +35,8 @@ test('item omission preserves meaning; explicit set or clear retains previous me
  const clear=declareCoreCardinality(source,identity,{cardinality:'one',itemType:null});expect(Object.hasOwn(clear.target.modules[0]!.elements[0]!,'itemType')).toBe(false);expect(clear.source).toEqual(source);expect(verifyCoreCardinalityDeclaration(clear,clear.target)).toEqual(clear);
  const replace=declareCoreCardinality(source,identity,{cardinality:'array',itemType:{module:'m',element:'e'}});expect(replace.source).toEqual(source);expect(replace.target.modules[0]!.elements[0]!.itemType).toEqual({module:'m',element:'e'});
 });
-test('legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning',()=>{
- for(const version of ['0.1.0','0.2.0','0.3.0'] as const)for(const value of ['array',null,42,{future:true}]){const source=model(version);source.modules[0]!.elements[0]!.cardinality=value;expect(inspectCoreCardinality(source,identity).meaning).toEqual({state:'legacy',value});expect(()=>declareCoreCardinality(source,identity,{cardinality:'array'})).toThrow();}
+test('retired core versions refuse; missing, unknown and inapplicable Cardinality are not inferred',()=>{
+ for(const version of ['0.1.0','0.2.0','0.3.0','0.8.0','0.9.0'] as const){const source=model(version);expect(()=>inspectCoreCardinality(source,identity)).toThrow();expect(()=>declareCoreCardinality(source,identity,{cardinality:'array'})).toThrow();}
  expect(inspectCoreCardinality(model(),identity).meaning).toEqual({state:'missing'});
  const future=model();future.modules[0]!.elements[0]!.cardinality='future-shape';expect(inspectCoreCardinality(future,identity).meaning).toEqual({state:'unknown',value:'future-shape'});expect(()=>declareCoreCardinality(future,identity,{cardinality:'one'})).toThrow('cannot be overwritten');
  for(const kind of ['record','group']){const source=model();source.modules[0]!.elements[0]!.kind=kind;delete source.modules[0]!.elements[0]!.nullability;expect(inspectCoreCardinality(source,identity).meaning).toEqual({state:'inapplicable'});expect(()=>declareCoreCardinality(source,identity,{cardinality:'one'})).toThrow();}

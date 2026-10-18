@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2995,
-        "line": 1,
-        "path": "src/model/types.ts",
-        "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+        "bytes": 4966,
+        "line": 9,
+        "path": "src/generated/core-model.ts",
+        "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
       }
     ],
     "entrypoint": ".",
     "exportName": "Json",
     "runtime": "type-only",
     "signatureText": [
-      "export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };"
+      "export type Json=null|boolean|number|string|Json[]|{[key:string]:Json};"
     ]
   },
   "id": "[\"api\",\".\",\"Json\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2995,
-      "line": 1,
-      "path": "src/model/types.ts",
-      "sha256": "adaab1b8588634365d3e81ea29bf20edba1dd4dee8d36e1cd253df34a5542be4"
+      "bytes": 4966,
+      "line": 9,
+      "path": "src/generated/core-model.ts",
+      "sha256": "8b54b1230ed6d3e6b777549496d7c7590702f932801474ef50583c7867ed58cb"
     }
   ],
-  "summary": "Type declaration · src/model/types.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "Json"
 }

@@ -56,19 +56,19 @@
     },
     {
       "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
       "links": [
         "[\"api\",\".\",\"Json\"]"
       ],
       "name": "residuals",
       "optional": false,
       "type": "{ path: string; value: Json; reason: string; }[]"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "provenance",
-      "optional": false,
-      "type": "\"unverified\""
     },
     {
       "description": "",

@@ -11,19 +11,20 @@ from typing import Generic, Literal, TypeVar, cast, get_args
 from pydantic import MISSING, BaseModel
 
 from ._context import CaptureError
+from ..generated_core import CURRENT_CORE_VERSION, CoreVersion
 
 
 @dataclass(frozen=True)
 class GeneratedSource:
     document_id: str
-    core_version: str
+    core_version: CoreVersion
     document_sha256: str
     input_digest: str
     runtime_abi: str
 
     def __post_init__(self) -> None:
         import re
-        if (type(self.document_id) is not str or not self.document_id or self.core_version != "0.8.0"
+        if (type(self.document_id) is not str or not self.document_id or self.core_version != CURRENT_CORE_VERSION
                 or self.runtime_abi != "umf-access-runtime/0.1"
                 or any(type(digest) is not str or re.fullmatch(r"[0-9a-f]{64}", digest) is None
                        for digest in (self.document_sha256, self.input_digest))):
@@ -127,7 +128,7 @@ def key_identity(model: type[BaseModel]) -> tuple[tuple[str, str], ...]:
         type(value) is not str or not value for value in identity.values()
     ):
         raise CaptureError("CAPTURE_SIGNATURE", "Key identity is incomplete")
-    if identity["coreVersion"] != "0.8.0":
+    if identity["coreVersion"] != CURRENT_CORE_VERSION:
         raise CaptureError(
             "CAPTURE_SIGNATURE", "Key core version is outside access 0.1"
         )

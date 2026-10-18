@@ -17,7 +17,7 @@
         },
         "validation": "structural"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "Retained physical presence context for Parquet leaf availability; original bytes and Arrow metadata remain authoritative",
       "id": "umf.parquet.nullability",
       "schema": {
@@ -106,9 +106,9 @@
   ],
   "sources": [
     {
-      "bytes": 2326,
+      "bytes": 2327,
       "path": "spec/extensions/parquet-nullability/package.json",
-      "sha256": "25162b0220094da8e5199e502dfb70158aff5c434391005cef9024c7f0d7fd81"
+      "sha256": "d3d3757f0f1ec5473a2b8526bedaa79ea4a6f60cefe0b367d5c202eedc70e760"
     }
   ],
   "summary": "Retained physical presence context for Parquet leaf availability; original bytes and Arrow metadata remain authoritative",

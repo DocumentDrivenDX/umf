@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -293,7 +293,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -423,7 +423,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -495,9 +495,9 @@
   ],
   "sources": [
     {
-      "bytes": 3074,
+      "bytes": 3076,
       "path": "spec/extensions/parquet/offset-repair.schema.json",
-      "sha256": "8afa520ec060cdd6a50c7815e96df4195a2570c3a19426bde6e1c786355a4e19"
+      "sha256": "d71fefc09e8b1e18f3c71df6f400fd81fb0f4e60d8d66173c34b2acfc69375b1"
     }
   ],
   "summary": "spec/extensions/parquet/offset-repair.schema.json",

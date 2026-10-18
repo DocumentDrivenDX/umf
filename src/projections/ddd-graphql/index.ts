@@ -1,11 +1,12 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Kind,parse,print,type ObjectTypeDefinitionNode,type FieldDefinitionNode} from 'graphql';
 import {copyJson} from '../../model/json';
 import {createValidator} from '../../validation/schema';
 import legacy from '../../../spec/core/schema.json';
-import relationshipsSchema from '../../../spec/core/relationship-document.schema.json';
+
 import projectionSchema from '../../../spec/projections/ddd-graphql.schema.json';
 export {default as dddGraphqlProjectionSchema} from '../../../spec/projections/ddd-graphql.schema.json';
-const validator=createValidator(false);validator.addSchema(legacy);validator.addSchema(relationshipsSchema);
+const validator=createValidator(false);validator.addSchema(legacy);
 const checkResult=validator.compile(projectionSchema);
 const checkPolicy=validator.compile({$ref:projectionSchema.$id+'#/$defs/policy'});
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
@@ -23,7 +24,7 @@ export interface DddGraphqlPolicy extends DddGraphqlEntityPolicy {
 }
 export interface DddGraphqlProjection extends Omit<DddGraphqlEntityProjection,'policy'> {
   operation:'project-ddd-graphql';version:'1.0.0';policy:DddGraphqlPolicy;lossPolicy:'strict'|'report';diagnostics:Diagnostic[];
-  sourceVersions:{core:'0.7.0';ddd:'0.1.0'};
+  sourceVersions:{core:typeof CURRENT_CORE_VERSION;ddd:'0.1.0'};
   targetVersions:{graphqlJs:'17.0.2';graphqlCore:'3.2.12';subset:'schema SDL with scalar fields, object relationships and explicit output unions; no execution'};
 }
 const identity=(r:{module:string;element:string})=>JSON.stringify([r.module,r.element]);
@@ -42,7 +43,7 @@ export function projectDddToGraphql(input:Document,options:DddGraphqlPolicy,loss
   if(!checkPolicy(policy))fail('POLICY','Invalid complete GraphQL projection policy: '+JSON.stringify(checkPolicy.errors));
   if(!exact(policy,['entities','fields','scalars','root','sourceProfile','endpoints','relationships'])||policy.sourceProfile!=='core-ideals'||!Array.isArray(policy.endpoints)||!Array.isArray(policy.relationships))fail('POLICY','Explicit core-ideals entity, endpoint and relationship policies required');
   const validation=validateRelationshipCandidate(logical);
-  if(logical.umf!=='0.7.0'||!validation.valid)fail('SOURCE','Valid core 0.7.0 relationship document required');
+  if(logical.umf!==CURRENT_CORE_VERSION||!validation.valid)fail('SOURCE','Valid core 0.10.0 relationship document required');
   if(logical.vocabularies['umf.ddd']?.version!=='0.1.0')fail('SOURCE','DDD 0.1.0 required');
   const {endpoints,relationships,...entityPolicy}=policy;
   const base=buildDddEntityGraphql(logical,entityPolicy,'report',true);
@@ -133,7 +134,7 @@ export function projectDddToGraphql(input:Document,options:DddGraphqlPolicy,loss
   const targetArchive=importGraphqlSchema(candidate,{id:'ddd-graphql-target',mode:'schema'});
   if(exportGraphqlSchema(targetArchive)!==candidate)fail('TARGET','Schema-mode archive did not preserve emitted SDL');
   const status=lossPolicy==='strict'&&residuals.length?'blocked':residuals.length?'reported':'proposed';
-  const result:DddGraphqlProjection={operation:'project-ddd-graphql',version:'1.0.0',status,logical,policy,lossPolicy,profile:'graphql-js-17.0.2-sdl',sourceVersions:{core:'0.7.0',ddd:'0.1.0'},targetVersions:{graphqlJs:'17.0.2',graphqlCore:'3.2.12',subset:'schema SDL with scalar fields, object relationships and explicit output unions; no execution'},residuals,mappings,diagnostics:residuals.map(r=>({code:'DDD_GRAPHQL_LOSS',path:r.path,severity:'warning',message:r.reason})),...(status==='blocked'?{}:{candidate,targetArchive})};
+  const result:DddGraphqlProjection={operation:'project-ddd-graphql',version:'1.0.0',status,logical,policy,lossPolicy,profile:'graphql-js-17.0.2-sdl',sourceVersions:{core:CURRENT_CORE_VERSION,ddd:'0.1.0'},targetVersions:{graphqlJs:'17.0.2',graphqlCore:'3.2.12',subset:'schema SDL with scalar fields, object relationships and explicit output unions; no execution'},residuals,mappings,diagnostics:residuals.map(r=>({code:'DDD_GRAPHQL_LOSS',path:r.path,severity:'warning',message:r.reason})),...(status==='blocked'?{}:{candidate,targetArchive})};
   if(!checkResult(result))fail('RESULT','Invalid complete projection contract: '+JSON.stringify(checkResult.errors));
   return result;
 }

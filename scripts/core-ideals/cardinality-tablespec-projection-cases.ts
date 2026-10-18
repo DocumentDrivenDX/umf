@@ -1,9 +1,11 @@
-import {declareCoreCardinality,copyJson,type Document,type CoreCardinalityDeclaration,type CardinalityTableSpecRequest} from '../../src';
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreCardinality, copyJson, type Document, type CoreCardinalityDeclaration, type CardinalityTableSpecRequest} from '../../src';
 export function cardinalityTableSpecProjectionCases(){
  const rows:{name:string;author:CoreCardinalityDeclaration;request:CardinalityTableSpecRequest;expectedStatus:'blocked'|'projected'}[]=[];
  for(const cardinality of ['one','array','map','unspecified'] as const)for(const item of ['missing','float','nested','record','unknown'] as const)for(const profile of ['generated-json','generated-spark','unresolved'] as const)for(const mode of ['strict','report'] as const){
   if(!['array','map'].includes(cardinality)&&item!=='missing')continue;
-  const source:Document={umf:'0.4.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',extensions:{}}]}]};
+  const source:Document={umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',extensions:{}}]}]};
   if(item==='unknown')source.vocabularies['future.item']={version:'1.0.0'};
   if(item!=='missing'){
    const field={id:'item',kind:'field',extensions:{},...(item==='float'?{scalarType:'float',cardinality:'one',nullability:'absent-allowed'}:item==='nested'?{cardinality:'array',itemType:{module:'m',element:'item'}}:item==='unknown'?{cardinality:'future',extensions:{'future.item':{opaque:true}}}: {references:[{module:'m',element:'record',role:'record-type'}]})};
@@ -17,7 +19,7 @@ export function cardinalityTableSpecProjectionCases(){
  }
  // Exactness and unknown source obligations are separate from shape labels.
  for(const requireExactValues of [false,true])for(const mode of ['strict','report'] as const){
-  const source:Document={umf:'0.4.0',id:'float',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType:'float',extensions:{}}]}]};
+  const source:Document={umf:CURRENT_CORE_VERSION,id:'float',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType:'float',extensions:{}}]}]};
   const author=declareCoreCardinality(source,{module:'m',element:'value'},{cardinality:'one'});
   const request:CardinalityTableSpecRequest={id:'native',tableName:'Shapes',columnName:'value',nativeType:'FLOAT',dimension:null,profile:'generated-spark',mode,requireExactValues};
   rows.push({name:'scalar-float-exactness',author,request,expectedStatus:mode==='strict'&&requireExactValues?'blocked':'projected'});

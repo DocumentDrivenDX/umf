@@ -1,3 +1,4 @@
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -5,7 +6,7 @@ import schema from '../../spec/extensions/rdf/rename-schema.json';
 import {importRdfNQuads,proposeRdfIriRename,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src';
 const base='fixtures/rdf/rename/';
 test('US-025-AC4: corpus IRI renames match native datasets through both UMF formats',async()=>{
- const cases=(await Bun.file(base+'results.json').json()).cases,native=(await Bun.file(base+'oracle-results.json').json()).results,check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);expect(cases).toHaveLength(53);expect(native).toHaveLength(106);
+ const cases=(await Bun.file(base+'results.json').json()).cases,native=(await Bun.file(base+'oracle-results.json').json()).results,check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);expect(cases).toHaveLength(53);expect(native).toHaveLength(106);
  for(const c of cases){const raw=await Bun.file(c.path).text(),d=importRdfNQuads(raw,{id:c.id});for(const row of c.exports){const restored=readDocument(writeDocument(d,row.format),row.format),r=proposeRdfIriRename(restored,{from:c.from,to:c.to});expect(r.status).toBe('candidate');expect(check(r)).toBe(true);expect(r.changes).toEqual(row.changes);expect(exportRdfNQuads(r.source)).toBe(raw);expect(exportRdfNQuads(readDocument(writeDocument(r.candidate!,row.format),row.format))).toBe(await Bun.file(row.path).text());expect(native.find((n:any)=>n.id===c.id&&n.format===row.format).isomorphic).toBe(true);expect(r.complete).toBe(false);}}
 },30000);
 test('US-025-AC4: all term positions change while literal text, blank scope and source stay intact',async()=>{

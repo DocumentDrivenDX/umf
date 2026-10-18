@@ -1,5 +1,6 @@
 // @covers US-080-AC3 @covers US-080-AC4
 import {chromium} from 'playwright';
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {probePreparedInspection} from '../tests/core/prepared-browser-probe';
 const outputRoot=process.env.UMF_PREPARED_BROWSER_OUTPUT??'/private/tmp/sdk-prepared-browser';
 await Bun.$`mkdir -p ${outputRoot}`.quiet();
@@ -14,6 +15,6 @@ try{
  const actual=await page.evaluate(async()=>{const path='/probe.js';const m=await import(path);return m.probePreparedInspection();});
  const expected=probePreparedInspection();await Bun.write(outputRoot+'/bun.json',expected);await Bun.write(outputRoot+'/chromium.json',actual);
  if(actual!==expected)throw Error('Chromium/Bun prepared inspection bytes differ');
- const receipt={status:'PASS',runtime:Bun.version,chromium:browser.version(),bytes:new TextEncoder().encode(actual).length,sha256:new Bun.CryptoHasher('sha256').update(actual).digest('hex'),bundleSha256:new Bun.CryptoHasher('sha256').update(await artifact.arrayBuffer()).digest('hex'),cases:['ordinary_selector_parity','unknown_key_and_facet_paths','caller_mutation_isolation','result_mutation_isolation','owned_recursive_freeze','unknown_content_retained'],coreVersions:['0.8.0','0.9.0'],temporalQualification:'HELD'};
+ const receipt={status:'PASS',runtime:Bun.version,chromium:browser.version(),bytes:new TextEncoder().encode(actual).length,sha256:new Bun.CryptoHasher('sha256').update(actual).digest('hex'),bundleSha256:new Bun.CryptoHasher('sha256').update(await artifact.arrayBuffer()).digest('hex'),cases:['ordinary_selector_parity','unknown_key_and_facet_paths','caller_mutation_isolation','result_mutation_isolation','owned_recursive_freeze','unknown_content_retained'],coreVersions:[CURRENT_CORE_VERSION],temporalQualification:'HELD'};
  await Bun.write(outputRoot+'/verification.json',JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));
 }finally{await browser?.close();server.stop(true);}

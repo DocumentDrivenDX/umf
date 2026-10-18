@@ -1,0 +1,44 @@
+{
+  "profile": "umf.schema-browser.candidate-proof/1",
+  "status": "candidate, unpublished; package is not the UMF consumer pin",
+  "createdAt": "2026-10-18T20:36:00Z",
+  "package": "@documentdrivendx/umf-schema-browser",
+  "version": "2.0.0",
+  "runtime": {
+    "bun": "1.4.2"
+  },
+  "builds": [
+    {
+      "path": "/private/tmp/umf-schema-browser-v2.0.0-final-pinned142",
+      "log": "/private/tmp/umf-browser-v2.0.0-build-final.log"
+    },
+    {
+      "path": "/private/tmp/umf-schema-browser-v2.0.0-second-pinned142",
+      "log": "/private/tmp/umf-browser-v2.0.0-build-second.log"
+    }
+  ],
+  "verified": {
+    "completePackagePayloadFiles": 73,
+    "provenanceInputs": 1214,
+    "twoCleanPayloadsMatch": true,
+    "npmInstalledPayloadMatchesCandidate": true,
+    "releaseManifestSha256": "80d21abd1d95c30270bfae317c84435b41cfc716b2bb1d4ea47b65d563f7d830",
+    "assetManifestSha256": "3020d6af4c3e6fc791a39fce3ccfed5a1d5f41d9bb0c44f3e85ad5cea44b2390"
+  },
+  "archive": {
+    "path": "/private/tmp/umf-schema-browser-v2.0.0-npm-pack/documentdrivendx-umf-schema-browser-2.0.0.tgz",
+    "sha256": "e81ef65016355d02e83430c363dca2ff9a4364e1351282ac3ea24a95e8cc5dba",
+    "npmIntegrity": "sha512-Vcjau/UN/iaIlGxxDwRLOi4cVCcpoZJV1y9jpWSxaoX5TE9d7JKbuWEIYWwNuqYex3OQiHUB/K95cboIs/AbUw=="
+  },
+  "browserProof": {
+    "log": "/private/tmp/umf-browser-v2.0.0-pinned142-browser-final.log",
+    "checks": 17,
+    "result": "pass",
+    "scope": "independent frames, local-only requests, standalone source inspection"
+  },
+  "evidenceLogs": {
+    "integrity": "/private/tmp/umf-browser-v2.0.0-integrity-final.log",
+    "npmPack": "/private/tmp/umf-browser-v2.0.0-npm-pack-final.json"
+  },
+  "publication": "Not published; current consumer pin remains 1.1.2."
+}

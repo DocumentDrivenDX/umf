@@ -1,7 +1,6 @@
 {
   "alternatives": [
     "{ state: \"missing\"; }",
-    "{ state: \"legacy\"; value: Json; }",
     "{ state: \"known\" | \"partial\"; relationships: CoreRelationship[]; uninterpretedPaths: string[]; }"
   ],
   "authored": false,

@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.5.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/facet-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/facet-operation-v3.schema.json\",\"\"]",
+        "target": "urn:umf:core:facet-operation:3.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v4.schema.json\",\"\"]",
-        "target": "urn:umf:core:kind-operation:4.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
       }
     ],
     "role": "operation",
@@ -460,7 +460,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:facet-operation:3.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -469,7 +469,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:kind-operation:4.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
                         }
                       }
                     }
@@ -1316,7 +1316,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.5.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1461,15 +1461,15 @@
   "id": "[\"schema\",\"spec/core/facets-sqlserver-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/facet-operation.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/kind-operation-v4.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/facet-operation-v3.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 10895,
+      "bytes": 10896,
       "path": "spec/core/facets-sqlserver-projection.schema.json",
-      "sha256": "a539e3fd69967c44c60f8a4757a0d8aeb743e889a41a4532699380230a3d7ef8"
+      "sha256": "6c92fee8e2bdaad0991e846d72786d259364ee3bc901503db90609d278885f2d"
     }
   ],
   "summary": "spec/core/facets-sqlserver-projection.schema.json",

@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -16,7 +16,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -649,7 +649,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -676,7 +676,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -730,9 +730,9 @@
   ],
   "sources": [
     {
-      "bytes": 4684,
+      "bytes": 4686,
       "path": "spec/projections/smithy-json-schema.schema.json",
-      "sha256": "b2ae7774e4ddfd1d4e7ae492f424902b8348c57cc152e17c27e7d3d68cd381e9"
+      "sha256": "b9ef9811b9aa27dcdd03f637d88b24257f9658253e80f3976353e68888e02cbc"
     }
   ],
   "summary": "spec/projections/smithy-json-schema.schema.json",
