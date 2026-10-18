@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"encodeSecurityDisclosure\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityDisclosureBatch\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SecurityDisclosureBatch"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "SecurityPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolution",
+      "optional": false,
+      "type": "SecurityResolution"
+    }
+  ],
+  "purpose": "encodeSecurityDisclosure accepts input, policy, resolution and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(input: SecurityDisclosureBatch, policy: SecurityPolicy, resolution: SecurityResolution) => string"
+}

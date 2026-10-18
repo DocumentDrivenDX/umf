@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProjectionIssue\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "code",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "classification",
+      "optional": false,
+      "type": "\"unsupported\" | \"representation-change\" | \"not-enforced\" | \"annotation-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "detail",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retainedInSource",
+      "optional": false,
+      "type": "true"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProjectionIssue is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProjectionIssue"
+}

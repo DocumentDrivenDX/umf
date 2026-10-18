@@ -1,0 +1,20 @@
+{
+  "alternatives": [
+    "{ kind: \"reference\"; node: RdfNode; }",
+    "{ kind: \"intersectionOf\" | \"unionOf\" | \"oneOf\"; node: RdfNode; members: Term[]; }",
+    "{ kind: \"complementOf\" | \"datatypeComplementOf\" | \"inverseOf\"; node: RdfNode; operand: Term; }",
+    "{ kind: \"restriction\"; node: RdfNode; properties: Term[]; facets: { predicate: string; values: Term[]; }[]; }",
+    "{ kind: \"datatypeRestriction\"; node: RdfNode; datatype: Term; facets: { node: RdfNode; statements: { predicate: string; values: Term[]; }[]; }[]; }",
+    "{ kind: \"unrecognized\"; node: RdfNode; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlExpressionDescription\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "OwlExpressionDescription is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlExpressionDescription"
+}

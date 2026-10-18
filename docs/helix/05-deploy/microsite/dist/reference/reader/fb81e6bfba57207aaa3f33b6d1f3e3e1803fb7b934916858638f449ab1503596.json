@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreFacets\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreFacetIdentity"
+    }
+  ],
+  "purpose": "Copies known assertions separately from uninterpreted members; never infers authorship.",
+  "related": [],
+  "returns": "CoreFacetInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreFacetIdentity) => CoreFacetInspection"
+}

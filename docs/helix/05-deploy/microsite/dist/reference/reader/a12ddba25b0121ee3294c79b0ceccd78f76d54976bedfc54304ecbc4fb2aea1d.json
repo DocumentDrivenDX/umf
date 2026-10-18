@@ -1,0 +1,18 @@
+{
+  "alternatives": [
+    "Availability & { kind: \"scalar\"; nativeType: keyof typeof parquetCarriers; }",
+    "Availability & { kind: \"array\"; item: ParquetCardinalityCarrier; }",
+    "Availability & { kind: \"map\"; keyType: keyof typeof parquetCarriers; value: ParquetCardinalityCarrier; }",
+    "Availability & { kind: \"record\"; fields: { name: string; type: ParquetCardinalityCarrier; }[]; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetCardinalityCarrier\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ParquetCardinalityCarrier is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetCardinalityCarrier"
+}

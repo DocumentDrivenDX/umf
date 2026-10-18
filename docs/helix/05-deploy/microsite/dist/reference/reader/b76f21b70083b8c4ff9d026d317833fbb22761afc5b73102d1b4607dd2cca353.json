@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"selectActionIdentity\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionFrame\"]"
+      ],
+      "name": "frame",
+      "optional": false,
+      "type": "ActionFrame"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionInputs\"]"
+      ],
+      "name": "inputsInput",
+      "optional": false,
+      "type": "ActionInputs"
+    }
+  ],
+  "purpose": "selectActionIdentity accepts document, action, frame, inputsInput and returns SelectedActionIdentity.",
+  "related": [],
+  "returns": "SelectedActionIdentity",
+  "task": "Inspect and select",
+  "type": "(document: Document, action: Action, frame: ActionFrame, inputsInput: ActionInputs) => SelectedActionIdentity"
+}

@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlAxiomAnnotations\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"owl-annotations-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "blankNodeScope",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "quadIndex",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "roots",
+      "optional": false,
+      "type": "RdfNode[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OwlAnnotationRecord\"]"
+      ],
+      "name": "records",
+      "optional": false,
+      "type": "OwlAnnotationRecord[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "malformed",
+      "optional": false,
+      "type": "RdfNode[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OwlAxiomAnnotations is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlAxiomAnnotations"
+}

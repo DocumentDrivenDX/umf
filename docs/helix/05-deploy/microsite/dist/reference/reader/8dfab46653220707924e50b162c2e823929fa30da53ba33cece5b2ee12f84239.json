@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddOperation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "input",
+      "optional": true,
+      "type": "DddReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "output",
+      "optional": true,
+      "type": "DddReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "emits",
+      "optional": true,
+      "type": "DddReference[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddOperation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddOperation"
+}

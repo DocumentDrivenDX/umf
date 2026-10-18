@@ -1,0 +1,71 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FieldClassificationInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"inspect-field-classification\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeFieldClassification\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "NativeFieldClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "({ origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; dependencyId?: string; nativeFragment: Json; basis: \"checked-record-field-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-native-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-primitive-schema-leaf\"; outcome: \"exact\" | \"unknown\"; }) & { binding: Binding; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\"; reason: string; binding: Binding; recovery: { strategy: \"retained-source-and-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "FieldClassificationInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FieldClassificationInspection"
+}

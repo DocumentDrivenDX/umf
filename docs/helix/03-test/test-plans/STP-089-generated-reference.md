@@ -102,3 +102,23 @@ records before navigation, then run fixed tools and the whole evaluation journey
 Capture screenshots and review them visually; DOM assertions alone do not establish
 visual fidelity. Completion requires the actual checks above and separate reporting
 of any signature/publication limitation.
+
+## Reader acceptance mapping
+
+| Criterion | Executable proof |
+| --- | --- |
+| US-089-AC12 | Reader tests: numeric latest selection; browser latest Document, concept navigation and old exact link |
+| US-089-AC13 | Reader tests: key/conditional/reference/open-value facts; browser Record, scalarType, itemType and validated complete examples |
+| US-089-AC14 | Compiler documentation census and browser constant/function/interface/member journeys |
+| US-089-AC15 | Browser cold search, keyboard/history and 390/798/1280px screenshots with overflow assertions |
+
+Run existing reference unit/build, boundary, typecheck and Chromium gates.
+Record reader evidence under generated-reference to avoid evidence self-hashing.
+Observed human comprehension remains separate from automated browser evidence;
+no recruited-reader session may be claimed without actual participants.
+
+## Example format verification
+
+| Criterion | Executable proof |
+| --- | --- |
+| US-089-AC16 | Reader unit check of emitted YAML/JSON value parity; Chromium complete/inline YAML default, JSON and keyboard return toggle, unchanged route and mobile containment |

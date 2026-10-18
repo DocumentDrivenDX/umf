@@ -1,0 +1,43 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"selectCoreElements\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreElementQuery\"]"
+      ],
+      "name": "queryInput",
+      "optional": false,
+      "type": "CoreElementQuery"
+    },
+    {
+      "description": "Default: new Registry().",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": true,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "Select copied element metadata by explicit filters and reference traversal policy. Qualified identities remain distinct from names.",
+  "related": [
+    "[\"api\",\".\",\"Document\"]"
+  ],
+  "returns": "CoreElementSelection",
+  "task": "Inspect and select",
+  "type": "(input: Document, queryInput: CoreElementQuery, registry?: Registry) => CoreElementSelection"
+}

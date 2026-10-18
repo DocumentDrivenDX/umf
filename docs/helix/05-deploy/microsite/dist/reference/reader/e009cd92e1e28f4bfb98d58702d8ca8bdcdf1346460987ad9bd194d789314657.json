@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"dddPostgresqlPolicySchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as dddPostgresqlPolicySchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; additionalProperties: boolean; required: string[]; properties: { profile: { const: string; }; version: { const: string; }; targetVersion: { const: string; }; mode: { enum: string[]; }; objectCheckNaming: { const: string; }; tablePolicy: { type: string; additionalProperties: boolean; required: string[]; properties: { fieldTypes: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { module: { type: string; minLength: number; }; element: { type: string; minLength: number; }; field: { type: string; minLength: number; }; sqlType: { type: string; minLength: number; }; }; }; }; partitionFamilies: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { name: { type: string; minLength: number; }; column: { type: string; minLength: number; }; defaultTable: { type: string; minLength: number; }; }; }; }; }; }; layoutPolicy: { $ref: string; }; }; }"
+}

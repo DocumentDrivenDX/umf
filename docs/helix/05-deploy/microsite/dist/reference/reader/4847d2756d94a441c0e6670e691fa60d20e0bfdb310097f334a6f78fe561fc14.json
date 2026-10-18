@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"readDescriptorSet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "binary",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    }
+  ],
+  "purpose": "readDescriptorSet accepts binary and returns DescriptorNode.",
+  "related": [],
+  "returns": "DescriptorNode",
+  "task": "Read and validate",
+  "type": "(binary: Uint8Array) => DescriptorNode"
+}

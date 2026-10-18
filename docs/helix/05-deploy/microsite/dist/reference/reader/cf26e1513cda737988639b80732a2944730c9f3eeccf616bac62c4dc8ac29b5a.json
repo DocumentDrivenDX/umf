@@ -1,0 +1,76 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlLayoutEndpointComponent\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
+      ],
+      "name": "keyField",
+      "optional": false,
+      "type": "CoreKeyFieldReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingFieldRef\"]"
+      ],
+      "name": "endpointField",
+      "optional": false,
+      "type": "BindingFieldRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "endpointColumn",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingFieldRef\"]"
+      ],
+      "name": "carrierField",
+      "optional": true,
+      "type": "BindingFieldRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "carrierColumn",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sqlType",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nullable",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "collation",
+      "optional": false,
+      "type": "\"C\" | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlLayoutEndpointComponent is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlLayoutEndpointComponent"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"rollbackFieldEnvelope\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldUpgradeReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FieldUpgradeReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Restore original model; retain the entire current model separately, including later assertions/edits.",
+  "related": [],
+  "returns": "FieldRollbackReceipt",
+  "task": "Author and edit",
+  "type": "(input: FieldUpgradeReceipt, current: Document) => FieldRollbackReceipt"
+}

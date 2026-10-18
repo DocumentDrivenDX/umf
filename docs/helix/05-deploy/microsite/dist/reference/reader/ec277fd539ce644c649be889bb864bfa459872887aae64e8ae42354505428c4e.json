@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverKeysPostgresqlIdeal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeyPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverKeysPostgresqlIdeal accepts input, current, backend and returns Promise<Document>.",
+  "related": [],
+  "returns": "Promise<Document>",
+  "task": "Import and export",
+  "type": "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<Document>"
+}

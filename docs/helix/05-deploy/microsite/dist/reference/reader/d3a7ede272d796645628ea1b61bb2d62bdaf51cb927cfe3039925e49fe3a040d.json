@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"upgradeRelationshipEnvelope\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "All module collisions are archived, including content that looks like a valid assertion.",
+  "related": [],
+  "returns": "RelationshipUpgradeReceipt",
+  "task": "Other APIs",
+  "type": "(input: Document) => RelationshipUpgradeReceipt"
+}

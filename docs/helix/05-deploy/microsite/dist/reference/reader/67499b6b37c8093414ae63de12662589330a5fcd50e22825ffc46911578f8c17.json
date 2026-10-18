@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityAssociation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "endpoints",
+      "optional": false,
+      "type": "{ role: string; target: SecurityRef; fields: SecurityRef[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "type",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keyId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityField\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "SecurityField[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityAssociation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityAssociation"
+}

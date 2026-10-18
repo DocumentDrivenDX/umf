@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyCoreKeyTuple\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKeyTupleReceipt"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "verifyCoreKeyTuple accepts input, current and returns CoreKeyTupleReceipt.",
+  "related": [],
+  "returns": "CoreKeyTupleReceipt",
+  "task": "Other APIs",
+  "type": "(input: CoreKeyTupleReceipt, current: unknown) => CoreKeyTupleReceipt"
+}

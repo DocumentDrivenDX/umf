@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"bits128FromWords\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "words",
+      "optional": false,
+      "type": "{ high: string; low: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "signed",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "purpose": "bits128FromWords accepts words, signed and returns Bit128Value.",
+  "related": [],
+  "returns": "Bit128Value",
+  "task": "Other APIs",
+  "type": "(words: { high: string; low: string; }, signed: boolean) => Bit128Value"
+}

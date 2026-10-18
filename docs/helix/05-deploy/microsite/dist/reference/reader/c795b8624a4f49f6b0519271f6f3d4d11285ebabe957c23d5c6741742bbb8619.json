@@ -1,0 +1,99 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ShaclEngineReport\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "stringProfile",
+      "optional": false,
+      "type": "\"umf-string-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "numericProfile",
+      "optional": false,
+      "type": "\"umf-numeric-2\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "engine",
+      "optional": false,
+      "type": "\"rdf-validate-shacl@0.6.5\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "blankNodePolicy",
+      "optional": false,
+      "type": "\"disjoint-inputs\" | \"shared-scope\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"evaluated\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "shapes",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "data",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "engineConforms",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "report",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ShaclEngineReport is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ShaclEngineReport"
+}

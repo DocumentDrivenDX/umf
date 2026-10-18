@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"captureArrowIpc\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "bytes",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "Accepts even empty or invalid native input so decode failure cannot lose source.",
+  "related": [],
+  "returns": "Document",
+  "task": "Other APIs",
+  "type": "(bytes: Uint8Array, options: { id: string; }) => Document"
+}

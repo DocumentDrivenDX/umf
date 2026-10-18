@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"evaluateSecurityCollection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "SecurityPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolution",
+      "optional": false,
+      "type": "SecurityResolution"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFactCut\"]"
+      ],
+      "name": "cut",
+      "optional": false,
+      "type": "SecurityFactCut"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityEvaluationRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "SecurityEvaluationRequest"
+    }
+  ],
+  "purpose": "evaluateSecurityCollection accepts policy, resolution, cut, request and returns SecurityCollectionResult.",
+  "related": [],
+  "returns": "SecurityCollectionResult",
+  "task": "Other APIs",
+  "type": "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: SecurityEvaluationRequest) => SecurityCollectionResult"
+}

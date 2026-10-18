@@ -1,0 +1,94 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRelationship\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipEndpoint\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "RelationshipEndpoint[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipTarget\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "RelationshipTarget[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipMultiplicity\"]"
+      ],
+      "name": "sourceMultiplicity",
+      "optional": false,
+      "type": "RelationshipMultiplicity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipMultiplicity\"]"
+      ],
+      "name": "targetMultiplicity",
+      "optional": false,
+      "type": "RelationshipMultiplicity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetLifecycle",
+      "optional": false,
+      "type": "\"unspecified\" | \"owned\" | \"independent\" | (string & {})"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "directed",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inverse",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipEndpoint\"]"
+      ],
+      "name": "associationRecord",
+      "optional": true,
+      "type": "RelationshipEndpoint"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRelationship is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRelationship"
+}

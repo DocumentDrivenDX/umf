@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRecordFromTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordTableSpecProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RecordTableSpecProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "recoverRecordFromTableSpec accepts input, nativeText and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: RecordTableSpecProjection, nativeText: string) => Document"
+}

@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreNullabilityOperationV7Schema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreNullabilityOperationV7Schema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; $defs: { nullability: { enum: string[]; }; identity: { type: string; additionalProperties: boolean; required: string[]; properties: { module: { type: string; minLength: number; }; element: { type: string; minLength: number; }; }; }; source: { $ref: string; }; lookup: { type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; identity: { $ref: string; }; path: { type: string; }; provenance: { const: string; }; meaning: { oneOf: ({ type: string; additionalProperties: boolean; required: string[]; properties: { state: { const: string; }; nullability: { $ref: string; }; value?: never; }; } | { type: string; additionalProperties: boolean; required: string[]; properties: { state: { const: string; }; nullability?: never; value?: never; }; } | { type: string; additionalProperties: boolean; required: string[]; properties: { state: { const: string; }; value: { type: string; minLength: number; not: { $ref: string; }; }; nullability?: never; }; })[]; }; }; }; }; $ref: string; }"
+}

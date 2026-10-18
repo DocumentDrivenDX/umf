@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyAvroRelationshipClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifyAvroRelationshipClassification accepts input, current and returns AvroRelationshipClassification.",
+  "related": [],
+  "returns": "AvroRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: AvroRelationshipClassification, current: Document) => AvroRelationshipClassification"
+}

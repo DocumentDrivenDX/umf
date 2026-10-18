@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"upgradeSecurityPolicySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "revision",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "upgradeSecurityPolicySource accepts input, revision and returns SecurityPolicySourceMigration.",
+  "related": [],
+  "returns": "SecurityPolicySourceMigration",
+  "task": "Other APIs",
+  "type": "(input: unknown, revision: unknown) => SecurityPolicySourceMigration"
+}

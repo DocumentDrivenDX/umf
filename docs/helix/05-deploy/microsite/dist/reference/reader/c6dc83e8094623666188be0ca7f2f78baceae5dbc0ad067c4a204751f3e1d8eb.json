@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverBit128CarrierProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128NativeProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Bit128NativeProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Exact artifact/source recovery; not independent native semantic classification.",
+  "related": [],
+  "returns": "{ logical: Document; binding: Document; }",
+  "task": "Import and export",
+  "type": "(input: Bit128NativeProjection, nativeText: string) => { logical: Document; binding: Document; }"
+}

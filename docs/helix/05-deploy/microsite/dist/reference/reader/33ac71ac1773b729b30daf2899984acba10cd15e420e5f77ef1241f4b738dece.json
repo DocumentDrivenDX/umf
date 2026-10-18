@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"upgradeCardinalityEnvelope\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Explicit version opt-in. Every legacy cardinality/itemType is archived, including known-looking values.",
+  "related": [],
+  "returns": "CardinalityUpgradeReceipt",
+  "task": "Other APIs",
+  "type": "(input: Document) => CardinalityUpgradeReceipt"
+}

@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectRelationshipToParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreRelationshipDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipParquetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RelationshipParquetRequest"
+    }
+  ],
+  "purpose": "Explicit reference-value lowering with retained authored meaning; no native identity inference.",
+  "related": [],
+  "returns": "RelationshipParquetProjection",
+  "task": "Import and export",
+  "type": "(input: Document, authorInput: CoreRelationshipDeclaration, options: RelationshipParquetRequest) => RelationshipParquetProjection"
+}

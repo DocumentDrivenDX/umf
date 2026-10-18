@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getSemanticTypes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "getSemanticTypes accepts document, module, element and returns SemanticTypeAnnotation.",
+  "related": [],
+  "returns": "SemanticTypeAnnotation",
+  "task": "Inspect and select",
+  "type": "(document: Document, module: string, element: string) => SemanticTypeAnnotation"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyRelationshipTableSpecProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipTableSpecProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipTableSpecProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recomputes retained consistency; does not authenticate authors or native execution.",
+  "related": [],
+  "returns": "RelationshipTableSpecProjection",
+  "task": "Other APIs",
+  "type": "(input: RelationshipTableSpecProjection, current: Document) => RelationshipTableSpecProjection"
+}

@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"assembleSmithyDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithyAssemblyBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "SmithyAssemblyBackend"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; signal?: AbortSignal; }"
+    }
+  ],
+  "purpose": "assembleSmithyDocument accepts document, backend, options and returns Promise<SmithyAssemblyResult>.",
+  "related": [],
+  "returns": "Promise<SmithyAssemblyResult>",
+  "task": "Other APIs",
+  "type": "(document: Document, backend: SmithyAssemblyBackend, options: { id: string; signal?: AbortSignal; }) => Promise<SmithyAssemblyResult>"
+}

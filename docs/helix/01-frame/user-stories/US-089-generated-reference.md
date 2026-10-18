@@ -105,3 +105,24 @@ must cite exercised criteria with `@covers US-089-ACn`.
 
 Editing UMF schema definitions in the browser, proving native equivalence,
 executing a database, and interpreting arbitrary third-party extension code.
+
+## Authoring reference journey
+
+The maintainer starts with latest core concepts, opens Record or Field and reads
+its keys and conditions. They follow a property to accepted value shapes and a
+complete example, then follow a related SDK operation to parameters and usage.
+
+- **US-089-AC12:** A cold visit opens latest Document; Record and Field are
+  directly discoverable. Exact older links stay pinned with View latest.
+- **US-089-AC13:** Record exposes documented keys, membership and identity Keys;
+  Field exposes scalarType recognized values and unknown-label policy, and
+  itemType's reference shape, target and cardinality restrictions.
+- **US-089-AC14:** AVRO_KEYS_EXTENSION is a Constant with exact value, purpose,
+  import, usage and related APIs; functions expose parameters/returns and
+  interfaces expose members and nested types.
+- **US-089-AC15:** Cold property/value/API search navigates directly to context;
+  keyboard, refresh, Back and narrow screens retain usable content.
+
+- **US-089-AC16:** Complete and inline schema examples open as YAML. The reader
+  can switch to JSON and back using labeled keyboard-operable controls without
+  changing values, selected definition or source records.

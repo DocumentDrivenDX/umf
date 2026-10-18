@@ -1,0 +1,85 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityOntology\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documentId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "revision",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documents",
+      "optional": false,
+      "type": "{ documentId: string; revision: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "subject",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityEntity\"]"
+      ],
+      "name": "entities",
+      "optional": false,
+      "type": "SecurityEntity[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityAssociation\"]"
+      ],
+      "name": "associations",
+      "optional": false,
+      "type": "SecurityAssociation[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "actions",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityOntology is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityOntology"
+}

@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"assertExactJsonNumber\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Original interoperable JSON-number profile, reusable by larger framed readers.",
+  "related": [],
+  "returns": "void",
+  "task": "Other APIs",
+  "type": "(token: string) => void"
+}

@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"admitJavascriptNumber\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "value",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scalarType",
+      "optional": false,
+      "type": "\"integer\" | \"decimal\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+      ],
+      "name": "context",
+      "optional": true,
+      "type": "JavascriptNumericContext | undefined"
+    }
+  ],
+  "purpose": "admitJavascriptNumber accepts value, scalarType, context and returns JavascriptNumericLiteral.",
+  "related": [],
+  "returns": "JavascriptNumericLiteral",
+  "task": "Other APIs",
+  "type": "(value: number, scalarType: \"integer\" | \"decimal\", context?: JavascriptNumericContext) => JavascriptNumericLiteral"
+}

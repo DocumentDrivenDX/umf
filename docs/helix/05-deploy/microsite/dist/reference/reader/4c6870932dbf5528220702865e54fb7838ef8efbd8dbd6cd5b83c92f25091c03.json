@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverParquetRecordBytes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetRecordClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetRecordClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverParquetRecordBytes accepts input, current and returns Uint8Array<ArrayBufferLike>.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Import and export",
+  "type": "(input: ParquetRecordClassification, current: Document) => Uint8Array"
+}

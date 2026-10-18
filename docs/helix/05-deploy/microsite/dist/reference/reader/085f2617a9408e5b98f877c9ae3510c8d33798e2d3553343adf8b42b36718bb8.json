@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getOwlDeclarations\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Explicit graph declarations only; multiple roles remain separate and unvalidated.",
+  "related": [],
+  "returns": "OwlDeclarationView",
+  "task": "Inspect and select",
+  "type": "(document: Document) => OwlDeclarationView"
+}

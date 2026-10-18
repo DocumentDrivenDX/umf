@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"EvaluatedSecurityRule\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "effect",
+      "optional": false,
+      "type": "\"permit\" | \"require\" | \"forbid\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityTruth\"]"
+      ],
+      "name": "truth",
+      "optional": false,
+      "type": "SecurityTruth"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityDisposition\"]"
+      ],
+      "name": "disclosure",
+      "optional": true,
+      "type": "Record<string, SecurityDisposition>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "EvaluatedSecurityRule is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "EvaluatedSecurityRule"
+}

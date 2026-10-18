@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getSqlServerColumnMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getSqlServerColumnMetadata accepts document and returns SqlServerColumnMetadata[].",
+  "related": [],
+  "returns": "SqlServerColumnMetadata[]",
+  "task": "Inspect and select",
+  "type": "(document: Document) => SqlServerColumnMetadata[]"
+}

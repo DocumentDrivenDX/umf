@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyPostgresqlKeyClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "verifyPostgresqlKeyClassification accepts input, current, backend and returns Promise<PostgresqlKeyClassification>.",
+  "related": [],
+  "returns": "Promise<PostgresqlKeyClassification>",
+  "task": "Other APIs",
+  "type": "(input: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend) => Promise<PostgresqlKeyClassification>"
+}

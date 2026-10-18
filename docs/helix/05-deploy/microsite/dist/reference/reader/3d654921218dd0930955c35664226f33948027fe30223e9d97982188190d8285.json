@@ -1,0 +1,16 @@
+{
+  "alternatives": [
+    "{ kind: \"roles\"; profile: ActionProfileIdentity; roles: string[]; } & { [key: string]: unknown; }",
+    "{ kind: \"policy\"; profile: ActionProfileIdentity; resources: string[]; } & { [key: string]: unknown; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionAuthorization\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ActionAuthorization is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionAuthorization"
+}

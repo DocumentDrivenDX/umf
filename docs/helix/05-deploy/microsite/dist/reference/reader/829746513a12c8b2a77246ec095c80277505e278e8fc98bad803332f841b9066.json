@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"rollbackKeyEnvelope\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyUpgradeReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeyUpgradeReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyCandidateDocument\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "KeyCandidateDocument"
+    }
+  ],
+  "purpose": "Source consistency, not authentication. Later assertions stay in the separately retained current envelope.",
+  "related": [],
+  "returns": "KeyRollbackReceipt",
+  "task": "Author and edit",
+  "type": "(input: KeyUpgradeReceipt, current: KeyCandidateDocument) => KeyRollbackReceipt"
+}

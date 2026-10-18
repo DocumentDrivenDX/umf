@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionPlanAssessment\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "compatible",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "executionVerified",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligations",
+      "optional": false,
+      "type": "{ id: string; status: \"supported\" | \"unsupported\" | \"unknown\"; evidence: string[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanDiagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "ActionPlanDiagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionPlanAssessment is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionPlanAssessment"
+}

@@ -1,0 +1,43 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlOntologyHeader\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "node",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]",
+        "[\"api\",\".\",\"RdfLiteral\"]"
+      ],
+      "name": "versionIRIs",
+      "optional": false,
+      "type": "(RdfNode | RdfLiteral)[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]",
+        "[\"api\",\".\",\"RdfLiteral\"]"
+      ],
+      "name": "imports",
+      "optional": false,
+      "type": "(RdfNode | RdfLiteral)[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OwlOntologyHeader is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlOntologyHeader"
+}

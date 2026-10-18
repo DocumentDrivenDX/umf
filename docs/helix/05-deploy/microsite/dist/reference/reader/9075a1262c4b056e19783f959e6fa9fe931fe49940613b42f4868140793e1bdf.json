@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"writeDddDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "Default: 'yaml'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "writeDddDocument accepts doc, format and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(doc: Document, format?: \"json\" | \"yaml\") => string"
+}

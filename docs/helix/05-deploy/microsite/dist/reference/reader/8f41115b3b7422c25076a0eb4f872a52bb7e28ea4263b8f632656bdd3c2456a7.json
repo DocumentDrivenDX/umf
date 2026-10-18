@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"AccessInstant\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"instant\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "microsecond",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "Whole UTC seconds since Unix epoch, rounding toward negative infinity.",
+      "links": [],
+      "name": "utcSeconds",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalOffset",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-access-temporal/0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "canonicalText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "AccessInstant is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AccessInstant"
+}

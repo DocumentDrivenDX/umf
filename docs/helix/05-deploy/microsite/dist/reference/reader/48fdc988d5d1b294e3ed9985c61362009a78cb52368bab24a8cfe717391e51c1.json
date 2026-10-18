@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeJsonLdToRdf\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; produceGeneralizedRdf?: boolean; numericPolicy?: \"strict\" | \"binary64\"; lossPolicy: \"report\" | \"reject\"; rdfDirection?: null | \"i18n-datatype\" | \"compound-literal\"; }"
+    }
+  ],
+  "purpose": "proposeJsonLdToRdf accepts document, options and returns Promise<JsonLdToRdfReport>.",
+  "related": [],
+  "returns": "Promise<JsonLdToRdfReport>",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { id: string; produceGeneralizedRdf?: boolean; numericPolicy?: \"strict\" | \"binary64\"; lossPolicy: \"report\" | \"reject\"; rdfDirection?: null | \"i18n-datatype\" | \"compound-literal\"; }) => Promise<JsonLdToRdfReport>"
+}

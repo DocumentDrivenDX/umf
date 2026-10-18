@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getSqlServerConstraintMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Missing observations are distinct from empty, permission-limited catalog results.",
+  "related": [],
+  "returns": "SqlServerConstraintMetadata",
+  "task": "Inspect and select",
+  "type": "(document: Document) => SqlServerConstraintMetadata"
+}

@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"StructuredClassificationInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"inspect-structured-classification\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeStructuredClassification\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "NativeStructuredClassification"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeContext",
+      "optional": false,
+      "type": "{ scope: \"declared-only\"; namespaceResolution: \"explicit\" | \"create-schema-context\" | \"unresolved\"; } | null"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "mappings",
+      "optional": false,
+      "type": "((Mapping | (Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"qualified-native-record-type\"; }) | Mapping | (Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"checked-struct-valued-member\"; }) | { origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-composite\" | \"checked-catalog-composite-attribute\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-raw-column-declaration\" | \"checked-raw-table-declaration\" | \"checked-raw-composite-declaration\"; outcome: \"exact\" | \"unknown\"; } | Mapping | Mapping | Mapping) & { binding: Binding; })[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\"; reason: string; binding: Binding; recovery: { strategy: \"retained-source-and-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "StructuredClassificationInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "StructuredClassificationInspection"
+}

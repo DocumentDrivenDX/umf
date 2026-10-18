@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"encodeArrowFlatbuffer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowFlatbufferEncodingBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "ArrowFlatbufferEncodingBackend"
+    }
+  ],
+  "purpose": "Encodes one logical metadata root. Never rewrites an archived IPC dataset.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Serialize",
+  "type": "(document: Document, backend: ArrowFlatbufferEncodingBackend) => Uint8Array"
+}

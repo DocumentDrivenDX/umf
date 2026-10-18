@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCsvBooleanLexical\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CsvBooleanLexicalReceipt\"]"
+      ],
+      "name": "receiptInput",
+      "optional": false,
+      "type": "CsvBooleanLexicalReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CsvBooleanLexicalRequest\"]"
+      ],
+      "name": "requestInput",
+      "optional": false,
+      "type": "CsvBooleanLexicalRequest"
+    }
+  ],
+  "purpose": "Independently expected original source/request are mandatory, never receipt-derived.",
+  "related": [],
+  "returns": "CsvBooleanLexicalReceipt",
+  "task": "Other APIs",
+  "type": "(receiptInput: CsvBooleanLexicalReceipt, sourceInput: Document, requestInput: CsvBooleanLexicalRequest) => CsvBooleanLexicalReceipt"
+}

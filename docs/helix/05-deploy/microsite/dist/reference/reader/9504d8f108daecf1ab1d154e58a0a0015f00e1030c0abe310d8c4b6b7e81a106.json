@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"exportPostgresqlCatalogCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Export the entire native capture, preserving unknown fields and exact numbers.",
+  "related": [],
+  "returns": "{ state: \"captured\" | \"modified\"; json: string; complete: false; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { state: \"captured\" | \"modified\"; json: string; complete: false; }"
+}

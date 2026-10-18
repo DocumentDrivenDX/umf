@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeOpenapiEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "json",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resourceUri",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "proposeOpenapiEdit accepts document, path, json, resourceUri and returns { document: Document; validation: Validation; }.",
+  "related": [],
+  "returns": "{ document: Document; validation: Validation; }",
+  "task": "Author and edit",
+  "type": "(document: Document, path: string, json: string, resourceUri?: string) => { document: Document; validation: Validation; }"
+}

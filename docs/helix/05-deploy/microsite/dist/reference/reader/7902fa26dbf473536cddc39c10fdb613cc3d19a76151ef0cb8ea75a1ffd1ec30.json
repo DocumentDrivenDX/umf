@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SelectedActionRow\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionEntityInput\"]"
+      ],
+      "name": "entity",
+      "optional": false,
+      "type": "ActionEntityInput"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "guard",
+      "optional": false,
+      "type": "{ profile: ActionProfileIdentity; store: string; epoch: string; identity: string; version: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "keyReceipt",
+      "optional": false,
+      "type": "CoreKeyTupleReceipt"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SelectedActionRow is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SelectedActionRow"
+}

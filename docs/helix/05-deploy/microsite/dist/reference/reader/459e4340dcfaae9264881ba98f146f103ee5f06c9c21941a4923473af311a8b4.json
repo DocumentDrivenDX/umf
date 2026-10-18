@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"resolveOdcsReference\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ reference: string; usage: \"element\" | \"foreignKey\"; }"
+    }
+  ],
+  "purpose": "Resolve local ODCS identifiers/names. These are not JSON Pointer array indexes.",
+  "related": [],
+  "returns": "OdcsReferenceResult",
+  "task": "Inspect and select",
+  "type": "(document: Document, options: { reference: string; usage: \"element\" | \"foreignKey\"; }) => OdcsReferenceResult"
+}

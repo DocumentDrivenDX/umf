@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CsvBooleanLexicalRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.csv-boolean-lexical/1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "field",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "\"true\" | \"false\" | \"True\" | \"False\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "sourceContext",
+      "optional": false,
+      "type": "Json"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CsvBooleanLexicalRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CsvBooleanLexicalRequest"
+}

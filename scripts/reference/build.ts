@@ -4,6 +4,7 @@ import {mkdtemp,mkdir,rename,rm,readdir} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';
 import {identity,assertJoins,canonical,exclude,type Entry,type ReferenceIndex} from '../../docs/helix/05-deploy/reference/model';
 import {root,config,source,read,paths,text,inputs,originals,sha,json} from './io';
+import {buildReader} from './reader-build';
 import {schemas,extensions,exportsInventory} from './extract';
 import {evidence,aggregate} from './evidence';
 import {runtimeBuild} from './runtime-build';
@@ -42,8 +43,10 @@ try{
  for(const e of entries){if(e.kind==='schema'&&e.data.profileVersions.length){e.links.push(identity('guide','concepts'),identity('guide','evolution'));const version=e.data.profileVersions[0];const related=['readDocument','writeDocument','validateDocument','selectCoreElements',...(['0.8.0','0.9.0'].includes(version)?['inspectCoreSchemaProperties','resolveCoreDefault']:[])];for(const name of related){const target=api.find(a=>a.data.entrypoint==='.'&&a.title===name);if(target)e.links.push(target.id);}const example=version==='0.1.0'?'unknown-preservation':version==='0.8.0'?'core-properties':version==='0.9.0'?'core-current':version==='0.10.0'?'core-semantic':undefined;if(example)e.links.push(identity('example',example));}if(e.kind==='extension'){const guide=({'umf.ddd':'ddd','umf.binding':'bindings','umf.actions':'actions','umf.security':'security','umf.access':'consumers','umf.dashboard':'consumers','umf.domain-pack':'consumers','umf.dataset-source':'consumers'} as Record<string,string>)[e.data.extensionId]??'extensions';e.links.push(identity('guide',guide));}e.links=[...new Set(e.links)].sort();if(e.kind==='extension')e.links.push(...entries.filter(x=>x.kind==='integration'&&x.links.includes(e.id)).map(x=>x.id));}
  const discovered=entries.map(e=>({id:e.id,kind:e.kind,paths:e.sources.map(s=>s.path)})),retained=exclude(entries,profiles.exclusions);entries.splice(0,entries.length,...retained);
  await Bun.write(join(stage,'discovery.json'),json({profile:'umf.reference.discovery/1',items:discovered.map(e=>({...e,assessment:entries.some(x=>x.id===e.id)?'represented':'excluded'})),exclusions:profiles.exclusions}));
+ for(const e of entries.filter(e=>e.kind==='api'))for(const target of entries.filter(x=>x.kind==='schema'&&e.sources.some(s=>s.path===x.data.schemaPath)))e.links.push(target.id);
  assertJoins(entries);
  for(const e of entries)await validate('entry',e);
+ await buildReader(stage,entries,profiles,validate);
  console.log('Building fixed runtime, guides and evidence inventory…');
  const evidenceExclusions=[{path:'docs/helix/04-build/evidence/generated-reference/**',reason:'This reference consumer’s own verification outputs are excluded to avoid a build-evidence self-hash cycle; they do not establish native integration support.'}];
  const inventory=[];const evidencePaths=new Set((await Promise.all(['fixtures/validation/**/*.json','fixtures/*/*results*.json','fixtures/*/*oracle*.json','docs/helix/04-build/evidence/**/*.json','docs/helix/04-build/evidence/**/*.md'].map(paths))).flat().filter(path=>!path.startsWith('docs/helix/04-build/evidence/generated-reference/')));

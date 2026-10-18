@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"UmfError\"]",
+  "kind": "Class",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "code",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Default: ''.",
+      "links": [],
+      "name": "path",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "message",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "stack",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "cause",
+      "optional": true,
+      "type": "unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfError is a class in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfError"
+}

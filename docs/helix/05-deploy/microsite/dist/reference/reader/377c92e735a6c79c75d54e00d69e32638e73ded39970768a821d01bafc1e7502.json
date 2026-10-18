@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverSqlServerFieldCapture\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerFieldClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerFieldClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverSqlServerFieldCapture accepts input, current and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(input: SqlServerFieldClassification, current: Document) => string"
+}

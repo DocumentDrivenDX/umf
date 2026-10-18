@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyPostgresqlFacetClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "Receipt consistency with retained input and current target, not source authentication.",
+  "related": [],
+  "returns": "Promise<PostgresqlFacetClassification>",
+  "task": "Other APIs",
+  "type": "(input: PostgresqlFacetClassification, current: Document, backend: PostgresqlBackend) => Promise<PostgresqlFacetClassification>"
+}

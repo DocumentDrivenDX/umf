@@ -10,6 +10,13 @@ Python adoption and other version-specific authoring expansion remain separate.
 
 ## Generated reference and microsite expansion
 
+[Schema and API reference organization plan](04-build/schema-reference-ia-plan.md)
+defines latest-first concept navigation, key/value explanations and task-based
+API pages following the owner's 2026-10-17 feedback.
+[Local execution evidence](04-build/evidence/generated-reference/reader/README.md)
+records passing implementation and Chromium checks; recruited-reader comprehension
+remains unverified.
+
 [TD-089](02-design/technical-designs/TD-089-generated-reference.md) specifies
 the generated core/extension/API reference, scoped integration evidence and local
 interactive tools. [SD-032](02-design/solution-designs/SD-032-generated-reference.md)

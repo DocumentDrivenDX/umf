@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectParquetLogicalTypes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Logical schema rules only: never inspects or coerces stored values.",
+  "related": [],
+  "returns": "ParquetLogicalInspection",
+  "task": "Inspect and select",
+  "type": "(source: Document) => ParquetLogicalInspection"
+}

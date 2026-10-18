@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProtobufPayload\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "descriptorProfile",
+      "optional": false,
+      "type": "\"protobuf-es-2.15.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DescriptorNode\"]"
+      ],
+      "name": "descriptorSet",
+      "optional": false,
+      "type": "DescriptorNode"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceArchive",
+      "optional": true,
+      "type": "{ role: \"original\"; compiler: string; files: Record<string, string>; roots: string[]; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtobufPayload is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtobufPayload"
+}

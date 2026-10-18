@@ -1,0 +1,40 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityField\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "ref",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "protection",
+      "optional": false,
+      "type": "\"protected\" | \"unprotected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityQueryOperator\"]",
+        "[\"api\",\".\",\"SecurityQueryUse\"]"
+      ],
+      "name": "queryUse",
+      "optional": true,
+      "type": "Partial<Record<SecurityQueryOperator, SecurityQueryUse>>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityField is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityField"
+}

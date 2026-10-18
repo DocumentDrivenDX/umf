@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportSmithySources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportSmithySources accepts document and returns { files: Record<string, string>; }.",
+  "related": [],
+  "returns": "{ files: Record<string, string>; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { files: Record<string, string>; }"
+}

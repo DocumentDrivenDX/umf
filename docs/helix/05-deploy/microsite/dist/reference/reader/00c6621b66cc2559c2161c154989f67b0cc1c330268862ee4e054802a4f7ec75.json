@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectCardinalityToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreCardinalityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalitySqlServerRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "CardinalitySqlServerRequest"
+    }
+  ],
+  "purpose": "projectCardinalityToSqlServer accepts input, options and returns CardinalitySqlServerProjection.",
+  "related": [],
+  "returns": "CardinalitySqlServerProjection",
+  "task": "Import and export",
+  "type": "(input: CoreCardinalityDeclaration, options: CardinalitySqlServerRequest) => CardinalitySqlServerProjection"
+}

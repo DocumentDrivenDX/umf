@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"declareCoreSchemaProperties\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSchemaPropertyIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreSchemaPropertyIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSchemaPropertyPatch\"]"
+      ],
+      "name": "patch",
+      "optional": false,
+      "type": "CoreSchemaPropertyPatch"
+    }
+  ],
+  "purpose": "declareCoreSchemaProperties accepts input, identity, patch and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreSchemaPropertyIdentity, patch: CoreSchemaPropertyPatch) => Document"
+}

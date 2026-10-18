@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityDisclosureBatchV2\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"umf.security.disclosure/0.2.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "{ id: string; revision: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "protection",
+      "optional": false,
+      "type": "{ id: string; revision: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "domains",
+      "optional": false,
+      "type": "{ documentId: string; revision: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityDisclosureColumnV2\"]"
+      ],
+      "name": "columns",
+      "optional": false,
+      "type": "SecurityDisclosureColumnV2[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityDisclosureCellV2\"]"
+      ],
+      "name": "rows",
+      "optional": false,
+      "type": "SecurityDisclosureCellV2[][]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityDisclosureBatchV2 is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityDisclosureBatchV2"
+}

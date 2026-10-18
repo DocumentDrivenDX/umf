@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeAvroNodeEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dependencyId",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "Explicit authoring proposal, not a semantic-validity or compatibility certificate.",
+  "related": [],
+  "returns": "AvroNodeEditProposal",
+  "task": "Author and edit",
+  "type": "(input: Document, path: string, text: string, dependencyId?: string) => AvroNodeEditProposal"
+}

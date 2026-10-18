@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"decodeBit128CarrierValue\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Record<string, string | null>"
+    }
+  ],
+  "purpose": "decodeBit128CarrierValue accepts binding, logical, identity, input and returns CoreLiteral.",
+  "related": [],
+  "returns": "CoreLiteral",
+  "task": "Serialize",
+  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, input: Record<string, string | null>) => CoreLiteral"
+}

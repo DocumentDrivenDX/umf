@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectOdcsRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "Default: {}.",
+      "links": [],
+      "name": "options",
+      "optional": true,
+      "type": "{ maxRelationships?: number; }"
+    }
+  ],
+  "purpose": "Local endpoint pairing, not execution of referential-integrity constraints.",
+  "related": [],
+  "returns": "OdcsRelationshipReport",
+  "task": "Inspect and select",
+  "type": "(document: Document, options?: { maxRelationships?: number; }) => OdcsRelationshipReport"
+}

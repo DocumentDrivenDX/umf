@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyParquetCardinality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetCardinalityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetCardinalityRequest"
+    }
+  ],
+  "purpose": "Publish logical Fields while retaining the physical archive and all existing meaning.",
+  "related": [],
+  "returns": "ParquetCardinalityClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetCardinalityRequest) => ParquetCardinalityClassification"
+}

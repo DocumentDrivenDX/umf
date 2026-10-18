@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"exportArrowSchemaIpc\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowSchemaIpcBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "ArrowSchemaIpcBackend"
+    }
+  ],
+  "purpose": "Schema-only IPC stream. Does not export arrays, dictionary values or arbitrary IPC.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Import and export",
+  "type": "(document: Document, backend: ArrowSchemaIpcBackend) => Uint8Array"
+}

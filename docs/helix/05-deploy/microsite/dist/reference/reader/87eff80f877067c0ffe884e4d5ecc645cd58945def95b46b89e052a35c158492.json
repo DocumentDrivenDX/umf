@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"evaluateSecurityWrite\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityPolicy\"]"
+      ],
+      "name": "policyInput",
+      "optional": false,
+      "type": "SecurityPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolutionInput",
+      "optional": false,
+      "type": "SecurityResolution"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityWriteProfile\"]"
+      ],
+      "name": "profileInput",
+      "optional": false,
+      "type": "SecurityWriteProfile"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityWriteRequest\"]"
+      ],
+      "name": "requestInput",
+      "optional": false,
+      "type": "SecurityWriteRequest"
+    }
+  ],
+  "purpose": "Admission only: the native host must bind this decision and effects to one guarded transaction.",
+  "related": [],
+  "returns": "SecurityWriteResult",
+  "task": "Other APIs",
+  "type": "(policyInput: SecurityPolicy, resolutionInput: SecurityResolution, profileInput: SecurityWriteProfile, requestInput: SecurityWriteRequest) => SecurityWriteResult"
+}

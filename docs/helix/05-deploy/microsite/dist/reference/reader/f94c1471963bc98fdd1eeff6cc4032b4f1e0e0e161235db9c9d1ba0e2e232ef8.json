@@ -1,0 +1,68 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ShaclShapeMetadataNode\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "node",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ShaclMetadataField\"]"
+      ],
+      "name": "annotations",
+      "optional": false,
+      "type": "ShaclMetadataField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ShaclMetadataField\"]"
+      ],
+      "name": "constraints",
+      "optional": false,
+      "type": "ShaclMetadataField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ShaclMetadataField\"]"
+      ],
+      "name": "controls",
+      "optional": false,
+      "type": "ShaclMetadataField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ShaclMetadataField\"]"
+      ],
+      "name": "uninterpreted",
+      "optional": false,
+      "type": "ShaclMetadataField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ShaclPath\"]"
+      ],
+      "name": "path",
+      "optional": false,
+      "type": "{ status: \"absent\"; } | { status: \"compiled\"; value: ShaclPath; } | { status: \"invalid\"; message: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ShaclShapeMetadataNode is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ShaclShapeMetadataNode"
+}

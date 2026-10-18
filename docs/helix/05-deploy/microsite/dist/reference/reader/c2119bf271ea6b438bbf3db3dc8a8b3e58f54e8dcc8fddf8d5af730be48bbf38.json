@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreElementQuery\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "references",
+      "optional": false,
+      "type": "\"none\" | \"transitive\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "modules",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespaces",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "names",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scalarTypes",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "cardinalities",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identities",
+      "optional": true,
+      "type": "{ module: string; element: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreElementQuery is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreElementQuery"
+}

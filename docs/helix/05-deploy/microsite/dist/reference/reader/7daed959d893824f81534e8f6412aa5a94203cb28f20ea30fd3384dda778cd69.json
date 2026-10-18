@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectKeysToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreKeyDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyAvroRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "KeyAvroRequest"
+    }
+  ],
+  "purpose": "Consume verified declarations by stable ID. Native names never supply authored identity.",
+  "related": [],
+  "returns": "KeyAvroProjection",
+  "task": "Import and export",
+  "type": "(input: Document, authorInput: CoreKeyDeclaration[], options: KeyAvroRequest) => KeyAvroProjection"
+}

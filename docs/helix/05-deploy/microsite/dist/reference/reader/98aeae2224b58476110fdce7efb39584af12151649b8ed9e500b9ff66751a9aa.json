@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectCardinalityToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreCardinalityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalityAvroRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "CardinalityAvroRequest"
+    }
+  ],
+  "purpose": "projectCardinalityToAvro accepts input, options and returns CardinalityAvroProjection.",
+  "related": [],
+  "returns": "CardinalityAvroProjection",
+  "task": "Import and export",
+  "type": "(input: CoreCardinalityDeclaration, options: CardinalityAvroRequest) => CardinalityAvroProjection"
+}

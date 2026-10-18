@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getShaclShapeMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "shape",
+      "optional": false,
+      "type": "RdfNode"
+    }
+  ],
+  "purpose": "Declared metadata only. Constraint grouping does not assert validity, inference or enforcement.",
+  "related": [],
+  "returns": "ShaclShapeMetadata",
+  "task": "Inspect and select",
+  "type": "(document: Document, shape: RdfNode) => ShaclShapeMetadata"
+}

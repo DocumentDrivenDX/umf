@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"lookupCoreKey\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "CoreKeyIdentity"
+    }
+  ],
+  "purpose": "lookupCoreKey accepts input, identityInput and returns CoreKeyLookup.",
+  "related": [],
+  "returns": "CoreKeyLookup",
+  "task": "Other APIs",
+  "type": "(input: Document, identityInput: CoreKeyIdentity) => CoreKeyLookup"
+}

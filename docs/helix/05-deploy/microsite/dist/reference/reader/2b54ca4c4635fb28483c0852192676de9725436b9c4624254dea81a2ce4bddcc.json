@@ -1,0 +1,17 @@
+{
+  "alternatives": [
+    "{ kind: \"predicate\"; iri: string; }",
+    "{ kind: \"sequence\" | \"alternative\"; paths: ShaclPath[]; }",
+    "{ kind: \"inverse\" | \"zeroOrMore\" | \"oneOrMore\" | \"zeroOrOne\"; path: ShaclPath; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ShaclPath\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ShaclPath is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ShaclPath"
+}

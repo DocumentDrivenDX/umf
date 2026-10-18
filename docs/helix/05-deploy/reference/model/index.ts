@@ -40,3 +40,5 @@ export function structuralDiff(before:unknown,after:unknown,pointer='',depth=0):
  if(before&&after&&typeof before==='object'&&typeof after==='object'&&!Array.isArray(before)&&!Array.isArray(after))return [...new Set([...Object.keys(before),...Object.keys(after)])].sort().flatMap(k=>structuralDiff((before as any)[k],(after as any)[k],pointer+'/'+k.replaceAll('~','~0').replaceAll('/','~1'),depth+1));
  return [{pointer,change:before===undefined?'added':after===undefined?'removed':'changed',...(before===undefined?{}:{before}),...(after===undefined?{}:{after})}];
 }
+export {compareVersions,latestProfile,treeValue,pointerPart,schemaNode,resolveSchema,shape,schemaRules,propertyPresence,unknownKeyPolicy} from './reader';
+export type {ReaderCatalog,ApiReader,ReaderRow,Concept} from './reader';

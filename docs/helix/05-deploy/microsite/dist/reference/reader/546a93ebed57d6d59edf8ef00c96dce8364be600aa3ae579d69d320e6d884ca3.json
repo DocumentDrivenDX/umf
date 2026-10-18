@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverFacetsFromAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FacetsAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Recompute the complete author projection and compare exact emitted text.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: FacetsAvroProjection, nativeText: string) => Document"
+}

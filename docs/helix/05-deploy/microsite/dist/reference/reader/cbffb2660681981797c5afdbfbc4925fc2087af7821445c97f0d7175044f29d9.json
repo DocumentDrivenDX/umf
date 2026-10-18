@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"assessAction\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "ActionIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionExecutorProfile\"]"
+      ],
+      "name": "profileInput",
+      "optional": false,
+      "type": "ActionExecutorProfile"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "assessAction accepts sourceInput, identityInput, profileInput, registry and returns ActionAssessment.",
+  "related": [],
+  "returns": "ActionAssessment",
+  "task": "Other APIs",
+  "type": "(sourceInput: Document, identityInput: ActionIdentity, profileInput: ActionExecutorProfile, registry: Registry) => ActionAssessment"
+}

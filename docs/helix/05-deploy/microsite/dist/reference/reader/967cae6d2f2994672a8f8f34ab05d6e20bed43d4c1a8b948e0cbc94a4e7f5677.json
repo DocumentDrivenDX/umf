@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyTableSpecRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecRelationshipRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "TableSpecRelationshipRequest"
+    }
+  ],
+  "purpose": "Observe native declarations without upgrading the envelope or creating authored relationships.",
+  "related": [],
+  "returns": "TableSpecRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: TableSpecRelationshipRequest) => TableSpecRelationshipClassification"
+}

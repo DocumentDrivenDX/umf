@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectTableSpecToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecAvroPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecAvroPolicy"
+    }
+  ],
+  "purpose": "projectTableSpecToAvro accepts source, input and returns TableSpecAvroProjection.",
+  "related": [],
+  "returns": "TableSpecAvroProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: TableSpecAvroPolicy) => TableSpecAvroProjection"
+}

@@ -1,0 +1,59 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"evaluateActionRule\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionRule\"]"
+      ],
+      "name": "rule",
+      "optional": false,
+      "type": "ActionRule"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionRulePhase\"]"
+      ],
+      "name": "phase",
+      "optional": false,
+      "type": "ActionRulePhase"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionRuleState\"]"
+      ],
+      "name": "stateInput",
+      "optional": false,
+      "type": "ActionRuleState"
+    }
+  ],
+  "purpose": "Recompiles from declaration text before evaluation; callers cannot forge a compiled-plan certificate.",
+  "related": [],
+  "returns": "boolean",
+  "task": "Other APIs",
+  "type": "(document: Document, action: Action, rule: ActionRule, phase: ActionRulePhase, stateInput: ActionRuleState) => boolean"
+}

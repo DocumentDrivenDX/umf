@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyAvroRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRelationshipRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroRelationshipRequest"
+    }
+  ],
+  "purpose": "Observe native schema grammar without resolving names or inferring authored associations.",
+  "related": [],
+  "returns": "AvroRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: AvroRelationshipRequest) => AvroRelationshipClassification"
+}

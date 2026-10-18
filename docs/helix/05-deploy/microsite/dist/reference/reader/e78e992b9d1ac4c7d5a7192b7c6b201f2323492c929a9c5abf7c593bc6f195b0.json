@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"captureParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "bytes",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "Captures even malformed source, without interpreting or normalizing any bytes.",
+  "related": [],
+  "returns": "Document",
+  "task": "Other APIs",
+  "type": "(bytes: Uint8Array, options: { id: string; }) => Document"
+}

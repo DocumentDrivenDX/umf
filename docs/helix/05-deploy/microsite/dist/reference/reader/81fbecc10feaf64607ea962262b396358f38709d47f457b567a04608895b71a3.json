@@ -1,0 +1,51 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreElementSelectionEntry\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Element\"]"
+      ],
+      "name": "element",
+      "optional": false,
+      "type": "Element"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "includedBy",
+      "optional": false,
+      "type": "\"reference\" | \"match\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreElementSelectionEntry is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreElementSelectionEntry"
+}

@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SecurityAuthorityGuard\"]",
+  "kind": "Class",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "read",
+      "optional": false,
+      "type": "<T>(operation: (generation: string) => Promise<T>, signal?: AbortSignal) => Promise<T>"
+    },
+    {
+      "description": "A change callback must commit its complete authority transaction before resolving.",
+      "links": [],
+      "name": "change",
+      "optional": false,
+      "type": "(generation: string, operation: () => Promise<void>, signal?: AbortSignal) => Promise<void>"
+    },
+    {
+      "description": "Closing refuses new/queued work; active callbacks retain their guard until they settle.",
+      "links": [],
+      "name": "close",
+      "optional": false,
+      "type": "() => void"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Single-realm coordination only. Hosts must prove all native writers and final releases participate.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityAuthorityGuard"
+}

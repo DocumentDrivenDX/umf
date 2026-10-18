@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectCardinalityToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreCardinalityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalityTableSpecRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "CardinalityTableSpecRequest"
+    }
+  ],
+  "purpose": "projectCardinalityToTableSpec accepts input, options and returns CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(input: CoreCardinalityDeclaration, options: CardinalityTableSpecRequest) => CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+}

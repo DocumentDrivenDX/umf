@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyKeysParquetProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeyParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "related": [],
+  "returns": "KeyParquetProjection",
+  "task": "Other APIs",
+  "type": "(input: KeyParquetProjection, current: Document) => KeyParquetProjection"
+}

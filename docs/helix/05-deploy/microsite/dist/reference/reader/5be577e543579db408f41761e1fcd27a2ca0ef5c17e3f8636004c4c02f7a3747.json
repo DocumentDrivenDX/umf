@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectCdcMortality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "textSource",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceId",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "The specific CDC leading-causes dataset has adjusted rates and no row denominators.",
+  "related": [],
+  "returns": "MedicalRow[]",
+  "task": "Import and export",
+  "type": "(textSource: string, sourceId: string) => MedicalRow[]"
+}

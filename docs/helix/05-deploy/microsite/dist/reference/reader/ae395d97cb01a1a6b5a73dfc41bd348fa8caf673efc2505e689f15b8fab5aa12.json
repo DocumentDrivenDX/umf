@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectActions\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "inspectActions accepts sourceInput, registry and returns ActionInspection.",
+  "related": [],
+  "returns": "ActionInspection",
+  "task": "Inspect and select",
+  "type": "(sourceInput: Document, registry: Registry) => ActionInspection"
+}

@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectMedicalFhir\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "inputs",
+      "optional": false,
+      "type": "{ source_id: string; text: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Selected R4 views only. Originals, exact fragments and unresolved edges remain explicit.",
+  "related": [],
+  "returns": "MedicalTables",
+  "task": "Import and export",
+  "type": "(inputs: { source_id: string; text: string; }[], namespace: string) => MedicalTables"
+}

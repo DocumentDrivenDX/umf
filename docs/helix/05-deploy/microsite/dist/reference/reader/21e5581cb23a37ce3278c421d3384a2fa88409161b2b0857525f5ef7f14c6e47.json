@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"sqlserverPhysicalBindingSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as sqlserverPhysicalBindingSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; status: { enum: string[]; }; logical: { $ref: string; }; binding: { anyOf: { $ref: string; }[]; }; policy: { type: string; additionalProperties: boolean; required: string[]; properties: { layout: { $ref: string; }; partitionFamilies: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { name: { type: string; }; scheme: { type: string; }; column: { type: string; }; }; }; }; }; }; lossPolicy: { enum: string[]; }; nativeSource: { type: string; }; nativeArchive: { anyOf: { $ref: string; }[]; }; candidate: { type: string; }; residuals: { type: string; minItems: number; items: { type: string; additionalProperties: boolean; required: string[]; properties: { source: { enum: string[]; }; path: { type: string; }; reason: { type: string; }; value: {}; }; }; }; mappings: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { sourcePath: { type: string; }; target: { type: string; }; kind: { enum: string[]; }; outcome: { enum: string[]; }; }; }; }; diagnostics: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { code: { type: string; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; }; }; }; allOf: ({ if: { properties: { status: { const: string; }; }; required?: never; }; then: { required: string[]; properties: { lossPolicy: { const: string; }; }; }; else: { properties: { candidate: boolean; nativeArchive?: never; }; }; } | { if: { required: string[]; properties?: never; }; then: { required: string[]; properties?: never; }; else: { properties: { nativeArchive: boolean; candidate?: never; }; }; })[]; }"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyTableSpecRecord\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecRecordRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "TableSpecRecordRequest"
+    }
+  ],
+  "purpose": "One record and its named members; atomic across every column. Physical/context groupings stay native.",
+  "related": [],
+  "returns": "TableSpecRecordClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: TableSpecRecordRequest) => TableSpecRecordClassification"
+}

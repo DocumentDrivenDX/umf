@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyParquetFacets\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetFacetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetFacetRequest"
+    }
+  ],
+  "purpose": "Classify the declaration of one present non-null leaf value. Does not infer\nrow availability, container cardinality, authored provenance or file validity.",
+  "related": [],
+  "returns": "ParquetFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetFacetRequest) => ParquetFacetClassification"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverDddGraphqlNative\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddGraphqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "currentTarget",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverDddGraphqlNative accepts input, currentTarget and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(input: DddGraphqlProjection, currentTarget: Document) => string"
+}

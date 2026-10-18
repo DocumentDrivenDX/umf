@@ -1,0 +1,107 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DeltaSidecarReconciliation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "checkpoint",
+      "optional": false,
+      "type": "DeltaCommit"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaSidecar\"]"
+      ],
+      "name": "sidecars",
+      "optional": false,
+      "type": "DeltaSidecar[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "derivedCheckpoint",
+      "optional": true,
+      "type": "DeltaCommit"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaSidecarOrigin\"]"
+      ],
+      "name": "origins",
+      "optional": true,
+      "type": "DeltaSidecarOrigin[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "omittedNullFields",
+      "optional": true,
+      "type": "{ sidecar: number; row: number; path: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaScalarConversion\"]"
+      ],
+      "name": "scalarConversions",
+      "optional": true,
+      "type": "(DeltaScalarConversion & { sidecar: number; })[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reconciled\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "sources",
+      "optional": false,
+      "type": "DeltaCommit[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaActionState\"]"
+      ],
+      "name": "state",
+      "optional": true,
+      "type": "DeltaActionState"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaSidecarReconciliation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaSidecarReconciliation"
+}

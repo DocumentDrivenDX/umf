@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getTypeSpecSemanticGraph\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "{ roots: string[]; }"
+    }
+  ],
+  "purpose": "Selected compiled graph snapshot; source remains authoritative for omitted compiler state.",
+  "related": [],
+  "returns": "Promise<{ status: \"available\" | \"blocked\"; source: Document; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; roots: { expression: string; target: string; }[]; nodes: TypeSpecSemanticNode[]; complete: false; limitations: string[]; issues: { code: string; detail: string; }[]; }>",
+  "task": "Inspect and select",
+  "type": "(document: Document, input: { roots: string[]; }) => Promise<{ status: \"available\" | \"blocked\"; source: Document; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; roots: { expression: string; target: string; }[]; nodes: TypeSpecSemanticNode[]; complete: false; limitations: string[]; issues: { code: string; detail: string; }[]; }>"
+}

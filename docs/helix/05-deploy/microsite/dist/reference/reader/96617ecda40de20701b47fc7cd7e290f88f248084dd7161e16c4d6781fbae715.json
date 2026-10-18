@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"declareCoreCardinality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreCardinalityIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "CoreCardinalityRequest"
+    }
+  ],
+  "purpose": "Explicit author action; archives previous meaning and makes no native classification claim.",
+  "related": [],
+  "returns": "CoreCardinalityDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreCardinalityIdentity, options: CoreCardinalityRequest) => CoreCardinalityDeclaration"
+}

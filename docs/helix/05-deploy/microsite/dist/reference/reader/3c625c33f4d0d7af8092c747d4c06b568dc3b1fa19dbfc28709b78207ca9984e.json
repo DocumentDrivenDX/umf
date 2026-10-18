@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"LinkmlImportContext\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "entry",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "schemas",
+      "optional": false,
+      "type": "{ key: string; document: Document; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "bindings",
+      "optional": false,
+      "type": "{ from: string; import: string; target: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "LinkmlImportContext is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "LinkmlImportContext"
+}

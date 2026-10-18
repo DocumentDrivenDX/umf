@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"readSecuritySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Default: 'json'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "Preservation is independent of interpretation; unfamiliar policy versions/operators remain data.",
+  "related": [],
+  "returns": "Json",
+  "task": "Read and validate",
+  "type": "(text: string, format?: \"json\" | \"yaml\") => Json"
+}

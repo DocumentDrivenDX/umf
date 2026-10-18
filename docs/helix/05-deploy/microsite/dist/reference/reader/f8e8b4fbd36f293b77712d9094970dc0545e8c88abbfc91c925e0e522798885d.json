@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverAvroFacetSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverAvroFacetSource accepts input, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
+  "related": [],
+  "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
+  "task": "Import and export",
+  "type": "(input: AvroFacetClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+}

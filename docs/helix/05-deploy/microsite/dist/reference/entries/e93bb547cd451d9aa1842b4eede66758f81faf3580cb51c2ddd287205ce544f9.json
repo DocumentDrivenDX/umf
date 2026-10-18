@@ -12,7 +12,7 @@
     "exportName": "emitTypeSpecJsonSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, input: { options: JsonObject; }): Promise<{ status: \"blocked\" | \"emitted\" | \"empty\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }>"
+      "(document: Document, input: { options: JsonObject; }): Promise<{ status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }>"
     ]
   },
   "id": "[\"api\",\".\",\"emitTypeSpecJsonSchema\"]",

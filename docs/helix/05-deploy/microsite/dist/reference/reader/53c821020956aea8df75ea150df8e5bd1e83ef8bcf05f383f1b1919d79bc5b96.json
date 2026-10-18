@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProtectionDeclarationObligation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "transform",
+      "optional": false,
+      "type": "{ id: string; version: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtectionDeclarationObligationKind\"]"
+      ],
+      "name": "kind",
+      "optional": false,
+      "type": "ProtectionDeclarationObligationKind"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "declaration",
+      "optional": false,
+      "type": "Json"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtectionDeclarationObligation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtectionDeclarationObligation"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportGraphqlBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportGraphqlBundle accepts document and returns { schema: string; source: Document; diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "{ schema: string; source: Document; diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { schema: string; source: Document; diagnostics: Diagnostic[]; }"
+}

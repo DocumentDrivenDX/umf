@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectRelationshipToExtra\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreRelationshipDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RelationshipExtraRequest"
+    }
+  ],
+  "purpose": "Explicit Record-shape down-binding; native-only import never authenticates authored intent.",
+  "related": [],
+  "returns": "RelationshipExtraProjection",
+  "task": "Import and export",
+  "type": "(input: Document, authorInput: CoreRelationshipDeclaration, options: RelationshipExtraRequest) => RelationshipExtraProjection"
+}

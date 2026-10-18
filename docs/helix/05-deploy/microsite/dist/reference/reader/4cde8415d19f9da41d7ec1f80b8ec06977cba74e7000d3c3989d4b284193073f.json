@@ -1,0 +1,57 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionManifestInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionManifest\"]"
+      ],
+      "name": "manifest",
+      "optional": false,
+      "type": "ActionManifest | null"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspection\"]"
+      ],
+      "name": "plan",
+      "optional": false,
+      "type": "ActionPlanInspection | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "eligible",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanDiagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "ActionPlanDiagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionManifestInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionManifestInspection"
+}

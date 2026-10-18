@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"rollbackBindingRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingMigrationReceipt\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "BindingMigrationReceipt"
+    }
+  ],
+  "purpose": "Restore the exact original; retain every later edit explicitly, without name reassociation.",
+  "related": [],
+  "returns": "BindingRollbackResult",
+  "task": "Author and edit",
+  "type": "(current: Document, logical: Document, receipt: BindingMigrationReceipt) => BindingRollbackResult"
+}

@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectDddEntitiesToGraphql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEntityPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "DddGraphqlEntityPolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "purpose": "Relationship-independent DDD entity SDL with an explicit schema-only root.",
+  "related": [],
+  "returns": "DddGraphqlEntityProjection",
+  "task": "Import and export",
+  "type": "(logical: Document, policy: DddGraphqlEntityPolicy, lossPolicy: \"strict\" | \"report\") => DddGraphqlEntityProjection"
+}

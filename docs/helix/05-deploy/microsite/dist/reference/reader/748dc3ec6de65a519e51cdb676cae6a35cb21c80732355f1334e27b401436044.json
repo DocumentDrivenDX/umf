@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverDddFromGraphql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddGraphqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "currentTarget",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverDddFromGraphql accepts input, currentTarget and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: DddGraphqlProjection, currentTarget: Document) => Document"
+}

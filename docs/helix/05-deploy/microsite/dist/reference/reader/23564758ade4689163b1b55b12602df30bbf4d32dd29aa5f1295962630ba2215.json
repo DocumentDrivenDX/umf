@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyKeysSqlServerProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeySqlServerProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeySqlServerProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
+    }
+  ],
+  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "related": [],
+  "returns": "KeySqlServerProjection",
+  "task": "Other APIs",
+  "type": "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => KeySqlServerProjection"
+}

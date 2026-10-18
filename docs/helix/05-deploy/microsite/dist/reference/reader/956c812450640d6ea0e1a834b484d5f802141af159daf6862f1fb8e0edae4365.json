@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectRecordToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordPostgresqlRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RecordPostgresqlRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "projectRecordToPostgresql accepts input, options, backend and returns Promise<RecordPostgresqlProjection>.",
+  "related": [],
+  "returns": "Promise<RecordPostgresqlProjection>",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: RecordPostgresqlRequest, backend: PostgresqlBackend) => Promise<RecordPostgresqlProjection>"
+}

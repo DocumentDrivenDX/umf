@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddValue\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"value\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddField\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "Record<string, DddField>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "equality",
+      "optional": false,
+      "type": "{ fields: string[]; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddInvariant\"]"
+      ],
+      "name": "invariants",
+      "optional": true,
+      "type": "DddInvariant[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddValue is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddValue"
+}

@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"editDashboardDefinition\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardDefinition\"]"
+      ],
+      "name": "update",
+      "optional": false,
+      "type": "(definition: DashboardDefinition) => DashboardDefinition"
+    }
+  ],
+  "purpose": "editDashboardDefinition accepts doc, module, element, update and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(doc: Document, module: string, element: string, update: (definition: DashboardDefinition) => DashboardDefinition) => Document"
+}

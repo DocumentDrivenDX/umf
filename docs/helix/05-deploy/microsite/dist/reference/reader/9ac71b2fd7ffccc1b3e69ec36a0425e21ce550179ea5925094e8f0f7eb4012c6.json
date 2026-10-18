@@ -1,0 +1,149 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Action\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionParameter\"]"
+      ],
+      "name": "parameters",
+      "optional": false,
+      "type": "ActionParameter[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionParameter\"]"
+      ],
+      "name": "outputs",
+      "optional": false,
+      "type": "ActionParameter[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionCondition\"]"
+      ],
+      "name": "preconditions",
+      "optional": false,
+      "type": "ActionCondition[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionCondition\"]"
+      ],
+      "name": "postconditions",
+      "optional": false,
+      "type": "ActionCondition[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionFrame\"]"
+      ],
+      "name": "reads",
+      "optional": false,
+      "type": "ActionFrame[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionFrame\"]"
+      ],
+      "name": "writes",
+      "optional": false,
+      "type": "ActionFrame[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionBinding\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "ActionBinding"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "failures",
+      "optional": false,
+      "type": "{ [key: string]: unknown; code: string; message: string; retryable: boolean; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionAuthorization\"]"
+      ],
+      "name": "authorization",
+      "optional": false,
+      "type": "ActionAuthorization"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "attribution",
+      "optional": false,
+      "type": "{ [key: string]: unknown; subject: \"person-required\"; } | { [key: string]: unknown; subject: \"actor-profile\"; profile: ActionProfileIdentity; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "atomicity",
+      "optional": false,
+      "type": "\"single-store\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "idempotency",
+      "optional": false,
+      "type": "\"caller-key-optional\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "result",
+      "optional": false,
+      "type": "{ [key: string]: unknown; identities: \"created-and-changed\"; version: \"store-opaque\"; receipt: \"read-at-least\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dddOperation",
+      "optional": true,
+      "type": "{ [key: string]: unknown; module: string; element: string; operation: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Action is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Action"
+}

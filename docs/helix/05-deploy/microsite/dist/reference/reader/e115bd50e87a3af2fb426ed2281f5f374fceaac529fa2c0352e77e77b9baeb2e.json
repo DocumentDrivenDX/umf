@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverBindingSqlServerNative\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerPhysicalProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerPhysicalProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "recoverBindingSqlServerNative accepts input, current and returns { catalog?: string; sql: string; }.",
+  "related": [],
+  "returns": "{ catalog?: string; sql: string; }",
+  "task": "Import and export",
+  "type": "(input: SqlServerPhysicalProjection, current: string) => { catalog?: string; sql: string; }"
+}

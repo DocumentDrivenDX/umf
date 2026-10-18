@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectBit128Binding\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logicalInput",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "inspectBit128Binding accepts bindingInput, logicalInput and returns Validation.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Inspect and select",
+  "type": "(bindingInput: Document, logicalInput: Document) => Validation"
+}

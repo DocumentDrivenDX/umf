@@ -1,0 +1,55 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRelationshipQuery\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "modules",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "names",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipIdentity\"]"
+      ],
+      "name": "identities",
+      "optional": true,
+      "type": "CoreRelationshipIdentity[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipEndpoint\"]"
+      ],
+      "name": "sources",
+      "optional": true,
+      "type": "RelationshipEndpoint[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipEndpoint\"]"
+      ],
+      "name": "targets",
+      "optional": true,
+      "type": "RelationshipEndpoint[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRelationshipQuery is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRelationshipQuery"
+}

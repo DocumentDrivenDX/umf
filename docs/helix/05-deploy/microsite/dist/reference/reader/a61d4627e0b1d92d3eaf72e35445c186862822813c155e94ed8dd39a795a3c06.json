@@ -1,0 +1,72 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BindingPayload\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-binding-2\" | \"umf-binding-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "logical",
+      "optional": false,
+      "type": "{ documentId: string; coreVersion: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": false,
+      "type": "{ system: string; version: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingElement\"]"
+      ],
+      "name": "elements",
+      "optional": false,
+      "type": "BindingElement[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingField\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "BindingField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingRelationship\"]",
+        "[\"api\",\".\",\"StableBindingRelationship\"]"
+      ],
+      "name": "relationships",
+      "optional": false,
+      "type": "(BindingRelationship | StableBindingRelationship)[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingIndex\"]"
+      ],
+      "name": "indexes",
+      "optional": false,
+      "type": "BindingIndex[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BindingPayload is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BindingPayload"
+}

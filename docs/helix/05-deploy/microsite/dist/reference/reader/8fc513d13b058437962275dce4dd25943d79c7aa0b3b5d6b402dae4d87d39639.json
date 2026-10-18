@@ -1,0 +1,40 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"AvroKeyRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"schema-declarations\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroKeyArchive\"]"
+      ],
+      "name": "nativeSource",
+      "optional": false,
+      "type": "AvroKeyArchive"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Options for Avro key classification: explicit loss policy, schema-declaration profile and retained native source archive.",
+  "related": [
+    "[\"api\",\".\",\"classifyAvroKeys\"]",
+    "[\"api\",\".\",\"AvroKeyArchive\"]"
+  ],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroKeyRequest"
+}

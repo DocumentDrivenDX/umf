@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionManifestConstruction\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "plan",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "action",
+      "optional": false,
+      "type": "{ target: { module: string; action: string; revision: string; }; documentSha256: string; invocation: ActionProfileIdentity; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "basis",
+      "optional": false,
+      "type": "{ profile: ActionProfileIdentity; store: string; epoch: string; cut: string; selectionSha256: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SelectedActionRow\"]"
+      ],
+      "name": "rows",
+      "optional": false,
+      "type": "SelectedActionRow[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionManifestConstruction is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionManifestConstruction"
+}

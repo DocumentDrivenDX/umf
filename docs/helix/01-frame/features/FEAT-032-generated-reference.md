@@ -130,3 +130,21 @@ independently released schema browser. CONTRACT-077 owns reference interfaces.
 New native adapter semantics, automatic promotion of support claims, a hosted
 schema registry, database execution, cloud qualification and a replacement
 domain-pack renderer. Package publishing and production deployment are separate.
+
+## Reader organization
+
+REF-11: Default schema navigation MUST follow the latest configured core by
+concept: Document, Module, Record, Field, Group, value types and constraints.
+Exact historical links remain pinned; history is secondary.
+REF-12: Every documented key MUST expose meaning, shape, recognized values,
+presence/applicability and unknown-key policy. Record membership and identity
+Keys remain distinct. Conditional and unknown semantics MUST remain explicit.
+REF-13: API navigation MUST expose tasks and distinguish functions, interfaces,
+type aliases, constants, schemas and packages, with readable members/parameters,
+returns and usage. Full exports remain discoverable.
+REF-14: Cold search MUST find properties, recognized values and API names without
+prior detail visits. Contextual relations and raw schema graphs are secondary.
+
+REF-15: Schema examples MUST default to YAML and provide an accessible JSON
+toggle over the same example values. Original schema/source views retain their
+original format; API code examples retain their programming language.

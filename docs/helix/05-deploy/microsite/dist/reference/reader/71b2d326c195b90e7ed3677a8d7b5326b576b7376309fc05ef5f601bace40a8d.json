@@ -1,0 +1,57 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"evaluateSecurityPolicyV2LegacyAccess\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolution",
+      "optional": false,
+      "type": "SecurityResolution"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFactCut\"]"
+      ],
+      "name": "cut",
+      "optional": false,
+      "type": "SecurityFactCut"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityEvaluationRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "Omit<SecurityEvaluationRequest, \"resources\">"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFact\"]"
+      ],
+      "name": "resource",
+      "optional": false,
+      "type": "SecurityFact"
+    }
+  ],
+  "purpose": "Logical single-resource access evaluation only. Host cuts must name the original0.2 policy revision.\nNo catalog, new relationship grammar, unknown meaning or native authority is admitted.",
+  "related": [],
+  "returns": "SecurityPolicyV2LegacyAccess",
+  "task": "Other APIs",
+  "type": "(input: unknown, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact) => SecurityPolicyV2LegacyAccess"
+}

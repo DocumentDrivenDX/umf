@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectSecurityActionPurposes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "ontologyInput",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documentsInput",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "inspectSecurityActionPurposes accepts ontologyInput, documentsInput and returns SecurityActionPurposeInspection.",
+  "related": [],
+  "returns": "SecurityActionPurposeInspection",
+  "task": "Inspect and select",
+  "type": "(ontologyInput: unknown, documentsInput: unknown) => SecurityActionPurposeInspection"
+}

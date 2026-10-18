@@ -1,0 +1,112 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerRelationshipLayout\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "relationship",
+      "optional": false,
+      "type": "{ module: string; id: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "storage",
+      "optional": false,
+      "type": "\"foreign_key\" | \"junction\" | \"edge\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "carrierTable",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutKeyRef\"]"
+      ],
+      "name": "targetKey",
+      "optional": false,
+      "type": "SqlServerLayoutKeyRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetConstraint",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutEndpointComponent\"]"
+      ],
+      "name": "targetComponents",
+      "optional": false,
+      "type": "SqlServerLayoutEndpointComponent[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutKeyRef\"]"
+      ],
+      "name": "sourceKey",
+      "optional": true,
+      "type": "SqlServerLayoutKeyRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceConstraint",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutEndpointComponent\"]"
+      ],
+      "name": "sourceComponents",
+      "optional": true,
+      "type": "SqlServerLayoutEndpointComponent[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
+      ],
+      "name": "associationRecord",
+      "optional": true,
+      "type": "CoreKeyFieldReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutKeyRef\"]"
+      ],
+      "name": "associationKey",
+      "optional": true,
+      "type": "SqlServerLayoutKeyRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutType\"]"
+      ],
+      "name": "discriminator",
+      "optional": true,
+      "type": "SqlServerLayoutType & { column: string; value: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerRelationshipLayout is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerRelationshipLayout"
+}

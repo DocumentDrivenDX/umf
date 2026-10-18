@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectCardinalityToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreCardinalityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalityPostgresqlRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "CardinalityPostgresqlRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "projectCardinalityToPostgresql accepts input, options, backend and returns Promise<CardinalityPostgresqlProjection>.",
+  "related": [],
+  "returns": "Promise<CardinalityPostgresqlProjection>",
+  "task": "Import and export",
+  "type": "(input: CoreCardinalityDeclaration, options: CardinalityPostgresqlRequest, backend: PostgresqlBackend) => Promise<CardinalityPostgresqlProjection>"
+}

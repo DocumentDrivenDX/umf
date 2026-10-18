@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectArrowFlatbufferModel\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "inspectArrowFlatbufferModel accepts document and returns { complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }.",
+  "related": [],
+  "returns": "{ complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }",
+  "task": "Inspect and select",
+  "type": "(document: Document) => { complete: boolean; diagnostics: Diagnostic[]; valid: boolean; }"
+}

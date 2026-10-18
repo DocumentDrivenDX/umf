@@ -1,0 +1,34 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionPlanSelectionInspector\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "ActionProfileIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]",
+        "[\"api\",\".\",\"Document\"]",
+        "[\"api\",\".\",\"ActionKeyReference\"]",
+        "[\"api\",\".\",\"ActionReference\"]",
+        "[\"api\",\".\",\"ActionPlanDiagnostic\"]"
+      ],
+      "name": "inspect",
+      "optional": false,
+      "type": "(artifact: ActionPlanArtifact, model: Document, target: ActionKeyReference) => { eligible: boolean; dependencies: ActionReference[]; diagnostics: ActionPlanDiagnostic[]; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionPlanSelectionInspector is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionPlanSelectionInspector"
+}

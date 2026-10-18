@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"decodeBit128Record\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "Bit128Ref"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Record<string, string | null>"
+    }
+  ],
+  "purpose": "decodeBit128Record accepts bindingInput, sourceInput, identity, input and returns Bit128RecordValue[].",
+  "related": [],
+  "returns": "Bit128RecordValue[]",
+  "task": "Serialize",
+  "type": "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, input: Record<string, string | null>) => Bit128RecordValue[]"
+}

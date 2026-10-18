@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipTableSpecNativeSources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipTableSpecProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipTableSpecProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverRelationshipTableSpecNativeSources accepts input, current and returns { source: string | Record<string, string>; target: string | Record<string, string>; }.",
+  "related": [],
+  "returns": "{ source: string | Record<string, string>; target: string | Record<string, string>; }",
+  "task": "Import and export",
+  "type": "(input: RelationshipTableSpecProjection, current: Document) => { source: string | Record<string, string>; target: string | Record<string, string>; }"
+}

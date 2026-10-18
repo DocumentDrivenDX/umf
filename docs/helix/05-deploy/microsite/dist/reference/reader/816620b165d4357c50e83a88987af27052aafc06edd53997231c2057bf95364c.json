@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportRdfNQuads\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "Default: {}.",
+      "links": [],
+      "name": "options",
+      "optional": true,
+      "type": "{ preserveSource?: boolean; }"
+    }
+  ],
+  "purpose": "exportRdfNQuads accepts document, options and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(document: Document, options?: { preserveSource?: boolean; }) => string"
+}

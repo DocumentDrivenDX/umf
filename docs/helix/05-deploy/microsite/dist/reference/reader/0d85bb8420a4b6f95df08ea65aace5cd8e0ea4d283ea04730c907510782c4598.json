@@ -1,0 +1,103 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128NativeProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-bit128-carrier-schema\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128ProjectionPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "Bit128ProjectionPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128Obligation\"]"
+      ],
+      "name": "outcomes",
+      "optional": false,
+      "type": "{ obligation: Bit128Obligation; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; reason: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128BindingPayload\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ idealPath: string; targetSlots: string[]; bindingVersion: \"0.3.0\"; target: Bit128BindingPayload[\"target\"]; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reported\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "candidate",
+      "optional": true,
+      "type": "{ format: \"sql\" | \"avro\" | \"parquet\" | \"tablespec\"; text: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128NativeProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128NativeProjection"
+}

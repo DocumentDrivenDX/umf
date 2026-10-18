@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"openapiSchemaReferenceSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as openapiSchemaReferenceSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { source: { type: string; additionalProperties: boolean; required: string[]; properties: { retrievalUri: { type: string; }; pointer: { type: string; }; baseUri: { type: string; }; dialect: { type: string; }; }; }; target: { type: string; additionalProperties: boolean; required: string[]; properties: { retrievalUri: { type: string; }; pointer: { type: string; }; baseUri: { type: string; }; dialect: { type: string; }; }; }; node: { $ref: string; }; complete: { const: boolean; }; limitations: { type: string; items: { type: string; }; minItems: number; }; }; $defs: { node: { oneOf: ({ type: string; required: string[]; properties: { kind: { const: string; }; value?: never; items?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; value: { type: string; pattern?: never; }; items?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; value: { type: string; pattern: string; }; items?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; items: { type: string; items: { $ref: string; }; }; value?: never; members?: never; }; } | { type: string; required: string[]; properties: { kind: { const: string; }; members: { type: string; additionalProperties: { $ref: string; }; }; value?: never; items?: never; }; })[]; }; }; }"
+}

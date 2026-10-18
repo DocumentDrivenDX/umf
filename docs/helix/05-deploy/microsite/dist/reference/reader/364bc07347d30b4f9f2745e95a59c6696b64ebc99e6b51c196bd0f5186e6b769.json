@@ -1,0 +1,95 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128ModelProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-bit128-model\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reported\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeRequirements",
+      "optional": false,
+      "type": "{ scope: \"connection\"; statements: string[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "residuals",
+      "optional": false,
+      "type": "Bit128ModelResidual[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ record: { module: string; element: string; }; table: string; fields: { identity: { module: string; element: string; }; slots: string[]; paths: string[][]; }[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "compositeMappings",
+      "optional": true,
+      "type": "CompositeMapping[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "candidate",
+      "optional": true,
+      "type": "{ format: \"sql\" | \"avro\" | \"parquet\" | \"tablespec\"; text: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128ModelProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128ModelProjection"
+}

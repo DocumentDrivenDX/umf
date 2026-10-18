@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverAvroKeySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverAvroKeySource accepts input, current and returns AvroKeyArchive.",
+  "related": [],
+  "returns": "AvroKeyArchive",
+  "task": "Import and export",
+  "type": "(input: AvroKeyClassification, current: Document) => AvroKeyArchive"
+}

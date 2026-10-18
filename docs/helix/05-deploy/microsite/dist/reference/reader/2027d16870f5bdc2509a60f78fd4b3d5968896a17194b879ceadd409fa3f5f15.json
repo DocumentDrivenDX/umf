@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreBit128TransitionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreBit128TransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; target: { $ref: string; }; options: { type: string; additionalProperties: boolean; required: string[]; properties: { collisions: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { path: { type: string; }; expected: {}; replacement: {}; }; }; }; }; }; }; }"
+}

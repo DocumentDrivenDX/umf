@@ -12,7 +12,7 @@
     "exportName": "declareCoreElementKind",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identity: CoreKindIdentity, kind: \"field\" | \"record\" | \"group\"): CoreKindDeclaration"
+      "(input: Document, identity: CoreKindIdentity, kind: \"record\" | \"group\" | \"field\"): CoreKindDeclaration"
     ]
   },
   "id": "[\"api\",\".\",\"declareCoreElementKind\"]",

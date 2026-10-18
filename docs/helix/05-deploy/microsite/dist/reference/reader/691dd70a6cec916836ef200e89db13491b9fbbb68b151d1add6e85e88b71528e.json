@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectDeltaActions\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "The tree remains authoritative; the temporary JS view is used only for shape validation.",
+  "related": [],
+  "returns": "{ knownShapesValid: boolean; diagnostics: Diagnostic[]; source: Document; complete: false; parsedAll: boolean; lines: DeltaLogLine[]; }",
+  "task": "Inspect and select",
+  "type": "(doc: Document) => { knownShapesValid: boolean; diagnostics: Diagnostic[]; source: Document; complete: false; parsedAll: boolean; lines: DeltaLogLine[]; }"
+}

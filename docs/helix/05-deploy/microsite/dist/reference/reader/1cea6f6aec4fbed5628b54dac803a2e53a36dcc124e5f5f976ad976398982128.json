@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"resolvePostgresqlCardinalityType\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "column",
+      "optional": false,
+      "type": "{ schema: string; relation: string; name: string; }"
+    }
+  ],
+  "purpose": "Resolve domain bases only. Category A and formatted names never imply arrays.\nThe result describes native relationships, not ideal admission or enforcement.",
+  "related": [],
+  "returns": "{ nativeSource: string; root: NativeJson; qualifiedVersion: boolean; column: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }; domains: ObservedType[]; native: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }; element: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; } | null; standardArray: boolean; }",
+  "task": "Inspect and select",
+  "type": "(text: string, column: { schema: string; relation: string; name: string; }) => { nativeSource: string; root: NativeJson; qualifiedVersion: boolean; column: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }; domains: ObservedType[]; native: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }; element: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; } | null; standardArray: boolean; }"
+}

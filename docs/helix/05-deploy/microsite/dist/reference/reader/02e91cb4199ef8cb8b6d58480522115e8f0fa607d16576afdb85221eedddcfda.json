@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"declareCoreRecordType\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "fieldInput",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "recordInput",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    }
+  ],
+  "purpose": "Explicit type relationship. Generic role strings are never treated as author receipts.",
+  "related": [],
+  "returns": "CoreRecordTypeDeclaration",
+  "task": "Other APIs",
+  "type": "(fieldInput: CoreKindDeclaration, recordInput: CoreKindDeclaration) => CoreRecordTypeDeclaration"
+}

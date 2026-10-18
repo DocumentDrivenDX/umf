@@ -1,0 +1,59 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectRelationshipToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreRelationshipDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "nativeSourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "nativeTargetInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipTableSpecRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RelationshipTableSpecRequest"
+    }
+  ],
+  "purpose": "Explicit metadata lowering; no native execution or author-intent inference.",
+  "related": [],
+  "returns": "RelationshipTableSpecProjection",
+  "task": "Import and export",
+  "type": "(input: Document, authorInput: CoreRelationshipDeclaration, nativeSourceInput: Document, nativeTargetInput: Document, options: RelationshipTableSpecRequest) => RelationshipTableSpecProjection"
+}

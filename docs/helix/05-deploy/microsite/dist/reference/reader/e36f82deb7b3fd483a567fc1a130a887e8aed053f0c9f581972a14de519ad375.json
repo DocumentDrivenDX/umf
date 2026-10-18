@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipPostgresqlIdeal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverRelationshipPostgresqlIdeal accepts input, current, backend and returns Promise<Document>.",
+  "related": [],
+  "returns": "Promise<Document>",
+  "task": "Import and export",
+  "type": "(input: RelationshipPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<Document>"
+}

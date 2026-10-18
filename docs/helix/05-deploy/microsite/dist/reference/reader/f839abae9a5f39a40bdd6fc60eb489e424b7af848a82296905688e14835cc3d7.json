@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"decodeParquetPageBodies\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Bounded physical page-body decoding only; encodings, levels and scalar values are separate.",
+  "related": [],
+  "returns": "ParquetPageBodies",
+  "task": "Serialize",
+  "type": "(source: Document) => ParquetPageBodies"
+}

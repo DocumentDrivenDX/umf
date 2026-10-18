@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyParquetRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetRelationshipRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetRelationshipRequest"
+    }
+  ],
+  "purpose": "Observe physical schema only. Sorting, field IDs, statistics and metadata never assert identity.",
+  "related": [],
+  "returns": "ParquetRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetRelationshipRequest) => ParquetRelationshipClassification"
+}

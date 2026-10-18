@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"renameDeltaMappedField\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }"
+    }
+  ],
+  "purpose": "Candidate context edit only; applying it requires a transaction and external-state checks.",
+  "related": [],
+  "returns": "{ source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }",
+  "task": "Other APIs",
+  "type": "(source: Document, options: { fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }) => { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }"
+}

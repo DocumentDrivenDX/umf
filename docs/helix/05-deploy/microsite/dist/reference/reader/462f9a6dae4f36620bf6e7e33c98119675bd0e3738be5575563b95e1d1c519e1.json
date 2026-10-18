@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityRule\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "effect",
+      "optional": false,
+      "type": "\"permit\" | \"require\" | \"forbid\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "actions",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityExpr\"]"
+      ],
+      "name": "condition",
+      "optional": false,
+      "type": "SecurityExpr"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]",
+        "[\"api\",\".\",\"SecurityFieldDisposition\"]"
+      ],
+      "name": "disclosure",
+      "optional": true,
+      "type": "{ field: SecurityRef; disposition: SecurityFieldDisposition; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityRule is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityRule"
+}

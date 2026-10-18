@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateSqlServerRelationshipLayout\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logicalInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipLayoutPolicy\"]"
+      ],
+      "name": "policyInput",
+      "optional": false,
+      "type": "SqlServerRelationshipLayoutPolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "purpose": "Validate retained metadata only. A candidate is a policy, never SQL or native enforcement.",
+  "related": [],
+  "returns": "SqlServerRelationshipLayoutResult",
+  "task": "Read and validate",
+  "type": "(logicalInput: Document, bindingInput: Document, policyInput: SqlServerRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\") => SqlServerRelationshipLayoutResult"
+}

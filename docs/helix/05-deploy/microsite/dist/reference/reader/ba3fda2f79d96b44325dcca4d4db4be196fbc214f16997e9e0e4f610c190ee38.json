@@ -1,0 +1,68 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionManifest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "protocol",
+      "optional": false,
+      "type": "\"umf.actions.manifest/1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "plan",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "action",
+      "optional": false,
+      "type": "{ target: { module: string; action: string; revision: string; }; documentSha256: string; invocation: ActionProfileIdentity; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "basis",
+      "optional": false,
+      "type": "{ profile: ActionProfileIdentity; store: string; epoch: string; cut: string; selectionSha256: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionEntityInput\"]",
+        "[\"api\",\".\",\"ActionInputs\"]"
+      ],
+      "name": "items",
+      "optional": false,
+      "type": "{ ordinal: number; entity: ActionEntityInput; guard: { profile: ActionProfileIdentity; store: string; epoch: string; identity: string; version: string; }; inputs: ActionInputs; expectedVersions: { frame: string; version: string; }[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "batches",
+      "optional": false,
+      "type": "{ ordinal: number; start: number; count: number; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "annotations",
+      "optional": true,
+      "type": "Record<string, unknown>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionManifest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionManifest"
+}

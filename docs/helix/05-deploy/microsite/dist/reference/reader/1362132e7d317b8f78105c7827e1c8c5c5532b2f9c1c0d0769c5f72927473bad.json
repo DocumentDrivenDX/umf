@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"coreSemanticTypesTransitionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as coreSemanticTypesTransitionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; $defs: { request: { type: string; properties: { migrateExtension: { type: string; }; }; required: string[]; additionalProperties: boolean; }; residual: { type: string; properties: { path: { type: string; }; value: {}; reason: { const: string; }; }; required: string[]; additionalProperties: boolean; }; upgrade: { type: string; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; target: { $ref: string; }; request: { $ref: string; }; residuals: { type: string; items: { $ref: string; }; }; }; required: string[]; additionalProperties: boolean; }; rollback: { type: string; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; target: { $ref: string; }; receipt: { $ref: string; }; reason: { const: string; }; }; required: string[]; additionalProperties: boolean; }; }; oneOf: { $ref: string; }[]; }"
+}

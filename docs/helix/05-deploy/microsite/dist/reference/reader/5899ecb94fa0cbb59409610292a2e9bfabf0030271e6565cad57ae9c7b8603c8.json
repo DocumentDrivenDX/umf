@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"assessActionManifest\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionManifestInspection\"]"
+      ],
+      "name": "inspection",
+      "optional": false,
+      "type": "ActionManifestInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapabilities\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "ActionPlanCapabilities"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspectionContext\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "ActionPlanInspectionContext"
+    }
+  ],
+  "purpose": "assessActionManifest accepts inspection, capabilities, context and returns ActionPlanAssessment.",
+  "related": [],
+  "returns": "ActionPlanAssessment",
+  "task": "Other APIs",
+  "type": "(inspection: ActionManifestInspection, capabilities: ActionPlanCapabilities, context: ActionPlanInspectionContext) => ActionPlanAssessment"
+}

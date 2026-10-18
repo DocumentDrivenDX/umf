@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"declareCoreNullability\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreNullabilityIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nullability",
+      "optional": false,
+      "type": "\"required\" | \"absent-allowed\" | \"unspecified\""
+    }
+  ],
+  "purpose": "Explicit author action; archives previous meaning and makes no native classification claim.",
+  "related": [],
+  "returns": "CoreNullabilityDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreNullabilityIdentity, nullability: Nullability) => CoreNullabilityDeclaration"
+}

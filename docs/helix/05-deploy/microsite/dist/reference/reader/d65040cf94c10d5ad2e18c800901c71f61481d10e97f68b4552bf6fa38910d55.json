@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyStructuredClassificationInspection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"StructuredClassificationInspection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "StructuredClassificationInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": true,
+      "type": "PostgresqlBackend | undefined"
+    }
+  ],
+  "purpose": "verifyStructuredClassificationInspection accepts input, backend and returns Promise<StructuredClassificationInspection>.",
+  "related": [],
+  "returns": "Promise<StructuredClassificationInspection>",
+  "task": "Other APIs",
+  "type": "(input: StructuredClassificationInspection, backend?: PostgresqlBackend) => Promise<StructuredClassificationInspection>"
+}

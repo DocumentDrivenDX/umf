@@ -142,3 +142,11 @@ This design selects no new external service, dependency or release date.
 Contract limits and browser budgets are proposed acceptance targets to measure
 during implementation. New evidence families can be added independently using
 the same exact allocation and negative-control requirements.
+
+## Reader organization
+
+REF-11–14 use a manifest-bound reader companion over unchanged exact reference
+entries. Concept navigation defaults to latest core; property explanations and
+conditional rules precede source details. API task groups and symbol-specific
+layouts precede full declarations. The reader companion owns presentation and
+search metadata; canonical schemas/contracts/compiler symbols own facts.

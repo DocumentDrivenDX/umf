@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"scalarTypesForVersion\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "scalarTypesForVersion accepts version and returns readonly string[].",
+  "related": [],
+  "returns": "readonly string[]",
+  "task": "Other APIs",
+  "type": "(version: string) => readonly string[]"
+}

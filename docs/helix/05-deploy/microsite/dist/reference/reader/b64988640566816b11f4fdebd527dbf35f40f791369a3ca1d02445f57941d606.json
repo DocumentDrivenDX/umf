@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverBit128ModelProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128ModelProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Bit128ModelProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "recoverBit128ModelProjection accepts input, current and returns { logical: Document; binding: Document; }.",
+  "related": [],
+  "returns": "{ logical: Document; binding: Document; }",
+  "task": "Import and export",
+  "type": "(input: Bit128ModelProjection, current: string) => { logical: Document; binding: Document; }"
+}

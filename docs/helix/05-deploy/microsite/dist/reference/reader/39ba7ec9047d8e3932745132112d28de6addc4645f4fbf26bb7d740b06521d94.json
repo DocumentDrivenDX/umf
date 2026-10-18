@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getShaclQuads\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getShaclQuads accepts document and returns RdfQuad[].",
+  "related": [],
+  "returns": "RdfQuad[]",
+  "task": "Inspect and select",
+  "type": "(document: Document) => RdfQuad[]"
+}

@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseBits128\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "hex",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseBits128 accepts hex and returns Bit128Value.",
+  "related": [],
+  "returns": "Bit128Value",
+  "task": "Read and validate",
+  "type": "(hex: string) => Bit128Value"
+}

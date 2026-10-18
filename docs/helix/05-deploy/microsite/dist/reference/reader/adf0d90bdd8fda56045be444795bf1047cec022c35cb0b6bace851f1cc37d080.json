@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"LINKML_SCALAR_SLOT_FIELDS\"]",
+  "kind": "Constant",
+  "members": [],
+  "parameters": [],
+  "purpose": "LINKML_SCALAR_SLOT_FIELDS is a constant in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ readonly domain: \"string\"; readonly inherited: \"boolean\"; readonly readonly: \"string\"; readonly ifabsent: \"string\"; readonly list_elements_unique: \"boolean\"; readonly list_elements_ordered: \"boolean\"; readonly shared: \"boolean\"; readonly key: \"boolean\"; readonly identifier: \"boolean\"; readonly designates_type: \"boolean\"; readonly role: \"string\"; readonly relational_role: \"string\"; readonly range: \"string\"; readonly required: \"boolean\"; readonly recommended: \"boolean\"; readonly multivalued: \"boolean\"; readonly inlined: \"boolean\"; readonly inlined_as_list: \"boolean\"; readonly minimum_value: \"number\"; readonly maximum_value: \"number\"; readonly pattern: \"string\"; readonly value_presence: \"string\"; readonly equals_string: \"string\"; readonly equals_number: \"number\"; readonly equals_expression: \"string\"; readonly exact_cardinality: \"number\"; readonly minimum_cardinality: \"number\"; readonly maximum_cardinality: \"number\"; readonly description: \"string\"; }"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectCoreKeys\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    }
+  ],
+  "purpose": "inspectCoreKeys accepts input, identity and returns CoreKeyInspection.",
+  "related": [],
+  "returns": "CoreKeyInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreRecordIdentity) => CoreKeyInspection"
+}

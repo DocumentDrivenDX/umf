@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"resolveOpenapiSchemaReference\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"pointer\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "{ pointer: string; reference: string; resourceUri?: string; schemaResources?: string[]; }"
+    }
+  ],
+  "purpose": "resolveOpenapiSchemaReference accepts document, input and returns { source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; }.",
+  "related": [],
+  "returns": "{ source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; }",
+  "task": "Inspect and select",
+  "type": "(document: Document, input: { pointer: string; reference: string; resourceUri?: string; schemaResources?: string[]; }) => { source: OpenapiSchemaLocation; target: OpenapiSchemaLocation; node: NativeJson; complete: false; limitations: string[]; }"
+}

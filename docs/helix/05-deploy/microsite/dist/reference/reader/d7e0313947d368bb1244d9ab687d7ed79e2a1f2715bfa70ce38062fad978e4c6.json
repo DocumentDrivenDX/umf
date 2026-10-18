@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverFacetsFromPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "FacetsPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "Verify the entire operation and exact native text before recovering retained ideal meaning.",
+  "related": [],
+  "returns": "Promise<Document>",
+  "task": "Import and export",
+  "type": "(input: FacetsPostgresqlProjection, nativeText: string, backend: PostgresqlBackend) => Promise<Document>"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectFieldToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldTableSpecRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FieldTableSpecRequest"
+    }
+  ],
+  "purpose": "projectFieldToTableSpec accepts input, options and returns FieldTableSpecProjection & { diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "FieldTableSpecProjection & { diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: FieldTableSpecRequest) => FieldTableSpecProjection & { diagnostics: Diagnostic[]; }"
+}

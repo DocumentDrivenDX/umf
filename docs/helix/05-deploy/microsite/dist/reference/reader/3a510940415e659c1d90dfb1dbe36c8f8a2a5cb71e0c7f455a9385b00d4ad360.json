@@ -1,0 +1,59 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectRelationshipsToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "physicalInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreRelationshipDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipPostgresqlRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RelationshipPostgresqlRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "New ordinary keyed tables, followed by ALTER TABLE FKs. This is not the full DDD generator.",
+  "related": [],
+  "returns": "Promise<RelationshipPostgresqlProjection>",
+  "task": "Import and export",
+  "type": "(input: Document, physicalInput: Document, authorInput: CoreRelationshipDeclaration[], options: RelationshipPostgresqlRequest, backend: PostgresqlBackend) => Promise<RelationshipPostgresqlProjection>"
+}

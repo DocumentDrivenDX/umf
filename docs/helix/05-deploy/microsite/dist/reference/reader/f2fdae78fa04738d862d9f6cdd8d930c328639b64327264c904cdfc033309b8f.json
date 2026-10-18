@@ -1,0 +1,36 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyAvroKeys\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroKeyRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroKeyRequest"
+    }
+  ],
+  "purpose": "Observe Avro record declarations from an explicitly supplied retained native archive. The result distinguishes observations and residual losses; it does not infer authored keys or native uniqueness enforcement.",
+  "related": [
+    "[\"api\",\".\",\"AvroKeyRequest\"]",
+    "[\"api\",\".\",\"AvroKeyClassification\"]",
+    "[\"api\",\".\",\"AVRO_KEYS_EXTENSION\"]"
+  ],
+  "returns": "AvroKeyClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: AvroKeyRequest) => AvroKeyClassification"
+}

@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"declareCoreSemanticTypes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreSemanticTypeIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeReference\"]"
+      ],
+      "name": "typesInput",
+      "optional": false,
+      "type": "CoreSemanticTypeReference[] | null"
+    }
+  ],
+  "purpose": "Explicit declarations retain the entire previous model; they do not assert native enforcement.",
+  "related": [],
+  "returns": "CoreSemanticTypeDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreSemanticTypeIdentity, typesInput: CoreSemanticTypeReference[] | null) => CoreSemanticTypeDeclaration"
+}

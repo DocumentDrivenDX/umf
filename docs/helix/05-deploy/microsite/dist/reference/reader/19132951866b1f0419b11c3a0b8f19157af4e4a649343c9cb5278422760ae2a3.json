@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreFacets\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "length",
+      "optional": true,
+      "type": "{ [key: string]: unknown; min?: number; max?: number; unit: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "precision",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scale",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "integerWidth",
+      "optional": true,
+      "type": "{ [key: string]: unknown; bits: number; signed: boolean; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreFacets is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreFacets"
+}

@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"KeySqlServerRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "record",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"new-table-stored-values\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keyNames",
+      "optional": false,
+      "type": "{ keyId: string; name: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "columns",
+      "optional": false,
+      "type": "{ field: CoreRecordIdentity; name: string; nativeType: keyof typeof carriers; nativeSize?: number; encoding?: { bytesColumn: string; lengthColumn: string; }; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "KeySqlServerRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "KeySqlServerRequest"
+}

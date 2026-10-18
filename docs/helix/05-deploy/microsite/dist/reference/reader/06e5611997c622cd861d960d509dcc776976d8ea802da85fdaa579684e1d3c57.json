@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRecordFromPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RecordPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverRecordFromPostgresql accepts input, nativeText, backend and returns Promise<Document>.",
+  "related": [],
+  "returns": "Promise<Document>",
+  "task": "Import and export",
+  "type": "(input: RecordPostgresqlProjection, nativeText: string, backend: PostgresqlBackend) => Promise<Document>"
+}

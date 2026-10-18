@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeIcebergTablePromotion\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ fieldId: number; targetType: string; nextSchemaId: number; }"
+    }
+  ],
+  "purpose": "Metadata candidate for the v1/v2 primitive widening rules, carried in v2/v3 tables.",
+  "related": [],
+  "returns": "{ document: Document; report: IcebergTablePromotionReport; }",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { fieldId: number; targetType: string; nextSchemaId: number; }) => { document: Document; report: IcebergTablePromotionReport; }"
+}

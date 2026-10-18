@@ -1,0 +1,20 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "example": "import { AVRO_KEYS_EXTENSION } from \"@umf/core\";\n\n// document is an existing UMF Document.\nconst metadata = document.extensions?.[AVRO_KEYS_EXTENSION];\nconst vocabulary = document.vocabularies[AVRO_KEYS_EXTENSION];",
+  "id": "[\"api\",\".\",\"AVRO_KEYS_EXTENSION\"]",
+  "kind": "Constant",
+  "members": [],
+  "parameters": [],
+  "purpose": "The identifier for the Avro key metadata extension. Use this constant as a vocabulary or extension map key. Observed schema metadata does not establish Avro uniqueness enforcement or authored key intent.",
+  "related": [
+    "[\"api\",\".\",\"avroKeysPackage\"]",
+    "[\"api\",\".\",\"classifyAvroKeys\"]",
+    "[\"api\",\".\",\"AvroKeyRequest\"]",
+    "[\"api\",\".\",\"AvroKeyClassification\"]"
+  ],
+  "returns": "",
+  "task": "Extensions",
+  "type": "\"umf.avro.keys\"",
+  "value": "\"umf.avro.keys\""
+}

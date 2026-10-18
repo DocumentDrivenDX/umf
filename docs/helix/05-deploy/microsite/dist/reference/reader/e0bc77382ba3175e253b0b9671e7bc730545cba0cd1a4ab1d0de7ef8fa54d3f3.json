@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"requireSecurityInterpretation\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolution",
+      "optional": false,
+      "type": "SecurityResolution"
+    }
+  ],
+  "purpose": "requireSecurityInterpretation accepts policy, resolution and returns SecurityInspection.",
+  "related": [],
+  "returns": "SecurityInspection",
+  "task": "Other APIs",
+  "type": "(policy: unknown, resolution: SecurityResolution) => SecurityInspection"
+}

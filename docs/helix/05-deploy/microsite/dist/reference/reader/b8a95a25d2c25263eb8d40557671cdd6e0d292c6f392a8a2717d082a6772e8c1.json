@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetFacetRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "location",
+      "optional": false,
+      "type": "{ index: number; scope: \"present-non-null-leaf\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"unresolved\" | \"declared-schema\" | \"pyarrow-safe-array-input\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligation",
+      "optional": false,
+      "type": "\"value-domain\" | \"exact-input\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetDeclaration\"]"
+      ],
+      "name": "author",
+      "optional": true,
+      "type": "CoreFacetDeclaration"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetFacetRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetFacetRequest"
+}

@@ -1,0 +1,24 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifySemanticTypesTransition\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypesRollbackReceipt\"]",
+        "[\"api\",\".\",\"SemanticTypesUpgradeReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SemanticTypesRollbackReceipt | SemanticTypesUpgradeReceipt"
+    }
+  ],
+  "purpose": "verifySemanticTypesTransition accepts input and returns SemanticTypesRollbackReceipt | SemanticTypesUpgradeReceipt.",
+  "related": [],
+  "returns": "SemanticTypesRollbackReceipt | SemanticTypesUpgradeReceipt",
+  "task": "Other APIs",
+  "type": "(input: SemanticTypesUpgradeReceipt | SemanticTypesRollbackReceipt) => SemanticTypesUpgradeReceipt | SemanticTypesRollbackReceipt"
+}

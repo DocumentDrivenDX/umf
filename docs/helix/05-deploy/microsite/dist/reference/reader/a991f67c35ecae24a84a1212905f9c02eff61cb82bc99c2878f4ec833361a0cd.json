@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128UpgradeOptions\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "collisions",
+      "optional": false,
+      "type": "{ path: string; expected: Json; replacement: Json; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128UpgradeOptions is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128UpgradeOptions"
+}

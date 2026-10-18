@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectSparkToArrow\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SparkArrowPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SparkArrowPolicy"
+    }
+  ],
+  "purpose": "Spark 4.0.1 schema lowering to Arrow logical metadata. No record/data conversion.",
+  "related": [],
+  "returns": "SparkArrowProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: SparkArrowPolicy) => SparkArrowProjection"
+}

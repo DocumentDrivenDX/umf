@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectPostgresqlKeyCatalog\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Validate observations without inferring authored keys, equivalent equality or trusted provenance.",
+  "related": [],
+  "returns": "{ root: NativeJson; nativeSource: string; serverVersion: 170004; encoding: \"UTF8\"; query: string; indexes: PostgresqlKeyIndex[]; provenance: \"unverified\"; }",
+  "task": "Inspect and select",
+  "type": "(text: string) => { root: NativeJson; nativeSource: string; serverVersion: 170004; encoding: \"UTF8\"; query: string; indexes: PostgresqlKeyIndex[]; provenance: \"unverified\"; }"
+}

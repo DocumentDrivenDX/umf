@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"typespecJsonSchemaEmissionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as typespecJsonSchemaEmissionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { status: { enum: string[]; }; source: { $ref: string; }; emitter: { const: string; }; policy: { type: string; additionalProperties: boolean; required: string[]; properties: { options: { type: string; required: string[]; properties: { \"int64-strategy\": { enum: string[]; }; }; }; }; }; compilation: { $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { compiler: { const: string; }; valid: { type: string; }; complete: { const: boolean; }; diagnostics: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { code: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; file: { type: string; }; start: { type: string; }; end: { type: string; }; }; }; }; limitations: { type: string; items: { type: string; }; minItems: number; }; libraries: { type: string; additionalProperties: { type: string; }; }; }; }; files: { type: string; additionalProperties: { type: string; }; }; complete: { const: boolean; }; limitations: { type: string; minItems: number; items: { type: string; }; }; }; allOf: { if: { properties: { status: { const: string; }; }; }; then: { properties: { files: { minProperties: number; }; }; }; else: { properties: { files: { maxProperties: number; }; }; }; }[]; }"
+}

@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectFacetsToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Author"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsTableSpecRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FacetsTableSpecRequest"
+    }
+  ],
+  "purpose": "Project verified author intent. Native carrier defaults never become author assertions.",
+  "related": [],
+  "returns": "FacetsTableSpecProjection",
+  "task": "Import and export",
+  "type": "(input: Author, options: FacetsTableSpecRequest) => FacetsTableSpecProjection"
+}

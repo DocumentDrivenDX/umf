@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyBit128NativeType\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128NativeTypeInput\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Bit128NativeTypeInput"
+    }
+  ],
+  "purpose": "Classify only explicit native type identity/annotation; never a name, string value or column pair.",
+  "related": [],
+  "returns": "{ source: Bit128NativeTypeInput; scalarType?: \"uuid\" | \"bits128\"; basis: \"native-type-identity\" | \"unclassified\"; }",
+  "task": "Other APIs",
+  "type": "(input: Bit128NativeTypeInput) => { source: Bit128NativeTypeInput; scalarType?: \"uuid\" | \"bits128\"; basis: \"native-type-identity\" | \"unclassified\"; }"
+}

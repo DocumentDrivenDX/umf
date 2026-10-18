@@ -1,0 +1,94 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SmithyJsonSchemaProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "converter",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithyAssemblyResult\"]"
+      ],
+      "name": "assembly",
+      "optional": false,
+      "type": "SmithyAssemblyResult"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithyJsonSchemaPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "SmithyJsonSchemaPolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProjectionIssue\"]"
+      ],
+      "name": "issues",
+      "optional": false,
+      "type": "ProjectionIssue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSchema",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "adaptedSchema",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SmithyJsonSchemaProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SmithyJsonSchemaProjection"
+}

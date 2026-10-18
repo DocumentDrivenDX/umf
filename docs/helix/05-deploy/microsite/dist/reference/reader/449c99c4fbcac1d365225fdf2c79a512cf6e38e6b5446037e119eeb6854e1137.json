@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"bits128FromBytes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "bytes",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    }
+  ],
+  "purpose": "bits128FromBytes accepts bytes and returns Bit128Value.",
+  "related": [],
+  "returns": "Bit128Value",
+  "task": "Other APIs",
+  "type": "(bytes: Uint8Array) => Bit128Value"
+}

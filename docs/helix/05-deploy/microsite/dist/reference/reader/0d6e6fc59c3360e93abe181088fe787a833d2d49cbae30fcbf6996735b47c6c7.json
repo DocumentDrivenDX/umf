@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyKeysTableSpecProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyTableSpecProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeyTableSpecProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "related": [],
+  "returns": "KeyTableSpecProjection",
+  "task": "Other APIs",
+  "type": "(input: KeyTableSpecProjection, current: Document) => KeyTableSpecProjection"
+}

@@ -1,0 +1,98 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PortableActionPlan\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "protocol",
+      "optional": false,
+      "type": "\"umf.actions.plan/1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanModelPin\"]"
+      ],
+      "name": "model",
+      "optional": false,
+      "type": "ActionPlanModelPin"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]",
+        "[\"api\",\".\",\"ActionReference\"]"
+      ],
+      "name": "selection",
+      "optional": false,
+      "type": "{ [key: string]: unknown; profile: ActionProfileIdentity; artifact: ActionPlanArtifact; dependencies: ActionReference[]; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PortableActionPin\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "PortableActionPin"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionKeyReference\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "ActionKeyReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionReference\"]",
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "inputs",
+      "optional": false,
+      "type": "{ [key: string]: unknown; entityParameter: string; assignments: { input: string; field: ActionReference; value: CoreLiteral; [key: string]: unknown; }[]; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "execution",
+      "optional": false,
+      "type": "{ [key: string]: unknown; selection: \"frozen\"; atomicity: \"batch\"; conflict: \"stop\"; partition: \"manifest-order\"; batchSize: number; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "limits",
+      "optional": false,
+      "type": "{ [key: string]: unknown; maxItems: number; maxManifestBytes: number; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "annotations",
+      "optional": true,
+      "type": "Record<string, unknown>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PortableActionPlan is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PortableActionPlan"
+}

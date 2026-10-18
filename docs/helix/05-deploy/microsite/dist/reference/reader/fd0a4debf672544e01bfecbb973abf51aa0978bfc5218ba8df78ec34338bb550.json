@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectPostgresqlRowToJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlRowPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlRowPolicy"
+    }
+  ],
+  "purpose": "Read-row encoding contract; never an INSERT validator or automatic migration.",
+  "related": [],
+  "returns": "PostgresqlRowProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: PostgresqlRowPolicy) => PostgresqlRowProjection"
+}

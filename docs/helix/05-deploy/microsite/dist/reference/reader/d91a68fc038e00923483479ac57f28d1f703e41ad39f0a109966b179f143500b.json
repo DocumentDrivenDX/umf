@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectLinkmlClassSlots\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "className",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Local class-slot membership only; import merge and induced slot values are separate operations.",
+  "related": [],
+  "returns": "LinkmlClassSlotsReport",
+  "task": "Inspect and select",
+  "type": "(document: Document, className: string) => LinkmlClassSlotsReport"
+}

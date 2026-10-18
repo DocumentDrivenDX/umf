@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectDeltaLog\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Offsets are UTF-16 positions in source text; end excludes the line terminator.",
+  "related": [],
+  "returns": "{ source: Document; complete: false; parsedAll: boolean; lines: DeltaLogLine[]; diagnostics: Diagnostic[]; }",
+  "task": "Inspect and select",
+  "type": "(doc: Document) => { source: Document; complete: false; parsedAll: boolean; lines: DeltaLogLine[]; diagnostics: Diagnostic[]; }"
+}

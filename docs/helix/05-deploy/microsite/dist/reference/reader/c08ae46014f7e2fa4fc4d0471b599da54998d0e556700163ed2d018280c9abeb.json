@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"declareCoreKey\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyRequest\"]"
+      ],
+      "name": "requestInput",
+      "optional": false,
+      "type": "CoreKeyRequest"
+    }
+  ],
+  "purpose": "declareCoreKey accepts input, identity, requestInput and returns CoreKeyDeclaration.",
+  "related": [],
+  "returns": "CoreKeyDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreRecordIdentity, requestInput: CoreKeyRequest) => CoreKeyDeclaration"
+}

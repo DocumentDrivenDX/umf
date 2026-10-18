@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"ProtobufSourceCompiler\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufSourceRequest\"]"
+      ],
+      "name": "compile",
+      "optional": false,
+      "type": "(request: ProtobufSourceRequest) => Promise<{ descriptorSet: Uint8Array; compiler: string; }>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "A trusted installed compiler. It must resolve only the explicit source bundle.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtobufSourceCompiler"
+}

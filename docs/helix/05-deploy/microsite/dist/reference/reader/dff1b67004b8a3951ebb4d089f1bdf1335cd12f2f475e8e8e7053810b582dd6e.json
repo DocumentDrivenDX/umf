@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectJsonSchemaToProtobuf\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufProjectionOptions\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ProtobufProjectionOptions"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufSourceCompiler\"]"
+      ],
+      "name": "compiler",
+      "optional": false,
+      "type": "ProtobufSourceCompiler"
+    }
+  ],
+  "purpose": "Schema projection only. Does not silently claim an instance-data converter.",
+  "related": [],
+  "returns": "Promise<ProtobufProjection>",
+  "task": "Import and export",
+  "type": "(source: Document, input: ProtobufProjectionOptions, compiler: ProtobufSourceCompiler) => Promise<ProtobufProjection>"
+}

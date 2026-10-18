@@ -1,0 +1,112 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlRelationshipLayout\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "relationship",
+      "optional": false,
+      "type": "{ module: string; id: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "storage",
+      "optional": false,
+      "type": "\"foreign_key\" | \"junction\" | \"edge\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "carrierTable",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutKeyRef\"]"
+      ],
+      "name": "targetKey",
+      "optional": false,
+      "type": "PostgresqlLayoutKeyRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetConstraint",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutEndpointComponent\"]"
+      ],
+      "name": "targetComponents",
+      "optional": false,
+      "type": "PostgresqlLayoutEndpointComponent[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutKeyRef\"]"
+      ],
+      "name": "sourceKey",
+      "optional": true,
+      "type": "PostgresqlLayoutKeyRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceConstraint",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutEndpointComponent\"]"
+      ],
+      "name": "sourceComponents",
+      "optional": true,
+      "type": "PostgresqlLayoutEndpointComponent[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
+      ],
+      "name": "associationRecord",
+      "optional": true,
+      "type": "CoreKeyFieldReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutKeyRef\"]"
+      ],
+      "name": "associationKey",
+      "optional": true,
+      "type": "PostgresqlLayoutKeyRef"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlLayoutType\"]"
+      ],
+      "name": "discriminator",
+      "optional": true,
+      "type": "PostgresqlLayoutType & { column: string; value: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlRelationshipLayout is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlRelationshipLayout"
+}

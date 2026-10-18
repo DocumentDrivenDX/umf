@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifySchemaPropertiesUpgrade\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SchemaPropertiesUpgradeReceipt\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SchemaPropertiesUpgradeReceipt"
+    }
+  ],
+  "purpose": "verifySchemaPropertiesUpgrade accepts input and returns SchemaPropertiesUpgradeReceipt.",
+  "related": [],
+  "returns": "SchemaPropertiesUpgradeReceipt",
+  "task": "Other APIs",
+  "type": "(input: SchemaPropertiesUpgradeReceipt) => SchemaPropertiesUpgradeReceipt"
+}

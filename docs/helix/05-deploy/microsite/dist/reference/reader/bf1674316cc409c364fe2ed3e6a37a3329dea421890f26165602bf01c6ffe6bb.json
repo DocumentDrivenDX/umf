@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverCardinalityFromParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalityParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CardinalityParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "native",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    }
+  ],
+  "purpose": "recoverCardinalityFromParquet accepts input, native and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: CardinalityParquetProjection, native: Uint8Array) => Document"
+}

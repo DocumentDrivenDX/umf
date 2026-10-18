@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyAvroKeyClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifyAvroKeyClassification accepts input, current and returns AvroKeyClassification.",
+  "related": [],
+  "returns": "AvroKeyClassification",
+  "task": "Other APIs",
+  "type": "(input: AvroKeyClassification, current: Document) => AvroKeyClassification"
+}

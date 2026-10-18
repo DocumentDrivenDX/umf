@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyKeysAvroProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeyAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "related": [],
+  "returns": "KeyAvroProjection",
+  "task": "Other APIs",
+  "type": "(input: KeyAvroProjection, current: Document) => KeyAvroProjection"
+}

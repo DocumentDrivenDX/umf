@@ -1,0 +1,28 @@
+{
+  "alternatives": [
+    "null",
+    "{ boolean: boolean; }",
+    "{ integerToken: string; }",
+    "{ decimalToken: string; }",
+    "{ string: string; }",
+    "{ binaryHex: string; }",
+    "{ floatToken: string; }",
+    "{ date: string; }",
+    "{ time: string; }",
+    "{ timestamp: string; }",
+    "{ bits128Hex: string; }",
+    "{ uuid: string; }",
+    "{ array: CoreLiteral[]; }",
+    "{ map: Record<string, CoreLiteral>; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreLiteral\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "CoreLiteral is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreLiteral"
+}

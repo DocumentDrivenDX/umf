@@ -1,0 +1,17 @@
+{
+  "alternatives": [
+    "{ disposition: \"original\"; value: CoreLiteral; }",
+    "{ disposition: \"absent\" | \"withheld\"; }",
+    "{ disposition: \"transformed\"; selection: { ruleIndex: number; disclosureIndex: number; }; outputDomain: SecurityRef; transform: { id: string; version: string; }; value: CoreLiteral; valueProfile?: typeof GREGORIAN_DATE_PROFILE; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityDisclosureCellV2\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "SecurityDisclosureCellV2 is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityDisclosureCellV2"
+}

@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionExecutorProfile\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "actionVersion",
+      "optional": false,
+      "type": "\"0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "coreVersion",
+      "optional": false,
+      "type": "\"0.8.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "claims",
+      "optional": false,
+      "type": "{ obligation: string; status: \"supported\" | \"unsupported\" | \"unknown\"; evidence: string[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "ActionIdentity"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionExecutorProfile is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionExecutorProfile"
+}

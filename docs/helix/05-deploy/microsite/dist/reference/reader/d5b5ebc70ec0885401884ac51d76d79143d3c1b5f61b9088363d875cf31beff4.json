@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"numericToNumberLossless\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JavascriptNumericLiteral\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "JavascriptNumericLiteral"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+      ],
+      "name": "context",
+      "optional": true,
+      "type": "JavascriptNumericContext | undefined"
+    }
+  ],
+  "purpose": "Lossless value conversion, not lexical recovery. The original carrier is untouched.",
+  "related": [],
+  "returns": "number",
+  "task": "Other APIs",
+  "type": "(input: JavascriptNumericLiteral, context?: JavascriptNumericContext) => number"
+}

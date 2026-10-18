@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"resolveSecurityProtectionSources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policyInput",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalogInput",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "resolveSecurityProtectionSources accepts policyInput, catalogInput and returns SecurityProtectionSourceResolution.",
+  "related": [],
+  "returns": "SecurityProtectionSourceResolution",
+  "task": "Inspect and select",
+  "type": "(policyInput: unknown, catalogInput: unknown) => SecurityProtectionSourceResolution"
+}

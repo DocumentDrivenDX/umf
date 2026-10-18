@@ -1,0 +1,93 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddDocumentBindings\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "root",
+      "optional": false,
+      "type": "DddReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closedObjects",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "integer",
+      "optional": false,
+      "type": "\"json-integer\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "decimal",
+      "optional": false,
+      "type": "\"decimal-string\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dateTime",
+      "optional": false,
+      "type": "\"string\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "bytes",
+      "optional": false,
+      "type": "\"hex-string\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "collection",
+      "optional": false,
+      "type": "\"array\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "relations",
+      "optional": false,
+      "type": "Record<string, \"identity\" | \"embed\">"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"allow-reported-loss\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddDocumentBindings is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddDocumentBindings"
+}

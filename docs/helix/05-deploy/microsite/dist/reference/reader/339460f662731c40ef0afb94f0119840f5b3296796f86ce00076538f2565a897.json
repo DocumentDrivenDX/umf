@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectParquetMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Maps known IDL fields; opaque fields and authoritative bytes remain available.",
+  "related": [],
+  "returns": "ParquetMetadataInspection",
+  "task": "Inspect and select",
+  "type": "(source: Document) => ParquetMetadataInspection"
+}

@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"decodeSecurityDisclosure\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "SecurityPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolution",
+      "optional": false,
+      "type": "SecurityResolution"
+    }
+  ],
+  "purpose": "decodeSecurityDisclosure accepts text, policy, resolution and returns SecurityDisclosureBatch.",
+  "related": [],
+  "returns": "SecurityDisclosureBatch",
+  "task": "Serialize",
+  "type": "(text: string, policy: SecurityPolicy, resolution: SecurityResolution) => SecurityDisclosureBatch"
+}

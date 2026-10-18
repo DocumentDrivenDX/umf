@@ -269,3 +269,23 @@ this sequence. No implementation or browser test is claimed by this document.
 No owner-only decision blocks the draft. Future cross-browser qualification,
 new evidence-reader families and additional live tools require their own measured
 scope. They do not defer the initial census or required integration coverage.
+
+## Reader layer
+
+The build emits CONTRACT-077's reader companion and API detail shards. Numeric
+core-version ordering selects latest. Model-owned pure schema-reader helpers
+resolve local references with cycle guards and preserve conditional branches.
+Trusted reader content supplies explanations and examples; the TypeScript
+compiler supplies symbol kind, parameters, return types and members. UI modules
+consume public model exports and integrity-verified companion assets. Preserve
+entry/pointer routes; add concept selection as a presentation coordinate. Search
+is independent of loaded entry state. Use the existing boundary checker before
+feature code; no alternate validator or renderer-package fork is introduced.
+
+### Schema example formats
+
+Generate the complete example YAML through the public serializer during the
+reference build. Load its manifest-verified text alongside the reader companion.
+Render YAML/JSON buttons with pressed state for complete and inline examples;
+format switching changes presentation only. No YAML runtime dependency is added
+to the reference UI.

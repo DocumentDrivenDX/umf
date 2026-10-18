@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardRoot\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"dashboard\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "pages",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "layout",
+      "optional": false,
+      "type": "{ columns: number; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardTheme\"]"
+      ],
+      "name": "theme",
+      "optional": true,
+      "type": "DashboardTheme"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardRoot is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardRoot"
+}

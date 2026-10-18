@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"compareBits128\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128Value\"]"
+      ],
+      "name": "left",
+      "optional": false,
+      "type": "Bit128Value"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128Value\"]"
+      ],
+      "name": "right",
+      "optional": false,
+      "type": "Bit128Value"
+    }
+  ],
+  "purpose": "compareBits128 accepts left, right and returns 0 | 1 | -1.",
+  "related": [],
+  "returns": "0 | 1 | -1",
+  "task": "Other APIs",
+  "type": "(left: Bit128Value, right: Bit128Value) => -1 | 0 | 1"
+}

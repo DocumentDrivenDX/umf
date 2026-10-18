@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"KeyRollbackReceipt\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"rollback-key-envelope\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyCandidateDocument\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "KeyCandidateDocument"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeyUpgradeReceipt\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "KeyUpgradeReceipt"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "reason",
+      "optional": false,
+      "type": "\"Original envelope restored; all subsequent content retained in source, not applied to legacy target\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "KeyRollbackReceipt is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "KeyRollbackReceipt"
+}

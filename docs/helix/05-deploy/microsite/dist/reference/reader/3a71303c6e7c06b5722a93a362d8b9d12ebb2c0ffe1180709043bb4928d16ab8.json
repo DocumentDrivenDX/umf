@@ -1,0 +1,103 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SecurityWriteProfile\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "readProtection",
+      "optional": false,
+      "type": "{ version: \"umf.security.write-read/0.1.0\"; readAction: string; blindWriteActions: { field: SecurityRef; action: string; }[]; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "type",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "createAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "updateAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deleteAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "fieldActions",
+      "optional": false,
+      "type": "{ field: SecurityRef; action: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policyAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "policyFields",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ownershipAction",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "ownershipFields",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "ownershipAssociations",
+      "optional": false,
+      "type": "SecurityRef[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Trusted host binding; field and ownership actions never come from client policy archives.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityWriteProfile"
+}

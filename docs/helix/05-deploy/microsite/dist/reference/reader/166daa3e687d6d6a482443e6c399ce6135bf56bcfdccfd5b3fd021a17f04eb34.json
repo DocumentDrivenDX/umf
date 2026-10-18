@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"csvBooleanLexicalOperationSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as csvBooleanLexicalOperationSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; properties: { operation: { const: string; }; version: { const: string; }; source: { $ref: string; }; request: { $ref: string; }; value: { type: string; properties: { boolean: { type: string; }; }; required: string[]; additionalProperties: boolean; }; validation: { type: string; properties: { valid: { type: string; }; complete: { type: string; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; message: { type: string; }; severity: { enum: string[]; }; }; required: string[]; additionalProperties: boolean; }; }; }; required: string[]; additionalProperties: boolean; }; provenance: { const: string; }; }; required: string[]; additionalProperties: boolean; $defs: { request: { type: string; properties: { profile: { const: string; }; field: { type: string; properties: { module: { type: string; minLength: number; }; element: { type: string; minLength: number; }; }; required: string[]; additionalProperties: boolean; }; token: { enum: string[]; }; sourceContext: {}; }; required: string[]; additionalProperties: boolean; }; }; }"
+}

@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"selectSmithyShapes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithySelectionBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "SmithySelectionBackend"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "selector",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; signal?: AbortSignal; }"
+    }
+  ],
+  "purpose": "selectSmithyShapes accepts document, backend, selector, options and returns Promise<SmithySelectionResult>.",
+  "related": [],
+  "returns": "Promise<SmithySelectionResult>",
+  "task": "Inspect and select",
+  "type": "(document: Document, backend: SmithySelectionBackend, selector: string, options: { id: string; signal?: AbortSignal; }) => Promise<SmithySelectionResult>"
+}

@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerLayoutField\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyFieldReference\"]"
+      ],
+      "name": "coreField",
+      "optional": false,
+      "type": "CoreKeyFieldReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingFieldRef\"]"
+      ],
+      "name": "boundField",
+      "optional": false,
+      "type": "BindingFieldRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "table",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "column",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sqlType",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nullable",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "collation",
+      "optional": false,
+      "type": "\"Latin1_General_100_BIN2\" | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerLayoutField is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerLayoutField"
+}

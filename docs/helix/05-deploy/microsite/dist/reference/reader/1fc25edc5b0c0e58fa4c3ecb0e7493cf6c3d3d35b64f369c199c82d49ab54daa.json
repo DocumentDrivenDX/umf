@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"createSmithyJavaScriptSelectionBackend\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "{ assemble(sourcesJson: string): string; select(modelJson: string, selector: string, control?: { signal?: AbortSignal; }): string; }"
+    }
+  ],
+  "purpose": "Explicit native shape-set query. Variable environments are not returned by this API.",
+  "related": [],
+  "returns": "SmithySelectionBackend",
+  "task": "Author and edit",
+  "type": "(module: { assemble(sourcesJson: string): string; select(modelJson: string, selector: string, control?: { signal?: AbortSignal; }): string; }) => SmithySelectionBackend"
+}

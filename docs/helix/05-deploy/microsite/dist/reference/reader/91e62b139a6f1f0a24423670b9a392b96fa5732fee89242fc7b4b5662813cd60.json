@@ -1,0 +1,16 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"avroKeysPackage\"]",
+  "kind": "Package",
+  "members": [],
+  "parameters": [],
+  "purpose": "The Avro key metadata extension package manifest. Inspect its vocabulary, payload schema and declared capabilities; loading a constant alone does not register it.",
+  "related": [
+    "[\"api\",\".\",\"AVRO_KEYS_EXTENSION\"]",
+    "[\"api\",\".\",\"classifyAvroKeys\"]"
+  ],
+  "returns": "",
+  "task": "Extensions",
+  "type": "ExtensionPackage"
+}

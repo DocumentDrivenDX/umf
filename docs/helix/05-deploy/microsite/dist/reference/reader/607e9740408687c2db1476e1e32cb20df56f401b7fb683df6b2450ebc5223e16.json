@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectRecordToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordSqlServerRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RecordSqlServerRequest"
+    }
+  ],
+  "purpose": "projectRecordToSqlServer accepts input, options and returns RecordSqlServerProjection.",
+  "related": [],
+  "returns": "RecordSqlServerProjection",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: RecordSqlServerRequest) => RecordSqlServerProjection"
+}

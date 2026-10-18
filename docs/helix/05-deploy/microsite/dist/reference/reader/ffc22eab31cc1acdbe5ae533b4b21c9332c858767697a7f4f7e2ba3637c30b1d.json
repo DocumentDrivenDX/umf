@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectFieldToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FieldPostgresqlRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "FieldPostgresqlRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "projectFieldToPostgresql accepts input, options, backend and returns Promise<FieldPostgresqlProjection>.",
+  "related": [],
+  "returns": "Promise<FieldPostgresqlProjection>",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: FieldPostgresqlRequest, backend: PostgresqlBackend) => Promise<FieldPostgresqlProjection>"
+}

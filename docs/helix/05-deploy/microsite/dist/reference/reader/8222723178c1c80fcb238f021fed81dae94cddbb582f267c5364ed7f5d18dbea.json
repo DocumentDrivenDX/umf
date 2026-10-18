@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateCoreRecordValues\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordValueIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "CoreRecordValueIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordFieldValue\"]"
+      ],
+      "name": "valuesInput",
+      "optional": false,
+      "type": "CoreRecordFieldValue[]"
+    }
+  ],
+  "purpose": "Logical membership/presence/field checks, never native rows, defaults or dataset uniqueness.",
+  "related": [],
+  "returns": "CoreRecordValueCheck",
+  "task": "Read and validate",
+  "type": "(input: Document, identityInput: CoreRecordValueIdentity, valuesInput: CoreRecordFieldValue[]) => CoreRecordValueCheck"
+}

@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectDicomMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "textSource",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceId",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "DICOM JSON metadata only. Does not read binaries, dereference BulkDataURI or decode pixels.",
+  "related": [],
+  "returns": "MedicalTables",
+  "task": "Import and export",
+  "type": "(textSource: string, sourceId: string) => MedicalTables"
+}

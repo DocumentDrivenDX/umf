@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"classifyAvroRecordType\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRecordTypeRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroRecordTypeRequest"
+    }
+  ],
+  "purpose": "classifyAvroRecordType accepts input, options and returns AvroRecordTypeClassification.",
+  "related": [],
+  "returns": "AvroRecordTypeClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: AvroRecordTypeRequest) => AvroRecordTypeClassification"
+}

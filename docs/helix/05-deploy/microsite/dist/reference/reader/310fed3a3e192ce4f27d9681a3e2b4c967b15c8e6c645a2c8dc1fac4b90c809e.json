@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getTableSpecColumn\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "index",
+      "optional": false,
+      "type": "number"
+    }
+  ],
+  "purpose": "getTableSpecColumn accepts document, index and returns NativeJson.",
+  "related": [],
+  "returns": "NativeJson",
+  "task": "Inspect and select",
+  "type": "(document: Document, index: number) => NativeJson"
+}

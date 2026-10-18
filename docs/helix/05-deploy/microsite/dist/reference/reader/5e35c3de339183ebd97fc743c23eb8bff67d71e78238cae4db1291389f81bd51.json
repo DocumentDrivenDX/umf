@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"validateCoreDatasetValuesCompact\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetInput\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreDatasetInput"
+    }
+  ],
+  "purpose": "validateCoreDatasetValuesCompact accepts source, input and returns CoreDatasetCompactValueCheck.",
+  "related": [],
+  "returns": "CoreDatasetCompactValueCheck",
+  "task": "Read and validate",
+  "type": "(source: Document, input: CoreDatasetInput) => CoreDatasetCompactValueCheck"
+}

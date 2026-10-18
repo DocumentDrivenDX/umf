@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlListAxiomView\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"owl-list-axioms-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "blankNodeScope",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OwlListAxiom\"]"
+      ],
+      "name": "axioms",
+      "optional": false,
+      "type": "OwlListAxiom[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OwlMalformedListAxiom\"]"
+      ],
+      "name": "malformed",
+      "optional": false,
+      "type": "OwlMalformedListAxiom[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OwlListAxiomView is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlListAxiomView"
+}

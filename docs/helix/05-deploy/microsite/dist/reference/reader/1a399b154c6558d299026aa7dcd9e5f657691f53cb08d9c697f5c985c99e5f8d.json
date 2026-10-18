@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectProtectionQueryProperties\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "useInput",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "inspectProtectionQueryProperties accepts policy, catalog, closure, useInput and returns ProtectionQueryPropertyInspection.",
+  "related": [],
+  "returns": "ProtectionQueryPropertyInspection",
+  "task": "Inspect and select",
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, useInput: unknown) => ProtectionQueryPropertyInspection"
+}

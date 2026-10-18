@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validatePostgresqlAst\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "tree",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Validate the known native JSON vocabulary without removing unknown fields.",
+  "related": [],
+  "returns": "{ valid: boolean | Promise<unknown>; complete: boolean; errors: Json; }",
+  "task": "Read and validate",
+  "type": "(tree: unknown) => { valid: boolean | Promise<unknown>; complete: boolean; errors: Json; }"
+}

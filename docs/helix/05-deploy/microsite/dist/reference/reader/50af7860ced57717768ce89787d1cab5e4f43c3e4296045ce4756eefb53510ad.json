@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectProtectionObligations\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ontologyInput",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Source declaration consistency only. Every reported enforcement obligation stays unverified.",
+  "related": [],
+  "returns": "ProtectionDeclarationInspection",
+  "task": "Inspect and select",
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, ontologyInput: unknown) => ProtectionDeclarationInspection"
+}

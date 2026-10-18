@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getDeltaTableSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Parse a copied view; this never normalizes the authoritative schemaString.",
+  "related": [],
+  "returns": "Document",
+  "task": "Inspect and select",
+  "type": "(document: Document) => Document"
+}
