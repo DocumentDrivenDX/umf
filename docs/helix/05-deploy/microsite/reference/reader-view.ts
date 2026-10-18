@@ -8,7 +8,14 @@ function disclosure(parent:HTMLElement,title:string,body:HTMLElement){const d=el
 function table(parent:HTMLElement,headers:string[],rows:HTMLElement[][]){const wrap=el('div',undefined,'table-wrap'),t=el('table'),head=el('thead'),r=el('tr');for(const h of headers)r.append(el('th',h));head.append(r);t.append(head);const body=el('tbody') as HTMLTableSectionElement;for(const cells of rows){const row=el('tr');row.append(...cells);body.append(row);}t.append(body);wrap.append(t);wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label',headers.join(', ')+' table');const hint=el('p','Scroll the table horizontally to see all columns.','table-hint');parent.append(hint,wrap);return body;}
 const cell=(s:string)=>el('td',s);
 function contextualLink(e:Entry,ref:string){if(ref.startsWith('#/'))return readerRoute(e.id,ref.slice(1));const target=e.data.references.find((r:any)=>r.target===ref);return target?.resolvedId?readerRoute(target.resolvedId,ref.includes('#')?ref.slice(ref.indexOf('#')+1):''):undefined;}
-export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:ReaderCatalog,concept?:Concept){
+function schemaExample(json:string,yaml:string){
+ const group=el('div',undefined,'schema-example'),controls=el('div',undefined,'example-formats'),preview=code(yaml);
+ controls.setAttribute('role','group');controls.setAttribute('aria-label','Example format');preview.dataset.format='yaml';
+ const yamlButton=el('button','YAML','secondary') as HTMLButtonElement,jsonButton=el('button','JSON','secondary') as HTMLButtonElement;
+ for(const [button,format]of [[yamlButton,'yaml'],[jsonButton,'json']] as const){button.type='button';button.setAttribute('aria-pressed',String(format==='yaml'));button.onclick=()=>{preview.textContent=format==='yaml'?yaml:json;preview.dataset.format=format;yamlButton.setAttribute('aria-pressed',String(format==='yaml'));jsonButton.setAttribute('aria-pressed',String(format==='json'));};}
+ controls.append(yamlButton,jsonButton);group.append(controls,preview);return group;
+}
+export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:ReaderCatalog,concept:Concept|undefined,exampleYaml:string){
  const core=e.data.profileVersions.length>0;
  const root=e.data.sourceData,original=schemaNode(root,pointer),node=resolveSchema(root,original),s=treeValue(node),name=pointer.split('/').at(-1)??'';
  const breadcrumb=el('nav',undefined,'breadcrumbs');breadcrumb.setAttribute('aria-label','Definition path');breadcrumb.append(anchor('Document',readerRoute(e.id)));
@@ -18,14 +25,14 @@ export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:Re
  const profile=e.data.profileVersions[0];parent.append(el('p',profile===reader.latest.version?'Latest core · '+profile:profile?'Historical core · '+profile:'Separately versioned schema','version-context'));
  if(profile&&profile!==reader.latest.version)parent.append(anchor('View latest',readerRoute(reader.latest.id,pointer,concept?.key??'')));
  const copy=el('button','Copy exact link','secondary') as HTMLButtonElement;copy.onclick=async()=>{try{await navigator.clipboard.writeText(location.href);copy.textContent='Link copied';}catch{copy.textContent=location.href;}};parent.append(copy);
- if(concept?.role&&concept.pointer===pointer)parent.append(el('p','Use kind: "'+concept.role+'".'+(concept.role==='record'?' The JSON keys below describe this definition. members lists its data Fields; keys declares identity tuples.':''),'callout'));
+ if(concept?.role&&concept.pointer===pointer)parent.append(el('p','Use kind: "'+concept.role+'".'+(concept.role==='record'?' The keys below describe this definition. members lists its data Fields; keys declares identity tuples.':''),'callout'));
  const props=node?.members?.properties?.members;
  if(!props){heading(parent,'Value shape');parent.append(el('p',shape(root,original),'value-shape'));}
  const recognized=core&&root.members?.$defs?.members?.knownScalarType&&(name==='scalarType'||name==='knownScalarType')?schemaNode(root,'/$defs/knownScalarType'):(s?.enum?node:undefined);
  if(recognized){heading(parent,name==='scalarType'?'Recognized values':'Values');table(parent,['Value','Meaning'],(treeValue(recognized).enum??[]).map((value:string)=>[cell(value),cell(reader.scalarMeanings[value]??(value==='unspecified'?'No assertion. Native semantics remain separate.':'Explicit '+title.toLowerCase()+' label.'))]));}
  if(core&&name==='scalarType')parent.append(el('p','Other nonempty strings are structurally accepted and retained with unknown meaning. Missing scalarType asserts no scalar family. scalarType is not allowed on Record/Group or array/map containers.','callout'));
  if(core&&name==='itemType'){
-  parent.append(el('p','Value: an object, not a scalar label or inline schema. Both module and element are required. The target must resolve to a Field; it describes array items or map values.','callout'),code('{ "module": "sales", "element": "tagValue" }'));
+  parent.append(el('p','Value: an object, not a scalar label or inline schema. Both module and element are required. The target must resolve to a Field; it describes array items or map values.','callout'),schemaExample('{ "module": "sales", "element": "tagValue" }','module: sales\nelement: tagValue\n'));
   parent.append(el('p','Allowed when kind = "field" and cardinality is "array" or "map". Omission leaves item meaning unasserted. Target resolution is a semantic check in addition to JSON shape validation.'));
  }
  if(props){
@@ -52,7 +59,7 @@ export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:Re
  if(s?.default!==undefined)parent.append(el('p','Schema default annotation: '+JSON.stringify(s.default)+'. This does not insert a value.','callout'));
  if(pointer.includes('/properties/'))parent.append(el('p','Presence and explicit null are different. Omission is governed by the owner’s required/conditional rules; null is accepted only if the value schema explicitly permits it.','quiet'));
  if(e.id===reader.latest.id&&(concept||['scalarType','itemType','members','keys'].includes(name))){heading(parent,'Complete example');parent.append(el('p','A Record, a scalar Field, and an array Field with a separate item Field. All references use module and element IDs.'));
-  disclosure(parent,'Show complete valid UMF document',code(JSON.stringify(reader.examples[0],null,2))).open=true;
+  disclosure(parent,'Show complete valid UMF document',schemaExample(JSON.stringify(reader.examples[0],null,2),exampleYaml)).open=true;
   if(name==='itemType'||name==='scalarType')parent.append(el('p','Invalid combinations: itemType: "string" has the wrong shape; cardinality: "array" with scalarType: "string" assigns a scalar to the container. Use the separate tagValue Field shown above.','callout'));
  }
  const refs=new Set<string>();const visit=(n:any,depth=0)=>{if(depth>128||!n)return;if(n.kind==='object'){if(n.members.$ref?.value)refs.add(n.members.$ref.value);for(const v of Object.values(n.members))visit(v,depth+1);}else if(n.kind==='array')for(const v of n.items)visit(v,depth+1);};visit(original);

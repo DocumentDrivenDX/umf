@@ -371,3 +371,13 @@ concepts refuse. Latest-only default navigation MUST NOT rewrite explicit older
 entry routes. Source pointer coordinates stay exact. Authored meanings MUST NOT
 override schema admission rules or semantic contracts. Branch conditions remain
 visible; unresolved constraints MUST NOT be presented as unconditional Optional.
+
+### Schema example YAML asset
+
+`example.yaml` is a manifest-bound UTF-8 serialization of `reader.json`
+`examples[0]`, emitted through the public UMF YAML writer. Generation MUST verify
+that reading it as YAML yields the same example values. It is bounded by the
+existing source-preview limit. Schema example presentation defaults to YAML;
+JSON is an explicit alternate view of the same values. Switching formats MUST
+NOT rewrite canonical examples, original schemas, source records or routes.
+This adds an asset; the reader record profile and existing fields are unchanged.

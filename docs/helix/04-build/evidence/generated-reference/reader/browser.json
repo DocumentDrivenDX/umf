@@ -1,11 +1,13 @@
 {
   "profile": "umf.reference.reader.browser-evidence/1",
   "browser": "153.0.8010.12",
-  "manifestSha256": "3073bd98c79a7cd3227df12bc0ee43a36d988ce2f4139720b4caaadc6ef34661",
+  "manifestSha256": "5c2b730e661959e6883609ecb1eab3c52452548375aa724e6e0a97cb495340cc",
   "checks": [
     "Cold visit opens latest Document without a version choice",
+    "Complete example defaults to YAML; JSON toggle and keyboard YAML return preserve route and values",
     "Record definition keys, membership and identity distinction with conditional prohibitions",
     "Field → scalarType lists recognized values and unknown-label acceptance",
+    "Inline itemType example YAML/JSON toggle preserves reference values",
     "itemType shape, Field target, cardinality rules and exact refresh/Back",
     "Cold property and recognized-value search",
     "Historical exact route stays pinned with explicit latest recovery",

@@ -144,3 +144,7 @@ type aliases, constants, schemas and packages, with readable members/parameters,
 returns and usage. Full exports remain discoverable.
 REF-14: Cold search MUST find properties, recognized values and API names without
 prior detail visits. Contextual relations and raw schema graphs are secondary.
+
+REF-15: Schema examples MUST default to YAML and provide an accessible JSON
+toggle over the same example values. Original schema/source views retain their
+original format; API code examples retain their programming language.

@@ -3,7 +3,7 @@ import {mountWorkbench} from './workbench';
 import {schemaReader,apiReader,readerRoute} from './reader-view';
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
 const digest=async(bytes:ArrayBuffer)=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
-let manifest:any,index:ReferenceIndex,reader:ReaderCatalog;const loaded=new Map<string,Entry>();
+let manifest:any,index:ReferenceIndex,reader:ReaderCatalog,exampleYaml='';const loaded=new Map<string,Entry>();
 export async function verified(path:string):Promise<ArrayBuffer>{
  if(!/^(?:[a-zA-Z0-9_.-]+\/)*[a-zA-Z0-9_.-]+$/.test(path)||path.includes('..'))throw Error('REFERENCE_INPUT invalid asset path');
  const expected=manifest.outputs.find((o:any)=>o.path===path);if(!expected)throw Error('REFERENCE_INTEGRITY unlisted asset '+path);
@@ -27,7 +27,7 @@ export async function show(e:Entry,pointer='',conceptKey=''){
  if(e.kind==='schema'){
   const concept=conceptKey?reader.concepts.find(c=>c.key===conceptKey):undefined;if(conceptKey&&!concept)throw Error('REFERENCE_LINK unknown concept');
   if(concept&&pointer!==concept.pointer&&!pointer.startsWith(concept.pointer+'/properties/'))throw Error('REFERENCE_LINK concept/pointer mismatch');
-  schemaReader(parent,e,pointer,reader,concept);
+  schemaReader(parent,e,pointer,reader,concept,exampleYaml);
  }else if(e.kind==='api'){
   const row=reader.api.find(a=>a.id===e.id);if(!row)throw Error('REFERENCE_LINK missing API documentation');
   const doc=JSON.parse(decode(await verified(row.href)));apiReader(parent,e,doc,reader);
@@ -57,6 +57,7 @@ async function start(){
  const expected=JSON.parse($('reference-integrity').textContent!).sha256;const response=await fetch('manifest.json',{redirect:'error',credentials:'omit'});if(!response.ok)throw Error('REFERENCE_INTEGRITY missing manifest');const bytes=await response.arrayBuffer();if(await digest(bytes)!==expected)throw Error('REFERENCE_INTEGRITY manifest');manifest=JSON.parse(decode(bytes));if(manifest.profile!=='umf.reference.manifest/1')throw Error('REFERENCE_PROTOCOL manifest version');index=JSON.parse(decode(await verified('index.json')));if(index.profile!=='umf.reference/1')throw Error('REFERENCE_PROTOCOL index version');const readyMessage='Source-bound reference · '+index.entries.length+' entries · assets verified on use';
  const view=location.pathname.split('/').at(-1)?.replace('.html','')??'index';if(view==='workbench'){await mountWorkbench(index.entries,getEntry,verified);$('load-status').textContent=readyMessage;return;}
  reader=JSON.parse(decode(await verified('reader.json')));if(reader.profile!=='umf.reference.reader/1')throw Error('REFERENCE_PROTOCOL reader version');
+ exampleYaml=decode(await verified('example.yaml'));
  const latest=await getEntry(reader.latest.id);
  const kinds:Record<string,string>={core:'schema',extensions:'extension',integrations:'integration',api:'api',examples:'example',index:'guide'};let limit=50,keyboardNavigation=false;
  type Choice={id:string;title:string;summary:string;pointer?:string;concept?:string};

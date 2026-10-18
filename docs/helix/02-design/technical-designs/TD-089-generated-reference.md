@@ -281,3 +281,11 @@ consume public model exports and integrity-verified companion assets. Preserve
 entry/pointer routes; add concept selection as a presentation coordinate. Search
 is independent of loaded entry state. Use the existing boundary checker before
 feature code; no alternate validator or renderer-package fork is introduced.
+
+### Schema example formats
+
+Generate the complete example YAML through the public serializer during the
+reference build. Load its manifest-verified text alongside the reader companion.
+Render YAML/JSON buttons with pressed state for complete and inline examples;
+format switching changes presentation only. No YAML runtime dependency is added
+to the reference UI.

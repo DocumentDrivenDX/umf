@@ -122,3 +122,7 @@ complete example, then follow a related SDK operation to parameters and usage.
   interfaces expose members and nested types.
 - **US-089-AC15:** Cold property/value/API search navigates directly to context;
   keyboard, refresh, Back and narrow screens retain usable content.
+
+- **US-089-AC16:** Complete and inline schema examples open as YAML. The reader
+  can switch to JSON and back using labeled keyboard-operable controls without
+  changing values, selected definition or source records.

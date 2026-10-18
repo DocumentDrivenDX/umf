@@ -1,6 +1,6 @@
 import {test,expect} from 'bun:test';
 import {latestProfile,propertyPresence,shape,schemaNode,unknownKeyPolicy,schemaRules,identity} from '../../docs/helix/05-deploy/reference/model';
-import {parseNativeJson,validateDocument} from '../../src/index';
+import {parseNativeJson,validateDocument,readDocument} from '../../src/index';
 const root=parseNativeJson(await Bun.file('spec/core/semantic-types-document.schema.json').text());
 // @covers US-089-AC12 @covers US-089-AC13
 test('latest uses numeric core versions and preserves conditional, open and recursive meaning',()=>{
@@ -38,4 +38,12 @@ test('latest uses numeric core versions and preserves conditional, open and recu
  const {readDocument,AVRO_KEYS_EXTENSION}=await import('../../src/index');
  const document=readDocument('{"umf":"0.10.0","id":"example","vocabularies":{},"modules":[]}');
  expect(document.umf).toBe('0.10.0');expect(document.extensions?.[AVRO_KEYS_EXTENSION]).toBeUndefined();expect(document.vocabularies[AVRO_KEYS_EXTENSION]).toBeUndefined();
+});
+
+// @covers US-089-AC16
+test('the generated YAML example preserves all JSON example values',async()=>{
+ const base='docs/helix/05-deploy/microsite/dist/reference/';
+ const reader=await Bun.file(base+'reader.json').json(),yaml=await Bun.file(base+'example.yaml').text();
+ expect(yaml.trimStart().startsWith('umf:')).toBe(true);
+ expect(readDocument(yaml,'yaml')).toEqual(reader.examples[0]);
 });

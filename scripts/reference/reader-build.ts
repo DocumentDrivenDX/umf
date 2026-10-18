@@ -3,7 +3,7 @@ import {identity,latestProfile,schemaNode,treeValue,type Entry,type ReaderCatalo
 import {apiDocumentation} from './extract';
 import {concepts,propertyText,scalarMeanings,examples} from './reader-content';
 import {sha,json,config} from './io';
-import {validateDocument} from '../../src/index';
+import {validateDocument,writeDocument,readDocument,type Document} from '../../src/index';
 export async function buildReader(stage:string,entries:Entry[],profiles:any,validate:(name:string,value:unknown)=>Promise<void>){
  const latest=latestProfile<{version:string;schemaPath:string}>(profiles.coreProfiles),id=identity('schema',latest.schemaPath,''),source=entries.find(e=>e.id===id);
  if(!source)throw Error('REFERENCE_LINK missing latest core');
@@ -11,6 +11,10 @@ export async function buildReader(stage:string,entries:Entry[],profiles:any,vali
  for(const pointer of ['', '/$defs/module','/$defs/element','/$defs/itemType'])for(const key of Object.keys(treeValue(schemaNode(source.data.sourceData,pointer)).properties??{}))if(!propertyText[key])throw Error('REFERENCE_STRUCTURE missing property explanation '+key);
  for(const value of treeValue(schemaNode(source.data.sourceData,'/$defs/knownScalarType')).enum)if(!scalarMeanings[value])throw Error('REFERENCE_STRUCTURE missing scalar explanation '+value);
  const docs=examples(latest.version);for(const example of docs)if(!validateDocument(example).valid)throw Error('REFERENCE_STRUCTURE reader example');
+ const yaml=writeDocument(docs[0] as unknown as Document,'yaml');
+ if(JSON.stringify(readDocument(yaml,'yaml'))!==JSON.stringify(docs[0]))throw Error('REFERENCE_STRUCTURE YAML example changed values');
+ if(yaml.length>4_000_000)throw Error('REFERENCE_LIMIT YAML example');
+ await Bun.write(join(stage,'example.yaml'),yaml);
  const api=[];
  for(const e of entries.filter(e=>e.kind==='api')){
   const doc=apiDocumentation.get(e.id);if(!doc)throw Error('REFERENCE_LINK API documentation '+e.id);

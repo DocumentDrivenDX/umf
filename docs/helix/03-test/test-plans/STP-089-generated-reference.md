@@ -116,3 +116,9 @@ Run existing reference unit/build, boundary, typecheck and Chromium gates.
 Record reader evidence under generated-reference to avoid evidence self-hashing.
 Observed human comprehension remains separate from automated browser evidence;
 no recruited-reader session may be claimed without actual participants.
+
+## Example format verification
+
+| Criterion | Executable proof |
+| --- | --- |
+| US-089-AC16 | Reader unit check of emitted YAML/JSON value parity; Chromium complete/inline YAML default, JSON and keyboard return toggle, unchanged route and mobile containment |
