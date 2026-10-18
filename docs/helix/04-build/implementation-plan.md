@@ -13043,3 +13043,13 @@ then run semantic and core0.9 regression, type/schema/build, independent structu
 and Chromium checks. Record exact source fingerprints and failed attempts under
 04-build/evidence/core-semantic-types-010/. Native delivery and other authoring
 profile expansion remain outside this source integration.
+
+## Unified generated Python access — 2026-10-18
+
+Owner-authorized FEAT-033 / SD-033 / CONTRACT-079 implements the same typed
+Python read, relationship and Action calls for table and ontology bindings.
+The portable generator accepts UMF 0.10 with UUID and bits128; generated Python
+is stdlib-only. Existing Weft raw/related compilers remain the SQL authority.
+[Execution evidence](evidence/unified-python-access.md) records the independent
+graph fixture, native PostgreSQL 18 run and current feature limits. This does
+not change qualification of earlier SDK/backend work.

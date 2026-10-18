@@ -1,0 +1,72 @@
+These are the requirements for UMF, written as a feature request. The idea is that UMF designs the access API and leaves the implementation to the consumer.
+
+## Feature: ontology access API layer (design only)
+
+**Summary.** From an ontology module, UMF derives a versioned, language-neutral description of the access API (types, reads, actions and errors). It then generates typed client code against an abstract transport. UMF never implements the transport, the execution engine or the storage.
+
+### Inputs and scope
+
+- **R1. Input.** Accept the DDD ontology dialect that Hohfeld reads today (core 0.7.0, `umf.ddd`: entity records, fields, relationships, actions with inputs, preconditions and effects). Core 0.8.0 should work too. No `umf.access` authoring is needed for the common case, and none of it is required for a typed SDK to be generated.
+- **R2. Dependencies.** Neither the description nor the generated code may depend on Pydantic, `umf_access`, a database, Hohfeld or a JavaScript runtime. Praxis's plugin SDK is stdlib-only, so the Python target must be too.
+- **R3. Selection.** A caller can select which types and actions go into the API (OSDK-style scoping), and the description records the selection.
+
+### The access API description (the contract, not code)
+
+- **R4. One document.** The description is a canonical JSON document with a schema and a version. It is deterministic: the same input gives the same bytes.
+- **R5. Types.** It carries one type per entity, with these facts for each field:
+  - Field name, scalar type (including enums, decimals, dates, timestamps and lists), cardinality, and whether the field can be absent.
+  - Identity key fields, named explicitly.
+  - Whether a value is required to create the record, supplied by the engine, or immutable.
+  - Relationships as named links in both directions, with their multiplicity.
+- **R6. Reads.** It declares the read operations as a closed surface:
+  - Get by key, get-many with a stated maximum, and list.
+  - Filters, which are typed per field, with the operators each field supports.
+  - Ordering, paging with an opaque cursor and a page-size limit, link traversal (follow a link from a key) and link-key inclusion.
+  - Read-your-write: a consistency choice and an "at least this token" parameter.
+- **R7. Actions.** For each action it declares:
+  - Typed inputs, where a reference to an entity is a typed key and not a bare string.
+  - The result shape: what changed (counts and receipt fields) and a consistency token.
+  - The preconditions as machine-readable reason codes, so a client can name the refusals an action can produce.
+  - Single and batch forms, with a stated batch maximum and an atomic-or-not choice.
+  - An optional idempotency key.
+- **R8. Errors.** It declares a closed, typed error vocabulary: invalid (naming the field), denied, conflict, precondition failed (naming which one), too many rows, busy. Errors are values with fixed codes. Messages never carry data.
+- **R9. Limits.** It states its limits as data (page maxima, batch maxima, filter operators). It never leaves them implicit.
+
+### Transport: an interface UMF defines and never implements
+
+- **R10. Abstract transport.** UMF defines a small transport contract that every generated client calls through. It has one operation per request kind (read, read-many, apply, apply-batch, optionally validate). Each takes a request document and returns a response document, both specified by the description's schema.
+- **R11. Wire shapes.** The request and response shapes are specified, with examples. Praxis (Hohfeld host and worker) binds this contract and does not translate to its own dict shapes. Hohfeld's current plan format should either be the wire shape or have a documented mapping.
+- **R12. Two bindings, one client.** The same generated client works over a synchronous or an asynchronous binding, and over an in-process or a remote one. Plugin code must not change between hosting modes.
+
+### Generation
+
+- **R13. Offline.** Generation runs offline and deterministically from exact source text. Document metadata never causes code execution, template loading or network access.
+- **R14. Python target.** The target is Python 3.11 or later, stdlib-only. Generated code holds:
+  - Frozen dataclasses or TypedDicts for rows and create/patch inputs.
+  - Typed filter and ordering builders.
+  - One typed method per action, taking and returning typed values.
+  - Typed errors as exceptions.
+  - A transport `Protocol`.
+  - It type-checks cleanly under pyright, mypy and ty with no suppression comments.
+- **R15. Other targets.** TypeScript should follow from the same description (the repo is already TypeScript). The description is the shared source for every target.
+- **R16. Generated code stays thin.** It holds signatures, inert metadata tables and mapping calls into the transport. Absence is not conflated with null, and names or strings reach source only through escaping.
+- **R17. Naming.** Python names derive from the document through documented rules, with explicit overrides and collision refusals. Nothing is guessed.
+- **R18. Check and diff.** The generated output is meant to be checked in. A `check` operation fails on any byte difference, regenerate refuses over hand edits, and a description diff classifies a change as compatible or breaking.
+- **R19. Stamp.** Generated files carry the description version and a digest of their source document. A runtime can compare the digest with the module it is talking to and refuse a mismatch.
+
+### Conformance
+
+- **R20. Fake.** UMF ships a conformance suite and a reference in-memory fake, so a consumer can prove a transport binding behaves as the description says (paging, cursors, error codes, batch limits, tokens). The fake is for tests, not production.
+- **R21. Mismatch handling.** Unknown versions or constructs the generator cannot express must refuse generation and never be dropped. The result states what was not handled.
+
+### Out of scope for UMF
+
+Execution, authorization, grants, storage, audit, and plugin loading. Praxis owns all of these.
+
+### Open questions for UMF
+
+- Does the Hohfeld plan format become the UMF wire shape, or does UMF define its own with a mapping?
+- Does this extend FEAT-028/030 as a second profile, or is it a new feature ("ontology access API")?
+- Do entities with no `umf.access` view get defaults, or an explicit minimal view?
+
+If you want, I can write this up as a HELIX feature-specification file, or publish it as a shareable page.

@@ -863,3 +863,44 @@ Core0.10.0 adds explicit publisher/version/term references over that existing
 model, without changing native or unknown meaning. FEAT-005 SEM-01 through SEM-06,
 US-090 and CONTRACT-078 own the bounded restoration. Catalog discovery, implicit
 validation and native projection/admission remain separate.
+
+## Generated ontology access — owner direction, 2026-10-18
+
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
+
+- **FR-56 — Generated ontology access.** Developers must be able to generate
+  typed access code directly from schemas using the latest UMF, with useful
+  defaults and no additional access-view or compatibility selection. Alongside
+  table access, ontology access must provide typed entities, keys, links, bounded
+  reads and declared actions. Python 3.11+ clients use only the standard library;
+  TypeScript uses the same machine-readable API description. Clients work across
+  host/worker placement through a shared transport contract. Exact values and
+  absence/null distinctions are preserved; unsupported meanings are diagnosed.
+  Output supports checked-in use, drift checking and compatibility comparison.
+  UMF supplies generation, a test fake and shared binding assertions; consumers
+  own production transport, execution, authorization, storage, audit and plugins.
+
+[FEAT-033](features/FEAT-033-generated-ontology-access.md),
+[US-091](user-stories/US-091-ontology-access-description.md) and
+[US-092](user-stories/US-092-portable-ontology-client.md) define the capability.
+The current UMF model remains the target as UMF evolves. This owner direction
+supersedes the original Praxis request's old-version scope. FR-52–FR-55 retain
+their existing table/native SDK requirements.
+
+## One generated access API — owner clarification, 2026-10-18
+
+Tables and ontologies must expose the same generated Python API for typed reads,
+relationship traversal and actions. Developers compose model expressions directly;
+query-wrapper functions, decorators, separate parameter declarations and query
+catalog generation must not be prerequisites for ordinary reads. The host binding
+owns storage-specific compilation/execution and may prepare or cache requests.
+The generated client remains stdlib-only and sends typed request data.
+
+This clarification governs FR-52–FR-56 and supersedes their earlier mandatory
+Pydantic/client-runtime and build-only catalog requirements where they constrain
+the public API. Existing backend implementations may reuse those mechanisms
+internally. Exact values, bounded results, schema-derived typing, bound SQL
+parameters, authorization and explicit unsupported-capability failures remain.
+ADR-004 and FEAT-033 record the common API direction. FR-56 now covers generated
+table and ontology access together; changing storage changes the binding, not
+application query or action code.

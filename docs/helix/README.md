@@ -1,5 +1,14 @@
 # UMF project documentation
 
+[Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
+turns a current UMF schema into one typed model/query/action API for tables and
+ontologies. Developers compose reads directly and change the binding to change
+storage. [The design](02-design/solution-designs/SD-033-generated-ontology-access.md)
+uses sensible defaults and a shared host/worker transport, with stdlib-only Python.
+[Generate and use it](04-build/guides/unified-python-access.md);
+[implementation evidence](04-build/evidence/unified-python-access.md) records the
+UMF 0.10 Python cut and its native Weft/PostgreSQL checks.
+
 The [core0.10 semantic-reference restoration](04-build/evidence/core-semantic-types-010/receipt.json)
 composes exact vocabulary/release/term metadata with the unchanged core0.9
 UUID/128-bit profile. [CONTRACT-078](02-design/contracts/CONTRACT-078-semantic-types.md)

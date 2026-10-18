@@ -1,6 +1,6 @@
 {
   "name": "@umf/core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "packageManager": "bun@1.4.2",
@@ -16,6 +16,7 @@
   },
   "scripts": {
     "check:access-boundaries": "bun scripts/check-compilation-boundaries.ts && python3 scripts/check-access-python-boundaries.py",
+    "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
     "test:access-boundaries": "bun test tests/compilation/boundaries.test.ts",
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
     "test": "bun run test:prepare && bun scripts/run-tests.ts",

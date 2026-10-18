@@ -523,3 +523,4 @@ export {default as coreSemanticTypesDocumentSchema} from '../spec/core/semantic-
 export {default as coreSemanticTypeReferenceSchema} from '../spec/core/semantic-type-reference.schema.json';
 export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic-types-operation.schema.json';
 export {default as coreSemanticTypesTransitionSchema} from '../spec/core/semantic-types-transition.schema.json';
+export {generatePythonClient,type PythonClientRequest,type PythonClientResult} from './access';

@@ -634,6 +634,14 @@ runtime are a new Python distribution, `umf_access`, in this repository. Weft ow
 all SQL lowering; Truss and Ashlar own their adapters.
 [Design entry point](../04-build/typed-persistence-design.md).
 
+FR-56 and [FEAT-033](../01-frame/features/FEAT-033-generated-ontology-access.md)
+add typed ontology access generated directly from current UMF schemas. A shared
+API description drives standard-library Python and TypeScript clients; consumers
+implement transport and execution. [SD-033](solution-designs/SD-033-generated-ontology-access.md)
+explains generation, async plugin calls, values and failures. Tables and ontologies share the generated model/query/action API; the binding
+owns storage-specific execution. ADR-004 replaces mandatory query capture with
+direct expression composition and optional backend preparation.
+
 ## Module Boundaries
 
 **Source Applicability**: source; the stage-one compiler and Python access SDK
