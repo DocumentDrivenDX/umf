@@ -1,0 +1,87 @@
+{
+  "evidenceId": "EVIDENCE-UNIFIED-RELEASE-041-NATIVE-PUBLISHED-001",
+  "recordedAt": "2026-10-18",
+  "publishedAsset": {
+    "release": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.44",
+    "wheel": "weft_sql-0.4.44-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "f331dd603437181efc845b6fbf03cfd512520cbeba54257d0dfdfa90f622c0f2",
+    "verification": "Matches the published API asset digest and SHA256SUMS."
+  },
+  "cohort": {
+    "umfVersion": "0.10.0",
+    "sdkVersion": "0.4.1",
+    "hostRuntime": {
+      "distribution": "umf_access",
+      "version": "0.1.0.dev1",
+      "wheel": "umf_access-0.1.0.dev1-py3-none-any.whl",
+      "wheelSha256": "2009a46093bd2de537dfcc85091cceaa687add51c42bd3bd75131f0037aa4c62",
+      "python": "3.13.16"
+    },
+    "weft": "0.4.44",
+    "postgresql": "18.6",
+    "generatedClient": "Python standard-library-only; graph fixture ran under Python 3.11.17 with -S",
+    "tableSubset": "Customer and Order string keys, string/decimal/UUID/bits128 scalar fields, one Order-to-Customer relationship, and generated shipOrder action"
+  },
+  "commands": {
+    "startDatabase": "/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /private/tmp/umf-unified-pg-kHYOBy/data -o '-h 127.0.0.1 -p 55439' -l /private/tmp/umf-unified-pg-kHYOBy/postgres.log -w start",
+    "test": "UMF_UNIFIED_POSTGRES_DSN='postgresql://erik@/postgres?host=/tmp&port=55439' UMF_UNIFIED_WEFT_DIR=/private/tmp/umf-unified-release/venv/lib/python3.13/site-packages UMF_UNIFIED_PSYCOPG_DIR=/Users/erik/.cache/uv/archive-v0/tebqbXgLoXYe8Cwz UMF_UNIFIED_HOST_PYTHON=/private/tmp/umf-unified-release/venv/bin/python bun test tests/access-unified.test.ts tests/access-unified-generation.test.ts",
+    "stopDatabase": "/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /private/tmp/umf-unified-pg-kHYOBy/data -m fast -w stop"
+  },
+  "result": {
+    "status": "passed",
+    "bun": "1.4.3",
+    "testsPassed": 5,
+    "testsFailed": 0,
+    "assertions": 39,
+    "hostWheelInstalled": true,
+    "publishedWeftWheelInstalled": true,
+    "hostImport": "/private/tmp/umf-unified-release/venv/lib/python3.13/site-packages/umf_access/unified/__init__.py",
+    "weftImport": "/private/tmp/umf-unified-release/venv/lib/python3.13/site-packages/weft/__init__.py",
+    "compiledReadCount": 8,
+    "graphTransport": "independent in-memory node/edge fixture",
+    "postgresqlTransport": "Published Weft 0.4.44 raw and related compiler output executed by psycopg against PostgreSQL 18.6",
+    "postgresClusterStopped": true,
+    "schemaDigest": "19c018888066d391599d4bc8079ec8f3479266e6ecc55237c57825bc33c3003d"
+  },
+  "scenarios": {
+    "sharedApplication": "The same application function performs a filtered forward relationship read, shipOrder action, and subsequent keyed read on both transports.",
+    "getMany": {
+      "inputOrder": ["o-200", "o-100", "o-200", "missing"],
+      "returnedOrder": ["o-200", "o-100", "o-200", null]
+    },
+    "inverseRelationship": ["o-200", "o-100"],
+    "orderedPaging": {
+      "pageSize": 1,
+      "resumedOrder": ["o-200", "o-100"],
+      "finalCursorAbsent": true
+    },
+    "parameterInjection": {
+      "input": "' OR 1=1 --",
+      "matches": 0,
+      "compiledSqlContainsValue": false,
+      "valuePassedAsBoundParameter": true
+    },
+    "actionOutcomes": {
+      "wrongKeyOwner": "rejected client-side before host invocation",
+      "denied": "host DENIED error mapped to AccessError",
+      "lostResponse": "mapped to WRITE_OUTCOME_UNKNOWN",
+      "malformedReceipt": "rejected as INVALID_RESPONSE",
+      "weftMalformedEntityKey": "rejected as INVALID"
+    },
+    "malformedResponses": {
+      "decimalAsJsonNumber": "rejected as INVALID_RESPONSE",
+      "nonCanonicalUuidTag": "rejected as INVALID_RESPONSE",
+      "emptyCursor": "rejected as INVALID_CURSOR"
+    },
+    "scalarRoundTrip": {
+      "uuid": "6f9619ff-8b86-d011-b42d-00cf4fc964ff",
+      "bits128Hex": "00112233445566778899aabbccddeeff"
+    },
+    "applicationResult": ["Ada", "shipped", "postgresql18-unified-commit-1"]
+  },
+  "limitations": [
+    "The graph host is a test fixture with explicit node and edge maps.",
+    "The PostgreSQL executor and action callback are test-local host implementations.",
+    "Denied and lost-response paths are injected test outcomes; production policy enforcement and durable idempotency behavior were not evaluated."
+  ]
+}
