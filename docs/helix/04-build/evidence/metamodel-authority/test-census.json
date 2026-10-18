@@ -10,10 +10,9 @@
     "Luna browser": 4
   },
   "statusCounts": {
-    "observed-pass": 588,
-    "pending-final-consumer-closure-native-renewal": 2
+    "observed-pass": 590
   },
-  "qualification": "Exact local integration observations, with runtime/source qualifications retained in individual receipts. Current test-source SHA is an inventory field, not a claim that every observation ran at a single final source revision. Mixed Bun1.4.3 historical integration observations and pinned1.4.2 closing checks remain distinguished. Native final consumerpinB qualification/publication is pending. Missing evidence remains an explicit gate.",
+  "qualification": "Exact local integration observations, with runtime/source qualifications retained in individual receipts. Current test-source SHA is an inventory field, not a claim that every observation ran at a single final source revision. Mixed Bun1.4.3 historical integration observations and pinned1.4.2 closing checks remain distinguished. Final consumerpinB UUID model/composition qualification and separate PG18 catalog campaign passed; SDK/site artifact publication remains separately gated. Missing evidence remains an explicit gate.",
   "receiptSources": [
     {
       "path": "docs/helix/04-build/evidence/metamodel-authority/regression/root-shards.json",
@@ -74,6 +73,18 @@
     {
       "path": "docs/helix/04-build/evidence/generated-reference/unified-installed-dev2-current-0.5/receipt.json",
       "sha256": "6b4b2bc84ef2b8f88563586d5ee5c9fca00e70c39b37c2dceb566baa19bf174f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/generated-reference/uuid-final-b-model/receipt.json",
+      "sha256": "06d4be67ccd18c94354f296eebb97f7139bf17fe57bbda019ea0a3636cce03ac"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/generated-reference/uuid-final-b-composition/receipt.json",
+      "sha256": "226aa1ae45f05a32b8fc907af5a93fbeb72a3833961297678aeb71871bbe8f11"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/generated-reference/consumer-b-pg18-catalog/receipt.json",
+      "sha256": "c3993fd0c35f844a255f9b2e10da7f0618771a1aa88d043b8e7069a572a98faf"
     }
   ],
   "files": [
@@ -11956,7 +11967,7 @@
       "path": "tests/uuid-composition-gates.test.ts",
       "currentTestSourceSha256": "490bf1c1ba90d82a3f56f7e5e5cafaa48e68a566635ecca22f3d3950c26081f2",
       "owner": "Root",
-      "status": "pending-final-consumer-closure-native-renewal",
+      "status": "observed-pass",
       "observation": {
         "testProcess": "tests/uuid-composition-gates.test.ts",
         "exitCode": 0,
@@ -11964,37 +11975,75 @@
         "fail": 0,
         "assertions": 9,
         "completeSummary": true,
-        "logSha256": "d43238d2049009078b60df7d7c1c5da77b3d37d0e772370b481ba3a07c846caa",
-        "integrationLog": "umf-root-uuid-final-gates.log",
-        "testSourceSha256": "490bf1c1ba90d82a3f56f7e5e5cafaa48e68a566635ecca22f3d3950c26081f2",
         "runtime": "Bun1.4.2",
-        "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-top-level.json"
+        "log": "docs/helix/04-build/evidence/generated-reference/uuid-final-b-composition/gateTests.log",
+        "rawLogSha256": "4f2cb2b683bbe2aa49eba9205a0849b12a50245d96eca005d529638544075412",
+        "observedTestSourceSha256": "490bf1c1ba90d82a3f56f7e5e5cafaa48e68a566635ecca22f3d3950c26081f2",
+        "qualification": "Fresh actual frozen consumerB native qualification and original strict refusal controls, no rehash of earlier observations"
       },
-      "qualification": "The prior actual five-target candidate campaign passed. Concurrent API/package integration and pending renderer consumerpinB change the exact source closure; actual final native campaigns remain required, never a rehash of prior proof."
+      "qualification": "The prior actual five-target candidate campaign passed. Concurrent API/package integration and pending renderer consumerpinB change the exact source closure; actual final native campaigns remain required, never a rehash of prior proof.",
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "490bf1c1ba90d82a3f56f7e5e5cafaa48e68a566635ecca22f3d3950c26081f2",
+          "status": "pending-final-consumer-closure-native-renewal",
+          "observation": {
+            "testProcess": "tests/uuid-composition-gates.test.ts",
+            "exitCode": 0,
+            "pass": 2,
+            "fail": 0,
+            "assertions": 9,
+            "completeSummary": true,
+            "logSha256": "d43238d2049009078b60df7d7c1c5da77b3d37d0e772370b481ba3a07c846caa",
+            "integrationLog": "umf-root-uuid-final-gates.log",
+            "testSourceSha256": "490bf1c1ba90d82a3f56f7e5e5cafaa48e68a566635ecca22f3d3950c26081f2",
+            "runtime": "Bun1.4.2",
+            "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-top-level.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/uuid-conformance.test.ts",
       "currentTestSourceSha256": "75d2efbc32ab87207fec0b22858c89d9e111645dc8d1b9c9355e005754cf1fdb",
       "owner": "Root",
-      "status": "pending-final-consumer-closure-native-renewal",
+      "status": "observed-pass",
       "observation": {
         "testProcess": "tests/uuid-conformance.test.ts",
         "exitCode": 0,
         "pass": 2,
         "fail": 0,
-        "assertions": null,
+        "assertions": 18,
         "completeSummary": true,
-        "rawLog": "/private/tmp/umf-uuid-conformance-current-final.log",
-        "rawLogSha256": "36d5f389eb11ae8ddf7f977d2235157413532b09525f3ae79e797927b6b8e5b5",
-        "runtime": "1.4.2 (744846f84)",
-        "provenance": "Bun file-heading and individual passing-test display in completed aggregate; no invented per-file assertion total",
-        "observedTests": [
-          "separate UUID ideal admission and five-target delivery require complete current native/source evidence",
-          "missing, stale, unsafe and falsified qualification cannot admit support"
-        ],
-        "receipt": "/private/tmp/umf-normalized-core-observations.json"
+        "runtime": "Bun1.4.2",
+        "log": "docs/helix/04-build/evidence/generated-reference/uuid-final-b-model/uuid-conformance-tests.log",
+        "rawLogSha256": "a1c5a6f0b4f05136f11e3a5075a3836f8aac487bc9830b2b7404e4511b30f719",
+        "observedTestSourceSha256": "75d2efbc32ab87207fec0b22858c89d9e111645dc8d1b9c9355e005754cf1fdb",
+        "qualification": "Fresh actual frozen consumerB native qualification and original strict refusal controls, no rehash of earlier observations"
       },
-      "qualification": "The prior actual five-target candidate campaign passed. Concurrent API/package integration and pending renderer consumerpinB change the exact source closure; actual final native campaigns remain required, never a rehash of prior proof."
+      "qualification": "The prior actual five-target candidate campaign passed. Concurrent API/package integration and pending renderer consumerpinB change the exact source closure; actual final native campaigns remain required, never a rehash of prior proof.",
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "75d2efbc32ab87207fec0b22858c89d9e111645dc8d1b9c9355e005754cf1fdb",
+          "status": "pending-final-consumer-closure-native-renewal",
+          "observation": {
+            "testProcess": "tests/uuid-conformance.test.ts",
+            "exitCode": 0,
+            "pass": 2,
+            "fail": 0,
+            "assertions": null,
+            "completeSummary": true,
+            "rawLog": "/private/tmp/umf-uuid-conformance-current-final.log",
+            "rawLogSha256": "36d5f389eb11ae8ddf7f977d2235157413532b09525f3ae79e797927b6b8e5b5",
+            "runtime": "1.4.2 (744846f84)",
+            "provenance": "Bun file-heading and individual passing-test display in completed aggregate; no invented per-file assertion total",
+            "observedTests": [
+              "separate UUID ideal admission and five-target delivery require complete current native/source evidence",
+              "missing, stale, unsafe and falsified qualification cannot admit support"
+            ],
+            "receipt": "/private/tmp/umf-normalized-core-observations.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/uuid-file-model.test.ts",
@@ -12096,15 +12145,15 @@
     {
       "gate": "UUID model+composition native qualification",
       "files": 2,
-      "status": "pending actual campaigns after exact published renderer consumerpinB; earlier candidate observations retained"
+      "status": "Actual published consumerpinB native campaigns passed all18model+15composition stages; both strict gate files observed-pass"
     },
     {
       "gate": "PG18 native catalog final closure",
-      "status": "pending actual renewed campaign after consumerpinB; outside Bun-file inventory"
+      "status": "Actual separate finalB PG18.6 catalog campaign passed93observations/260typedcells; Python3.9.6/Bun1.4.3 explicitly scoped"
     },
     {
       "gate": "Publication",
-      "status": "npm CLI authenticated through user2FA; independent review/clean rendererproducerA, published2consumerpinB, final artifacts and release still required"
+      "status": "Renderer2 published and exact consumerpinB full reproduction passed; final SDK/wheel release assets and site HTML/signature/deployment remain separately gated"
     }
   ],
   "postMainIntegrationRefresh": {
@@ -12116,5 +12165,12 @@
     "at": "2026-10-18T23:06:53.307993+00:00",
     "preservedPriorObservations": true,
     "qualification": "RendererproducerA is bounded separately from final SDK/site/native closure; no global finalsource revision claim."
+  },
+  "finalConsumerNativeClosure": {
+    "baselineRevision": "9a551ba775f23c93bc94bc2fcf46ac7560aedb05",
+    "uuidSourceFilesUnchanged": 1368,
+    "modelStagesPassed": 18,
+    "compositionStagesPassed": 15,
+    "qualification": "Measured source closure, not a claim every historical test ran at one final revision; remaining old native family criteria remain explicitly UNQUALIFIED"
   }
 }

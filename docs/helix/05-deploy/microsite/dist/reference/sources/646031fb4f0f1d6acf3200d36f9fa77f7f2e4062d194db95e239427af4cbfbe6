@@ -85,6 +85,7 @@
     "yaml": "2.9.1"
   },
   "devDependencies": {
+    "@documentdrivendx/umf-schema-browser": "2.0.0",
     "@launchql/protobufjs": "7.2.6",
     "@types/bun": "1.4.2",
     "@types/n3": "1.26.4",
@@ -92,8 +93,7 @@
     "playwright": "1.63.0",
     "rdfxml-streaming-parser": "3.3.0",
     "typescript": "7.0.2",
-    "typescript-api": "npm:typescript@5.9.3",
-    "@documentdrivendx/umf-schema-browser": "1.1.2"
+    "typescript-api": "npm:typescript@5.9.3"
   },
   "patchedDependencies": {
     "jsonld@9.0.0": "patches/jsonld@9.0.0.patch"

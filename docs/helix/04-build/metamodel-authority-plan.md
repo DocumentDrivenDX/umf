@@ -532,3 +532,76 @@ passes distribution checks, and all 19 included source/resource files match
 current bytes. The wheel, SDK and renderer remain unpublished local candidates.
 Final producer review, npm authentication, published consumer pin B, actual
 source-bound UUID/PG18 renewal and final release/deployment checks remain open.
+
+### Published renderer and frozen consumer checkpoint
+
+Renderer 2.0.0 is published from immutable producer
+`c4ad0e8a83816e5ea4003dab09e781ab92c91dcb`. Two Bun 1.4.2 builds matched,
+533 repository inputs matched that Git tree, and 683 dependency inputs matched
+the locked installation. Packed and offline-installed payloads matched; strict-CSP
+Chromium reported no page errors or external requests. Public npm and GitHub
+archive retrieval both matched SHA-256
+`03e13341c79f29fe891fa6d97a3e504b36a483ba51c98b2e1bcb557b6036e8e1`.
+The separate npm login and publication security-key checks completed; neither
+involved a human content signature or a 1Password signing dependency.
+
+Consumer `9a551ba775f23c93bc94bc2fcf46ac7560aedb05` pins that published package,
+regenerates current model outputs and action identity, and checks the complete
+installed release against a fresh immutable producer checkout. Current-source
+two-build reproducibility and exact released-payload reproduction both passed.
+Its final actual UUID model/composition campaigns and installed Python wheels
+remain pending at this checkpoint. Fresh PostgreSQL 18.6 catalog execution passed
+93 observations, including 260 typed cells; its observed Bun 1.4.3 and Python
+3.9.6 runtimes remain distinct from the pinned Bun 1.4.2 UUID campaign. The owned
+database container and volumes were removed.
+
+Root and Sol reviewed the publication dependency: SDK archives and Python wheels
+may publish after their own exact installed, native and distribution checks.
+HTML deploys only after the existing CI build-role sealing and verification gate.
+This clarifies the earlier combined publication sentence: HTML signatures govern
+the final HTML artifact, while publishing verified SDK assets first makes its
+live download links resolvable. No HTML signing check is removed. The official
+core 0.9 PyPI lane uses the existing trusted publisher after confirming that the
+version is unused, and qualifies the actual CI-produced wheel rather than
+assuming that two builds with the same version have identical bytes.
+
+The Python channel preflight subsequently confirmed that the `umf-core` PyPI
+project itself returns 404, and the retained October 10 trusted-publisher run
+failed with `invalid-publisher`. Root and Sol reviewed the bounded delivery
+scope: publish the qualified official 0.9 wheel as a GitHub SDK release asset,
+point current install instructions to that exact wheel, and keep the hardened
+PyPI workflow optional and explicitly unconfigured. Creating a new project or
+security grant is not a prerequisite for the requested schema/site deployment;
+no PyPI publication is claimed. The optional workflow now tests the actual
+built wheel in an isolated installation and compares every packaged current
+source/resource byte before upload.
+
+### Final native and installed-artifact checkpoint
+
+Both actual frozen-consumer UUID campaigns passed: all 18 model stages and all
+15 composition stages, with 1,368 runtime source hashes unchanged. The exact
+five-target native, recovery, returned-value and browser gates are retained in
+`evidence/generated-reference/uuid-final-b-model/` and
+`evidence/generated-reference/uuid-final-b-composition/`. The regression census
+now classifies all 590 live Bun test files with observed passing execution;
+its original observations, runtime distinctions and historical qualifications
+remain explicit. The twelve older native-dependent criteria remain untested;
+these current UUID results do not promote unrelated profiles.
+
+The final installed SDK archive contains 1,739 members and passes all 139 core
+vectors plus public unified-generator, actions and loader probes. The corrected
+official Python core wheel reports both module and metadata version 0.9.0,
+passes 166 installed tests, matches 20 packaged source/resource files, and runs
+the current YAML README example. The exact host backend requirement was respected;
+the final host wheel passes six identity and two actual installed native cases.
+Python version/README corrections after the consumer baseline are separately
+byte-pinned; they do not alter the UUID runtime source closure.
+
+The final 10 action guide pages and eight diagrams pass deterministic checks,
+all seven malformed-source/output controls, and Chromium at widths 1440 and 390
+with no page errors, external requests or overflow. Root and Sol's focused
+current-entry-point documentation review found no remaining obsolete positive
+core examples or duplicate browser entry points. Final reference generation,
+its browser journeys, automated HTML sealing and live delivery are the remaining
+publication checks at this checkpoint; the delivery receipt records their later
+observed results without relabeling older evidence.

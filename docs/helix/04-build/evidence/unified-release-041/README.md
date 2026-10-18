@@ -17,3 +17,9 @@ The unpublished SDK 0.4.0 and Weft 0.4.43 candidates retained their original
 tags after hosted gates exposed browser synchronization and a newly declared
 compiler capability in an older output digest. Release fixes are recorded in
 the successor source; those tags are not rewritten or represented as published.
+
+Published and verified: [UMF SDK 0.4.1](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.4.1)
+(with the Python host 0.1.0.dev1 wheel) and [Weft 0.4.44](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.44).
+[Public delivery verification](published.json), [published-wheel native proof](native-published.json)
+and [signed Pages byte verification](pages.json) record the final checks and the
+existing attestation-subject URL limitation. No candidate tags were rewritten.

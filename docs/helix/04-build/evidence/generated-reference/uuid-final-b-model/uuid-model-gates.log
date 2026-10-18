@@ -1,0 +1,11 @@
+{
+  boundedModelQualification: true,
+  idealAdmitted: false,
+  priorityDelivery: false,
+  limits: [ "Qualified singular128-bit Record/carrier subset; mixed legacy scalar/container/group composition is not implied",
+    "Association and partition layouts beyond the declared foreign-key subset refuse",
+    "Native UUID and signed-pair indexes are not portable unsigned-byte order", "Consumer deployment/cutover, wider drivers/isolation modes and native equivalence need separate qualification",
+    "This scoped UUID/native and legacy-binding replay is not a full repository replay"
+  ],
+}
+

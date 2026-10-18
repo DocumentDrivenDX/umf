@@ -1,4 +1,4 @@
-// Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler 2c6b3b5e6553af0a0a2b82e5fac396552f55e91b56828e7cd8c8fb1ab9c89779
+// Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler bed515c790ba8c96f84e0208fbc1c35a90205283619a88ad20c07fddae53b57a
 export const CURRENT_CORE_VERSION="0.10.0" as const;
 export {default as coreSchema} from '../../spec/core/schema.json';
 export {default as semanticTypeReferenceSchema} from '../../spec/core/semantic-type-reference.schema.json';

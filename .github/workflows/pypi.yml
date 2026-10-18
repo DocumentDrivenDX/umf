@@ -11,10 +11,36 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install build twine pytest ./python
-      - run: python -m pytest python/tests -q
+      - run: python -m pip install build twine
       - run: python -m build python
       - run: python -m twine check python/dist/*
+      - name: Verify the exact wheel payload against current sources
+        run: |
+          python - <<'PY'
+          import hashlib, json, zipfile
+          from pathlib import Path
+          wheels = list(Path('python/dist').glob('*.whl'))
+          assert len(wheels) == 1, 'Expected one official core wheel'
+          sources = {'umf/' + p.name: p for p in Path('python/src/umf').iterdir() if p.is_file()}
+          for name in ['schema.json', 'semantic-type-reference.schema.json', 'extension-package.schema.json']:
+              p = Path('spec/core') / name
+              sources['umf/' + str(p)] = p
+          sources.update({'umf/' + str(p): p for p in Path('spec/metamodel/generated').glob('*.json')})
+          for extension in ['domain-pack', 'dataset-source']:
+              p = Path('spec/extensions') / extension / 'schema.json'
+              sources['umf/' + str(p)] = p
+          with zipfile.ZipFile(wheels[0]) as wheel:
+              assert {n for n in wheel.namelist() if n.startswith('umf/')} == set(sources)
+              for name, source in sources.items():
+                  assert wheel.read(name) == source.read_bytes(), name
+          print(json.dumps({'wheel': wheels[0].name, 'sha256': hashlib.sha256(wheels[0].read_bytes()).hexdigest(), 'exactSourceFiles': len(sources)}))
+          PY
+      - name: Test the built wheel in an isolated installation
+        run: |
+          python -m venv /tmp/umf-core-release
+          /tmp/umf-core-release/bin/python -m pip install pytest python/dist/*.whl
+          /tmp/umf-core-release/bin/python -I -c 'import importlib.metadata, pathlib, sysconfig, tomllib, umf; assert pathlib.Path(umf.__file__).is_relative_to(sysconfig.get_path("purelib")); assert importlib.metadata.version("umf-core") == tomllib.loads(pathlib.Path("python/pyproject.toml").read_text())["project"]["version"]; assert umf.__version__ == importlib.metadata.version("umf-core"); print(umf.__file__)'
+          /tmp/umf-core-release/bin/python -I -m pytest python/tests -q
       - uses: actions/upload-artifact@v4
         with:
           name: pypi-dist

@@ -26,7 +26,7 @@ from .serialization import (
 )
 from .validation import validate_document
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 __all__ = [
     "Diagnostic",
     "Document",

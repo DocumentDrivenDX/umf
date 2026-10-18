@@ -1,0 +1,506 @@
+{
+  "schema": "umf-pages-byte-verification/1",
+  "workflow_run": "https://github.com/DocumentDrivenDX/umf/actions/runs/39174615821",
+  "source_commit": "b8af4f6d6b30a18ee004f0107bdbcc2f09ad68eb",
+  "deployment_id": 7162219648,
+  "deployment_url": "https://documentdrivendx.github.io/umf/",
+  "artifact_id": 12154277632,
+  "manifest_profile": "umf.generated-page-seals/1",
+  "html_count": 24,
+  "html_match_count": 24,
+  "html": [
+    {
+      "path": "action-compiler.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/action-compiler.html",
+      "bytes": 3924,
+      "artifact_sha256": "07f156a3b68f1173d0b73ddf61ce77c87a2fd771df62c6c4d79b790046b1a376",
+      "public_sha256": "07f156a3b68f1173d0b73ddf61ce77c87a2fd771df62c6c4d79b790046b1a376",
+      "signed_sha256": "07f156a3b68f1173d0b73ddf61ce77c87a2fd771df62c6c4d79b790046b1a376",
+      "claim_uri": "https://documentdrivendx.github.io/umf/action-compiler.html/",
+      "claim_file": "action-compiler-html.attestation.json"
+    },
+    {
+      "path": "actions/api-reference.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/api-reference.html",
+      "bytes": 14409,
+      "artifact_sha256": "9ad27720730681b8b2b7d947b33b22731ebb72c649dc6ea82bd3f20cace0b518",
+      "public_sha256": "9ad27720730681b8b2b7d947b33b22731ebb72c649dc6ea82bd3f20cace0b518",
+      "signed_sha256": "9ad27720730681b8b2b7d947b33b22731ebb72c649dc6ea82bd3f20cace0b518",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/api-reference.html/",
+      "claim_file": "actions-api-reference-html.attestation.json"
+    },
+    {
+      "path": "actions/concepts.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/concepts.html",
+      "bytes": 9500,
+      "artifact_sha256": "32cbe428d9ea94393f58b8729ba1dabbd5c076646370ba295cf186628887cd5e",
+      "public_sha256": "32cbe428d9ea94393f58b8729ba1dabbd5c076646370ba295cf186628887cd5e",
+      "signed_sha256": "32cbe428d9ea94393f58b8729ba1dabbd5c076646370ba295cf186628887cd5e",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/concepts.html/",
+      "claim_file": "actions-concepts-html.attestation.json"
+    },
+    {
+      "path": "actions/declarations.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/declarations.html",
+      "bytes": 17402,
+      "artifact_sha256": "eaabd21c03c399073353ee3dc5f35c1fd1b8b0a706327b7bc98aa5f2f9a0dd3c",
+      "public_sha256": "eaabd21c03c399073353ee3dc5f35c1fd1b8b0a706327b7bc98aa5f2f9a0dd3c",
+      "signed_sha256": "eaabd21c03c399073353ee3dc5f35c1fd1b8b0a706327b7bc98aa5f2f9a0dd3c",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/declarations.html/",
+      "claim_file": "actions-declarations-html.attestation.json"
+    },
+    {
+      "path": "actions/execution.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/execution.html",
+      "bytes": 23045,
+      "artifact_sha256": "cacc77117e782549797170bf92ed0c62d3bdf7873dbee919d9d20d56ec91e337",
+      "public_sha256": "cacc77117e782549797170bf92ed0c62d3bdf7873dbee919d9d20d56ec91e337",
+      "signed_sha256": "cacc77117e782549797170bf92ed0c62d3bdf7873dbee919d9d20d56ec91e337",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/execution.html/",
+      "claim_file": "actions-execution-html.attestation.json"
+    },
+    {
+      "path": "actions/formal-analysis.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/formal-analysis.html",
+      "bytes": 12048,
+      "artifact_sha256": "5dcfbc9ec6f1f05b6398641e27bec6d0590cb035426883ec74c6948f9f25e52c",
+      "public_sha256": "5dcfbc9ec6f1f05b6398641e27bec6d0590cb035426883ec74c6948f9f25e52c",
+      "signed_sha256": "5dcfbc9ec6f1f05b6398641e27bec6d0590cb035426883ec74c6948f9f25e52c",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/formal-analysis.html/",
+      "claim_file": "actions-formal-analysis-html.attestation.json"
+    },
+    {
+      "path": "actions/getting-started.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/getting-started.html",
+      "bytes": 7871,
+      "artifact_sha256": "293f56ce820e8ac577327ca66e083f8b2214f5bb5ab1377676b5ffcf75faeb12",
+      "public_sha256": "293f56ce820e8ac577327ca66e083f8b2214f5bb5ab1377676b5ffcf75faeb12",
+      "signed_sha256": "293f56ce820e8ac577327ca66e083f8b2214f5bb5ab1377676b5ffcf75faeb12",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/getting-started.html/",
+      "claim_file": "actions-getting-started-html.attestation.json"
+    },
+    {
+      "path": "actions/glossary.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/glossary.html",
+      "bytes": 4539,
+      "artifact_sha256": "7639fdf24bccef24fe761a414ebbf21774c93588a0127b9748e023f2f3566523",
+      "public_sha256": "7639fdf24bccef24fe761a414ebbf21774c93588a0127b9748e023f2f3566523",
+      "signed_sha256": "7639fdf24bccef24fe761a414ebbf21774c93588a0127b9748e023f2f3566523",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/glossary.html/",
+      "claim_file": "actions-glossary-html.attestation.json"
+    },
+    {
+      "path": "actions/index.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/index.html",
+      "bytes": 10331,
+      "artifact_sha256": "61bee139f9b658902ae3a3af7136ce7f1dcc3e97e17ed610def11539452b9853",
+      "public_sha256": "61bee139f9b658902ae3a3af7136ce7f1dcc3e97e17ed610def11539452b9853",
+      "signed_sha256": "61bee139f9b658902ae3a3af7136ce7f1dcc3e97e17ed610def11539452b9853",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/index.html/",
+      "claim_file": "actions-index-html.attestation.json"
+    },
+    {
+      "path": "actions/receipts-and-queries.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/receipts-and-queries.html",
+      "bytes": 14607,
+      "artifact_sha256": "1ee95c8cc15aa7a654930462a7e5d7b38d7a76c8769abe3f04c26c9dbb9636cd",
+      "public_sha256": "1ee95c8cc15aa7a654930462a7e5d7b38d7a76c8769abe3f04c26c9dbb9636cd",
+      "signed_sha256": "1ee95c8cc15aa7a654930462a7e5d7b38d7a76c8769abe3f04c26c9dbb9636cd",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/receipts-and-queries.html/",
+      "claim_file": "actions-receipts-and-queries-html.attestation.json"
+    },
+    {
+      "path": "actions/support-and-evidence.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/actions/support-and-evidence.html",
+      "bytes": 8556,
+      "artifact_sha256": "70e54f3950156c46cb4d93fa1601ce28f51b494d38c60f1e76f4d6cedb2304e5",
+      "public_sha256": "70e54f3950156c46cb4d93fa1601ce28f51b494d38c60f1e76f4d6cedb2304e5",
+      "signed_sha256": "70e54f3950156c46cb4d93fa1601ce28f51b494d38c60f1e76f4d6cedb2304e5",
+      "claim_uri": "https://documentdrivendx.github.io/umf/actions/support-and-evidence.html/",
+      "claim_file": "actions-support-and-evidence-html.attestation.json"
+    },
+    {
+      "path": "demo.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/demo.html",
+      "bytes": 3972,
+      "artifact_sha256": "ae0ee2d719988c9442e4c71a9f06b5213a72ffa9f870671240c3ebe0c483a38e",
+      "public_sha256": "ae0ee2d719988c9442e4c71a9f06b5213a72ffa9f870671240c3ebe0c483a38e",
+      "signed_sha256": "ae0ee2d719988c9442e4c71a9f06b5213a72ffa9f870671240c3ebe0c483a38e",
+      "claim_uri": "https://documentdrivendx.github.io/umf/demo.html/",
+      "claim_file": "demo-html.attestation.json"
+    },
+    {
+      "path": "docs.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/docs.html",
+      "bytes": 8215,
+      "artifact_sha256": "d265a218d7e675e0e0123ffb6f9686347d80b878ad36d516de05876cd26db625",
+      "public_sha256": "d265a218d7e675e0e0123ffb6f9686347d80b878ad36d516de05876cd26db625",
+      "signed_sha256": "d265a218d7e675e0e0123ffb6f9686347d80b878ad36d516de05876cd26db625",
+      "claim_uri": "https://documentdrivendx.github.io/umf/docs.html/",
+      "claim_file": "docs-html.attestation.json"
+    },
+    {
+      "path": "ecosystem.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/ecosystem.html",
+      "bytes": 5122,
+      "artifact_sha256": "9a4b3aae45d103a0dc828f42bc6761f3137abe130f9608729ddd96d5eac8020f",
+      "public_sha256": "9a4b3aae45d103a0dc828f42bc6761f3137abe130f9608729ddd96d5eac8020f",
+      "signed_sha256": "9a4b3aae45d103a0dc828f42bc6761f3137abe130f9608729ddd96d5eac8020f",
+      "claim_uri": "https://documentdrivendx.github.io/umf/ecosystem.html/",
+      "claim_file": "ecosystem-html.attestation.json"
+    },
+    {
+      "path": "explorer.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/explorer.html",
+      "bytes": 4923,
+      "artifact_sha256": "7a18f203c2bedc2bb9ed14d62e777d0e4d5299daf6a2a018fd9f982dd1ac2a13",
+      "public_sha256": "7a18f203c2bedc2bb9ed14d62e777d0e4d5299daf6a2a018fd9f982dd1ac2a13",
+      "signed_sha256": "7a18f203c2bedc2bb9ed14d62e777d0e4d5299daf6a2a018fd9f982dd1ac2a13",
+      "claim_uri": "https://documentdrivendx.github.io/umf/explorer.html/",
+      "claim_file": "explorer-html.attestation.json"
+    },
+    {
+      "path": "index.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/index.html",
+      "bytes": 6978,
+      "artifact_sha256": "f4d4facec41023ed59c784fa011fd179dced8fe9f0224b9f73f687aab3836999",
+      "public_sha256": "f4d4facec41023ed59c784fa011fd179dced8fe9f0224b9f73f687aab3836999",
+      "signed_sha256": "f4d4facec41023ed59c784fa011fd179dced8fe9f0224b9f73f687aab3836999",
+      "claim_uri": "https://documentdrivendx.github.io/umf/index.html/",
+      "claim_file": "index-html.attestation.json"
+    },
+    {
+      "path": "reference/api.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/api.html",
+      "bytes": 3512,
+      "artifact_sha256": "750f28011cd509bcd32157633c8999484b07a6cbfeb0975834db80d43651a7ae",
+      "public_sha256": "750f28011cd509bcd32157633c8999484b07a6cbfeb0975834db80d43651a7ae",
+      "signed_sha256": "750f28011cd509bcd32157633c8999484b07a6cbfeb0975834db80d43651a7ae",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/api.html/",
+      "claim_file": "reference-api-html.attestation.json"
+    },
+    {
+      "path": "reference/core.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/core.html",
+      "bytes": 3856,
+      "artifact_sha256": "bc83dbc460fde31dda0c2c72258b326a7dd6430f650932cd8ad4df1868b62e8c",
+      "public_sha256": "bc83dbc460fde31dda0c2c72258b326a7dd6430f650932cd8ad4df1868b62e8c",
+      "signed_sha256": "bc83dbc460fde31dda0c2c72258b326a7dd6430f650932cd8ad4df1868b62e8c",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/core.html/",
+      "claim_file": "reference-core-html.attestation.json"
+    },
+    {
+      "path": "reference/examples.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/examples.html",
+      "bytes": 3604,
+      "artifact_sha256": "6f529fa4d8b65c95efc12585ba3a6b005a2459eff7cc4b6a23ecaf07d8b6bac3",
+      "public_sha256": "6f529fa4d8b65c95efc12585ba3a6b005a2459eff7cc4b6a23ecaf07d8b6bac3",
+      "signed_sha256": "6f529fa4d8b65c95efc12585ba3a6b005a2459eff7cc4b6a23ecaf07d8b6bac3",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/examples.html/",
+      "claim_file": "reference-examples-html.attestation.json"
+    },
+    {
+      "path": "reference/extensions.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/extensions.html",
+      "bytes": 3602,
+      "artifact_sha256": "b987e5a52d947eb6ac6d972651107573071d5c85113546abf27b778dec347c99",
+      "public_sha256": "b987e5a52d947eb6ac6d972651107573071d5c85113546abf27b778dec347c99",
+      "signed_sha256": "b987e5a52d947eb6ac6d972651107573071d5c85113546abf27b778dec347c99",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/extensions.html/",
+      "claim_file": "reference-extensions-html.attestation.json"
+    },
+    {
+      "path": "reference/index.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/index.html",
+      "bytes": 5045,
+      "artifact_sha256": "ceee292af4e43205bcf18b598553fe6af855bd1032d57390a8473bb468ccd6b0",
+      "public_sha256": "ceee292af4e43205bcf18b598553fe6af855bd1032d57390a8473bb468ccd6b0",
+      "signed_sha256": "ceee292af4e43205bcf18b598553fe6af855bd1032d57390a8473bb468ccd6b0",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/index.html/",
+      "claim_file": "reference-index-html.attestation.json"
+    },
+    {
+      "path": "reference/integrations.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/integrations.html",
+      "bytes": 3646,
+      "artifact_sha256": "853f91c9016a685fab4b1fd4bfafd89adde4ec941ef78277267d95f071f28646",
+      "public_sha256": "853f91c9016a685fab4b1fd4bfafd89adde4ec941ef78277267d95f071f28646",
+      "signed_sha256": "853f91c9016a685fab4b1fd4bfafd89adde4ec941ef78277267d95f071f28646",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/integrations.html/",
+      "claim_file": "reference-integrations-html.attestation.json"
+    },
+    {
+      "path": "reference/workbench.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/reference/workbench.html",
+      "bytes": 5258,
+      "artifact_sha256": "f71fe28e0424279fc98491b47b105fd10b22bda1929b9ad5339a2ea6e4bc6b34",
+      "public_sha256": "f71fe28e0424279fc98491b47b105fd10b22bda1929b9ad5339a2ea6e4bc6b34",
+      "signed_sha256": "f71fe28e0424279fc98491b47b105fd10b22bda1929b9ad5339a2ea6e4bc6b34",
+      "claim_uri": "https://documentdrivendx.github.io/umf/reference/workbench.html/",
+      "claim_file": "reference-workbench-html.attestation.json"
+    },
+    {
+      "path": "schema-browser.html",
+      "ok": true,
+      "status": 200,
+      "final_url": "https://documentdrivendx.github.io/umf/schema-browser.html",
+      "bytes": 2425,
+      "artifact_sha256": "052d7aad2c7a598cc851c02774ae4dacb76590437ed8ee9ad9404645246a9e36",
+      "public_sha256": "052d7aad2c7a598cc851c02774ae4dacb76590437ed8ee9ad9404645246a9e36",
+      "signed_sha256": "052d7aad2c7a598cc851c02774ae4dacb76590437ed8ee9ad9404645246a9e36",
+      "claim_uri": "https://documentdrivendx.github.io/umf/schema-browser.html/",
+      "claim_file": "schema-browser-html.attestation.json"
+    }
+  ],
+  "supporting_file_count": 25,
+  "supporting_match_count": 25,
+  "supporting_files": [
+    {
+      "path": ".well-known/innsigle/keys.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1048,
+      "artifact_sha256": "f07662be2a5390dc3bb028373075bc28874886c1092cc50a9a459c9d26b0e67d",
+      "public_sha256": "f07662be2a5390dc3bb028373075bc28874886c1092cc50a9a459c9d26b0e67d"
+    },
+    {
+      "path": ".well-known/innsigle/claims/action-compiler-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1519,
+      "artifact_sha256": "74b11675682f109ec362b362f95e6937df490c5f605b97d57a52e0160ada0f23",
+      "public_sha256": "74b11675682f109ec362b362f95e6937df490c5f605b97d57a52e0160ada0f23"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-api-reference-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1525,
+      "artifact_sha256": "9a4f7a5a6e09e93f4c17bc0c332b1acaa6264f74ec9e928132b79693e7c5e6d6",
+      "public_sha256": "9a4f7a5a6e09e93f4c17bc0c332b1acaa6264f74ec9e928132b79693e7c5e6d6"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-concepts-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1520,
+      "artifact_sha256": "31f49daf0acebd71fd47de36ea2f5cf828c92f986d8b4b9b6156901b14cb3306",
+      "public_sha256": "31f49daf0acebd71fd47de36ea2f5cf828c92f986d8b4b9b6156901b14cb3306"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-declarations-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1524,
+      "artifact_sha256": "e5f110a8e9cc58e4d9e2792a0200ff48966a9f8dbed2531e1954c345d27d1008",
+      "public_sha256": "e5f110a8e9cc58e4d9e2792a0200ff48966a9f8dbed2531e1954c345d27d1008"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-execution-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1521,
+      "artifact_sha256": "4566d57434c070359843b7d1b750a3d7491a33268b336bd590c61dca2c35e715",
+      "public_sha256": "4566d57434c070359843b7d1b750a3d7491a33268b336bd590c61dca2c35e715"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-formal-analysis-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1527,
+      "artifact_sha256": "0eb6fb05297498f489fccc5d3a9a774bee7ac7cdbec318cff61f3d744ad132cb",
+      "public_sha256": "0eb6fb05297498f489fccc5d3a9a774bee7ac7cdbec318cff61f3d744ad132cb"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-getting-started-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1527,
+      "artifact_sha256": "4ceb069e48abd366074bee096229cb537b14c71672247136d1eec78233a58808",
+      "public_sha256": "4ceb069e48abd366074bee096229cb537b14c71672247136d1eec78233a58808"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-glossary-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1520,
+      "artifact_sha256": "4df62afa70ac899a28bd36e5812decf94b17612cb3534837b26be625dbe3e9f6",
+      "public_sha256": "4df62afa70ac899a28bd36e5812decf94b17612cb3534837b26be625dbe3e9f6"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-index-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1517,
+      "artifact_sha256": "517e8f6217d81d327828db0acea70643d8edd007aa762e1109362ff017b1cd5f",
+      "public_sha256": "517e8f6217d81d327828db0acea70643d8edd007aa762e1109362ff017b1cd5f"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-receipts-and-queries-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1532,
+      "artifact_sha256": "896a7b01e704221aa1d3dffec0291b30c6e0cf3364e02cff577f352578755519",
+      "public_sha256": "896a7b01e704221aa1d3dffec0291b30c6e0cf3364e02cff577f352578755519"
+    },
+    {
+      "path": ".well-known/innsigle/claims/actions-support-and-evidence-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1532,
+      "artifact_sha256": "535be68cf80439b075eccad679359aa9b403ff088b07b5168c869f91effec5cf",
+      "public_sha256": "535be68cf80439b075eccad679359aa9b403ff088b07b5168c869f91effec5cf"
+    },
+    {
+      "path": ".well-known/innsigle/claims/demo-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1508,
+      "artifact_sha256": "23f25ec0d5b3d72c645c8754beac58c809e43fc31815039284dfab429487e917",
+      "public_sha256": "23f25ec0d5b3d72c645c8754beac58c809e43fc31815039284dfab429487e917"
+    },
+    {
+      "path": ".well-known/innsigle/claims/docs-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1508,
+      "artifact_sha256": "25718e32f653ba153f143c127d1cde06364410ffbb025d66212be36603798380",
+      "public_sha256": "25718e32f653ba153f143c127d1cde06364410ffbb025d66212be36603798380"
+    },
+    {
+      "path": ".well-known/innsigle/claims/ecosystem-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1513,
+      "artifact_sha256": "a4719c38e9e5dc429a7cd16317f5291c0476ba21c576d99695fdc1811f5412b3",
+      "public_sha256": "a4719c38e9e5dc429a7cd16317f5291c0476ba21c576d99695fdc1811f5412b3"
+    },
+    {
+      "path": ".well-known/innsigle/claims/explorer-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1512,
+      "artifact_sha256": "5d9cbf743c212386baac6cf65dbb61878d892c0e0e277042bdb43841a05c1e36",
+      "public_sha256": "5d9cbf743c212386baac6cf65dbb61878d892c0e0e277042bdb43841a05c1e36"
+    },
+    {
+      "path": ".well-known/innsigle/claims/index-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1509,
+      "artifact_sha256": "c3c8a075f535b2d501000fbd73586e6e06fc1cee47edfcd88619b25825bc7cd4",
+      "public_sha256": "c3c8a075f535b2d501000fbd73586e6e06fc1cee47edfcd88619b25825bc7cd4"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-api-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1517,
+      "artifact_sha256": "1fc25867c81ffe0a20d7ce3b74c4ff0b46a4bc844b2796970f183aaff3bd7cc4",
+      "public_sha256": "1fc25867c81ffe0a20d7ce3b74c4ff0b46a4bc844b2796970f183aaff3bd7cc4"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-core-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1518,
+      "artifact_sha256": "662af48e03d1c5571e60e954dd4c42a15344df2c9de959d004df178dfde6e9c3",
+      "public_sha256": "662af48e03d1c5571e60e954dd4c42a15344df2c9de959d004df178dfde6e9c3"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-examples-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1522,
+      "artifact_sha256": "2df9fdeaafc069ab6ef782d53adecd1e9613e0c548e440c4e252d17a360599f8",
+      "public_sha256": "2df9fdeaafc069ab6ef782d53adecd1e9613e0c548e440c4e252d17a360599f8"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-extensions-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1524,
+      "artifact_sha256": "d26728d761812b138635bb8f89e0e6a98eeefab7bd1718de57438fd0f3853120",
+      "public_sha256": "d26728d761812b138635bb8f89e0e6a98eeefab7bd1718de57438fd0f3853120"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-index-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1519,
+      "artifact_sha256": "58c9fb0447d8346022a0df3cdb96f4733b9a4326d1734d04ba406bb6d2c08ebe",
+      "public_sha256": "58c9fb0447d8346022a0df3cdb96f4733b9a4326d1734d04ba406bb6d2c08ebe"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-integrations-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1526,
+      "artifact_sha256": "b57fb30b15b68dc44f240fe6adf6683bf612b7976014365e3d53577fcccfdd51",
+      "public_sha256": "b57fb30b15b68dc44f240fe6adf6683bf612b7976014365e3d53577fcccfdd51"
+    },
+    {
+      "path": ".well-known/innsigle/claims/reference-workbench-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1523,
+      "artifact_sha256": "e01d52b5ff2254b6c250439483c258462448d4bc4760f9acfcdbabbfc2a93975",
+      "public_sha256": "e01d52b5ff2254b6c250439483c258462448d4bc4760f9acfcdbabbfc2a93975"
+    },
+    {
+      "path": ".well-known/innsigle/claims/schema-browser-html.attestation.json",
+      "ok": true,
+      "status": 200,
+      "bytes": 1518,
+      "artifact_sha256": "2a1b683cb55cbac4ef379440355dfc99dbfce481902aaec4c98bb17142fd5a7f",
+      "public_sha256": "2a1b683cb55cbac4ef379440355dfc99dbfce481902aaec4c98bb17142fd5a7f"
+    }
+  ],
+  "all_match": true
+}
