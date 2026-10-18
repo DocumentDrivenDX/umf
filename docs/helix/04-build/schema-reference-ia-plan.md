@@ -303,3 +303,14 @@ UMF model of the UMF metamodel was found; JSON Schemas and TypeScript declaratio
 are the existing machine-readable authorities. A concept graph derived from a
 self-model is distinct from the generated JSON Schema reference graph. No
 self-model or ontology diagram is claimed by this documentation patch.
+
+Confirmed clarification: “all schemas collapsed” applies to both the reference
+and the separate schema catalog. The site host closes the initial catalog groups,
+then relinquishes control so user expansion, search and navigation use the
+released browser normally. No installed renderer, CSS or workspace markup is
+modified. Independent Chromium inspection found 115 groups/zero open on startup,
+with explicit expansion and 17 expanded matching groups after medical search.
+
+The final combined browser replay passed 44 checks with zero page errors or
+external requests; the installed package asset/workspace parity check and type
+checking passed after the catalog host change.

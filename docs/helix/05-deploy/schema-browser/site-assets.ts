@@ -21,6 +21,9 @@ export async function installSiteAssets(packageRoot:string,site:string,expectedV
  await mkdir(site,{recursive:true});await cp(packageRoot,join(site,'schema-browser'),{recursive:true});
  for(const name of await shared(packageRoot))await cp(join(packageRoot,'assets',name),join(site,name==='style.css'?'browser-style.css':name));
  const explorer=join(site,'explorer.html');const html=await Bun.file(explorer).text();if(!html.includes('href="browser-style.css"'))await Bun.write(explorer,html.replace('<link rel="stylesheet" href="explorer.css">','<link rel="stylesheet" href="browser-style.css"><link rel="stylesheet" href="explorer.css">'));
+ // Site presentation policy remains outside the integrity-locked renderer.
+ await cp(new URL('../microsite/catalog-defaults.js',import.meta.url).pathname,join(site,'catalog-defaults.js'));
+ const installedHtml=await Bun.file(explorer).text();if(!installedHtml.includes('src="catalog-defaults.js"'))await Bun.write(explorer,installedHtml.replace(/<script type="module" src="explorer.js"><\/script>/,'<script type="module" src="catalog-defaults.js"></script><script type="module" src="explorer.js"></script>'));
  const manifest=await verifySiteAssets(packageRoot,site,expectedVersion);
  await Bun.write(join(site,'schema-browser-release.json'),JSON.stringify(manifest,null,2)+'\n');return manifest;
 }
