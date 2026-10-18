@@ -42,3 +42,6 @@ docs/helix/04-build/evidence/python-current-core-0.9.0/*.log -text whitespace=-b
 python/src/umf/constraint_kernel.py whitespace=-blank-at-eof
 python/src/umf/literal_kernel.py whitespace=-blank-at-eof
 python/src/umf/generated_resources.py whitespace=-blank-at-eof
+
+# Release proof hashes cover exact captured stdout/stderr, including progress and final blank lines.
+docs/helix/04-build/evidence/generated-reference/**/*.log -text whitespace=-blank-at-eol,-blank-at-eof
