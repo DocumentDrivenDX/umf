@@ -3,9 +3,9 @@
   "issuer": {
     "id": "documentdrivendx-umf",
     "name": "DocumentDrivenDX UMF",
-    "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+    "key_id": "ed25519:c63e7352e15127ee63b9ae2f071602bb",
     "key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json",
-    "public_key": "QIXX1JgtijcPMwefd1fzTP9fYCI6ftoWD3JjiCn9ucM"
+    "public_key": "lqYBMUWWP78ZQd_6oFX-PO5GKsKrtHMtFy6uPo4bAgU"
   },
   "paths": {
     "public": ".innsigle/public",
@@ -19,25 +19,17 @@
       "to": ".well-known/innsigle"
     }
   },
-  "onepassword": {
-    "vault": "Employee",
-    "item_title": "Innsigle UMF signing key",
-    "item_id": "647wnkd5rvxutqy4g7vr4ksaqe",
-    "private_key_ref": "op://Employee/Innsigle UMF signing key/private key"
-  },
   "content_root": "docs/helix/05-deploy/microsite/dist",
   "content_globs": [
     "docs/helix/05-deploy/microsite/dist/*.html",
     "docs/helix/05-deploy/microsite/dist/actions/*.html",
     "docs/helix/05-deploy/microsite/dist/reference/*.html"
   ],
-  "kind_from_frontmatter": true,
+  "kind_from_frontmatter": false,
   "keys": {
-    "human": {
-      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293"
-    },
     "build": {
       "key_id": "ed25519:c63e7352e15127ee63b9ae2f071602bb"
     }
-  }
+  },
+  "default_composition": "model-primary"
 }

@@ -236,11 +236,11 @@ jobs:
         with:
           name: generated-action-guides
           path: docs/helix/05-deploy/microsite/dist/actions
-      - name: Test generated and curated signer separation
+      - name: Test automated site signing policy
         run: bun test tests/generated-page-seals.test.ts
-      - name: Verify curated page signatures
-        run: bun scripts/generated-page-seals.ts --verify-curated
-      - name: Seal generated pages with the build key
+      - name: Check complete site signing inventory
+        run: bun scripts/generated-page-seals.ts --inventory
+      - name: Seal all site pages with the build key
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
           INNSIGLE_BUILD_KEY: ${{ secrets.INNSIGLE_BUILD_KEY }}

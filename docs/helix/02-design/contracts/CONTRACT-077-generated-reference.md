@@ -405,3 +405,17 @@ user expansion and format switching remain keyboard accessible.
 Acceptance: verify all supplied examples execute, format parity after edits,
 conversion refusal and cancellation, current-only navigation, old-link recovery,
 and zero initially open schema disclosures in Chromium at desktop/mobile widths.
+
+## Automated publication signing amendment — 2026-10-18
+
+Owner direction classifies all current first-party site HTML as model-primary.
+Root, Actions and Reference pages MUST use the registered build-role key and
+must not require human signatures or 1Password access. The active issuer and
+signer configuration select the build key only; private material is supplied
+through the existing CI environment secret. No interactive fallback is permitted.
+The exact signing inventory MUST cover every configured first-party HTML file.
+After sealing, copy public claims to the site's well-known tree before verifying
+cryptographic signatures, expected colophons, key roles and exact byte digests.
+Historical public keys/endorsements remain valid verification material; retaining
+them does not make human signing a prerequisite for new publication. This
+supersedes earlier curated/human signer requirements without relaxing integrity.

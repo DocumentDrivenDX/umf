@@ -322,3 +322,31 @@ Chromium journey passes 37 checks over six collections and four bookmark aliases
 including ontology graph interactions and field-filter history, with no external
 data requests. This corrects the driver for the new desired behavior; the catalog
 startup policy is unchanged.
+
+## Publication signature refresh — 2026-10-18
+
+After the operator unlocked 1Password, the pinned Innsigle CLI refreshed the
+catalog page's mixed-composition signature using the existing human-role key.
+The colophon retains the existing page contributions and records Codex's catalog
+startup change without inventing a human-input percentage. Public claims were
+copied into the site's well-known tree; all seven curated page signatures now
+verify locally. No private key material is stored in the repository or evidence.
+
+
+## Owner correction: automated signing for all content — 2026-10-18
+
+The owner clarified that no site content requires human authorship signatures.
+The attempted mixed catalog seal above is superseded before publication and is
+not being shipped. All current first-party HTML uses model-primary provenance
+and the existing registered build key. Remove manual/curated signature gates,
+1Password configuration and any interactive fallback. Keep full inventory,
+digest, role and cryptographic verification. Historical public keys remain.
+
+Automated-policy verification: five tests/29 assertions pass, including all 24
+inventoried pages, missing-key refusal and rejection of human/1Password settings.
+The pinned Innsigle CLI sealed and cryptographically verified three representative
+root/Actions/Reference fixture pages using an ephemeral Ed25519 environment key;
+a trap confirmed zero 1Password invocations. Public claims were synchronized
+before verification. No production private material was accessed by this test.
+Type checking passes; the reference was regenerated for the changed publication
+configuration, workflow and governing contract.

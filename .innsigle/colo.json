@@ -2,9 +2,16 @@
   "schema_version": "1",
   "composition": "model-primary",
   "ingredients": [
-    { "kind": "model", "name": "OpenAI Codex", "role": "draft and rewrite" },
-    { "kind": "human", "name": "Erik Labianca", "role": "direction and review" },
-    { "kind": "tool", "name": "innsigle-seal", "role": "colophon preparation and sealing" }
+    {
+      "kind": "model",
+      "name": "AI assistants",
+      "role": "Author and revise site content"
+    },
+    {
+      "kind": "tool",
+      "name": "UMF site generators",
+      "role": "Render documentation, schemas, APIs and evidence"
+    }
   ],
-  "notes": "The pages were drafted and rewritten by Codex from UMF project documents, with human direction and review. No human-input percentage is declared."
+  "notes": "Model-primary site content. Automated build-key signatures bind exact publication bytes and make no claim of human authorship, review or approval."
 }
