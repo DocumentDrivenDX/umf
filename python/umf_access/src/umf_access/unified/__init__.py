@@ -6,13 +6,19 @@ import inspect
 from collections.abc import Awaitable, Callable, Mapping
 
 from ._binding import UnifiedAccessError, _TableBinding
+from .head_session import (
+    observe_table_head,
+    observe_table_head_async,
+    verify_table_correspondence,
+    verify_table_correspondence_async,
+)
 from .session_async import AsyncSession
 from .session_policy import SessionError, SessionIdentity, SessionPolicy
 from .session_psycopg2 import Psycopg2Session
 from .session_sqlalchemy import AsyncSQLAlchemySession, SQLAlchemySession
 from .session_sync import SyncSession
-from .head_session import observe_table_head, observe_table_head_async, verify_table_correspondence, verify_table_correspondence_async
-from .table_reads import SyncTableReader, AsyncTableReader
+from .table_reads import AsyncTableReader, SyncTableReader
+from .table_writes import AsyncTableWriter, SyncTableWriter, WriteOutcomeUnknown
 
 
 class WeftTableBinding(_TableBinding):
@@ -155,21 +161,24 @@ class SyncWeftTableBinding(_TableBinding):
 
 
 __all__ = [
-    "SyncTableReader",
-    "AsyncTableReader",
-    "observe_table_head",
-    "observe_table_head_async",
-    "verify_table_correspondence",
-    "verify_table_correspondence_async",
     "AsyncSQLAlchemySession",
     "AsyncSession",
+    "AsyncTableReader",
+    "AsyncTableWriter",
     "Psycopg2Session",
     "SQLAlchemySession",
     "SessionError",
     "SessionIdentity",
     "SessionPolicy",
     "SyncSession",
+    "SyncTableReader",
+    "SyncTableWriter",
     "SyncWeftTableBinding",
     "UnifiedAccessError",
     "WeftTableBinding",
+    "WriteOutcomeUnknown",
+    "observe_table_head",
+    "observe_table_head_async",
+    "verify_table_correspondence",
+    "verify_table_correspondence_async",
 ]

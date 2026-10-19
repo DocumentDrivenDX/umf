@@ -10,6 +10,7 @@ import asyncio
 import copy
 import hashlib
 from contextlib import contextmanager, asynccontextmanager
+from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
 import uuid
@@ -24,12 +25,17 @@ from sqlalchemy import create_engine, URL
 from sqlalchemy.ext.asyncio import create_async_engine
 from umf_codegen import compile_table_deployment, compile_table_migration
 from umf_access.lifecycle import apply_table_migration
+from umf_access.lifecycle import prepare_table_correspondence, inspect_table_history, read_table_head
 from umf_access.unified import (SyncTableReader, AsyncTableReader, SyncSession, AsyncSession,
-    Psycopg2Session, SQLAlchemySession, AsyncSQLAlchemySession, SessionIdentity, SessionPolicy, SessionError)
+    Psycopg2Session, SQLAlchemySession, AsyncSQLAlchemySession, SessionIdentity, SessionPolicy, SessionError,
+    SyncTableWriter, AsyncTableWriter, WriteOutcomeUnknown)
+from umf_access.unified.outcome_values import outcome_slot
+from umf_access.unified.operation_values import native_arguments
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsn', required=True)
 parser.add_argument('--report', required=True, type=Path)
+parser.add_argument('--mutations',action='store_true')
 args = parser.parse_args()
 source = json.loads(Path(__file__).with_name('table-operation-model.json').read_text())
 module = source['modules'][0]; content = {'module':'demo','element':'content'}
@@ -50,6 +56,17 @@ all_count = copy.deepcopy(next(c for c in commands if c['id']=='read_count'))
 all_count.update(id='read_all_count',parameters=[])
 all_count['body']['where']={'op':'all'}
 commands.append(all_count)
+if args.mutations:
+    for command in ('insert','update','delete'):
+        payload['tables'][0]['policy']['batch'][command]={'kind':'allow'}
+    bounded=copy.deepcopy(next(c for c in commands if c['id']=='remove'))
+    bounded.update(id='remove_all_bounded',parameters=[])
+    bounded['body'].update(where={'op':'all'},maxRows=1)
+    commands.append(bounded)
+    returning=copy.deepcopy(next(c for c in commands if c['id']=='rename'))
+    returning['id']='return_large'
+    returning['body']['returning']=[content]
+    commands.append(returning)
 prefix = 'p5_'+uuid.uuid4().hex[:12]+'_'
 cfg = {'module':'demo','schema':prefix+'schema%','ownerRole':prefix+'owner',
        'personRole':prefix+'person','batchRole':prefix+'batch','groupRoles':{}}
@@ -243,6 +260,319 @@ async def run_async():
     finally:await engine.dispose()
 
 
+def write_inputs(key,role):return {'id':{'string':key},'owner':{'string':role}}
+
+
+def write_sync_cases(label,factory,adapter):
+    session=adapter(factory,policy)
+    w=SyncTableWriter(session,bundle,reference,binding,outcome_secret=secret)
+    key=label+'-create';data=write_inputs(key,alice)
+    result=w.write(a,'create',data,key=key)
+    check(label+'-native-write',result['status']=='applied' and result['durability']=='committed'
+          and result['result']['items']==[{'affectedCount':{'integerToken':'1'},'rows':[{'id':key,'owner':alice}]}])
+    replay=w.write(a,'create',data,key=key)
+    check(label+'-repeat-recovers-without-reinsert',replay['status']=='recovered' and 'result' not in replay
+          and replay['receipt']==result['receipt'])
+    check(label+'-observe-committed',w.observe(a,'create',data,key=key)['receipt']==result['receipt'])
+    refused(label+'-changed-inputs-refuse',lambda:w.write(a,'create',write_inputs(key+'changed',alice),key=key))
+    rotated=SyncTableWriter(session,bundle,reference,binding,outcome_secret=b'z'*32)
+    refused(label+'-rotated-verifier-cannot-miss-occupied-slot',lambda:rotated.write(a,'create',data,key=key))
+    check(label+'-wrong-person-cannot-observe',w.observe(b,'create',data,key=key)['status']=='not-observed')
+    foreign=write_inputs(label+'-foreign',bob)
+    refused(label+'-person-rls-write-denial',lambda:w.write(a,'create',foreign,key='foreign-'+key))
+    check(label+'-failed-write-has-no-receipt',w.observe(a,'create',foreign,key='foreign-'+key)['status']=='not-observed')
+    check(label+'-batch-role-write',w.write(job,'create',write_inputs(label+'-batch',bob),key='batch-'+key)['receipt']['effects']==[{'integerToken':'1'}])
+    mixed=[write_inputs(label+'-mixed-own',alice),write_inputs(label+'-mixed-foreign',bob)]
+    refused(label+'-mixed-person-batch-rolls-back',lambda:w.write_batch(a,'create_batch',mixed,key='mixed-'+key))
+    check(label+'-failed-batch-has-no-receipt',w.observe_batch(a,'create_batch',mixed,key='mixed-'+key)['status']=='not-observed')
+    batch=[write_inputs(label+'-bulk1',alice),write_inputs(label+'-bulk2',bob)]
+    first=w.write_batch(job,'create_batch',batch,key='bulk-'+key)
+    check(label+'-atomic-batch',first['receipt']['effects']==[{'integerToken':'1'},{'integerToken':'1'}])
+    check(label+'-batch-replay',w.write_batch(job,'create_batch',batch,key='bulk-'+key)['status']=='recovered')
+    check(label+'-upsert-ignore',w.write(a,'put_ignore',data,key='ignore-'+key)['receipt']['effects']==[{'integerToken':'0'}])
+    check(label+'-upsert-update',w.write(a,'put_update',data,key='update-'+key)['receipt']['effects']==[{'integerToken':'1'}])
+    refused(label+'-effect-bound-rolls-back',lambda:w.write(a,'remove_all_bounded',{},key='bound-'+key))
+    check(label+'-bound-failure-has-no-receipt',w.observe(a,'remove_all_bounded',{},key='bound-'+key)['status']=='not-observed')
+    deleted=w.write(a,'remove',{'id':{'string':key}},key='delete-'+key)
+    check(label+'-native-delete-count-without-invented-business-rows',deleted['receipt']['effects']==[{'integerToken':'1'}]
+          and deleted['result']['items']==[{'affectedCount':{'integerToken':'1'},'rows':[]}])
+    check(label+'-deleted-row-recovery-retains-no-business-data',w.observe(a,'create',data,key=key)['status']=='recovered' and key not in canonical_receipt(result))
+    write_sync_caller(label,factory,adapter,w)
+    check(label+'-all-mutation-leases-returned',leases[label]['acquired']==leases[label]['released'])
+
+
+def canonical_receipt(response):return json.dumps(response['receipt'],sort_keys=True)
+
+
+@contextmanager
+def rollback_caller(c):
+    if isinstance(c,psycopg.Connection):
+        with c.transaction(force_rollback=True):
+            c.execute('SELECT current_user')
+            yield
+    elif hasattr(c,'get_transaction_status'):
+        original=c.autocommit;c.autocommit=False
+        try:
+            with c.cursor() as cur:cur.execute('SELECT current_user')
+            yield
+        finally:c.rollback();c.autocommit=original
+    else:
+        tx=c.begin()
+        try:
+            c.exec_driver_sql('SELECT current_user')
+            yield
+        finally:tx.rollback()
+
+
+def write_sync_caller(label,factory,adapter,w):
+    key=label+'-caller';data=write_inputs(key,alice)
+    with factory(a) as c,rollback_caller(c):
+        @contextmanager
+        def borrowed(_):yield c
+        caller=SyncTableWriter(adapter(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,outcome_secret=secret)
+        result=caller.write(a,'create',data,key=key)
+        check(label+'-caller-write-pending',result['durability']=='pending-caller-commit')
+        check(label+'-caller-observation-is-pending',caller.observe(a,'create',data,key=key)['durability']=='pending-caller-commit')
+    check(label+'-caller-rollback-removes-receipt',w.observe(a,'create',data,key=key)['status']=='not-observed')
+
+
+async def write_async_cases(label,factory,adapter):
+    w=AsyncTableWriter(adapter(factory,policy),bundle,reference,binding,outcome_secret=secret)
+    key=label+'-create';data=write_inputs(key,alice)
+    first=await w.write(a,'create',data,key=key)
+    check(label+'-async-native-write',first['status']=='applied' and first['receipt']['effects']==[{'integerToken':'1'}])
+    check(label+'-async-replay',(await w.write(a,'create',data,key=key))['status']=='recovered')
+    check(label+'-async-observe',(await w.observe(a,'create',data,key=key))['receipt']==first['receipt'])
+    batch=[write_inputs(label+'-bulk1',alice),write_inputs(label+'-bulk2',bob)]
+    check(label+'-async-batch',(await w.write_batch(job,'create_batch',batch,key='bulk-'+key))['receipt']['effects']==[{'integerToken':'1'},{'integerToken':'1'}])
+    check(label+'-async-batch-observe',(await w.observe_batch(job,'create_batch',batch,key='bulk-'+key))['status']=='recovered')
+    try:await w.write(a,'create',write_inputs(label+'-foreign',bob),key='foreign-'+key)
+    except SessionError:check(label+'-async-person-rls-denial',True)
+    else:raise AssertionError('person foreign write accepted')
+    check(label+'-async-failed-receipt-absent',(await w.observe(a,'create',write_inputs(label+'-foreign',bob),key='foreign-'+key))['status']=='not-observed')
+    pending=write_inputs(label+'-caller',alice)
+    async with factory(a) as c:
+        native=isinstance(c,psycopg.AsyncConnection)
+        @asynccontextmanager
+        async def borrowed(_):yield c
+        caller=AsyncTableWriter(adapter(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,outcome_secret=secret)
+        tx=c.transaction(force_rollback=True) if native else c.begin()
+        async with tx:
+            if native:await c.execute('SELECT current_user')
+            else:await c.exec_driver_sql('SELECT current_user')
+            check(label+'-async-caller-pending',(await caller.write(a,'create',pending,key=label+'-caller'))['durability']=='pending-caller-commit')
+            check(label+'-async-caller-observation-pending',(await caller.observe(a,'create',pending,key=label+'-caller'))['durability']=='pending-caller-commit')
+            if not native:await tx.rollback()
+    check(label+'-async-caller-rollback-removes-receipt',(await w.observe(a,'create',pending,key=label+'-caller'))['status']=='not-observed')
+    await write_cancellation_cases(label,w)
+    await write_boundary_cancellation_cases(label,factory,adapter,w)
+    check(label+'-async-pool-cleanup',leases[label]['acquired']==leases[label]['released'])
+
+
+async def write_cancellation_cases(label,w):
+    principal=admin.execute('SELECT oid FROM pg_catalog.pg_roles WHERE rolname=%s',(alice,)).fetchone()[0]
+    probe=prepare_table_correspondence(bundle,reference,principal_role=alice,audience='person')
+    for stage in ('outcome-slot','mutation'):
+        key=label+'-cancel-'+stage
+        operation='create' if stage=='outcome-slot' else 'rename'
+        data=write_inputs(key,alice) if stage=='outcome-slot' else write_inputs('a1',alice)
+        with admin.transaction():
+            if stage=='outcome-slot':
+                lock=next(probe.outcome_steps('lock',principal,outcome_slot(a,principal,cfg,operation,key)))
+                admin.execute(lock.statement,lock.parameters)
+            else:admin.execute(sql.SQL('SELECT id FROM {} WHERE id=%s FOR UPDATE').format(bound_table),('a1',))
+            previous=leases[label]['acquired']
+            task=asyncio.create_task(w.write(a,operation,data,key=key));waiting=False
+            try:
+                async with await psycopg.AsyncConnection.connect(args.dsn,autocommit=True) as monitor:
+                    deadline=time.monotonic()+15
+                    while time.monotonic()<deadline:
+                        if leases[label]['acquired']>previous:
+                            row=await (await monitor.execute('SELECT wait_event_type,wait_event,query FROM pg_catalog.pg_stat_activity WHERE pid=%s',(leases[label]['pid'],))).fetchone()
+                            if row and row[:2]==('Lock','advisory' if stage=='outcome-slot' else 'transactionid'):
+                                waiting=('pg_advisory_xact_lock(' in row[2]) if stage=='outcome-slot' else row[2].startswith('WITH umf_effects AS')
+                                if waiting:break
+                        if task.done():await task;break
+                        await asyncio.sleep(.01)
+                check(label+'-actual-'+stage+'-cancellation-wait',waiting)
+            finally:
+                task.cancel();await asyncio.sleep(0);task.cancel()
+                try:await task
+                except asyncio.CancelledError:check(label+'-repeated-'+stage+'-cancel-propagates',True)
+        check(label+'-cancelled-'+stage+'-leaves-no-receipt',(await w.observe(a,operation,data,key=key))['status']=='not-observed')
+
+
+async def write_boundary_cancellation_cases(label,factory,adapter,w):
+    reached=asyncio.Event();release=asyncio.Event()
+    class Cursor:
+        def __init__(self,inner):self.inner=inner;self.statement=''
+        def __getattr__(self,name):return getattr(self.inner,name)
+        async def __aenter__(self):await self.inner.__aenter__();return self
+        async def __aexit__(self,*args):return await self.inner.__aexit__(*args)
+        async def execute(self,statement,parameters=None):
+            self.statement=statement
+            return await self.inner.execute(statement,parameters)
+        async def fetchall(self):
+            rows=await self.inner.fetchall()
+            if self.statement.startswith('WITH umf_effects AS'):
+                reached.set();await release.wait()
+            return rows
+    class Paused(adapter):
+        def _control_cursor(self,connection):return Cursor(super()._control_cursor(connection))
+    paused=AsyncTableWriter(Paused(factory,policy),bundle,reference,binding,outcome_secret=secret)
+    key=label+'-after-effect';data=write_inputs(key,alice)
+    task=asyncio.create_task(paused.write(a,'create',data,key=key))
+    try:
+        await asyncio.wait_for(reached.wait(),15)
+        row=admin.execute('SELECT backend_xid IS NOT NULL FROM pg_catalog.pg_stat_activity WHERE pid=%s',(leases[label]['pid'],)).fetchone()
+        check(label+'-native-effect-precedes-injected-cancel-boundary',row==(True,))
+    finally:
+        task.cancel();await asyncio.sleep(0);task.cancel();release.set()
+        try:await task
+        except asyncio.CancelledError:check(label+'-after-effect-cancellation-propagates',True)
+    check(label+'-after-effect-cancel-rolls-back-row-and-receipt',(await w.observe(a,'create',data,key=key))['status']=='not-observed'
+          and admin.execute(sql.SQL('SELECT count(*) FROM {} WHERE id=%s').format(bound_table),(key,)).fetchone()==(0,))
+    committed=asyncio.Event();lease_release=asyncio.Event()
+    @asynccontextmanager
+    async def delayed(identity):
+        async with factory(identity) as c:
+            yield c
+            committed.set();await lease_release.wait()
+    delayed_writer=AsyncTableWriter(adapter(delayed,policy),bundle,reference,binding,outcome_secret=secret)
+    key=label+'-after-commit';data=write_inputs(key,alice)
+    task=asyncio.create_task(delayed_writer.write(a,'create',data,key=key))
+    try:
+        await asyncio.wait_for(committed.wait(),15)
+        check(label+'-actual-commit-precedes-injected-lease-cancel',admin.execute(sql.SQL('SELECT count(*) FROM {} WHERE id=%s').format(bound_table),(key,)).fetchone()==(1,))
+    finally:
+        task.cancel();await asyncio.sleep(0);task.cancel();lease_release.set()
+        try:await task
+        except asyncio.CancelledError:check(label+'-post-commit-cancellation-propagates',True)
+    check(label+'-cancel-is-not-a-rollback-promise',(await w.observe(a,'create',data,key=key))['status']=='recovered')
+
+
+def write_fault_cases():
+    @contextmanager
+    def fresh(_):
+        with psycopg.connect(args.dsn,autocommit=True) as c:yield c
+    w=SyncTableWriter(SyncSession(fresh,policy),bundle,reference,binding,outcome_secret=secret)
+    pending=write_inputs('caller-pending',alice)
+    with admin.transaction(force_rollback=True):
+        @contextmanager
+        def borrowed(_):yield admin
+        caller=SyncTableWriter(SyncSession(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,outcome_secret=secret)
+        value=caller.write(a,'create',pending,key='caller-pending')
+        check('caller-write-remains-pending',value['durability']=='pending-caller-commit')
+        check('caller-can-observe-pending-without-claiming-durability',caller.observe(a,'create',pending,key='caller-pending')['durability']=='pending-caller-commit')
+    check('outer-rollback-discards-effect-and-receipt',w.observe(a,'create',pending,key='caller-pending')['status']=='not-observed'
+          and admin.execute(sql.SQL('SELECT count(*) FROM {} WHERE id=%s').format(bound_table),('caller-pending',)).fetchone()==(0,))
+    @contextmanager
+    def lost(_):
+        with psycopg.connect(args.dsn,autocommit=True) as c:
+            yield c
+            raise RuntimeError('synthetic post-commit lease response fault')
+    losing=SyncTableWriter(SyncSession(lost,policy),bundle,reference,binding,outcome_secret=secret)
+    data=write_inputs('lost-response',alice)
+    try:losing.write(a,'create',data,key='lost-response')
+    except WriteOutcomeUnknown as error:check('lost-post-commit-response-is-explicit',error.key=='lost-response')
+    else:raise AssertionError('lost commit response not reported')
+    check('fresh-observation-recovers-actual-committed-outcome',w.observe(a,'create',data,key='lost-response')['status']=='recovered')
+    check('explicit-repeat-does-not-reinsert',w.write(a,'create',data,key='lost-response')['status']=='recovered')
+    principal=admin.execute('SELECT oid FROM pg_catalog.pg_roles WHERE rolname=%s',(alice,)).fetchone()[0]
+    probe=prepare_table_correspondence(bundle,reference,principal_role=alice,audience='person')
+    slot=outcome_slot(a,principal,cfg,'create','concurrent')
+    lock=next(probe.outcome_steps('lock',principal,slot))
+    pids=[]
+    @contextmanager
+    def concurrent_factory(_):
+        with psycopg.connect(args.dsn,autocommit=True) as c:
+            pids.append(c.info.backend_pid)
+            yield c
+    concurrent=SyncTableWriter(SyncSession(concurrent_factory,policy),bundle,reference,binding,outcome_secret=secret)
+    executor=ThreadPoolExecutor(max_workers=2)
+    futures=[]
+    try:
+        with admin.transaction():
+            admin.execute(lock.statement,lock.parameters)
+            futures=[executor.submit(concurrent.write,a,'create',write_inputs('concurrent',alice),key='concurrent') for _ in range(2)]
+            with psycopg.connect(args.dsn,autocommit=True) as monitor:
+                deadline=time.monotonic()+20;waiting=False
+                while time.monotonic()<deadline:
+                    if any(f.done() for f in futures):
+                        for f in futures:
+                            if f.done():f.result()
+                    if len(pids)==2:
+                        waits=monitor.execute('SELECT wait_event_type,wait_event,query FROM pg_catalog.pg_stat_activity WHERE pid=ANY(%s)',(pids,)).fetchall()
+                        waiting=len(waits)==2 and all(row[:2]==('Lock','advisory') and 'pg_advisory_xact_lock(' in row[2] for row in waits)
+                        if waiting:break
+                    time.sleep(.01)
+                check('two-native-attempts-contend-on-exact-outcome-slot',waiting)
+        responses=[f.result(timeout=30) for f in futures]
+    finally:executor.shutdown(wait=True,cancel_futures=True)
+    check('concurrent-attempts-have-one-applied-and-one-recovered-outcome',sorted(r['status'] for r in responses)==['applied','recovered'] and responses[0]['receipt']==responses[1]['receipt'])
+    check('concurrent-attempts-insert-exactly-one-business-row',admin.execute(sql.SQL('SELECT count(*) FROM {} WHERE id=%s').format(bound_table),('concurrent',)).fetchone()==(1,))
+    outcome_table=sql.SQL(sql.Identifier(cfg['schema'],'umf_lifecycle_outcomes').as_string(admin).replace('%','%%'))
+    poisoned='poisoned-slot';poison_slot=outcome_slot(a,principal,cfg,'create',poisoned)
+    with admin.transaction():
+        admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+        admin.execute(sql.SQL('INSERT INTO {} VALUES (%s,%s,%s,%s,%s,%s)').format(outcome_table),
+                      (principal,poison_slot,'0'*64,'0'*64,'{}','0'*64))
+    refused('forged-own-principal-receipt-refuses-before-mutation',lambda:w.write(a,'create',write_inputs(poisoned,alice),key=poisoned),'stored outcome cannot be authenticated')
+    check('forged-receipt-cannot-cause-business-effect',admin.execute(sql.SQL('SELECT count(*) FROM {} WHERE id=%s').format(bound_table),(poisoned,)).fetchone()==(0,))
+    try:
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(bob)))
+            admin.execute(sql.SQL('INSERT INTO {} VALUES (%s,%s,%s,%s,%s,%s)').format(outcome_table),
+                          (principal,'f'*64,'0'*64,'0'*64,'{}','0'*64))
+    except psycopg.errors.InsufficientPrivilege:check('outcome-rls-refuses-forged-other-principal',True)
+    else:raise AssertionError('foreign receipt accepted')
+    with admin.transaction():
+        admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(bob)))
+        check('outcome-rls-hides-other-principal',admin.execute(sql.SQL('SELECT count(*) FROM {} WHERE principal_oid=%s').format(outcome_table),(principal,)).fetchone()==(0,))
+    admin.execute(sql.SQL('UPDATE {} SET content=repeat(%s,9437184) WHERE id=%s').format(bound_table),('x','a1'))
+    large={'id':{'string':'a1'},'owner':{'string':bob}}
+    program=w._write_prepare(job,'return_large',large,'large-frame',None)[1]
+    try:
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(cfg['batchRole'])))
+            admin.execute(program['dbapiSql'],native_arguments(program)).fetchall()
+    except psycopg.errors.DivisionByZero:check('native-returning-byte-guard-has-declared-sqlstate',True)
+    else:raise AssertionError('oversize mutation frame accepted')
+    refused('sdk-oversize-returning-frame-rolls-back',lambda:w.write(job,'return_large',large,key='large-frame'))
+    check('oversize-frame-retains-old-owner-and-no-receipt',admin.execute(sql.SQL('SELECT owner FROM {} WHERE id=%s').format(bound_table),('a1',)).fetchone()==(alice,)
+          and w.observe(job,'return_large',large,key='large-frame')['status']=='not-observed')
+    drift_cases=[
+        ('rls',sql.SQL('ALTER TABLE {} DISABLE ROW LEVEL SECURITY').format(outcome_table),sql.SQL('ALTER TABLE {} ENABLE ROW LEVEL SECURITY').format(outcome_table)),
+        ('column',sql.SQL('ALTER TABLE {} ADD COLUMN untrusted text').format(outcome_table),sql.SQL('ALTER TABLE {} DROP COLUMN untrusted').format(outcome_table)),
+        ('grant',sql.SQL('GRANT UPDATE ON TABLE {} TO {}').format(outcome_table,sql.Identifier(cfg['personRole'])),sql.SQL('REVOKE UPDATE ON TABLE {} FROM {}').format(outcome_table,sql.Identifier(cfg['personRole']))),
+    ]
+    for label,alter,restore in drift_cases:
+        # These statements have no parameters: retain literal schema percents.
+        alter=sql.SQL(alter.as_string(admin).replace('%%','%'))
+        restore=sql.SQL(restore.as_string(admin).replace('%%','%'))
+        admin.execute(alter)
+        try:refused('changed-outcome-'+label+'-refuses-before-recovery',lambda:w.observe(a,'create',data,key='lost-response'))
+        finally:admin.execute(restore)
+    check('restored-outcome-shape-recovers-again',w.observe(a,'create',data,key='lost-response')['status']=='recovered')
+    with admin.transaction(force_rollback=True):
+        admin.execute(sql.SQL('DROP TABLE {}').format(sql.Identifier(cfg['schema'],'umf_lifecycle_outcomes')))
+        admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(cfg['ownerRole'])))
+        admin.execute('SET LOCAL search_path=pg_catalog')
+        legacy=inspect_table_history(admin,bundle,person_roles=(alice,bob))['installationReference']
+        check('legacy-outcome-free-installation-retains-v1-reference',legacy['version']=='umf.table-installation/0.1' and 'outcomeShape' not in legacy)
+        check('legacy-v1-head-remains-observable',read_table_head(admin,bundle,legacy)['headDigest']==reference['headDigest'])
+        acquired=[]
+        @contextmanager
+        def forbidden(_):acquired.append(True);yield admin
+        old_writer=SyncTableWriter(SyncSession(forbidden,policy),bundle,legacy,binding,outcome_secret=secret)
+        refused('legacy-v1-write-requires-explicit-storage-upgrade',lambda:old_writer.write(a,'create',write_inputs('legacy-write',alice),key='legacy-write'))
+        check('legacy-write-refusal-acquires-no-lease',not acquired)
+
+
+if args.mutations:
+    sync_cases,async_cases=write_sync_cases,write_async_cases
+
+
 with psycopg.connect(args.dsn,autocommit=True) as admin:
     created=[];schema_created=False
     try:
@@ -291,22 +621,24 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 sync_cases(label,factory,SQLAlchemySession)
             finally:engine.dispose()
         asyncio.run(run_async())
-        with psycopg.connect(args.dsn,autocommit=True) as c:
-            @contextmanager
-            def direct(_):yield c
-            r=reader(SyncTableReader,SyncSession(direct,policy))
-            first=r.read(a,'read_page',inputs(alice))
-            admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT FALSE,SET FALSE').format(sql.Identifier(bob),sql.Identifier(alice)))
-            refused('member-closure-change-refuses-cursor',lambda:r.read(a,'read_page',inputs(alice),cursor=first['cursor']),'cursor authority changed')
-            admin.execute(sql.SQL('REVOKE {} FROM {}').format(sql.Identifier(bob),sql.Identifier(alice)))
-            admin.execute(sql.SQL('UPDATE {} SET content=repeat(%s,9437184) WHERE id=%s').format(bound_table),('x','a1'))
-            size=admin.execute(sql.SQL('SELECT pg_column_size(content),octet_length(content) FROM {} WHERE id=%s').format(bound_table),('a1',)).fetchone()
-            check('oversize-fixture-is-actually-compressed',size[0]<8388608 and size[1]>8388608)
-            refused('compressed-oversize-frame-is-atomic-refusal',lambda:r.read(a,'read_content',inputs(alice)))
-            check('oversize-refusal-restores-session',r.read(b,'read_count',inputs(bob))['count']=={'integerToken':'1'})
+        if args.mutations:write_fault_cases()
+        if not args.mutations:
+            with psycopg.connect(args.dsn,autocommit=True) as c:
+                @contextmanager
+                def direct(_):yield c
+                r=reader(SyncTableReader,SyncSession(direct,policy))
+                first=r.read(a,'read_page',inputs(alice))
+                admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT FALSE,SET FALSE').format(sql.Identifier(bob),sql.Identifier(alice)))
+                refused('member-closure-change-refuses-cursor',lambda:r.read(a,'read_page',inputs(alice),cursor=first['cursor']),'cursor authority changed')
+                admin.execute(sql.SQL('REVOKE {} FROM {}').format(sql.Identifier(bob),sql.Identifier(alice)))
+                admin.execute(sql.SQL('UPDATE {} SET content=repeat(%s,9437184) WHERE id=%s').format(bound_table),('x','a1'))
+                size=admin.execute(sql.SQL('SELECT pg_column_size(content),octet_length(content) FROM {} WHERE id=%s').format(bound_table),('a1',)).fetchone()
+                check('oversize-fixture-is-actually-compressed',size[0]<8388608 and size[1]>8388608)
+                refused('compressed-oversize-frame-is-atomic-refusal',lambda:r.read(a,'read_content',inputs(alice)))
+                check('oversize-refusal-restores-session',r.read(b,'read_count',inputs(bob))['count']=={'integerToken':'1'})
         report={'postgresql':admin.info.server_version,'sourceDigest':bundle['sourceDigest'],'observations':observations,
-                'leases':leases,'scope':'SDK-owned declared reads; six native driver/pool configurations',
-                'remaining':['durable write outcomes','generated native module methods','remaining lifecycle codecs and evolution','private Praxis and managed Lakebase acceptance','prerelease publication']}
+                'leases':leases,'scope':('SDK-owned declared mutation/outcome component' if args.mutations else 'SDK-owned declared reads')+'; six native driver/pool configurations',
+                'remaining':['full mutation race/uncertainty/fault qualification' if args.mutations else 'durable write outcomes','generated native module methods','remaining lifecycle codecs and evolution','private Praxis and managed Lakebase acceptance','prerelease publication']}
     finally:
         if schema_created:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))
         for role in reversed(created):admin.execute(sql.SQL('DROP OWNED BY {}').format(sql.Identifier(role)))

@@ -12,6 +12,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from typing import Any, cast
 from uuid import uuid4
+
 from .table_boundary import TABLE_BOUNDARY
 
 

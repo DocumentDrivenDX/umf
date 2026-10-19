@@ -156,5 +156,53 @@ native read. Rows exceeding the authored cardinality or the8MiB native/wire
 frame limit fail without partial results. Cursors expire on source/head,
 identity, role scope, inputs or size changes; they promise no cross-page snapshot.
 This reader is a native execution component. Generated lifecycle module methods,
-durable writes, remaining codecs/evolution and full Praxis/Lakebase acceptance
+remaining codecs/evolution and full Praxis/Lakebase acceptance
 remain release gates. No complete Praxis prerelease has been published.
+
+## Declared native mutation and outcome candidate
+
+New installations add verified outcome storage and issue a version0.2
+installation reference. `SyncTableWriter`/`AsyncTableWriter` use the same
+source-approved binding and per-call sessions as the reader:
+
+```python
+from umf_access.unified import SyncTableWriter, WriteOutcomeUnknown
+
+writer = SyncTableWriter(session, approved_bundle, committed_reference, binding,
+                         outcome_secret=host_outcome_secret)
+params = {"id": {"string": note_id}, "owner": {"string": owner_role}}
+try:
+    result = writer.write(identity, "create_note", params, key=operation_key)
+except WriteOutcomeUnknown:
+    result = writer.observe(identity, "create_note", params, key=operation_key)
+```
+
+Choose a stable caller key when the declaration requires it. Optional-key
+declarations can mint a key for the current invocation; recovery after a fully
+lost response needs a key the caller retained. There are no automatic retries.
+`write_batch`/`observe_batch` take the ordered item list for one declared batch
+operation; batch shape does not select batch identity. Only an authenticated
+`SessionIdentity("batch", subject)` and its native source grant provide that
+authority.
+
+`status="applied"` includes fresh wire projections and a signed direct-effect
+receipt. `status="recovered"` includes the receipt without historical business
+rows. `status="not-observed"` records an observation, not a future guarantee
+that no attempt can commit. Inspect `durability`: caller-owned writes and
+recovered receipts stay `pending-caller-commit`. Cancellation propagates after cleanup
+and can occur after commit; observe the original key afresh. Effect counts
+exclude source-declared native FK cascade effects. Empty RETURNING lists produce
+an affected count and no invented business rows.
+
+Receipt authentication requires a host-owned secret of at least32 bytes. Keep
+the verifier available for retained receipts; a changed verifier refuses an
+occupied slot and cannot silently execute a second write. Native RLS isolates
+principal rows, with no ordinary UPDATE/DELETE grant. Source/head/role drift,
+changed inputs and forged receipts refuse. Each invocation and its receipt are
+atomic;8MiB native RETURNING and cumulative wire bounds fail before commit.
+Receipt retention has no implicit expiry. Existing outcome-free version0.1
+installations keep head reads and require an explicit storage upgrade for writes.
+The administrative upgrade operation for those earlier installations remains a
+separate pending lifecycle gate.
+These unpublished components still require generated module integration,
+remaining lifecycle/codec work and full private consumer/release acceptance.

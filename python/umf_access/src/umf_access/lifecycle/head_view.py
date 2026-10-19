@@ -5,9 +5,9 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
-from .probe import _Query, _run
-from .catalog import _COLUMNS, CatalogError, _all, _columns, _execute, _one, _q
+from .catalog import _COLUMNS, CatalogError, _all, _execute, _one, _q
 from .ledger_schema import HISTORY
+from .probe import _Query, _run
 
 HEAD = 'umf_lifecycle_head'
 

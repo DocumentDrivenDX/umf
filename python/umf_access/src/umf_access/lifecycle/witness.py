@@ -6,9 +6,10 @@ import hashlib
 import json
 from typing import Any, cast
 
-from .catalog import _CONSTRAINTS, _INDEXES, _POLICY, _COLUMNS as _COLUMN_QUERY, CatalogError
-from .probe import _Query, _run
+from .catalog import _COLUMNS as _COLUMN_QUERY
+from .catalog import _CONSTRAINTS, _INDEXES, _POLICY, CatalogError
 from .privileges import _COLUMN_ACL, _TABLE_ACL
+from .probe import _Query, _run
 
 
 def _json_bytes(value: Any) -> bytes:

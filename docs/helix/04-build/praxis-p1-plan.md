@@ -723,3 +723,53 @@ native codecs/constraints, seed/evolution work, the selected private Praxis
 conversion/identity mapping and available Lakebase/cohort release acceptance
 remain required. The local unreleased package version labels are not release
 support promises.
+
+## Native declared mutations and authenticated effect recovery — 2026-10-19
+
+`SyncTableWriter`/`AsyncTableWriter` now execute declared insert/update/delete,
+upsert and atomic single-operation batches through the same source-checked Weft
+program admission and native per-call sessions as the reader. Inputs are copied
+before hashing and compilation. The source-required caller key or an explicitly
+optional generated key identifies the operation slot; inputs, source/head or
+verifier changes cannot turn an occupied slot into a second write. Both current
+correspondence and the actual principal are rechecked after waiting on the native
+slot lock and after execution. No driver or client automatically retries.
+
+New installations atomically create fixed forced-RLS outcome metadata and issue
+version0.2 references pinning its proven shape. Owner-only schema administration,
+exact ACL/policies/columns/keys/checks/indexes and trigger/FK closure apply to the
+metadata as well. Earlier outcome-free installations keep version0.1 head reads;
+writes refuse before leasing. An explicit administrative runtime-upgrade
+operation remains pending. Effect receipts are authenticated with a host secret;
+input/response fingerprints are opaque HMAC values. Recovery returns direct
+effect counts, with no retained historical business rows. Fresh returning rows
+and recovered receipts have explicit different status shapes. Caller-owned
+results remain pending until the outer commit.
+
+Weft4c7c2eb0 adds `pg18-write-frame/0.1` inside the existing native effect guard:
+oversized uncompressed RETURNING data raises SQLSTATE22012 and rolls back the
+statement. SDK streaming JSON accounting bounds cumulative batch/wire output,
+including repeated Field identities. Empty returning lists emit no invented
+business rows. The
+[source-bound packet](evidence/praxis-p2/durable-outcomes/receipt.json) records
+native mutations, read/ledger regression, all six driver/pool and caller-owned
+modes, native contention, current-role RLS, forged receipts, commit uncertainty,
+metadata drift and legacy-reference refusals. Actual outcome-slot/row-lock waits
+are distinguished from controlled cancellation boundaries after confirmed native
+effects or actual commit. A cancelled call can have committed; fresh observation
+recovers its receipt. Native codec coverage remains text and exact count markers,
+with separate exact-scalar unit coverage.
+
+The predecessor UMF Python workflow exposed31 lint diagnostics. Ruff0.17.1 now
+passes the full Python tree: imports/exports are sorted, optional-driver errors
+retain deliberate sanitized SDK boundaries, and SQLAlchemy metadata keys retain
+their actual API semantics. No global rule is weakened. CI pins the exact new
+Weft commit and includes the outcome trust-boundary and native mutation fixtures.
+SDK source/wheel byte and MIT OR Apache-2.0 audits are recorded separately.
+
+The complete goal remains active and no prerelease is published. Next expose
+these operations through generated typed module clients and the native wire
+transport. Required temporal/domain/native constraints, seed execution, broader
+forward schema/policy/command evolution, runtime upgrades, private source/data
+conversion, available managed Lakebase acceptance and immutable publication
+remain required; this component does not redefine the release scope.

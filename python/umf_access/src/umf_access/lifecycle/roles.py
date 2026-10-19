@@ -66,7 +66,7 @@ def _role_scope_steps(source, person_roles, batch_roles=()):
         effective = (yield _Query('all', _CLOSURE, (identities[name],)))
         if len(effective) > 4096:
             raise CatalogError('role-scope-capacity')
-        if not effective or any((any(row[2:]) or row[1].startswith('pg_') for row in effective)):
+        if not effective or any(any(row[2:]) or row[1].startswith('pg_') for row in effective):
             raise CatalogError('role-scope-mismatch')
         administrators = (yield _Query('one', 'SELECT EXISTS (SELECT FROM pg_catalog.pg_auth_members WHERE member=ANY(%s::pg_catalog.oid[]) AND admin_option)', ([row[0] for row in effective],)))
         if administrators != (False,):

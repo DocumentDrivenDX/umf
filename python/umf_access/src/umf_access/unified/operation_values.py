@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import base64
-from decimal import Decimal, InvalidOperation
 import hashlib
 import hmac
 import json
 import re
+from decimal import Decimal, InvalidOperation
 from uuid import UUID
 
 from .session_policy import SessionError
@@ -17,6 +17,16 @@ MAX_FRAME=8*1024*1024
 
 def canonical(value):
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
+
+
+def bounded_size(value, limit=MAX_FRAME):
+    """Stop before assembling a potentially huge repeated-key JSON frame."""
+    size=0
+    encoder=json.JSONEncoder(ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
+    for chunk in encoder.iterencode(value):
+        size+=len(chunk.encode('utf-8'))
+        if size>limit:raise SessionError('native wire frame bound exceeded')
+    return size
 
 
 def digest(value):
@@ -58,12 +68,12 @@ def token_decode(secret,token):
     except (ValueError,TypeError,UnicodeError):raise SessionError('invalid cursor') from None
 
 
-def native_arguments(program):
+def native_arguments(program, item=0):
     sources={slot['id']:slot['source'] for slot in program['parameterSources']}
     result=[]
     for name in program['dbapiParameterOrder']:
         source=sources[name]
-        if source['kind']=='input':value=program['nativeInputs'][0][source['parameter']]
+        if source['kind']=='input':value=program['nativeInputs'][item][source['parameter']]
         elif source['kind']=='after':value=program['nativeAfter'][source['index']]
         elif source['kind']=='literal':value=source['nativeValue']
         else:raise SessionError('unknown operation parameter source')
@@ -122,5 +132,5 @@ def result_frame(program,rows,scope,secret):
         response={'kind':kind,'rows':decoded,'cursor':cursor}
     response.update({'version':'umf.table-read-result/0.1','module':program['module'],'operation':program['operation'],
                      'sourceDigest':program['binding']['modelSha256']})
-    if len(canonical(response).encode('utf-8'))>MAX_FRAME:raise SessionError('native wire frame bound exceeded')
+    bounded_size(response)
     return response

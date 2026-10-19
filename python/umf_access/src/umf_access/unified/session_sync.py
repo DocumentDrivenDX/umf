@@ -16,8 +16,8 @@ from .session_policy import (
     SessionError,
     SessionIdentity,
     SessionPolicy,
-    verify_role,
     _tuple_row,
+    verify_role,
 )
 
 

@@ -5,9 +5,16 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
-from .probe import _Query, _run
 from .catalog import (
     _COLUMNS as _COLUMN_QUERY,
+)
+from .catalog import (
+    _CONSTRAINTS as _NATIVE_CONSTRAINTS,
+)
+from .catalog import (
+    _INDEXES as _NATIVE_INDEXES,
+)
+from .catalog import (
     CatalogError,
     _all,
     _columns,
@@ -16,9 +23,8 @@ from .catalog import (
     _index_shapes,
     _one,
     _q,
-    _CONSTRAINTS as _NATIVE_CONSTRAINTS,
-    _INDEXES as _NATIVE_INDEXES,
 )
+from .probe import _Query, _run
 
 HISTORY = 'umf_lifecycle_history'
 _COLUMNS = [
@@ -54,12 +60,16 @@ def _history_shape(connection: Any, schema: str) -> dict[str, Any] | None:
 
 
 def _history_shape_steps(schema: str):
+    return (yield from _metadata_shape_steps(schema,HISTORY))
+
+
+def _metadata_shape_steps(schema: str, name: str):
     """Read-only snapshot; issuers must first reparse the fixed original schema."""
-    state = (yield _Query('one', _STATE, (schema, HISTORY)))
+    state = (yield _Query('one', _STATE, (schema, name)))
     if state is None:
         return None
     oid = state[13]
-    return {'state': state, 'columns': (yield _Query('all', _COLUMN_QUERY, (schema, HISTORY))), 'constraints': (yield _Query('all', _NATIVE_CONSTRAINTS, (schema, HISTORY))), 'indexes': (yield _Query('all', _NATIVE_INDEXES, (schema, HISTORY))), 'acl': (yield _Query('all', "SELECT grantor,grantee,privilege_type,is_grantable\nFROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))\nWHERE c.oid=%s ORDER BY 1,2,3,4", (oid,))), 'columnAcl': (yield _Query('all', 'SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable\nFROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x\nWHERE a.attrelid=%s ORDER BY 1,2,3,4,5', (oid,)))}
+    return {'state': state, 'columns': (yield _Query('all', _COLUMN_QUERY, (schema, name))), 'constraints': (yield _Query('all', _NATIVE_CONSTRAINTS, (schema, name))), 'indexes': (yield _Query('all', _NATIVE_INDEXES, (schema, name))), 'acl': (yield _Query('all', "SELECT grantor,grantee,privilege_type,is_grantable\nFROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))\nWHERE c.oid=%s ORDER BY 1,2,3,4", (oid,))), 'columnAcl': (yield _Query('all', 'SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable\nFROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x\nWHERE a.attrelid=%s ORDER BY 1,2,3,4,5', (oid,)))}
 
 
 def _create_history(connection: Any, schema: str, name: str = HISTORY) -> dict[str, str]:

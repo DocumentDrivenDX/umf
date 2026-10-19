@@ -19,9 +19,10 @@ from .catalog import (
     _q_bound,
     verify_native_catalog,
 )
-from .ledger_schema import HISTORY, _create_history, _verify_history_schema
 from .head import _issue_reference
 from .head_view import _create_head_view
+from .ledger_schema import HISTORY, _create_history, _verify_history_schema
+from .outcome_schema import _create_outcomes
 from .privileges import verify_native_privileges
 from .witness import _capture_witness, _entry_digest
 
@@ -135,6 +136,7 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
         if not exists:
             _create_history(connection,schema)
             _create_head_view(connection,source)
+            _create_outcomes(connection,source)
         verify_native_catalog(connection,source,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         verify_native_privileges(connection,source,person_roles=person_roles,
                                  statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)

@@ -3,13 +3,22 @@
 import copy
 import unittest
 
-from umf_access.unified.operation_values import (
-    key_literal, loads, result_frame, token_decode, token_encode, value_from_native,
-)
 from umf_access.unified import SessionError, SessionIdentity, SessionPolicy
+from umf_access.unified.operation_values import (
+    bounded_size,
+    key_literal,
+    loads,
+    result_frame,
+    token_decode,
+    token_encode,
+    value_from_native,
+)
 
 
 class TableReadValues(unittest.TestCase):
+    def test_wire_budget_includes_repeated_field_identities(self):
+        name='x'*2000
+        with self.assertRaises(SessionError):bounded_size([{name:'a'} for _ in range(5000)])
     def test_exact_scalar_values_never_pass_through_float(self):
         for carrier, text, wire in [
             ('integer','9007199254740993123456789',{'integerToken':'9007199254740993123456789'}),

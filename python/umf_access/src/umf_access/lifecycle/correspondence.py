@@ -10,9 +10,10 @@ import hashlib
 from typing import Any, Literal
 
 from .catalog import CatalogError
-from .head import prepare_table_head, _head_steps, _normalized
+from .head import _head_steps, _normalized, prepare_table_head
 from .head_view import HEAD
 from .ledger_schema import HISTORY
+from .outcome_schema import OUTCOMES, _outcome_steps
 from .privileges import _EXTERNAL
 from .probe import _Query
 from .roles import _role_scope_steps
@@ -33,6 +34,12 @@ class TableCorrespondenceProbe:
         head = self._head
         return _correspondence_steps(head._source,head._expected,self._principal,self._audience,
                                      head._statement_timeout_ms,head._lock_timeout_ms)
+
+    def outcome_steps(self, action, principal_oid, key_digest, row=None):
+        """Fixed receipt IO; callers keep verified principal/admission in one lease."""
+        if 'outcomeShape' not in self._head._expected:
+            raise CatalogError('outcome-storage-not-installed')
+        return _outcome_steps(self.schema,principal_oid,key_digest,action,row)
 
     @property
     def binding_context(self) -> dict[str, Any]:
@@ -81,6 +88,8 @@ FROM pg_catalog.aclexplode(pg_catalog.acldefault('n',%s::pg_catalog.oid))""",(ow
     inventory = yield _Query('all',"""SELECT c.relname FROM pg_catalog.pg_class c
 WHERE c.relnamespace=%s AND c.relkind NOT IN ('i','I') ORDER BY c.relname""",(schema_id,))
     names = sorted([(t['name'],) for t in source['expectedCatalog']['tables']]+[(HEAD,),(HISTORY,)])
+    if 'outcomeShape' in expected:
+        names=sorted([*names,(OUTCOMES,)])
     if inventory != names:
         raise CatalogError('catalog-mismatch')
     for role in (cfg['ownerRole'],cfg['personRole'],cfg['batchRole']):

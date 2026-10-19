@@ -11,8 +11,9 @@ from typing import Any
 from uuid import uuid4
 
 from .catalog import CatalogError, _all, _execute, _installation, _one, _q
-from .ledger_schema import HISTORY, _verify_history_schema
 from .head_view import HEAD, _verify_head_view
+from .ledger_schema import HISTORY, _verify_history_schema
+from .outcome_schema import OUTCOMES, _verify_outcomes
 from .roles import verify_native_role_scope
 
 _TABLE_ACL = """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
@@ -119,6 +120,8 @@ FROM pg_catalog.aclexplode(pg_catalog.acldefault('n',%s::pg_catalog.oid))""",(ow
         inventory=_all(connection,"""SELECT c.relname FROM pg_catalog.pg_class c WHERE c.relnamespace=%s
 AND c.relkind NOT IN ('i','I') ORDER BY c.relname""",(schema_id,))
         expected_inventory = [(t['name'],) for t in source['expectedCatalog']['tables']]
+        if _verify_outcomes(connection,source):
+            expected_inventory.append((OUTCOMES,))
         if _verify_history_schema(connection,source):
             expected_inventory.append((HISTORY,))
             if not _verify_head_view(connection,source):

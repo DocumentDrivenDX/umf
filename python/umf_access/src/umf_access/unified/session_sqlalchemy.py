@@ -70,7 +70,8 @@ class _Cursor:
 
     @property
     def description(self):
-        return tuple((name,) for name in self.result.keys())
+        names = self.result.keys()
+        return tuple((name,) for name in names)
 
 
 class _SyncConnection(_State):

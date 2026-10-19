@@ -81,6 +81,7 @@ jobs:
         run: |
           python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
           python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
       - name: Check portable sync and async clients
         run: >-
           bun test tests/access-unified.test.ts tests/access-unified-sync.test.ts
@@ -186,7 +187,7 @@ jobs:
         if: matrix.weft-cohort == 'source-dbapi'
         with:
           repository: DocumentDrivenDX/weft
-          ref: ff1695675b05c98c0ae56d7cdd675b82426f65b2
+          ref: 4c7c2eb0382e8dd5a5fca91e65d7f39cdecfc49b
           path: .ci-weft
       - uses: dtolnay/rust-toolchain@stable
         if: matrix.weft-cohort == 'source-dbapi'
@@ -231,6 +232,7 @@ jobs:
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
           python -I tests/unified/table_reads_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-reads-native.json
+          python -I tests/unified/table_reads_native.py --mutations --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-writes-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -246,3 +248,4 @@ jobs:
             /tmp/umf-head-adapter-native.json
             /tmp/umf-correspondence-adapter-native.json
             /tmp/umf-table-reads-native.json
+            /tmp/umf-table-writes-native.json

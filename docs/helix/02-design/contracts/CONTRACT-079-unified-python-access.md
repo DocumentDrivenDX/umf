@@ -357,6 +357,47 @@ are not a continuation interface. A valid cursor grants no snapshot across
 pages, and source/principal/policy drift invalidates it. No read execution claim
 admits durable writes, generated lifecycle modules or unverified native codecs.
 
+### Durable write outcome protocol
+
+Declared mutation execution and outcome observation are distinct typed results.
+A fresh invocation may return its declared business projections plus direct
+effect counts. Recovery returns a durable effect receipt with per-item exact
+counts and an original response digest. Historical business rows are not retained
+in the outcome store. A recovered outcome has an explicit discriminant and no
+business-row payload; generated clients must preserve that distinction. This
+allows a caller to establish a committed write after a lost response without
+turning recovery into a historical-row access path. Fresh reads use their own
+current RLS. Caller-owned transaction results remain pending until the caller
+commits; an in-transaction receipt is not proof of durability.
+
+The fixed `umf_lifecycle_outcomes` metadata table belongs to the plugin's isolated
+schema. Its versioned native shape, owner, forced RLS, constraints, indexes,
+policies and ACLs are source-proved during installation and pinned in a
+`umf.table-installation/0.2` reference. Each ordinary principal has SELECT/INSERT
+on its own outcome rows through native current-role RLS, with no UPDATE/DELETE
+grant. Stored payloads carry HMAC-SHA256 authentication using a host-owned key
+separate in purpose from cursor tokens; native row ownership alone cannot bless
+a forged receipt. The host authenticates the subject outside the wire request.
+
+The keyed slot binds the module, actual principal and authenticated subject,
+operation and caller key. It excludes inputs and deployment generation so an
+existing slot with changed inputs/source/head/scope refuses instead of silently
+executing a second write. A separate invocation digest binds the ordered exact
+inputs, original source, configuration, bundle, installed head, target, command
+and live role/MEMBER scope. A matching receipt requires current source/head,
+principal, command privileges and native correspondence again before observation.
+The outcome table's own current-role RLS governs its bounded effect metadata.
+
+The shared generation lock precedes a transaction-scoped exclusive outcome-slot
+lock. Competing attempts serialize before observing the slot under READ COMMITTED.
+An absent slot permits one atomic invocation and authenticated receipt insert in
+the same transaction. A present valid matching slot returns only the observed
+outcome. A mismatched or forged slot refuses without mutation. No library retries
+a dispatched write. Commit/response uncertainty is explicit and resolved by a
+fresh authenticated outcome observation. Receipts have no implicit expiry or
+deletion that could turn a retry into a second write. These requirements govern
+the pending implementation; no release qualification follows from this contract.
+
 This declaration subset covers single-table projections/counts and scalar
 CRUD/upsert operations. Joins/aggregate business outputs, parameter lists,
 optional-input omission and cross-operation transactions require explicit wire

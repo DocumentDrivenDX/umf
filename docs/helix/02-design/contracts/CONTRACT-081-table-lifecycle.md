@@ -506,6 +506,32 @@ uncertain commit. An untrusted request cannot choose the expected reference.
 Historical migration replay issues a reference for the verified current cohort.
 References use the bounded native witness JSON subset and a16MiB serialized cap.
 
+The durable-outcome runtime adds `umf.table-installation/0.2`, with the same
+source/head custody plus `outcomeShape`. The fixed `umf_lifecycle_outcomes`
+relation is installed atomically with new history/head metadata. Its ordinary
+heap shape, exact constraints/indexes, owner, forced RLS, two source-audience
+policies, table/column ACLs and absence of triggers/incoming FKs are proved
+against a protected fixed-schema scratch relation. The trusted reference pins
+that verified native shape. Head observations compare it before accessing
+outcomes; ordinary correspondence includes it in the exact schema inventory.
+Receipt payloads never become expected catalog shape by observation alone.
+
+Existing outcome-free installations keep version0.1 references and read-only
+head observation. No implicit outcome-table upgrade is performed by inspection
+or an ordinary call. Mutation execution refuses before acquiring a lease when
+the approved installation lacks outcome storage. Runtime0.2 metadata requires
+its qualified library cohort; a new reference is persisted only after commit.
+
+CONTRACT-079 defines the closed outcome wire and effect-only recovery. Native
+current-role RLS confines rows to their actual principal OID; source audiences
+receive SELECT/INSERT with no UPDATE/DELETE grant. Every stored effect receipt
+is independently authenticated by a host-owned secret. The slot digest excludes
+mutable inputs/generation and the authentication secret, so changed authority,
+inputs or secret rotation cannot silently miss an occupied slot and execute a
+second write. Invalid receipts refuse. Recovery never returns historical
+business projections. Cancelled calls may already have committed; a fresh
+authenticated observation of the caller's key establishes the durable outcome.
+
 The explicit Psycopg3 `read_table_head(connection,bundle,reference,...)` observer
 requires an active READ COMMITTED transaction, exact pg_catalog resolution,
 PG18/UTF8, row_security on and session_replication_role origin. Read-only

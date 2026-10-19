@@ -9,11 +9,15 @@ from __future__ import annotations
 import asyncio
 from typing import Any
 
-from umf_access.lifecycle import CatalogError, prepare_table_head, prepare_table_correspondence
+from umf_access.lifecycle import (
+    CatalogError,
+    prepare_table_correspondence,
+    prepare_table_head,
+)
 
 from .session_async import AsyncSession
-from .session_sync import SyncSession
 from .session_policy import SessionError, SessionIdentity
+from .session_sync import SyncSession
 
 
 def _prepare(session, identity, bundle, reference, correspondence=False):
@@ -41,13 +45,15 @@ def _drive(session, native, steps):
         query = next(steps)
         while True:
             with session.control_cursor(native) as cursor:
-                cursor.execute(query.statement,query.parameters) if query.parameters else cursor.execute(query.statement)
+                cursor.execute(query.statement,query.parameters) if query.parameters or query.kind=='frame' else cursor.execute(query.statement)
                 if query.kind == 'one':
                     value = cursor.fetchone()
                 elif query.kind == 'all':
                     value = cursor.fetchall()
                 elif query.kind == 'execute':
                     value = None
+                elif query.kind == 'frame':
+                    value = ([c[0] for c in cursor.description],cursor.fetchall())
                 else:
                     raise SessionError('unknown internal observation step')
             query = steps.send(value)
@@ -62,7 +68,7 @@ async def _drive_async(session, native, steps):
         query = next(steps)
         while True:
             async with session.control_cursor(native) as cursor:
-                if query.parameters:
+                if query.parameters or query.kind=='frame':
                     await cursor.execute(query.statement,query.parameters)
                 else:
                     await cursor.execute(query.statement)
@@ -72,6 +78,8 @@ async def _drive_async(session, native, steps):
                     value = await cursor.fetchall()
                 elif query.kind == 'execute':
                     value = None
+                elif query.kind == 'frame':
+                    value = ([c[0] for c in cursor.description],await cursor.fetchall())
                 else:
                     raise SessionError('unknown internal observation step')
             query = steps.send(value)
@@ -90,7 +98,7 @@ def observe_table_head(session: SyncSession, identity: SessionIdentity,
             return _check_principal(session,identity,_drive(session,native,probe.steps()))
     except (CatalogError,SessionError):
         raise
-    except Exception:
+    except Exception:  # noqa: BLE001 -- sanitize optional native-driver/verifier errors at the SDK boundary
         raise SessionError('native head observation failed') from None
 
 
@@ -106,7 +114,7 @@ async def observe_table_head_async(session: AsyncSession, identity: SessionIdent
             return _check_principal(session,identity,await _drive_async(session,native,probe.steps()))
     except (CatalogError,SessionError):
         raise
-    except Exception:
+    except Exception:  # noqa: BLE001 -- sanitize optional native-driver/verifier errors at the SDK boundary
         raise SessionError('native head observation failed') from None
 
 
@@ -119,7 +127,7 @@ def verify_table_correspondence(session: SyncSession, identity: SessionIdentity,
             return _check_principal(session,identity,_drive(session,native,probe.steps()))
     except (CatalogError,SessionError):
         raise
-    except Exception:
+    except Exception:  # noqa: BLE001 -- sanitize optional native-driver/verifier errors at the SDK boundary
         raise SessionError('native table correspondence failed') from None
 
 
@@ -132,5 +140,5 @@ async def verify_table_correspondence_async(session: AsyncSession, identity: Ses
             return _check_principal(session,identity,await _drive_async(session,native,probe.steps()))
     except (CatalogError,SessionError):
         raise
-    except Exception:
+    except Exception:  # noqa: BLE001 -- sanitize optional native-driver/verifier errors at the SDK boundary
         raise SessionError('native table correspondence failed') from None

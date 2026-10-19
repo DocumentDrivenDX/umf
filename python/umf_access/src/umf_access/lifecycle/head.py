@@ -6,17 +6,18 @@ Observing a head does not admit a data operation or freeze native role catalogs.
 """
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import re
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, cast
 
 from .catalog import CatalogError, _q
-from .probe import _Query, _run
-from .head_view import HEAD, _head_oid, _head_shape, _head_oid_steps, _head_shape_steps
+from .head_view import HEAD, _head_oid, _head_oid_steps, _head_shape, _head_shape_steps
 from .ledger_schema import _history_shape, _history_shape_steps
+from .outcome_schema import _outcome_shape, _outcome_shape_steps
+from .probe import _Query, _run
 from .witness import _json_bytes
 
 _REFERENCE_KEYS = {'version','bundleDigest','sourceDigest','configurationDigest',
@@ -42,16 +43,20 @@ def _issue_reference(connection: Any, source: dict[str, Any], entry: dict[str, A
         'headRelationOid':_head_oid(connection,schema),'headShape':_head_shape(connection,schema),
         'historyShape':_history_shape(connection,schema),
         'nativeWitness':entry['witness']})
+    outcome_shape=_outcome_shape(connection,schema)
+    if outcome_shape is not None:
+        reference.update(version='umf.table-installation/0.2',outcomeShape=_normalized(outcome_shape))
     reference['referenceDigest'] = hashlib.sha256(_json_bytes(reference)).hexdigest()
     return reference
 
 
 def _checked_reference(reference: dict[str, object], source: dict[str, Any]) -> dict[str, Any]:
-    if type(reference) is not dict or set(reference) != _REFERENCE_KEYS:
+    if type(reference) is not dict or set(reference) != (_REFERENCE_KEYS | {'outcomeShape'} if reference.get('version')=='umf.table-installation/0.2' else _REFERENCE_KEYS):
         raise CatalogError('installation-reference-mismatch')
     checked = _normalized(reference)
     digest = checked.pop('referenceDigest')
-    if (checked['version'] != 'umf.table-installation/0.1'
+    if (checked['version'] not in ('umf.table-installation/0.1','umf.table-installation/0.2')
+            or checked['version']=='umf.table-installation/0.2' and type(checked['outcomeShape']) is not dict
             or digest != hashlib.sha256(_json_bytes(checked)).hexdigest()
             or any(checked[key] != source[key] for key in ('bundleDigest','sourceDigest','configurationDigest'))
             or type(checked['generation']) is not int or not 1 <= checked['generation'] <= 128
@@ -70,7 +75,7 @@ class TableHeadProbe:
     Construct with prepare_table_head. Source and expected native metadata are
     copied by their original verifiers. Drivers only schedule its fixed queries.
     """
-    __slots__ = ('_source','_expected','_statement_timeout_ms','_lock_timeout_ms')
+    __slots__ = ('_expected', '_lock_timeout_ms', '_source', '_statement_timeout_ms')
 
     def __init__(self, source: dict[str, Any], expected: dict[str, Any], statement_timeout_ms: int, lock_timeout_ms: int):
         self._source,self._expected = source,expected
@@ -149,6 +154,8 @@ def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
         raise CatalogError('head-view-catalog-mismatch')
     if _normalized((yield from _history_shape_steps(schema))) != expected['historyShape']:
         raise CatalogError('history-catalog-mismatch')
+    if _normalized((yield from _outcome_shape_steps(schema))) != expected.get('outcomeShape'):
+        raise CatalogError('outcome-catalog-mismatch')
     yield _Query('execute', 'LOCK TABLE ' + _q(schema) + '.' + _q(HEAD) + ' IN ACCESS SHARE MODE', ())
     location = (yield _Query('one', 'SELECT d.oid,d.datname,n.oid,n.nspowner\nFROM pg_catalog.pg_database d,pg_catalog.pg_namespace n\nWHERE d.datname=pg_catalog.current_database() AND n.nspname=%s', (schema,)))
     witness = expected['nativeWitness']
@@ -158,9 +165,11 @@ def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
         raise CatalogError('head-view-catalog-mismatch')
     if _normalized((yield from _history_shape_steps(schema))) != expected['historyShape']:
         raise CatalogError('history-catalog-mismatch')
+    if _normalized((yield from _outcome_shape_steps(schema))) != expected.get('outcomeShape'):
+        raise CatalogError('outcome-catalog-mismatch')
     relation = _q(schema) + '.' + _q(HEAD)
     row = (yield _Query('one', 'SELECT generation,head_digest,plan_digest,bundle_digest,source_digest,\nconfiguration_digest,pg_catalog.octet_length(native_witness::pg_catalog.text) FROM ' + relation, ()))
-    if row is None or tuple(row[:6]) != tuple((expected[k] for k in ('generation', 'headDigest', 'planDigest', 'bundleDigest', 'sourceDigest', 'configurationDigest'))):
+    if row is None or tuple(row[:6]) != tuple(expected[k] for k in ('generation', 'headDigest', 'planDigest', 'bundleDigest', 'sourceDigest', 'configurationDigest')):
         raise CatalogError('installed-generation-mismatch')
     if type(row[6]) is not int or not 0 < row[6] <= _MAX_REFERENCE_BYTES:
         raise CatalogError('installation-reference-capacity')

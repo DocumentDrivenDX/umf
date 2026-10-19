@@ -6,9 +6,9 @@ import asyncio
 import copy
 import threading
 import unittest
-from unittest.mock import patch
 from contextlib import asynccontextmanager, nullcontext
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from umf_access.unified import (
     AsyncSession,
@@ -16,8 +16,8 @@ from umf_access.unified import (
     SessionIdentity,
     SessionPolicy,
     SyncSession,
-    observe_table_head_async,
     observe_table_head,
+    observe_table_head_async,
 )
 
 ALICE = SessionIdentity("person", "alice")
