@@ -1,5 +1,5 @@
 import {renderRecordMap} from '@documentdrivendx/umf-schema-browser';
-import {relationshipGeometry} from '../ontology-layout';
+import {balancedLayouts} from './ontology-layout';
 import {selfModelGraph,type SelfModelCatalog,type ReaderCatalog} from '../../reference/model';
 const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 const link=(text:string,href:string)=>{const a=el('a',text) as HTMLAnchorElement;a.href=href;return a;};
@@ -59,22 +59,22 @@ function graphViewport(map:HTMLElement,root:HTMLElement,model:ReturnType<typeof 
  const zoomControls=el('div',undefined,'graph-zoom'),status=el('output');status.setAttribute('aria-live','polite');
  const state={dispose:()=>{},zoom:previous?.zoom??null,left:previous?.left??0,top:previous?.top??0};
  // Reflow the released renderer's existing SVG elements; keep its navigation,
- // labels, markers and the shared relationship geometry intact.
+ // labels, markers and navigation intact; Dagre routes edges between nodes.
  const edges=focus?model.edges.filter(e=>e.source===focus||e.target===focus):model.edges;
  const ids=new Set([focus,...edges.flatMap(e=>[e.source,e.target])]);const records=focus?model.records.filter(r=>ids.has(r.id)):model.records;
  const recordNodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect record "]')),edgeNodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect relationship "]'));
  const original=recordNodes.map(n=>{const r=n.querySelector('rect')!;return {x:Number(r.getAttribute('x')),y:Number(r.getAttribute('y'))};});
- const pairs=new Map<string,typeof edges>();for(const edge of model.edges){const key=JSON.stringify([edge.source,edge.target].sort()),group=pairs.get(key)??[];group.push(edge);pairs.set(key,group);}
- const extra=Math.max(0,...Array.from(pairs.values(),group=>Math.max(0,(group.length-1)/2)*48)),step=130+extra;
+ const sizes=records.map((record,i)=>{const node=recordNodes[i]!,rect=node.querySelector('rect')!,text=node.querySelector('text')!,width=Math.ceil(Math.max(140,text.getComputedTextLength()+24));rect.setAttribute('width',String(width));rect.setAttribute('height','64');node.querySelector('.map-count')!.setAttribute('y',String(original[i]!.y+48));node.dataset.modelId=record.id;return {id:record.id,width};});
+ const layouts=balancedLayouts(sizes,edges);
+ const note=document.createElementNS('http://www.w3.org/2000/svg','text');note.textContent='Standalone definitions';note.setAttribute('class','graph-standalone');note.setAttribute('text-anchor','middle');svg.append(note);
  let width=880,height=180,fit=1;
  const resize=()=>{
-  let best=0,columns=1;
-  for(let cols=1;cols<=Math.min(6,records.length);cols++){const w=cols*250+80,h=Math.ceil(records.length/cols)*step+65+extra,scale=Math.min(viewport.clientWidth/w,viewport.clientHeight/h);if(scale>best){best=scale;columns=cols;}}
-  const positions=new Map(records.map((r,i)=>[r.id,{x:35+(i%columns)*250,y:60+Math.floor(i/columns)*step}]));
-  width=columns*250+80;height=Math.ceil(records.length/columns)*step+65+extra;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
-  recordNodes.forEach((node,i)=>{const p=positions.get(records[i]!.id)!;node.setAttribute('transform',`translate(${p.x-original[i]!.x} ${p.y-original[i]!.y})`);});
-  edgeNodes.forEach((node,i)=>{const edge=edges[i]!,from=positions.get(edge.source)!,to=positions.get(edge.target)!,siblings=pairs.get(JSON.stringify([edge.source,edge.target].sort()))!,index=siblings.indexOf(edge),geometry=relationshipGeometry(from,to,edge.source===edge.target?index:index-(siblings.length-1)/2,78,(siblings.length-1)/2);node.querySelector('path')!.setAttribute('d',geometry.path);const circle=node.querySelector('circle')!,text=node.querySelector('text')!;circle.setAttribute('cx',String(geometry.x));circle.setAttribute('cy',String(geometry.y));text.setAttribute('x',String(geometry.x));text.setAttribute('y',String(geometry.y+4));});
-  const bounds=svg.getBBox();width=bounds.width+48;height=bounds.height+48;svg.setAttribute('viewBox',`${bounds.x-24} ${bounds.y-24} ${width} ${height}`);
+  const chosen=layouts.reduce((best,next)=>Math.min(viewport.clientWidth/next.width,viewport.clientHeight/next.height)>Math.min(viewport.clientWidth/best.width,viewport.clientHeight/best.height)?next:best);
+  width=chosen.width;height=chosen.height;
+  recordNodes.forEach((node,i)=>{const p=chosen.nodes.get(records[i]!.id)!;node.setAttribute('transform',`translate(${p.x-original[i]!.x} ${p.y-original[i]!.y})`);});
+  edgeNodes.forEach((node,i)=>{const geometry=chosen.edges.get(edges[i]!.id)!;node.dataset.source=edges[i]!.source;node.dataset.target=edges[i]!.target;node.querySelector('path')!.setAttribute('d',geometry.path);const circle=node.querySelector('circle')!,text=node.querySelector('text')!;circle.setAttribute('cx',String(geometry.x));circle.setAttribute('cy',String(geometry.y));text.setAttribute('x',String(geometry.x));text.setAttribute('y',String(geometry.y+4));});
+  note.style.display=chosen.standalone?'':'none';if(chosen.standalone){note.setAttribute('x',String(chosen.standalone.x));note.setAttribute('y',String(chosen.standalone.y));}
+  svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
   fit=Math.min(viewport.clientWidth/width,viewport.clientHeight/height);const scale=state.zoom??fit;svg.style.width=width*scale+'px';svg.style.height=height*scale+'px';status.textContent=Math.round(scale*100)+'%';
  };
  const button=(title:string,action:()=>void)=>{const b=el('button',title) as HTMLButtonElement;b.type='button';b.onclick=action;zoomControls.append(b);};

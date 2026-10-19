@@ -1,4 +1,4 @@
-import {resolve,join} from 'node:path';
+import {resolve,join,relative} from 'node:path';
 import {tmpdir} from 'node:os';
 import {mkdtemp,mkdir,rename,rm,readdir} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';
@@ -56,17 +56,18 @@ try{
  for(let offset=0;offset<sortedEvidence.length;offset+=32)inventory.push(...await Promise.all(sortedEvidence.slice(offset,offset+32).map(async path=>{const mapped=allocations.allocations.filter((a:any)=>a.recordPath===path);return {source:await source(path,false),allocationIds:mapped.map((a:any)=>a.id),assessment:mapped.length?'mapped':'unassessed'};})));
  await Bun.write(join(stage,'evidence-inventory.json'),json({profile:'umf.reference.evidence-inventory/1',items:inventory,exclusions:evidenceExclusions}));
  const runtimeInputs=await runtimeBuild(join(stage,'assets'),api);
- await Bun.write(join(stage,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(root,[...runtimeInputs,...(renderer.preview?[]:[renderer.path+'/index.js'])])+(renderer.preview?'\n'+await text(renderer.path+'/THIRD_PARTY_NOTICES.md'):''));
  await source('docs/helix/05-deploy/schema-browser/notices.ts',false);
  for(const path of [...await paths('spec/**/LICENSE*'),...await paths('spec/**/NOTICE*'),...await paths('LICENSE*')]){const s=await source(path,false);await Bun.write(join(stage,'licenses',s.sha256+'-'+path.split('/').at(-1)),await Bun.file(resolve(root,path)).bytes());}
  const ui=await Bun.build({entrypoints:[resolve(root,'docs/helix/05-deploy/microsite/reference/index.ts')],target:'browser',format:'esm',minify:true,metafile:true,plugins:[{name:'verified-renderer-package',setup(build){build.onResolve({filter:/^@documentdrivendx\/umf-schema-browser$/},()=>({path:resolve(root,renderer.path,'index.js')}));}}]});if(!ui.success)throw Error(ui.logs.join('\n'));const uiInputs=Object.keys((typeof ui.metafile==='string'?JSON.parse(ui.metafile):ui.metafile as any).inputs).map(path=>resolve(root,path));if(!uiInputs.includes(resolve(root,renderer.path,'index.js')))throw Error('REFERENCE_RENDERER canonical host did not compile the verified package entry');await Bun.write(join(stage,'assets/reference.js'),await ui.outputs[0]!.text());
+ await Bun.write(join(stage,'THIRD_PARTY_NOTICES.md'),await thirdPartyNotices(root,[...runtimeInputs,...uiInputs,...(renderer.preview?[]:[renderer.path+'/index.js'])])+(renderer.preview?'\n'+await text(renderer.path+'/THIRD_PARTY_NOTICES.md'):''));
  await Bun.write(join(stage,'assets/reference.css'),await text(renderer.path+'/assets/components.css')+'\n'+await text('docs/helix/05-deploy/microsite/reference/style.css'));
+ for(const path of uiInputs)await source(relative(root,path).replaceAll('\\','/'),false);
  await source(renderer.path+'/assets/components.css',false);
  await source(renderer.path+'/index.js',false);
  for(const name of ['package.json','release-manifest.json','provenance.json','THIRD_PARTY_NOTICES.md'])await source(renderer.path+'/'+name,false);
  if(renderer.preview)await source('docs/helix/05-deploy/microsite/dist/schema-browser-release.json',false);
  for(const pattern of ['scripts/reference/**/*.ts',config+'/**/*','docs/helix/05-deploy/microsite/reference/**/*','src/**/*.ts','spec/**/*.json']){const discovered=await paths(pattern);for(let offset=0;offset<discovered.length;offset+=32)await Promise.all(discovered.slice(offset,offset+32).map(path=>source(path,false)));}
- for(const path of ['docs/helix/05-deploy/microsite/ontology-layout.ts','package.json','bun.lock','tsconfig.json','tsconfig.tools.json','.github/workflows/microsite.yml','.innsigle/config.json','scripts/build-protobuf.ts','scripts/build-postgresql.ts','scripts/protobuf-module-notices.ts',...await paths('native/protobuf/*.go'),...await paths('native/protobuf/go.*'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')])await source(path,false);
+ for(const path of ['package.json','bun.lock','tsconfig.json','tsconfig.tools.json','.github/workflows/microsite.yml','.innsigle/config.json','scripts/build-protobuf.ts','scripts/build-postgresql.ts','scripts/protobuf-module-notices.ts',...await paths('native/protobuf/*.go'),...await paths('native/protobuf/go.*'),...await paths('docs/helix/02-design/contracts/CONTRACT-*.md')])await source(path,false);
  const inputList=[...inputs.values()].sort((a,b)=>a.path<b.path?-1:1),inputDigest=sha(canonical(inputList.map(s=>[s.path,s.sha256])));
  const index:ReferenceIndex={profile:'umf.reference/1',entries:[],inputDigest};
  index.entries.push(...await bounded(entries.sort((a,b)=>a.id<b.id?-1:1),async e=>{const bytes=json(e);if(new TextEncoder().encode(bytes).length>8*1024*1024)throw Error('REFERENCE_LIMIT shard '+e.id);const href='entries/'+sha(e.id)+'.json';await Bun.write(join(stage,href),bytes);return {id:e.id,kind:e.kind,title:e.title,summary:e.summary.slice(0,240),href,sha256:sha(bytes),bytes:new TextEncoder().encode(bytes).length};}));

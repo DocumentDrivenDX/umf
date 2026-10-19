@@ -1,61 +1,83 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:umf:core:0.10.0",
-  "title": "UMF for UMF",
-  "description": "A Document groups Modules and declares the vocabularies used by its extension content. Its identifier names the complete metadata envelope.",
+  "$id": "urn:umf:core:semantic-type-reference:1.0.0",
+  "description": "UMF language semanticType",
   "type": "object",
   "required": [
-    "umf",
-    "id",
-    "vocabularies",
-    "modules"
+    "vocabulary",
+    "version",
+    "term"
   ],
   "properties": {
-    "umf": {
-      "const": "0.10.0"
+    "vocabulary": {
+      "type": "string",
+      "minLength": 1
     },
-    "id": {
-      "$ref": "#/$defs/id"
+    "version": {
+      "type": "string",
+      "minLength": 1
     },
-    "vocabularies": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "required": [
-          "version"
-        ],
-        "properties": {
-          "version": {
-            "$ref": "#/$defs/version"
-          }
-        }
-      },
-      "propertyNames": {
-        "$ref": "#/$defs/id"
-      }
-    },
-    "modules": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/module"
-      }
-    },
-    "extensions": {
-      "$ref": "#/$defs/extensions"
-    },
-    "title": {
-      "type": "string"
-    },
-    "aliases": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "uniqueItems": true
+    "term": {
+      "type": "string",
+      "minLength": 1
     }
   },
   "$defs": {
+    "document": {
+      "description": "A Document groups Modules and declares the vocabularies used by its extension content. Its identifier names the complete metadata envelope.",
+      "type": "object",
+      "required": [
+        "umf",
+        "id",
+        "vocabularies",
+        "modules"
+      ],
+      "properties": {
+        "umf": {
+          "const": "0.10.0"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "vocabularies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "version"
+            ],
+            "properties": {
+              "version": {
+                "$ref": "#/$defs/version"
+              }
+            }
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/module"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "title": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
     "id": {
       "description": "UMF language id",
       "type": "string",
@@ -1298,29 +1320,6 @@
         }
       ]
     },
-    "semanticType": {
-      "description": "UMF language semanticType",
-      "type": "object",
-      "required": [
-        "vocabulary",
-        "version",
-        "term"
-      ],
-      "properties": {
-        "vocabulary": {
-          "type": "string",
-          "minLength": 1
-        },
-        "version": {
-          "type": "string",
-          "minLength": 1
-        },
-        "term": {
-          "type": "string",
-          "minLength": 1
-        }
-      }
-    },
     "extensionPackage": {
       "description": "UMF language extensionPackage",
       "type": "object",
@@ -1456,5 +1455,5 @@
       }
     }
   },
-  "$comment": "Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler bed515c790ba8c96f84e0208fbc1c35a90205283619a88ad20c07fddae53b57a"
+  "$comment": "Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler 1ddb4d57783635b76a08e5e07234040297177751abd460ddd752e451b3768354"
 }
