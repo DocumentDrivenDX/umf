@@ -11,3 +11,72 @@
 .umf-record-map-view .umf-map-number{fill:var(--paper)}
 .umf-record-map-view .map-relationships{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.umf-record-map-view .map-relationships p{margin:0}.umf-record-map-view .map-relationships button{font-size:12px;padding:6px 9px;border-color:var(--line);border-radius:4px}
 .shape-definition{margin:8px 0 12px;padding:10px 12px;border-left:2px solid var(--olive);background:var(--panel);font-size:14px}.shape-definition>ul{margin:6px 0;padding-left:22px}.shape-definition code{font-family:ui-monospace,monospace}.shape-member{display:grid;grid-template-columns:minmax(120px,auto) auto;gap:4px 12px;margin:8px 0;padding-top:6px;border-top:1px solid var(--line)}.shape-member>.shape-definition{grid-column:1/-1;margin-left:10px}@media(max-width:650px){.shape-member{grid-template-columns:minmax(0,1fr)}}
+
+/* Schemas is a workspace: keep navigation compact and the model in view. */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.schema-page header{max-width:none;padding:10px 24px;gap:20px}
+.schema-page .brand{font-size:22px;letter-spacing:-1px}.schema-page .brand img{width:26px;height:26px}
+.schema-page main{max-width:none;padding:0 24px;display:flex;flex-direction:column}
+.schema-page .reference-nav{padding:7px 0;gap:22px;order:0}
+.schema-page .schema-toolbar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:10px 0;order:1}
+.schema-page .schema-toolbar h1{font:600 20px/1.2 system-ui,sans-serif;letter-spacing:0;margin:0}
+.schema-page .schema-views{padding:0;margin:0;border:0;gap:6px}
+.schema-page .schema-views a{padding:5px 10px;font-size:13px}
+.schema-page #ontology,.schema-page #model-catalog,.schema-page .workspace{order:2}
+.schema-page #load-status{order:3;margin:8px 0;font-size:11px}
+.schema-page footer{max-width:none;padding:12px 24px}
+.schema-page .ontology-layout{display:block;padding:0 0 20px}
+.schema-page .ontology-types{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:16px}
+.schema-page .ontology-types>label{width:240px;font-size:12px}
+.schema-page .ontology-types input{margin:2px 0 0;padding:6px 9px}
+.schema-page .ontology-groups{display:flex;gap:18px}
+.schema-page .ontology-types details{position:relative;border:0;padding:0}
+.schema-page .ontology-types summary{padding:8px 0;font-size:12px}
+.schema-page .definition-options,.schema-page .ontology-about-content{position:absolute;top:100%;left:0;z-index:3;width:280px;max-height:55vh;overflow:auto;background:var(--white);border:1px solid var(--line);border-radius:4px;box-shadow:0 8px 22px #203c351c;padding:8px}
+.schema-page .ontology-about{margin-left:auto}
+.schema-page .ontology-about-content{left:auto;right:0;width:min(440px,calc(100vw - 48px));padding:16px;font-size:13px}
+.schema-page .ontology-content{display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,34vw,520px);align-items:start;gap:24px}
+.schema-page #ontology-map{min-width:0}
+.schema-page .umf-record-map-view{gap:10px}
+.schema-page .umf-record-map-view .map-controls{gap:10px;font-size:12px}
+.schema-page .map-controls label{font-size:12px}
+.schema-page .map-controls select{padding:6px;max-width:220px}
+.schema-page .map-summary{font-size:12px;margin:4px 0}
+.schema-page .map-relationships{display:flex;gap:6px;flex-wrap:wrap}
+.schema-page .map-relationships p{margin:0}
+.schema-page .map-relationships button{font-size:12px;padding:5px 8px}
+.schema-page #ontology-detail{border:1px solid var(--line);border-radius:5px;background:var(--white);padding:16px;min-width:0}
+.schema-page #ontology-detail .eyebrow{margin:0 0 4px}
+.schema-page #ontology-detail h3{font:normal 28px/1.2 Georgia,serif;margin:0 0 10px}
+.schema-page #ontology-detail p{font-size:13px;margin:10px 0}
+.schema-page #ontology-detail>a{font-size:13px}
+.schema-page #ontology-detail .table-wrap{margin-top:12px}
+.schema-page #ontology-detail td,.schema-page #ontology-detail th{padding:8px 6px}
+@media(max-width:1000px){
+ .schema-page .ontology-content{grid-template-columns:minmax(0,1fr)}
+ .schema-page .umf-record-map-view .ontology-map{max-height:300px}
+ .schema-page .ontology-types{gap:10px}.schema-page .ontology-groups{gap:14px}
+}
+@media(max-width:850px){
+ .schema-page header{flex-direction:row;align-items:center;gap:16px;padding:8px 16px}
+ .schema-page .brand{flex-shrink:0}
+ .schema-page header nav{flex:1;min-width:0;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;gap:16px;padding:3px 0}
+ .schema-page header nav a{font-size:12px}
+ .schema-page main{padding:0 16px}
+ .schema-page .reference-nav{flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;gap:18px}
+ .schema-page .reference-nav a{font-size:12px}
+ .schema-page .schema-toolbar{gap:10px;padding:8px 0}
+ .schema-page .schema-toolbar h1{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .schema-page .schema-views a{font-size:12px;padding:5px 7px}
+ .schema-page .ontology-types{margin-bottom:12px;padding:6px 0;align-items:center}
+ .schema-page .ontology-types>label{width:100%}
+ .schema-page .ontology-types>div{max-height:none;overflow:visible;display:flex;grid-template-columns:none}
+ .schema-page .ontology-about{margin-left:auto}
+ .schema-page .ontology-content{gap:12px;overflow:visible}
+ .schema-page .umf-record-map-view .ontology-map{max-height:225px}
+ .schema-page .definition-options{width:min(280px,calc(100vw - 32px))}
+ .schema-page .ontology-groups details:nth-child(2) .definition-options{left:-100px}
+ .schema-page .ontology-about-content{width:calc(100vw - 32px)}
+ .schema-page #ontology-detail{padding:12px}
+}
+@media(min-width:1001px){.schema-page #ontology-detail{position:sticky;top:12px;max-height:calc(100dvh - 24px);overflow:auto}}
