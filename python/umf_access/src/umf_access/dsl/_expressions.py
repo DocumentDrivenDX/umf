@@ -10,8 +10,8 @@ from decimal import Decimal
 from typing import Any, Generic, Literal, Never, TypeVar, cast, overload
 
 from pydantic import BaseModel
-from ..types import MISSING
 
+from ..types import MISSING
 from ._context import CaptureError, require_capture
 from ._nodes import FieldRef, KeyLiteral, Node, RecordRef, literal, owner_identity
 

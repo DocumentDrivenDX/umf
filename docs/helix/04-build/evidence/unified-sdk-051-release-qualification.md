@@ -122,3 +122,19 @@ pool/fork/cancellation matrix, complete frozen dependency lock, and managed
 service acceptance remain open. Bun-free generation/index qualification is
 also not claimed by this record. The evidence above does not close FEAT-033's
 broader adoption requirements or assert production Praxis/Hohfeld behavior.
+
+## Final import-lint correction
+
+The automatic Python run on `57e68afed` passed its tests, then reported 14
+Ruff findings. The final correction sorts/coalesces imports and preserves the
+three intentional `MISSING` public re-exports with line-local PLC0414 annotations.
+Independent review confirms identical non-import AST in all 12 changed Python
+files and no new import-cycle or initialization dependency. Ruff 0.17.1 is clean.
+
+The rebuilt host wheel supersedes `9c53221f…` above: SHA-256 `972f5751956433471b70a63e6c5df07a2df421264ed685b3862a2271089d4441`.
+All 50 packaged files match source and the installed wheel; only six runtime
+files differ from the native-qualified parent through imports/comments. Final
+installed compatibility passes 58 tests with each Pydantic version, all four
+actual published-Weft 0.4.47 transport tests pass, and isolated catalog import
+passes. The earlier native results retain their parent-wheel identity. No
+unrelated native or stress campaign is repeated for this bounded lint delta.

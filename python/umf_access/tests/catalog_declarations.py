@@ -2,8 +2,8 @@
 """Trusted build-time declarations for real installed catalog E2E."""
 
 from commerce import Customer, Order, OrderCustomerProjection, OrderKey
-from umf_access.types import MISSING
 from umf_access import Param, if_present, query
+from umf_access.types import MISSING
 
 
 @query

@@ -14,7 +14,6 @@ from types import UnionType
 from typing import Any, Union, cast, get_args, get_origin, get_type_hints
 
 from pydantic import BaseModel
-from .types import MISSING
 
 from .dsl import GeneratedSource, Join, Param, Terminal
 from .dsl._context import CURRENT, CaptureContext
@@ -33,7 +32,7 @@ from .dsl._nodes import Node as ExpressionNode  # noqa: F401 -- Retained public 
 from .dsl._nodes import ProjectionRef as ProjectionRef  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.render import render_logical as render_logical  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.search import SearchLeg
-from .types import ActionRef, ActionSource, Vector
+from .types import MISSING, ActionRef, ActionSource, Vector
 
 
 @dataclass(frozen=True)

@@ -8,12 +8,12 @@ from typing import TYPE_CHECKING, ClassVar, Generic, TypeAlias, TypeVar, final
 # Explicit public re-export is required by static consumers.
 if TYPE_CHECKING:
     # Both supported releases expose this static alias to the same sentinel.
-    from pydantic.experimental.missing_sentinel import MISSING as MISSING
+    from pydantic.experimental.missing_sentinel import MISSING as MISSING  # noqa: PLC0414
 else:
     try:
-        from pydantic import MISSING as MISSING
+        from pydantic import MISSING as MISSING  # noqa: PLC0414
     except ImportError:
-        from pydantic.experimental.missing_sentinel import MISSING as MISSING
+        from pydantic.experimental.missing_sentinel import MISSING as MISSING  # noqa: PLC0414
 from pydantic import BaseModel, ConfigDict
 
 from .generated_core import CURRENT_CORE_VERSION, CoreVersion

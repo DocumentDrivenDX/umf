@@ -13,8 +13,8 @@ import tempfile
 import tomllib
 from pathlib import Path
 
-from packaging.specifiers import SpecifierSet
 from packaging.requirements import Requirement
+from packaging.specifiers import SpecifierSet
 from replay_installed import inspect_wheel
 
 
