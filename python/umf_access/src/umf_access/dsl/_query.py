@@ -23,9 +23,8 @@ from typing import (
 )
 
 from pydantic import BaseModel
-from ..types import MISSING
 
-from ..types import ActionRef, SnapshotVersions, validate_snapshot_versions
+from ..types import MISSING, ActionRef, SnapshotVersions, validate_snapshot_versions
 from ._context import CaptureError, require_capture
 from ._expressions import Column, Join, Ordering, Param, Predicate, Related, operand
 from ._nodes import (

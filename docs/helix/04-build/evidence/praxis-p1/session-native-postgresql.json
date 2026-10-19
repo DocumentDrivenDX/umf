@@ -4,7 +4,7 @@
   "psycopg": "3.2.13",
   "pool": "3.3.3",
   "weft": "0.4.44",
-  "schema": "p1_schema_4c230ffb0f14",
+  "schema": "p1_schema_ad5d5c4d29e6",
   "assertions": [
     "sync_weft_alice",
     "sync_weft_bob",
@@ -53,15 +53,15 @@
   ],
   "status": "passed-scoped-native-session-foundation",
   "environment": "isolated PostgreSQL18.6; Python3.11.17; Pydantic2.13.5",
-  "hostWheelSha256": "7f9e12f5ece291c3a40926104ec7ae76441d049c51a54446514c563da346387a",
+  "hostWheelSha256": "d0db9480a34bd87a191f75d478ef6e775fd3504140ffa58739b6678b90a2acd1",
   "weftWheelSha256": "5beb429164d0b4d5384b54f0569a6006b222210c4181f31ea23aca4dc73f8e45",
   "testSourceSha256": "3304a5afed31dab8a41f21d0ea705a1f62eb52647aa2fc556c694249c3f246b4",
   "sourceModules": {
-    "python/umf_access/src/umf_access/unified/__init__.py": "a5738bc2ebf7c755260d03860f1ba6d0b7342c9a0385272ac0af9c9bcf6f43a2",
+    "python/umf_access/src/umf_access/unified/__init__.py": "016f924120c9c884ec275a45b593f322745b36787ba9d780c2e0a4415e88554a",
     "python/umf_access/src/umf_access/unified/_binding.py": "688ff7e0033d6984c59469c4c0051b2e46dfc565c1cac0435ec8a90d1f8c38fc",
-    "python/umf_access/src/umf_access/unified/session_async.py": "efc3393e5aca20203d0e04087bca14e4459558c44b95f30a67a55c1e747858fc",
-    "python/umf_access/src/umf_access/unified/session_binding.py": "5cd89348c29768f4d3db700a6974b2bd36d8322ca1b7c412e1050c10ef94b9dd",
+    "python/umf_access/src/umf_access/unified/session_async.py": "355ff7a9339f16597cfa212b0108db71585b3f9ebd793ecd7c3ba864532d48d0",
+    "python/umf_access/src/umf_access/unified/session_binding.py": "3f28499a4a8ea56d526e4c852b880a16b8ae4e1454a2caceb474beb4d40f120c",
     "python/umf_access/src/umf_access/unified/session_policy.py": "2b971f6d16532aff5121b6a609460cce64881a1014494efb8853d438ed7c2e7c",
-    "python/umf_access/src/umf_access/unified/session_sync.py": "5d1d6de096e907dfebd99eb186c98fe8e94d65af4113dde7b845323eb8bb300f"
+    "python/umf_access/src/umf_access/unified/session_sync.py": "9ec54bfb4ebaa397fa823f963d920c9e7b386af85c051e90b00d21e73f7feb0f"
   }
 }

@@ -2,13 +2,13 @@
 """Sync and async host bindings for the generated UMF access transport."""
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable, Mapping
 import inspect
+from collections.abc import Awaitable, Callable, Mapping
 
 from ._binding import UnifiedAccessError, _TableBinding
+from .session_async import AsyncSession
 from .session_policy import SessionError, SessionIdentity, SessionPolicy
 from .session_sync import SyncSession
-from .session_async import AsyncSession
 
 
 class WeftTableBinding(_TableBinding):
@@ -98,7 +98,7 @@ class SyncWeftTableBinding(_TableBinding):
         page_size: int = 100,
         cursor_secret: bytes | None = None,
     ) -> None:
-        if any(inspect.iscoroutinefunction(callback) or inspect.iscoroutinefunction(getattr(callback, "__call__", None))
+        if any(inspect.iscoroutinefunction(callback) or inspect.iscoroutinefunction(getattr(callback, "__call__", None))  # noqa: B004 -- inspect async __call__, not callability
                for callback in (execute, action_executor, at_least)):
             raise TypeError("synchronous callbacks required")
         super().__init__(binding, compiler, target=target,
@@ -150,5 +150,13 @@ class SyncWeftTableBinding(_TableBinding):
         return self._finish_action(response)
 
 
-__all__ = ["UnifiedAccessError", "WeftTableBinding", "SyncWeftTableBinding",
-           "SessionError", "SessionIdentity", "SessionPolicy", "SyncSession", "AsyncSession"]
+__all__ = [
+    "AsyncSession",
+    "SessionError",
+    "SessionIdentity",
+    "SessionPolicy",
+    "SyncSession",
+    "SyncWeftTableBinding",
+    "UnifiedAccessError",
+    "WeftTableBinding",
+]

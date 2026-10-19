@@ -87,11 +87,11 @@
   "nativeDatabaseQualification": false,
   "wheel": {
     "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
-    "sha256": "b791b4d03b92d8e53841327e394718e6cb905b2d7cb3dc7c4a3c6d483b93c5e5"
+    "sha256": "c1924d7c266e1786c35e43ab3fdce9cafc46d6ba6f81ffcca0b8f0c2165f88c1"
   },
   "sdist": {
     "name": "umf_codegen-0.1.0a1.tar.gz",
-    "sha256": "62010014343d5f8a3ecbc45b3ab3dfaf8a0afa2be511e808cf27ce66c1b0d924"
+    "sha256": "5c50d06039d29cb6be3612ad7bc5ae7c82483b1ac3c0e33bfc3226e5eb920a0b"
   },
   "reproducibility": {
     "sourceAndSdistWheelIdentical": true,
@@ -115,22 +115,27 @@
     "damaged-payload-refuses"
   ],
   "sourceHashes": {
-    "python/umf_codegen/src/umf_codegen/__init__.py": "5b8ded9a13b9aa88ec00e52b98627914f58960fe132b7dbf9218bd3c6b13fe3b",
-    "python/umf_codegen/src/umf_codegen/__main__.py": "d93bde8cf3e8390781f53d70459c3449ea1dcaa731ebc467b0cd18f42d7feaa4",
-    "python/umf_codegen/src/umf_codegen/_embedded.py": "cf1e9dc4f7b382a8e1e769f9e6537e2bdc618cf4d523a1c9a3637db2a26804a5",
-    "python/umf_codegen/src/umf_codegen/_release.py": "ae3882f5c3b9ce20af4dacbb1cf1e4fe2b24282b2b6eb48d6c454fab2da64575",
-    "python/umf_codegen/src/umf_codegen/_writer.py": "00f6ec133d690f396f03dfdf61a4b31ee289657665129bfbe805296a8f65f45f"
+    "python/umf_codegen/src/umf_codegen/__init__.py": "f99a905ee4bd8c18adb812ec9c4a90e7aa24f3616b8369851fd198b129ec9d6f",
+    "python/umf_codegen/src/umf_codegen/__main__.py": "a839c18cc28fbce5498e88a10057c6422e4c293eb719f39a17ffa039769e33a6",
+    "python/umf_codegen/src/umf_codegen/_embedded.py": "553930f310e9578a4f84b73570ffd823ba42914bfca317ab96e33b034cec2bef",
+    "python/umf_codegen/src/umf_codegen/_release.py": "b4f1ba920cccd0e856fedf1e917c69819077a85f2ef80016be2ca5ff15a64d7f",
+    "python/umf_codegen/src/umf_codegen/_writer.py": "61a30ef49ba532fdff09f4f86de985b527dcb7e0f6c777bc3f386d545c792082"
   },
   "corpusSha256": "47ba0ccf22e1befac2c8c735f12ab747d559c8b49e82e11ae324f4f058cef57f",
   "limits": [
-    "macOS arm64 only; Linux CI configured but not executed",
-    "index/release publication pending",
-    "native PostgreSQL setup unavailable: five approval service failures across three consecutive goal turns"
+    "Linux CI replay pending after deterministic framing correction",
+    "index/release publication pending"
   ],
   "references": {
     "embeddedRuntimeApi": "https://bpcreech.com/PyMiniRacer/api/",
     "sharedGenerator": "src/access/index.ts",
     "corpus": "scripts/codegen-corpus.ts",
     "probe": "tests/codegen/installed_probe.py"
+  },
+  "builderFraming": "RFC1952 fixed metadata, RFC1951 stored blocks; wheel owns compression",
+  "platformFramingTest": {
+    "cases": 6,
+    "assertions": 18,
+    "result": "pass"
   }
 }

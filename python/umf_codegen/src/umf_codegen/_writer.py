@@ -180,7 +180,7 @@ def _write_locked(path: Path, candidate: Mapping[str, bytes], package: str,
                     step("before-restore-rename")
                     os.replace(backup, path)
                     moved = False
-                except BaseException:
+                except BaseException:  # noqa: BLE001 -- retain recovery state even after interruption
                     raise OutputError("WRITE_UNRESOLVED", "Installation and restoration failed; original backup retained",
                                       recovery=str(staging)) from None
             raise

@@ -9,7 +9,15 @@ from collections.abc import Callable, Iterator
 from contextlib import AbstractContextManager, contextmanager
 from typing import Any, Literal
 
-from .session_policy import GET_SETTING, ROLE_CHECK, SET_LOCAL, SessionError, SessionIdentity, SessionPolicy, verify_role
+from .session_policy import (
+    GET_SETTING,
+    ROLE_CHECK,
+    SET_LOCAL,
+    SessionError,
+    SessionIdentity,
+    SessionPolicy,
+    verify_role,
+)
 
 
 @contextmanager

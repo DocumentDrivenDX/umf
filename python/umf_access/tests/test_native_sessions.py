@@ -8,8 +8,13 @@ import unittest
 from contextlib import asynccontextmanager, nullcontext
 from types import SimpleNamespace
 
-from umf_access.unified import AsyncSession, SessionError, SessionIdentity, SessionPolicy, SyncSession
-
+from umf_access.unified import (
+    AsyncSession,
+    SessionError,
+    SessionIdentity,
+    SessionPolicy,
+    SyncSession,
+)
 
 ALICE = SessionIdentity("person", "alice")
 BATCH = SessionIdentity("batch", "run")
@@ -140,11 +145,11 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(self.connection.events, ["commit", "commit"])
 
     def test_failure_and_privileged_role_rollback(self):
-        with self.assertRaisesRegex(RuntimeError, "body"):
-            with self.session.open(ALICE): raise RuntimeError("body")
+        with self.assertRaisesRegex(RuntimeError, "body"), self.session.open(ALICE):
+            raise RuntimeError("body")
         self.connection.bypass = True
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): self.fail("privileged role reached caller")
+        with self.assertRaises(SessionError), self.session.open(ALICE):
+            self.fail("privileged role reached caller")
         self.assertEqual(self.connection.events, ["rollback", "rollback"])
         self.assertEqual(self.connection.settings["role"], "login")
 
@@ -157,49 +162,45 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(self.connection.settings, before)
         self.assertEqual(self.connection.info.transaction_status, 2)
         self.assertEqual(self.connection.events, ["release"])
-        with self.assertRaises(ValueError):
-            with self.session.open(ALICE): raise ValueError("rollback savepoint")
+        with self.assertRaises(ValueError), self.session.open(ALICE):
+            raise ValueError("rollback savepoint")
         self.assertEqual(self.connection.settings, before)
         self.assertEqual(self.connection.events[-1], "rollback")
         self.assertEqual(self.connection.info.transaction_status, 2)
 
     def test_invalid_outer_and_unknown_identity(self):
-        with self.assertRaises(SessionError):
-            with self.session.open(SessionIdentity("batch", "alice")): pass
+        with self.assertRaises(SessionError), self.session.open(SessionIdentity("batch", "alice")):
+            pass
         self.assertEqual(self.acquired, 0)
         self.connection.info.transaction_status = 3
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): pass
+        with self.assertRaises(SessionError), self.session.open(ALICE): pass
         self.assertFalse(self.connection.closed)
         self.assertEqual(self.connection.events, [])
         self.connection.info.transaction_status = 2
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): pass
+        with self.assertRaises(SessionError), self.session.open(ALICE): pass
         self.session = SyncSession(self.session.factory, POLICY, transaction_owner="caller")
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): pass
+        with self.assertRaises(SessionError), self.session.open(ALICE): pass
         self.assertEqual(self.connection.info.transaction_status, 2)
 
     def test_ownership_tampering_and_cleanup_failure(self):
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): self.connection.settings["role"] = "other"
+        with self.assertRaises(SessionError), self.session.open(ALICE):
+            self.connection.settings["role"] = "other"
         self.assertEqual(self.connection.settings["role"], "login")
         self.connection.exit_fail = True
-        with self.assertRaisesRegex(RuntimeError, "cleanup"):
-            with self.session.open(ALICE): pass
+        with self.assertRaisesRegex(RuntimeError, "cleanup"), self.session.open(ALICE):
+            pass
         self.assertTrue(self.connection.closed)
         self.assertEqual(self.session._active, set())
 
     def test_settings_tampering_rolls_back(self):
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): self.connection.settings["search_path"] = "other"
+        with self.assertRaises(SessionError), self.session.open(ALICE):
+            self.connection.settings["search_path"] = "other"
         self.assertEqual(self.connection.settings["search_path"], "public")
         self.assertEqual(self.connection.events, ["rollback"])
 
     def test_no_postfork_use(self):
         self.session._pid = -1
-        with self.assertRaises(SessionError):
-            with self.session.open(ALICE): pass
+        with self.assertRaises(SessionError), self.session.open(ALICE): pass
         self.assertEqual(self.acquired, 0)
 
 

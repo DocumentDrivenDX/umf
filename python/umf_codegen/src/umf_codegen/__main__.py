@@ -33,7 +33,7 @@ def main(argv: list[str] | None = None) -> int:
         write_package(args.output, result)
         print(json.dumps({"package": args.package, "sourceDigest": result["sourceDigest"], "files": len(result["files"])}))
         return 0
-    except Exception as error:  # Refuse locally; no executable or network fallback.
+    except Exception as error:  # noqa: BLE001 -- sanitize errors at the CLI process boundary
         response = {"code": getattr(error, "code", "GENERATION_FAILED"), "message": str(error)}
         for name in ("path", "written", "recovery"):
             value = getattr(error, name, None)

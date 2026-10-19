@@ -13,12 +13,12 @@ from commerce.actions import (
     ShipOrderRejected,
 )
 from commerce.keys import OrderKey
-from umf_access.types import MISSING
 from umf_access.codec_support import (
     initialize_action_rejection,
     initialize_rejection,
     revalidate_model,
 )
+from umf_access.types import MISSING
 
 
 class GeneratedActionTypes(unittest.TestCase):

@@ -27,7 +27,6 @@ from types import UnionType
 from typing import Annotated, Any, Union, cast, get_args, get_origin
 
 from pydantic import create_model
-from ..types import MISSING
 
 from ..capture import ProjectionRef, capture
 from ..codec_support import make_projection_model, make_scalar_projection_model
@@ -50,7 +49,7 @@ from ..reviewed import (
     ReviewedSQL,
     captured_source,
 )
-from ..types import RUNTIME_IDENTITY, ActionRef, StrictModel
+from ..types import MISSING, RUNTIME_IDENTITY, ActionRef, StrictModel
 from .approximate import require_approximate_profile
 from .commands import emit_command
 from .privileges import privilege_report

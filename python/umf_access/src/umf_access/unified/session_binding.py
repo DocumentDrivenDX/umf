@@ -6,9 +6,9 @@ identity, leases and transactions; they do not reinterpret Weft SQL or actions.
 """
 from __future__ import annotations
 
+import copy
 from collections.abc import Awaitable, Callable, Mapping
 from typing import Any
-import copy
 
 from . import SyncWeftTableBinding, WeftTableBinding
 from .session_async import AsyncSession

@@ -81,6 +81,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: bun install --frozen-lockfile
+      - run: bun test tests/compilation/codegen-gzip.test.ts
       - run: bun scripts/build-codegen.ts --check
       - run: python scripts/check-codegen-boundaries.py
       - run: python -m unittest discover -s python/umf_codegen/tests -v

@@ -3,6 +3,7 @@
   "generator": "generatePythonClient",
   "engine": "mini-racer==0.14.1",
   "v8": "14.4.258.23",
+  "bundleSha256": "f9b935035f5a31231b55d2c7fd71d0b33a23ee0fb5d3e0a0212af105d084e986",
   "builder": "bun@1.4.3",
   "license": "MIT OR Apache-2.0",
   "inputs": {
@@ -211,7 +212,8 @@
     "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
     "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
     "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
-    "scripts/build-codegen.ts": "4ac1db5196a949ca3c5ad9a966fb5291dfba0b94684e29d16254cdf8540c312f"
+    "scripts/build-codegen.ts": "3312a80bcbf9469ecd5679138f3827fbc6ce5c070c35ed79120dcb87e75b2ce3",
+    "scripts/codegen/gzip.ts": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3"
   },
   "dependencies": [
     {
@@ -256,7 +258,7 @@
     }
   ],
   "files": {
-    "generator.js.gz": "e6bb8f99d933c76a5af07cb278a9c4e788574850d6a4420086ed0f98b395c6f9",
+    "generator.js.gz": "19a62bd6848a4d8794a71fd399905c4239c48788975a609b29d6e19122831e4f",
     "notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
     "notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
     "notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",

@@ -251,3 +251,38 @@ including the token regression, and22 installed session controls pass. The
 receipt includes both exact host/compiler wheel hashes. Hosted native CI now
 uses the immutable published Linux Weft0.4.44 wheel with its observed SHA-256,
 separate from the locally rebuilt macOS compiler cohort.
+
+
+## Hosted qualification and repair at P1 source publication
+
+Commit5abcdcb47 was pushed to `codex/praxis-p1-lifecycle`. At that exact head,
+[Typed access boundaries run39255052416](https://github.com/DocumentDrivenDX/umf/actions/runs/39255052416)
+passes both installed Pydantic jobs, the source-boundary job, the native Linux
+PostgreSQL18.6 session job and macOS embedded-codegen parity. Linux codegen
+freshness failed because the gzip asset differed between native builders; this
+was not treated as a passing Linux qualification. Separately,
+[Python support run39255052415](https://github.com/DocumentDrivenDX/umf/actions/runs/39255052415)
+passed core tests but reported41 Ruff diagnostics across inherited and new code.
+
+The repair uses deterministic RFC1952 metadata and fixed RFC1951 stored blocks;
+wheel packaging supplies compression. Six empty/block-boundary cases round-trip
+through a standard gzip decoder with18 assertions. This keeps one byte-stable
+universal asset without depending on native compressor behavior. Complete15-case
+installed parity, writer/integrity controls, source/sdist wheel equality and
+strict typing still pass. The asset freshness check now reports expected/observed
+hashes and the uncompressed bundle hash if a future platform differs.
+
+Ruff0.17.1 now passes the entire Python tree: imports/exports and test context
+syntax were corrected directly. Narrow inline annotations retain intentional
+public Pydantic sentinel re-exports, asynchronous-callable introspection and
+rollback/recovery catches that must include cancellation/interruption. No global
+lint rule was disabled. The rebuilt installed host still passes22 session and
+seven binding identity tests; all40 live native assertions also pass after the
+mechanical cleanup. Exact candidate receipts are updated; hosted Linux replay
+of the repaired source remains a separate gate.
+
+Weft work continues in isolated `/private/tmp/umf-praxis-weft`, branch
+`codex/praxis-lifecycle`, fromfe3864c538bfab407ede0024f8366abb9b054c5e.
+The original Weft checkout/branch is preserved. No Weft lifecycle source change
+or prerelease is claimed yet; production DB-API/compiler execution and remaining
+physical-policy/deployment/mutation gates still govern the full goal.

@@ -9,7 +9,15 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import AbstractAsyncContextManager, asynccontextmanager
 from typing import Any, Literal
 
-from .session_policy import GET_SETTING, ROLE_CHECK, SET_LOCAL, SessionError, SessionIdentity, SessionPolicy, verify_role
+from .session_policy import (
+    GET_SETTING,
+    ROLE_CHECK,
+    SET_LOCAL,
+    SessionError,
+    SessionIdentity,
+    SessionPolicy,
+    verify_role,
+)
 
 
 async def _finish(operation: Awaitable[None]) -> None:
@@ -119,7 +127,7 @@ class AsyncSession:
                                     if not owned:
                                         for name, value in previous.items():
                                             await cursor.execute(SET_LOCAL, (name, value))
-                            except BaseException:
+                            except BaseException:  # noqa: BLE001 -- cleanup must roll back even cancellation
                                 failure = sys.exc_info()
                         try:
                             await transaction.__aexit__(*failure)

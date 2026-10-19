@@ -197,8 +197,8 @@ class UnifiedBindingIdentityTests(unittest.TestCase):
         self.assertEqual(received, [{"replacement": "next"}])
 
     def test_exact_wire_numeric_tokens_refuse_non_json_forms(self) -> None:
-        from umf_access.unified._binding import _wire_value
         from umf_access.unified import UnifiedAccessError
+        from umf_access.unified._binding import _wire_value
         for scalar, tag, invalid in (
             ("integer", "integerToken", ["--1", "¹", "01", "+1", " 1", "1_0"]),
             ("decimal", "decimalToken", ["1_0", "+1", "01", " 1", "1.", "NaN"]),

@@ -10,9 +10,9 @@ from decimal import Decimal
 from typing import Generic, Literal, TypeVar, cast, get_args
 
 from pydantic import BaseModel
-from ..types import MISSING
 
 from ..generated_core import CURRENT_CORE_VERSION, CoreVersion
+from ..types import MISSING
 from ._context import CaptureError
 
 

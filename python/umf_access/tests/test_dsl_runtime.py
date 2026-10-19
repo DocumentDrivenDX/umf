@@ -170,8 +170,8 @@ class SchemaIdentityAndContinuations(unittest.TestCase):
     def test_continuation_keeps_key_sort_states_and_target(self):
         from dataclasses import FrozenInstanceError
 
-        from umf_access.types import MISSING
         from umf_access.dsl import Continuation
+        from umf_access.types import MISSING
 
         continuation = Continuation(
             key="o-1",

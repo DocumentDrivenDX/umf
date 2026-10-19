@@ -5,13 +5,20 @@ from __future__ import annotations
 import asyncio
 import json
 import unittest
-from collections.abc import Mapping
 from contextlib import asynccontextmanager, nullcontext
 
-from umf_access.unified import AsyncSession, SyncSession, SyncWeftTableBinding, UnifiedAccessError
-from umf_access.unified.session_binding import AsyncSessionTransport, SyncSessionTransport
-from test_native_sessions import ALICE, BATCH, POLICY, AsyncConnection, Connection
 import test_unified_binding_identity as fixtures
+from test_native_sessions import ALICE, BATCH, POLICY, AsyncConnection, Connection
+from umf_access.unified import (
+    AsyncSession,
+    SyncSession,
+    SyncWeftTableBinding,
+    UnifiedAccessError,
+)
+from umf_access.unified.session_binding import (
+    AsyncSessionTransport,
+    SyncSessionTransport,
+)
 
 
 class Compiler:

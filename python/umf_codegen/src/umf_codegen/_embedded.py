@@ -28,7 +28,12 @@ def execute(request: dict[str, object], timeout_seconds: float) -> dict[str, obj
     try:
         if version("mini-racer") != "0.14.1":
             raise GenerationError("ENGINE_UNAVAILABLE", "Pinned mini-racer 0.14.1 required")
-        from py_mini_racer import MiniRacer, JSTimeoutException, JSOOMException, JSEvalException
+        from py_mini_racer import (
+            JSEvalException,
+            JSOOMException,
+            JSTimeoutException,
+            MiniRacer,
+        )
     except ImportError as error:
         raise GenerationError("ENGINE_UNAVAILABLE", "Pinned mini-racer 0.14.1 required") from error
     root = files("umf_codegen").joinpath("_assets")
