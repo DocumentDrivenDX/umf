@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 import psycopg
 from psycopg import sql
-from umf_access.lifecycle import CatalogError, apply_table_migration, inspect_table_history
+from umf_access.lifecycle import CatalogError, apply_table_migration, inspect_table_history, read_table_head
 from umf_access.lifecycle import ledger as implementation
 
 parser=argparse.ArgumentParser()
@@ -143,6 +143,146 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             context(admin)
             second=apply(admin,forward,first['entryDigest'])
             check('forward-application-increments-generation',second['generation']==2)
+        for identity in (alice,batch):
+            with admin.transaction():
+                admin.execute('SET TRANSACTION READ ONLY')
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(identity)))
+                admin.execute('SET LOCAL search_path=pg_catalog')
+                reference=second['installationReference']
+                head=read_table_head(admin,forward['next'],reference)
+                check('ordinary-read-only-head-'+identity,head['generation']==2 and head['observedPrincipal']==identity and head['lifecycleAdmission'] is False)
+                refuses('stale-head-refuses-'+identity,lambda:read_table_head(admin,initial['next'],first['installationReference']),{'installed-generation-mismatch'})
+                check('stale-head-keeps-caller-healthy-'+identity,admin.execute('SELECT 1').fetchone()==(1,))
+                changed=dict(reference,headDigest='0'*64)
+                refuses('changed-reference-refuses-'+identity,lambda:read_table_head(admin,forward['next'],changed),{'installation-reference-mismatch'})
+                names=[column.name for column in admin.execute(sql.SQL('SELECT * FROM {}').format(sql.Identifier(schema,'umf_lifecycle_head'))).description]
+                check('head-projects-only-approved-metadata-'+identity,names==['generation','head_digest','plan_digest','bundle_digest','source_digest','configuration_digest','native_witness'])
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+            admin.execute('SET LOCAL search_path=pg_catalog')
+            read_table_head(admin,forward['next'],second['installationReference'])
+            started,completed=queue.Queue(),queue.Queue()
+            def head_competing_inspection():
+                try:
+                    with psycopg.connect(args.dsn,autocommit=True) as other,other.transaction():
+                        context(other)
+                        started.put(other.info.backend_pid)
+                        value=inspect(other,forward['next'])
+                    completed.put(value)
+                except BaseException as error:completed.put(error)
+            worker=threading.Thread(target=head_competing_inspection,daemon=True)
+            worker.start()
+            pid=started.get(timeout=10)
+            waiting=False
+            deadline=time.monotonic()+10
+            with psycopg.connect(args.dsn,autocommit=True) as monitor:
+                while time.monotonic()<deadline:
+                    if monitor.execute('SELECT wait_event_type,wait_event FROM pg_catalog.pg_stat_activity WHERE pid=%s',(pid,)).fetchone()==('Lock','advisory'):
+                        waiting=True
+                        break
+                    if not worker.is_alive():break
+                    threading.Event().wait(.02)
+            check('head-shared-lock-survives-function-savepoint-release',waiting)
+        worker.join(timeout=15)
+        check('migrator-unblocks-only-after-reader-transaction-end',not worker.is_alive())
+        competitor=completed.get(timeout=1)
+        if isinstance(competitor,BaseException):raise competitor
+        check('waiting-migrator-verifies-current-generation',competitor['headDigest']==second['headDigest'])
+        refuses('head-never-starts-an-outer-transaction',lambda:read_table_head(admin,forward['next'],second['installationReference']),{'transaction-required'})
+        check('idle-connection-stays-idle',int(admin.info.transaction_status)==0)
+        with admin.transaction():
+            admin.execute('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ')
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+            admin.execute('SET LOCAL search_path=pg_catalog')
+            refuses('head-refuses-stale-snapshot-mode',lambda:read_table_head(admin,forward['next'],second['installationReference']),{'head-context-mismatch'})
+            check('head-snapshot-refusal-keeps-outer-transaction',admin.execute('SELECT 1').fetchone()==(1,))
+        with psycopg.connect(args.dsn,autocommit=True) as holder,holder.transaction():
+            context(holder)
+            lock=int.from_bytes(hashlib.sha256(('umf.table-lifecycle/0.1\0'+schema).encode()).digest()[:8],'big',signed=True)
+            holder.execute('SELECT pg_catalog.pg_advisory_xact_lock(%s)',(lock,))
+            with admin.transaction():
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                admin.execute('SET LOCAL search_path=pg_catalog')
+                before=admin.execute("SELECT current_setting('statement_timeout'),current_setting('lock_timeout')").fetchone()
+                refuses('head-shared-lock-timeout-is-bounded',lambda:read_table_head(admin,forward['next'],second['installationReference'],lock_timeout_ms=50),{'head-observation-failed'})
+                check('head-timeout-restores-caller-settings',admin.execute("SELECT current_setting('statement_timeout'),current_setting('lock_timeout')").fetchone()==before)
+                check('head-timeout-keeps-caller-healthy',admin.execute('SELECT 1').fetchone()==(1,))
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+            admin.execute('SET LOCAL search_path=pg_catalog')
+            from psycopg.rows import dict_row
+            previous_factory=admin.row_factory
+            try:
+                admin.row_factory=dict_row
+                check('head-private-cursors-support-caller-dict-factory',read_table_head(admin,forward['next'],second['installationReference'])['generation']==2)
+                check('head-preserves-caller-row-factory',admin.execute('SELECT 1 AS value').fetchone()=={'value':1})
+            finally:admin.row_factory=previous_factory
+        with admin.transaction():
+            context(admin)
+            reference=inspect(admin,forward['next'])['installationReference']
+            check('reference-reissued-only-after-source-proof',reference==second['installationReference'])
+            check('historical-replay-issues-current-reference',apply(admin,initial)['installationReference']==reference)
+            for label,value in [('database',[0,'another_database']),('schema',[0,0]),('serverVersion',180000)]:
+                changed=json.loads(json.dumps(reference))
+                changed['nativeWitness'][label]=value
+                changed.pop('referenceDigest')
+                changed['referenceDigest']=hashlib.sha256(json.dumps(changed,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+                refuses('head-checks-native-location-'+label,lambda:read_table_head(admin,forward['next'],changed),{'installation-location-mismatch'})
+            with admin.transaction(force_rollback=True):
+                admin.execute('SET LOCAL ROLE NONE')
+                admin.execute(sql.SQL('CREATE ACCESS METHOD {} TYPE TABLE HANDLER pg_catalog.heap_tableam_handler').format(sql.Identifier(schema+'_am')))
+                context(admin)
+                admin.execute(sql.SQL('SET LOCAL default_table_access_method={}').format(sql.Literal(schema+'_am')))
+                refuses('unqualified-default-table-access-method-refuses-before-scratch-ddl',lambda:inspect(admin,forward['next']),{'install-authority-required'})
+                admin.execute('SET LOCAL default_table_access_method=heap')
+                admin.execute(sql.SQL('ALTER TABLE {} SET ACCESS METHOD {}').format(sql.Identifier(schema,'umf_lifecycle_history'),sql.Identifier(schema+'_am')))
+                refuses('unqualified-private-history-access-method-refuses',lambda:inspect(admin,forward['next']),{'ledger-catalog-mismatch'})
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                refuses('ordinary-head-refuses-changed-history-access-method',lambda:read_table_head(admin,forward['next'],reference),{'history-catalog-mismatch'})
+            for label,statement in [
+                ('public-grant',sql.SQL('GRANT SELECT ON {} TO PUBLIC').format(sql.Identifier(schema,'umf_lifecycle_head'))),
+                ('column-grant',sql.SQL('GRANT SELECT(head_digest) ON {} TO {}').format(sql.Identifier(schema,'umf_lifecycle_head'),sql.Identifier(person))),
+                ('invoker',sql.SQL('ALTER VIEW {} SET (security_invoker=true)').format(sql.Identifier(schema,'umf_lifecycle_head'))),
+                ('barrier',sql.SQL('ALTER VIEW {} SET (security_barrier=false)').format(sql.Identifier(schema,'umf_lifecycle_head'))),
+            ]:
+                with admin.transaction(force_rollback=True):
+                    admin.execute(statement)
+                    refuses('head-source-proof-refuses-'+label,lambda:inspect(admin,forward['next']),{'head-view-catalog-mismatch','head-view-privilege-mismatch'})
+                    admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                    refuses('runtime-head-refuses-'+label,lambda:read_table_head(admin,forward['next'],reference),{'head-view-catalog-mismatch','head-observation-failed'})
+                    check('head-drift-keeps-caller-'+label,admin.execute('SELECT 1').fetchone()==(1,))
+            with admin.transaction(force_rollback=True):
+                original_definition=admin.execute('SELECT pg_catalog.pg_get_viewdef(%s::pg_catalog.regclass,true)',(schema+'.umf_lifecycle_head',)).fetchone()[0].rstrip().rstrip(';')
+                admin.execute(sql.SQL('CREATE SEQUENCE {}').format(sql.Identifier(schema,'head_probe')))
+                modified=original_definition+' OFFSET (pg_catalog.nextval('+sql.Literal(schema+'.head_probe').as_string(admin)+') - 1)'
+                admin.execute(sql.SQL('CREATE OR REPLACE VIEW {} AS '+modified).format(sql.Identifier(schema,'umf_lifecycle_head')))
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                refuses('changed-head-definition-refuses-before-execution',lambda:read_table_head(admin,forward['next'],reference),{'head-view-catalog-mismatch'})
+                context(admin)
+                check('untrusted-head-function-never-executed',admin.execute(sql.SQL('SELECT is_called FROM {}').format(sql.Identifier(schema,'head_probe'))).fetchone()==(False,))
+            with admin.transaction(force_rollback=True):
+                admin.execute(sql.SQL('CREATE SEQUENCE {}').format(sql.Identifier(schema,'head_probe')))
+                admin.execute(sql.SQL('ALTER TABLE {} ENABLE ROW LEVEL SECURITY').format(sql.Identifier(schema,'umf_lifecycle_history')))
+                admin.execute(sql.SQL('ALTER TABLE {} FORCE ROW LEVEL SECURITY').format(sql.Identifier(schema,'umf_lifecycle_history')))
+                admin.execute(sql.SQL('CREATE POLICY untrusted ON {} USING (pg_catalog.nextval({})>0)').format(sql.Identifier(schema,'umf_lifecycle_history'),sql.Literal(schema+'.head_probe')))
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                refuses('history-policy-refuses-before-view-execution',lambda:read_table_head(admin,forward['next'],reference),{'history-catalog-mismatch'})
+                context(admin)
+                check('untrusted-history-policy-function-never-executed',admin.execute(sql.SQL('SELECT is_called FROM {}').format(sql.Identifier(schema,'head_probe'))).fetchone()==(False,))
+            with admin.transaction(force_rollback=True):
+                admin.execute(sql.SQL("UPDATE {} SET payload=pg_catalog.jsonb_set(payload,'{{witness,serverVersion}}','0'::pg_catalog.jsonb) WHERE position=2").format(sql.Identifier(schema,'umf_lifecycle_history')))
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                refuses('changed-native-witness-refuses',lambda:read_table_head(admin,forward['next'],reference),{'installed-generation-mismatch'})
+            with admin.transaction(force_rollback=True):
+                original_definition=admin.execute('SELECT pg_catalog.pg_get_viewdef(%s::pg_catalog.regclass,true)',(schema+'.umf_lifecycle_head',)).fetchone()[0]
+                admin.execute(sql.SQL('DROP VIEW {}').format(sql.Identifier(schema,'umf_lifecycle_head')))
+                admin.execute(sql.SQL('CREATE VIEW {} WITH(security_barrier=true,security_invoker=false) AS '+original_definition).format(sql.Identifier(schema,'umf_lifecycle_head')))
+                admin.execute(sql.SQL('GRANT SELECT ON {} TO {},{}').format(sql.Identifier(schema,'umf_lifecycle_head'),sql.Identifier(person),sql.Identifier(batch)))
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                refuses('same-definition-new-native-object-requires-new-reference',lambda:read_table_head(admin,forward['next'],reference),{'head-view-catalog-mismatch'})
+            with admin.transaction(force_rollback=True):
+                admin.execute(sql.SQL('DROP VIEW {}').format(sql.Identifier(schema,'umf_lifecycle_head')))
+                refuses('missing-head-view-cannot-be-exempted',lambda:inspect(admin,forward['next']),{'head-view-missing'})
         with admin.transaction():
             context(admin)
             check('forward-replay-does-not-repeat-ddl',apply(admin,forward,first['entryDigest'])['status']=='already-applied')
@@ -169,7 +309,7 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                     check('history-refusal-keeps-caller-'+label,admin.execute('SELECT 1').fetchone()==(1,))
             for label,statement in [
                 ('metadata-grant',sql.SQL('GRANT SELECT ON {} TO {}').format(sql.Identifier(schema,'umf_lifecycle_history'),sql.Identifier(person))),
-                ('metadata-column',sql.SQL('ALTER TABLE {} ALTER COLUMN plan_digest TYPE pg_catalog.varchar(64)').format(sql.Identifier(schema,'umf_lifecycle_history'))),
+                ('metadata-column',sql.SQL('ALTER TABLE {} ALTER COLUMN migration_id TYPE pg_catalog.varchar(256)').format(sql.Identifier(schema,'umf_lifecycle_history'))),
                 ('metadata-extra-index',sql.SQL('CREATE INDEX extra_metadata ON {}(plan_digest)').format(sql.Identifier(schema,'umf_lifecycle_history'))),
                 ('data-default',sql.SQL("ALTER TABLE {} ALTER COLUMN owner SET DEFAULT 'changed'").format(sql.Identifier(schema,'notes'))),
             ]:
@@ -177,6 +317,9 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                     admin.execute(statement)
                     refuses('native-ledger-drift-refuses-'+label,lambda:inspect(admin,forward['next']),{'ledger-privilege-mismatch','ledger-catalog-mismatch','catalog-mismatch'})
                     check('drift-refusal-keeps-caller-'+label,admin.execute('SELECT 1').fetchone()==(1,))
+                    if label.startswith('metadata-'):
+                        admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(alice)))
+                        refuses('ordinary-head-refuses-history-'+label,lambda:read_table_head(admin,forward['next'],reference),{'history-catalog-mismatch'})
             check('final-history-restores-after-controls',inspect(admin,forward['next'])['headDigest']==second['entryDigest'])
             with admin.transaction(force_rollback=True):
                 admin.execute(sql.SQL("INSERT INTO {} SELECT g,'opaque-'||g,NULL,repeat('a',64),repeat('b',64),'{{}}'::pg_catalog.jsonb FROM pg_catalog.generate_series(3,131) g").format(sql.Identifier(schema,'umf_lifecycle_history')))

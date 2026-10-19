@@ -48,7 +48,7 @@ def _capture_witness(connection: Any, source: dict[str, Any]) -> dict[str, Any]:
     tables = []
     for table in source['expectedCatalog']['tables']:
         name = table['name']
-        relation = _one(connection,"""SELECT c.oid,c.relowner,c.relkind,c.relpersistence,c.relrowsecurity,c.relforcerowsecurity,c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident
+        relation = _one(connection,"""SELECT c.oid,c.relowner,c.relkind,c.relpersistence,c.relrowsecurity,c.relforcerowsecurity,c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,c.relam
 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s""",(schema,name))
         policies = [[audience,command,_one(connection,_POLICY,(schema,name,'umf_'+audience+'_'+command))] for audience in ('person','batch') for command in ('select','insert','update','delete')]
         tables.append({'id':table['id'],'relation':relation,'columns':_columns(connection,schema,name),

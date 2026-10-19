@@ -213,9 +213,9 @@ def _installation(connection: Any, bundle: dict[str, object], *,
             state = _one(connection, """SELECT current_user, r.rolsuper,r.rolbypassrls,r.rolcreatedb,
 r.rolcreaterole,r.rolcanlogin,n.nspowner=r.oid,pg_catalog.current_schemas(false),
 pg_catalog.current_setting('transaction_read_only'),pg_catalog.current_setting('server_version_num')::pg_catalog.int4,
-pg_catalog.current_setting('row_security'),pg_catalog.current_setting('session_replication_role'),pg_catalog.current_setting('server_encoding'),pg_catalog.current_setting('transaction_isolation')
+pg_catalog.current_setting('row_security'),pg_catalog.current_setting('session_replication_role'),pg_catalog.current_setting('server_encoding'),pg_catalog.current_setting('transaction_isolation'),pg_catalog.current_setting('default_table_access_method')
 FROM pg_catalog.pg_roles r JOIN pg_catalog.pg_namespace n ON n.nspname=%s WHERE r.rolname=current_user""", (schema,))
-            if state is None or tuple(state[:9]) != (owner, False, False, False, False, False, True, ["pg_catalog"], "off") or state[9] // 10000 != 18 or tuple(state[10:]) != ('on','origin','UTF8','read committed'):
+            if state is None or tuple(state[:9]) != (owner, False, False, False, False, False, True, ["pg_catalog"], "off") or state[9] // 10000 != 18 or tuple(state[10:]) != ('on','origin','UTF8','read committed','heap'):
                 raise CatalogError("install-authority-required")
             lock = int.from_bytes(hashlib.sha256(("umf.table-lifecycle/0.1\0" + schema).encode()).digest()[:8], "big", signed=True)
             _one(connection, "SELECT pg_catalog.pg_advisory_xact_lock(%s)", (lock,))
@@ -239,16 +239,20 @@ def verify_native_catalog(connection: Any, bundle: dict[str, object], *,
     with _installation(connection, bundle, statement_timeout_ms=statement_timeout_ms,
                        lock_timeout_ms=lock_timeout_ms) as source:
         schema, owner = source["configuration"]["schema"], source["configuration"]["ownerRole"]
+        heap = _one(connection,"SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0]
         for table in source["expectedCatalog"]["tables"]:
+            if _one(connection,"""SELECT c.relkind,c.relam FROM pg_catalog.pg_class c
+JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s""",(schema,table['name'])) != ('r',heap):
+                raise CatalogError('catalog-mismatch')
             relation = _q(schema) + "." + _q(table["name"])
             _execute(connection, "LOCK TABLE " + relation + " IN ACCESS EXCLUSIVE MODE")
         for table in source["expectedCatalog"]["tables"]:
             native = _one(connection, """SELECT c.relkind,c.relrowsecurity,c.relforcerowsecurity,r.rolname,c.relpersistence,
 c.relispartition,c.relhassubclass,EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
-c.relhasrules,EXISTS(SELECT FROM pg_catalog.pg_inherits inh WHERE inh.inhrelid=c.oid),c.relreplident
+c.relhasrules,EXISTS(SELECT FROM pg_catalog.pg_inherits inh WHERE inh.inhrelid=c.oid),c.relreplident,c.relam
 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace JOIN pg_catalog.pg_roles r ON r.oid=c.relowner
 WHERE n.nspname=%s AND c.relname=%s""", (schema, table["name"]))
-            if native != ("r", True, True, owner, "p", False, False, False, False, False, "d"):
+            if native != ("r", True, True, owner, "p", False, False, False, False, False, "d",heap):
                 raise CatalogError("catalog-mismatch")
             _verify_table_shape(connection, source, table)
         _verify_policies(connection, source)

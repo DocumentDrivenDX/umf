@@ -9,6 +9,10 @@ records the separately authorized MIT OR Apache-2.0 source/package changes.
 clients and installed Pydantic 2.13.5/2.14.1 compatibility. [Native per-call session evidence](04-build/evidence/praxis-p1/session-native-postgresql.json)
 now covers scoped Psycopg3, Psycopg2 and SQLAlchemy Core/PostgreSQL18 sessions.
 Production artifact execution and release/index delivery remain open. The
+[source-proved native head observer](04-build/evidence/praxis-p2/native-head.json)
+adds a private-history metadata projection, trusted installation references and
+read-only person/batch current-generation checks. Full data admission remains
+open. The
 [local Python generator candidate](04-build/evidence/praxis-p1/python-codegen.json)
 runs the original portable generator without external Bun/Node; Linux/macOS
 hosted checks pass. Publication gates remain open.

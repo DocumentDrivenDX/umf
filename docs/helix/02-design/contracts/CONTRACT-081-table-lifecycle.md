@@ -462,6 +462,9 @@ The installed Psycopg3 administrative entry points now are
 and `inspect_table_history(connection,bundle,person_roles=...)`. They require a
 healthy, writable caller-owned READ COMMITTED transaction, UTF8 server encoding,
 pg_catalog resolution, `row_security=on` and `session_replication_role=origin`.
+The bounded native profile requires persistent ordinary heap tables and
+default_table_access_method=heap before reparsing scratch DDL. Native witnesses
+retain the actual table access-method OID; private history explicitly uses heap.
 They preserve caller row factories and timeout settings. Success is
 `applied-in-transaction`, with caller commit responsibility; identical historical
 replay reports `already-applied` and the verified current generation. Inspection
@@ -477,6 +480,59 @@ qualified native scope is PostgreSQL18.6 with the recorded wheel/source hashes;
 managed engines, broader migration operations and ordinary data admission remain
 separate gates. Authored role alias-map order cannot affect emitted native SQL or
 invalidate original-plan verification after JSONB key reordering.
+
+The native candidate additionally installs a fixed `umf_lifecycle_head` view in
+the same transaction as history. It projects only generation, entry/plan/bundle/
+source/configuration digests and the source-verified native witness from the
+latest entry. It never projects original source plans or seed contents. The
+configured install owner owns the view; only source person/batch audiences
+receive SELECT, without grant options or column grants. PUBLIC receives none.
+`security_barrier=true` and `security_invoker=false` retain the private history
+boundary. The complete view definition, relation/column metadata, rewrite-rule
+inventory/dependencies and ACLs must match a freshly reparsed fixed definition
+on a protected scratch view. Its presence is not an inventory exemption based
+on a name. Missing or altered metadata refuses; no implicit upgrade of earlier
+unpublished ledger-only installations is performed.
+
+After complete original-source native verification, application, replay and
+administrative inspection return an `installationReference` with version
+`umf.table-installation/0.1`. It binds current bundle/source/configuration,
+generation/head/plan digests, actual head-view OID and proven catalog shape,
+the source-proved private-history catalog shape and the installed table witness.
+Its canonical consistency digest is not an
+authentication token. Trusted deployment code persists the reference only
+after commit, or obtains it through fresh administrative inspection after an
+uncertain commit. An untrusted request cannot choose the expected reference.
+Historical migration replay issues a reference for the verified current cohort.
+References use the bounded native witness JSON subset and a16MiB serialized cap.
+
+The explicit Psycopg3 `read_table_head(connection,bundle,reference,...)` observer
+requires an active READ COMMITTED transaction, exact pg_catalog resolution,
+PG18/UTF8, row_security on and session_replication_role origin. Read-only
+transactions are supported. It verifies the original source and trusted
+reference, obtains the module's shared transaction advisory lock and compares
+the view OID/shape and private-history relation/column/constraint/index/ACL shape,
+including access method and RLS/rule/trigger absence, before locking the known
+view. Both shapes are rechecked after that lock. Only then may it execute
+the view and compare the current digests and native witness. A modified view
+must refuse before executing any newly introduced function. Recreating an
+equivalent view at a different OID requires a freshly source-proved reference.
+The actual database OID/name, schema OID/owner and complete server-version number
+must also match the issued native witness; matching copied metadata alone cannot
+establish its location in the trusted connection context. These identifiers are
+cluster-local metadata; the host still selects and authenticates the connection
+endpoint.
+
+The shared lock survives the observer's savepoint release until the caller
+ends the transaction, excluding compliant migrators across later work in that
+transaction. Timeouts are bounded1..300000ms and restored; errors roll back the
+observer savepoint and preserve a healthy outer transaction and row factory.
+The method never begins an outer transaction, commits, changes identity or
+retries. It returns observedPrincipal and digests with lifecycleAdmission false.
+This is current-head observation, not operation admission, principal validation,
+live data-table/privilege verification or a freeze of native role catalogs.
+Async/other-driver observer composition and complete generated execution remain
+separate qualification gates.
 
 This plan-generation subset supports initial deployment and appended tables.
 Root/module metadata, existing elements/relationships and native tables,

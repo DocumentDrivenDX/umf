@@ -532,3 +532,50 @@ pins this exact pushed successor while retaining the earlier feature source.
 This supersedes the compiler's earlier compilation-only browser qualification,
 without claiming native execution or closing any remaining release gate. New
 hosted candidate jobs remain pending; no full Praxis prerelease is published.
+
+
+## Source-proved native head observation — 2026-10-19
+
+The current native candidate installs a fixed security-barrier metadata view over
+private history and proves its exact native definition, columns, rules,
+dependencies and SELECT-only audience grants from a freshly reparsed fixed view.
+No original plan or seed projection is granted. Full source-proved application,
+replay and inspection issue a bounded trusted-host installation reference that
+binds current digests/generation, view OID/shape, private history shape and native
+table witness. Historical replay issues the current cohort's reference. A
+consistency hash is never treated as request authentication or install approval.
+
+`read_table_head` now observes this reference through an active Psycopg3
+READ COMMITTED transaction, including read-only person/batch transactions. It
+checks actual database/schema/server context, source metadata before opening
+known dependencies, then rechecks locked shapes before selecting the view. The
+shared lifecycle lock remains until the caller ends its transaction. Current
+digests/witness must match; no outer begin/commit, role change or retry occurs.
+The native profile requires ordinary heap tables and heap scratch DDL, retaining
+actual access-method identity instead of silently accepting a changed native AM.
+
+Module ownership: `head_view` owns fixed projection/source-reparse proof; `head`
+owns trusted reference consistency and the synchronous metadata observation
+boundary; `ledger_schema` owns private history shape and proof; `ledger` issues
+references only after complete native source correspondence. No generator, DSL,
+ordinary-runtime or target import allowance was broadened.
+
+The [current packet](evidence/praxis-p2/native-head.json) records101 native
+assertions for baseline source and101 for the same fixture with eleven declared
+operations,112 existing catalog assertions,50 installed Weft sync/async operation
+assertions and22 session unit tests. Actual side-effect sequences prove neither
+a modified view nor new private-history RLS executes before refusal. Native
+concurrency proves migrators wait past function savepoint release until caller
+transaction completion. Real lock timeout, stale snapshot/head, new native OID,
+source/metadata drift and dict-row-factory controls pass. Installed wheel/source
+hashes and dual-license payload audit are retained. This supersedes the earlier
+missing current-head observation component, not the full data-admission gate.
+
+Weft4e0abd77's browser-enabled hosted run39315199160 is now green. Its pinned SDK
+is the earlier6d623fc52 cohort; the new SDK/native head CI outcome remains pending
+push. Existing CI automatically runs both expanded native fixtures. Async and
+other-driver head composition, live data-table/privilege/current-principal
+admission, generated methods, authenticated cursors, durable replay and all
+remaining lifecycle/consumer/release gates stay required. Earlier unpublished
+ledger-only installations refuse without an implicit metadata upgrade. No new
+release was published and the full Praxis goal remains active.

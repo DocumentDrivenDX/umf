@@ -19,6 +19,8 @@ from .catalog import (
     verify_native_catalog,
 )
 from .ledger_schema import HISTORY, _create_history, _verify_history_schema
+from .head import _issue_reference
+from .head_view import _create_head_view
 from .privileges import verify_native_privileges
 from .witness import _capture_witness, _entry_digest
 
@@ -112,6 +114,7 @@ def apply_table_migration(connection: Any, plan: dict[str, object], *, approved_
             return {'status':'already-applied','migrationId':source_plan['id'],'entryDigest':entry['entryDigest'],
                     'headDigest':history[-1]['entryDigest'],'generation':len(history),
                     'installedBundleDigest':history[-1]['plan']['toBundleDigest'],
+                    'installationReference':_issue_reference(connection,history[-1]['plan']['next'],history[-1]),
                     'commitResponsibility':'caller','lifecycleAdmission':False}
         if (expected_head != (history[-1]['entryDigest'] if history else None)
                 or source_plan['predecessor'] != ({'id':history[-1]['plan']['id'],'digest':history[-1]['plan']['digest']} if history else None)
@@ -130,6 +133,7 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
             _execute(connection,step['sql'])
         if not exists:
             _create_history(connection,schema)
+            _create_head_view(connection,source)
         verify_native_catalog(connection,source,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
         verify_native_privileges(connection,source,person_roles=person_roles,
                                  statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
@@ -146,6 +150,7 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
             raise CatalogError('ledger-digest-conflict')
         return {'status':'applied-in-transaction','migrationId':source_plan['id'],'entryDigest':entry_digest,
                 'headDigest':entry_digest,'generation':position,'installedBundleDigest':source['bundleDigest'],
+                'installationReference':_issue_reference(connection,source,stored[-1]),
                 'commitResponsibility':'caller','lifecycleAdmission':False}
 
 
@@ -155,7 +160,8 @@ def inspect_table_history(connection: Any, bundle: dict[str, object], *, person_
     """Observe durable history on a fresh transaction after an uncertain commit.
 
     Caller supplies its expected current source bundle; no stale cohort is
-    silently substituted. This administrative API does not expose source/seeds.
+    silently substituted. The reference includes native metadata, without
+    returning original plans or seed payloads.
     """
     with _installation(connection,bundle,statement_timeout_ms=statement_timeout_ms,
                        lock_timeout_ms=lock_timeout_ms) as source:
@@ -169,5 +175,6 @@ def inspect_table_history(connection: Any, bundle: dict[str, object], *, person_
         _verify_installed(connection,history[-1],person_roles,statement_timeout_ms,lock_timeout_ms)
         return {'generation':len(history),'headDigest':history[-1]['entryDigest'],
                 'installedBundleDigest':source['bundleDigest'],
+                'installationReference':_issue_reference(connection,source,history[-1]),
                 'entries':[{'migrationId':e['plan']['id'],'planDigest':e['plan']['digest'],'entryDigest':e['entryDigest']} for e in history],
                 'lifecycleAdmission':False}

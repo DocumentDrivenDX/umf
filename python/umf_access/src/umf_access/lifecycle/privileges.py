@@ -12,6 +12,7 @@ from uuid import uuid4
 
 from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .ledger_schema import HISTORY, _verify_history_schema
+from .head_view import HEAD, _verify_head_view
 from .roles import verify_native_role_scope
 
 _TABLE_ACL = """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
@@ -120,6 +121,9 @@ AND c.relkind NOT IN ('i','I') ORDER BY c.relname""",(schema_id,))
         expected_inventory = [(t['name'],) for t in source['expectedCatalog']['tables']]
         if _verify_history_schema(connection,source):
             expected_inventory.append((HISTORY,))
+            if not _verify_head_view(connection,source):
+                raise CatalogError('head-view-missing')
+            expected_inventory.append((HEAD,))
         if inventory != sorted(expected_inventory):
             raise CatalogError('catalog-mismatch')
         for table in source['expectedCatalog']['tables']:

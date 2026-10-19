@@ -14,6 +14,8 @@ from .catalog import (
     _index_shapes,
     _one,
     _q,
+    _CONSTRAINTS as _NATIVE_CONSTRAINTS,
+    _INDEXES as _NATIVE_INDEXES,
 )
 
 HISTORY = 'umf_lifecycle_history'
@@ -36,6 +38,31 @@ _CONSTRAINTS = [
     ('object_payload',"CHECK (pg_catalog.jsonb_typeof(\"payload\")='object')"),
 ]
 
+_STATE = """SELECT c.relkind,c.relpersistence,r.rolname,c.relrowsecurity,c.relforcerowsecurity,
+c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,
+EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
+EXISTS(SELECT FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid),
+EXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),r.oid,c.oid,c.relam
+FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+JOIN pg_catalog.pg_roles r ON r.oid=c.relowner WHERE n.nspname=%s AND c.relname=%s"""
+
+
+def _history_shape(connection: Any, schema: str) -> dict[str, Any] | None:
+    """Read-only snapshot; issuers must first reparse the fixed original schema."""
+    state = _one(connection,_STATE,(schema,HISTORY))
+    if state is None:
+        return None
+    oid = state[13]
+    return {'state':state,'columns':_columns(connection,schema,HISTORY),
+            'constraints':_all(connection,_NATIVE_CONSTRAINTS,(schema,HISTORY)),
+            'indexes':_all(connection,_NATIVE_INDEXES,(schema,HISTORY)),
+            'acl':_all(connection,"""SELECT grantor,grantee,privilege_type,is_grantable
+FROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))
+WHERE c.oid=%s ORDER BY 1,2,3,4""",(oid,)),
+            'columnAcl':_all(connection,"""SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x
+WHERE a.attrelid=%s ORDER BY 1,2,3,4,5""",(oid,))}
+
 
 def _create_history(connection: Any, schema: str, name: str = HISTORY) -> dict[str, str]:
     aliases: dict[str, str] = {}
@@ -44,26 +71,22 @@ def _create_history(connection: Any, schema: str, name: str = HISTORY) -> dict[s
         constraint = original if name == HISTORY else 'umf_verify_'+uuid4().hex
         aliases[constraint] = original
         definitions.append('CONSTRAINT '+_q(constraint)+' '+body)
-    _execute(connection,'CREATE TABLE '+_q(schema)+'.'+_q(name)+' ('+', '.join(definitions)+')')
+    _execute(connection,'CREATE TABLE '+_q(schema)+'.'+_q(name)+' ('+', '.join(definitions)+') USING heap')
     return aliases
 
 
 def _verify_history_schema(connection: Any, source: dict[str, Any]) -> bool:
     """Caller holds the administrative scope; verify even before reading payload."""
     schema, owner = source['configuration']['schema'], source['configuration']['ownerRole']
-    query = """SELECT c.relkind,c.relpersistence,r.rolname,c.relrowsecurity,c.relforcerowsecurity,
-c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,
-EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
-EXISTS(SELECT FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid),
-EXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),r.oid,c.oid
-FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
-JOIN pg_catalog.pg_roles r ON r.oid=c.relowner WHERE n.nspname=%s AND c.relname=%s"""
+    query = _STATE
     state = _one(connection,query,(schema,HISTORY))
     if state is None:
         return False
     if tuple(state[:12]) != ('r','p',owner,False,False,False,False,False,'d',False,False,False):
         raise CatalogError('ledger-catalog-mismatch')
-    owner_id, relation_id = state[12:]
+    owner_id, relation_id = state[12:14]
+    if state[14] != _one(connection,"SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0]:
+        raise CatalogError('ledger-catalog-mismatch')
     _execute(connection,'LOCK TABLE '+_q(schema)+'.'+_q(HISTORY)+' IN ACCESS EXCLUSIVE MODE')
     if _one(connection,query,(schema,HISTORY)) != state:
         raise CatalogError('ledger-catalog-mismatch')
