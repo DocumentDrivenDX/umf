@@ -11,7 +11,10 @@ now covers scoped Psycopg3, Psycopg2 and SQLAlchemy Core/PostgreSQL18 sessions.
 Production artifact execution and release/index delivery remain open. The
 [source-proved native head observer](04-build/evidence/praxis-p2/native-head.json)
 adds a private-history metadata projection, trusted installation references and
-read-only person/batch current-generation checks. Full data admission remains
+read-only person/batch current-generation checks. The
+[per-call adapter evidence](04-build/evidence/praxis-p2/native-head-adapter-execution.json)
+qualifies sync/async native drivers, real pools and cancellation for this metadata
+observer. Full data admission remains
 open. The
 [local Python generator candidate](04-build/evidence/praxis-p1/python-codegen.json)
 runs the original portable generator without external Bun/Node; Linux/macOS

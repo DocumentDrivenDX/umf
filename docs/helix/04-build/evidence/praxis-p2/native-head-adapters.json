@@ -1,0 +1,143 @@
+{
+  "scope": "installed shared native-head observation through per-call session adapters and real pools; no data admission",
+  "postgresql": 180006,
+  "versions": {
+    "umf_access": "0.1.0.dev2",
+    "umf_codegen": "0.1.0a1",
+    "psycopg": "3.2.13",
+    "psycopg2-binary": "2.9.11",
+    "SQLAlchemy": "2.0.44",
+    "greenlet": "3.2.4",
+    "psycopg-pool": "3.3.3",
+    "pydantic": "2.13.5"
+  },
+  "plansSha256": "30359f9ae272fed201f69dd885d744bf5ff25128172bc242c0ea4b124e4fb306",
+  "observations": [
+    "psycopg3-person-alice",
+    "psycopg3-person-bob",
+    "psycopg3-batch-job",
+    "psycopg3-pool-returned-after-success",
+    "psycopg3-unknown-person-before-lease",
+    "psycopg3-denial-never-acquires",
+    "psycopg3-stale-source-rollback",
+    "psycopg3-pool-returned-after-stale",
+    "psycopg3-caller-remains-active",
+    "psycopg3-caller-role-and-settings-restored",
+    "psycopg3-caller-dict-row-factory-preserved",
+    "psycopg3-all-leases-complete",
+    "psycopg2-person-alice",
+    "psycopg2-person-bob",
+    "psycopg2-batch-job",
+    "psycopg2-pool-returned-after-success",
+    "psycopg2-unknown-person-before-lease",
+    "psycopg2-denial-never-acquires",
+    "psycopg2-stale-source-rollback",
+    "psycopg2-pool-returned-after-stale",
+    "psycopg2-caller-remains-active",
+    "psycopg2-caller-role-and-settings-restored",
+    "psycopg2-caller-dict-row-factory-preserved",
+    "psycopg2-all-leases-complete",
+    "sqlalchemy-psycopg-person-alice",
+    "sqlalchemy-psycopg-person-bob",
+    "sqlalchemy-psycopg-batch-job",
+    "sqlalchemy-psycopg-pool-returned-after-success",
+    "sqlalchemy-psycopg-unknown-person-before-lease",
+    "sqlalchemy-psycopg-denial-never-acquires",
+    "sqlalchemy-psycopg-stale-source-rollback",
+    "sqlalchemy-psycopg-pool-returned-after-stale",
+    "sqlalchemy-psycopg-caller-remains-active",
+    "sqlalchemy-psycopg-caller-role-and-settings-restored",
+    "sqlalchemy-psycopg-all-leases-complete",
+    "sqlalchemy-psycopg2-person-alice",
+    "sqlalchemy-psycopg2-person-bob",
+    "sqlalchemy-psycopg2-batch-job",
+    "sqlalchemy-psycopg2-pool-returned-after-success",
+    "sqlalchemy-psycopg2-unknown-person-before-lease",
+    "sqlalchemy-psycopg2-denial-never-acquires",
+    "sqlalchemy-psycopg2-stale-source-rollback",
+    "sqlalchemy-psycopg2-pool-returned-after-stale",
+    "sqlalchemy-psycopg2-caller-remains-active",
+    "sqlalchemy-psycopg2-caller-role-and-settings-restored",
+    "sqlalchemy-psycopg2-all-leases-complete",
+    "async-psycopg3-sync-api-inside-running-loop",
+    "async-psycopg3-person-alice",
+    "async-psycopg3-person-bob",
+    "async-psycopg3-batch-job",
+    "async-psycopg3-pool-returned-after-success",
+    "async-psycopg3-stale-source-rollback",
+    "async-psycopg3-pool-returned-after-stale",
+    "async-psycopg3-caller-remains-active",
+    "async-psycopg3-caller-restored",
+    "async-psycopg3-caller-dict-row-factory-preserved",
+    "async-psycopg3-cancellation-observes-real-native-wait",
+    "async-psycopg3-repeated-cancellation-propagates",
+    "async-psycopg3-cancelled-lease-exits-before-return",
+    "async-psycopg3-pool-usable-with-new-batch-identity",
+    "async-psycopg3-all-leases-complete",
+    "async-sqlalchemy-psycopg3-sync-api-inside-running-loop",
+    "async-sqlalchemy-psycopg3-person-alice",
+    "async-sqlalchemy-psycopg3-person-bob",
+    "async-sqlalchemy-psycopg3-batch-job",
+    "async-sqlalchemy-psycopg3-pool-returned-after-success",
+    "async-sqlalchemy-psycopg3-stale-source-rollback",
+    "async-sqlalchemy-psycopg3-pool-returned-after-stale",
+    "async-sqlalchemy-psycopg3-caller-remains-active",
+    "async-sqlalchemy-psycopg3-caller-restored",
+    "async-sqlalchemy-psycopg3-cancellation-observes-real-native-wait",
+    "async-sqlalchemy-psycopg3-repeated-cancellation-propagates",
+    "async-sqlalchemy-psycopg3-cancelled-lease-exits-before-return",
+    "async-sqlalchemy-psycopg3-pool-usable-with-new-batch-identity",
+    "async-sqlalchemy-psycopg3-all-leases-complete"
+  ],
+  "leases": {
+    "psycopg3": {
+      "acquired": 4,
+      "released": 4
+    },
+    "psycopg2": {
+      "acquired": 4,
+      "released": 4
+    },
+    "sqlalchemy-psycopg": {
+      "acquired": 4,
+      "released": 4
+    },
+    "sqlalchemy-psycopg2": {
+      "acquired": 4,
+      "released": 4
+    },
+    "async-psycopg3": {
+      "acquired": 6,
+      "released": 6,
+      "pids": [
+        272,
+        272,
+        272,
+        272,
+        272,
+        272
+      ]
+    },
+    "async-sqlalchemy-psycopg3": {
+      "acquired": 6,
+      "released": 6,
+      "pids": [
+        309,
+        309,
+        309,
+        309,
+        309,
+        340
+      ]
+    }
+  },
+  "lifecycleAdmission": false,
+  "unqualified": [
+    "live data-operation native admission",
+    "generated native table methods",
+    "authenticated cursors",
+    "durable replay",
+    "managed Lakebase",
+    "full Praxis release"
+  ]
+}

@@ -7,6 +7,7 @@ import {tableOperationSource} from './table-operation-fixture';
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
 const prefix='p3_'+randomUUID().replaceAll('-','').slice(0,12)+'_';
 const configuration={module:'demo',schema:prefix+'schema',ownerRole:prefix+'owner',personRole:prefix+'person',batchRole:prefix+'batch',groupRoles:{readers:prefix+'readers',aa:prefix+'aa',z:prefix+'z'}};
+if(process.argv.includes('--quoted-schema'))configuration.schema+='%';
 function deployed(doc:any){
  doc.modules[0].extensions['umf.tables'].tables[0].policy.person.select={kind:'memberOf',field:{module:'demo',element:'owner'}};
  const r=compileTableDeployment({text:JSON.stringify(doc),configuration});if(r.status!=='compiled')throw Error(JSON.stringify(r));return r.bundle;

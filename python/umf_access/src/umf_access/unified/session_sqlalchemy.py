@@ -59,11 +59,14 @@ class _Cursor:
     def execute(self, statement, parameters=None):
         if self.result is not None:
             self.result.close()
-        self.result = self.connection.exec_driver_sql(statement, parameters)
+        self.result = self.connection.exec_driver_sql(statement, parameters, execution_options={'no_parameters':True})
 
     def fetchone(self):
         row = self.result.fetchone()
         return None if row is None else tuple(row)
+
+    def fetchall(self):
+        return [tuple(row) for row in self.result.fetchall()]
 
 
 class _SyncConnection(_State):
@@ -90,10 +93,13 @@ class _AsyncCursor(_Cursor):
     async def execute(self, statement, parameters=None):
         if self.result is not None:
             self.result.close()
-        self.result = await self.connection.exec_driver_sql(statement, parameters)
+        self.result = await self.connection.exec_driver_sql(statement, parameters, execution_options={'no_parameters':True})
 
     async def fetchone(self):
         return super().fetchone()
+
+    async def fetchall(self):
+        return super().fetchall()
 
 
 class _AsyncConnection(_State):
@@ -127,9 +133,15 @@ class SQLAlchemySession(SyncSession):
     def _prepare_connection(self, connection):
         return _SyncConnection(connection)
 
+    def _control_cursor(self, connection):
+        return connection.cursor()
+
 
 class AsyncSQLAlchemySession(AsyncSession):
     """Async SQLAlchemy 2 Core counterpart, using its PostgreSQL Psycopg3 driver."""
 
     def _prepare_connection(self, connection):
         return _AsyncConnection(connection)
+
+    def _control_cursor(self, connection):
+        return connection.cursor()

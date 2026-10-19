@@ -16,6 +16,7 @@ from .catalog import (
     _installation,
     _one,
     _q,
+    _q_bound,
     verify_native_catalog,
 )
 from .ledger_schema import HISTORY, _create_history, _verify_history_schema
@@ -141,7 +142,7 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
         position = len(history)+1
         entry_digest = _entry_digest(position,expected_head,source_plan['digest'],witness)
         payload = {'plan':source_plan,'witness':witness}
-        _execute(connection,'INSERT INTO '+_q(schema)+'.'+_q(HISTORY)+' (position,migration_id,predecessor_entry_digest,plan_digest,entry_digest,payload) VALUES (%s,%s,%s,%s,%s,%s)',
+        _execute(connection,'INSERT INTO '+_q_bound(schema)+'.'+_q_bound(HISTORY)+' (position,migration_id,predecessor_entry_digest,plan_digest,entry_digest,payload) VALUES (%s,%s,%s,%s,%s,%s)',
                  (position,source_plan['id'],expected_head,source_plan['digest'],entry_digest,Jsonb(payload)))
         # Also verify the newly persisted JSONB round trip, full chain and caps
         # before exposing a result. No partially durable history is accepted.

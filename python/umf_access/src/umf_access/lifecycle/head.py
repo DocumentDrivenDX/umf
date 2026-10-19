@@ -9,11 +9,14 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any, cast
 
-from .catalog import CatalogError, _execute, _one, _q
-from .head_view import HEAD, _head_oid, _head_shape
-from .ledger_schema import _history_shape
+from .catalog import CatalogError, _q
+from .probe import _Query, _run
+from .head_view import HEAD, _head_oid, _head_shape, _head_oid_steps, _head_shape_steps
+from .ledger_schema import _history_shape, _history_shape_steps
 from .witness import _json_bytes
 
 _REFERENCE_KEYS = {'version','bundleDigest','sourceDigest','configurationDigest',
@@ -61,77 +64,107 @@ def _checked_reference(reference: dict[str, object], source: dict[str, Any]) -> 
     return cast(dict[str, Any],checked)
 
 
-def read_table_head(connection: Any, bundle: dict[str, object], reference: dict[str, object], *,
-                    statement_timeout_ms: int = 30_000, lock_timeout_ms: int = 5_000) -> dict[str, object]:
-    """Observe a trusted installation's current head as an ordinary Psycopg3 role.
+class TableHeadProbe:
+    """Prepared library-owned metadata checks; not a data admission capability.
 
-    The host persists the administrative reference after commit and supplies it
-    with the expected original bundle. A hash is consistency, not authentication.
-    Requires an active READ COMMITTED transaction, including read-only ones.
-    Holds the shared lifecycle lock until the caller ends that transaction;
-    failure rolls back only this function's savepoint. No data admission occurs.
+    Construct with prepare_table_head. Source and expected native metadata are
+    copied by their original verifiers. Drivers only schedule its fixed queries.
     """
-    from psycopg import Error as NativeError
-    from umf_codegen import verify_table_deployment
+    __slots__ = ('_source','_expected','_statement_timeout_ms','_lock_timeout_ms')
 
+    def __init__(self, source: dict[str, Any], expected: dict[str, Any], statement_timeout_ms: int, lock_timeout_ms: int):
+        self._source,self._expected = source,expected
+        self._statement_timeout_ms,self._lock_timeout_ms = statement_timeout_ms,lock_timeout_ms
+
+    @property
+    def schema(self) -> str:
+        return self._source['configuration']['schema']
+
+    def steps(self) -> Any:
+        return _head_steps(self._source,self._expected,self._statement_timeout_ms,self._lock_timeout_ms)
+
+
+def prepare_table_head(bundle: dict[str, object], reference: dict[str, object], *,
+                       statement_timeout_ms: int = 30_000, lock_timeout_ms: int = 5_000) -> TableHeadProbe:
+    """Reverify original source and trusted reference before any lease or query.
+
+    The reference is trusted deployment configuration, never wire authority.
+    No connection, executable callback or SQL text is accepted from a document.
+    """
     for timeout in (statement_timeout_ms,lock_timeout_ms):
         if type(timeout) is not int or not 1 <= timeout <= 300_000:
             raise ValueError('head timeouts must be 1..300000 milliseconds')
     try:
-        source = cast(dict[str, Any],verify_table_deployment(bundle))
+        asyncio.get_running_loop()
+    except RuntimeError:
+        source = _original_source(bundle)
+    else:
+        # A synchronous host call remains synchronous inside a running loop.
+        # Only bounded CPU verification moves to a worker, never the connection;
+        # no coroutine is run or scheduled by this synchronous entry point.
+        with ThreadPoolExecutor(max_workers=1) as worker:
+            source = worker.submit(_original_source,bundle).result()
+    return TableHeadProbe(source,_checked_reference(reference,source),statement_timeout_ms,lock_timeout_ms)
+
+
+def _original_source(bundle: dict[str, object]) -> dict[str, Any]:
+    from umf_codegen import verify_table_deployment
+    try:
+        return cast(dict[str, Any],verify_table_deployment(bundle))
     except (ValueError,TypeError):
         raise CatalogError('source-mismatch') from None
-    expected = _checked_reference(reference,source)
+
+
+def read_table_head(connection: Any, bundle: dict[str, object], reference: dict[str, object], *,
+                    statement_timeout_ms: int = 30_000, lock_timeout_ms: int = 5_000) -> dict[str, object]:
+    """Psycopg3 caller-transaction observer; never commit or admit data methods.
+
+    Ordinary adapters schedule the same prepared checks through per-call leases.
+    The shared lifecycle lock lasts until the caller ends this transaction.
+    """
+    from psycopg import Error as NativeError
+
+    probe = prepare_table_head(bundle,reference,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
     if int(connection.info.transaction_status) != 2:
         raise CatalogError('transaction-required')
-    schema = source['configuration']['schema']
     try:
         with connection.transaction():
-            previous = _one(connection,"SELECT pg_catalog.current_setting('statement_timeout'),pg_catalog.current_setting('lock_timeout')")
-            _one(connection,"SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)",(str(statement_timeout_ms),str(lock_timeout_ms)))
-            state = _one(connection,"""SELECT current_user,pg_catalog.current_schemas(false),
-pg_catalog.current_setting('server_version_num')::pg_catalog.int4,
-pg_catalog.current_setting('row_security'),pg_catalog.current_setting('session_replication_role'),
-pg_catalog.current_setting('server_encoding'),pg_catalog.current_setting('transaction_isolation')""")
-            if state[1] != ['pg_catalog'] or state[2]//10000 != 18 or tuple(state[3:]) != ('on','origin','UTF8','read committed'):
-                raise CatalogError('head-context-mismatch')
-            lock = int.from_bytes(hashlib.sha256(('umf.table-lifecycle/0.1\0'+schema).encode()).digest()[:8],'big',signed=True)
-            _one(connection,'SELECT pg_catalog.pg_advisory_xact_lock_shared(%s)',(lock,))
-            # Refuse unknown targets before LOCK traverses view dependencies.
-            # Recheck after locking, before executing any view expression.
-            if (_head_oid(connection,schema) != expected['headRelationOid']
-                    or _normalized(_head_shape(connection,schema)) != expected['headShape']):
-                raise CatalogError('head-view-catalog-mismatch')
-            if _normalized(_history_shape(connection,schema)) != expected['historyShape']:
-                raise CatalogError('history-catalog-mismatch')
-            _execute(connection,'LOCK TABLE '+_q(schema)+'.'+_q(HEAD)+' IN ACCESS SHARE MODE')
-            location = _one(connection,'''SELECT d.oid,d.datname,n.oid,n.nspowner
-FROM pg_catalog.pg_database d,pg_catalog.pg_namespace n
-WHERE d.datname=pg_catalog.current_database() AND n.nspname=%s''',(schema,))
-            witness = expected['nativeWitness']
-            if (location is None or list(location[:2]) != witness.get('database')
-                    or list(location[2:]) != witness.get('schema')
-                    or state[2] != witness.get('serverVersion')):
-                raise CatalogError('installation-location-mismatch')
-            if (_head_oid(connection,schema) != expected['headRelationOid']
-                    or _normalized(_head_shape(connection,schema)) != expected['headShape']):
-                raise CatalogError('head-view-catalog-mismatch')
-            if _normalized(_history_shape(connection,schema)) != expected['historyShape']:
-                raise CatalogError('history-catalog-mismatch')
-            relation = _q(schema)+'.'+_q(HEAD)
-            row = _one(connection,'''SELECT generation,head_digest,plan_digest,bundle_digest,source_digest,
-configuration_digest,pg_catalog.octet_length(native_witness::pg_catalog.text) FROM '''+relation)
-            if row is None or tuple(row[:6]) != tuple(expected[k] for k in ('generation','headDigest','planDigest','bundleDigest','sourceDigest','configurationDigest')):
-                raise CatalogError('installed-generation-mismatch')
-            if type(row[6]) is not int or not 0 < row[6] <= _MAX_REFERENCE_BYTES:
-                raise CatalogError('installation-reference-capacity')
-            if _one(connection,'SELECT native_witness FROM '+relation)[0] != expected['nativeWitness']:
-                raise CatalogError('installed-generation-mismatch')
-            _one(connection,"SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)",tuple(previous))
-            return {'bundleDigest':source['bundleDigest'],'headDigest':expected['headDigest'],
-                    'generation':expected['generation'],'referenceDigest':expected['referenceDigest'],
-                    'observedPrincipal':state[0],'lifecycleAdmission':False}
+            return _run(connection,probe.steps())
     except CatalogError:
         raise
     except (NativeError,ValueError,TypeError,KeyError,IndexError):
         raise CatalogError('head-observation-failed') from None
+
+
+def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
+    schema = source['configuration']['schema']
+    previous = (yield _Query('one', "SELECT pg_catalog.current_setting('statement_timeout'),pg_catalog.current_setting('lock_timeout')", ()))
+    yield _Query('one', "SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)", (str(statement_timeout_ms), str(lock_timeout_ms)))
+    state = (yield _Query('one', "SELECT current_user,pg_catalog.current_schemas(false),\npg_catalog.current_setting('server_version_num')::pg_catalog.int4,\npg_catalog.current_setting('row_security'),pg_catalog.current_setting('session_replication_role'),\npg_catalog.current_setting('server_encoding'),pg_catalog.current_setting('transaction_isolation')", ()))
+    if state[1] != ['pg_catalog'] or state[2] // 10000 != 18 or tuple(state[3:]) != ('on', 'origin', 'UTF8', 'read committed'):
+        raise CatalogError('head-context-mismatch')
+    lock = int.from_bytes(hashlib.sha256(('umf.table-lifecycle/0.1\x00' + schema).encode()).digest()[:8], 'big', signed=True)
+    yield _Query('one', 'SELECT pg_catalog.pg_advisory_xact_lock_shared(%s)', (lock,))
+    if (yield from _head_oid_steps(schema)) != expected['headRelationOid'] or _normalized((yield from _head_shape_steps(schema))) != expected['headShape']:
+        raise CatalogError('head-view-catalog-mismatch')
+    if _normalized((yield from _history_shape_steps(schema))) != expected['historyShape']:
+        raise CatalogError('history-catalog-mismatch')
+    yield _Query('execute', 'LOCK TABLE ' + _q(schema) + '.' + _q(HEAD) + ' IN ACCESS SHARE MODE', ())
+    location = (yield _Query('one', 'SELECT d.oid,d.datname,n.oid,n.nspowner\nFROM pg_catalog.pg_database d,pg_catalog.pg_namespace n\nWHERE d.datname=pg_catalog.current_database() AND n.nspname=%s', (schema,)))
+    witness = expected['nativeWitness']
+    if location is None or list(location[:2]) != witness.get('database') or list(location[2:]) != witness.get('schema') or (state[2] != witness.get('serverVersion')):
+        raise CatalogError('installation-location-mismatch')
+    if (yield from _head_oid_steps(schema)) != expected['headRelationOid'] or _normalized((yield from _head_shape_steps(schema))) != expected['headShape']:
+        raise CatalogError('head-view-catalog-mismatch')
+    if _normalized((yield from _history_shape_steps(schema))) != expected['historyShape']:
+        raise CatalogError('history-catalog-mismatch')
+    relation = _q(schema) + '.' + _q(HEAD)
+    row = (yield _Query('one', 'SELECT generation,head_digest,plan_digest,bundle_digest,source_digest,\nconfiguration_digest,pg_catalog.octet_length(native_witness::pg_catalog.text) FROM ' + relation, ()))
+    if row is None or tuple(row[:6]) != tuple((expected[k] for k in ('generation', 'headDigest', 'planDigest', 'bundleDigest', 'sourceDigest', 'configurationDigest'))):
+        raise CatalogError('installed-generation-mismatch')
+    if type(row[6]) is not int or not 0 < row[6] <= _MAX_REFERENCE_BYTES:
+        raise CatalogError('installation-reference-capacity')
+    if (yield _Query('one', 'SELECT native_witness FROM ' + relation, ()))[0] != expected['nativeWitness']:
+        raise CatalogError('installed-generation-mismatch')
+    yield _Query('one', "SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)", tuple(previous))
+    return {'bundleDigest': source['bundleDigest'], 'headDigest': expected['headDigest'], 'generation': expected['generation'], 'referenceDigest': expected['referenceDigest'], 'observedPrincipal': state[0], 'lifecycleAdmission': False}

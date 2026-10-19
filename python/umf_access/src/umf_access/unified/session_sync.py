@@ -17,6 +17,7 @@ from .session_policy import (
     SessionIdentity,
     SessionPolicy,
     verify_role,
+    _tuple_row,
 )
 
 
@@ -63,6 +64,13 @@ class SyncSession:
     def _prepare_connection(self, connection):
         return connection
 
+    def _control_cursor(self, connection):
+        return connection.cursor(row_factory=_tuple_row)
+
+    def control_cursor(self, native):
+        """Private control work on an already leased connection; never acquire."""
+        return self._control_cursor(self._prepare_connection(native))
+
     @contextmanager
     def open(self, identity: SessionIdentity, *, read_only: bool = True) -> Iterator[Any]:
         if os.getpid() != self._pid:
@@ -93,7 +101,7 @@ class SyncSession:
                 except BaseException:
                     connection.close()
                     raise
-                with connection.cursor() as cursor:
+                with self._control_cursor(connection) as cursor:
                     if owned:
                         if read_only:
                             cursor.execute("SET TRANSACTION READ ONLY")
@@ -114,7 +122,7 @@ class SyncSession:
                         cursor.execute(GET_SETTING, (name,))
                         effective[name] = cursor.fetchone()[0]
                 yield native
-                with connection.cursor() as cursor:
+                with self._control_cursor(connection) as cursor:
                     cursor.execute(ROLE_CHECK)
                     verify_role(cursor.fetchone(), settings["role"], session_user)
                     for name, value in effective.items():

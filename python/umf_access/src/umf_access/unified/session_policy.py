@@ -15,6 +15,11 @@ class SessionError(RuntimeError):
     """A native session could not establish or preserve its declared authority."""
 
 
+def _tuple_row(cursor):
+    """Psycopg3 row-factory protocol without importing an optional driver."""
+    return tuple
+
+
 @dataclass(frozen=True)
 class SessionIdentity:
     kind: Literal["person", "batch"]
@@ -38,8 +43,11 @@ class SessionPolicy:
     schema: str
     statement_timeout_ms: int = 30_000
     lock_timeout_ms: int = 5_000
+    catalog_only: bool = False
 
     def __post_init__(self) -> None:
+        if type(self.catalog_only) is not bool:
+            raise ValueError('catalog_only must be bool')
         for name in ("people", "batches"):
             entries = dict(getattr(self, name))
             if any(type(k) is not str or not k or not _identifier(v) for k, v in entries.items()):
@@ -67,7 +75,7 @@ class SessionPolicy:
     def settings(self, identity: SessionIdentity) -> dict[str, str]:
         return {
             "role": self.role(identity),
-            "search_path": 'pg_catalog,"' + self.schema.replace('"', '""') + '"',
+            "search_path": 'pg_catalog' if self.catalog_only else 'pg_catalog,"' + self.schema.replace('"', '""') + '"',
             "row_security": "on",
             "statement_timeout": str(self.statement_timeout_ms),
             "lock_timeout": str(self.lock_timeout_ms),

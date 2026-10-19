@@ -17,6 +17,7 @@ from .session_policy import (
     SessionIdentity,
     SessionPolicy,
     verify_role,
+    _tuple_row,
 )
 
 
@@ -54,6 +55,13 @@ class AsyncSession:
     def _prepare_connection(self, connection):
         return connection
 
+    def _control_cursor(self, connection):
+        return connection.cursor(row_factory=_tuple_row)
+
+    def control_cursor(self, native):
+        """Async control cursor on the current lease, without creating a pool."""
+        return self._control_cursor(self._prepare_connection(native))
+
     @asynccontextmanager
     async def open(self, identity: SessionIdentity, *, read_only: bool = True) -> AsyncIterator[Any]:
         if os.getpid() != self._pid:
@@ -90,7 +98,7 @@ class AsyncSession:
             except BaseException:
                 await _finish(connection.close())
                 raise
-            async with connection.cursor() as cursor:
+            async with self._control_cursor(connection) as cursor:
                 if owned:
                     if read_only:
                         await cursor.execute("SET TRANSACTION READ ONLY")
@@ -122,7 +130,7 @@ class AsyncSession:
                     if entered:
                         if failure[0] is None:
                             try:
-                                async with connection.cursor() as cursor:
+                                async with self._control_cursor(connection) as cursor:
                                     await cursor.execute(ROLE_CHECK)
                                     verify_role(await cursor.fetchone(), settings["role"], session_user)
                                     for name, value in effective.items():

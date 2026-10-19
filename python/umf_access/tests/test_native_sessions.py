@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import asyncio
 import copy
+import threading
 import unittest
+from unittest.mock import patch
 from contextlib import asynccontextmanager, nullcontext
 from types import SimpleNamespace
 
@@ -14,6 +16,8 @@ from umf_access.unified import (
     SessionIdentity,
     SessionPolicy,
     SyncSession,
+    observe_table_head_async,
+    observe_table_head,
 )
 
 ALICE = SessionIdentity("person", "alice")
@@ -74,7 +78,7 @@ class Connection:
         self.superuser = self.bypass = self.closed = self.exit_fail = False
         self.events = []
 
-    def cursor(self): return Cursor(self)
+    def cursor(self, *, row_factory=None): return Cursor(self)
     def transaction(self): return Transaction(self)
     def close(self): self.closed = True
 
@@ -101,12 +105,19 @@ class AsyncConnection(Connection):
         self.exit_gate = None
         self.exit_started = asyncio.Event()
 
-    def cursor(self): return AsyncCursor(self)
+    def cursor(self, *, row_factory=None): return AsyncCursor(self)
     def transaction(self): return AsyncTransaction(self)
     async def close(self): super().close()
 
 
 class PolicyTests(unittest.TestCase):
+    def test_catalog_only_resolution_is_explicit_and_scoped(self):
+        catalog=SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema,catalog_only=True)
+        self.assertEqual(catalog.settings(ALICE)['search_path'],'pg_catalog')
+        self.assertEqual(POLICY.settings(ALICE)['search_path'],'pg_catalog,"plugin"')
+        self.assertNotEqual(catalog.cursor_secret(ALICE,b'x'*32),POLICY.cursor_secret(ALICE,b'x'*32))
+        with self.assertRaises(ValueError):SessionPolicy({}, {}, 'plugin',catalog_only='yes')
+
     def test_explicit_batch_registry(self):
         self.assertEqual(POLICY.role(BATCH), "batch_role")
         with self.assertRaises(SessionError): POLICY.role(SessionIdentity("batch", "alice"))
@@ -143,6 +154,13 @@ class SyncTests(unittest.TestCase):
             self.assertEqual(self.connection.info.transaction_status, 0)
         self.assertEqual(self.acquired, 2)
         self.assertEqual(self.connection.events, ["commit", "commit"])
+
+    def test_head_guard_rejects_before_lease_or_optional_compiler(self):
+        with self.assertRaisesRegex(SessionError,'catalog-only'):
+            observe_table_head(self.session,ALICE,{}, {})
+        with self.assertRaisesRegex(SessionError,'no grant'):
+            observe_table_head(self.session,SessionIdentity('person','missing'),{}, {})
+        self.assertEqual(self.acquired,0)
 
     def test_failure_and_privileged_role_rollback(self):
         with self.assertRaisesRegex(RuntimeError, "body"), self.session.open(ALICE):
@@ -205,6 +223,29 @@ class SyncTests(unittest.TestCase):
 
 
 class AsyncTests(unittest.IsolatedAsyncioTestCase):
+    async def test_cancelled_preparation_never_acquires_a_late_lease(self):
+        started,finish,done=threading.Event(),threading.Event(),threading.Event()
+        acquired=[]
+        @asynccontextmanager
+        async def factory(identity):
+            acquired.append(identity)
+            yield AsyncConnection()
+        session=AsyncSession(factory,POLICY)
+        def bounded_preparation(*args):
+            started.set()
+            try:finish.wait(2)
+            finally:done.set()
+            return object()
+        with patch('umf_access.unified.head_session._prepare',bounded_preparation):
+            task=asyncio.create_task(observe_table_head_async(session,ALICE,{},{}))
+            try:
+                self.assertTrue(await asyncio.to_thread(started.wait,2))
+                task.cancel()
+                with self.assertRaises(asyncio.CancelledError):await task
+            finally:finish.set()
+            self.assertTrue(await asyncio.to_thread(done.wait,2))
+            self.assertEqual(acquired,[])
+
     async def asyncSetUp(self):
         self.connection = AsyncConnection()
         self.releases = []

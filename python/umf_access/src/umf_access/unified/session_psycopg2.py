@@ -64,3 +64,7 @@ class Psycopg2Session(SyncSession):
 
     def _prepare_connection(self, connection):
         return _Connection(connection)
+
+    def _control_cursor(self, connection):
+        from psycopg2.extensions import cursor
+        return connection.native.cursor(cursor_factory=cursor)

@@ -5,7 +5,9 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
+from .probe import _Query, _run
 from .catalog import (
+    _COLUMNS as _COLUMN_QUERY,
     CatalogError,
     _all,
     _columns,
@@ -48,20 +50,16 @@ JOIN pg_catalog.pg_roles r ON r.oid=c.relowner WHERE n.nspname=%s AND c.relname=
 
 
 def _history_shape(connection: Any, schema: str) -> dict[str, Any] | None:
+    return _run(connection, _history_shape_steps(schema))
+
+
+def _history_shape_steps(schema: str):
     """Read-only snapshot; issuers must first reparse the fixed original schema."""
-    state = _one(connection,_STATE,(schema,HISTORY))
+    state = (yield _Query('one', _STATE, (schema, HISTORY)))
     if state is None:
         return None
     oid = state[13]
-    return {'state':state,'columns':_columns(connection,schema,HISTORY),
-            'constraints':_all(connection,_NATIVE_CONSTRAINTS,(schema,HISTORY)),
-            'indexes':_all(connection,_NATIVE_INDEXES,(schema,HISTORY)),
-            'acl':_all(connection,"""SELECT grantor,grantee,privilege_type,is_grantable
-FROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))
-WHERE c.oid=%s ORDER BY 1,2,3,4""",(oid,)),
-            'columnAcl':_all(connection,"""SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable
-FROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x
-WHERE a.attrelid=%s ORDER BY 1,2,3,4,5""",(oid,))}
+    return {'state': state, 'columns': (yield _Query('all', _COLUMN_QUERY, (schema, HISTORY))), 'constraints': (yield _Query('all', _NATIVE_CONSTRAINTS, (schema, HISTORY))), 'indexes': (yield _Query('all', _NATIVE_INDEXES, (schema, HISTORY))), 'acl': (yield _Query('all', "SELECT grantor,grantee,privilege_type,is_grantable\nFROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))\nWHERE c.oid=%s ORDER BY 1,2,3,4", (oid,))), 'columnAcl': (yield _Query('all', 'SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable\nFROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x\nWHERE a.attrelid=%s ORDER BY 1,2,3,4,5', (oid,)))}
 
 
 def _create_history(connection: Any, schema: str, name: str = HISTORY) -> dict[str, str]:

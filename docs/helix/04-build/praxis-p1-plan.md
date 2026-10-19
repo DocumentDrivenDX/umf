@@ -579,3 +579,59 @@ admission, generated methods, authenticated cursors, durable replay and all
 remaining lifecycle/consumer/release gates stay required. Earlier unpublished
 ledger-only installations refuse without an implicit metadata upgrade. No new
 release was published and the full Praxis goal remains active.
+
+
+## Shared native-head probes through all per-call adapters — 2026-10-19
+
+The source-proved head checks now share one library-owned query protocol. The
+original raw Psycopg3 observer and administrative source-snapshot helpers use
+that same sequence as the new `observe_table_head` /
+`observe_table_head_async` session integrations. No source SQL/callback or
+installer authority is exposed to requests. Ordinary targets receive only the
+exact public preparation/error seam; boundary controls still refuse migration
+API imports and general Psycopg2 use outside its exact cursor integration.
+
+Sessions explicitly select `catalog_only=True` for this native profile. Earlier
+default resolution stays intact and cursor authority includes the effective
+setting. Control cursors use tuple rows without changing caller factories.
+The source verifier runs in a bounded worker before an async lease, since the
+embedded V8 timeout API cannot run in an event loop. All database IO remains
+async. Cancelling preparation cannot acquire a connection later. Synchronous
+observation also works inside an already-running host loop: only bounded CPU
+verification moves to a temporary worker, never the caller's connection or
+synchronous driver work. Actual running-loop calls are included in the native
+fixture.
+
+The [execution packet](evidence/praxis-p2/native-head-adapter-execution.json)
+records75 actual PostgreSQL18.6 assertions across Psycopg3 sync/async, Psycopg2
+sync, SQLAlchemy Core2 sync with both drivers and async with Psycopg3. Actual
+pools verify person/batch switches, active caller transactions, stale-source
+rollback, dict row-factory preservation, complete return and repeated cancellation
+during confirmed advisory-lock waits. Psycopg3 restores/reuses its backend;
+SQLAlchemy invalidates/replaces its cancelled backend and the next batch call
+succeeds. All28 tracked owned leases exit; separate caller leases also return.
+
+A percent-bearing synthetic schema exposed existing metadata transport defects:
+parameterized ledger identifiers need DBAPI percent framing, and unbound history
+queries must omit empty parameter frames. SQLAlchemy control statements now use
+explicit no-parameter execution when appropriate. The fixture preserves the exact
+native schema identifier through all six configurations. The prior101 native
+head/history controls and50 installed Weft sync/async operation assertions pass.
+Twenty-five scheduling/session tests also pass in a fresh SDK environment without
+database drivers or umf_codegen, including no late lease after cancelled source
+preparation. Twenty-three boundary tests/157 assertions,72-module import checks,
+exact changed source/wheel bytes and dual-license audit pass.
+
+UMF38c0be341 hosted run39318298101 is now green; the new source-dbapi job includes
+this fixture and the current candidate outcome remains pending push. No compiler
+or generated native-data guard is opened by metadata observation. Live native
+data/privilege/principal admission, generated module execution, authenticated
+cursors, durable replay and the remaining codec/lifecycle/consumer/release gates
+stay required. The complete Praxis release goal remains active.
+
+Next: use the shared probe scheduling inside a single native operation lifetime,
+with current principal/audience role closure, schema/object/ACL containment and
+complete live data-table correspondence before/after execution. Trigger/rule and
+incoming-reference closure must be established explicitly; comparing a cached
+head or an incomplete table witness alone cannot admit an operation. Generated
+methods remain guarded until these checks and their compiler obligations close.

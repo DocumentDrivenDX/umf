@@ -531,8 +531,47 @@ The method never begins an outer transaction, commits, changes identity or
 retries. It returns observedPrincipal and digests with lifecycleAdmission false.
 This is current-head observation, not operation admission, principal validation,
 live data-table/privilege verification or a freeze of native role catalogs.
-Async/other-driver observer composition and complete generated execution remain
-separate qualification gates.
+Raw-connection observation remains Psycopg3-specific. The per-call compositions
+below carry separate native evidence; complete generated execution is unqualified.
+
+The host now exposes `prepare_table_head` to produce the same fixed observation
+recipe consumed by the raw Psycopg3 observer and the session integrations. It
+revalidates original source and trusted reference before any lease. Its internal
+query protocol is library-owned verification work, not a query-authoring surface
+or data admission capability. No source-selected SQL/callback is accepted.
+
+`observe_table_head(session,identity,bundle,reference)` and its explicit
+`observe_table_head_async` counterpart acquire one existing per-call session
+lease. Supported candidate compositions are Psycopg3 sync/async, Psycopg2 sync,
+SQLAlchemy Core2 sync with Psycopg2/3 and async with Psycopg3. ORM Sessions and
+other drivers are not selected implicitly. `SessionPolicy(catalog_only=True)`
+is required; the earlier default search path remains unchanged. Registry and
+schema mismatches refuse before acquiring a connection. Identity, transaction
+ownership, savepoint rollback, settings restoration and pool disposal remain
+owned by the existing adapters. Control cursors use tuple rows without changing
+the caller's native row factory. SQLAlchemy control execution stays in Core.
+
+Async preparation schedules the bounded synchronous embedded V8 verifier in a
+worker before opening a lease: V8's synchronous timeout interface cannot run
+inside an event loop. Cancelling preparation cannot later acquire a connection;
+the worker may finish within its own existing resource/deadline bounds. Native
+database queries remain genuinely async. Repeated cancellation during an actual
+advisory-lock wait must complete transaction/lease cleanup before propagating;
+healthy connections are restored, failed ones discarded. No query/write retry
+is introduced.
+The synchronous observer also remains callable inside an already-running host
+loop: only bounded CPU verification moves to a temporary worker and is waited
+synchronously. It neither runs a coroutine nor moves the caller's connection
+or synchronous driver IO to that worker.
+
+The observation still reports lifecycleAdmission false. An adapter-owned helper
+ends its read-only transaction before returning metadata; it does not return a
+held execution permit. Caller-owned use preserves the active outer transaction.
+Live data-table/privilege/principal admission and generated methods remain
+required. Business operation lowering remains Weft-owned. Fixed metadata
+statements preserve quoted identifiers including literal percent: parameterized
+metadata INSERTs escape only the identifier's DBAPI percent transport, unbound
+queries omit parameter frames, and Core uses explicit no-parameter execution.
 
 This plan-generation subset supports initial deployment and appended tables.
 Root/module metadata, existing elements/relationships and native tables,

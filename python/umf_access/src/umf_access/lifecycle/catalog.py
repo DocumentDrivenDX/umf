@@ -22,6 +22,11 @@ def _q(value: str) -> str:
     return '"' + value.replace('"', '""') + '"'
 
 
+def _q_bound(value: str) -> str:
+    """Identifier in a fixed DBAPI statement that also binds parameters."""
+    return _q(value).replace('%','%%')
+
+
 def _cursor(connection: Any) -> Any:
     from psycopg.rows import tuple_row
 
@@ -88,7 +93,7 @@ WHERE n.nspname=%s AND c.relname=%s ORDER BY ic.relname"""
 
 def _all(connection: Any, statement: str, parameters: tuple[Any, ...]) -> list[tuple[Any, ...]]:
     with _cursor(connection) as cursor:
-        cursor.execute(statement, parameters)
+        cursor.execute(statement, parameters) if parameters else cursor.execute(statement)
         return cast(list[tuple[Any, ...]], cursor.fetchall())
 
 

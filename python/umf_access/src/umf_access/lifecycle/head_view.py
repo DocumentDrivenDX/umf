@@ -5,7 +5,8 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
-from .catalog import CatalogError, _all, _columns, _execute, _one, _q
+from .probe import _Query, _run
+from .catalog import _COLUMNS, CatalogError, _all, _columns, _execute, _one, _q
 from .ledger_schema import HISTORY
 
 HEAD = 'umf_lifecycle_head'
@@ -27,43 +28,30 @@ FROM '''+_q(cfg['schema'])+'.'+_q(HISTORY)+' ORDER BY position DESC LIMIT 1')
 
 
 def _head_oid(connection: Any, schema: str, name: str = HEAD) -> int | None:
-    row = _one(connection,'''SELECT c.oid FROM pg_catalog.pg_class c
-JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s''',(schema,name))
+    return _run(connection, _head_oid_steps(schema,name))
+
+
+def _head_oid_steps(schema: str, name: str=HEAD):
+    row = (yield _Query('one', 'SELECT c.oid FROM pg_catalog.pg_class c\nJOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s', (schema, name)))
     return None if row is None else row[0]
 
 
 def _head_shape(connection: Any, schema: str, name: str = HEAD) -> dict[str, Any] | None:
-    oid = _head_oid(connection,schema,name)
+    return _run(connection, _head_shape_steps(schema,name))
+
+
+def _head_shape_steps(schema: str, name: str=HEAD):
+    oid = (yield from _head_oid_steps(schema, name))
     if oid is None:
         return None
-    state = _one(connection,'''SELECT c.relkind,c.relpersistence,c.relowner,c.relrowsecurity,
-c.relforcerowsecurity,c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,
-ARRAY(SELECT opt FROM pg_catalog.unnest(c.reloptions) opt ORDER BY opt),
-EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid),
-EXISTS(SELECT FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid OR i.inhparent=c.oid),
-EXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),
-EXISTS(SELECT FROM pg_catalog.pg_constraint k WHERE k.conrelid=c.oid)
-FROM pg_catalog.pg_class c WHERE c.oid=%s''',(oid,))
-    # Never invoke pg_get_viewdef against an arbitrary same-name relation kind.
+    state = (yield _Query('one', 'SELECT c.relkind,c.relpersistence,c.relowner,c.relrowsecurity,\nc.relforcerowsecurity,c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,\nARRAY(SELECT opt FROM pg_catalog.unnest(c.reloptions) opt ORDER BY opt),\nEXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid),\nEXISTS(SELECT FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid OR i.inhparent=c.oid),\nEXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),\nEXISTS(SELECT FROM pg_catalog.pg_constraint k WHERE k.conrelid=c.oid)\nFROM pg_catalog.pg_class c WHERE c.oid=%s', (oid,)))
     if state is None or state[0] != 'v':
         raise CatalogError('head-view-catalog-mismatch')
-    rules = _all(connection,'''SELECT rulename,ev_type,is_instead,ev_enabled
-FROM pg_catalog.pg_rewrite WHERE ev_class=%s ORDER BY rulename''',(oid,))
-    dependencies = _all(connection,'''SELECT d.refclassid,
-CASE WHEN d.refclassid='pg_catalog.pg_class'::pg_catalog.regclass AND d.refobjid=%s
-THEN 'self' ELSE d.refobjid::pg_catalog.text END,d.refobjsubid,d.deptype
-FROM pg_catalog.pg_depend d JOIN pg_catalog.pg_rewrite r ON r.oid=d.objid
-WHERE d.classid='pg_catalog.pg_rewrite'::pg_catalog.regclass AND r.ev_class=%s
-ORDER BY 1,2,3,4''',(oid,oid))
-    acl = _all(connection,'''SELECT grantor,grantee,privilege_type,is_grantable
-FROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))
-WHERE c.oid=%s ORDER BY 1,2,3,4''',(oid,))
-    column_acl = _all(connection,'''SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable
-FROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x
-WHERE a.attrelid=%s ORDER BY 1,2,3,4,5''',(oid,))
-    return {'state':state,'columns':_columns(connection,schema,name),'rules':rules,
-            'definition':_one(connection,'SELECT pg_catalog.pg_get_viewdef(%s::pg_catalog.oid,true)',(oid,))[0],
-            'dependencies':dependencies,'acl':acl,'columnAcl':column_acl}
+    rules = (yield _Query('all', 'SELECT rulename,ev_type,is_instead,ev_enabled\nFROM pg_catalog.pg_rewrite WHERE ev_class=%s ORDER BY rulename', (oid,)))
+    dependencies = (yield _Query('all', "SELECT d.refclassid,\nCASE WHEN d.refclassid='pg_catalog.pg_class'::pg_catalog.regclass AND d.refobjid=%s\nTHEN 'self' ELSE d.refobjid::pg_catalog.text END,d.refobjsubid,d.deptype\nFROM pg_catalog.pg_depend d JOIN pg_catalog.pg_rewrite r ON r.oid=d.objid\nWHERE d.classid='pg_catalog.pg_rewrite'::pg_catalog.regclass AND r.ev_class=%s\nORDER BY 1,2,3,4", (oid, oid)))
+    acl = (yield _Query('all', "SELECT grantor,grantee,privilege_type,is_grantable\nFROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner)))\nWHERE c.oid=%s ORDER BY 1,2,3,4", (oid,)))
+    column_acl = (yield _Query('all', 'SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable\nFROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x\nWHERE a.attrelid=%s ORDER BY 1,2,3,4,5', (oid,)))
+    return {'state': state, 'columns': (yield _Query('all', _COLUMNS, (schema, name))), 'rules': rules, 'definition': (yield _Query('one', 'SELECT pg_catalog.pg_get_viewdef(%s::pg_catalog.oid,true)', (oid,)))[0], 'dependencies': dependencies, 'acl': acl, 'columnAcl': column_acl}
 
 
 def _verify_head_view(connection: Any, source: dict[str, Any]) -> bool:
