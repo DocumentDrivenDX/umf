@@ -1,0 +1,5 @@
+Sol read-only source and Chromium review
+
+Review identified stale metamodel and action-plan producer provenance after the dependency/lock change. Metamodel outputs and then action-plan identity were regenerated; both current-output checks and core-authority retirement checks pass. Historical native qualification files were not rewritten.
+
+Rebuilt browser recheck at 1440/1280/390px: full model has 15 nodes and 17 edges; zero card overlaps, unrelated-card edge crossings, detached endpoints, badge overlaps, clipping, document overflow or page errors. Explicit Element neighborhood retains 8 nodes and 7 edges through scalarType/owner links and 1280 -> 390 -> 1440 resizing. Isolated semantic reference zoom 388% -> 485% -> 388% is monotonic. Connections -> modules -> target Module navigation works. Pinned Bun 1.4.2 / Chromium. Reviewer made no source, dist or build changes.

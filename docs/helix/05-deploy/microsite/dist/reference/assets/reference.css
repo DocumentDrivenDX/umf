@@ -125,3 +125,8 @@
 }
 
 .schema-page .ontology-viewport [aria-current] rect{stroke-width:4;fill:var(--panel)}
+
+.schema-page .ontology-viewport path[fill="none"]{stroke-width:2;stroke-linejoin:round;opacity:.72}
+.schema-page .ontology-viewport a:hover path,.schema-page .ontology-viewport a:focus path{opacity:1;stroke-width:3}
+.schema-page .ontology-viewport .map-count{font-size:12px;fill:var(--muted)}
+.schema-page .ontology-viewport .graph-standalone{font-size:13px;fill:var(--muted);letter-spacing:.4px}
