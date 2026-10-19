@@ -9,19 +9,22 @@ from __future__ import annotations
 import asyncio
 from typing import Any
 
-from umf_access.lifecycle import CatalogError, prepare_table_head
+from umf_access.lifecycle import CatalogError, prepare_table_head, prepare_table_correspondence
 
 from .session_async import AsyncSession
 from .session_sync import SyncSession
 from .session_policy import SessionError, SessionIdentity
 
 
-def _prepare(session, identity, bundle, reference):
+def _prepare(session, identity, bundle, reference, correspondence=False):
     session.policy.role(identity)  # reject unregistered subjects before source work or leases
     if not session.policy.catalog_only:
         raise SessionError('head observation requires catalog-only session resolution')
-    probe = prepare_table_head(bundle,reference,statement_timeout_ms=session.policy.statement_timeout_ms,
-                               lock_timeout_ms=session.policy.lock_timeout_ms)
+    options = {'statement_timeout_ms':session.policy.statement_timeout_ms,'lock_timeout_ms':session.policy.lock_timeout_ms}
+    if correspondence:
+        probe = prepare_table_correspondence(bundle,reference,principal_role=session.policy.role(identity),audience=identity.kind,**options)
+    else:
+        probe = prepare_table_head(bundle,reference,**options)
     if probe.schema != session.policy.schema:
         raise SessionError('head source differs from the isolated session schema')
     return probe
@@ -105,3 +108,29 @@ async def observe_table_head_async(session: AsyncSession, identity: SessionIdent
         raise
     except Exception:
         raise SessionError('native head observation failed') from None
+
+
+def verify_table_correspondence(session: SyncSession, identity: SessionIdentity,
+                                bundle: dict[str, object], reference: dict[str, object]) -> dict[str, Any]:
+    """Observe live roles/ACLs/table shape in one lease; never admit an operation."""
+    probe = _prepare(session,identity,bundle,reference,True)
+    try:
+        with session.open(identity,read_only=True) as native:
+            return _check_principal(session,identity,_drive(session,native,probe.steps()))
+    except (CatalogError,SessionError):
+        raise
+    except Exception:
+        raise SessionError('native table correspondence failed') from None
+
+
+async def verify_table_correspondence_async(session: AsyncSession, identity: SessionIdentity,
+                                           bundle: dict[str, object], reference: dict[str, object]) -> dict[str, Any]:
+    """Async live correspondence using the same fixed checks and cleanup contract."""
+    probe = await asyncio.to_thread(_prepare,session,identity,bundle,reference,True)
+    try:
+        async with session.open(identity,read_only=True) as native:
+            return _check_principal(session,identity,await _drive_async(session,native,probe.steps()))
+    except (CatalogError,SessionError):
+        raise
+    except Exception:
+        raise SessionError('native table correspondence failed') from None

@@ -635,3 +635,50 @@ complete live data-table correspondence before/after execution. Trigger/rule and
 incoming-reference closure must be established explicitly; comparing a cached
 head or an incomplete table witness alone cannot admit an operation. Generated
 methods remain guarded until these checks and their compiler obligations close.
+
+
+## Live ordinary-principal installation correspondence — 2026-10-19
+
+The native recipe now combines the approved current head with live principal,
+source audience, role reachability, schema/object/ACL containment and table
+correspondence. Original administrative role checks and native witness capture
+share the same fixed query generators with sync/async native sessions. Person
+identities must be individual roles; inherited batch login principals retain
+their separate source grant and cannot be relabelled as people. Scope digests
+include effective and MEMBER closure because group policies use native MEMBER
+even for edges with disabled INHERIT/SET.
+
+The new table boundary is checked in both original-source proof and ordinary
+correspondence. It rejects extra policies, user triggers, disabled/unexpected
+constraint triggers, inheritance and incoming FKs from outside the module.
+Current columns/defaults, constraints/indexes, policy expressions/dependencies,
+ownership/access methods and table/column ACLs must match the source-proved
+witness. Schema ACL/inventory and plugin root-role external containment remain
+exact; actual people can retain their other plugin grants. No observed drift is
+reclassified as expected. Metadata checks deliberately demand no SELECT grant
+on denied module tables. Shared advisory locking coordinates compliant migration;
+selected native business statements will acquire their own table locks.
+
+The [source-bound packet](evidence/praxis-p2/live-correspondence.json) records141
+ordinary correspondence assertions across six real adapter/pool configurations,
+116 catalog,64 role,133 privilege and101 native ledger assertions. Committed
+drift leaves a matching head readable but the new checks refuse changed defaults,
+column grants, policies, forced RLS, role authority and cross-audience membership.
+Native cases cover batch login aliases, MEMBER-only scope changes, source/ordinary
+trigger and incoming-FK refusals, valid source FKs and disabled/always-enabled
+constraint triggers. Native caller ownership, actual pools, running-loop sync
+calls and repeated async cancellation remain covered by the shared fixture.
+
+Twenty-five session/scheduling tests pass in full and minimal SDK environments.
+The23-test/161-assertion boundary corpus and74-module import checks pass; a first
+5s infrastructure timeout is retained as a precursor, with no weakened limit.
+Changed runtime bytes match the installed wheel, and source/wheel dual-license
+audits pass. aee257f1f hosted run39322791079 is green; the new CI outcome remains
+pending push, with the correspondence fixture added to source-dbapi acceptance.
+
+This is installation correspondence, not permission to execute an operation.
+Results keep lifecycleAdmission/operationAdmission false. Next combine these
+checks inside one operation lifetime with verified Weft programs, exact codecs
+and current scope before/after execution, then generate typed native module
+methods. Cursor authentication, durable outcomes and the remaining lifecycle/
+consumer/release gates remain part of the full active Praxis goal.

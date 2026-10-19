@@ -85,7 +85,7 @@ def check(root: Path) -> int:
             target_owner = owner(target)
             if source_owner != target_owner:
                 head_probe = (name == 'umf_access.unified.head_session' and target == 'umf_access.lifecycle'
-                              and member in {'CatalogError','prepare_table_head'})
+                              and member in {'CatalogError','prepare_table_head','prepare_table_correspondence'})
                 if target_owner not in allowed.get(source_owner, set()) and not head_probe:
                     fail(path, "DEPENDENCY", f"{source_owner} -> {target_owner}")
                 if target.count(".") != 1 or member.startswith("_"):

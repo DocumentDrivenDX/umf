@@ -3,7 +3,8 @@
 from .catalog import CatalogError, verify_native_catalog
 from .ledger import apply_table_migration, inspect_table_history
 from .head import prepare_table_head, read_table_head
+from .correspondence import prepare_table_correspondence
 from .privileges import verify_native_privileges
 from .roles import verify_native_role_scope
 
-__all__ = ["CatalogError", "apply_table_migration", "inspect_table_history", "prepare_table_head", "read_table_head", "verify_native_catalog", "verify_native_privileges", "verify_native_role_scope"]
+__all__ = ["CatalogError", "apply_table_migration", "inspect_table_history", "prepare_table_head", "prepare_table_correspondence", "read_table_head", "verify_native_catalog", "verify_native_privileges", "verify_native_role_scope"]

@@ -153,6 +153,19 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
                     check('failed-catalog-verification-keeps-caller-healthy-'+label,admin.execute('SELECT 1').fetchone() == (1,))
                     check('failed-catalog-no-scratch-relation-'+label,admin.execute('SELECT count(*) FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname LIKE \'umf_verify_%%\'',(schema,)).fetchone() == (0,))
             check('installed-catalog-restores-original-after-controls',verify_native_catalog(admin,bundle)['catalogShapeVerified'] is True)
+            internal_trigger=admin.execute("""SELECT t.tgname FROM pg_catalog.pg_trigger t
+JOIN pg_catalog.pg_class c ON c.oid=t.tgrelid JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+WHERE n.nspname=%s AND c.relname='notes' AND t.tgisinternal ORDER BY t.tgname LIMIT 1""",(schema,)).fetchone()[0]
+            for mode in ('DISABLE','ENABLE ALWAYS'):
+                with admin.transaction(force_rollback=True):
+                    admin.execute('SET LOCAL ROLE NONE')
+                    admin.execute(sql.SQL('ALTER TABLE {} '+mode+' TRIGGER {}').format(sql.Identifier(schema,'notes'),sql.Identifier(internal_trigger)))
+                    admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
+                    refused=False
+                    try:verify_native_catalog(admin,bundle)
+                    except CatalogError as error:refused=str(error)=='catalog-mismatch'
+                    check('constraint-trigger-mode-refuses-'+mode,refused)
+                    check('constraint-trigger-refusal-keeps-caller-'+mode,admin.execute('SELECT 1').fetchone()==(1,))
         with psycopg.connect(args.dsn,autocommit=True) as blocker, blocker.transaction():
             blocker.execute(sql.SQL('LOCK TABLE {} IN ACCESS SHARE MODE').format(sql.Identifier(schema,'notes')))
             with admin.transaction():

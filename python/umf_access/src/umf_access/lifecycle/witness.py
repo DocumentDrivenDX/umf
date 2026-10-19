@@ -6,7 +6,8 @@ import hashlib
 import json
 from typing import Any, cast
 
-from .catalog import _CONSTRAINTS, _INDEXES, _POLICY, CatalogError, _all, _columns, _one
+from .catalog import _CONSTRAINTS, _INDEXES, _POLICY, _COLUMNS as _COLUMN_QUERY, CatalogError
+from .probe import _Query, _run
 from .privileges import _COLUMN_ACL, _TABLE_ACL
 
 
@@ -43,24 +44,23 @@ def _entry_digest(position: int, predecessor: str | None, plan_digest: str, witn
 
 
 def _capture_witness(connection: Any, source: dict[str, Any]) -> dict[str, Any]:
+    return _run(connection,_witness_steps(source))
+
+
+def _witness_steps(source: dict[str, Any]) -> dict[str, Any]:
     schema = source['configuration']['schema']
-    roles = sorted({source['configuration'][k] for k in ('ownerRole','personRole','batchRole')} | set(source['configuration']['groupRoles'].values()))
+    roles = sorted({source['configuration'][k] for k in ('ownerRole', 'personRole', 'batchRole')} | set(source['configuration']['groupRoles'].values()))
     tables = []
     for table in source['expectedCatalog']['tables']:
         name = table['name']
-        relation = _one(connection,"""SELECT c.oid,c.relowner,c.relkind,c.relpersistence,c.relrowsecurity,c.relforcerowsecurity,c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,c.relam
-FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s""",(schema,name))
-        policies = [[audience,command,_one(connection,_POLICY,(schema,name,'umf_'+audience+'_'+command))] for audience in ('person','batch') for command in ('select','insert','update','delete')]
-        tables.append({'id':table['id'],'relation':relation,'columns':_columns(connection,schema,name),
-                       'constraints':_all(connection,_CONSTRAINTS,(schema,name)),
-                       'indexes':_all(connection,_INDEXES,(schema,name)),
-                       'tableAcl':_all(connection,_TABLE_ACL,(schema,name)),
-                       'columnAcl':_all(connection,_COLUMN_ACL,(schema,name)),'policies':policies})
-    result={'version':'umf.native-table-witness/0.1',
-            'serverVersion':_one(connection,"SELECT current_setting('server_version_num')::pg_catalog.int4")[0],
-            'database':_one(connection,'SELECT oid,datname FROM pg_catalog.pg_database WHERE datname=current_database()'),
-            'schema':_one(connection,'SELECT oid,nspowner FROM pg_catalog.pg_namespace WHERE nspname=%s',(schema,)),
-            'roles':[_one(connection,'SELECT oid,rolname FROM pg_catalog.pg_roles WHERE rolname=%s',(name,)) for name in roles],
-            'tables':tables}
-    # Normalize driver tuples to the exact JSON shape retained by JSONB.
-    return cast(dict[str, Any],json.loads(_json_bytes(result)))
+        relation = (yield _Query('one', 'SELECT c.oid,c.relowner,c.relkind,c.relpersistence,c.relrowsecurity,c.relforcerowsecurity,c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,c.relam\nFROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s', (schema, name)))
+        policies = []
+        for audience in ('person', 'batch'):
+            for command in ('select', 'insert', 'update', 'delete'):
+                policies.append([audience, command, (yield _Query('one', _POLICY, (schema, name, 'umf_' + audience + '_' + command)))])
+        tables.append({'id': table['id'], 'relation': relation, 'columns': (yield _Query('all', _COLUMN_QUERY, (schema, name))), 'constraints': (yield _Query('all', _CONSTRAINTS, (schema, name))), 'indexes': (yield _Query('all', _INDEXES, (schema, name))), 'tableAcl': (yield _Query('all', _TABLE_ACL, (schema, name))), 'columnAcl': (yield _Query('all', _COLUMN_ACL, (schema, name))), 'policies': policies})
+    role_rows = []
+    for role_name in roles:
+        role_rows.append((yield _Query('one', 'SELECT oid,rolname FROM pg_catalog.pg_roles WHERE rolname=%s', (role_name,))))
+    result = {'version': 'umf.native-table-witness/0.1', 'serverVersion': (yield _Query('one', "SELECT current_setting('server_version_num')::pg_catalog.int4", ()))[0], 'database': (yield _Query('one', 'SELECT oid,datname FROM pg_catalog.pg_database WHERE datname=current_database()', ())), 'schema': (yield _Query('one', 'SELECT oid,nspowner FROM pg_catalog.pg_namespace WHERE nspname=%s', (schema,))), 'roles': role_rows, 'tables': tables}
+    return cast(dict[str, Any], json.loads(_json_bytes(result)))

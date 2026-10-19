@@ -227,6 +227,7 @@ jobs:
           python -I tests/unified/table_ledger_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-operation-ledger-plans.json --report /tmp/umf-operation-ledger-native.json
           bun tests/unified/table-ledger-fixture.ts /tmp/umf-head-adapter-plans.json --typed-operations --quoted-schema
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
+          python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -240,3 +241,4 @@ jobs:
             /tmp/umf-table-ledger-native.json
             /tmp/umf-operation-ledger-native.json
             /tmp/umf-head-adapter-native.json
+            /tmp/umf-correspondence-adapter-native.json

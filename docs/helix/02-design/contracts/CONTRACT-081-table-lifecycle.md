@@ -573,6 +573,50 @@ statements preserve quoted identifiers including literal percent: parameterized
 metadata INSERTs escape only the identifier's DBAPI percent transport, unbound
 queries omit parameter frames, and Core uses explicit no-parameter execution.
 
+`prepare_table_correspondence` additionally binds an explicit trusted native
+principal and `person`/`batch` audience. Its session counterparts are
+`verify_table_correspondence` and `verify_table_correspondence_async`. The same
+fixed query scheduling and lease/transaction ownership apply. These checks
+establish current selected installation correspondence, not business-operation
+authorization: results retain lifecycleAdmission false and operationAdmission
+false. An adapter-owned observation ends its lease before returning metadata.
+
+The current head must match first. The actual role must equal the trusted
+registry selection and satisfy the source audience's native role boundary.
+Person identities cannot be audience umbrella roles; batch identities must
+inherit the separate batch audience and cannot reach person/owner authority.
+Shared native role checks cover configured root/group roles and the actual
+principal, including SET-then-INHERIT reachability, dangerous flags, predefined
+roles, ADMIN options and session_replication_role SET authority. A stable scope
+digest includes selected/current role OIDs, flags, effective closure and MEMBER
+closure. MEMBER-only edges are included because declared group policies use
+that native relation even when INHERIT and SET are disabled. Role-closure
+capacity is4096 per checked role. A digest is an observation, not a frozen grant.
+
+Current data-table columns/defaults, constraints, indexes, source policies,
+native ownership/access methods and table/column ACLs must match the witness
+issued after original-source proof. Source schema ACL and relation inventory
+must agree exactly; owner/person/batch roots must retain the dedicated-schema
+external-authority preconditions. Actual people may retain other plugin grants.
+Live checks cannot substitute a new first-observed witness for a mismatch.
+
+Both administrative source proof and ordinary correspondence additionally
+require exactly the eight source audience/command policies, no user triggers,
+no inheritance, and no incoming FK from outside the module. Internal constraint
+triggers must be enabled normally, refer to known module constraints of the
+qualified FK/Key kinds, and use native pg_catalog implementations. This closes
+omissions that the earlier table witness alone could not detect. Known module
+FK/Key semantics remain checked against their original source definitions.
+
+Metadata verification does not demand SELECT on every declared table: denied
+tables remain denied. The shared module advisory lock excludes compliant
+migrations; selected native business statements acquire their own table locks.
+Privileged role/ACL/DDL changes outside the protocol require operator quiescence;
+observations do not freeze PostgreSQL authorization catalogs. Complete operation
+admission must use this correspondence inside the operation's own lifetime,
+check compiler obligations and recheck relevant current scope before releasing
+results/committing. Generated native methods remain guarded pending that gate.
+
 This plan-generation subset supports initial deployment and appended tables.
 Root/module metadata, existing elements/relationships and native tables,
 columns/Keys/checks/FKs/indexes/policies must remain exact. New tables retain the

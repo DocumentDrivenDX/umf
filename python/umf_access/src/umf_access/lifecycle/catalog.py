@@ -12,6 +12,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from typing import Any, cast
 from uuid import uuid4
+from .table_boundary import TABLE_BOUNDARY
 
 
 class CatalogError(RuntimeError):
@@ -245,6 +246,12 @@ def verify_native_catalog(connection: Any, bundle: dict[str, object], *,
                        lock_timeout_ms=lock_timeout_ms) as source:
         schema, owner = source["configuration"]["schema"], source["configuration"]["ownerRole"]
         heap = _one(connection,"SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0]
+        owner_id = _one(connection,'SELECT oid FROM pg_catalog.pg_roles WHERE rolname=%s',(owner,))[0]
+        module_oids = [_one(connection,"""SELECT c.oid FROM pg_catalog.pg_class c
+JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s""",(schema,t['name'])) for t in source['expectedCatalog']['tables']]
+        if any(row is None for row in module_oids):
+            raise CatalogError('catalog-mismatch')
+        relation_ids = [row[0] for row in module_oids]
         for table in source["expectedCatalog"]["tables"]:
             if _one(connection,"""SELECT c.relkind,c.relam FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname=%s""",(schema,table['name'])) != ('r',heap):
@@ -259,6 +266,11 @@ FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespac
 WHERE n.nspname=%s AND c.relname=%s""", (schema, table["name"]))
             if native != ("r", True, True, owner, "p", False, False, False, False, False, "d",heap):
                 raise CatalogError("catalog-mismatch")
+            # Initial/source reproof establishes the same boundary later used
+            # by ordinary connections, rather than blessing first observations.
+            boundary = _one(connection,TABLE_BOUNDARY,(relation_ids,relation_ids,schema,table['name']))
+            if boundary != ('r','p',True,True,False,False,False,'d',owner_id,heap,False,8,False,False):
+                raise CatalogError('catalog-mismatch')
             _verify_table_shape(connection, source, table)
         _verify_policies(connection, source)
     return {"bundleDigest": source["bundleDigest"], "catalogShapeVerified": True, "lifecycleAdmission": False}

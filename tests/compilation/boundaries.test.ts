@@ -180,11 +180,13 @@ describe("actual Python boundary checker", () => {
   });
   test("ordinary head observations cannot import migration authority or general Psycopg2 APIs",()=>{
     const prefix="python/umf_access/src/umf_access/";
-    const lifecycle="class CatalogError(Exception): pass\ndef prepare_table_head(): pass\ndef apply_table_migration(): pass";
-    expect(check("py",{[prefix+"unified/head_session.py"]:"from umf_access.lifecycle import CatalogError, prepare_table_head",[prefix+"lifecycle/__init__.py"]:lifecycle}).exitCode).toBe(0);
+    const lifecycle="class CatalogError(Exception): pass\ndef prepare_table_head(): pass\ndef prepare_table_correspondence(): pass\ndef apply_table_migration(): pass";
+    expect(check("py",{[prefix+"unified/head_session.py"]:"from umf_access.lifecycle import CatalogError, prepare_table_head, prepare_table_correspondence",[prefix+"lifecycle/__init__.py"]:lifecycle}).exitCode).toBe(0);
     rejects("py",{[prefix+"unified/head_session.py"]:"from umf_access.lifecycle import apply_table_migration",[prefix+"lifecycle/__init__.py"]:lifecycle},"DEPENDENCY");
     for(const consumer of ['dsl/__init__.py','unified/other.py'])
       rejects("py",{[prefix+consumer]:"from umf_access.lifecycle import prepare_table_head",[prefix+"lifecycle/__init__.py"]:lifecycle},"DEPENDENCY");
+    for(const consumer of ['dsl/__init__.py','unified/other.py'])
+      rejects("py",{[prefix+consumer]:"from umf_access.lifecycle import prepare_table_correspondence",[prefix+"lifecycle/__init__.py"]:lifecycle},"DEPENDENCY");
     expect(check("py",{[prefix+"unified/session_psycopg2.py"]:"from psycopg2.extensions import cursor"}).exitCode).toBe(0);
     rejects("py",{[prefix+"unified/session_psycopg2.py"]:"from psycopg2 import connect"},"DEPENDENCY");
     rejects("py",{[prefix+"runtime/read.py"]:"from psycopg2.extensions import cursor"},"DEPENDENCY");

@@ -26,14 +26,20 @@ from psycopg2.pool import ThreadedConnectionPool
 from sqlalchemy import create_engine,URL
 from sqlalchemy.ext.asyncio import create_async_engine
 from umf_access.lifecycle import CatalogError,apply_table_migration
+from umf_access.lifecycle import verify_native_catalog
 from umf_access.unified import (SyncSession,AsyncSession,Psycopg2Session,SQLAlchemySession,AsyncSQLAlchemySession,
     SessionIdentity,SessionPolicy,SessionError,observe_table_head,observe_table_head_async)
+from umf_access.unified import verify_table_correspondence, verify_table_correspondence_async
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--dsn',required=True)
 parser.add_argument('--plans',required=True,type=Path)
 parser.add_argument('--report',required=True,type=Path)
+parser.add_argument('--correspondence',action='store_true')
 args=parser.parse_args()
+head_only=observe_table_head
+if args.correspondence:
+    observe_table_head,observe_table_head_async=verify_table_correspondence,verify_table_correspondence_async
 plans=json.loads(args.plans.read_text());initial,forward=plans['initial'],plans['forward']
 cfg=initial['next']['configuration'];schema,owner,person,batch=(cfg[k] for k in ('schema','ownerRole','personRole','batchRole'))
 assert re.fullmatch(r'p3_[a-f0-9]{12}_schema%?',schema)
@@ -41,13 +47,20 @@ alice,bob=owner+'_alice',owner+'_bob'
 roles=[owner,person,batch,*cfg['groupRoles'].values(),alice,bob]
 policy=SessionPolicy({'alice':alice,'bob':bob},{'job':batch},schema,catalog_only=True)
 identities=[SessionIdentity('person','alice'),SessionIdentity('person','bob'),SessionIdentity('batch','job')]
-observations=[];leases={}
+observations=[];leases={};scope_digests={}
 connection_args=parse_dsn(args.dsn)
 
 
 def check(name,value):
     assert value,name
     observations.append(name)
+
+
+def check_correspondence(label,identity,result):
+    if not args.correspondence:return
+    check(label+'-source-audience-'+identity.subject,result['audience']==identity.kind and result['nativeTableCorrespondenceVerified'] is True and result['operationAdmission'] is False and type(result['principalOid']) is int)
+    before=scope_digests.setdefault(identity.subject,result['roleScopeDigest'])
+    check(label+'-stable-live-scope-'+identity.subject,result['roleScopeDigest']==before)
 
 
 def refuses(name,call,reason):
@@ -64,6 +77,73 @@ def native_row(c,query):
     return tuple(c.exec_driver_sql(query).one())
 
 
+def drift_cases(admin,factory):
+    session=SyncSession(factory,policy)
+    def verify():return verify_table_correspondence(session,identities[0],forward['next'],reference)
+    before=verify()
+    cases=[
+        ('default',sql.SQL("ALTER TABLE {} ALTER COLUMN owner SET DEFAULT 'unexpected'").format(sql.Identifier(schema,'notes')),sql.SQL('ALTER TABLE {} ALTER COLUMN owner DROP DEFAULT').format(sql.Identifier(schema,'notes')),'installed-generation-mismatch'),
+        ('column-grant',sql.SQL('GRANT SELECT(owner) ON {} TO {}').format(sql.Identifier(schema,'notes'),sql.Identifier(person)),sql.SQL('REVOKE SELECT(owner) ON {} FROM {}').format(sql.Identifier(schema,'notes'),sql.Identifier(person)),'installed-generation-mismatch'),
+        ('extra-policy',sql.SQL('CREATE POLICY unexpected ON {} FOR SELECT TO {} USING(true)').format(sql.Identifier(schema,'notes'),sql.Identifier(person)),sql.SQL('DROP POLICY unexpected ON {}').format(sql.Identifier(schema,'notes')),'table-boundary-mismatch'),
+        ('forced-rls',sql.SQL('ALTER TABLE {} NO FORCE ROW LEVEL SECURITY').format(sql.Identifier(schema,'notes')),sql.SQL('ALTER TABLE {} FORCE ROW LEVEL SECURITY').format(sql.Identifier(schema,'notes')),'table-boundary-mismatch'),
+        ('owner-privilege',sql.SQL('ALTER ROLE {} CREATEDB').format(sql.Identifier(owner)),sql.SQL('ALTER ROLE {} NOCREATEDB').format(sql.Identifier(owner)),'role-scope-mismatch'),
+        ('cross-audience',sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(batch),sql.Identifier(person)),sql.SQL('REVOKE {} FROM {}').format(sql.Identifier(batch),sql.Identifier(person)),'role-scope-mismatch'),
+    ]
+    for label,alter,restore,reason in cases:
+        admin.execute(alter)
+        try:
+            check('matching-head-alone-does-not-detect-'+label,head_only(session,identities[0],forward['next'],reference)['headDigest']==reference['headDigest'])
+            refuses('live-correspondence-refuses-'+label,verify,reason)
+        finally:admin.execute(restore)
+        check('restored-correspondence-'+label,verify()['roleScopeDigest']==before['roleScopeDigest'])
+    for audience,role,reason in [('person',batch,'person-identity-required'),('batch',alice,'role-scope-mismatch')]:
+        wrong=SessionPolicy({'wrong':role} if audience=='person' else {},{'wrong':role} if audience=='batch' else {},schema,catalog_only=True)
+        bad=SyncSession(factory,wrong)
+        refuses('native-kind-refuses-'+audience,lambda:verify_table_correspondence(bad,SessionIdentity(audience,'wrong'),forward['next'],reference),reason)
+    service=owner+'_service'
+    admin.execute(sql.SQL('CREATE ROLE {} LOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION').format(sql.Identifier(service)))
+    try:
+        admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(batch),sql.Identifier(service)))
+        service_policy=SessionPolicy({}, {'service':service},schema,catalog_only=True)
+        result=verify_table_correspondence(SyncSession(factory,service_policy),SessionIdentity('batch','service'),forward['next'],reference)
+        check('batch-login-principal-inherits-separate-source-grant',result['audience']=='batch' and result['observedPrincipal']==service)
+        wrong=SessionPolicy({'wrong':service},{},schema,catalog_only=True)
+        refuses('batch-service-cannot-be-relabelled-person',lambda:verify_table_correspondence(SyncSession(factory,wrong),SessionIdentity('person','wrong'),forward['next'],reference),'role-scope-mismatch')
+    finally:admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(service)))
+    group=cfg['groupRoles']['readers']
+    admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT FALSE,SET FALSE').format(sql.Identifier(group),sql.Identifier(alice)))
+    try:check('member-only-group-change-alters-scope-digest',verify()['roleScopeDigest']!=before['roleScopeDigest'])
+    finally:admin.execute(sql.SQL('REVOKE {} FROM {}').format(sql.Identifier(group),sql.Identifier(alice)))
+    fn=sql.Identifier(schema,'unexpected_trigger')
+    admin.execute(sql.SQL('CREATE FUNCTION {}() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RETURN NEW; END $$').format(fn))
+    try:
+        admin.execute(sql.SQL('CREATE TRIGGER unexpected BEFORE INSERT ON {} FOR EACH ROW EXECUTE FUNCTION {}()').format(sql.Identifier(schema,'notes'),fn))
+        try:
+            refuses('ordinary-correspondence-refuses-user-trigger',verify,'table-boundary-mismatch')
+            with admin.transaction():
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)));admin.execute('SET LOCAL search_path=pg_catalog')
+                refuses('source-reproof-refuses-user-trigger',lambda:verify_native_catalog(admin,forward['next']),'catalog-mismatch')
+        finally:admin.execute(sql.SQL('DROP TRIGGER unexpected ON {}').format(sql.Identifier(schema,'notes')))
+    finally:admin.execute(sql.SQL('DROP FUNCTION {}()').format(fn))
+    outside=schema+'_outside'
+    admin.execute(sql.SQL('CREATE SCHEMA {}').format(sql.Identifier(outside)))
+    try:
+        admin.execute(sql.SQL('CREATE TABLE {}(id text REFERENCES {}(id))').format(sql.Identifier(outside,'incoming'),sql.Identifier(schema,'notes')))
+        refuses('ordinary-correspondence-refuses-outside-incoming-fk',verify,'table-boundary-mismatch')
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)));admin.execute('SET LOCAL search_path=pg_catalog')
+            refuses('source-reproof-refuses-outside-incoming-fk',lambda:verify_native_catalog(admin,forward['next']),'catalog-mismatch')
+        admin.execute(sql.SQL('DROP TABLE {}').format(sql.Identifier(outside,'incoming')))
+        admin.execute(sql.SQL('CREATE TABLE {}(id text)').format(sql.Identifier(outside,'other')))
+        admin.execute(sql.SQL('GRANT SELECT ON {} TO {}').format(sql.Identifier(outside,'other'),sql.Identifier(person)))
+        try:refuses('audience-root-external-authority-refuses',verify,'external-authority-present')
+        finally:admin.execute(sql.SQL('REVOKE SELECT ON {} FROM {}').format(sql.Identifier(outside,'other'),sql.Identifier(person)))
+        admin.execute(sql.SQL('GRANT SELECT ON {} TO {}').format(sql.Identifier(outside,'other'),sql.Identifier(alice)))
+        check('actual-person-may-have-other-plugin-grants',verify()['nativeTableCorrespondenceVerified'] is True)
+    finally:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(outside)))
+    check('final-native-scope-restores-after-drift',verify()['roleScopeDigest']==before['roleScopeDigest'])
+
+
 def sync_cases(label,kind,factory,checkout):
     counts={'acquired':0,'released':0};leases[label]=counts
     @contextmanager
@@ -76,6 +156,7 @@ def sync_cases(label,kind,factory,checkout):
     for identity in identities:
         result=observe_table_head(session,identity,forward['next'],reference)
         check(label+'-'+identity.kind+'-'+identity.subject,result['observedPrincipal']==policy.role(identity) and result['headDigest']==reference['headDigest'] and result['lifecycleAdmission'] is False)
+        check_correspondence(label,identity,result)
     check(label+'-pool-returned-after-success',checkout()==0)
     before=dict(counts)
     refuses(label+'-unknown-person-before-lease',lambda:observe_table_head(session,SessionIdentity('person','missing'),forward['next'],reference),'subject has no grant for this session kind')
@@ -119,6 +200,7 @@ async def async_cases(label,kind,factory,checkout,admin):
     for identity in identities:
         result=await observe_table_head_async(session,identity,forward['next'],reference)
         check(label+'-'+identity.kind+'-'+identity.subject,result['observedPrincipal']==policy.role(identity) and result['headDigest']==reference['headDigest'] and result['lifecycleAdmission'] is False)
+        check_correspondence(label,identity,result)
     check(label+'-pool-returned-after-success',checkout()==0)
     try:await observe_table_head_async(session,identities[0],initial['next'],old_reference)
     except CatalogError as error:check(label+'-stale-source-rollback',str(error)=='installed-generation-mismatch')
@@ -188,6 +270,7 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             second=apply_table_migration(admin,forward,approved_digest=forward['digest'],expected_head=first['headDigest'],person_roles=(alice,bob));reference=second['installationReference']
         with ConnectionPool(args.dsn,kwargs={'row_factory':dict_row},min_size=1,max_size=1) as pool:
             pool.wait()
+            if args.correspondence:drift_cases(admin,lambda _:pool.connection())
             sync_cases('psycopg3',SyncSession,lambda _:pool.connection(),lambda:pool.get_stats()['pool_size']-pool.get_stats()['pool_available'])
         pool2=ThreadedConnectionPool(1,1,args.dsn,cursor_factory=RealDictCursor)
         @contextmanager
@@ -209,7 +292,8 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             try:await async_cases('async-sqlalchemy-psycopg3',AsyncSQLAlchemySession,lambda _:engine.connect(),engine.pool.checkedout,admin)
             finally:await engine.dispose()
         asyncio.run(asynchronous())
-        report={'scope':'installed shared native-head observation through per-call session adapters and real pools; no data admission',
+        report={'scope':'installed shared native-head/correspondence observation through per-call session adapters and real pools; no data admission',
+            'liveCorrespondence':args.correspondence,
             'postgresql':admin.info.server_version,'versions':{p:version(p) for p in ('umf_access','umf_codegen','psycopg','psycopg2-binary','SQLAlchemy','greenlet','psycopg-pool','pydantic')},
             'plansSha256':hashlib.sha256(args.plans.read_bytes()).hexdigest(),'observations':observations,'leases':leases,'lifecycleAdmission':False,
             'unqualified':['live data-operation native admission','generated native table methods','authenticated cursors','durable replay','managed Lakebase','full Praxis release']}
