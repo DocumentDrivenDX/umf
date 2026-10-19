@@ -518,3 +518,17 @@ ledger generation and complete privilege closure, then generated typed module
 execution. Authenticated cursors, durable data outcomes, necessary native codecs,
 schema evolution/seeds and complete pinned private consumer/available Lakebase
 acceptance remain release gates. The user's full Praxis goal remains active.
+
+
+### Shared operation compiler browser evidence
+
+Weft4e0abd77 extends the same compiler packet with actual Chromium153.0.8010.12
+execution through wasm-bindgen0.2.105. All27 native/WASM result pairs agree,
+compiled programs verify, and one altered program plus two invalid Unicode
+transports refuse. Browser network IO is disabled after module loading; actual
+WASM/JS hashes and imports are retained. The candidate CI now reproduces the
+browser comparison. The [updated packet](evidence/praxis-p2/weft-table-operations.json)
+pins this exact pushed successor while retaining the earlier feature source.
+This supersedes the compiler's earlier compilation-only browser qualification,
+without claiming native execution or closing any remaining release gate. New
+hosted candidate jobs remain pending; no full Praxis prerelease is published.
