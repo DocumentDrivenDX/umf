@@ -59,7 +59,7 @@ class _Cursor:
     def execute(self, statement, parameters=None):
         if self.result is not None:
             self.result.close()
-        self.result = self.connection.exec_driver_sql(statement, parameters, execution_options={'no_parameters':True})
+        self.result = self.connection.exec_driver_sql(statement, parameters, execution_options={'no_parameters':parameters is None})
 
     def fetchone(self):
         row = self.result.fetchone()
@@ -67,6 +67,10 @@ class _Cursor:
 
     def fetchall(self):
         return [tuple(row) for row in self.result.fetchall()]
+
+    @property
+    def description(self):
+        return tuple((name,) for name in self.result.keys())
 
 
 class _SyncConnection(_State):
@@ -93,7 +97,7 @@ class _AsyncCursor(_Cursor):
     async def execute(self, statement, parameters=None):
         if self.result is not None:
             self.result.close()
-        self.result = await self.connection.exec_driver_sql(statement, parameters, execution_options={'no_parameters':True})
+        self.result = await self.connection.exec_driver_sql(statement, parameters, execution_options={'no_parameters':parameters is None})
 
     async def fetchone(self):
         return super().fetchone()

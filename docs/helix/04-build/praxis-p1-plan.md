@@ -682,3 +682,44 @@ checks inside one operation lifetime with verified Weft programs, exact codecs
 and current scope before/after execution, then generate typed native module
 methods. Cursor authentication, durable outcomes and the remaining lifecycle/
 consumer/release gates remain part of the full active Praxis goal.
+
+## SDK-owned declared native reads — 2026-10-19
+
+`SyncTableReader`/`AsyncTableReader` now compile and source-recheck declared reads
+inside the SDK. Trusted host configuration pins the original source, deployment
+and committed installation reference. Identity remains a separate authenticated
+per-call argument; no SQL/program or execution callback enters this API. The
+closed host profile refuses unknown Weft obligations. One catalog-only native
+lease combines pre/post live correspondence with the checked business statement,
+exact scalar/cardinality checks and final wire bound. Write declarations remain
+explicitly gated on the durable outcome executor.
+
+Weftff169567 adds the shared `pg18-read-frame/0.1`8MiB uncompressed-octet guard,
+including lookahead, with hidden native ordering fields excluded from public
+results. The SQLAlchemy adapter now distinguishes no-parameter control statements
+from explicitly bound empty DBAPI tuples; percent-containing schema names pass
+both paths. Opaque HMAC cursors bind exact inputs/size, source/head/reference,
+verified principal and live role/MEMBER scope. No cross-page snapshot is implied.
+
+The [source-bound receipt](evidence/praxis-p2/declared-reads/receipt.json) records126
+native PG18.6 assertions across six driver/pool configurations. All72 tracked
+leases exit; caller read-only ownership, cardinality failures, source-driven RLS,
+cross-principal/tampered/changed-scope cursors, compressed oversize frames and
+repeated async cancellation at real advisory/relation waits pass. PostgreSQL's
+catalog deparser reaches the relation wait during admission; the retained
+precursor and final report identify that phase without claiming business-query
+cancellation. Native codec coverage is text and count; exact scalar unit tests
+do not establish every native codec. Twenty-five session tests and five value/
+cursor tests pass in full and dependency-minimal environments. Twenty-four
+boundary tests/170 assertions,76-module imports, exact changed source/wheel/
+installed bytes and MIT OR Apache-2.0 audits pass.
+
+Predecessor c66707ed hosted run39325447746 is green. CI now pins the exact
+ff1695675b05c98c0ae56d7cdd675b82426f65b2 Weft source and runs this native reader
+fixture. New hosted results remain pending publication of this UMF increment.
+No prerelease is published and the goal remains active. Next close durable
+write outcomes and generated lifecycle module execution; remaining required
+native codecs/constraints, seed/evolution work, the selected private Praxis
+conversion/identity mapping and available Lakebase/cohort release acceptance
+remain required. The local unreleased package version labels are not release
+support promises.

@@ -110,7 +110,9 @@ def check(root: Path) -> int:
         typing_backport = name == "umf_access.dsl.navigation" and target == "typing_extensions" and member == "TypeVar"
         psycopg2_cursor = (name == 'umf_access.unified.session_psycopg2'
                           and target == 'psycopg2.extensions' and member == 'cursor')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor:
+        table_read_compiler = (name == 'umf_access.unified.table_reads' and target == 'weft'
+                               and member in {'compile_table_operation_json', 'check_table_operation_json'})
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
             fail(path, "DYNAMIC", "dynamic loading module")

@@ -12,6 +12,7 @@ from .session_psycopg2 import Psycopg2Session
 from .session_sqlalchemy import AsyncSQLAlchemySession, SQLAlchemySession
 from .session_sync import SyncSession
 from .head_session import observe_table_head, observe_table_head_async, verify_table_correspondence, verify_table_correspondence_async
+from .table_reads import SyncTableReader, AsyncTableReader
 
 
 class WeftTableBinding(_TableBinding):
@@ -154,6 +155,8 @@ class SyncWeftTableBinding(_TableBinding):
 
 
 __all__ = [
+    "SyncTableReader",
+    "AsyncTableReader",
     "observe_table_head",
     "observe_table_head_async",
     "verify_table_correspondence",

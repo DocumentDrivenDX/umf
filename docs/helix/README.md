@@ -20,6 +20,12 @@ open. The
 runs the original portable generator without external Bun/Node; Linux/macOS
 hosted checks pass. Publication gates remain open.
 
+The [declared native reader evidence](04-build/evidence/praxis-p2/declared-reads/receipt.json)
+records checked Weft reads with pre/post live correspondence, identity-scoped
+cursors, bounded frames and126 PG18 assertions across six driver/pool variants.
+Durable writes, generated lifecycle methods and the remaining full Praxis
+lifecycle/consumer/release gates remain open.
+
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and
 ontologies. Developers compose reads directly and change the binding to change

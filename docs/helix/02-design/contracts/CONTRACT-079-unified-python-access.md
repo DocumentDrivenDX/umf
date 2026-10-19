@@ -313,6 +313,50 @@ means no automatic retry is safe without a supplied key. Read execution as a
 scheduled batch identity is independently controlled by native table policy;
 the write-batch shape grants no batch principal authority.
 
+### SDK-owned declared read execution profile
+
+`SyncTableReader` and `AsyncTableReader` accept a host-owned session factory,
+approved bundle, committed installation reference, matching original-source
+binding and at least256-bit cursor root secret. Each `read` selects an explicitly
+authenticated `SessionIdentity` and declared module operation with exact
+CoreLiteral inputs. The entry point accepts neither SQL nor compiled programs;
+write declarations require a separate durable outcome executor. Selected source,
+mapping, configuration and deployment pins MUST match before a lease is acquired.
+The installed Weft compiler MUST compile and source-recheck its own program.
+
+Execution requires the fixed `pg18-read-frame/0.1` Weft guard. The materialized
+bounded native read MUST measure uncompressed visible value octets, including
+lookahead, against8388608 bytes and fail with SQLSTATE22012 before delivering
+an oversized frame. Hidden native sort fields preserve authored ordering without
+becoming output Fields. Public aliases/order, arity, exact scalar carriers,
+availability and result cardinality are checked. The final serialized wire frame
+also has an8388608-byte limit; JSON escaping can increase size beyond native
+octets. Either failure returns no partial frame. SQL NULL is represented as
+`None` only for an admitted nullable Field. Count is exact nonnegative integer
+text wrapped as `integerToken`; integer/decimal/UUID/bits128 results retain their
+existing wire wrappers without a floating-point intermediary.
+
+One authenticated, catalog-only, read-only native lease contains current head,
+principal/role-scope, source-proved live table/privilege correspondence, the
+checked business read and repeated correspondence. A changed observation MUST
+refuse the response. The shared module advisory lock remains held through the
+native transaction lifetime. Adapter-owned transactions complete before return;
+caller-owned transactions must already be read-only and retain ownership after
+savepoint success or failure. Native PostgreSQL catalogs are trusted server
+infrastructure; privileged external DDL/role changes require operator quiescence
+under the existing lifecycle contract.
+
+Opaque `umf.table-cursor/0.1` tokens are bounded to16384 characters and use
+HMAC-SHA256 with the host's identity-and-session-policy-derived secret. Their
+closed payload binds module/operation, target, exact input digest, requested
+size, source/configuration/bundle/head/reference digests, schema, verified
+principal OID and live role/MEMBER scope digest to the complete typed key tuple.
+The internal digest encoding is explicitly `python-sorted-json/0.1`, not an
+RFC8785 or cross-language cursor minting promise. Caller-supplied raw key tuples
+are not a continuation interface. A valid cursor grants no snapshot across
+pages, and source/principal/policy drift invalidates it. No read execution claim
+admits durable writes, generated lifecycle modules or unverified native codecs.
+
 This declaration subset covers single-table projections/counts and scalar
 CRUD/upsert operations. Joins/aggregate business outputs, parameter lists,
 optional-input omission and cross-operation transactions require explicit wire

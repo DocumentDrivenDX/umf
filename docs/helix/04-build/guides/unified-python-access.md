@@ -126,3 +126,35 @@ required by generated application clients. The wheel and self-contained source
 distribution have local macOS arm64 Python3.11 evidence; Linux CI is configured
 but not executed, and no new package/index release has been published. See
 [P1 evidence](../evidence/praxis-p1.md) for the exact candidate and remaining gates.
+
+## Declared native reader candidate
+
+The unpublished SDK reader executes `umf.table-operation/0.1` read declarations
+through the checked Weft compiler and native per-call sessions. Host configuration
+supplies the approved original bundle, its committed installation reference and
+matching binding. Authentication supplies the identity separately from inputs:
+
+```python
+from umf_access.unified import SyncTableReader
+
+reader = SyncTableReader(session, approved_bundle, committed_reference, binding,
+                         cursor_secret=host_cursor_secret)
+first = reader.read(identity, "list_notes", {"owner": {"string": owner_value}}, size=25)
+next_page = reader.read(identity, "list_notes", {"owner": {"string": owner_value}},
+                        size=25, cursor=first["cursor"]) if first["cursor"] else None
+```
+
+Use `AsyncTableReader` with an async session and await `read`. Existing Psycopg3,
+Psycopg2 and supported SQLAlchemy Core session adapters supply all IO; no query
+callback or process-global pool is needed. Set `SessionPolicy.catalog_only=True`.
+Caller-owned read transactions must already be read-only. Pages use authenticated
+opaque continuation, and count/single/optional/many operations preserve their
+authored bounds. Returned integer and decimal wire values keep exact tokens.
+
+The same lease checks source-proved live correspondence before and after the
+native read. Rows exceeding the authored cardinality or the8MiB native/wire
+frame limit fail without partial results. Cursors expire on source/head,
+identity, role scope, inputs or size changes; they promise no cross-page snapshot.
+This reader is a native execution component. Generated lifecycle module methods,
+durable writes, remaining codecs/evolution and full Praxis/Lakebase acceptance
+remain release gates. No complete Praxis prerelease has been published.

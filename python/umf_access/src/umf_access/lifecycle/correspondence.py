@@ -34,6 +34,15 @@ class TableCorrespondenceProbe:
         return _correspondence_steps(head._source,head._expected,self._principal,self._audience,
                                      head._statement_timeout_ms,head._lock_timeout_ms)
 
+    @property
+    def binding_context(self) -> dict[str, Any]:
+        """Copied source pins for an SDK-owned operation compiler invocation."""
+        source,expected=self._head._source,self._head._expected
+        return {'module':source['configuration']['module'],'schema':self.schema,
+                'sourceUtf8':source['source']['utf8'],'sourceDigest':source['sourceDigest'],
+                'configurationDigest':source['configurationDigest'],'bundleDigest':source['bundleDigest'],
+                'headDigest':expected['headDigest'],'referenceDigest':expected['referenceDigest']}
+
 
 def prepare_table_correspondence(bundle: dict[str, object], reference: dict[str, object], *,
                                  principal_role: str, audience: Literal['person','batch'],

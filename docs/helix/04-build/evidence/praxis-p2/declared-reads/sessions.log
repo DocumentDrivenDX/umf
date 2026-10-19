@@ -1,0 +1,30 @@
+test_cancel_body_and_repeated_cancel_during_cleanup (test_native_sessions.AsyncTests.test_cancel_body_and_repeated_cancel_during_cleanup) ... ok
+test_cancellation_during_successful_cleanup_waits_for_release (test_native_sessions.AsyncTests.test_cancellation_during_successful_cleanup_waits_for_release) ... ok
+test_cancelled_preparation_never_acquires_a_late_lease (test_native_sessions.AsyncTests.test_cancelled_preparation_never_acquires_a_late_lease) ... ok
+test_cleanup_failure_closes_before_pool_release (test_native_sessions.AsyncTests.test_cleanup_failure_closes_before_pool_release) ... ok
+test_role_tampering_rolls_back_and_propagates (test_native_sessions.AsyncTests.test_role_tampering_rolls_back_and_propagates) ... ok
+test_settings_tampering_rolls_back (test_native_sessions.AsyncTests.test_settings_tampering_rolls_back) ... ok
+test_success_and_failure (test_native_sessions.AsyncTests.test_success_and_failure) ... ok
+test_catalog_only_resolution_is_explicit_and_scoped (test_native_sessions.PolicyTests.test_catalog_only_resolution_is_explicit_and_scoped) ... ok
+test_cursor_authority_and_policy_scope (test_native_sessions.PolicyTests.test_cursor_authority_and_policy_scope) ... ok
+test_explicit_batch_registry (test_native_sessions.PolicyTests.test_explicit_batch_registry) ... ok
+test_failure_and_privileged_role_rollback (test_native_sessions.SyncTests.test_failure_and_privileged_role_rollback) ... ok
+test_head_guard_rejects_before_lease_or_optional_compiler (test_native_sessions.SyncTests.test_head_guard_rejects_before_lease_or_optional_compiler) ... ok
+test_invalid_outer_and_unknown_identity (test_native_sessions.SyncTests.test_invalid_outer_and_unknown_identity) ... ok
+test_no_postfork_use (test_native_sessions.SyncTests.test_no_postfork_use) ... ok
+test_outer_transaction_preserved (test_native_sessions.SyncTests.test_outer_transaction_preserved) ... ok
+test_owned_transaction_and_cleanup (test_native_sessions.SyncTests.test_owned_transaction_and_cleanup) ... ok
+test_ownership_tampering_and_cleanup_failure (test_native_sessions.SyncTests.test_ownership_tampering_and_cleanup_failure) ... ok
+test_settings_tampering_rolls_back (test_native_sessions.SyncTests.test_settings_tampering_rolls_back) ... ok
+test_async_transport_rolls_back_shared_wire_error (test_session_binding.SessionBindingTests.test_async_transport_rolls_back_shared_wire_error) ... ok
+test_binding_schema_containment (test_session_binding.SessionBindingTests.test_binding_schema_containment) ... ok
+test_cursor_scope_across_calls_and_identities (test_session_binding.SessionBindingTests.test_cursor_scope_across_calls_and_identities) ... ok
+test_error_response_rolls_back_action_before_return (test_session_binding.SessionBindingTests.test_error_response_rolls_back_action_before_return) ... ok
+test_missing_action_and_malformed_request_refuse (test_session_binding.SessionBindingTests.test_missing_action_and_malformed_request_refuse) ... ok
+test_sync_does_not_use_running_event_loop (test_session_binding.SessionBindingTests.test_sync_does_not_use_running_event_loop) ... ok
+test_sync_rejects_async_functions_and_disguised_awaitables (test_session_binding.SessionBindingTests.test_sync_rejects_async_functions_and_disguised_awaitables) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.099s
+
+OK

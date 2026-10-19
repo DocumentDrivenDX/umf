@@ -78,7 +78,9 @@ jobs:
           --wheel /tmp/umf-p1-wheels/*.whl
           --report /tmp/umf-p1-compatibility.json
       - name: Check installed session scheduling and lease fault handling
-        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
+        run: |
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
       - name: Check portable sync and async clients
         run: >-
           bun test tests/access-unified.test.ts tests/access-unified-sync.test.ts
@@ -184,7 +186,7 @@ jobs:
         if: matrix.weft-cohort == 'source-dbapi'
         with:
           repository: DocumentDrivenDX/weft
-          ref: e686c27e8c05a17cfbd3a21d14ff5b38c6629b7b
+          ref: ff1695675b05c98c0ae56d7cdd675b82426f65b2
           path: .ci-weft
       - uses: dtolnay/rust-toolchain@stable
         if: matrix.weft-cohort == 'source-dbapi'
@@ -228,6 +230,7 @@ jobs:
           bun tests/unified/table-ledger-fixture.ts /tmp/umf-head-adapter-plans.json --typed-operations --quoted-schema
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
+          python -I tests/unified/table_reads_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-reads-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -242,3 +245,4 @@ jobs:
             /tmp/umf-operation-ledger-native.json
             /tmp/umf-head-adapter-native.json
             /tmp/umf-correspondence-adapter-native.json
+            /tmp/umf-table-reads-native.json
