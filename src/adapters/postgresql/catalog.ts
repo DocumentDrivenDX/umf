@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/postgresql-catalog/package.json';
 import {derivePostgresqlColumns} from './column-metadata';
 export type {PostgresqlColumnMetadata} from './column-metadata';
@@ -49,7 +50,7 @@ function payload(document:Document):Payload{
 }
 export function importPostgresqlCatalogCapture(text:string,options:{id:string}):Document{
  const root=parseNativeJson(text);const state=root.kind==='object'&&root.members.state?.kind==='string'?root.members.state.value:'captured';
- const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[POSTGRESQL_CATALOG_EXTENSION]:{version:'0.1.0'}},modules:[{id:'catalog',namespace:'',elements:[{id:'capture',extensions:{[POSTGRESQL_CATALOG_EXTENSION]:{profile:'postgresql-catalog-capture',state,root} as unknown as Json}}]}]};payload(document);document.modules.push({id:'postgresql.columns',namespace:'',elements:derivePostgresqlColumns(root).map(c=>c.element)});return document;
+ const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[POSTGRESQL_CATALOG_EXTENSION]:{version:'0.1.0'}},modules:[{id:'catalog',namespace:'',elements:[{id:'capture',extensions:{[POSTGRESQL_CATALOG_EXTENSION]:{profile:'postgresql-catalog-capture',state,root} as unknown as Json}}]}]};payload(document);document.modules.push({id:'postgresql.columns',namespace:'',elements:derivePostgresqlColumns(root).map(c=>c.element)});return document;
 }
 export function getPostgresqlColumnMetadata(document:Document){return derivePostgresqlColumns(payload(document).root);}
 function checkColumnMetadata(document:Document){

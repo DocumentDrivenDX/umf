@@ -656,11 +656,11 @@ excluded; unknown source-module owners refuse.
 
 | Module | Responsibility / Owned Types | Public API | Allowed Dependencies | Forbidden Dependencies |
 | --- | --- | --- | --- | --- |
-| `src/compilation/admission/` | Admission, access validation, closure, census | `admission/index.ts`; CONTRACT-067/070 | Own internals, IR public barrel, `src/index.ts` semantic APIs | Emitters, bundle, host I/O |
-| `src/compilation/ir/` | Immutable resolved nodes, provenance, obligations | `ir/index.ts`; private compiler representation | Own internals; type-only imports from `src/index.ts` | External values, renderers, host globals |
-| `src/compilation/targets/python/` | Python source emission | `targets/python/index.ts`; CONTRACT-068 output | Own literal renderer, IR public barrel | SQL lowering, execution, host I/O |
+| `src/compilation/admission/` | Admission, access validation, closure, census | `admission/index.ts`; CONTRACT-067/070 | Own internals, IR public barrel, named public semantic exports via barrel or identity-checked leaf imports | Emitters, bundle, host I/O |
+| `src/compilation/ir/` | Immutable resolved nodes, provenance, obligations | `ir/index.ts`; private compiler representation | Own internals; erased public semantic types via barrel or identity-checked leaf imports | External values, renderers, host globals |
+| `src/compilation/targets/python/` | Python source emission | `targets/python/index.ts`; CONTRACT-068 output | Own literal renderer, IR public barrel, generated `CURRENT_CORE_VERSION` for emitted metadata | SQL lowering, execution, host I/O |
 | `src/compilation/bundle/` | Manifest, source archive, portable hashing | `bundle/index.ts`; CONTRACT-067 results | Own internals, IR and Python target public barrels | Filesystem, external host dependencies |
-| `src/compilation/index.ts` | Generator facade and trusted composition | `generateAccessPackage`; CONTRACT-067 | Public compilation barrels, public UMF APIs | Artifact-selected loading, host I/O |
+| `src/compilation/index.ts` | Generator facade and trusted composition | `generateAccessPackage`; CONTRACT-067 | Public compilation barrels, named public UMF exports via barrel or identity-checked leaf imports | Artifact-selected loading, host I/O |
 | `scripts/umf-access-generate.ts` | Host writer and drift check | `generate`/`check`; CONTRACT-067 | Generator facade and host APIs | Semantic reimplementation; reviewed host boundary |
 | `types.py`, `values.py`, `codec_support.py` | Shared carriers, strict values, codec revalidation; foundation owner | Named top-level modules; CONTRACT-068/072 | Other foundation modules, standard library, Pydantic | DSL, capture, drivers, Weft, host I/O |
 | `dsl/`, `capture.py` | Typed expressions and in-memory declaration capture; DSL owner | `dsl/__init__.py`, `capture.py`; CONTRACT-071 | DSL internals, foundation, pure standard library, Pydantic | Drivers, Weft, network/filesystem, dynamic loading |
@@ -670,6 +670,8 @@ excluded; unknown source-module owners refuse.
 | `targets/` | Raw-table integration and native execution | `targets/__init__.py`; CONTRACT-072/073 | Runtime, DSL, foundation public APIs; standard library, optional psycopg/Databricks/PySpark drivers | Generated packages by name; engine internals |
 | `conformance/` | Shared adapter conformance | `conformance/__init__.py`; CONTRACT-069/072 | Runtime/foundation public APIs, pure standard library, Pydantic | Engine internals and host I/O |
 | `__init__.py` | SDK public re-exports | CONTRACT-068/071/072 exports when implemented | DSL, runtime and foundation public APIs | Build/compiler dependencies, drivers |
+
+Named leaf imports are admitted only when TypeScript resolves the imported symbol to the same symbol exported by `src/index.ts`; exposing a symbol in a leaf alone does not make it public. Admission and the facade use this to avoid eager initialization of every adapter. IR dependencies remain erased types (including an erased `typeof` current-marker query); the Python target may load only the generated current marker for metadata. Private, default, namespace and side-effect leaf imports remain refused, together with cross-owner internals and host I/O.
 
 **Integration Owners**: Weft -> Python `build/` and the exact `runtime/bulk.py`
 exception; raw-table drivers -> `targets/`; Truss/Ashlar -> their own repositories'
@@ -800,3 +802,19 @@ core0.10.0 source. No view is a native downgrade or public version conversion.
 Semantic checks use separately supplied exact registries, never remote loading.
 Migration and rollback preserve all source bytes as JSON values and explicit
 residuals. Existing native/version-specific APIs retain their declared limits.
+
+## Authoritative metamodel boundary — 2026-10-18
+
+ADR-005 / CONTRACT-080 / TD-091 supersede layered core schema authority. The
+host-side `scripts/metamodel/` compiler independently loads authored
+`spec/metamodel/umf.yaml`, checks its closed vocabulary and emits current schema,
+TS/Python shapes, portable ordered constraints/domain policy and provenance.
+`src/generated/core-model.ts` exposes data/types; browser-compatible
+`src/validation/constraint-kernel.ts` executes generic operations. Python executes
+the same inert program. No runtime imports compiler/filesystem modules, and no
+compiler bootstrap imports generated document admission. Reference/ontology and
+current browser consumers read generated/model data, never reverse-author rules
+from schema fragments. Inert historical archives cannot enter current packages.
+Architecture checks must enforce these boundaries and retired import families.
+One `reference/core.html` host owns ontology/reference/catalog; reusable current
+renderer behavior belongs in a qualified released package, not host shims.

@@ -1,0 +1,81 @@
+{
+  "umf": "0.1.0",
+  "id": "cpp-21.0.0/generated_list_view.stream/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "lv",
+                          "nullable": true,
+                          "type": {
+                            "type": "ListView",
+                            "value": {}
+                          },
+                          "children": [
+                            {
+                              "name": "item",
+                              "nullable": true,
+                              "type": {
+                                "type": "FloatingPoint",
+                                "value": {
+                                  "precision": "SINGLE"
+                                }
+                              },
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "llv",
+                          "nullable": true,
+                          "type": {
+                            "type": "LargeListView",
+                            "value": {}
+                          },
+                          "children": [
+                            {
+                              "name": "item",
+                              "nullable": true,
+                              "type": {
+                                "type": "FloatingPoint",
+                                "value": {
+                                  "precision": "SINGLE"
+                                }
+                              },
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

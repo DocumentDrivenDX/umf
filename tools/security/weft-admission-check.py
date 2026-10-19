@@ -1,4 +1,7 @@
-"""Current-source owner Rust security admission evidence, not backend acceptance."""
+"""Historical Rust admission/source-correspondence reproduction.
+Pinned original checkout and upstream profiles qualify only the original scope;
+these observations cannot qualify the current core or native backend acceptance.
+"""
 import hashlib,json,os,subprocess
 from pathlib import Path
 ROOT=Path('/Users/erik/Projects/weft')

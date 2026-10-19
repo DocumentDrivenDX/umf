@@ -7,7 +7,7 @@
       "checkpoint": {
         "version": "6",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.checkpoint.f5ee283b-37c7-46af-b64c-8f77c6a5c43a.json",
           "vocabularies": {
             "umf.delta.log": {
@@ -38,7 +38,7 @@
         {
           "path": "00000000000000000006.checkpoint.0000000001.0000000001.1a1516f4-8a39-48f0-9ccd-cc3790d824c7.parquet",
           "source": {
-            "umf": "0.1.0",
+            "umf": "0.10.0",
             "id": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000006.checkpoint.0000000001.0000000001.1a1516f4-8a39-48f0-9ccd-cc3790d824c7.parquet",
             "vocabularies": {
               "umf.parquet": {
@@ -208,7 +208,7 @@
       "checkpoint": {
         "version": "8",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.checkpoint.e5ac4dc4-be27-4106-8a55-609707487f83.json",
           "vocabularies": {
             "umf.delta.log": {
@@ -239,7 +239,7 @@
         {
           "path": "00000000000000000008.checkpoint.0000000001.0000000001.d55fb2cb-b8d3-4362-8572-c52142a9da1f.parquet",
           "source": {
-            "umf": "0.1.0",
+            "umf": "0.10.0",
             "id": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000008.checkpoint.0000000001.0000000001.d55fb2cb-b8d3-4362-8572-c52142a9da1f.parquet",
             "vocabularies": {
               "umf.parquet": {

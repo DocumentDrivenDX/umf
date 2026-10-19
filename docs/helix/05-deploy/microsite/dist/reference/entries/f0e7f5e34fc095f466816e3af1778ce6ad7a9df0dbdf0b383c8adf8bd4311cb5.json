@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -491,7 +491,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -579,13 +579,13 @@
   "id": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 4158,
+      "bytes": 4159,
       "path": "spec/core/key-tuple-operation-v4.schema.json",
-      "sha256": "90691e12c3edd982009124ea3d7a170d0f109bca76d388d5388bd2578ffaee0c"
+      "sha256": "fe7d93da41ac331696686bd32fb0be8ca62b7a5638b95b975034195d66dff2cc"
     }
   ],
   "summary": "Structural receipt validation is insufficient: verification recomputes exact tuple bytes from retained candidate source/values and checks current document context. This establishes neither authorship nor native enforcement.",

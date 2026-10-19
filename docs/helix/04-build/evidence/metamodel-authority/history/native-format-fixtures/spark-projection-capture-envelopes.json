@@ -1,0 +1,4859 @@
+{
+  "scope": "Top-level authored UMF capture envelope markers only. Native-results reports, source schema files, native payload bytes and expected recovered schemas unchanged. Not a relabelled historical native receipt.",
+  "entries": [
+    {
+      "path": "fixtures/projections/arrow-spark/list-view.umf.json",
+      "archive": "fixtures__projections__arrow-spark__list-view.umf.json.txt",
+      "originalSha256": "fdd32113e1d2bd9a32bb4bf2a1979225b74b52e36683549d26fdd26987218143",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/decimal64.umf.json",
+      "archive": "fixtures__projections__arrow-spark__decimal64.umf.json.txt",
+      "originalSha256": "82b0e9acbc3d3c0d92fef07118ce001c88e8737d26528e5f99b78bb802dc7dd3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/time32.umf.json",
+      "archive": "fixtures__projections__arrow-spark__time32.umf.json.txt",
+      "originalSha256": "5233d371ba0690bcc3b344287c9f51bb47eed354e1f757a4613b2d05b47acc42",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/fixed-binary.umf.json",
+      "archive": "fixtures__projections__arrow-spark__fixed-binary.umf.json.txt",
+      "originalSha256": "3aab3aa9932b683d3df3257312f6ba172214506696f40c83aa3bf0c5af57843a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/duration-ns.umf.json",
+      "archive": "fixtures__projections__arrow-spark__duration-ns.umf.json.txt",
+      "originalSha256": "9965ebf1bcce08df8deeab07a882d257dc8b790846819f45289a72fc4734ad43",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/float16.umf.json",
+      "archive": "fixtures__projections__arrow-spark__float16.umf.json.txt",
+      "originalSha256": "3e86bd094e86278f03e758821ff0ac96508f09244b15175b49999e8a5b830a94",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/decimal256-large.umf.json",
+      "archive": "fixtures__projections__arrow-spark__decimal256-large.umf.json.txt",
+      "originalSha256": "8e73734f491d913f08b32ff26479b5c8ea64270d49950a0b082bc9ae7a30dc50",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/zero-list.umf.json",
+      "archive": "fixtures__projections__arrow-spark__zero-list.umf.json.txt",
+      "originalSha256": "1845f4d6b141c9b306fd6a0bec2477a18c4a47cfa3bdd2c098f0d2560db99023",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/decimal-negative.umf.json",
+      "archive": "fixtures__projections__arrow-spark__decimal-negative.umf.json.txt",
+      "originalSha256": "715f4192475c03752cc328d1c7106a27413438971f2721744bbf295c409a9ddc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/uint64.umf.json",
+      "archive": "fixtures__projections__arrow-spark__uint64.umf.json.txt",
+      "originalSha256": "686e05818e3cc83d44e4f218c84859ebdea561cafebf861f5e575197378eb6a0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/dictionary.umf.json",
+      "archive": "fixtures__projections__arrow-spark__dictionary.umf.json.txt",
+      "originalSha256": "fe50e904ddf4bca82c80c0578ebda889f92456aad650a07c4c451113be3f7a35",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/large-list.umf.json",
+      "archive": "fixtures__projections__arrow-spark__large-list.umf.json.txt",
+      "originalSha256": "018d6bd9dc5af78cb6e829b5d9b4ba62c92795ecae3cbac4602a5304298dc9d3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/zero-binary.umf.json",
+      "archive": "fixtures__projections__arrow-spark__zero-binary.umf.json.txt",
+      "originalSha256": "81a95da15a5fbe009de26f09b715f81d459b8015df5834caa293e16a4f8a4214",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/fixed-list.umf.json",
+      "archive": "fixtures__projections__arrow-spark__fixed-list.umf.json.txt",
+      "originalSha256": "1fda9abe1c5688e99fd9d10a57d1bc812b9749fbd90acf89cb7e7ec46a56e8c7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/zoned-us.umf.json",
+      "archive": "fixtures__projections__arrow-spark__zoned-us.umf.json.txt",
+      "originalSha256": "594512647baceb1a8395769aaf936c81692796aee745acacb238c65a67ee1675",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/run-end.umf.json",
+      "archive": "fixtures__projections__arrow-spark__run-end.umf.json.txt",
+      "originalSha256": "d0685fa71cb04f01c0a97a7b6eddc24ecc9122f2b6d4d2d628295cd4589c0f89",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/timestamp-ms.umf.json",
+      "archive": "fixtures__projections__arrow-spark__timestamp-ms.umf.json.txt",
+      "originalSha256": "dfdb1ae91991e547ff66fbee73bb62ff7cea33f2005f0c69cc0d624f22d25aa1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/duration-s.umf.json",
+      "archive": "fixtures__projections__arrow-spark__duration-s.umf.json.txt",
+      "originalSha256": "bc64735b50159775f1411155b36d7195d12e8b5d89f20908052076992f92e830",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/timestamp-us.umf.json",
+      "archive": "fixtures__projections__arrow-spark__timestamp-us.umf.json.txt",
+      "originalSha256": "7565ee67a1d6d1a0c6ccec32ad35c0b39f80251e8a0612c7e958339f0c7700ae",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/zoned-ms.umf.json",
+      "archive": "fixtures__projections__arrow-spark__zoned-ms.umf.json.txt",
+      "originalSha256": "a57d9f80d31433350581c563dc5d11457704970136d2197458efb2f2a2748f78",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/time64.umf.json",
+      "archive": "fixtures__projections__arrow-spark__time64.umf.json.txt",
+      "originalSha256": "b641b4c23ca9ab4664d1bfea5c048d72ca6ce243dfadebf75880d9d50cab31cf",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/decimal32.umf.json",
+      "archive": "fixtures__projections__arrow-spark__decimal32.umf.json.txt",
+      "originalSha256": "7457079599824530a1a99738f30e6c31372485c91ce777ab6bc8179296a51b07",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/decimal256-small.umf.json",
+      "archive": "fixtures__projections__arrow-spark__decimal256-small.umf.json.txt",
+      "originalSha256": "ecb79ffa0b25e139dafe634848f6ca3f8f55d829e885d9144eb00b6662b22c2f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/timestamp-ns.umf.json",
+      "archive": "fixtures__projections__arrow-spark__timestamp-ns.umf.json.txt",
+      "originalSha256": "eeccfb32b5e3c66759f96881c961c4085dab89113b49f7a98dab14cd52a9c677",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/date64.umf.json",
+      "archive": "fixtures__projections__arrow-spark__date64.umf.json.txt",
+      "originalSha256": "3e30c3a8089936342c320bf5002eb76d96193d8783cea29e0d15d64dd2651aee",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/zoned-ns.umf.json",
+      "archive": "fixtures__projections__arrow-spark__zoned-ns.umf.json.txt",
+      "originalSha256": "a31f51b761d57e8fedab43d7b5427157967b13b2943a3a3957c3ac1c8a4e01a9",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/timestamp-s.umf.json",
+      "archive": "fixtures__projections__arrow-spark__timestamp-s.umf.json.txt",
+      "originalSha256": "706d1e15fe3314b5aa536a356516dd05953076e7036dda2782b3fac355f0d926",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/sorted-map.umf.json",
+      "archive": "fixtures__projections__arrow-spark__sorted-map.umf.json.txt",
+      "originalSha256": "ede572208774db98c0dc84329a02d9ceff0cb5513fa6caa7876d7dcd73c55b7f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/dictionary-list.umf.json",
+      "archive": "fixtures__projections__arrow-spark__dictionary-list.umf.json.txt",
+      "originalSha256": "8473a2f35c0fd6a6656faf1634655c24d64a50fd5d1ee6cc758645c67644ae59",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/union.umf.json",
+      "archive": "fixtures__projections__arrow-spark__union.umf.json.txt",
+      "originalSha256": "47d50995926ddb39e3ec288d909a73cf179318a431cf937a124d420eb5bd7a46",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/duration-us.umf.json",
+      "archive": "fixtures__projections__arrow-spark__duration-us.umf.json.txt",
+      "originalSha256": "93e1bee248edb286a1e25cd99c59db9e5c6642351a7b9c804fb36d2480b7145e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/duration-ms.umf.json",
+      "archive": "fixtures__projections__arrow-spark__duration-ms.umf.json.txt",
+      "originalSha256": "94249809ee90667a1d928a89568617bca65664fe99c80112d63279676d28c55e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark/zoned-s.umf.json",
+      "archive": "fixtures__projections__arrow-spark__zoned-s.umf.json.txt",
+      "originalSha256": "3c143018b2686a3a9f2a32fd5008bcdd1cf6efbf5028d21a6b4e69d3539a14ff",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-111.umf.json.txt",
+      "originalSha256": "fd854dd9a07a22baa5d5384d1c376296545038b2802afc40322ec1dabfc036d1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-110.umf.json.txt",
+      "originalSha256": "9d957e7e67b9d898788b828104b4834835554f834e403fb5fae4f0cfb2d23e40",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-101.umf.json.txt",
+      "originalSha256": "f5544b551b8f02e7e711981265bda4859a8d58011715d819236b3a08b21b3a95",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-100.umf.json.txt",
+      "originalSha256": "20b9b14376906d5e2f644bfe099dd22f4ba263b88693853b37afcea28d4d1c1d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-nested-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-nested-010.umf.json.txt",
+      "originalSha256": "4fca65bc56aa41f0b07ecb90ffcc5cba0822f1525fcc15d687649cc48ccd2885",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-110.umf.json.txt",
+      "originalSha256": "8bfb0782a00c4f27f6cfc3c7a9c7d4184da79663d2e9517f7ba92741b39ded61",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-111.umf.json.txt",
+      "originalSha256": "e9e3cfa108bb978fc9e9c1984a08ce931db44d6bbeb311202eff59216d9c3139",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-011.umf.json.txt",
+      "originalSha256": "fd890fe2e4ad04d248b307bb2ab21acc5ffde583f8c973c00ceca095980273aa",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-100.umf.json.txt",
+      "originalSha256": "33d564fd6147400f141373016d6f602629475dce0dce804a794cd8fa169acabc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-010.umf.json.txt",
+      "originalSha256": "c96892edac0b027d0f85d06e8b0f381d8318e75ded4c10a94c1815b28eecf5f8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-101.umf.json.txt",
+      "originalSha256": "6cdcd055194b3c37ccc7f0d77df6164d01085a3249a6188c71c733f4196ea9b8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-001.umf.json.txt",
+      "originalSha256": "e4cee353a0a433ef0702ab309fff8fa93c62ac1ab4b1865427e37cf3aef1b21a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-000.umf.json.txt",
+      "originalSha256": "f7224ad7b69b4e3d4229535b191ffdbb3533f9618270235578b74252d8dd593e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-110.umf.json.txt",
+      "originalSha256": "4b85c5496bd4b697fa7083bce642b466d05e6f0a354adafea9b508d27c5ed9d6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-111.umf.json.txt",
+      "originalSha256": "349ce8ce8ae8b4dec89a93ad78290aab2a52d36dfdfccb554064f96d953091a3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-110.umf.json.txt",
+      "originalSha256": "69db89124c4194471f6159d69fb7727d6223633aff2cc8707bc7e46b34921c35",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-111.umf.json.txt",
+      "originalSha256": "bd2cbb6e7b6956c61c21d9b58518dc0f6a900a905bba742837da2e7eced60f53",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-010.umf.json.txt",
+      "originalSha256": "35d58a2c771464be18f8f6d3f16554132eff71dd251891a7e10083435d13d537",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-011.umf.json.txt",
+      "originalSha256": "ecfd8182f5e21f9cdbf8aa2e8b2040e438aea56e1d7646a954175f76edf7d295",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-110.umf.json.txt",
+      "originalSha256": "f1dd7a4ede699e22114ed4d633221941f454aded6f92917b993692853425847d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-111.umf.json.txt",
+      "originalSha256": "46fe59d87e041847690c6473068bc12501c26c38c6f6ed94f3e2c14458308307",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-001.umf.json.txt",
+      "originalSha256": "bee144ce4ff2c7dc2bd6f5d711f70f82545ca691b60ba5acb141702cb5330a09",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-001.umf.json.txt",
+      "originalSha256": "7a717b8d2359d4cf09740bf8a4207d066e28cfbc46587e05004603b3edb16f97",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-000.umf.json.txt",
+      "originalSha256": "cd40f3b24272227f65293abfdeb18daec1a02b9bb6442f77e535ee9b5536c762",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-000.umf.json.txt",
+      "originalSha256": "a5ec7ba1a8eeece9a2e652faacf5428e5d8694cbd7d1c2e07c29b9f90705b3cc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-101.umf.json.txt",
+      "originalSha256": "5fcf9af095ff73e7c36cd60a4e7736453a4d4b47293fc6bd6f9a29286acd46c6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-100.umf.json.txt",
+      "originalSha256": "e0a60482d75fcb5ac03099f9c2d49337265426948bc82dc125dc09a8b7d286ac",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-100.umf.json.txt",
+      "originalSha256": "80232c2e26e5bf90c40da497aef61959393f76ea6650f5244b42eaad29a21d1d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-101.umf.json.txt",
+      "originalSha256": "5c2d732ec2d4a82b9e28756660f362a3c10f11ee503fa45b6bf35a1384155aec",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-011.umf.json.txt",
+      "originalSha256": "cfcf2ab6c85a614866f3652301b115bf448cca1a03ef77c73adbd7e13e8e1ef7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-010.umf.json.txt",
+      "originalSha256": "295239a79ad8d131c9d84fc7ad6b15f4c47d8620451ecf3de779d4b2fc63817b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-101.umf.json.txt",
+      "originalSha256": "a79e17a8f9c5e40124df881c023cc1cedaf08e992d7f2941d953b3df7d9f62f9",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-101.umf.json.txt",
+      "originalSha256": "9247127a8d88eb9db2364e83c444c21022287435cea1b1623c51770e22c8ea07",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-100.umf.json.txt",
+      "originalSha256": "708c780a28904f3e74e64afc530f947f307da0a0dc6ed04b63a567f5389b6770",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-100.umf.json.txt",
+      "originalSha256": "08c63e66e3408fa2fdd2504bb00e8c7f4c5a20cc74aeb40e8196c1eb5a646537",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-010.umf.json.txt",
+      "originalSha256": "1095bda9732d56fb20aae4cd0844f99c938cd69b9c2191137b54c5e6951beeec",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-011.umf.json.txt",
+      "originalSha256": "75236e8eb5bf99edc37f90a8d0f3ca8cf82aeb379526fccd61d9064b7ed92b2d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-010.umf.json.txt",
+      "originalSha256": "aae6ea59879ec6e400ad8b45b49d36a365506b3680952969c107ed0d602033cb",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-011.umf.json.txt",
+      "originalSha256": "1f00f3ea05cf20493f2f64f1b37e1dbc4ae76a8626bca70d5dfa08005b721a29",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-111.umf.json.txt",
+      "originalSha256": "61ecb7b95d1d6fd1e9f76f28900273952426fc7d59846fd2848a2b700a61c223",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-110.umf.json.txt",
+      "originalSha256": "566beb897d02aa689c349c57f22b628548a38a461e7b36073b0c3ee85d3bcb8b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-001.umf.json.txt",
+      "originalSha256": "a4e3f60a5f1dbf3d0c7ed58e61124ee8c891a6b4e540060f94681f27bbfec83d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-000.umf.json.txt",
+      "originalSha256": "df5d7550573a5c355fdb484f810b92d05778569bc9b2cac7c82af643af8f9d2e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-010.umf.json.txt",
+      "originalSha256": "4103419c943c54fbb7b1f3417420fcff76ace68ae635192180604d82ec7ed7ff",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-011.umf.json.txt",
+      "originalSha256": "a0b7750eaa31b614aa97be571558011c1926c500046abf959cf42f31365f4ab7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-011.umf.json.txt",
+      "originalSha256": "088eb105d8a7a55938dce0e6a5ee468e325e7e0c87f19dc182617aade0b5b650",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-010.umf.json.txt",
+      "originalSha256": "e4ddd75cdff7901d01810966aefb6c17335ab005ad71d7007f771049423dde85",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-100.umf.json.txt",
+      "originalSha256": "4abb126fa8da0546cff785354350779d9fbbd7d543e47af54059c0507c863a85",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-101.umf.json.txt",
+      "originalSha256": "eebcc80fbf9e79763c3fe2d322eb3a50bcee26024f37fb943d4dcd5e57b39479",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-001.umf.json.txt",
+      "originalSha256": "3e9f5b133777f952f08175c682cb706496434cca73f593ea72f91b67650cb4f8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-110.umf.json.txt",
+      "originalSha256": "6fca51294981f616a8e5222bfe3c3a672c29741b295f8a80592341cecf5166f8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-000.umf.json.txt",
+      "originalSha256": "1de9a99906032d9efbc900a872a7afa9d8e8782ae7cb55fd220d69712b2b1614",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-111.umf.json.txt",
+      "originalSha256": "e7451f00ca1b8dc8593a72da51134b79016566e5b36a3842c1729694ace52812",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-101.umf.json.txt",
+      "originalSha256": "7a096fbb460f17104d95216b345d5d635ff5f43b0da1d3a31142f9d9b54128d1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-100.umf.json.txt",
+      "originalSha256": "4a6e0ac983282b9b0f9401b51fc5f2c19fdc97be905e3489b2202388c2e3911a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-nested-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-nested-000.umf.json.txt",
+      "originalSha256": "719c94d7f2fa81441de26c42ef56e6049996b717866f403d65167fd958bfbc8f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-111.umf.json.txt",
+      "originalSha256": "018ff74aa87bc6acf3e97fc6e7a9fd57d8e6bebfec1f835a6978f4f69d89963d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-110.umf.json.txt",
+      "originalSha256": "a85ac80f7649cdd114c3de1b7df367a1b766b084e8d42d81216aedfc7dcf6fba",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-011.umf.json.txt",
+      "originalSha256": "2d56222445b9ebf874381b25764bb780572bca235606f2374227583b0c383ffd",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-010.umf.json.txt",
+      "originalSha256": "c8bf2f9803abc28b6da0129361603eb37cfef0d8fedcc6bc66fb3b461688eeb5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-100.umf.json.txt",
+      "originalSha256": "6f4eab9c7fa1f2a910f25aa290afaac21985be2a6b778beeccd7c584bcf432a1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-101.umf.json.txt",
+      "originalSha256": "f93ccfee9f5250934f4bd8fbc6febea2e46a37e1ba28561fdfd584dbb8a0d0ee",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-100.umf.json.txt",
+      "originalSha256": "7f9a4ac38c7c23156a960c38bee4e01693a8f41a1553775991a858f4d5f936c2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-101.umf.json.txt",
+      "originalSha256": "674e291328f12deab57e626c315673a8492723e06c12531a339d324e5b9a4112",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-100.umf.json.txt",
+      "originalSha256": "1ab405b1da5109dfd0751acab4711552132e9c8f5096ec737c6f6d63ca246cf4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-101.umf.json.txt",
+      "originalSha256": "e7a46c45cba19d3c2eab599b4b1b7fb88ace6ec8210cf44ac0fa0784bd561f8d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-000.umf.json.txt",
+      "originalSha256": "9fe209af561ae1228bd04951d8c33c7fec595a97024417201eb3a51e188c8243",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-001.umf.json.txt",
+      "originalSha256": "acf8940966518b4b13c38af9fac4384b78795811f0e37a2920bd4cfb551fb0d3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-111.umf.json.txt",
+      "originalSha256": "f90547e9bd82f2c5281e75553738709226205cec49e06837fa7a5a3dae2568cc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-110.umf.json.txt",
+      "originalSha256": "afed3c90d9e1de44eddd6f3e333abacdbfda9c14a92929e303d56a3c45dff31b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-011.umf.json.txt",
+      "originalSha256": "ec92767cbd14ddf9f141ec02880754d0c322ae521299a6c2ad7f6b931a167e2a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-011.umf.json.txt",
+      "originalSha256": "9ccec5e9fb7073c4014a178d83d3da8b7da078467c4fdedcf2f61d9d632e3b61",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-010.umf.json.txt",
+      "originalSha256": "b900241e9f8462dae21a5a81220eca2bfce4c089c0da021adaca4e86ec57036f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-010.umf.json.txt",
+      "originalSha256": "ab3b87a5b872cdae324320a40088e5902606ced53ed6fefb0b3c38e39c22913d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-110.umf.json.txt",
+      "originalSha256": "d3890625741d364091da5bafed8231b25e839963764403dcea20315f3152b7b7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-111.umf.json.txt",
+      "originalSha256": "902cbfc70f23087668b8927052bd6158145cfef999f5fe5f30f8b57bafd939fc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-001.umf.json.txt",
+      "originalSha256": "4a80ab4cc56bd226c3f8bb83b0cc7ae36c5b67b6b410ddce0d0c982323e16fe7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-000.umf.json.txt",
+      "originalSha256": "0be1c6baf99f3a2dc792ff8c8ad09b9bc4d197102a47cc1d32d314b84fd3e0aa",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-000.umf.json.txt",
+      "originalSha256": "1bbe9eafd682043106e25c8a95e5fade21422d9a9dde51c928962d926da5ea67",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-001.umf.json.txt",
+      "originalSha256": "e6fe33bebc9dd3b95e98b5aec19b4c1b7adbd2c3022df38d4e98a3901d18db44",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-000.umf.json.txt",
+      "originalSha256": "4eafcde9110b63c139550c04f8962fb13f7695dfd60c9c5c0de4e0603d00e496",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-001.umf.json.txt",
+      "originalSha256": "8b4cd979b838b2ca6c10e1a882f2da89eecc43a44f72a9f433633edbe4dab749",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-111.umf.json.txt",
+      "originalSha256": "5e38d7e748374fa38d60e819f8ee7a48ee69a8b2ff6e78e8ac5f4653a4720615",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-111.umf.json.txt",
+      "originalSha256": "634692b18b948643fd764144ae6c69deb266c0cab0135f2160c322e6e792a2db",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-110.umf.json.txt",
+      "originalSha256": "0ee896bee2312634d1ce21ebbbdeee80da5f6c065a6badbb25ad38e0ddae469a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-110.umf.json.txt",
+      "originalSha256": "92237bc434cb479257dfd59bce411681f7253e766ccbc9f9f00deff5023e7682",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-000.umf.json.txt",
+      "originalSha256": "a06ac2f43a4d6e946f3071eeac11b520c1e45076a884ffff85c84229d2cfdeec",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-001.umf.json.txt",
+      "originalSha256": "f7197243631983d387b7a1ebcd9e8b67ddbfba03954eb868e67eddfc822e4c93",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-101.umf.json.txt",
+      "originalSha256": "3c7ab68b2b94b0c6951329a3f75becd47fb0fb1a74f99ee499a22e4e50c0752f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-100.umf.json.txt",
+      "originalSha256": "da03d98ed55a64a82a88aa5251938c1ac4c68c1c229e2ab46a8d8b3e6d2edd10",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-011.umf.json.txt",
+      "originalSha256": "fc281a410d263e85a694747fdbff57979a025d971cffd0fe57dc5fc8a956ef7b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-010.umf.json.txt",
+      "originalSha256": "ba9154c3102cc294ffb0c57dee54de3e37a34d35fe2f51dd8dd1c51e749e2278",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-001.umf.json.txt",
+      "originalSha256": "593915e29816dddb1ee364fc713b5921fe61cfacd1f5aa336ce1a4186dcab18f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-000.umf.json.txt",
+      "originalSha256": "b87ae88a18aecd2ac2d00c0c0320d10bda1dbfd4fd9fc8d48ef0f466ec3ba81d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-001.umf.json.txt",
+      "originalSha256": "6030ab9dd06bfd5bf1e87470313a59b7dd487ae939aece957065593e3b62c5c7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-000.umf.json.txt",
+      "originalSha256": "29562a93891b164850e4b7ee39c64cd11a7c077e4415ad5b65909900a11fa097",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-110.umf.json.txt",
+      "originalSha256": "3548df697898fe0992fc209a13b747a3df4dc02daf1ee952078af6381cebe7c3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-111.umf.json.txt",
+      "originalSha256": "693815c16a7a2b98fa5485f876ec91756c61e442293026234069c0492464feac",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-111.umf.json.txt",
+      "originalSha256": "01307b9a90372a1eba7b823b407b443d70442b21c843cc971757fd5ae7c14527",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-110.umf.json.txt",
+      "originalSha256": "9fa47289b1de5199f79702356cf645490676175145eb50c72b9f2e86da408252",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-111.umf.json.txt",
+      "originalSha256": "423c2c5147f702c4c236913ba879909aaf5530531facac55a850bd16e6eda0f4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-110.umf.json.txt",
+      "originalSha256": "c9797c87578902a0c01129fbb7e6cfe56cbdf003398cc90a406f75ddabed647c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-000.umf.json.txt",
+      "originalSha256": "34e19f0f4270a7606e1037d6f0baa81166c23d2851abff170a123955f4832182",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-000.umf.json.txt",
+      "originalSha256": "663c43722d7eb74ceda392edd9620967fe7c1227b46822b90b180aa8254dfd4c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-001.umf.json.txt",
+      "originalSha256": "cc66928a27c74979967cdea7736518d46282e655ebabb0695d5f48721c0b9997",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-001.umf.json.txt",
+      "originalSha256": "82afdb22f7d19912c59d6bb4c878b57c1883e179083afac507f948b9bec95bac",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-111.umf.json.txt",
+      "originalSha256": "3bcf2a1cc1f2ab73a62aba119fcd398895d219be4ed1fb038d930a221e2c802c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-110.umf.json.txt",
+      "originalSha256": "ddf4fd71f2cbcef1dc33d4a5214ed4d6475d71c498eea65d949aeee6cf46d8ca",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-010.umf.json.txt",
+      "originalSha256": "1b1412950cdf0789e4471a3073d21aca77547aeaa22234b76ea8c6e94b83b932",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-011.umf.json.txt",
+      "originalSha256": "07b788788b8d7c3bb2db9791585c4766eab580fb65b6066228b72e3a67d444a0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-100.umf.json.txt",
+      "originalSha256": "60c038cdff9769815fbf4f0a052df1217de5a684efc5fec014a6f4e2e147a3c0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-101.umf.json.txt",
+      "originalSha256": "c78e23f43afeb731408d4b4da72990087ac7f9ac271e7b34d394e95e88ccbb3e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-110.umf.json.txt",
+      "originalSha256": "8984171507237104a91c6d55fb96f279770de31a4e9aed83b7175e2c70d7d664",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-111.umf.json.txt",
+      "originalSha256": "dc0370b9fc1cd71ecc529541e297b2fa7bdb8b414cc8b22437de8fa1182a67e7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-011.umf.json.txt",
+      "originalSha256": "9b9f6dd81dfeecb838451328bf2db9e49b992d1e42a92f0f9eafe250419fad1c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-010.umf.json.txt",
+      "originalSha256": "40e6f70280fbca0727b26a0592b6379e8acf238e80a5b797a9d2eca9aa5cd9c2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-001.umf.json.txt",
+      "originalSha256": "a93f2fffffffd108701fd6ac87e68cfa96d1df7b4aae2c8222d9cc02a825cc8c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-110.umf.json.txt",
+      "originalSha256": "6a06e3749fcab28251ac2840f62b7dcea28da6ea28674d699fe02a304fa8c545",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-000.umf.json.txt",
+      "originalSha256": "f67a3afcdcb9a3d7bb46d3248b3cb02bd068347c9cc1fe80dd6f6c168e237e91",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-111.umf.json.txt",
+      "originalSha256": "09094e67ef66ebed4cc561db45ff1d1112a7199f1bd1abef9db89c8de5432338",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-010.umf.json.txt",
+      "originalSha256": "129a8b299876383ff901cc14076b6c7cdf938dff6fc3f310993279ab6a8e931b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-011.umf.json.txt",
+      "originalSha256": "1a54f5d3033372473c5063ce0c5eb01ad9e9dd2188ebad21277308d5b20c7150",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-000.umf.json.txt",
+      "originalSha256": "56c4f8db1a541c24325b9fb7fe14437d80f7de2fc597dce87bd9a04348da9a6b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-001.umf.json.txt",
+      "originalSha256": "2eb57174252d9234f2cef51ff4f1fe038a7669430d5d48818554edab67579593",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-nested-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-nested-110.umf.json.txt",
+      "originalSha256": "27da58b205443bee0a5932972b6ecb6dd623b3c0ebc39b923e0ee1c8a52cf619",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-100.umf.json.txt",
+      "originalSha256": "3108eba2513f874b4232057163010fecae4b9dc0ddf610700a99bc1182b57a3f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-101.umf.json.txt",
+      "originalSha256": "749e179fc2ac4ee8f2a709bf01be1ea4dd05253b6d64a3d10f16aeb29ae5d52a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-011.umf.json.txt",
+      "originalSha256": "17d5f7c26c0ed2113ca496c391c29f384943eab788c1c7ab0bbfa01e522e9919",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-010.umf.json.txt",
+      "originalSha256": "3b3a3b6f79adfa4d61ade05ba24ffcedc641790edaf1a3fa07cf42b5f92c1658",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-011.umf.json.txt",
+      "originalSha256": "ce59b867d743bee3f1de9676f0c9e21b4b8d92108c609b2a1848b8fb16701069",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-010.umf.json.txt",
+      "originalSha256": "3c58460fdd234e6eb1168386fbbd63e0ce389d6a2e49f66daebcd79a862896c2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-011.umf.json.txt",
+      "originalSha256": "a0daa9a90259f7f119057c4cc81d295a3e7cc6948d63c9cfb9fcbc08d3fa15be",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-010.umf.json.txt",
+      "originalSha256": "37f7b94a90a61d546524b682e5fd36575aeab899d6c9fe687b31e6db8fc990ec",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-111.umf.json.txt",
+      "originalSha256": "4dfbacf8f5f4f8219f65f54c6fd0389cd70d51bd8a0c5a0d8f03197892a4b83a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-110.umf.json.txt",
+      "originalSha256": "5a498ac54bb019964c2e0f712705055be0e88c97d9acfee5882937e024455cfa",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-000.umf.json.txt",
+      "originalSha256": "085c9d24923ab4bbd5b8ea606106ae78aefa8907bee40238ed55b6e190f546ee",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-001.umf.json.txt",
+      "originalSha256": "ba332a00472e1f2cc99715983d5458084401b46931e3862f946646aafd0be0ac",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-100.umf.json.txt",
+      "originalSha256": "81da8530ff50b5243b199605ea2c09a2293118c1d0a9a80f7ad26ba4c41e899b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-100.umf.json.txt",
+      "originalSha256": "511e0388c4b25896dce78edb22ad1ee62f31980d39848f3a6f6b4413323e138a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-101.umf.json.txt",
+      "originalSha256": "879884ed4927dfe5686d9048649ce499924a423c59f2295e73cebd7d821e599b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-101.umf.json.txt",
+      "originalSha256": "33c76179339da45470cf55032f6e837c00d122224c33626d705e1f73c8a9be25",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-011.umf.json.txt",
+      "originalSha256": "ba386a18c56461d97bc267e5aae18a47f43cf9d3185b9789cd80df8b495d835f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/date-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__date-010.umf.json.txt",
+      "originalSha256": "1c0f2d9e5672f454dfe41ece58c10c2a1c45c2e9b52a59a565b5e1a9f72350ae",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-100.umf.json.txt",
+      "originalSha256": "1aabd88ca27c6d3be7a68879b96888e2574ae3b57ad37b50eb11d181c32e18d4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/short-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__short-101.umf.json.txt",
+      "originalSha256": "5319af90f9a8435bf2307adc9761625873182f117a6d102ba8e185136b594b2e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-010.umf.json.txt",
+      "originalSha256": "512c668bee9c1f0dbe767727615cc9562f06ef854d48b45553eb1614ef1d1c85",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-010.umf.json.txt",
+      "originalSha256": "27868ac4097e82110a6bfa98b1d806a5289c002e9718743f92d0e75a48138393",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/binary-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__binary-011.umf.json.txt",
+      "originalSha256": "97714305c2433c123e7e4146ab0a1a6bb273840a92850a5adb48708d8d47576b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-ntz-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-ntz-011.umf.json.txt",
+      "originalSha256": "7f068944687aed898d4e50f14bae0ee1a30ebd6f259535670d305af145f59b4b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-101.umf.json.txt",
+      "originalSha256": "3da2dceef745e8eaa526b00822d83e1af12ce309db3f6502dc8ccb1b5c11bc17",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/decimal-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__decimal-100.umf.json.txt",
+      "originalSha256": "2c5123cc692f3b2776795547d525964690d55bf1dce0a5ec5088998d3cdcd6a9",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-101.umf.json.txt",
+      "originalSha256": "3eeba34f16d1a9e91d6896d02e88159e90b08c68cd78d0ac8ca290522aa21dd6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/boolean-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__boolean-100.umf.json.txt",
+      "originalSha256": "221dc4a173f1c829c96a1de140506115681f937e741c7de742e0c0527389bedf",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-000.umf.json.txt",
+      "originalSha256": "35e3abe37aa23649d6da9a76c1dcdc10f2043d22ec665d3bddd802992bdc0458",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-full-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-full-001.umf.json.txt",
+      "originalSha256": "f0cabb22741cc0182a6aa0723ea6742f10ee7df830e055f9a036aea28d03e60f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-110.umf.json.txt",
+      "originalSha256": "c717c6193319f78cc26c48e293aea767a0ec36ac998c2cf21dd203153b27c3d3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/double-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__double-111.umf.json.txt",
+      "originalSha256": "366943bc2141b5809e174297ba1414b03b270a8938d344d4d0c7eea2795a6235",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-101.umf.json.txt",
+      "originalSha256": "3b3e8d64136a45f04db0e3a7393a574e1d5b151a67adf4dcd1b090ce37efea0e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/float-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__float-100.umf.json.txt",
+      "originalSha256": "c4c98e94381e59ba9adad4fc9a0ecfab087bdaef2acf73b6a2329628df22d91c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-100.umf.json.txt",
+      "originalSha256": "04604d5a775296b6c585a31e31324431ae29763dab03594bab6ded9f657e8ae5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/byte-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__byte-101.umf.json.txt",
+      "originalSha256": "5f769863a4502138e6d92db1ca99d53a8262760a1277dd657687b047f76a0b20",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-000.umf.json.txt",
+      "originalSha256": "cd9952ebbd2dfbba661037a4c4b0396c1c1dd7cb9037f360c1d1fbbffc76176c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nullable-null-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nullable-null-001.umf.json.txt",
+      "originalSha256": "54726e8efa1532be526cb71015687aebb9a1adf03994e60365ca831fa85a3bbb",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-nested-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-nested-100.umf.json.txt",
+      "originalSha256": "35d56535e9c55b9e1166b3e72ee37493ca113d916a4d0bf375f1b3953a9aa804",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-010.umf.json.txt",
+      "originalSha256": "70de56185f4c7a21c9d896e22f14e8669968b91c9da98c28d667b4928608d064",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/string-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__string-011.umf.json.txt",
+      "originalSha256": "7cc10f0a8ce4b5dd5fb1410a610fe9dc1853aacca246a78392354a7378145365",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-001.umf.json.txt",
+      "originalSha256": "882e4330131abd09442398befa135aa44702536444ebe17431849d15c4ec6e97",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/long-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__long-000.umf.json.txt",
+      "originalSha256": "aa82f087c06cf52f7946991cdb2f769644ede9fb6e4a06ea93a5d7399b7a9bfc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-011.umf.json.txt",
+      "originalSha256": "08641242d61c6bda5591be189e0a0d4a6eff34cafb9eb66db8468441c586a542",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-100.umf.json.txt",
+      "originalSha256": "6116a4580271d5a30befd43e8cda8935d049bf9f4b18631b3a1300c5fb58bba2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/array-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__array-010.umf.json.txt",
+      "originalSha256": "0ad186fa8131bccd9613db4dd68cb6b5d56ef45751d2aedaa9b76da0a1a631a6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/nested-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__nested-101.umf.json.txt",
+      "originalSha256": "1a010913085444b685ce767b126c951c79bcef3838065bc402ee3afa936f7669",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-110.umf.json.txt",
+      "originalSha256": "2f43c1c61091778880d8cf333bde539e0d5a21813d48f53acd7ec9f265061ec4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/collated-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__collated-111.umf.json.txt",
+      "originalSha256": "98b436746aba968d59df28783385a79283c0f1409bb30772214d8e7cd2d9001d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-001.umf.json.txt",
+      "originalSha256": "3921a408460132614fbeed43f10684985b098c6f6bb560250e12f14519fa23ba",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/integer-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__integer-000.umf.json.txt",
+      "originalSha256": "ceb45f745e30e22e64cfd96b15eeea0a4f4b20dfc67590964a1d86846211c09f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-001.umf.json.txt",
+      "originalSha256": "f5b651f4236f0a7087af32d7a0d8d67dc37fc4108a4dd2cfdb480f1a0019a369",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/metadata-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__metadata-000.umf.json.txt",
+      "originalSha256": "f74befc4c5824760b32ac1f66d2866828131806f436d77c5f20d2b8fa9e201e1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-101.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-101.umf.json.txt",
+      "originalSha256": "0742a881c37d69b7bf6f0db9c2470e626c60681364abcb2087b43fc58daa01bd",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/map-100.umf.json",
+      "archive": "fixtures__projections__spark-arrow__map-100.umf.json.txt",
+      "originalSha256": "e32a7e47684e18ca68577da4e696bf6e5f55d839042aa4f5da1a9d960c912d36",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-001.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-001.umf.json.txt",
+      "originalSha256": "b4b9b3b158c72b075c71f8881ab0cb3831329e2bd4b0df88ba42f79a0074d0f4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duplicate-top-000.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duplicate-top-000.umf.json.txt",
+      "originalSha256": "4792af16e07452e595d5286e34e79869f7529ade364c44ca6fe81c392b9a3028",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-110.umf.json.txt",
+      "originalSha256": "b3bed91a134ffbecc96d0d94e969a54b18af1b88960d64ab5d79e97ec000ef53",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-110.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-110.umf.json.txt",
+      "originalSha256": "558d2003cbf5b46e5348be7f6cbe4afd0da35b41cfa4baf385813ef08be9fc23",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/duration-day-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__duration-day-111.umf.json.txt",
+      "originalSha256": "f3d0f74cfab1d640f204deaafd60a81ea1daac947ff254452010344bac49d868",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/timestamp-111.umf.json",
+      "archive": "fixtures__projections__spark-arrow__timestamp-111.umf.json.txt",
+      "originalSha256": "3128f316fc6da7ccfc5dcc49b8e9c17efda38d663f950aa6b9750d1c7649cdc5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-010.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-010.umf.json.txt",
+      "originalSha256": "c1b58fce68fd45daab95bf583edc0fa14f156c1e80080d76b0f3cfe559d67189",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/variant-011.umf.json",
+      "archive": "fixtures__projections__spark-arrow__variant-011.umf.json.txt",
+      "originalSha256": "d707b3f520c7668c9baa13d69419dfeeefd0e668c773157f864c0675976b8186",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_duplicate_fieldnames.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_duplicate_fieldnames.arrow_file.umf.json.txt",
+      "originalSha256": "f18eeddb2e3bab5e5f724c2fd3c65f1fa08651019f5e72e01f3d06fefadf66c7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_primitive_no_batches.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_primitive_no_batches.arrow_file.umf.json.txt",
+      "originalSha256": "61a8055ebe2e4a70445b53a468c3e1b04fce37f472ba340f779d24867718221b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_large_binary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_large_binary.stream.umf.json.txt",
+      "originalSha256": "d6610ee25a5f964817af31d1fa91d54f66d6bbdc94ab4d1eed848df41ff43d2e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_map.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_map.arrow_file.umf.json.txt",
+      "originalSha256": "59ee634957498b427521ba3de95004e39437cc5d21d0841494e9a54cf3e44280",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal64.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal64.arrow_file.umf.json.txt",
+      "originalSha256": "069f6d7dccedb10a90a310d519238fb44db572bd8774420d489c370e6dc54a38",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary_no_batches.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary_no_batches.arrow_file.umf.json.txt",
+      "originalSha256": "bf748a8e78aac1b6bafe0cd9561e21eef8565cd4f0ced4c77e6cbe1d9cf9455d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal64.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal64.stream.umf.json.txt",
+      "originalSha256": "2dec60ac055cab1519f50ba7bf3c91ee79631f05ba1e618a3228857beb6cd1be",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal256.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal256.arrow_file.umf.json.txt",
+      "originalSha256": "039725d46b6ce45f9238a2aa84819b4eb252d04bf0448027b0ba5878bddf9cd8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_recursive_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_recursive_nested.arrow_file.umf.json.txt",
+      "originalSha256": "b1e88dd30accc514916c883ac832d7f1b09964127aa372403da7f9abb6557622",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_union.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_union.stream.umf.json.txt",
+      "originalSha256": "60c657e9ac105a844d98479877ecd79d28425d7ca8073a891b4478afadf34f97",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal32.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal32.arrow_file.umf.json.txt",
+      "originalSha256": "ac98db1ef7cada01eff09c1e9138e146f1f3ebaecb82d82c8d3a5c72ffa83b6b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_list_view.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_list_view.stream.umf.json.txt",
+      "originalSha256": "0a90a94a66bb8cb84fcd33817f3e5869246304642975b2af2193627cd29d69c2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_large_binary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_large_binary.arrow_file.umf.json.txt",
+      "originalSha256": "e9fee7c6bffb1ee2a8f3f75a4ef64f55183f5d854c95b5e63c30080577e08aec",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_null_trivial.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_null_trivial.arrow_file.umf.json.txt",
+      "originalSha256": "9bf3b0c336cdb36062bd2cac5e9d3a4ccfd3fde7381e9956be1ccc41dd12d170",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_primitive.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_primitive.arrow_file.umf.json.txt",
+      "originalSha256": "a232e02595602bafb1aba61c57b34549f79726588198f34d6046f9fb545d390f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal32.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal32.stream.umf.json.txt",
+      "originalSha256": "914741055f0a1867fe3dc51d3b92e28da51c57d4f8fa62a5c865ea3e39ef14a0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal.arrow_file.umf.json.txt",
+      "originalSha256": "abbfaa86dafdd14877268e82e3ff4f0da83eeb8a7da5ec9d194e062bf4d32457",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_nested.stream.umf.json.txt",
+      "originalSha256": "27ce155e49b2bdb8de6e5bdcd9bed9794c4e12db2aaea2b991072971da171836",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_nested_large_offsets.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_nested_large_offsets.stream.umf.json.txt",
+      "originalSha256": "bbdb8c09a66adbf4c891fdadc8d7a3785eb2acdcd9175c570d39b272c988b419",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_datetime.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_datetime.arrow_file.umf.json.txt",
+      "originalSha256": "972c0b516559f4c02bcf65f5a6e5e5932342bb08717d743cb9c624d25cce2877",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_primitive_zerolength.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_primitive_zerolength.arrow_file.umf.json.txt",
+      "originalSha256": "5ebb3539c65ba55d77b0f3f25be1715add321c858079f0df3f90f8bf5633774b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary_zerolength.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary_zerolength.arrow_file.umf.json.txt",
+      "originalSha256": "dbedccc20d683004701f5a7ce705e4b53e087c56852d3b8cd5b4f8fbc28ec5da",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary_view.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary_view.stream.umf.json.txt",
+      "originalSha256": "151d3379d04d1d9ac6c843ce83a14cf284a44ca1a98e0a95580f78f9e9c2da9b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_duplicate_fieldnames.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_duplicate_fieldnames.stream.umf.json.txt",
+      "originalSha256": "eace37290b48f9d89a85c596686c510baeaed9306d419699ec8f71ef23788f3a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_dictionary_unsigned.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_dictionary_unsigned.arrow_file.umf.json.txt",
+      "originalSha256": "4043f7b1e16e884aa3b650cd1412af79f3e56b2bee8e6ba7f232dbd9a7072ac8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_nested_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_nested_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "253b95c3ddb562c60157a22addbf3fbda35baec74e157cae521aae157268e82f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary_view.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary_view.arrow_file.umf.json.txt",
+      "originalSha256": "eea12a44c1af4aa5308218702be9660e36160139947c3722d255a21432cbe7a9",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_union.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_union.arrow_file.umf.json.txt",
+      "originalSha256": "1ee56d4bb680d9db1c3819829fb24fef077cebcf83dbe7e83769390b92238e13",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary.stream.umf.json.txt",
+      "originalSha256": "c95037cae112bdfe25023385dc3d4be0db97f58e62dfa1f69f37a8bc05575f36",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_interval_mdn.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_interval_mdn.stream.umf.json.txt",
+      "originalSha256": "1f34816ae894e1a677bf086e69ac696be32f440f5c7fec00f3e9575e3799f558",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_run_end_encoded.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_run_end_encoded.stream.umf.json.txt",
+      "originalSha256": "ec828cb31defb04f311a63f9323beffd84ddea9ba88b4a845e3e99e39cd80af2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_duration.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_duration.arrow_file.umf.json.txt",
+      "originalSha256": "fc0850ce6a640fba85c65cd7c13bc3293e9d6951c7684987333de89aedf8c568",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_map_non_canonical.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_map_non_canonical.stream.umf.json.txt",
+      "originalSha256": "26c3277bfeed171f8574e3587df4b1233a09019d4f267503581fb4a86db853ac",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_extension.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_extension.arrow_file.umf.json.txt",
+      "originalSha256": "ad385102dde01c6bedf43b2cd52b6cdc151c0585d4d104f5982b0638f93f578a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal256.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal256.stream.umf.json.txt",
+      "originalSha256": "def66f4ee09fc776fb7b6f2303ab49e73c9cd0d362b14159ebef7d5f7606de26",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_interval_mdn.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_interval_mdn.arrow_file.umf.json.txt",
+      "originalSha256": "9104d99e5eeefa8fb67c900e98a30437e8ecaf9761cd29df492a18ab33d17674",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_null_trivial.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_null_trivial.stream.umf.json.txt",
+      "originalSha256": "b3361b1d476d2fb4f51d51ec5bab8f85fe2f8387980c0cb269c89eb621dfdca6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_custom_metadata.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_custom_metadata.arrow_file.umf.json.txt",
+      "originalSha256": "7b4fe1b8683bae889350dda761e1f399f2ca681d16a3e635379c44ba4d634ba3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_recursive_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_recursive_nested.stream.umf.json.txt",
+      "originalSha256": "b891b436781efb7196a862d420837d2a378188d5ddf7323fae62e5ca7430894f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary_no_batches.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary_no_batches.stream.umf.json.txt",
+      "originalSha256": "af748a1a35c67079991c2d6f36f9c5050df0c6040aff5f944d7cbff75743643f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_list_view.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_list_view.arrow_file.umf.json.txt",
+      "originalSha256": "106aa6944d81407cd3aec1a1d14e9751f6f3b595b55027161e1830db09844ec7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_dictionary_unsigned.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_dictionary_unsigned.stream.umf.json.txt",
+      "originalSha256": "d5f5ac13bcc8b1fb0972f76de8e285b92258326faa5274d4a8cc7f8d85e319cb",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_interval.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_interval.stream.umf.json.txt",
+      "originalSha256": "12c5d57e1a5bd6dab52ef70ff6c954cb089b2d672811c6f0e6c79033d8f168d3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_primitive.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_primitive.stream.umf.json.txt",
+      "originalSha256": "c300eb14ecfc04e6501a9484bdacbd7b156a18c2e51341125474ea5c8049daa1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_duration.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_duration.stream.umf.json.txt",
+      "originalSha256": "91d482d0b6d2c364ff3b9cf4f5e7dca1e52a1f8cb9e9dba59bc8812476098d14",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_nested.arrow_file.umf.json.txt",
+      "originalSha256": "65d9caeaeb7dc92883ad6c3355c5580e9d7d317c21a5ffe48c18c269ed918513",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_interval.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_interval.arrow_file.umf.json.txt",
+      "originalSha256": "d0b33568a767ae8a2c2ac5e806ce2ac33725f3f8011dd1a3528e82dd442d03a3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_datetime.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_datetime.stream.umf.json.txt",
+      "originalSha256": "f53b5daa22812894bc8e4d0b389250bd97ade17548ad738cf4fd261bbb24e4f9",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_dictionary.stream.umf.json.txt",
+      "originalSha256": "c7ad4e9ebfbbd311e396958140c125e89567c98bab04ac6d0bc1be37033501ce",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_primitive_zerolength.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_primitive_zerolength.stream.umf.json.txt",
+      "originalSha256": "84e2a656e2ae03d2b6a95f0f0f3700baa9f12828efd6396f131d840567dac3dd",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary.arrow_file.umf.json.txt",
+      "originalSha256": "36a2583eba04664b7e4ae3ccdbe0e56a419a8284a1bf2b5e3b419eb479294233",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_decimal.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_decimal.stream.umf.json.txt",
+      "originalSha256": "e51e2205d4a2718fc36afffbccfb6c0991935a346f696c5df42fff9ed4c4dd6f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_map_non_canonical.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_map_non_canonical.arrow_file.umf.json.txt",
+      "originalSha256": "3940c1748092a12e2f7915a7e94fb402328f5a10990d9eb4b1ebc0985c2cff41",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_null.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_null.stream.umf.json.txt",
+      "originalSha256": "ffe726df580f9a38606f9fff4d73dd2cb6b553cf278fc1f3df2c01e4d59ffbc2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_primitive_no_batches.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_primitive_no_batches.stream.umf.json.txt",
+      "originalSha256": "7d4e81e46e800c7ea2ebb251e484cb0d19205c4fb89aa05ae5b49bdd1bfb7859",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "222feb399317adee629d9eff8f302db099a9802c5f8e40daead71b128a6ea9ca",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_custom_metadata.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_custom_metadata.stream.umf.json.txt",
+      "originalSha256": "fa05ac1736587418bd1d634ed0df760c99896dd8f7e11f2bb4d81606567dc1c2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_null.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_null.arrow_file.umf.json.txt",
+      "originalSha256": "47974171bee49e69e9f7532b4ce018f4a1a07559020a8b8ceddb2ec851b2d880",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_run_end_encoded.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_run_end_encoded.arrow_file.umf.json.txt",
+      "originalSha256": "3b9bf5e1b819454da5eccf7ef4d7e16a3527ae73d2d3fb2ec7f4c473a7444475",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_nested_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_nested_dictionary.stream.umf.json.txt",
+      "originalSha256": "7e8f5904f0cfc0e34e76816c943284fc781a606e08f691484051a49d99c10d5c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_binary_zerolength.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_binary_zerolength.stream.umf.json.txt",
+      "originalSha256": "6f30eecd8fad6e26a1e220fcf831279e361783ce63e14e6452164481d7479d96",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_nested_large_offsets.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_nested_large_offsets.arrow_file.umf.json.txt",
+      "originalSha256": "7869b9b85f0ec835ae6681c4ff24e3a51c8e37eb6b249190eb68bb347c5b4605",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_map.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_map.stream.umf.json.txt",
+      "originalSha256": "65631645534af99784787fec6f46277e2fdcc1550f1566af184d74894961e373",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/cpp-21.0.0/generated_extension.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__cpp-21.0.0__generated_extension.stream.umf.json.txt",
+      "originalSha256": "54a86be2d4f27f7b2fd09cf0d070a0ddbbaa973d8140954dc4703103a04213c8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_duplicate_fieldnames.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_duplicate_fieldnames.arrow_file.umf.json.txt",
+      "originalSha256": "ebf0ac01f01d55ae3c522189a5fef893cc00788bf730db33c4daf37ac5d951fa",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive_no_batches.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive_no_batches.arrow_file.umf.json.txt",
+      "originalSha256": "5aa27e6275447f5441a3b42088c9dca1dfb12b4a050dcf774b24b7b9cb8a3ca5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_map.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_map.arrow_file.umf.json.txt",
+      "originalSha256": "0f90b032a36c478aa892bbf2216a677053e6c8d9b879d3d78ab84fdc2b75146d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive_large_offsets.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive_large_offsets.stream.umf.json.txt",
+      "originalSha256": "b70e2943a2ea2ffffe6e583f0bc97dccc5e674dacb95336d8431d79cc3201767",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_decimal256.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_decimal256.arrow_file.umf.json.txt",
+      "originalSha256": "a3abcede2f7a759a4e4c66ca00fa4a4455fcd54cca3ea9c419ac031e4854ebc4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_recursive_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_recursive_nested.arrow_file.umf.json.txt",
+      "originalSha256": "501e80607958ec6b3c511e795394dee664676f5eed7fc168bab77d79d2bb9502",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_union.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_union.stream.umf.json.txt",
+      "originalSha256": "703f4ab101c50d01637531c680392f8ab3cc9a5795da1bc990b46f6bdcb89851",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_null_trivial.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_null_trivial.arrow_file.umf.json.txt",
+      "originalSha256": "c6f7037ff382cff10ac1cadd47433089f6d683008cfffc70b89d77fca27099be",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive_large_offsets.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive_large_offsets.arrow_file.umf.json.txt",
+      "originalSha256": "1f9afea51a68d8a5e592e86f6b3cc7370ee924683e3afb6d6e497a6943292d58",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive.arrow_file.umf.json.txt",
+      "originalSha256": "a43b42ef4d10053ea535279503f9dc5d03b0d7fa09a0efc3361332d676d863e7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_decimal.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_decimal.arrow_file.umf.json.txt",
+      "originalSha256": "e5c8bdffa0ce68b0cbe9846faf7a02070fc1ae1755e0c61c62caaa0283e19a5a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_nested.stream.umf.json.txt",
+      "originalSha256": "56fb7d0f9818806373756a79f7fc1dc9f182b34eb918b698324620a05fb6daa1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_nested_large_offsets.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_nested_large_offsets.stream.umf.json.txt",
+      "originalSha256": "e7ea2ca965f1b0dc8ecb38621118a07c7e66156f04d95c196afe521cc1e860aa",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_datetime.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_datetime.arrow_file.umf.json.txt",
+      "originalSha256": "2bdd564de93459602b979597ac0fe2a7e5ca9f27f22ef235dfc232678b5ad4cb",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive_zerolength.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive_zerolength.arrow_file.umf.json.txt",
+      "originalSha256": "800ec1762c5384714febd1d6f3b410d4d3864f79a6c8d80427a71c35ae81f7bb",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_duplicate_fieldnames.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_duplicate_fieldnames.stream.umf.json.txt",
+      "originalSha256": "a31622af813a41daef3a7d5a0e596ffdeb66c7fa02c39284a406441d93993c84",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_dictionary_unsigned.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_dictionary_unsigned.arrow_file.umf.json.txt",
+      "originalSha256": "3436f8aeda21cc96e9b39a2b366ffcba85ac0acf500fb1bbe3cffa1e224cdfb8",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_nested_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_nested_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "970b06b59d975ce37e39b6c98e6b0aefcf9fc235a15f4c57fefc760ab2509a06",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_union.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_union.arrow_file.umf.json.txt",
+      "originalSha256": "9ee41591491e485792ca3cf67f1fff3df7fbc3e081ae4391c70e880665a6a000",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_map_non_canonical.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_map_non_canonical.stream.umf.json.txt",
+      "originalSha256": "03e6e770bf7c0fcc6f7b263553605dac711ab5faa01232d71c46cc4b99948150",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_extension.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_extension.arrow_file.umf.json.txt",
+      "originalSha256": "730a71620c7636bcbde3050243e779ac2eccdc81230dc5df8a17210ae789469e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_decimal256.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_decimal256.stream.umf.json.txt",
+      "originalSha256": "4daadddbf5d52ee7c1f37756cf0f6bc5c755e66bc0d0f42a0cd99654a6c8c15a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_null_trivial.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_null_trivial.stream.umf.json.txt",
+      "originalSha256": "6f0a946af39105021c5b54ea64cd55f464319ddfa088fb1c083354fd1611f3b3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_custom_metadata.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_custom_metadata.arrow_file.umf.json.txt",
+      "originalSha256": "24a22d162dcbab52a495f97b79aac6b8fd4ceb0a9b9fc3c02fab75a6b2b9ecf5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_recursive_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_recursive_nested.stream.umf.json.txt",
+      "originalSha256": "20adf2195076ef311c7867c27356fd14a31d8280654f677c083d4ff54cee2e49",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_dictionary_unsigned.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_dictionary_unsigned.stream.umf.json.txt",
+      "originalSha256": "f8c53eb6ec1588fdf3d684d7039424e7e3f11ac4602738eab6856b1b85bf616f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_interval.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_interval.stream.umf.json.txt",
+      "originalSha256": "f648ab454308be27699d2b52db0f2d657acf9f57ac1a16cfa2d83329556a5f54",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive.stream.umf.json.txt",
+      "originalSha256": "0f3f0c9a25ff9703544eec4083a63c4c11187e64e4f8fcced091c0d7d45660f6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_nested.arrow_file.umf.json.txt",
+      "originalSha256": "b726348697e5f33fe7312aa36f6f243afa47c223131e907bb7cc30196d4ee5aa",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_interval.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_interval.arrow_file.umf.json.txt",
+      "originalSha256": "2623beff077c985261d9c227713975cf84c75285656a389396335024e353d41b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_datetime.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_datetime.stream.umf.json.txt",
+      "originalSha256": "aa55dcb4c047c0bdcaff4312ded5fa952dfe13718d6e60e94b13fed3a686873a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_dictionary.stream.umf.json.txt",
+      "originalSha256": "547635b882fa7540d166a037fe3184e2de3627d63e901c0b247e6f669fad9f42",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive_zerolength.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive_zerolength.stream.umf.json.txt",
+      "originalSha256": "fb23182afad72ec224e00e73c1982391867aa6db10e690174200d51def5c001a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_decimal.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_decimal.stream.umf.json.txt",
+      "originalSha256": "c638e446820552107f30e6c17376497cb7700d30b31c7025a449c43021bca675",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_map_non_canonical.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_map_non_canonical.arrow_file.umf.json.txt",
+      "originalSha256": "cc1d0779f65f6faaf44a8f90b39ae8f22773a7a5e9dc59fed1574b33057677be",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_null.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_null.stream.umf.json.txt",
+      "originalSha256": "192a4b4ae752acca8df842a9083a88ac24b2df767269399ebd7b5d6756f368bf",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_primitive_no_batches.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_primitive_no_batches.stream.umf.json.txt",
+      "originalSha256": "f18da6af295f4d0b8a64737ac96503b40c988131d67344ef9c7d9c04a42ad3bc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "a8a8e6f3d898239b93e51c1c5c48828a69cfce828e3b3e67eeac8181369ce900",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_custom_metadata.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_custom_metadata.stream.umf.json.txt",
+      "originalSha256": "83126e9508ccc1fe1b0f66a42e020c9b53bfe149a4e9798e26bd57ec85b041dd",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_null.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_null.arrow_file.umf.json.txt",
+      "originalSha256": "7b5347c387e63257961898708143f16c0c6e2e1097a1e2b90f6b995d8809aae6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_nested_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_nested_dictionary.stream.umf.json.txt",
+      "originalSha256": "6b368031ff9737270dd08016d1f29142dad953761f3338851ff792c7c8eb892b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_nested_large_offsets.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_nested_large_offsets.arrow_file.umf.json.txt",
+      "originalSha256": "0742bf2cda5b843512de3c5cc28f5f0bd316dbf53f9bd4ffa9bc2081a3eff10c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_map.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_map.stream.umf.json.txt",
+      "originalSha256": "61ba974cb320d8e11f6f0fb782166df7ade9b1a3d687a23fb805fb8f534066d1",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-bigendian/generated_extension.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-bigendian__generated_extension.stream.umf.json.txt",
+      "originalSha256": "85767016cd955238b049face46aff4b1f0f0a422be1eefc8eb0610987d63f687",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_uncompressible_zstd.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_uncompressible_zstd.arrow_file.umf.json.txt",
+      "originalSha256": "d01dc0b40f5281092dbef03c9cd55f633ee06a7760f62a7588c9374d3cd11f95",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_lz4.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_lz4.arrow_file.umf.json.txt",
+      "originalSha256": "974d0ea3757855178f836a67ee5dcab7d3367ea0c5e10b5f8dc326d0d0c8c621",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_uncompressible_lz4.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_uncompressible_lz4.stream.umf.json.txt",
+      "originalSha256": "ed747c88fe1d89311841e7c8a1d54e6dabc06e2f7851b02ef5a17047a0934ad4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_lz4.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_lz4.stream.umf.json.txt",
+      "originalSha256": "8ca29e74f3da5b5757707991181e79b1453e37577b7ca5938d3c7591a2a6241e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_zstd.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_zstd.stream.umf.json.txt",
+      "originalSha256": "b9eb4e41de39f40f7965badb1ec9bb9f829f540cacf923c6a84b2763be305f5f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_uncompressible_lz4.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_uncompressible_lz4.arrow_file.umf.json.txt",
+      "originalSha256": "e357c2e98338139e500ed4aad0d50950ea39d68e636f3a3459cfb0de91aba947",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_uncompressible_zstd.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_uncompressible_zstd.stream.umf.json.txt",
+      "originalSha256": "fe2b710ad684c870b0bce704b2f8a8be32374a33aa28873b0b41450fe577c50c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/2.0.0-compression/generated_zstd.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__2.0.0-compression__generated_zstd.arrow_file.umf.json.txt",
+      "originalSha256": "f2ec93a30be1991d5e0d67c1ee7f6136a58cac8d2d30bf63a5c94a0caefb6544",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_duplicate_fieldnames.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_duplicate_fieldnames.arrow_file.umf.json.txt",
+      "originalSha256": "774e7fefa11db3a7bd607857ded7fbda867d94dafb73e706930ecd1652bb9a1c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive_no_batches.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive_no_batches.arrow_file.umf.json.txt",
+      "originalSha256": "d5a3048038b543b3b230b68fb2d333bb80cca6dccc72833243e3558c39896c86",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_map.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_map.arrow_file.umf.json.txt",
+      "originalSha256": "57df5d7375a42eed49e0eea1d79136ec211bacd9bdeeb7552e5c699f548a6ab7",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive_large_offsets.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive_large_offsets.stream.umf.json.txt",
+      "originalSha256": "619a5de2a00bb07505bdad232fb6ba01e872c5b7ee164e7e3e99d715cbe39275",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_decimal256.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_decimal256.arrow_file.umf.json.txt",
+      "originalSha256": "2472bf196201ea48d50e168aa385edb2e8f5b699806ae20062aaa635d32abfb5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_recursive_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_recursive_nested.arrow_file.umf.json.txt",
+      "originalSha256": "b1405d6f06e378f81ba97afbb8dcc19b531d226225587e80c222306454f3f336",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_union.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_union.stream.umf.json.txt",
+      "originalSha256": "27b35e4844490b0bc11c54d0c9f23fdfa596c7835bc05c02b04e0f0b8c4a8f4b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_null_trivial.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_null_trivial.arrow_file.umf.json.txt",
+      "originalSha256": "e4bcdf9d862c4835b19c9749931e61b4f6b79f14dfe335a023bcc6ecb4b03788",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive_large_offsets.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive_large_offsets.arrow_file.umf.json.txt",
+      "originalSha256": "4a22317c57b65a614dee4d2f5d65311b91055e4283e6fa855867ad3185327346",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive.arrow_file.umf.json.txt",
+      "originalSha256": "7870e51a36b459f99974e48035dbe12c3cb0151be319aef6728a1f1808981eb0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_decimal.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_decimal.arrow_file.umf.json.txt",
+      "originalSha256": "9dd87efd169773d65a640d81bb3a4e8cb1edce0663c05ff009d71b5dfa55cf17",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_nested.stream.umf.json.txt",
+      "originalSha256": "9b6dc5db12464eb5c2764771f1c814db4425e81d36ea498c16ee0afd9bf271d6",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_nested_large_offsets.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_nested_large_offsets.stream.umf.json.txt",
+      "originalSha256": "d7804fd04b4fc878eea698fd039b4485da4acd7bc0c4d673033118401bfafc85",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_datetime.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_datetime.arrow_file.umf.json.txt",
+      "originalSha256": "3420ab4969b7e946b590c40175bca8c320d2f28f0b68e094315ab4616eb1b2b4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive_zerolength.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive_zerolength.arrow_file.umf.json.txt",
+      "originalSha256": "61735f31786265fac95138327316f08dce37af7877e4d889d8cef802ff18f9df",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_duplicate_fieldnames.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_duplicate_fieldnames.stream.umf.json.txt",
+      "originalSha256": "895ea33a60f5b2136ea95902c658b9315ed60191bbd3be0baf326f34d4b48bbf",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_dictionary_unsigned.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_dictionary_unsigned.arrow_file.umf.json.txt",
+      "originalSha256": "dc07583455618e445c4dffb1618e74cff24474c2dcd0b705e4dbd1729ddde163",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_nested_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_nested_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "9ba5a7e94d4de7912ff46ea0c997ebe1a83c04a36ab6f627948c3d092d2cc5eb",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_union.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_union.arrow_file.umf.json.txt",
+      "originalSha256": "850c40cf2437bda687cb057339cdd33c95ed7a907a4cda8c6f65c0c210ab3513",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_map_non_canonical.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_map_non_canonical.stream.umf.json.txt",
+      "originalSha256": "2577007e9fb660478da97007f6f71806e47cc6a0ec7802edc23dea894e54c68c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_extension.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_extension.arrow_file.umf.json.txt",
+      "originalSha256": "e4f4dfbe1d387ea7e8fc12242b410c91823e54d4897b1500213a63776ab8413e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_decimal256.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_decimal256.stream.umf.json.txt",
+      "originalSha256": "f07c293e53cd76a1f92dd95b9f569903b79d9d72c2ec7089685617ad562445a3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_null_trivial.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_null_trivial.stream.umf.json.txt",
+      "originalSha256": "33e465f9f046b7761755cb08c575f16d43f5181f81def4226f1b8d616a78b183",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_custom_metadata.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_custom_metadata.arrow_file.umf.json.txt",
+      "originalSha256": "279e9defbcacc2876f009e22c8f01197ebd34582868ab0fde71c74d6cb779e1a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_recursive_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_recursive_nested.stream.umf.json.txt",
+      "originalSha256": "c992fed61fe99e1dd41a7dda9f6dffc2f8f12d5dc7d6a7d7015a594e261f6b4c",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_dictionary_unsigned.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_dictionary_unsigned.stream.umf.json.txt",
+      "originalSha256": "abd56f6bc823e5d4a4368da4cbd651b6362be2bacf7d54779e14e30beb2a9620",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_interval.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_interval.stream.umf.json.txt",
+      "originalSha256": "0aac5e7e9879918aa92d4870085ebf1e7548a4d7f02824cd0541d296ed77d089",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive.stream.umf.json.txt",
+      "originalSha256": "305c06a63f553df2e1708e887dca0e6994f43d9a2e11b1f17ed0d19a32682e8f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_nested.arrow_file.umf.json.txt",
+      "originalSha256": "d010785d425b43b0cf472db8f5d673f647c61accae64243a3397a1eb3537916e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_interval.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_interval.arrow_file.umf.json.txt",
+      "originalSha256": "13ff304aaca1f34c6fa56a3072ce3b090668bc28c62d600647c41e9165350cef",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_datetime.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_datetime.stream.umf.json.txt",
+      "originalSha256": "34c41c915e344778aae875eebb91c7394a1d87f748c320b0b269cf9243c04a8b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_dictionary.stream.umf.json.txt",
+      "originalSha256": "56387c00f8861ebce7dd8b767e9e5a9027dbda370e4b2854981eea196fa78866",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive_zerolength.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive_zerolength.stream.umf.json.txt",
+      "originalSha256": "33b334a6ee04d3a45e52a84f70759e16eb571eeeabeb553bf44fa31bdcac15b3",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_decimal.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_decimal.stream.umf.json.txt",
+      "originalSha256": "7c14a625258cb3180d68d29630b87101812b4103d0d855aa6e1d8aa4e8209c82",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_map_non_canonical.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_map_non_canonical.arrow_file.umf.json.txt",
+      "originalSha256": "17215ee4569d345b064777ca2e6857d5bb2e9d201f0445132b9ae4fee19d22f5",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_null.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_null.stream.umf.json.txt",
+      "originalSha256": "8e0c38fbab54f2f9f21f91583e0564ded4b52db7022fe6595ecfc5b1ba4bfe4d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_primitive_no_batches.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_primitive_no_batches.stream.umf.json.txt",
+      "originalSha256": "b43f1e14dcea7ed0621fdc6d62ecf76a913f4071c33ad83c3f57c48162ac2b50",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "b3ff7dcde21c2ced0ceab539c395bdec40da1792a32e300a48965df7f2709060",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_custom_metadata.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_custom_metadata.stream.umf.json.txt",
+      "originalSha256": "e69e8ba3f3c6d402d2459d52cf7410e942269fe8651b9353a185ef8209cfce2f",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_null.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_null.arrow_file.umf.json.txt",
+      "originalSha256": "d21a668184e5b412cea43a823ab2e9e47cfc35efa5491afd7f21282c66ed28bf",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_nested_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_nested_dictionary.stream.umf.json.txt",
+      "originalSha256": "9ce0fdf6824033d5aed3c485401011610968b0411cec82a28a960b4be4969f92",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_nested_large_offsets.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_nested_large_offsets.arrow_file.umf.json.txt",
+      "originalSha256": "876ef28ca5e8cd9793d47ccc6a953a5b40c609e2dec24d281caa140538808915",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_map.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_map.stream.umf.json.txt",
+      "originalSha256": "64c62aaae5d9736ad6e942a6d4579360c41754c744f449328b8a4d2e90a7b25e",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/1.0.0-littleendian/generated_extension.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__1.0.0-littleendian__generated_extension.stream.umf.json.txt",
+      "originalSha256": "18a6c6233f1b158daede78807bad06fa7c569f4db49639ba0e8c1b430bfd867b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.17.1/generated_union.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.17.1__generated_union.stream.umf.json.txt",
+      "originalSha256": "e434d720abf93f611955eadc89005ed3a1280365a77567103c0160fca20af07d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.17.1/generated_union.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.17.1__generated_union.arrow_file.umf.json.txt",
+      "originalSha256": "c69957e4ac3c4b296e65b611a5622998516c3c7f5b4b398b790eb615ff1b10a0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/4.0.0-shareddict/generated_shared_dict.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__4.0.0-shareddict__generated_shared_dict.stream.umf.json.txt",
+      "originalSha256": "48ffde91e1c46a4577cc6be9f284f428d5018e50af350d683d19ed41f12d5966",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/4.0.0-shareddict/generated_shared_dict.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__4.0.0-shareddict__generated_shared_dict.arrow_file.umf.json.txt",
+      "originalSha256": "77b271adbccb7738219f763168ebc7646943a38d988b19e558aa0b1afb5d1993",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_primitive_no_batches.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_primitive_no_batches.arrow_file.umf.json.txt",
+      "originalSha256": "0c9d62731a535498c008cbb0c9a5b26c1368e9dda98930436b28f1d4886cc5c9",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_map.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_map.arrow_file.umf.json.txt",
+      "originalSha256": "3fd520097a70363b74287c613f3fb0694f836071ccfea6cfa48829988c24df61",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_primitive.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_primitive.arrow_file.umf.json.txt",
+      "originalSha256": "03785ed05baa78a47cce45a381605aa3db769445c213e1629dc80743cf7526c2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_decimal.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_decimal.arrow_file.umf.json.txt",
+      "originalSha256": "d04a3d38918465c65f2fcc1d82d56127384873d0c35d15dd5d3fc8272433836b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_nested.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_nested.stream.umf.json.txt",
+      "originalSha256": "d761e014959672375fdc50716c384cf0ae2fe4b5f7977784772d7941975981bc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_datetime.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_datetime.arrow_file.umf.json.txt",
+      "originalSha256": "804e5649a9343f7a1aa7b4f9581a547ce51be81ce9fa6ce9d5f21979471c5a6d",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_primitive_zerolength.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_primitive_zerolength.arrow_file.umf.json.txt",
+      "originalSha256": "1c6fcd6a686652eb83bad00ed2fb9f3feefa843deb832df6a85654017c4f4ae2",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_interval.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_interval.stream.umf.json.txt",
+      "originalSha256": "c04eb49bac6c1fe4320edda5c426204600d36c47505b708c9f697df71d340dbc",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_primitive.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_primitive.stream.umf.json.txt",
+      "originalSha256": "5483d48e9b281546e2466604f7049fb4a411a5e731a9a85192b84121dccf296a",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_nested.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_nested.arrow_file.umf.json.txt",
+      "originalSha256": "d587ace59ba620d42c75e22a982379900fb85236a765e3ab5560f7a943556061",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_interval.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_interval.arrow_file.umf.json.txt",
+      "originalSha256": "763316c5e975144daaaa90768e64b937f9a91e7a43cc5488216834a9a8ba0d58",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_datetime.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_datetime.stream.umf.json.txt",
+      "originalSha256": "51c5105847b51994e5c0b336ae09cb81da6719c84b9711f5d917babd802a6d5b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_dictionary.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_dictionary.stream.umf.json.txt",
+      "originalSha256": "144eb0b700fd101b78f415de782e61ec85efc09eb6138a0c5cf2c10be751ebee",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_primitive_zerolength.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_primitive_zerolength.stream.umf.json.txt",
+      "originalSha256": "1c3c475bd6a01e6d91f5b483de97a959ec0d4c881db0a1d2f67a79cf643063e0",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_decimal.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_decimal.stream.umf.json.txt",
+      "originalSha256": "386d87b87fb132658cfe7c9b52eafb9d7757f673b32926c30fa43508021342f4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_primitive_no_batches.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_primitive_no_batches.stream.umf.json.txt",
+      "originalSha256": "99400bb4427c97f18f5d9713cf972be41a9fe2f2cecfe13aeb9fe2d1c269fbcf",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_dictionary.arrow_file.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_dictionary.arrow_file.umf.json.txt",
+      "originalSha256": "20f47d548c26b32554e192364c4414d1504a007f30a8e74cc370cbd13cb446b4",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/0.14.1/generated_map.stream.umf.json",
+      "archive": "fixtures__projections__arrow-spark-upstream__0.14.1__generated_map.stream.umf.json.txt",
+      "originalSha256": "7891450e5f47daddea508654a5b643c80d1a67afbfa6db0b0ba3302b6e92b48b",
+      "changes": [
+        {
+          "pointer": "/umf",
+          "before": "0.1.0",
+          "after": "0.10.0"
+        }
+      ]
+    }
+  ],
+  "nativeReports": [
+    {
+      "path": "fixtures/projections/arrow-spark/native-results.json",
+      "sha256": "b5ced167ec8971bed5ad25c8248b842ace714dfb596ca020a2f28ece7d9acab0",
+      "unchangedFromOriginalRevision": true
+    },
+    {
+      "path": "fixtures/projections/arrow-spark-upstream/native-results.json",
+      "sha256": "924ede00530c095a73fa27d4236b99ce66a4770fd36faa8e408f453645e8a6be",
+      "unchangedFromOriginalRevision": true
+    },
+    {
+      "path": "fixtures/projections/spark-arrow/native-results.json",
+      "sha256": "1047f6a05201a535f1d15b8258f51775b7ceca5cdc5580c6d6a7269091793652",
+      "unchangedFromOriginalRevision": true
+    }
+  ],
+  "verifiedEnvelopeOnlyDeltas": 403
+}

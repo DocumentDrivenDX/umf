@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -339,7 +339,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -366,7 +366,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -411,9 +411,9 @@
   ],
   "sources": [
     {
-      "bytes": 2393,
+      "bytes": 2395,
       "path": "spec/projections/spark-arrow.schema.json",
-      "sha256": "4329535d8ff9be9f4c65799a2a8a477dd5cb39ee8d5953df05cc659e1d1b54bd"
+      "sha256": "e095d0c02d0e22d67e65ff077330cb38187d887ec76fc93da8149d41ba1b8351"
     }
   ],
   "summary": "spec/projections/spark-arrow.schema.json",

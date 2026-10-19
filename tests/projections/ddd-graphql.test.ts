@@ -61,14 +61,11 @@ test('@covers US-049-AC4 @covers US-049-AC5: missing roots, collisions, ambiguou
   const f=graphqlCases().find(x=>x.id==='heterogeneous')!;delete f.policy.relationships[0]!.forwardUnion;expect(()=>project(f)).toThrow('explicit union');
 });
 
-test('@covers US-049-AC10: projection recovery composes with collision-preserving migration and rollback',async()=>{
-  const {upgradeRelationshipEnvelope,rollbackRelationshipEnvelope}=await import('../../src');
-  const f=base(),legacy=structuredClone(f.logical);legacy.umf='0.6.0';legacy.modules[0]!.relationships={futureLegacy:['opaque',1]};
-  const upgrade=upgradeRelationshipEnvelope(legacy);
-  const p=project(f);const restored=recoverDddFromGraphql(p,importGraphqlSchema(p.candidate!,{id:'fresh',mode:'schema'}));
-  const rollback=rollbackRelationshipEnvelope(upgrade,restored as any);
-  expect(rollback.target).toEqual(legacy);expect(rollback.source as unknown as Document).toEqual(f.logical);
-  expect(rollback.receipt.residuals[0]!.value).toEqual({futureLegacy:['opaque',1]});
+test('@covers US-049-AC10: current projection recovery retains unrelated extension content exactly',()=>{
+  const f=base();f.logical.vocabularies.future={version:'9.0.0'};f.logical.extensions??={};f.logical.extensions.future={futureLegacy:['opaque',1]};
+  const p=project(f),target=importGraphqlSchema(p.candidate!,{id:'fresh',mode:'schema'});
+  expect(recoverDddFromGraphql(p,target)).toEqual(f.logical);
+  expect(recoverDddGraphqlNative(p,target)).toBe(p.candidate!);
 });
 
 
@@ -81,8 +78,8 @@ test('@covers US-049-AC1 @covers US-049-AC6: generated shared authored graph mat
 test('@covers US-049-AC4 @covers US-049-AC7: complete result schema rejects partial targets and missing policy/source contracts',async()=>{
   const {createValidator}=await import('../../src/validation/schema');
   const {dddGraphqlProjectionSchema}=await import('../../src');
-  const legacy=await Bun.file('spec/core/schema.json').json(),current=await Bun.file('spec/core/relationship-document.schema.json').json();
-  const validator=createValidator(false);validator.addSchema(legacy);validator.addSchema(current);const check=validator.compile(dddGraphqlProjectionSchema);
+  const current=await Bun.file('spec/core/schema.json').json();
+  const validator=createValidator(false);validator.addSchema(current);const check=validator.compile(dddGraphqlProjectionSchema);
   const p=project();expect(check(p)).toBe(true);expect(check(project(base(),'strict'))).toBe(true);
   const bad:((r:any)=>void)[]=[r=>delete r.sourceVersions,r=>delete r.policy.endpoints,r=>delete r.policy.fields[0].coreField,r=>delete r.policy.relationships[0].id,r=>delete r.targetArchive,r=>r.status='blocked',r=>r.policy.relationships[0].extra='unknown',r=>r.logical.umf='0.6.0'];
   for(const mutate of bad){const r=structuredClone(p);mutate(r);expect(check(r)).toBe(false);}

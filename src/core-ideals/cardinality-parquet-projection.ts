@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreCardinalityDeclaration,type CoreCardinalityDeclaration} from '../model/cardinality';
@@ -7,11 +8,9 @@ import {parquetCardinalityFile,type ParquetCardinalityCarrier} from './parquet-c
 import {inspectParquetCardinalityShape} from './parquet-cardinality-shape';
 export type {ParquetCardinalityCarrier} from './parquet-cardinality-carrier';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import core from '../../spec/core/cardinality-document.schema.json';
-import authorSchema from '../../spec/core/cardinality-operation.schema.json';
+
+import core from '../../spec/core/schema.json';
+import authorSchema from '../../spec/core/cardinality-operation-v4.schema.json';
 import schema from '../../spec/core/cardinality-parquet-projection.schema.json';
 export {default as cardinalityParquetProjectionSchema} from '../../spec/core/cardinality-parquet-projection.schema.json';
 export interface CardinalityParquetRequest {id:string;recordName:string;fieldName:string;nativeType:ParquetCardinalityCarrier;availability:'definition-level'|'unresolved';requireExactValues:boolean;mode:'strict'|'report';}
@@ -21,13 +20,13 @@ export interface CardinalityParquetProjection {
  mapping:{origin:'authored';idealPath:string;cardinality:'one'|'array'|'map'|'unspecified';outcome:'exact'|'approximated'|'unknown'|'not-expressible';items:{idealPath:string;nativeIndex:number}[]};
  residuals:{path:string;value:Json;reason:string;outcome:'approximated'|'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,core,authorSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile({...schema.properties.request,$defs:schema.$defs});
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 export function projectCardinalityToParquet(input:CoreCardinalityDeclaration,options:CardinalityParquetRequest):CardinalityParquetProjection {
  const copied=copyJson(input) as unknown as CoreCardinalityDeclaration,author=verifyCoreCardinalityDeclaration(copied,copied.target);
  const source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as CardinalityParquetRequest;
- if(source.umf!=='0.4.0')throw new UmfError('CARDINALITY_PARQUET_VERSION','This binding requires a core 0.4.0 declaration; facet-envelope projection requires a separately qualified binding');
+ if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('CARDINALITY_PARQUET_VERSION','This binding requires a core 0.10.0 declaration; facet-envelope projection requires a separately qualified binding');
  if(!checkRequest(request))throw new UmfError('CARDINALITY_PARQUET_REQUEST',JSON.stringify(checkRequest.errors));
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),ei=source.modules[mi]!.elements.findIndex(e=>e.id===author.identity.element),element=source.modules[mi]!.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;
  const target=importParquetSchema(parquetCardinalityFile(request.recordName,request.fieldName,request.nativeType),{id:request.id});

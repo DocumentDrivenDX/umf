@@ -8,7 +8,7 @@ try{
  const checks=await page.evaluate(async()=>{
   const path='/umf.js',u=await import(path),rows=await(await fetch('/cases')).json();let recoveries=0;
   for(const row of rows){
-   const initial=u.importTableSpec(row.text,{id:row.case,format:row.nativeFormat}),field=u.classifyTableSpecField(u.upgradeFieldEnvelope(initial).target,{column:0,mode:'strict'}),model=u.upgradeNullabilityEnvelope(field.target).target;
+   const initial=u.importTableSpec(row.text,{id:row.case,format:row.nativeFormat}),field=u.classifyTableSpecField(initial,{column:0,mode:'strict'}),model=field.target;
    if(JSON.stringify(model)!==JSON.stringify(row.model))throw Error('Bun/browser parity');
    if(u.inspectCoreNullability(model,{module:'table',element:'column:0'}).meaning.state!=='missing')throw Error('Availability inferred');
    for(const format of ['json','yaml']){

@@ -1,8 +1,8 @@
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
-import {validateCoreRecordValues,readDocument,upgradeSchemaPropertiesEnvelope,validateDocument} from '../src/index';
-const old=readDocument(readFileSync(new URL('../fixtures/core/record-values-source.umf.json',import.meta.url),'utf8'),'json');
-const source=upgradeSchemaPropertiesEnvelope(old).target;
+import {validateCoreRecordValues,readDocument,validateDocument} from '../src/index';
+// Authored as a current .10 fixture while preserving the source's native Record and Field meanings.
+const source=readDocument(readFileSync(new URL('../fixtures/core/record-values-current.umf.json',import.meta.url),'utf8'),'json');
 const identity={module:'fixture',element:'item'},label={module:'fixture',element:'label'},caption={module:'fixture',element:'caption'};
 const labelValue={field:label,state:'present' as const,value:{string:'雪🙂'}};
 test('complete logical record check preserves original document validation',()=>{
@@ -28,7 +28,7 @@ test('unknown scope/availability and dataset keys remain explicit incomplete obl
  expect(validateCoreRecordValues(keyed,identity,[labelValue]).validation.diagnostics.some(d=>d.code==='RECORD_KEY_CONTEXT_REQUIRED')).toBe(true);
 });
 test('explicit version/shape/accessor boundaries refuse without getters or version rewrite',()=>{
- expect(()=>validateCoreRecordValues(old,identity,[labelValue])).toThrow();
+ const retired={...source,umf:'0.7.0'} as any;expect(()=>validateCoreRecordValues(retired,identity,[labelValue])).toThrow();
  expect(()=>validateCoreRecordValues(source,identity,[null] as any)).toThrow();
  let calls=0;const value=Object.defineProperty({...labelValue},'value',{get(){calls++;return {string:'x'};}});
  expect(()=>validateCoreRecordValues(source,identity,[value])).toThrow();expect(calls).toBe(0);

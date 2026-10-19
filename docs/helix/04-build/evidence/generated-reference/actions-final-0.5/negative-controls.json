@@ -1,0 +1,49 @@
+{
+  "profile": "umf.actions.documentation-build-controls/1",
+  "untouchedControlPassed": true,
+  "isolatedCopy": true,
+  "cases": [
+    {
+      "case": "malformed-frontmatter",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Unsupported guide frontmatter"
+    },
+    {
+      "case": "unsafe-html",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Unsupported raw HTML"
+    },
+    {
+      "case": "unresolved-include",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Unresolved include"
+    },
+    {
+      "case": "unclosed-fence",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Unclosed code fence"
+    },
+    {
+      "case": "unsafe-link",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Unsafe link"
+    },
+    {
+      "case": "missing-repository-link",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Missing repository link"
+    },
+    {
+      "case": "extra-generated-output",
+      "refused": true,
+      "sourceUnchanged": true,
+      "diagnostic": "Generated output ownership differs"
+    }
+  ]
+}

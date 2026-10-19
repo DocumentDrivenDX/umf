@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -101,7 +101,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -309,7 +309,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -392,9 +392,9 @@
   ],
   "sources": [
     {
-      "bytes": 2095,
+      "bytes": 2097,
       "path": "spec/extensions/jsonld/to-rdf-schema.json",
-      "sha256": "d44d2ac64b6a7b3fa61f3b8ebb5f53b1a20c65d0a0179b34959a921abb99b184"
+      "sha256": "bd65b8a9fc878e64675e4de22b4b59560582a92fc431e2d99aae74697b037161"
     }
   ],
   "summary": "spec/extensions/jsonld/to-rdf-schema.json",

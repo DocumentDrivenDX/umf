@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9717,
-        "line": 25,
+        "bytes": 8193,
+        "line": 17,
         "path": "src/model/facets.ts",
-        "sha256": "90fecc4402d8531c3e7bb42bde5a9f845c9e172eeb8b348b707fbdc17141fea1"
+        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreFacetMeaning",
     "runtime": "type-only",
     "signatureText": [
-      "export type CoreFacetMeaning={state:'missing'|'inapplicable'}|{state:'legacy';value:Json}|{state:'known'|'partial';facets:CoreFacets;interpreted:CoreFacetInterpreted;uninterpretedPaths:string[]};"
+      "export type CoreFacetMeaning={state:'missing'|'inapplicable'}|{state:'known'|'partial';facets:CoreFacets;interpreted:CoreFacetInterpreted;uninterpretedPaths:string[]};"
     ]
   },
   "id": "[\"api\",\".\",\"CoreFacetMeaning\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9717,
-      "line": 25,
+      "bytes": 8193,
+      "line": 17,
       "path": "src/model/facets.ts",
-      "sha256": "90fecc4402d8531c3e7bb42bde5a9f845c9e172eeb8b348b707fbdc17141fea1"
+      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
     }
   ],
   "summary": "Type declaration · src/model/facets.ts",

@@ -1,17 +1,17 @@
 import {test,expect} from 'bun:test';
 import {nullabilitySelectionCases} from '../../scripts/core-ideals/nullability-selection-cases';
 import {selectCoreElements} from '../../src/model/selection';
-import {coreNullabilitySelectionSchema,coreFieldSelectionSchema} from '../../src/model/selection-schemas';
+import {coreNullabilitySelectionSchema} from '../../src/model/selection-schemas';
 import {inspectCoreNullability} from '../../src/model/nullability';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {createValidator} from '../../src/validation/schema';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-const validator=createValidator();validator.addSchema(fields);validator.addSchema(availability);const check=validator.compile(coreNullabilitySelectionSchema),previous=validator.compile(coreFieldSelectionSchema);
-test('0.3 reports retain availability distinctions, namespaces, recursive boundaries and native refinements',()=>{
+import fields from '../../spec/core/schema.json';
+import availability from '../../spec/core/schema.json';
+const validator=createValidator();validator.addSchema(fields);validator.addSchema(availability);const check=validator.compile(coreNullabilitySelectionSchema);
+test('current selection reports retain availability distinctions, namespaces, recursive boundaries and native refinements',()=>{
  for(const c of nullabilitySelectionCases()){
-  const result=selectCoreElements(c.source,c.query);expect(check(result)).toBe(true);expect(previous(result)).toBe(false);expect(result.source).toEqual(c.source);
+  const result=selectCoreElements(c.source,c.query);expect(check(result)).toBe(true);expect(result.source).toEqual(c.source);
   for(const entry of result.selection){const original=c.source.modules.find(m=>m.id===entry.module)!.elements.find(e=>e.id===entry.element.id)!;expect(entry.element).toEqual(original);}
   for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;expect(receipt).toEqual(result);}
  }
@@ -25,7 +25,8 @@ test('selection schema rejects inapplicable known availability',()=>{
  const c=nullabilitySelectionCases()[1]!,result=selectCoreElements(c.source,c.query);
  const malformed=structuredClone(result);malformed.selection[0]!.element.nullability='required';expect(check(malformed)).toBe(false);
 });
-test('0.2 availability remains opaque through the old selection schema',()=>{
- const source=structuredClone(nullabilitySelectionCases()[0]!.source);source.umf='0.2.0';source.modules[0]!.elements[1]!.nullability={opaque:['required',null]};
- const report=selectCoreElements(source,{references:'none'});expect(previous(report)).toBe(true);expect(check(report)).toBe(false);expect(inspectCoreNullability(source,{module:'sales',element:'required'}).meaning.state).toBe('legacy');
+test('retired core marker and old nullability lookalikes are refused',()=>{
+ const source={...structuredClone(nullabilitySelectionCases()[0]!.source),umf:'0.2.0'} as any;
+ source.modules[0]!.elements[1]!.nullability={opaque:['required',null]};
+ expect(()=>selectCoreElements(source,{references:'none'})).toThrow();expect(()=>inspectCoreNullability(source,{module:'sales',element:'required'})).toThrow();
 });

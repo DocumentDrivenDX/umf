@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 export function relationshipCandidate():any {
  const elements:any[]=[];
  for(const name of ['Order','Customer','Product','Person','Company','Student','Course','Enrollment']){
@@ -10,7 +11,8 @@ export function relationshipCandidate():any {
  customer.members.push(code);customer.keys.push({id:'account-number',name:'Account number',fields:[code]});
  const grade={module:'m',element:'Enrollment.grade'};elements.find(e=>e.id==='Enrollment').members.push(grade);
  elements.push({id:grade.element,kind:'field',scalarType:'string',cardinality:'one',nullability:'absent-allowed',extensions:{}});
- return {umf:'0.7.0',id:'relationships',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{unknown:['9007199254740993',null]}},modules:[{id:'m',namespace:'domain',elements,relationships:[{
+ // Synthetic current-core fixture assembled directly for current validation and operations.
+ return {umf:CURRENT_CORE_VERSION,id:'relationships',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{unknown:['9007199254740993',null]}},modules:[{id:'m',namespace:'domain',elements,relationships:[{
   id:'order-customer',name:'customer',source:[{module:'m',element:'Order'}],target:[{module:'m',element:'Customer',key:'identity'}],sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:1,max:1},targetLifecycle:'independent',directed:true,inverse:'orders',
  }]}]};
 }
@@ -40,17 +42,17 @@ export function relationshipCases(){
  add('field-endpoint',(_,r)=>r.source[0].element='Order.id',false,'RELATIONSHIP_ENDPOINT_KIND');
  add('unkeyed-endpoint',d=>delete d.modules[0].elements.find((e:any)=>e.id==='Order').keys,false,'RELATIONSHIP_ENDPOINT_KEY');
  add('key-name-not-id',(_,r)=>r.target[0].key='Account number',false,'RELATIONSHIP_TARGET_KEY');
- add('missing-target-key',(_,r)=>delete r.target[0].key,false,'RELATIONSHIP_STRUCTURE');
+ add('missing-target-key',(_,r)=>delete r.target[0].key,false,'SEMANTIC_TYPE_STRUCTURE');
  add('unkeyed-association',(d,r)=>{r.associationRecord={module:'m',element:'Enrollment'};delete d.modules[0].elements.find((e:any)=>e.id==='Enrollment').keys;},false,'RELATIONSHIP_ENDPOINT_KEY');
  add('inverted-bounds',(_,r)=>r.sourceMultiplicity={min:3,max:2},false,'RELATIONSHIP_MULTIPLICITY');
- for(const value of [-1,0,1.5,'many'])add('invalid-max-'+value,(_,r)=>r.targetMultiplicity.max=value,false,'RELATIONSHIP_STRUCTURE');
+ for(const value of [-1,0,1.5,'many'])add('invalid-max-'+value,(_,r)=>r.targetMultiplicity.max=value,false,'SEMANTIC_TYPE_STRUCTURE');
  add('owned-undirected',(_,r)=>{r.targetLifecycle='owned';r.directed=false;},false,'RELATIONSHIP_LIFECYCLE');
  add('inverse-collision',(d,r)=>d.modules[0].relationships.push({...r,id:'other',name:'other',source:[{module:'m',element:'Product'}]}),false,'RELATIONSHIP_PRESENTATION_COLLISION');
  add('inverse-forward-collision',(d,r)=>{const other=structuredClone(r);other.id='other';other.name='orders';other.source=[{module:'m',element:'Customer'}];other.target=[{module:'m',element:'Product',key:'identity'}];other.inverse='products';d.modules[0].relationships.push(other);},false,'RELATIONSHIP_PRESENTATION_COLLISION');
  add('same-forward-name-other-module',(d,r)=>{const other=structuredClone(r);delete r.inverse;delete other.inverse;d.modules.push({id:'other',namespace:'other',elements:[],relationships:[other]});});
  add('inverse-collision-other-module',(d,r)=>{const other=structuredClone(r);other.id='other';other.name='other';other.source=[{module:'m',element:'Product'}];d.modules.push({id:'other',namespace:'other',elements:[],relationships:[other]});},false,'RELATIONSHIP_PRESENTATION_COLLISION');
- add('empty-source',(_,r)=>r.source=[],false,'RELATIONSHIP_STRUCTURE');
- add('old-version',d=>d.umf='0.6.0',false,'RELATIONSHIP_STRUCTURE');
+ add('empty-source',(_,r)=>r.source=[],false,'SEMANTIC_TYPE_STRUCTURE');
+ add('old-version',d=>d.umf='0.6.0',false,'SEMANTIC_TYPE_STRUCTURE');
  return rows;
 }
 if(import.meta.main)await Bun.write('fixtures/relationship/core-candidate.json',JSON.stringify({scope:'Authored relationship candidate fixtures; not native admission evidence',cases:relationshipCases()},null,2)+'\n');

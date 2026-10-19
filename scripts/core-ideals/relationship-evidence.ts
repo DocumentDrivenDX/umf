@@ -8,25 +8,40 @@ import {relationshipSqlServerCases} from './relationship-sqlserver-cases';
 import {postgresqlRelationshipCases} from './relationship-postgresql-cases';
 import {relationshipExtraCases} from './relationship-extras-cases';
 export type RelationshipEvidenceReader=(path:string)=>Promise<Uint8Array>;
-export async function verifyRelationshipEvidence(read:RelationshipEvidenceReader=readEvidence){
+export async function verifyRelationshipEvidence(read:RelationshipEvidenceReader=readEvidence,options:{allowUnqualifiedHistorical?:boolean}={}){
  const json=async(p:string)=>JSON.parse(new TextDecoder().decode(await read(safePath(p))));
+ const history=await json('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json');
+ const unqualified:{path:string;expected:string;actual:string|null;reason:string}[]=[],revalidated:{path:string;expected:string;basis:string}[]=[];
+ async function exactHistorical(path:string,expected:string):Promise<boolean>{
+  try{if(digest(await read(safePath(path)))===expected){revalidated.push({path,expected,basis:'current exact bytes'});return true;}}catch{/* removed historical path */}
+  const archived=history.entries.find((entry:any)=>entry.path===path&&entry.sha256===expected);
+  if(archived){assert.equal(digest(await read(safePath(archived.archive))),expected,'Changed archived historical relationship source '+path);revalidated.push({path,expected,basis:'byte-exact history archive'});return true;}
+  return false;
+ }
  const refresh=await json('fixtures/validation/relationship-gate-refresh.json');
  assert.equal(refresh.complete,true,'Incomplete relationship replay');assert.equal(refresh.nativeEquivalence,false);
- const currentSources=await relationshipSourceHashes(),historicalView={...currentSources};
+ const currentSources=await relationshipSourceHashes();
  for(const [path,row] of Object.entries(refresh.sourceRevalidation??{}) as [string,any][]){
   assert.match(row.currentSha256,/^[0-9a-f]{64}$/);assert.equal(currentSources[path],row.currentSha256,'Stale revalidated relationship source '+path);
-  if(row.historicalSha256===null)delete historicalView[path];
-  else{assert.match(row.historicalSha256,/^[0-9a-f]{64}$/);historicalView[path]=row.historicalSha256;}
+  if(row.historicalSha256!==null)assert.match(row.historicalSha256,/^[0-9a-f]{64}$/);
  }
- assert.deepEqual(refresh.sourceHashes,historicalView,'Stale relationship replay sources');
+ for(const [path,expected] of Object.entries(refresh.sourceHashes) as [string,string][]){
+  if(await exactHistorical(path,expected))continue;
+  const row=(refresh.sourceRevalidation??{})[path];
+  if(row&&row.historicalSha256===expected&&row.currentSha256===currentSources[path]){revalidated.push({path,expected,basis:'recorded historical/current source revalidation'});continue;}
+  unqualified.push({path,expected,actual:currentSources[path]??null,reason:'The exact original source pin is not current, byte-exactly archived, or covered by its recorded revalidation.'});
+ }
  assert.deepEqual(refresh.commands.map((c:any)=>c.command),relationshipRefreshCommands,'Missing required replay command');
  for(const row of refresh.commands){assert.equal(row.exitCode,0,'Failed replay command');assert.equal(digest(await read(safePath(row.log))),row.sha256,'Changed execution log');}
  assert.deepEqual(Object.keys(refresh.proofHashes).sort(),[...relationshipProofs].sort(),'Missing relationship proof');
  const proofs:Record<string,any>={};
  for(const path of relationshipProofs){assert.equal(digest(await read(path)),refresh.proofHashes[path],'Changed relationship proof '+path);const p=await json(path);proofs[path]=p;
-  for(const [source,hash] of Object.entries(p.sha256??{})){
-   const actual=digest(await read(safePath(source)));
-   if(actual!==hash){const row=refresh.sourceRevalidation?.[source];assert(row,'Stale native/browser proof '+source);assert.equal(row.historicalSha256,hash,'Unapproved historical relationship proof '+source);assert.equal(row.currentSha256,actual,'Stale revalidated relationship proof '+source);}
+  for(const [source,rawHash] of Object.entries(p.sha256??{})){
+   const hash=String(rawHash);
+   let actual:string|null=null;try{actual=digest(await read(safePath(source)));}catch{/* retired historical source */}
+   if(actual!==hash){const row=refresh.sourceRevalidation?.[source];if(row){assert.equal(row.historicalSha256,hash,'Unapproved historical relationship proof '+source);assert.equal(row.currentSha256,actual,'Stale revalidated relationship proof '+source);revalidated.push({path:source,expected:hash,basis:'recorded historical/current proof source revalidation'});}
+    else if(await exactHistorical(source,hash))continue;
+    else unqualified.push({path:source,expected:hash,actual,reason:'The exact source artifact pinned by the historical relationship proof could not be recovered.'});}
   }
   if(path.includes('browser')){assert.equal(p.browser,refresh.browser??'148.0.7778.0','Unqualified Chromium');assert.deepEqual(p.externalRequests,[]);const c=p.checks??p.result;assert(c.cases>0&&c.idealRecoveries>0,'Empty browser recovery matrix');assert(c.blocked>0,'Missing browser refusals');}
  }
@@ -54,5 +69,6 @@ export async function verifyRelationshipEvidence(read:RelationshipEvidenceReader
  const sql=get('sqlserver-native.json'),pg=get('postgresql-native.json');assert.equal(sql.projected,expected('sqlserver').length);assert(sql.rows.length>0);assert(sql.rows.every((r:any)=>r.expected===r.actual.error),'SQL Server insertion mismatch');for(const name of expected('sqlserver')){const rows=sql.rows.filter((r:any)=>r.id.startsWith(name+'/'));assert(rows.some((r:any)=>r.actual.error===0)&&rows.some((r:any)=>r.actual.error===547),'Missing useful SQL Server mapping controls '+name);}assert(pg.rows.filter((r:any)=>r.status==='projected').length>0);
  assert(pg.rows.some((r:any)=>(r.probes??[]).some((p:any)=>JSON.stringify(p).includes('23503'))),'No PostgreSQL FK rejection control');
  assert(JSON.stringify(sql.rows).includes('547'),'No SQL Server FK rejection control');
- return {refreshSha256:digest(await read('fixtures/validation/relationship-gate-refresh.json')),usefulMappings:{postgresql:pg.rows.filter((r:any)=>r.status==='projected').reduce((n:number,r:any)=>n+r.mappings.length,0),sqlserver:sql.projected},versions:{postgresql:pg.serverVersion,sqlserver:sql.serverVersion,tablespec:get('tablespec-projection-native.json').nativeVersion,avro:get('avro-projection-native.json').versions,parquet:get('parquet-native.json').version,extras:get('extras/oracle.json').versions},proofHashes:refresh.proofHashes,sourceHashes:refresh.sourceHashes,browsers:Object.fromEntries(Object.entries(proofs).filter(([p])=>p.includes('browser')).map(([p,v])=>[p,v.checks??v.result])),usefulSystems:['postgresql','sqlserver']};
+ if(unqualified.length&&!options.allowUnqualifiedHistorical)throw new Error(`Historical relationship evidence has ${unqualified.length} unrecoverable source pins; current native qualification is UNQUALIFIED`);
+ return {refreshSha256:digest(await read('fixtures/validation/relationship-gate-refresh.json')),usefulMappings:{postgresql:pg.rows.filter((r:any)=>r.status==='projected').reduce((n:number,r:any)=>n+r.mappings.length,0),sqlserver:sql.projected},versions:{postgresql:pg.serverVersion,sqlserver:sql.serverVersion,tablespec:get('tablespec-projection-native.json').nativeVersion,avro:get('avro-projection-native.json').versions,parquet:get('parquet-native.json').version,extras:get('extras/oracle.json').versions},proofHashes:refresh.proofHashes,sourceHashes:refresh.sourceHashes,browsers:Object.fromEntries(Object.entries(proofs).filter(([p])=>p.includes('browser')).map(([p,v])=>[p,v.checks??v.result])),usefulSystems:['postgresql','sqlserver'],historicalQualification:unqualified.length?'PARTIALLY_REVALIDATED':'REVALIDATED',currentNativeQualification:unqualified.length?'UNQUALIFIED':'QUALIFIED',unqualified,revalidated,sourceFunctionalCurrent:{path:'scripts/core-ideals/relationship-current-base.ts',sha256:currentSources['scripts/core-ideals/relationship-current-base.ts']}};
 }

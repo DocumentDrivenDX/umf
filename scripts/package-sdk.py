@@ -3,7 +3,15 @@ from pathlib import Path
 import gzip, hashlib, io, json, tarfile
 
 output = Path('.cache/sdk-distribution')
-files = sorted(p for p in Path('dist').rglob('*') if p.is_file() and not p.name.startswith('._'))
+# Qualification builds also emit standalone adapter test bundles at dist root.
+# Only the two public entry bundles belong to the SDK; declarations, schemas
+# and optional backend resources retain their actual built directory inventory.
+entry_bundles = {'umf.js', 'umf.js.map', 'loader-contract.js'}
+export_directories = {'src', 'spec', 'postgresql', 'protobuf'}
+def exported(path):
+    relative = path.relative_to('dist')
+    return relative.name in entry_bundles if len(relative.parts) == 1 else relative.parts[0] in export_directories
+files = sorted(p for p in Path('dist').rglob('*') if p.is_file() and not p.name.startswith('._') and exported(p))
 required = ['dist/umf.js', 'dist/src/index.d.ts', 'dist/spec/extensions/actions/package.json',
             'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js']
 assert all(Path(p).is_file() for p in required), 'SDK build is incomplete'

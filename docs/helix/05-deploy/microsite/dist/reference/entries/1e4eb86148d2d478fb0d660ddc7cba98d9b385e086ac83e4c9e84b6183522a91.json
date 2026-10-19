@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 15962,
-        "line": 16,
+        "bytes": 15824,
+        "line": 15,
         "path": "src/model/key-tuple.ts",
-        "sha256": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8"
+        "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreKeyTupleReceipt",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreKeyTupleReceipt {operation:'encode-core-key-tuple';version:'3.0.0'|'4.0.0';profile:'umf-key-tuple-v1'|'umf-key-tuple-v2';source:Json;identity:CoreKeyIdentity;values:CoreKeyTupleValue[];keyPath:string;bytesHex:string}"
+      "export interface CoreKeyTupleReceipt {operation:'encode-core-key-tuple';version:'4.0.0';profile:'umf-key-tuple-v1'|'umf-key-tuple-v2';source:Json;identity:CoreKeyIdentity;values:CoreKeyTupleValue[];keyPath:string;bytesHex:string}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreKeyTupleReceipt\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 15962,
-      "line": 16,
+      "bytes": 15824,
+      "line": 15,
       "path": "src/model/key-tuple.ts",
-      "sha256": "5957d892802cfcfeb40d46a7ef4df767f8806261a74f0fb5a9276ecb2dcf3dd8"
+      "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
     }
   ],
   "summary": "Type declaration · src/model/key-tuple.ts",

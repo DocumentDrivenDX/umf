@@ -16,10 +16,10 @@ try{
    const r=u.projectCardinalityToAvro(c.author,c.request);if(canonical(r)!==canonical(c.expected))throw Error('Receipt parity');
    if(!r.nativeBundle){blocked++;continue;}projected++;
    const bundle=r.nativeBundle,record=c.request.namespace?c.request.namespace+'.'+c.request.recordName:c.request.recordName;
-   const initial=u.upgradeFieldEnvelope(u.importAvroSchema(bundle.schema,{id:'fresh-native',dependencies:bundle.dependencies})).target;
+   const initial=u.importAvroSchema(bundle.schema,{id:'fresh-native',dependencies:bundle.dependencies});
    const member=u.getAvroFieldMetadata(initial).find((f:any)=>f.record===record&&f.element.name===c.request.fieldName);if(!member)throw Error('Fresh field missing');
    const kind=u.classifyAvroField(initial,{column:member.element.id,nativeSource:bundle.schema,dependencies:bundle.dependencies,mode:'strict'});if(!kind.target)throw Error('Fresh field classification');
-   const source=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(kind.target).target).target;
+   const source=kind.target;
    const classified=u.classifyAvroCardinality(source,{column:member.element.id,nativeSource:bundle.schema,dependencies:bundle.dependencies,identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'report'});if(!classified.target)throw Error('Fresh shape classification');
    if(r.mapping.outcome==='exact')for(const pair of r.mapping.items){
     const parts=/^\/modules\/(\d+)\/elements\/(\d+)$/.exec(pair.idealPath);if(!parts)throw Error('Ideal path');

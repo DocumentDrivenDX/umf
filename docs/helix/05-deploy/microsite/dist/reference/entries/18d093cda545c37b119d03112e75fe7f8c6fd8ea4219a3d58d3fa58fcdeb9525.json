@@ -18,7 +18,7 @@
         },
         "validation": "semantic"
       },
-      "coreVersion": "0.1.0",
+      "coreVersion": "0.10.0",
       "description": "JSON Schema Draft 2020-12 syntax, scoped validation, and lossless-number native interchange",
       "id": "umf.json-schema",
       "schema": {
@@ -160,7 +160,7 @@
         "[\"api\",\".\",\"jsonSchemaRegistry\"]"
       ],
       "coreProfiles": [
-        "0.1.0"
+        "0.10.0"
       ],
       "mode": "explicit"
     },
@@ -178,9 +178,9 @@
   ],
   "sources": [
     {
-      "bytes": 3649,
+      "bytes": 3650,
       "path": "spec/extensions/json-schema/package.json",
-      "sha256": "4e55cfbe1816801d2002fb40d0fe1887833eb70b964d8fdb125f3830fe33feb8"
+      "sha256": "32bac6cf2a6fcb6d0f4367084f7e358887e263969f0b1697145abb0b413c4582"
     }
   ],
   "summary": "JSON Schema Draft 2020-12 syntax, scoped validation, and lossless-number native interchange",

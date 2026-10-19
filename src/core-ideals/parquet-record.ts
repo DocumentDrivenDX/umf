@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {inspectParquetContainers} from '../adapters/parquet/containers';
 import type {ParquetSchemaNode} from '../adapters/parquet/schema';
 import {copyJson} from '../model/json';
@@ -8,7 +9,7 @@ import {getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {exportParquetCapture} from '../adapters/parquet';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/parquet-record-classification.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/parquet-record-classification.schema.json';
 export {default as parquetRecordClassificationSchema} from '../../spec/core/parquet-record-classification.schema.json';
 export interface ParquetRecordRequest {recordModule:string;recordId:string;index:number;mode:'strict'|'report';authors?:CoreKindDeclaration[]}
 const binding={id:'umf.parquet.record',version:'1.0.0',nativeVersion:'parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017',subset:'Unannotated root/struct definitions after LIST/MAP interpretation; direct members only, no cardinality or value-domain equivalence'} as const;
@@ -17,11 +18,11 @@ export interface ParquetRecordClassification {
  operation:'classify-parquet-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetRecordRequest;binding:typeof binding;mappings:Mapping[];
  residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export function classifyParquetRecord(input:Document,options:ParquetRecordRequest):ParquetRecordClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as ParquetRecordRequest;
  if(!checkRequest(request))throw new UmfError('PARQUET_RECORD_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('PARQUET_RECORD_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('PARQUET_RECORD_VERSION','Valid current 0.10.0 envelope required');
  exportParquetCapture(source);
  const inspected=inspectParquetContainers(source),inventory=getParquetFieldMetadata(source);
  if(inspected.status!=='checked'||!inspected.tree||inventory.status!=='checked')throw new UmfError('PARQUET_RECORD_SCHEMA','Checked schema and container topology required');

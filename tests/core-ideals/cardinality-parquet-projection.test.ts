@@ -1,10 +1,10 @@
 import {test,expect} from 'bun:test';
-import {declareCoreCardinality,exportParquetCapture,readJsonValue,writeJsonValue,type Document,type Cardinality} from '../../src';
-import {projectCardinalityToParquet,recoverCardinalityFromParquet,type CardinalityParquetRequest,type ParquetCardinalityCarrier} from '../../src/core-ideals/cardinality-parquet-projection';
+import {declareCoreCardinality, exportParquetCapture, readJsonValue, writeJsonValue, type Document, type Cardinality} from '../../src';
+import {projectCardinalityToParquet, recoverCardinalityFromParquet, type CardinalityParquetRequest, type ParquetCardinalityCarrier} from '../../src/core-ideals/cardinality-parquet-projection';
 import {verifyParquetCardinalityComposition} from '../../scripts/core-ideals/cardinality-parquet-composition';
 const scalar:ParquetCardinalityCarrier={kind:'scalar',nativeType:'int64',nullable:false};
 const base:CardinalityParquetRequest={id:'projection',recordName:'Example',fieldName:'value',nativeType:scalar,availability:'definition-level',requireExactValues:false,mode:'strict'};
-const doc=():Document=>({umf:'0.4.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]});
+const doc=():Document=>({umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]});
 const author=(shape:Cardinality)=>declareCoreCardinality(doc(),{module:'m',element:'f'},{cardinality:shape});
 test('Parquet projection reports shape mismatch and unasserted item meaning, recovering every emitted ideal',()=>{
  const carriers:ParquetCardinalityCarrier[]=[scalar,{kind:'array',nullable:false,item:scalar},{kind:'map',nullable:false,keyType:'string',value:scalar}];

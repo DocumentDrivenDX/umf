@@ -1,0 +1,72 @@
+{"testProcess":"tests/core-ideals/key-native-roundtrips.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/key-native-roundtrips.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/key-native-roundtrips.test.ts:
+(pass) five-system native Key observations preserve unknown meanings and exact archives without author inference [30783.73ms]
+
+ 1 pass
+ 0 fail
+ 16 expect() calls
+Ran 1 test across 1 file. [35.03s]
+{"testProcess":"tests/core-ideals/key-native-roundtrips.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":16,"completeSummary":true,"logSha256":"0003353bc54697cd26458d8bf0eb0d1ba05e73ca63bb14af3f4269e47fe48fd2"}
+{"testProcess":"tests/core-ideals/key-parquet-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/key-parquet-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/key-parquet-projection.test.ts:
+(pass) Parquet authored Key: primary-strict [107.22ms]
+(pass) Parquet authored Key: primary-report [395.75ms]
+(pass) Parquet authored Key: no-primary-strict [80.27ms]
+(pass) Parquet authored Key: no-primary-report [357.68ms]
+(pass) Parquet authored Key: rename-and-reorder [359.09ms]
+(pass) Parquet authored Key: boolean [333.51ms]
+(pass) Parquet authored Key: decimal [343.72ms]
+(pass) Parquet authored Key: binary [317.49ms]
+(pass) Parquet authored Key: integer-width [321.06ms]
+(pass) Parquet authored Key: unsigned [325.94ms]
+(pass) Parquet authored Key: string-length [328.17ms]
+(pass) Parquet authored Key: binary-length [345.48ms]
+(pass) Parquet authored Key: compound-ordered [346.38ms]
+(pass) Parquet authored Key: multiple-alternates [366.60ms]
+(pass) Parquet authored Key: unknown-extension [324.99ms]
+(pass) Parquet authored Key: unknown-key-qualifier [330.71ms]
+(pass) Parquet authored Key: unknown-member-qualifier [289.99ms]
+(pass) Parquet authored Key: unknown-facet-qualifier [289.11ms]
+(pass) Parquet authored Key: family-conflict [66.35ms]
+(pass) Parquet authored Key: quoted-identifiers [284.77ms]
+(pass) Parquet authored Key: fixed-binary [289.69ms]
+(pass) Parquet authored Key: decimal-int32 [309.60ms]
+(pass) Parquet authored Key: decimal-bytes [294.93ms]
+(pass) Parquet authored Key: decimal-fixed [281.84ms]
+(pass) stable IDs and compound field ordering remain distinct from native field IDs [161.40ms]
+(pass) missing or stale authors, changed tuples, ownership conflicts and malformed physical mappings refuse [81.20ms]
+(pass) forged residuals, edited original bytes and getters cannot recover authorship [217.50ms]
+(pass) native-only reimport cannot reconstruct authored keys [246.14ms]
+37 | test('native generated-schema proof verifies actual types, duplicate writing and retained file bytes',async()=>{
+38 |  const {createHash}=await import('node:crypto'),proof=await Bun.file('fixtures/validation/key-parquet-projection-native.json').json(),corpus=await Bun.file('fixtures/validation/key-parquet-projection-corpus.json').json();expect(proof.runtime).toBe('PyArrow 21.0.0');expect(proof.rows.length).toBe(21);
+39 |  for(const row of proof.rows){expect(row.decoded[0]).toEqual(row.decoded[1]);expect(row.requiredNullRefused).toBeTruthy();expect(row.fields.every((f:any)=>f.definitionLevel===0&&f.repetitionLevel===0)).toBe(true);}
+40 |  expect(proof.rows.find((r:any)=>r.name==='fixed-binary').shortFixedRefused).toBeTruthy();
+41 |  expect(proof.rows.filter((r:any)=>r.inputTruncation).length).toBe(12);
+42 |  for(const [path,hash] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(recordedRepositoryPath(path)).arrayBuffer())).digest('hex')).toBe(hash as string);
+                                                                                                                                                                                          ^
+error: expect(received).toBe(expected)
+
+Expected: "8b7a7fd866c6db193d4378ae1ce826dcce3de3d5435b02d948ec39df9121dadf"
+Received: "7575a1019dd3e4c5af537c0e9c97b7204a7ac714ca043291b8a7f2a11c7fadbb"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/key-parquet-projection.test.ts:42:182)
+(fail) native generated-schema proof verifies actual types, duplicate writing and retained file bytes [5.74ms]
+
+1 tests failed:
+(fail) native generated-schema proof verifies actual types, duplicate writing and retained file bytes [5.74ms]
+
+ 28 pass
+ 1 fail
+ 320 expect() calls
+Ran 29 tests across 1 file. [8.22s]
+{"testProcess":"tests/core-ideals/key-parquet-projection.test.ts","exitCode":1,"pass":28,"fail":1,"assertions":320,"completeSummary":true,"logSha256":"53e328072df5bae481462f22d9f6a146d45850958fccb87cdf1c8199fad46b6d"}
+Complete test file failed or terminated: tests/core-ideals/key-parquet-projection.test.ts
+
+ 29 pass
+ 1 fail
+ 336 expect() calls
+Ran 30 tests across 2 files. [43.29s]

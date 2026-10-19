@@ -1,7 +1,7 @@
 {
   "id": "umf.tablespec.cardinality",
   "version": "1.0.0",
-  "coreVersion": "0.1.0",
+  "coreVersion": "0.10.0",
   "description": "Qualified TableSpec column shape observations with native refinements retained",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -50,7 +50,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-042; core 0.4.0 shape classification, not native replacement",
+  "semantics": "CONTRACT-040 and TD-042; shape classification, not native replacement",
   "scopes": [
     "element"
   ],

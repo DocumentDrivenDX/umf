@@ -1,6 +1,6 @@
 {
   "relational": {
-    "umf": "0.8.0",
+    "umf": "0.10.0",
     "id": "typed-access-relational",
     "vocabularies": {
       "umf.access": {
@@ -459,7 +459,7 @@
     ]
   },
   "propertyStore": {
-    "umf": "0.8.0",
+    "umf": "0.10.0",
     "id": "typed-access-engine",
     "vocabularies": {
       "umf.access": {
@@ -815,7 +815,7 @@
     ]
   },
   "binding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "typed-access-pg-binding",
     "vocabularies": {
       "umf.binding": {
@@ -828,7 +828,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "typed-access-relational",
-          "coreVersion": "0.8.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "postgresql",

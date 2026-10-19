@@ -1,8 +1,8 @@
 import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {avroKeyProjectionCases} from './key-avro-projection-cases';
-import {projectKeysToAvro,recoverKeysAvroIdeal} from '../../src/core-ideals/key-avro-projection';
-import {exportAvroSchema,importAvroSchema} from '../../src/adapters/avro';
+import {projectKeysToAvro, recoverKeysAvroIdeal} from '../../src/core-ideals/key-avro-projection';
+import {exportAvroSchema, importAvroSchema} from '../../src/adapters/avro';
 const cases=[];
 for(const c of avroKeyProjectionCases()){
  const r=projectKeysToAvro(c.source,c.authors,c.request);assert.equal(r.status,c.expected);if(r.status==='blocked')continue;

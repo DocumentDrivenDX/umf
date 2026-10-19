@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.7.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -256,7 +256,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.7.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -265,7 +265,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.7.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -319,7 +319,7 @@
         },
         "title": {
           "kind": "string",
-          "value": "Explicit authored Field to record-definition reference (Key envelope) (Relationship envelope)"
+          "value": "Core record type declaration receipt"
         },
         "type": {
           "kind": "string",
@@ -332,15 +332,15 @@
   "kind": "schema",
   "links": [
     "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/relationship-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 2048,
+      "bytes": 1993,
       "path": "spec/core/record-type-operation-v6.schema.json",
-      "sha256": "6b0e1c14e57ec1d921fd2717a7fd40d692538804e20857046c87f025b6fd2888"
+      "sha256": "2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d"
     }
   ],
   "summary": "spec/core/record-type-operation-v6.schema.json",
-  "title": "Explicit authored Field to record-definition reference (Key envelope) (Relationship envelope)"
+  "title": "Core record type declaration receipt"
 }

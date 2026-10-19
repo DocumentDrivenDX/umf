@@ -15,8 +15,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -35,13 +35,13 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/identity"
+        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/identity"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/value"
+        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/value"
       },
       {
         "keyword": "$ref",
@@ -85,8 +85,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -239,7 +239,7 @@
                       "members": {
                         "const": {
                           "kind": "string",
-                          "value": "3.0.0"
+                          "value": "4.0.0"
                         }
                       }
                     }
@@ -375,7 +375,7 @@
                               "members": {
                                 "$ref": {
                                   "kind": "string",
-                                  "value": "urn:umf:core:0.8.0#/$defs/literal"
+                                  "value": "urn:umf:core:0.10.0#/$defs/literal"
                                 }
                               }
                             }
@@ -631,7 +631,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/identity"
+                                              "value": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/identity"
                                             }
                                           }
                                         },
@@ -643,7 +643,7 @@
                                               "members": {
                                                 "$ref": {
                                                   "kind": "string",
-                                                  "value": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/value"
+                                                  "value": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/value"
                                                 }
                                               }
                                             },
@@ -1225,7 +1225,7 @@
                       "members": {
                         "const": {
                           "kind": "string",
-                          "value": "1.0.0"
+                          "value": "2.0.0"
                         }
                       }
                     }
@@ -1953,7 +1953,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.8.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -2039,14 +2039,14 @@
   "id": "[\"schema\",\"spec/core/dataset-value-compact-operation.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 13919,
+      "bytes": 13921,
       "path": "spec/core/dataset-value-compact-operation.schema.json",
-      "sha256": "b113553c04e1c25eeb5f19da0879d8273c1e34ed515126d751bc812424843caf"
+      "sha256": "89f502aa0cea1a75fba2ff586c795c875a980b96af3e01d3117538e9fe12e74e"
     }
   ],
   "summary": "spec/core/dataset-value-compact-operation.schema.json",

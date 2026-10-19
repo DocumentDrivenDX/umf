@@ -209,7 +209,7 @@ Declared license: "(Apache-2.0 AND BSD-3-Clause)"
    limitations under the License.
 
 
-## @documentdrivendx/umf-schema-browser@1.1.2
+## @documentdrivendx/umf-schema-browser@2.0.0
 
 Declared license: "(MIT OR Apache-2.0)"
 

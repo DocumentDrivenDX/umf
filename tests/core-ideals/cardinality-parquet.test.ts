@@ -1,9 +1,9 @@
 import {test,expect} from 'bun:test';
-import {importParquetSchema,exportParquetCapture,writeJsonValue,readJsonValue,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,validateDocument} from '../../src';
-import {classifyParquetCardinality,recoverParquetCardinalityBytes,type ParquetCardinalityRequest} from '../../src/core-ideals/cardinality-parquet';
+import {importParquetSchema, exportParquetCapture, writeJsonValue, readJsonValue, validateDocument} from '../../src';
+import {classifyParquetCardinality, recoverParquetCardinalityBytes, type ParquetCardinalityRequest} from '../../src/core-ideals/cardinality-parquet';
 const prepare=async(path:string)=>{
  const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());
- const source=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importParquetSchema(bytes,{id:path})).target).target).target;
+ const source=importParquetSchema(bytes,{id:path});
  const request:ParquetCardinalityRequest={index:1,identity:{module:'logical',element:'value'},profile:'present-value-schema',mode:'strict'};
  return {bytes,source,request};
 };
@@ -62,7 +62,7 @@ test('conflicts, forged receipts, stale targets and invalid input refuse without
  const forged=structuredClone(r);forged.mapping.nodes[0]!.shape='one';expect(()=>recoverParquetCardinalityBytes(forged,r.target!)).toThrow();
  const stale=structuredClone(r.target!);stale.modules.at(-1)!.elements[0]!.name='changed';expect(()=>recoverParquetCardinalityBytes(r,stale)).toThrow();
  for(const index of [0,-1,NaN,1.5,99999])expect(()=>classifyParquetCardinality(source,{...request,index})).toThrow();
- expect(()=>classifyParquetCardinality({...source,umf:'0.3.0'},request)).toThrow();
+ expect(()=>classifyParquetCardinality({...source,umf:'0.3.0'} as any,request)).toThrow();
  const invalid=await prepare('fixtures/parquet/containers/map-repeated-value.parquet');
  expect(()=>classifyParquetCardinality(invalid.source,{...invalid.request,mode:'report'})).toThrow('topology');
 });

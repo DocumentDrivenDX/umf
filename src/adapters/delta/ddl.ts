@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/delta-definition/package.json';
 import {deltaRegistry, exportDeltaSchema, importDeltaSchema} from './index';
 import {validateDocument} from '../../validation/document';
@@ -82,7 +83,7 @@ export function generateDeltaDDL(input:Document):{sql:string;definition:DeltaDef
   const validation=validateDocument(document,deltaRegistry().register(deltaDefinitionPackage));
   if(!validation.valid)throw new UmfError('DELTA_DDL_INVALID',JSON.stringify(validation.diagnostics));
   exact(document,['umf','id','vocabularies','modules','extensions']);
-  if(document.umf!=='0.1.0')fail('This definition profile requires core 0.1.0');
+  if(document.umf!==CURRENT_CORE_VERSION)fail('This definition profile requires core 0.1.0');
   exact(document.vocabularies,['umf.delta',DELTA_DEFINITION_EXTENSION]);
   for(const declaration of Object.values(document.vocabularies))exact(declaration,['version']);
   if(document.vocabularies[DELTA_DEFINITION_EXTENSION]?.version!=='0.1.0')fail('Missing or unknown definition version');

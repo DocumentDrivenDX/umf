@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -196,7 +196,7 @@
                   "members": {
                     "$ref": {
                       "kind": "string",
-                      "value": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+                      "value": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
                     }
                   }
                 },
@@ -940,7 +940,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.6.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -967,7 +967,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1041,15 +1041,14 @@
   "id": "[\"schema\",\"spec/core/key-tablespec-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7233,
+      "bytes": 7235,
       "path": "spec/core/key-tablespec-projection.schema.json",
-      "sha256": "019d38b819c9bc288f428e43e9974c71c6d0fb9033e69f1bc3d429a460c59d62"
+      "sha256": "6dec12eaa8835bfa798f617e55202ccaf453e164935d3e3b7bccf26dca9da600"
     }
   ],
   "summary": "spec/core/key-tablespec-projection.schema.json",

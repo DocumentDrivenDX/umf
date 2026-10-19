@@ -1,8 +1,9 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import {readDddDocument,writeDddDocument,projectDddToJsonSchema,exportJsonSchema,importJsonSchema,inspectDdd,coreSchema,type DddDocumentBindings} from '../../src';
 import reportSchema from '../../spec/projections/ddd-json-schema.schema.json';
-const checkReport=new Ajv2020({strict:false}).addSchema(coreSchema).compile(reportSchema);
+const checkReport=new Ajv2020({strict:false}).addSchema(reference).addSchema(coreSchema).compile(reportSchema);
 const text=await Bun.file('fixtures/ddd/sales.json').text();
 const options:DddDocumentBindings={id:'order-document',schemaId:'https://example.test/order-document',root:{module:'sales',element:'Order'},closedObjects:true,integer:'json-integer',decimal:'decimal-string',dateTime:'string',bytes:'hex-string',collection:'array',lossPolicy:'allow-reported-loss',relations:{'/sales/Order/fields/total':'embed','/sales/Order/fields/lines':'embed','/sales/Order/fields/shipping':'embed','/sales/Order/fields/customer':'identity','/sales/OrderLine/fields/price':'embed'}};
 const good={order_id:'o-1',total:{amount:'10.00',currency:'USD'},lines:[{line_id:'l-1',sku:'sku',quantity:1,price:{amount:'10.00',currency:'USD'}}],shipping:{street:'Main',city:'Town',postal_code:'10000'},customer:{customer_id:'c-1'}};

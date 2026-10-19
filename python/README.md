@@ -1,41 +1,50 @@
 # Official UMF Python support
 
-`umf-core` provides the `umf` import namespace. The canonical JSON Schemas in
-`spec/core` are packaged unchanged; Pydantic provides access models rather than
-a competing definition of the format. Consumer extension schemas and execution
+`umf-core` provides the `umf` import namespace for the current UMF language.
+The authored `spec/metamodel/umf.yaml` generates the packaged JSON Schemas,
+portable constraint programs and Python shape data. Pydantic provides access
+models; it does not define a competing format. Consumer extensions and execution
 policies remain in consumer repositories.
 
-Install from an UMF checkout with `pip install ./python`, or install a built
-wheel. Released wheels and source distributions are pinned in GitHub releases; PyPI publication requires a matching trusted-publisher configuration for the repository workflow.
+Install the qualified release wheel:
+
+```sh
+pip install https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.0/umf_core-0.9.0-py3-none-any.whl
+```
+
+For development, use `pip install ./python` from a checkout. PyPI publication
+is not configured; the GitHub release and its checksums identify the distributed
+wheel. The separately distributed experimental `umf_access` host adapter is
+not required to read or validate UMF documents.
 
 ```python
-from umf import Document, read_document, validate_document, write_document
+from umf import read_document, validate_document, write_document
 
-document = Document.model_validate(
-    {
-        "umf": "0.8.0",
-        "id": "orders",
-        "vocabularies": {},
-        "modules": [],
-    }
-)
+document = read_document('''
+umf: "0.10.0"
+id: orders
+vocabularies: {}
+modules: []
+''', format="yaml")
 result = validate_document(document)
 assert result.valid and result.complete
-assert read_document(write_document(document)).to_dict() == document.to_dict()
+# Unknown or unregistered extension meaning can instead make complete false.
+text = write_document(document, format="yaml")
+assert read_document(text, format="yaml").to_dict() == document.to_dict()
 ```
 
 Use canonical camelCase property names when constructing models. `to_dict()`
 preserves unknown content and field presence; `checked_copy()` revalidates
-mutable model state. Core document versions 0.1.0–0.8.0 have packaged structural
-schemas. Python semantic qualification currently covers identity, references,
-recognized scalar/role labels and explicit extension registration. Facets, keys,
-relationships and typed literal constraints are structurally checked and report
-unchecked semantics. This package does not claim full JavaScript API parity.
+mutable model state. Current APIs accept core 0.10.0; retired core dispatch and
+upgrade/rollback paths are removed. Structural checks and ordered core semantic
+constraints use generated data through bounded generic interpreters. Installed
+Python and TypeScript share 139 frozen conformance vectors; this is not a claim
+of parity for every TypeScript adapter or native execution API.
 
-Unknown registered versions and qualifiers remain serializable and make
-`complete` false. A consumer must refuse execution when it needs semantics that
-its own binding cannot interpret. Large integers and exact decimals use string
-token carriers; ordinary numeric values follow the portable JSON profile.
+Unknown vocabulary versions, labels and qualifiers remain serializable and
+make interpretation incomplete. Consumers must refuse execution when their
+binding cannot interpret required semantics. Exact numeric token carriers,
+UUID/128-bit carriers, explicit null and omission retain their separate meanings.
 
 Extensions register explicitly through `Registry` and `Extension` with exact
 versions, permitted scopes, a JSON Schema and optional semantic callback.
@@ -44,7 +53,7 @@ authorize loading code or fetching schemas. `schema_validator()` is reusable
 for consumer-owned schemas and honors their declared dialect.
 
 Run `python -m pytest python/tests` from the repository root. Build with
-`uv build --project python`. The source distribution includes the canonical
-schemas and supports building a wheel without the repository. After the Bun
-browser build, `bun scripts/python-conformance.ts <python executable>` checks
-the shared qualified subset in Chromium and replays Python JSON/YAML output.
+`uv build --project python`. The source distribution includes the current
+generated resources and supports building a wheel without the repository.
+Release checks install the actual wheel in an isolated environment, compare
+its packaged resource bytes and replay the shared core conformance corpus.

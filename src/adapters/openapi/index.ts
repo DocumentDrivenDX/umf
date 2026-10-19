@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {standaloneOpenapiObjectSchema as standalone} from './validation';
 import {inspectEmbeddedSchemas} from './schemas';
 import AjvDraft04 from 'ajv-draft-04';
@@ -65,7 +66,7 @@ function payload(document:Document):OpenapiPayload {
 export function importOpenapiDocument(text:string,options:{id:string;format:'json'|'yaml';baseUri?:string;resources?:{uri:string;text:string;format:'json'|'yaml'}[]}):Document {
  if(!['json','yaml'].includes(options.format))throw new UmfError('OPENAPI_FORMAT','Explicit JSON or YAML format is required');
  const value:OpenapiPayload={profile:'openapi-json-yaml-0.1',root:parse(text,options.format),originalSource:text,originalFormat:options.format,...(options.baseUri?{baseUri:documentUri(options.baseUri)}:{}),...(options.resources?{resources:options.resources.map(r=>({uri:documentUri(r.uri),root:parse(r.text,r.format),originalSource:r.text,originalFormat:r.format}))}:{})};
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[OPENAPI_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[OPENAPI_EXTENSION]:value as unknown as Json}}]}]};payload(doc);return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[OPENAPI_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[OPENAPI_EXTENSION]:value as unknown as Json}}]}]};payload(doc);return doc;
 }
 function documentUri(uri:string):string {try{const url=new URL(uri);if(url.hash||uri.includes('#'))throw new Error('Document URI cannot contain a fragment');return url.href;}catch(error){throw new UmfError('OPENAPI_RESOURCE_URI',String(error));}}
 function emit(p:Pick<OpenapiResource,'root'|'originalSource'|'originalFormat'>,format?:'json'|'yaml'):string {

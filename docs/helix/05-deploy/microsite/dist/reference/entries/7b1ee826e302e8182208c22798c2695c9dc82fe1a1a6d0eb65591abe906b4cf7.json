@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/keyFieldReference"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/keyFieldReference"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/keyFieldReference"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/keyFieldReference"
       }
     ],
     "role": "other",
@@ -119,7 +119,7 @@
                                   "members": {
                                     "$ref": {
                                       "kind": "string",
-                                      "value": "urn:umf:core:0.9.0#/$defs/keyFieldReference"
+                                      "value": "urn:umf:core:0.10.0#/$defs/keyFieldReference"
                                     }
                                   }
                                 },
@@ -203,7 +203,7 @@
                                   "members": {
                                     "$ref": {
                                       "kind": "string",
-                                      "value": "urn:umf:core:0.9.0#/$defs/keyFieldReference"
+                                      "value": "urn:umf:core:0.10.0#/$defs/keyFieldReference"
                                     }
                                   }
                                 },
@@ -382,7 +382,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -444,13 +444,13 @@
   "id": "[\"schema\",\"spec/core/record-members-inspection-v0.3.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 2984,
+      "bytes": 2987,
       "path": "spec/core/record-members-inspection-v0.3.schema.json",
-      "sha256": "74ae6d494207469f8e62ed4b1d72f69ac947f2dc559806221d2c7187f4781fe3"
+      "sha256": "1f5d95cd75717b3f55a06b51656cbe25b8aa2dd167730f84b67a484cb2f5d5f9"
     }
   ],
   "summary": "spec/core/record-members-inspection-v0.3.schema.json",

@@ -3,7 +3,7 @@ import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import * as u from '../../src';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
-import {projectFacetsToParquet,recoverFacetsFromParquet} from '../../src/core-ideals/facets-parquet-projection';
+import {projectFacetsToParquet, recoverFacetsFromParquet} from '../../src/core-ideals/facets-parquet-projection';
 const hash=async(path:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex');
 const native=await Bun.file('fixtures/validation/facets-parquet-projection-native.json').json();
 for(const [path,sha] of Object.entries(native.sha256))assert.equal(await hash(path),sha,'Stale native evidence: '+path);
@@ -15,7 +15,7 @@ for(const row of parquetFacetProjectionCases()){
  const emitted=targets.find((r:any)=>r.id===row.id);assert.ok(emitted);const bytes=u.exportParquetCapture(projection.target!);assert.deepEqual(new Uint8Array(await Bun.file(emitted.path).arrayBuffer()),bytes);
  const family=row.author.target.modules[0]!.elements[0]!.scalarType as u.ScalarType;
  const imported=u.importParquetSchema(bytes,{id:'composition'});
- const source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(imported).target).target).target).target;
+ const source=imported;
  source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType:family,extensions:{}}]});
  const classification=u.classifyParquetFacets(source,{location:{index:1,scope:'present-non-null-leaf'},identity:{module:'logical',element:'value'},mode:'report',profile:'declared-schema',obligation:row.request.obligation});assert.equal(classification.status,'classified');
  assert.deepEqual(u.exportParquetCapture(classification.target!),bytes);

@@ -5,8 +5,8 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -206,7 +206,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.8.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -450,13 +450,13 @@
   "id": "[\"schema\",\"spec/core/csv-boolean-lexical-operation.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 2849,
+      "bytes": 2850,
       "path": "spec/core/csv-boolean-lexical-operation.schema.json",
-      "sha256": "1c07d500c8dd6732ce814bdfb04a532a8df313c0df188f369faf7fcf0b2b85b0"
+      "sha256": "6548b442849a2a1246ea860ca5be22eecd98596c571d9c0b74ce1eba7780b791"
     }
   ],
   "summary": "spec/core/csv-boolean-lexical-operation.schema.json",

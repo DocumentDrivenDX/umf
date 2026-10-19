@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -293,7 +293,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -530,7 +530,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -610,9 +610,9 @@
   ],
   "sources": [
     {
-      "bytes": 3819,
+      "bytes": 3821,
       "path": "spec/extensions/parquet/arrow-rename.schema.json",
-      "sha256": "449633a5e68e67024cee83115ad1872961bfe150e1d09accff1f3309c7429464"
+      "sha256": "4e4f4b86269faff03c4cede4790fd5fd0e9fbc39e5ddb0203fd373fda626baa5"
     }
   ],
   "summary": "spec/extensions/parquet/arrow-rename.schema.json",

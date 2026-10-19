@@ -1,0 +1,49 @@
+{
+  "id": "umf.sdk-integrated-0.5-candidate",
+  "createdAt": "2026-10-18T21:36:39.593361+00:00",
+  "sdkVersion": "0.5.0",
+  "runtime": "Bun1.4.2",
+  "qualification": "Local installed integration candidate only; not published, clean-producer or final consumer-pin-B qualification. Root consumer dependency still pins schema-browser1.1.2. Final package must rebuild after reviewed immutable renderer2 publication/consumerpin and final native closure qualification.",
+  "archive": {
+    "path": ".cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "1258bcd2f6fd22f11e584314000ca1e754155f3244f66b16d97a472948b76e99",
+    "files": 1739
+  },
+  "installedProbe": {
+    "passed": true,
+    "distributionFiles": 1739,
+    "currentConformanceCases": 139,
+    "newUnifiedPublicGenerator": true,
+    "singleInstall": true,
+    "bundledActions": true,
+    "loaderEntrypoint": true,
+    "opaqueMeaningRemainsUnchecked": true,
+    "dependencyScripts": "intentionally ignored; no dependency postinstall ran"
+  },
+  "build": {
+    "source": true,
+    "postgresql": true,
+    "protobuf": "Go1.27.1",
+    "standaloneHarnesses": 12
+  },
+  "initialAttempt": "Sandboxed Bun extraction could not write its temp state; test did not start. Authorized local-cache/temp-access retry passed. Initial diagnostic retained.",
+  "sourceSha256": {
+    "package.json": "52e99cb101e96dd5adb7a97b165a552ae8109650bc18d591c088c01f13c5c998",
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
+    "src/index.ts": "ea98f0bfc758d0561647583be4f9c0e824d2e5461d51cfbe455be786d6ba9602",
+    "src/access/index.ts": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd",
+    "src/extensions/actions/plan-identity.ts": "a82c096aeee3af97fa6988844c7bffdd58f4a549d8233486c070f9eaeed70afc",
+    "scripts/package-sdk.ts": "f4e7c96794d0057e176a9aab46ba25d407812276a3d21b79871e3238a3407be4",
+    "scripts/package-sdk.py": "b06cf488add1cdbb6a1aedc5eb6bbcdf028f5a0976e8ccdcc5b04ede76fa8c92",
+    "scripts/test-sdk-install.ts": "c31203f204e34bb14fdf40b2a7452e76332535f14801b9ce1098df0386700411"
+  },
+  "logs": {
+    "build.log": "2551e14d9ccd553a449756f40f2743c50c8a6052b68c3193046d2da3f97a0719",
+    "postgresql.log": "9e817038787aa388d477ba020d9bd554d56b596a14f09dffdd29314187e00471",
+    "protobuf.log": "54de77e721200d5966117e17fcba4afefb77cd7f573270ff4ff9243d8d9bdb22",
+    "prerequisites.log": "897ee7702aee09aef94dbdfac5d6ac6c3d1233e1ada10683435db76443e97d9f",
+    "package.log": "70a02d1e4663227d24f802b31b8cb7757a7fe4cc68fd4118ad6892439315e315",
+    "installed.log": "9899b1fc143faf6f78bf17c3719968db836357b6fc119630c59c15a43cabf6d6",
+    "initial-sandbox-temp-refusal.log": "54985ba42f70536602f5a1d67d5822d6e4eec259e898b926348a1b6c22270fd8"
+  }
+}

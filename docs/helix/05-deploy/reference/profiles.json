@@ -2,44 +2,8 @@
   "profile": "umf.reference.profiles/1",
   "coreProfiles": [
     {
-      "version": "0.1.0",
-      "schemaPath": "spec/core/schema.json"
-    },
-    {
-      "version": "0.2.0",
-      "schemaPath": "spec/core/field-document.schema.json"
-    },
-    {
-      "version": "0.3.0",
-      "schemaPath": "spec/core/nullability-document.schema.json"
-    },
-    {
-      "version": "0.4.0",
-      "schemaPath": "spec/core/cardinality-document.schema.json"
-    },
-    {
-      "version": "0.5.0",
-      "schemaPath": "spec/core/facet-document.schema.json"
-    },
-    {
-      "version": "0.6.0",
-      "schemaPath": "spec/core/key-document.schema.json"
-    },
-    {
-      "version": "0.7.0",
-      "schemaPath": "spec/core/relationship-document.schema.json"
-    },
-    {
-      "version": "0.8.0",
-      "schemaPath": "spec/core/schema-properties-document.schema.json"
-    },
-    {
-      "version": "0.9.0",
-      "schemaPath": "spec/core/bit128-document.schema.json"
-    },
-    {
       "version": "0.10.0",
-      "schemaPath": "spec/core/semantic-types-document.schema.json"
+      "schemaPath": "spec/core/schema.json"
     }
   ],
   "registrations": [
@@ -52,7 +16,7 @@
         "registerActions"
       ],
       "coreProfiles": [
-        "0.8.0"
+        "0.10.0"
       ]
     },
     {
@@ -63,7 +27,7 @@
         "dddRegistry"
       ],
       "coreProfiles": [
-        "0.1.0"
+        "0.10.0"
       ]
     },
     {
@@ -74,7 +38,7 @@
         "jsonSchemaRegistry"
       ],
       "coreProfiles": [
-        "0.1.0"
+        "0.10.0"
       ]
     },
     {
@@ -85,7 +49,7 @@
         "protobufRegistry"
       ],
       "coreProfiles": [
-        "0.1.0"
+        "0.10.0"
       ]
     },
     {

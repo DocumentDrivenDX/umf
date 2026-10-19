@@ -21,7 +21,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -1178,7 +1178,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1253,9 +1253,9 @@
   ],
   "sources": [
     {
-      "bytes": 9449,
+      "bytes": 9450,
       "path": "spec/extensions/typespec/semantic-graph.schema.json",
-      "sha256": "bd1faa5f3f173bcac232ccdf5a9dbab4aaf76ab536066279528d6c6aa0c4ff30"
+      "sha256": "83496e6527e679a631a3f63e7e7cd87dbbd9061bef07e4b96dd9eaffc0737d35"
     }
   ],
   "summary": "spec/extensions/typespec/semantic-graph.schema.json",

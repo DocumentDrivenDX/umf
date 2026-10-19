@@ -28,8 +28,8 @@ test('all discovery inputs retain exact native text through both envelope serial
  expect(rows).toHaveLength(44);
  for(const row of rows){
   const original=u.importTableSpec(row.sourceText,{id:'facet-discovery:'+row.case,format:'json'});
-  let doc=u.upgradeFieldEnvelope(original).target;doc=u.upgradeNullabilityEnvelope(doc).target;doc=u.upgradeCardinalityEnvelope(doc).target;doc=u.upgradeFacetEnvelope(doc).target;
-  expect(doc.umf).toBe('0.5.0');expect(doc.extensions).toEqual(original.extensions);expect(doc.modules[0]!.elements[0]!.facets).toBeUndefined();
+  let doc=original;
+  expect(doc.umf).toBe('0.10.0');expect(doc.extensions).toEqual(original.extensions);expect(doc.modules[0]!.elements[0]!.facets).toBeUndefined();
   for(const format of ['json','yaml'] as const){const recovered=u.readDocument(u.writeDocument(doc,format),format);expect(u.exportTableSpec(recovered)).toBe(row.sourceText);}
  }
 });

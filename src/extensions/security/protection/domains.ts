@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../../generated/core-model';
 import {ProtectionFieldIndex} from './core-fields';
 /** Qualified core-definition closure; no function compatibility or native admission. */
 import schema from '../../../../spec/extensions/security-protection/domain-resolution.schema.json';
@@ -54,8 +55,8 @@ export function resolveSecurityProtectionDomains(policyInput:unknown,catalogInpu
  }
  for(const [i,entry] of resolved.documents.entries()){
   const at=`/closure/documents/${i}`,validation=validateDocument(entry.document);
-  if(entry.document.umf!=='0.8.0'||!validation.valid||!validation.complete){
-   add('PROTECTION_DOMAIN_DOCUMENT',at,'Known complete core0.8 document required');
+  if(entry.document.umf!==CURRENT_CORE_VERSION||!validation.valid||!validation.complete){
+   add('PROTECTION_DOMAIN_DOCUMENT',at,'Known complete current core document required');
    for(const d of validation.diagnostics)diagnostics.push({...d,path:at+'/document'+d.path});
   }
   if(!pins.has(entry.document.id)||pins.get(entry.document.id)!==entry.revision||documents.has(entry.document.id))add('PROTECTION_DOMAIN_PIN',at,'Unpinned, stale or duplicate document');

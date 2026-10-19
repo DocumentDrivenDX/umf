@@ -1,10 +1,11 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Element} from '../model/types';
 import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,getPostgresqlNode,type PostgresqlBackend} from '../adapters/postgresql';
 import {getPostgresqlDdlDeclarations} from '../adapters/postgresql/declarations';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import schema from '../../spec/core/postgresql-ddl-kinds.schema.json';
+import legacy from '../../spec/core/schema.json';import schema from '../../spec/core/postgresql-ddl-kinds.schema.json';
 export {default as postgresqlDdlKindsSchema} from '../../spec/core/postgresql-ddl-kinds.schema.json';
 export interface PostgresqlDdlKindRequest {module:string;recordId:string;declaration:string;mode:'strict'|'report'}
 const binding={id:'umf.postgresql.ddl.record',version:'1.0.0',nativeVersion:'17.4',subset:'Explicit CREATE TABLE declaration only; no catalog expansion or statement replay'} as const;
@@ -14,12 +15,12 @@ export interface PostgresqlDdlKinds {
  mappings:{origin:'classified';kind:'field'|'record';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-raw-column-declaration'|'checked-raw-table-declaration'|'checked-raw-composite-declaration';outcome:'exact'|'unknown'}[];
  residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+canonical(value[key]!)).join(',')+'}':JSON.stringify(value);
 export async function classifyPostgresqlDdlRecord(input:Document,options:PostgresqlDdlKindRequest,backend:PostgresqlBackend):Promise<PostgresqlDdlKinds>{
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as PostgresqlDdlKindRequest;
  if(!checkRequest(request))throw new UmfError('POSTGRESQL_DDL_KIND_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('POSTGRESQL_DDL_KIND_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('POSTGRESQL_DDL_KIND_VERSION','Valid current 0.10.0 envelope required');
  await exportPostgresqlSql(source,backend);
  const original=await importPostgresqlSql(getPostgresqlSource(source),backend,{id:'archive-check'});
  if(canonical(copyJson(getPostgresqlNode(original,'')))!==canonical(copyJson(getPostgresqlNode(source,''))))throw new UmfError('POSTGRESQL_DDL_KIND_ARCHIVE','Source archive differs from edited AST; reimport reviewed native text before classification');

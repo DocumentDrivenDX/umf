@@ -1,10 +1,10 @@
 import {recordedRepositoryPath} from '../helpers/recorded-repository-path';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {classifyParquetKeys,verifyParquetKeyClassification,recoverParquetKeySource} from '../../src/core-ideals/key-parquet';
+import {classifyParquetKeys, verifyParquetKeyClassification, recoverParquetKeySource} from '../../src/core-ideals/key-parquet';
 import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
-import {captureParquet,exportParquetCapture} from '../../src/adapters/parquet';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {captureParquet, exportParquetCapture} from '../../src/adapters/parquet';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const proof=await Bun.file('fixtures/validation/key-parquet-discovery-native.json').json();
 for(const row of proof.cases)test('Parquet Key observation: '+row.id,async()=>{
  const bytes=new Uint8Array(await Bun.file(row.path).arrayBuffer()),source=row.expectedSchema==='blocked'?captureParquet(bytes,{id:row.id}):importParquetSchema(bytes,{id:row.id}),before=JSON.stringify(source);

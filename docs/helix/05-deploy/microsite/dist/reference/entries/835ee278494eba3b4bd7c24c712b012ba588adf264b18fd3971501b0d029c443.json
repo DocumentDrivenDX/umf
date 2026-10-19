@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -2320,7 +2320,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -2369,9 +2369,9 @@
   ],
   "sources": [
     {
-      "bytes": 23073,
+      "bytes": 23074,
       "path": "spec/extensions/owl/expression-schema.json",
-      "sha256": "01722874752c9fd69a375033e68aa8c83f40dbe886747d89c5b8c137fcc9654a"
+      "sha256": "ceb1bf0c9d65a5811ef7677f851c90180bd1ada2ab823d1eaba7c89bdc968e4d"
     }
   ],
   "summary": "spec/extensions/owl/expression-schema.json",

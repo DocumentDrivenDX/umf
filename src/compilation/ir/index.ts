@@ -1,10 +1,11 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Public data boundary shared by admission, bundle and Python target. */
 export interface Ref {module:string;element:string}
 export interface AccessDiagnostic {code:string;sourceId:string;pointer:string;message:string;accessCode?:string}
 export interface Disposition {id:string;sourceId:string;pointer:string;assertion:string;relevance:'selected'|'dependency'|'unselected';fidelity:'exact'|'approximated'|'not-expressible'|'unknown';checks:('client'|'database'|'engine'|'informational')[];reason:string;obligationIds:string[]}
 export interface Obligation {id:string;owner:'host'|'database'|'engine'|'catalog'|'qualifier';description:string;dispositionIds:string[]}
 export interface AccessSource {id:string;format:'json'|'yaml';text:string}
-export interface AccessRequest {contract:'umf-access-generate/0.1';sources:AccessSource[];logical:string;bindings:string[];records:Ref[];actions:{module:string;action:string}[];projections:{name:string;record:Ref;fields:Ref[]}[];package:string;names:{sourceId:string;pointer:string;python:string}[];mode:'strict'|'report';profileId:string;profileVersion:string;coreVersion:'0.8.0'}
+export interface AccessRequest {contract:'umf-access-generate/0.1';sources:AccessSource[];logical:string;bindings:string[];records:Ref[];actions:{module:string;action:string}[];projections:{name:string;record:Ref;fields:Ref[]}[];package:string;names:{sourceId:string;pointer:string;python:string}[];mode:'strict'|'report';profileId:string;profileVersion:string;coreVersion:typeof CURRENT_CORE_VERSION}
 export interface AccessProfile {id:string;version:string;compilerVersion:string;coreVersions:string[];vocabularies:{id:string;version:string}[];python:{version:string};dependencies:{distribution:string;version:string}[];checkers:{name:string;version:string;configuration:Record<string,unknown>}[];reservedNames:string[];importedNames:string[];assertionKinds:string[];subset:string;codeSha256:string}
 export interface GeneratedFile {path:string;text:string;sha256:string}
 export interface AccessSymbol {sourceId:string;pointer:string;path:string;symbol:string;role:'row'|'create'|'patch'|'update'|'key'|'projection'|'fields'|'search'|'action-ref'|'action-input'|'action-output'|'action-failure'|'action-client'|'action-committed'|'codec'}

@@ -230,8 +230,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -4602,7 +4602,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -4813,13 +4813,13 @@
   "id": "[\"schema\",\"spec/core/bit128-selection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 33919,
+      "bytes": 33920,
       "path": "spec/core/bit128-selection.schema.json",
-      "sha256": "db9ae63d0d647f544caed064fe80b68d208246c3a77fafc9be9f00ed59652c5f"
+      "sha256": "2ae3a359b46bc7bf82dcdc8098ae46f60bfb64bba5bd4acb1b0e6ded4eee5442"
     }
   ],
   "summary": "spec/core/bit128-selection.schema.json",

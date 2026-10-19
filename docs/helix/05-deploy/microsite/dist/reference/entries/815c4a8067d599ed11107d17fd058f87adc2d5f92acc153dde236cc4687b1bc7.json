@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7155,
-        "line": 28,
+        "bytes": 7183,
+        "line": 29,
         "path": "src/model/schema-properties.ts",
-        "sha256": "92642cbd9cc44d0fbe9a12fe2aeb5e025a5908e39a9080f3fc80f2ae1393b876"
+        "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectCoreSchemaProperties",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identity: CoreSchemaPropertyIdentity): { operation: \"inspect-core-schema-properties\"; version: \"1.0.0\" | \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }"
+      "(input: Document, identity: CoreSchemaPropertyIdentity): { operation: \"inspect-core-schema-properties\"; version: \"2.0.0\"; source: Document; identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }; path: string; properties: Record<string, Json>; diagnostics: Diagnostic[]; provenance: \"unverified\"; }"
     ]
   },
   "id": "[\"api\",\".\",\"inspectCoreSchemaProperties\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7155,
-      "line": 28,
+      "bytes": 7183,
+      "line": 29,
       "path": "src/model/schema-properties.ts",
-      "sha256": "92642cbd9cc44d0fbe9a12fe2aeb5e025a5908e39a9080f3fc80f2ae1393b876"
+      "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
     }
   ],
   "summary": "Public export · src/model/schema-properties.ts",

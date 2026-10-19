@@ -125,8 +125,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -3066,7 +3066,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.6.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -3277,13 +3277,13 @@
   "id": "[\"schema\",\"spec/core/key-selection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 23536,
+      "bytes": 23537,
       "path": "spec/core/key-selection.schema.json",
-      "sha256": "1f7dd4aafe576d5d56e8632d954f33776ab25b462a46ab3eebe5c8f425c195a4"
+      "sha256": "c3aef95bdb7b0134b8d52076e2d82394f656fde41f0da092af54aa052d1747f3"
     }
   ],
   "summary": "spec/core/key-selection.schema.json",

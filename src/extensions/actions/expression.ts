@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {validateDocument} from '../../validation/document';
 import {admitAction,checkActionLiteral} from './structure';
@@ -42,7 +43,7 @@ function identifier(value:unknown,path:string):string {
 }
 export function compileActionRule(documentInput:Document,actionInput:Action,ruleInput:ActionRule,phase:ActionRulePhase):CompiledActionRule {
  const document=copyJson(documentInput) as unknown as Document,action=copyJson(actionInput) as unknown as Action,rule=copyJson(ruleInput) as unknown as ActionRule;
- admitAction(action);exactActionReferences(action);if(document.umf!=='0.8.0'||!validateDocument(document).valid)actionExpressionError('ACTION_RULE_SOURCE','Expected valid exact core 0.8.0 document');
+ admitAction(action);exactActionReferences(action);if(document.umf!==CURRENT_CORE_VERSION||!validateDocument(document).valid)actionExpressionError('ACTION_RULE_SOURCE','Expected valid exact core 0.10.0 document');
  for(const list of [action.parameters,action.outputs,[...action.reads,...action.writes]])if(new Set(list.map(entry=>entry.id)).size!==list.length)actionExpressionError('ACTION_RULE_SYNTAX','Duplicate declaration identity is ambiguous');
  if(phase!=='pre'&&phase!=='post')actionExpressionError('ACTION_RULE_PHASE','Expected pre/post phase');
  if(rule.language!=='umf.actions.rules'||rule.version!=='1')actionExpressionError('ACTION_RULE_PROFILE','Unsupported exact rule language/version');

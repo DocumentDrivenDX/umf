@@ -1,6 +1,7 @@
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {type Document} from '../src/model/types';
 export function schemaPropertiesFixture():Document {
- return {umf:'0.8.0',id:'schema-properties',vocabularies:{},title:'Orders',aliases:['sales'],modules:[{id:'m',namespace:'sales',title:'Sales',aliases:['commerce'],elements:[
+ return {umf:CURRENT_CORE_VERSION,id:'schema-properties',vocabularies:{},title:'Orders',aliases:['sales'],modules:[{id:'m',namespace:'sales',title:'Sales',aliases:['commerce'],elements:[
   {id:'quantity',name:'quantity',kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{},facets:{integerWidth:{bits:64,signed:true}},title:'Quantity',aliases:['qty'],examples:[{integerToken:'3'}],allowedValues:[{integerToken:'1'},{integerToken:'2'}],default:{value:{integerToken:'1'},on:'missing'},},
   {id:'price',kind:'field',scalarType:'decimal',nullability:'required',extensions:{},facets:{precision:20,scale:2,range:{min:{decimalToken:'0.01'},max:{decimalToken:'999999999999999999.99'}}},examples:[{decimalToken:'1.20'}],default:{value:{decimalToken:'1.20'},on:'missing-or-null'}},
   {id:'label',kind:'field',scalarType:'string',nullability:'absent-allowed',extensions:{},facets:{length:{min:1,max:3,unit:'unicode-scalar'}},examples:[{string:'😀'}],default:{value:{string:'new'},on:'null'}},
@@ -40,7 +41,7 @@ export function schemaPropertiesCases(){
   ['decimal-scale2','decimal',{precision:2,scale:2},'-0.99','0.99'],
  ] as const)for(const end of ['min','max'] as const)for(const inclusive of [false,true]){
   const wrapper=scalarType==='integer'?'integerToken':'decimalToken';
-  rows.push({id:`${profile}-${end}-domain-extreme-${inclusive?'inclusive':'exclusive'}`,valid:inclusive,document:{umf:'0.8.0',id:'numeric-boundary',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,extensions:{},facets:{...facets,range:{[end]:{[wrapper]:end==='min'?max:min},[end+'Inclusive']:inclusive}}}]}]}});
+  rows.push({id:`${profile}-${end}-domain-extreme-${inclusive?'inclusive':'exclusive'}`,valid:inclusive,document:{umf:CURRENT_CORE_VERSION,id:'numeric-boundary',vocabularies:{},modules:[{id:'m',namespace:'n',elements:[{id:'f',kind:'field',scalarType,extensions:{},facets:{...facets,range:{[end]:{[wrapper]:end==='min'?max:min},[end+'Inclusive']:inclusive}}}]}]}});
  }
  return rows;
 }

@@ -3,7 +3,7 @@ import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} 
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {exportSqlServerCatalog,getSqlServerConstraintMetadata,getSqlServerColumnMetadata} from '../adapters/sqlserver';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import relationships from '../../spec/core/relationship-document.schema.json';
+import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/sqlserver-relationship-classification.schema.json';import manifest from '../../spec/extensions/sqlserver-relationships/package.json';
 export const SQLSERVER_RELATIONSHIPS_EXTENSION='umf.sqlserver.relationships';export const sqlserverRelationshipsPackage=manifest as unknown as ExtensionPackage;
 export {default as sqlserverRelationshipClassificationSchema} from '../../spec/core/sqlserver-relationship-classification.schema.json';
@@ -11,7 +11,7 @@ export interface SqlServerRelationshipRequest {nativeSource:string;mode:'strict'
 export interface SqlServerRelationshipObservation {nativePath:string;table:{schema:string;name:string};name:string;nativeForeignKey:Json;referencedKeys:{path:string;nativeKey:Json}[];sourceFields:{module:string;element:string}[];targetFields:{module:string;element:string}[];enforcement:'enabled-trusted'|'enabled-untrusted'|'disabled'|'unknown';authorIntent:'unknown';provenance:'inferred';deleteAction:string;updateAction:string;notForReplication:boolean;resolution:'captured-tuple-candidate'|'unresolved'}
 const binding=schema.properties.binding.const;
 export interface SqlServerRelationshipClassification {operation:'classify-sqlserver-relationships';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerRelationshipRequest;binding:typeof binding;observations:SqlServerRelationshipObservation[];residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible'|'approximated';recovery:string}[];diagnostics:Diagnostic[]}
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,relationships])validator.addSchema(s);const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
+const validator=createValidator(false);for(const s of [legacy])validator.addSchema(s);const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));
 /** Permission-limited catalog observations; trust flags never establish authored relationship meaning. */
 export function classifySqlServerRelationships(input:Document,options:SqlServerRelationshipRequest):SqlServerRelationshipClassification {

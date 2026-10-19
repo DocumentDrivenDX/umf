@@ -5,28 +5,28 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/key"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/key"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/key"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/key"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/key"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/key"
       },
       {
         "keyword": "$ref",
@@ -266,7 +266,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:0.9.0#/$defs/key"
+                                              "value": "urn:umf:core:0.10.0#/$defs/key"
                                             }
                                           }
                                         },
@@ -354,7 +354,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:0.9.0#/$defs/key"
+                                              "value": "urn:umf:core:0.10.0#/$defs/key"
                                             }
                                           }
                                         },
@@ -461,7 +461,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.9.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -822,7 +822,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.9.0#/$defs/key"
+                          "value": "urn:umf:core:0.10.0#/$defs/key"
                         }
                       }
                     },
@@ -858,7 +858,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.9.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -1051,13 +1051,13 @@
   "id": "[\"schema\",\"spec/core/key-operation-v4.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7385,
+      "bytes": 7390,
       "path": "spec/core/key-operation-v4.schema.json",
-      "sha256": "dd087b5e26a92dd6ee5366ded216a006ed4ef5e7b31e851890fd81d978606ba1"
+      "sha256": "f9306a891b4f0f9f180160144109e05b42e05e8868dcc84fc301f5819c63519f"
     }
   ],
   "summary": "Structural validation does not prove author intent or native enforcement. Recompute receipts and validate their current source/target context before trusting operation results.",

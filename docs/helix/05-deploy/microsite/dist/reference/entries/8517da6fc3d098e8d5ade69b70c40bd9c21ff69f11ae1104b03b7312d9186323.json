@@ -15,8 +15,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -35,18 +35,18 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/identity"
+        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/identity"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/value"
+        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/value"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -80,8 +80,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.8.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -100,8 +100,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-tuple-operation:3.0.0"
+        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-tuple-operation:4.0.0"
       },
       {
         "keyword": "$ref",
@@ -110,8 +110,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-tuple-operation:3.0.0"
+        "resolvedId": "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-tuple-operation:4.0.0"
       },
       {
         "keyword": "$ref",
@@ -214,7 +214,7 @@
                               "members": {
                                 "$ref": {
                                   "kind": "string",
-                                  "value": "urn:umf:core:0.8.0#/$defs/literal"
+                                  "value": "urn:umf:core:0.10.0#/$defs/literal"
                                 }
                               }
                             }
@@ -470,7 +470,7 @@
                                           "members": {
                                             "$ref": {
                                               "kind": "string",
-                                              "value": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/identity"
+                                              "value": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/identity"
                                             }
                                           }
                                         },
@@ -482,7 +482,7 @@
                                               "members": {
                                                 "$ref": {
                                                   "kind": "string",
-                                                  "value": "urn:umf:core:key-tuple-operation:3.0.0#/$defs/value"
+                                                  "value": "urn:umf:core:key-tuple-operation:4.0.0#/$defs/value"
                                                 }
                                               }
                                             },
@@ -752,7 +752,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.8.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -788,7 +788,7 @@
                       "members": {
                         "const": {
                           "kind": "string",
-                          "value": "1.0.0"
+                          "value": "2.0.0"
                         }
                       }
                     }
@@ -1119,7 +1119,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:key-tuple-operation:3.0.0"
+                              "value": "urn:umf:core:key-tuple-operation:4.0.0"
                             }
                           }
                         }
@@ -1389,7 +1389,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:key-tuple-operation:3.0.0"
+                              "value": "urn:umf:core:key-tuple-operation:4.0.0"
                             }
                           }
                         }
@@ -1516,7 +1516,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.8.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1602,14 +1602,14 @@
   "id": "[\"schema\",\"spec/core/dataset-value-operation.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-tuple-operation-v3.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/schema-properties-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 10615,
+      "bytes": 10618,
       "path": "spec/core/dataset-value-operation.schema.json",
-      "sha256": "913b25afb079d6952e31006ee4a772e77b67461d9029f8cccda24dd4ce017b7a"
+      "sha256": "217cc3c05e10cec1bb4e93cca1205c039f596e95080cba075823a9b8b351013d"
     }
   ],
   "summary": "spec/core/dataset-value-operation.schema.json",

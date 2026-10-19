@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 /** Fresh Weft-owned read requirements -> supplied-complete-cut logical scan oracle. */
 import {createHash} from 'node:crypto';
 import source from '../../tests/security/protection/current-query-source.json';
@@ -31,7 +32,7 @@ for(const variant of ['r1-undisclosed','r2-allowed','r2-revoked']){
  const program=compileCandidateCatalogProgram(policy,source.catalog,source.closure,source.ontology),documentJson=JSON.stringify(source.closure.documents[0]!.document);
  const opaqueSources=[['policy',policy,policy.id,policy.revision],['catalog',source.catalog,source.catalog.id,source.catalog.revision],['ontology',source.ontology,source.ontology.documentId,source.ontology.revision],['owner',owner,owner.id,owner.revision],['logical-cut',cut,'logical-cut-fixture',cut.generation]].map(([role,value,documentId,revision])=>{const utf8=JSON.stringify(value);return {role,identity:{documentId,revision},mediaType:'application/json',utf8,sha256:sha(utf8)};});
  for(const [name,sql,scanIds,expectedFields,expectedDirections]of queryCases){
-  const label=variant+':'+name,request={interfaceVersion:'weft-application-lineage/0.2-candidate',modules:[{documentJson,pin:{documentId:'domain',revision:source.closure.pins[0]!.revision,umfVersion:'0.8.0',sha256:sha(documentJson)},selectedModuleIds:['m']}],sql,parameters:{},opaqueSources},raw=JSON.stringify(request);
+  const label=variant+':'+name,request={interfaceVersion:'weft-application-lineage/0.2-candidate',modules:[{documentJson,pin:{documentId:'domain',revision:source.closure.pins[0]!.revision,umfVersion:CURRENT_CORE_VERSION,sha256:sha(documentJson)},selectedModuleIds:['m']}],sql,parameters:{},opaqueSources},raw=JSON.stringify(request);
   const proc=Bun.spawn([binary],{stdin:'pipe',stdout:'pipe',stderr:'pipe'});proc.stdin.write(raw);proc.stdin.end();const [stdout,stderr,exit]=await Promise.all([new Response(proc.stdout).text(),new Response(proc.stderr).text(),proc.exited]);check(label+':actual-issuer',exit===0&&stderr==='');const report=JSON.parse(stdout);
   check(label+':exact-source',report.sourceRequestJson===raw&&report.sourceRequestSha256===sha(raw)&&report.sqlSha256===sha(sql));check(label+':no-native-authority',report.version==='weft.application.lineage/0.2-candidate'&&report.authority===false&&report.securityReady===false);
   check(label+':original-plan',report.applicationPlanSha256===sha(report.applicationPlanJson));

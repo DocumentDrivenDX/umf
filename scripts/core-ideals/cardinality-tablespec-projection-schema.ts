@@ -1,7 +1,7 @@
 import base from '../../spec/core/field-tablespec-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:cardinality-tablespec-projection:1.0.0';schema.title='Authored Cardinality to explicit TableSpec carrier';
-schema.properties.operation.const='project-cardinality-tablespec';schema.properties.source.$ref='urn:umf:core:0.4.0';schema.properties.author.$ref='urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration';
+schema.properties.operation.const='project-cardinality-tablespec';schema.properties.source.$ref='urn:umf:core:0.10.0';schema.properties.author.$ref='urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration';
 schema.properties.binding.const={id:'umf.core.cardinality.tablespec',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Single authored Field with selected scalar/vector carrier and execution profile; explicit residuals, no implicit map encoding or item conversion'};
 const request=schema.properties.request;
 for(const key of ['tableName','columnName'])request.properties[key]={type:'string',minLength:1,maxLength:128,pattern:'^[A-Za-z][A-Za-z0-9_]*$'};

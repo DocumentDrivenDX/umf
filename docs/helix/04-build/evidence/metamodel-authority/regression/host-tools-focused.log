@@ -1,0 +1,25 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/security-record-type-journal.test.ts:
+(pass) explicit transition journal reconciles multiple typed Fields without issuer authority [354.00ms]
+
+tests/security/core-extension-closure.test.ts:
+(pass) current products action extension survives explicit source custody and real policy compilation [231.00ms]
+(pass) absent or forged closure cannot grant extension interpretation [2.24ms]
+(pass) only exact original selected extension version is admitted, not callback or hash claims [0.07ms]
+(pass) unregistered vocabulary and malformed actions retain fail-closed behavior [127.41ms]
+(pass) registry access cannot mutate subsequent captures or original source snapshots [115.88ms]
+(pass) selection accessors never execute and mutable public package cannot drift from retained closure [39.92ms]
+(pass) actions metadata cannot be widened before the closure module loads in a fresh process [879.73ms]
+
+tests/security/preparation-sources.test.ts:
+(pass) authored owner profile actually passes existing logical write consumer for original/proposed products [89.63ms]
+(pass) native Subject carrier uses original String Key codec with exact Unicode and explicit refusal domains [45.44ms]
+(pass) historical native preparation cannot qualify the authored current logical declaration [141.42ms]
+(pass) current Subject codec retains accessor and refined-domain refusals without native authority [5.36ms]
+(pass) host CLI refuses unsupported native preparation and malformed UTF8 without issuing output [1435.13ms]
+
+ 13 pass
+ 0 fail
+ 106 expect() calls
+Ran 13 tests across 3 files. [4.39s]

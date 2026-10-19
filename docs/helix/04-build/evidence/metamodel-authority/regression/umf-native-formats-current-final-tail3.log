@@ -1,0 +1,520 @@
+{"testProcess":"tests/delta/parquet-checkpoint.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/parquet-checkpoint.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/parquet-checkpoint.test.ts:
+(pass) US-018-AC18: explicit V1/V2 Parquet checkpoint recovery agrees with nine native snapshots [3130.51ms]
+(pass) US-018-AC18: wrong checkpoint specs, missing sidecars and missing successors cannot produce state [855.17ms]
+(pass) US-018-AC18: pinned single-file checkpoints preserve bounded recovery outcomes [7464.93ms]
+
+ 3 pass
+ 0 fail
+ 205 expect() calls
+Ran 3 tests across 1 file. [18.05s]
+{"testProcess":"tests/delta/parquet-checkpoint.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":205,"completeSummary":true,"logSha256":"b45729e355fdf365107cc23ba8a9f1c6e86ae2d160f495a5d8b5e3a7fecd44a9"}
+{"testProcess":"tests/delta/reconcile.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/reconcile.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/reconcile.test.ts:
+(pass) US-018-AC11: native six-version history matches action state and preserves every source [199.42ms]
+(pass) US-018-AC11: gaps, duplicates, missing initial context, checkpoints and ambiguous file changes block [141.76ms]
+(pass) US-018-AC11: DV changes are set-based; domains and unknown actions remain preserved [102.26ms]
+
+ 3 pass
+ 0 fail
+ 55 expect() calls
+Ran 3 tests across 1 file. [7.28s]
+{"testProcess":"tests/delta/reconcile.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":55,"completeSummary":true,"logSha256":"f73759128a1a2aed1d84aad4cd0d50f2524ddec0618351c9b49205e6408dced9"}
+{"testProcess":"tests/delta/rename.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/rename.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/rename.test.ts:
+(pass) US-018-AC7: mapped rename preserves physical meaning and updates top-level partition references [1203.91ms]
+(pass) US-018-AC7: collisions, expressions, unknown features and non-field pointers block [1079.79ms]
+(pass) US-018-AC7: expressions elsewhere in the schema and unknown storage providers block [345.63ms]
+
+ 3 pass
+ 0 fail
+ 22 expect() calls
+Ran 3 tests across 1 file. [7.35s]
+{"testProcess":"tests/delta/rename.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":22,"completeSummary":true,"logSha256":"16c6fd3baeafd24f2ff086d69ec22df12e9845ee407d7bc13b1bb074ed6f271b"}
+{"testProcess":"tests/delta/schema.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/schema.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/schema.test.ts:
+(pass) US-018-AC1: Delta source cases preserve exact schema through JSON/YAML [1741.73ms]
+(pass) US-018-AC2: unknown metadata and representation fields never disappear silently [59.07ms]
+(pass) US-018-AC3: edits are atomic and keep source; shape failure rejects candidate [92.05ms]
+
+ 3 pass
+ 0 fail
+ 122 expect() calls
+Ran 3 tests across 1 file. [6.76s]
+{"testProcess":"tests/delta/schema.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":122,"completeSummary":true,"logSha256":"b2053df592f7495e584fb05fcd26c600487a1a56c774d2e744cbca00e079afd8"}
+{"testProcess":"tests/delta/sidecars.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/sidecars.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/sidecars.test.ts:
+(pass) US-018-AC16: native sidecar checkpoints recover states and retain origin/source evidence [1226.20ms]
+(pass) US-018-AC16: missing, duplicate, extra, mismatched and mixed sidecars block atomically [1369.66ms]
+(pass) US-018-AC16: nonfile sidecar actions and malformed bytes cannot seed state [275.55ms]
+(pass) US-018-AC16: supplied upstream sidecars retain typed-statistics blockers and all bytes [445.24ms]
+
+ 4 pass
+ 0 fail
+ 79 expect() calls
+Ran 4 tests across 1 file. [8.35s]
+{"testProcess":"tests/delta/sidecars.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":79,"completeSummary":true,"logSha256":"287e17cf76456c4d223cbb7bb2772930d04b9f837526139ae62878f454dea0f8"}
+{"testProcess":"tests/delta/table.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/table.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/table.test.ts:
+(pass) US-018-AC4: context preserves embedded spelling, exact integers and future declarations [260.89ms]
+(pass) US-018-AC4: feature/partition inconsistencies and malformed schema remain visible and preserved [82.00ms]
+(pass) US-018-AC5: generic context edits are atomic and do not imply safe table evolution [243.02ms]
+
+ 3 pass
+ 0 fail
+ 20 expect() calls
+Ran 3 tests across 1 file. [4.96s]
+{"testProcess":"tests/delta/table.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":20,"completeSummary":true,"logSha256":"c92b531736c73ef7efabe6ffc5684df76fa36b0ecbe8dcc7dea68755e87695c3"}
+{"testProcess":"tests/delta/upstream.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/upstream.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/upstream.test.ts:
+(pass) US-018-AC8: pinned upstream schema/context corpus preserves source and known rejection [15050.99ms]
+
+ 1 pass
+ 0 fail
+ 286 expect() calls
+Ran 1 test across 1 file. [19.90s]
+{"testProcess":"tests/delta/upstream.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":286,"completeSummary":true,"logSha256":"2d08a3d02955e31e74e2ad994ca2da37cf6ce60dccb154f2a47710e97570a846"}
+{"testProcess":"tests/iceberg/promotion-data.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/promotion-data.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/promotion-data.test.ts:
+(pass) US-021-AC9: data evidence binds exact files and metadata to current public candidates [2648.82ms]
+
+ 1 pass
+ 0 fail
+ 80 expect() calls
+Ran 1 test across 1 file. [7.59s]
+{"testProcess":"tests/iceberg/promotion-data.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":80,"completeSummary":true,"logSha256":"f26a13251f9fde057d662961281b9c51b0bdb61f27c349d5d1bffd793310b429"}
+{"testProcess":"tests/iceberg/schema.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/schema.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/schema.test.ts:
+(pass) US-020-AC1: recursive schema shapes and exact source tokens round trip in both UMF formats [2563.59ms]
+(pass) US-020-AC2: unknown representation fields remain in UMF and cannot silently export [55.16ms]
+(pass) US-020-AC3: copied access and atomic nested edits preserve IDs and reject invalid candidates [158.46ms]
+
+ 3 pass
+ 0 fail
+ 102 expect() calls
+Ran 3 tests across 1 file. [7.84s]
+{"testProcess":"tests/iceberg/schema.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":102,"completeSummary":true,"logSha256":"64dffc2f296ce54ba587f7c064f74cdb6618f8d4d827ba74c27a6f1601bfbba7"}
+{"testProcess":"tests/iceberg/table-context.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/table-context.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/table-context.test.ts:
+(pass) US-021-AC4: upstream retained references resolve separately from native shape acceptance [1999.37ms]
+(pass) US-021-AC4: missing/duplicate current targets block context without destroying source [3188.80ms]
+(pass) US-021-AC4: exact snapshot links, expired parents and main branch coherence [3173.54ms]
+
+ 3 pass
+ 0 fail
+ 162 expect() calls
+Ran 3 tests across 1 file. [12.83s]
+{"testProcess":"tests/iceberg/table-context.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":162,"completeSummary":true,"logSha256":"cb4650ab0a97d7c5a7f9bcbe73f3352a30f5bd62e388fc49d68c150a6ad1446f"}
+{"testProcess":"tests/iceberg/table-promotion.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/table-promotion.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/table-promotion.test.ts:
+(pass) US-021-AC8: six primitive widenings match independent native evolution and preserve history [5482.77ms]
+(pass) US-021-AC8: invalid promotions and unknown historical dependencies fail atomically [1095.25ms]
+
+ 2 pass
+ 0 fail
+ 85 expect() calls
+Ran 2 tests across 1 file. [17.60s]
+{"testProcess":"tests/iceberg/table-promotion.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":85,"completeSummary":true,"logSha256":"f1223eb6566481e7122c7b5cb1b732ab66f1fbf260729f6e80567f9d7d9cbfbf"}
+{"testProcess":"tests/iceberg/table-rename.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/table-rename.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/table-rename.test.ts:
+(pass) US-021-AC7: versioned rename retains histories and matches independent native evolution [3045.56ms]
+(pass) US-021-AC7: failed renames are atomic and native unknown content survives [1149.09ms]
+
+ 2 pass
+ 0 fail
+ 60 expect() calls
+Ran 2 tests across 1 file. [8.58s]
+{"testProcess":"tests/iceberg/table-rename.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":60,"completeSummary":true,"logSha256":"99b9cc817ceb303a8b36c03cab489cdaab5251d7214737e6b13ced0211ce8453"}
+{"testProcess":"tests/iceberg/table-transforms.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/table-transforms.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/table-transforms.test.ts:
+(pass) US-021-AC6: selected fields bind by ID, including nested structs and names containing dots [1326.65ms]
+(pass) US-021-AC6: invalid current binding is diagnosed without interpreting historical specs [2878.61ms]
+(pass) US-021-AC6: v3 multi-source fields preserve both formats but remain unbound [532.40ms]
+(pass) US-021-AC6: struct fields within collections cannot act as scalar sources [522.22ms]
+(pass) US-021-AC6: native nested tables agree; v3 multi-source parser limitation remains explicit [581.56ms]
+
+ 5 pass
+ 0 fail
+ 96 expect() calls
+Ran 5 tests across 1 file. [11.46s]
+{"testProcess":"tests/iceberg/table-transforms.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":96,"completeSummary":true,"logSha256":"010ca988c099d1f2518f89e04af2ed0cc682c42c99405b7c8a016b4d4c16b636"}
+{"testProcess":"tests/iceberg/table.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/table.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/table.test.ts:
+(pass) US-021-AC1: known table fields and embedded schemas survive JSON/YAML without native defaults [3869.21ms]
+(pass) US-021-AC2: exact int64 values, unknown versions/content and representation guards retain meaning [451.86ms]
+(pass) US-021-AC3: candidate failures are atomic and copy access cannot mutate original metadata [434.86ms]
+(pass) US-021-AC1: native parse and re-emission limits remain distinct [46.48ms]
+
+ 4 pass
+ 0 fail
+ 49 expect() calls
+Ran 4 tests across 1 file. [13.60s]
+{"testProcess":"tests/iceberg/table.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":49,"completeSummary":true,"logSha256":"412d25132a96b3662ca35ec21927285f7557d683ea46a4986ffe702647af8533"}
+{"testProcess":"tests/iceberg/transforms.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/transforms.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/transforms.test.ts:
+(pass) US-021-AC5: native transform type matrix agrees for 136 source/transform combinations [1.15ms]
+(pass) US-021-AC5: unknown syntax stays uninterpreted and bounded parameters reject invalid widths [0.09ms]
+
+ 2 pass
+ 0 fail
+ 499 expect() calls
+Ran 2 tests across 1 file. [10.07s]
+{"testProcess":"tests/iceberg/transforms.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":499,"completeSummary":true,"logSha256":"2968d2a46e5a6eaac0d07541076d6e4d6681433730d481b0eaccefa0bad67d21"}
+{"testProcess":"tests/iceberg/upstream.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/iceberg/upstream.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/iceberg/upstream.test.ts:
+(pass) US-020-AC4: pinned table/view resources retain exact standalone schema fragments [6376.77ms]
+(pass) US-020-AC4: Java and Python parser differences are recorded without default insertion [21.59ms]
+
+ 2 pass
+ 0 fail
+ 129 expect() calls
+Ran 2 tests across 1 file. [13.82s]
+{"testProcess":"tests/iceberg/upstream.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":129,"completeSummary":true,"logSha256":"749d4eca3732e05d5009e5609633247e769f2b3d0831acafd7d97aa4353cd7b3"}
+{"testProcess":"tests/parquet/arrow-nested.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/arrow-nested.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/arrow-nested.test.ts:
+(pass) US-019-AC23 structural LIST/MAP correspondence retains distinct labels and inverse meaning [19304.66ms]
+
+ 1 pass
+ 0 fail
+ 51 expect() calls
+Ran 1 test across 1 file. [28.36s]
+{"testProcess":"tests/parquet/arrow-nested.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":51,"completeSummary":true,"logSha256":"15952ca7ce78bddf4d252c16a372048b46763cf89893103c9b8d5250b4320f3b"}
+{"testProcess":"tests/parquet/arrow-rename.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/arrow-rename.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/arrow-rename.test.ts:
+(pass) US-019-AC23 coordinated renames retain data, metadata and reversible field intent [100018.66ms]
+(pass) US-019-AC23 missing correspondence and invalid policies cannot produce partial files [1607.52ms]
+
+ 2 pass
+ 0 fail
+ 298 expect() calls
+Ran 2 tests across 1 file. [108.98s]
+{"testProcess":"tests/parquet/arrow-rename.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":298,"completeSummary":true,"logSha256":"11ea25f0c40f4d2da27763ccad585c3830a549eda40df5176646330e9f241ea5"}
+{"testProcess":"tests/parquet/arrow-schema.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/arrow-schema.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/arrow-schema.test.ts:
+(pass) CONTRACT-019 embedded Arrow schema preserves meanings absent from physical Parquet [631.35ms]
+(pass) CONTRACT-019 embedded schema rejects ambiguity and malformed framing without losing source [1628.97ms]
+(pass) CONTRACT-019 extracted Arrow messages re-encode and support detached schema transforms [956.20ms]
+
+ 3 pass
+ 0 fail
+ 72 expect() calls
+Ran 3 tests across 1 file. [8.37s]
+{"testProcess":"tests/parquet/arrow-schema.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":72,"completeSummary":true,"logSha256":"ff241133edae8ad9a81d5b87ebf9594f321c27b8f06e4dbe6dc23f2e4212dbd1"}
+{"testProcess":"tests/parquet/avro-arrow-loss.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/avro-arrow-loss.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/avro-arrow-loss.test.ts:
+(pass) CONTRACT-035 Arrow refinements require explicit losses even when physical Avro schemas agree [1245.70ms]
+(pass) CONTRACT-035 malformed or ambiguous Arrow metadata blocks physical-only projection [722.78ms]
+
+ 2 pass
+ 0 fail
+ 85 expect() calls
+Ran 2 tests across 1 file. [7.75s]
+{"testProcess":"tests/parquet/avro-arrow-loss.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":85,"completeSummary":true,"logSha256":"3fd61bed9072f3bde1675724fbd331cfd2727416aae9ccf97032d7134155c3c1"}
+{"testProcess":"tests/parquet/avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/avro-projection.test.ts:
+(pass) CONTRACT-035 nested Parquet shapes preserve nullable lists, map entries and scalar precision in Avro [1261.43ms]
+(pass) CONTRACT-035 logical and legacy container corpora lower or report blocked source shapes [3560.70ms]
+(pass) CONTRACT-035 unknown native fields on normalized-away LIST wrappers still block lowering [88.61ms]
+
+ 3 pass
+ 0 fail
+ 179 expect() calls
+Ran 3 tests across 1 file. [9.89s]
+{"testProcess":"tests/parquet/avro-projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":179,"completeSummary":true,"logSha256":"ec0d3091323a197e6aadc7c615268c2d33687d59fb49aa48913eb517694b10e0"}
+{"testProcess":"tests/parquet/bodies.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/bodies.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/bodies.test.ts:
+(pass) US-019-AC14: bounded physical page bodies and CRCs match independent native decompression [3242.18ms]
+(pass) US-019-AC14: Snappy copy/literal variants match native vectors and malformed blocks fail [8.34ms]
+(pass) US-019-AC14: actual corrupted bodies fail without publishing partial pages [102.46ms]
+
+ 3 pass
+ 0 fail
+ 351 expect() calls
+Ran 3 tests across 1 file. [8.51s]
+{"testProcess":"tests/parquet/bodies.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":351,"completeSummary":true,"logSha256":"f35f091bf6886099c836e6568a61322466e286c584444fe74994dcbf2ed008c1"}
+{"testProcess":"tests/parquet/capture.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/capture.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/capture.test.ts:
+(pass) US-019-AC1: bounded binary source copies exact bytes including malformed input and preserves unknown representation [143.05ms]
+(pass) US-019-AC2: footer region checks do not imply metadata validity or plaintext columns [128.03ms]
+(pass) US-019-AC3: pinned Parquet source hashes survive both UMF serializations [1646.50ms]
+
+ 3 pass
+ 0 fail
+ 144 expect() calls
+Ran 3 tests across 1 file. [7.46s]
+{"testProcess":"tests/parquet/capture.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":144,"completeSummary":true,"logSha256":"943d63cdce44b45210ab775016491c3ab6bc7e29175c30961d7a3dffd3621024"}
+{"testProcess":"tests/parquet/containers.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/containers.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/containers.test.ts:
+(pass) US-019-AC9: container interpretations preserve source and match qualified native evidence [2612.53ms]
+(pass) US-019-AC9: preserve key-only map intent and diagnose repeated map values [84.37ms]
+
+ 2 pass
+ 0 fail
+ 275 expect() calls
+Ran 2 tests across 1 file. [9.60s]
+{"testProcess":"tests/parquet/containers.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":275,"completeSummary":true,"logSha256":"8ac5ada26856885fe69e7193e0429d013a4768bdc4f4cce94c5dc476418a2fbf"}
+{"testProcess":"tests/parquet/field-metadata.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/field-metadata.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/field-metadata.test.ts:
+(pass) CONTRACT-019 core field families respect native logical and physical meanings [6180.10ms]
+(pass) CONTRACT-019 native rename synchronizes materialized fields without losing attachments [687.39ms]
+
+ 2 pass
+ 0 fail
+ 171 expect() calls
+Ran 2 tests across 1 file. [12.91s]
+{"testProcess":"tests/parquet/field-metadata.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":171,"completeSummary":true,"logSha256":"d59e93d8424e3a664e7ea729d302c2bc08010f877f84bb761f0b9c970d69e2c5"}
+{"testProcess":"tests/parquet/footer.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/footer.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/footer.test.ts:
+(pass) US-019-AC5: exact footer trees match independent Apache Thrift observations [3438.22ms]
+(pass) US-019-AC5: malformed and excessive wire values fail without partial interpretation [367.16ms]
+(pass) US-019-AC5: unknown UUID fields and trailing bytes remain distinct from native validity [65.66ms]
+
+ 3 pass
+ 0 fail
+ 239 expect() calls
+Ran 3 tests across 1 file. [11.75s]
+{"testProcess":"tests/parquet/footer.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":239,"completeSummary":true,"logSha256":"846992a2bcd81c74a8594de1ea2b6af8f11b8b24e2faffb6dfe2329fa18c8a1d"}
+{"testProcess":"tests/parquet/hybrid.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/hybrid.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/hybrid.test.ts:
+(pass) US-019-AC15: hybrid decoding matches independently read native dictionary pages [2.25ms]
+(pass) US-019-AC15: unsigned widths, final padding and strict bounds do not allocate from hostile run counts [3.22ms]
+
+ 2 pass
+ 0 fail
+ 155 expect() calls
+Ran 2 tests across 1 file. [262.00ms]
+{"testProcess":"tests/parquet/hybrid.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":155,"completeSummary":true,"logSha256":"d26e59d10ea3c87bf7ac35b012baabecf0a15e05eab55cfd6b0c1bc8740368f8"}
+{"testProcess":"tests/parquet/levels.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/levels.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/levels.test.ts:
+(pass) US-019-AC16: bounded page-level integration covers existing native files [6439.75ms]
+(pass) US-019-AC16: native-authored required/optional/repeated/list pages and malformed levels [1884.14ms]
+
+ 2 pass
+ 0 fail
+ 305 expect() calls
+Ran 2 tests across 1 file. [15.99s]
+{"testProcess":"tests/parquet/levels.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":305,"completeSummary":true,"logSha256":"587c3ef0aaa2f6ce0e5a012435c41d7cbb1ff1e87ebc576030984042e80742f5"}
+{"testProcess":"tests/parquet/logical.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/logical.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/logical.test.ts:
+(pass) US-019-AC8: scalar annotations match native acceptance while preserving all sources [3802.40ms]
+(pass) US-019-AC8: local time meaning, legacy defaults/conflicts and incomplete containers remain explicit [151.26ms]
+
+ 2 pass
+ 0 fail
+ 317 expect() calls
+Ran 2 tests across 1 file. [12.21s]
+{"testProcess":"tests/parquet/logical.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":317,"completeSummary":true,"logSha256":"9395a6297d4aaa1c964b87aa26b55a24b886d57c08367d8c3797406a69f2698c"}
+{"testProcess":"tests/parquet/metadata.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/metadata.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/metadata.test.ts:
+(pass) US-019-AC6: named metadata matches native generated IDL classes for every fixture [2307.82ms]
+(pass) US-019-AC6: future enum codes and repeated unknown fields survive the named view [37.19ms]
+(pass) US-019-AC6: missing, duplicate or mistyped known fields block mapping while retaining wire/source [153.08ms]
+
+ 3 pass
+ 0 fail
+ 226 expect() calls
+Ran 3 tests across 1 file. [10.51s]
+{"testProcess":"tests/parquet/metadata.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":226,"completeSummary":true,"logSha256":"965155edd2efe9b070950b5f8e158d151475391f0085cc903cd98bfaa95b5673"}
+{"testProcess":"tests/parquet/offset-repair.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/offset-repair.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/offset-repair.test.ts:
+(pass) US-019-AC20: explicit legacy offset repair preserves source and every byte before footer [1606.66ms]
+(pass) US-019-AC20: already-correct files and damaged dictionaries do not produce repair candidates [728.67ms]
+
+ 2 pass
+ 0 fail
+ 30 expect() calls
+Ran 2 tests across 1 file. [8.84s]
+{"testProcess":"tests/parquet/offset-repair.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":30,"completeSummary":true,"logSha256":"619f1054304f946bdd9922e40745956f16844827dd617cfae95f5e235dcf8a9c"}
+{"testProcess":"tests/parquet/pages.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/pages.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/pages.test.ts:
+(pass) US-019-AC13: page headers and declared budgets match native corpus evidence [2244.36ms]
+(pass) US-019-AC13: malformed declarations block without decoding payloads; payload corruption remains explicit [752.62ms]
+
+ 2 pass
+ 0 fail
+ 324 expect() calls
+Ran 2 tests across 1 file. [8.64s]
+{"testProcess":"tests/parquet/pages.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":324,"completeSummary":true,"logSha256":"e24eebd880515ffa03ce0f6b5286021c47a1bbc946ee789dd07af72f1ff50399"}
+{"testProcess":"tests/parquet/physical.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/physical.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/physical.test.ts:
+(pass) US-019-AC17: physical carrier decoding matches independent corpus results [9405.50ms]
+(pass) US-019-AC17: native physical boundaries preserve widths, bits, binary and dictionary carriers [2908.00ms]
+(pass) US-019-AC17: malformed PLAIN counts, lengths and fixed widths are rejected [0.26ms]
+(pass) US-019-AC17: dictionary range and expansion budgets block without partial values [406.36ms]
+
+ 4 pass
+ 0 fail
+ 333 expect() calls
+Ran 4 tests across 1 file. [19.09s]
+{"testProcess":"tests/parquet/physical.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":333,"completeSummary":true,"logSha256":"9e0ef219ae50841d01459b1085a79df68ed7bda67c544e95ac177f7a6e0ba541"}
+{"testProcess":"tests/parquet/rename.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/rename.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/rename.test.ts:
+(pass) US-019-AC11: rename every field in nested native files with exact data-prefix preservation [10938.64ms]
+(pass) US-019-AC11: reject semantic wrapper changes, collisions, stale metadata and invalid requests [630.71ms]
+
+ 2 pass
+ 0 fail
+ 583 expect() calls
+Ran 2 tests across 1 file. [17.11s]
+{"testProcess":"tests/parquet/rename.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":583,"completeSummary":true,"logSha256":"d646d4f04d7ca151327a0b7f9a0b2c3cfd4b4a550390e655407584b52e38a46f"}
+{"testProcess":"tests/parquet/rows.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/rows.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/rows.test.ts:
+(pass) US-019-AC18: assembled corpus rows match native-value evidence without source changes [9261.27ms]
+(pass) US-019-AC18: inconsistent shared columns and row-node expansion cannot publish partial rows [3266.50ms]
+
+ 2 pass
+ 0 fail
+ 274 expect() calls
+Ran 2 tests across 1 file. [18.58s]
+{"testProcess":"tests/parquet/rows.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":274,"completeSummary":true,"logSha256":"45b701dcffc5579b617a1519c37495e86d11c5905f338b61e736583d59f2f68f"}
+{"testProcess":"tests/parquet/schema.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/schema.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/schema.test.ts:
+(pass) US-019-AC7: physical schema trees and levels match native columns [2465.71ms]
+(pass) US-019-AC7: inconsistent topology/links block; literal dots remain path components [618.48ms]
+
+ 2 pass
+ 0 fail
+ 274 expect() calls
+Ran 2 tests across 1 file. [9.84s]
+{"testProcess":"tests/parquet/schema.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":274,"completeSummary":true,"logSha256":"ad1ddad5a0401c1660d92416374539eb2fa7083af61fee7d15e127d49c7702ee"}
+{"testProcess":"tests/parquet/transform.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/transform.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/transform.test.ts:
+(pass) US-019-AC10: encoding preserves all native wire observations and guarded metadata transforms preserve data [9447.72ms]
+(pass) US-019-AC10: unsafe metadata edits fail without losing source or publishing output [612.75ms]
+(pass) US-019-AC10: encoder rejects lossy or oversized wire inputs and preserves UUID bits [37.02ms]
+
+ 3 pass
+ 0 fail
+ 439 expect() calls
+Ran 3 tests across 1 file. [17.38s]
+{"testProcess":"tests/parquet/transform.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":439,"completeSummary":true,"logSha256":"6969d1b372e484e624a4d74b3274ba7229372c5cff6f6cc20286d6d5b0eb0efc"}
+{"testProcess":"tests/parquet/values-trial.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/values-trial.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/values-trial.test.ts:
+(pass) US-019-AC12 experiment: exact nested decimals, ordered maps, hostile names and temporal meaning match native values [204.91ms]
+
+ 1 pass
+ 0 fail
+ 45 expect() calls
+Ran 1 test across 1 file. [7.52s]
+{"testProcess":"tests/parquet/values-trial.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":45,"completeSummary":true,"logSha256":"051b608abff22cb575cff255ee73201873ae659588085c50a20bb99f278f0b16"}
+{"testProcess":"tests/parquet/values.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/parquet/values.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/parquet/values.test.ts:
+(pass) US-019-AC19: bounded logical projections match native values and preserve sources [15553.05ms]
+(pass) US-019-AC19: logical value constraints block while exact/opaque carriers remain available [2594.75ms]
+(pass) US-019-AC19: bounded implementation agrees with the prior native nested-decimal/map experiment [1086.27ms]
+(pass) US-019-AC19: logical floating views retain NaN payloads and signed zero exactly [501.93ms]
+(pass) US-019-AC19: JSON syntax validation preserves duplicates/exact text and bounds structure [8.17ms]
+
+ 5 pass
+ 0 fail
+ 303 expect() calls
+Ran 5 tests across 1 file. [27.49s]
+{"testProcess":"tests/parquet/values.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":303,"completeSummary":true,"logSha256":"aa677cc83f70536da197b3d414fb5d9f62168e8e53b8b8011af6ff9b7a2fcaff"}
+{"testProcess":"tests/spark/arrow-origin.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/arrow-origin.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/arrow-origin.test.ts:
+4 | import { Registry } from '../registry/registry';
+5 | import { UmfError, type Document, type Json } from './types';
+6 | export function readDocument(text: string, format: 'json' | 'yaml' = 'yaml'): Document {
+7 |   const value = readJsonValue(text, format);
+8 |   const result = validateDocument(value);
+9 |   if (!result.valid) throw new UmfError('INVALID_DOCUMENT', JSON.stringify(result.diagnostics));
+                               ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/umf","message":"must pass \"const\" keyword validation","severity":"error"}]
+ path: "",
+ code: "INVALID_DOCUMENT"
+
+      at readDocument (/Users/erik/.codex/worktrees/d8be/umf/src/model/document.ts:9:28)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/spark/arrow-origin.test.ts:5:48)
+(fail) US-017-AC7: Arrow-origin layouts match native recovery or block native incompatibility [11.13ms]
+
+ 0 pass
+ 1 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [8.48s]
+{"testProcess":"tests/spark/arrow-origin.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":1,"completeSummary":true,"logSha256":"ed09f3135f8ba69322bd5bb076805a5d693e66e9774489e9f20ce0749402590a"}
+Complete test file failed or terminated: tests/spark/arrow-origin.test.ts
+
+ 100 pass
+ 1 fail
+ 7525 expect() calls
+Ran 101 tests across 40 files. [573.09s]

@@ -55,7 +55,7 @@
       ],
       "name": "fields",
       "optional": false,
-      "type": "Partial<Record<\"role\" | \"required\" | \"key\" | \"pattern\" | \"description\" | \"domain\" | \"range\" | \"inherited\" | \"readonly\" | \"ifabsent\" | \"list_elements_unique\" | \"list_elements_ordered\" | \"shared\" | \"identifier\" | \"designates_type\" | \"relational_role\" | \"recommended\" | \"multivalued\" | \"inlined\" | \"inlined_as_list\" | \"minimum_value\" | \"maximum_value\" | \"value_presence\" | \"equals_string\" | \"equals_number\" | \"equals_expression\" | \"exact_cardinality\" | \"minimum_cardinality\" | \"maximum_cardinality\", NativeJson>>"
+      "type": "Partial<Record<\"description\" | \"role\" | \"required\" | \"key\" | \"range\" | \"pattern\" | \"domain\" | \"inherited\" | \"readonly\" | \"ifabsent\" | \"list_elements_unique\" | \"list_elements_ordered\" | \"shared\" | \"identifier\" | \"designates_type\" | \"relational_role\" | \"recommended\" | \"multivalued\" | \"inlined\" | \"inlined_as_list\" | \"minimum_value\" | \"maximum_value\" | \"value_presence\" | \"equals_string\" | \"equals_number\" | \"equals_expression\" | \"exact_cardinality\" | \"minimum_cardinality\" | \"maximum_cardinality\", NativeJson>>"
     },
     {
       "description": "",

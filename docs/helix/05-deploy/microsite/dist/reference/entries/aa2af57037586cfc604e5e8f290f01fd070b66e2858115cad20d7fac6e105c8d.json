@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6188,
-        "line": 12,
-        "path": "src/validation/relationships.ts",
-        "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+        "bytes": 4966,
+        "line": 32,
+        "path": "src/generated/core-model.ts",
+        "sha256": "c3d6ca3f95259eee0af31661e992844a74a3aefe4919eae09bf00445d8364b77"
       }
     ],
     "entrypoint": ".",
     "exportName": "RelationshipCandidate",
     "runtime": "type-only",
     "signatureText": [
-      "export interface RelationshipCandidate {umf:'0.7.0';id:string;vocabularies:Document['vocabularies'];modules:(Module&{relationships?:CoreRelationship[]})[];extensions?:Record<string,Json>;[key:string]:unknown}"
+      "export type Document = {\"umf\":\"0.10.0\";\"id\":Id;\"vocabularies\":{[key:string]:{\"version\":Version;[key:string]:unknown;};};\"modules\":(Module)[];\"extensions\"?:Extensions;\"title\"?:string;\"aliases\"?:(string)[];[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"RelationshipCandidate\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6188,
-      "line": 12,
-      "path": "src/validation/relationships.ts",
-      "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+      "bytes": 4966,
+      "line": 32,
+      "path": "src/generated/core-model.ts",
+      "sha256": "c3d6ca3f95259eee0af31661e992844a74a3aefe4919eae09bf00445d8364b77"
     }
   ],
-  "summary": "Type declaration · src/validation/relationships.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "RelationshipCandidate"
 }

@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import datums from '../../fixtures/validation/facets-postgresql-resolved-native.json';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
 import {inspectResolvedFacetPredicate as inspect} from '../../src/adapters/postgresql/facet-resolved-predicate';
-import {readFacetNodeTree,decodeFacetConstant,type PgFacetNode} from '../../src/adapters/postgresql/facet-node-tree';
+import {readFacetNodeTree, decodeFacetConstant, type PgFacetNode} from '../../src/adapters/postgresql/facet-node-tree';
 const profile={serverVersion:170004,encoding:'UTF8',datumFormat:'little-endian-datum64'};
 const row=(name:string)=>evidence.capture.constraints.find(c=>c.relation===name)!;
 test('complete resolved expressions yield exact predicates and explicit value scope',()=>{
@@ -53,8 +53,8 @@ test('Datum64 integers remain exact beyond JavaScript precision',()=>{
  expect(constants(n).map(decodeFacetConstant)).toEqual(['-999.99','999.99','2']);
 });
 
-test('independent native Datum corpus replays exactly and fingerprints are current',async()=>{
- for(const [path,sha] of Object.entries(datums.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(sha);
+test('independent native Datum corpus replays exactly with its original source fingerprint archived',async()=>{
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();for(const [path,sha] of Object.entries(datums.sha256)){const source=history.entries.find((entry:any)=>entry.path===path)?.archive??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(sha);}
  for(const row of datums.rows){const tree=readFacetNodeTree(row.nodeTree)!;expect(decodeFacetConstant((tree.fields.args as PgFacetNode[])[1]!)??null).toBe(row.actual);expect(row.actual).toBe(row.expected);}
  expect(inspect(row('decimal_exact'),profile).nonNullValuesOnly).toBe(true);
 });

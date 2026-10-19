@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/arrow-ipc/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -16,7 +17,7 @@ export function inspectArrowIpcCapture(document:Document){
 export function captureArrowIpc(bytes:Uint8Array,options:{id:string}):Document{
  if(!(bytes instanceof Uint8Array)||bytes.byteLength>ARROW_IPC_MAX_BYTES)throw new UmfError('ARROW_IPC_LIMIT','Expected at most 1000000 source bytes');
  const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
- const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[ARROW_IPC_EXTENSION]:{version:'0.1.0'}},modules:[{id:'ipc',namespace:'',elements:[{id:'source',extensions:{[ARROW_IPC_EXTENSION]:{profile:'arrow-ipc-source',encoding:'hex',bytes:hex}}}]}]};
+ const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[ARROW_IPC_EXTENSION]:{version:'0.1.0'}},modules:[{id:'ipc',namespace:'',elements:[{id:'source',extensions:{[ARROW_IPC_EXTENSION]:{profile:'arrow-ipc-source',encoding:'hex',bytes:hex}}}]}]};
  exportArrowIpcCapture(document);return document;
 }
 /** Exports captured bytes, never a regenerated interpretation or an edited schema. */

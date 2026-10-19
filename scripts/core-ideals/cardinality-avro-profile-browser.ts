@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {inspectAvroFieldShape,inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
+import {inspectAvroFieldShape, inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
 import {parseNativeJson} from '../../src/model/native-json';
 const fixture='fixtures/avro/cardinality-cases.json';
 const proof='fixtures/validation/cardinality-avro-profile-native.json';
@@ -16,7 +16,7 @@ for(const c of cases){
  }
 }
 const entry='.cache/cardinality-avro-profile-entry.ts';
-await Bun.write(entry,`import {inspectAvroFieldShape,inspectAvroTypeShape} from '../src/core-ideals/avro-cardinality-type';
+await Bun.write(entry,`import {inspectAvroFieldShape, inspectAvroTypeShape} from '../src/core-ideals/avro-cardinality-type';
 import {parseNativeJson} from '../src/model/native-json';
 export function typeShape(schema,location){return inspectAvroTypeShape([{root:parseNativeJson(schema)}],location);}
 export function shape(schema){return inspectAvroFieldShape([{root:parseNativeJson(schema)}],'cardinality.Example','value');}

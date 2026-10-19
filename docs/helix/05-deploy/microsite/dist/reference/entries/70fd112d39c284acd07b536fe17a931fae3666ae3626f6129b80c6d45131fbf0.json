@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -380,7 +380,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -547,9 +547,9 @@
   ],
   "sources": [
     {
-      "bytes": 3386,
+      "bytes": 3387,
       "path": "spec/projections/sqlserver-ddl.schema.json",
-      "sha256": "608fd57d1a0668beb1858810dfc768fb22e0611f8966437b8654f7390025031f"
+      "sha256": "8e0f2423f96175e675ab8844e75e4c9657fc120a307c2259a6b7e339b6bce8b3"
     }
   ],
   "summary": "spec/projections/sqlserver-ddl.schema.json",

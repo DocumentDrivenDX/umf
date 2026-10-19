@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -443,7 +443,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
                 }
               }
             },
@@ -1223,7 +1223,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1250,7 +1250,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1324,15 +1324,14 @@
   "id": "[\"schema\",\"spec/core/cardinality-tablespec-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 9286,
+      "bytes": 9288,
       "path": "spec/core/cardinality-tablespec-projection.schema.json",
-      "sha256": "90295503a98d3e86d69a882cccc99bf961524d4ec6364d336863e49fd45e30a1"
+      "sha256": "de0e9a95d76eb22f36ca511e0b8fa24bfcba371b17df82d8e0693dfc693a65c2"
     }
   ],
   "summary": "spec/core/cardinality-tablespec-projection.schema.json",

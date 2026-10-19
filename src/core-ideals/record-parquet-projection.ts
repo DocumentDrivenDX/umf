@@ -6,12 +6,12 @@ import {exportParquetCapture} from '../adapters/parquet';
 import {importParquetSchema,getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {type FieldParquetRequest,type FieldParquetProjection} from './field-parquet-projection';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/record-parquet-projection.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/record-parquet-projection.schema.json';
 export {default as recordParquetProjectionSchema} from '../../spec/core/record-parquet-projection.schema.json';
 export interface RecordParquetRequest {id:string;recordName:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;fieldName:string;nativeType:FieldParquetRequest['nativeType'];repetition:FieldParquetRequest['repetition']}[]}
 const binding={id:'umf.core.record.parquet',version:'1.0.0',nativeVersion:'parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017',subset:'Authored flat record with explicit field carriers/repetition in an empty schema file; no row writing or value-domain equivalence'} as const;
 export interface RecordParquetProjection {operation:'project-record-parquet';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordParquetRequest;binding:typeof binding;target?:Document;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldParquetProjection['residuals'];diagnostics:Diagnostic[]}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export function projectRecordToParquet(input:CoreKindDeclaration,options:RecordParquetRequest):RecordParquetProjection {
  const copied=copyJson(input) as unknown as CoreKindDeclaration,author=verifyCoreKindDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as RecordParquetRequest;
  if(!checkRequest(request))throw new UmfError('RECORD_PARQUET_REQUEST',JSON.stringify(checkRequest.errors));

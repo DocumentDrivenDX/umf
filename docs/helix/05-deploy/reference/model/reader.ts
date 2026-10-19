@@ -26,15 +26,22 @@ export function shape(root:any,node:any,seen=new Set<any>()):string {
  if(s.uniqueItems===true)parts.push('unique items');
  return parts.join(' · ')||'See schema constraints';
 }
-export function conditionText(s:any):string {
+export function conditionText(s:any,path=''):string {
  if(s===false)return 'no value is allowed';if(s===true)return 'any value is allowed';const out:string[]=[];
- if(s.required?.length)out.push(s.required.map((k:string)=>'`'+k+'` is present').join(' and '));
- if(s.properties)for(const [k,v]of Object.entries(s.properties) as [string,any][]){if(v===false)out.push('`'+k+'` is not allowed');else if(v.const!==undefined)out.push('`'+k+'` = '+text(v.const));else if(v.enum)out.push('`'+k+'` is one of '+v.enum.map(text).join(', '));}
- if(s.not)out.push('not ('+conditionText(s.not)+')');
- for(const key of ['allOf','anyOf','oneOf'])if(s[key])out.push(s[key].map(conditionText).join(key==='allOf'?' and ':key==='oneOf'?' or (exactly one) ':' or '));
+ const label=(key:string)=>'`'+(path?path+'.':'')+key+'`';
+ if(s.required?.length)out.push(s.required.map((k:string)=>label(k)+' is present').join(' and '));
+ if(s.properties)for(const [k,v]of Object.entries(s.properties) as [string,any][]){
+  const at=path?path+'.'+k:k;
+  if(v===false)out.push('`'+at+'` is not allowed');
+  else if(v.const!==undefined)out.push('`'+at+'` = '+text(v.const));
+  else if(v.enum)out.push('`'+at+'` is one of '+v.enum.map(text).join(', '));
+  else if(v&&typeof v==='object'&&(v.required||v.properties||v.allOf||v.anyOf||v.oneOf||v.not))out.push(conditionText(v,at));
+ }
+ if(s.not)out.push('not ('+conditionText(s.not,path)+')');
+ for(const key of ['allOf','anyOf','oneOf'])if(s[key])out.push(s[key].map((part:any)=>conditionText(part,path)).join(key==='allOf'?' and ':key==='oneOf'?' or (exactly one) ':' or '));
  return out.join('; ')||'additional constraints apply (see original rule)';
 }
-export function schemaRules(node:any):{text:string;source:any}[] {const s=treeValue(node);return (s?.allOf??[]).map((rule:any)=>({text:rule.if?'When '+conditionText(rule.if)+', '+conditionText(rule.then??{})+(rule.else?'; otherwise '+conditionText(rule.else):''):conditionText(rule),source:rule}));}
+export function schemaRules(node:any,role?:string):{text:string;source:any}[] {const s=treeValue(node);return (s?.allOf??[]).filter((rule:any)=>{if(!role)return true;const constrained:string[]=[];const visit=(v:any)=>{if(!v||typeof v!=='object')return;if(v.properties?.kind){const k=v.properties.kind;if(k.const!==undefined)constrained.push(k.const);else if(Array.isArray(k.enum))constrained.push(...k.enum);}for(const child of Object.values(v))if(child&&typeof child==='object')visit(child);};visit(rule);if(constrained.length&&!constrained.includes(role))return false;const guard=rule.if??{};const guarded=new Set([...(guard.required??[]),...Object.keys(guard.properties??{})]);return [...guarded].every(key=>!propertyPresence(node,String(key),role).startsWith('Not allowed'));}).map((rule:any)=>({text:rule.if?'When '+conditionText(rule.if)+', '+conditionText(rule.then??{})+(rule.else?'; otherwise '+conditionText(rule.else):''):conditionText(rule),source:rule}));}
 export function propertyPresence(node:any,key:string,role?:string):string {
  const s=treeValue(node);let forbidden=false;
  for(const rule of s?.allOf??[]){const guard=rule.if,target=rule.then;if(!guard||!target)continue;

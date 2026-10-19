@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0 — 2026-10-18
+
+Current-core reference integration moves to one `reference/core.html` host with
+Ontology, Object reference and Model catalog views. The catalog uses the
+reusable package mount API and its exact static assets; the public site no
+longer patches a standalone explorer page or inserts navigation/default shims.
+Existing package mount, selection, local-file and catalog APIs remain intact.
+The package requires current core 0.10.0. Release reproducibility and installed
+consumer verification are separate checks.
+
 ## 1.1.2 — 2026-10-11
 
 Fix light/dark diff and annotation contrast, relationship-number paint and direct

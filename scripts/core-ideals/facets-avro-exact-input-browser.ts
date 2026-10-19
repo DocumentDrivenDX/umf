@@ -22,7 +22,7 @@ try{
    if(r.status==='blocked'){blocked++;if(r.target!==undefined)throw Error('Partial blocked candidate');continue;}
    projected++;
    const imported=u.importAvroSchema(r.nativeSchema,{id:'avro-facet-composition'});
-   const source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(imported).target).target).target).target;
+   const source=imported;
    const family=row.author.target.modules[0].elements[0].scalarType;
    source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType:family,extensions:{}}]});
    const classified=u.classifyAvroFacets(source,{location:{path:'/fields/0/type'},nativeSource:r.nativeSchema,identity:{module:'logical',element:'value'},mode:'report',profile:row.request.profile,obligation:row.request.obligation});

@@ -162,3 +162,34 @@ and zero initially open schema disclosures in Chromium at desktop/mobile widths.
   Model catalog. Graph nodes and connections work with keyboard input and link
   to the relevant key/value explanation. Old deep links, refresh, Back, mobile
   containment and initially collapsed sections remain usable.
+
+## Authoritative metamodel acceptance — 2026-10-18
+
+This amendment supersedes AC17's bootstrap-authority limit, AC18's separate
+catalog host, and the earlier workbench restriction to old-profile property APIs.
+Existing useful current operations must work through the current core.
+
+- **US-089-AC19:** One authored UMF metamodel generates current structural schemas,
+  TS/Python shapes and portable semantic rules; no reverse-schema authority or
+  embedded authored raw JSON Schema rules remain.
+- **US-089-AC20:** TS, installed Python and browser agree on current rule behavior,
+  ordered diagnostics, registry context, exact values and unknown-content policy;
+  an independently frozen baseline and reviewed corrections qualify parity.
+- **US-089-AC21:** Active producers, classifiers, package envelopes and operation
+  references use current core with explicit source-preserving collision handling.
+  Useful native/classification functionality and independent versions survive.
+- **US-089-AC22:** Old runtime profiles, downgrade chains, migration-only core APIs,
+  duplicated policy tables, schema resources and browser shims are removed. All
+  retained historical identities are classified inert evidence or independent
+  native/extension meanings; current distributions exclude inert archives.
+- **US-089-AC23:** Ontology, reference and model catalog share one route owner,
+  including local-file and embedding capabilities, current-model renderer support,
+  collapsed defaults, YAML/JSON controls, keyboard/mobile and deep-link journeys.
+- **US-089-AC24:** Clean generation, self-validation/fixed point, no-write stale
+  checks, complete required tests, schema/type/package/build/integrity and
+  architecture boundaries pass without legacy fallback or skipped regressions.
+- **US-089-AC25:** Independent review findings are resolved; current docs reflect
+  actual support; CI build-signs and deploys; live bytes, public claims and real
+  browser journeys verify the deployed result without human signing dependency.
+
+ADR-005, CONTRACT-080, TD-091 and STP-091 own the implementation contract.

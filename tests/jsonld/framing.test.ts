@@ -1,3 +1,4 @@
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import {parseNativeJson} from '../../src/model/native-json';
 import {createHash} from 'node:crypto';
@@ -6,7 +7,7 @@ import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/framing-schema.json';
 import {equalCompactJsonLdText} from '../../scripts/jsonld-compare';
 import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFraming,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
-const validate=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);
+const validate=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies',async()=>{
  const sources=await Bun.file('native/jsonld/framing-sources/manifest.json').json(),cases=(await Bun.file('fixtures/jsonld/framing/results.json').json()).cases,oracle=(await Bun.file('fixtures/jsonld/framing/oracle-results.json').json()).results;
  expect(sources.commit).toBe('3bf782ba9a40dd1b143435abe386d38df64f2b47');expect(sources.files).toHaveLength(271);for(const file of sources.files)expect(createHash('sha256').update(await Bun.file(file.path).bytes()).digest('hex')).toBe(file.sha256);

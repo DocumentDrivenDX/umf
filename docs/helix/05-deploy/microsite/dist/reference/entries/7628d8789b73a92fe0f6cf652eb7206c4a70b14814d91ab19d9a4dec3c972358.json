@@ -16,7 +16,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -1983,7 +1983,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -2062,9 +2062,9 @@
   ],
   "sources": [
     {
-      "bytes": 13567,
+      "bytes": 13568,
       "path": "spec/extensions/linkml/slot-values-schema.json",
-      "sha256": "57888e9771ff72cd42c89a8e9a42fc28461fae687c7f574c470cf9c5662a9924"
+      "sha256": "740ba957388b60e610581edf69802c867a7b91fec958762370f7571b6b6db77c"
     }
   ],
   "summary": "spec/extensions/linkml/slot-values-schema.json",

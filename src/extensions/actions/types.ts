@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import type {Document,Diagnostic,Validation} from '../../model/types';
 import type {CoreLiteral} from '../../model/schema-literals';
 export interface ActionReference {module:string;element:string;[key:string]:unknown}
@@ -28,5 +29,5 @@ export type ActionObligationKind='value'|'key'|'condition'|'effect'|'authorizati
 export interface ActionObligation {id:string;path:string;kind:ActionObligationKind;status:'checked'|'unchecked'}
 export interface InspectedAction {module:string;path:string;action:Action;obligations:ActionObligation[]}
 export interface ActionInspection {source:Document;validation:Validation;actions:InspectedAction[]}
-export interface ActionExecutorProfile {id:string;version:string;actionVersion:'0.1.0';coreVersion:'0.8.0';claims:{obligation:string;status:'supported'|'unsupported'|'unknown';evidence:string[]}[];source:Document;identity:ActionIdentity}
+export interface ActionExecutorProfile {id:string;version:string;actionVersion:'0.1.0';coreVersion:typeof CURRENT_CORE_VERSION;claims:{obligation:string;status:'supported'|'unsupported'|'unknown';evidence:string[]}[];source:Document;identity:ActionIdentity}
 export interface ActionAssessment {source:Document;profile:ActionExecutorProfile;identity:ActionIdentity;declaredCompatible:boolean;executionVerified:false;outcomes:{obligation:string;path:string;status:'supported'|'unsupported'|'unknown';evidence:string[]}[];diagnostics:Diagnostic[]}

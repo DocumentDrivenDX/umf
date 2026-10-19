@@ -1,0 +1,62 @@
+{"testProcess":"tests/core-ideals/facets-avro-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-avro-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-avro-projection.test.ts:
+(pass) authored domains distinguish exact carriers from unenforced approximations [22.81ms]
+(pass) fixed bounds preserve lower-bound losses and refuse impossible or oversized carriers [6.89ms]
+(pass) all profile, encoding and mode combinations recover authored ideals with explicit losses [240.90ms]
+(pass) receipt integrity, unknown metadata, invalid names and exact-input counterexamples remain explicit [2.87ms]
+
+ 4 pass
+ 0 fail
+ 215 expect() calls
+Ran 4 tests across 1 file. [3.42s]
+{"testProcess":"tests/core-ideals/facets-avro-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":215,"completeSummary":true,"logSha256":"a8196e61b700e0fc6e1a58b7579cba637c22e5a5664d8b170ef71fe00ac949cf"}
+{"testProcess":"tests/core-ideals/facets-parquet-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-parquet-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-parquet-projection.test.ts:
+(pass) integer widths and decimal carriers project only matched declared domains [1390.38ms]
+(pass) native validity, reader limitations and non-enforcing length metadata stay separate [420.64ms]
+(pass) profile/mode/encoding matrix recovers full authored ideals in both serializations [6415.20ms]
+(pass) unknown content, false authorship, changed bytes and unsafe inputs cannot pass recovery [176.06ms]
+
+ 4 pass
+ 0 fail
+ 153 expect() calls
+Ran 4 tests across 1 file. [11.59s]
+{"testProcess":"tests/core-ideals/facets-parquet-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":153,"completeSummary":true,"logSha256":"2ea618b60b654c570cebdcffe92b24d125f133122b2ab1c67486c29ae50641d4"}
+{"testProcess":"tests/core-ideals/facets-postgresql-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-postgresql-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-postgresql-projection.test.ts:
+(pass) authored facet matrix preserves every ideal and reports unsupported native representations [5019.59ms]
+(pass) finite decimal checks, exact width bounds, length units and input losses are explicit [40.35ms]
+(pass) unknown meaning, unsafe identifiers and changed receipts cannot be silently normalized [40.02ms]
+(pass) unrepresentable comments produce retained report losses instead of losing metadata [19.89ms]
+
+ 4 pass
+ 0 fail
+ 942 expect() calls
+Ran 4 tests across 1 file. [7.96s]
+{"testProcess":"tests/core-ideals/facets-postgresql-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":942,"completeSummary":true,"logSha256":"55f7fa1f4113a2fff7ddf8df9f0f32b5aa2d7b259812f45f8af46eade0c24688"}
+{"testProcess":"tests/core-ideals/facets-tablespec-projection.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/core-ideals/facets-tablespec-projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/facets-tablespec-projection.test.ts:
+(pass) authored facet matrix projects or explicitly residualizes with exact retained ideal recovery [29007.66ms]
+(pass) positive projections are required, including zero length and narrow signed/unsigned widths [62.52ms]
+(pass) unknown source and facet refinements survive receipts; Field-kind receipts cannot establish facet authorship [42.10ms]
+(pass) forged receipts, stale native text, accessors and invalid native requests refuse [41.88ms]
+(pass) unsupported widths and carriers cannot pass strict mode; float exactness has a permanent counterexample [120.46ms]
+
+ 5 pass
+ 0 fail
+ 2506 expect() calls
+Ran 5 tests across 1 file. [32.48s]
+{"testProcess":"tests/core-ideals/facets-tablespec-projection.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":2506,"completeSummary":true,"logSha256":"265a14d1d9fd096c47adeaa233d314c5e94233426bb512765d5560c4e8efd1a8"}
+
+ 17 pass
+ 0 fail
+ 3816 expect() calls
+Ran 17 tests across 4 files. [55.55s]

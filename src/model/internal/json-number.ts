@@ -1,4 +1,4 @@
-import {UmfError} from '../types';
+import {UmfError} from '../errors';
 // Compare decimal values without rounding, without expanding an exponent.
 export function decimal(text: string): string {
   const match = /^([+-]?)(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/.exec(text);

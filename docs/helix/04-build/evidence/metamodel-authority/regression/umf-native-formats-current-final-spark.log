@@ -1,0 +1,130 @@
+{"testProcess":"tests/spark/arrow-origin.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/arrow-origin.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/arrow-origin.test.ts:
+(pass) US-017-AC7: Arrow-origin layouts match native recovery or block native incompatibility [5009.28ms]
+
+ 1 pass
+ 0 fail
+ 166 expect() calls
+Ran 1 test across 1 file. [12.17s]
+{"testProcess":"tests/spark/arrow-origin.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":166,"completeSummary":true,"logSha256":"973b4a59028966764b1133d2db82717798d6863ad79612c96e20accb2add121c"}
+{"testProcess":"tests/spark/collations.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/collations.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/collations.test.ts:
+(pass) US-017-AC2: field-local collation warnings distinguish target, path, value and provider risks [848.53ms]
+
+ 1 pass
+ 0 fail
+ 57 expect() calls
+Ran 1 test across 1 file. [9.62s]
+{"testProcess":"tests/spark/collations.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":57,"completeSummary":true,"logSha256":"a52b9040dfbffbee41f4f4a7dca843af7e157f195ef8a5d1e3968dbcbbf09b0f"}
+{"testProcess":"tests/spark/metadata.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/metadata.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/metadata.test.ts:
+(pass) US-017-AC2: exact metadata warns about JVM numeric and array interpretation without normalizing [618.85ms]
+(pass) US-017-AC2: nested metadata paths are escaped and missing nullable is runtime-qualified [27.98ms]
+
+ 2 pass
+ 0 fail
+ 46 expect() calls
+Ran 2 tests across 1 file. [10.53s]
+{"testProcess":"tests/spark/metadata.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":46,"completeSummary":true,"logSha256":"a6222ae31e10aa5874a82bab1eebe309fed2f2815ada340e2fcb5bec4c1b852b"}
+{"testProcess":"tests/spark/parameters.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/parameters.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/parameters.test.ts:
+(pass) US-017-AC2: parameter diagnostics preserve source and distinguish configuration constraints [921.76ms]
+
+ 1 pass
+ 0 fail
+ 74 expect() calls
+Ran 1 test across 1 file. [11.77s]
+{"testProcess":"tests/spark/parameters.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":74,"completeSummary":true,"logSha256":"c008db1f7d74a3d26853939d695c35a808e9d756c5d6c6443c95547190e01edc"}
+{"testProcess":"tests/spark/projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/projection.test.ts:
+(pass) US-017-AC6: projection retains source and reports loss; strict policy blocks loss [317.64ms]
+(pass) US-017-AC6: unknown source properties and opaque UDT block; context stays explicit [221.44ms]
+(pass) US-017-AC6: native reference models match across the complete authored matrix [27292.32ms]
+
+ 3 pass
+ 0 fail
+ 444 expect() calls
+Ran 3 tests across 1 file. [36.86s]
+{"testProcess":"tests/spark/projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":444,"completeSummary":true,"logSha256":"59b800ffa54c7dfbc3f6b43b36546ccba62f6e576079459be0c4d47ed844ae4e"}
+{"testProcess":"tests/spark/rename.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/rename.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/rename.test.ts:
+(pass) US-017-AC5: renames exact field-local collation paths through array/map types [593.78ms]
+(pass) US-017-AC5: nested structs own independent metadata and pointers select actual fields [288.48ms]
+(pass) US-017-AC5: unresolved collation paths block instead of dropping or guessing their meaning [345.35ms]
+(pass) US-017-AC5: empty collated names block observed native loss [109.95ms]
+
+ 4 pass
+ 0 fail
+ 30 expect() calls
+Ran 4 tests across 1 file. [9.18s]
+{"testProcess":"tests/spark/rename.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":30,"completeSummary":true,"logSha256":"80540ab6fa2dcec760a571e328d2067f80e8136eff497dd8de31dbd4e8e512e2"}
+{"testProcess":"tests/spark/reverse-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/reverse-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/reverse-projection.test.ts:
+(pass) US-017-AC7: reverse projection reports nullability/layout losses and retains exact source [345.20ms]
+(pass) US-017-AC7: unsigned integers, unknown table fields and malformed maps block [352.94ms]
+(pass) US-017-AC7: both timestamp recovery modes match all native reference recoveries [30912.91ms]
+(pass) US-017-AC7: variant recognition is explicit and cannot hide extra struct fields [298.23ms]
+
+ 4 pass
+ 0 fail
+ 772 expect() calls
+Ran 4 tests across 1 file. [40.84s]
+{"testProcess":"tests/spark/reverse-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":772,"completeSummary":true,"logSha256":"6171b7bb7b5aeae16e32ece7dd661ca9d24794862a58a15f002f44b705bdaba9"}
+{"testProcess":"tests/spark/schema.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/schema.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/schema.test.ts:
+(pass) US-017-AC1: native schema cases preserve exact source through both UMF serializations [6573.68ms]
+(pass) US-017-AC2: metadata integers, unknown semantics and UDT declarations remain data [168.62ms]
+(pass) US-017-AC3: candidate edits validate shape, preserve unknown content and leave source untouched [193.13ms]
+
+ 3 pass
+ 0 fail
+ 157 expect() calls
+Ran 3 tests across 1 file. [15.68s]
+{"testProcess":"tests/spark/schema.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":157,"completeSummary":true,"logSha256":"a47268f3319d39f5ef6247740f9a67ad220cf692cfd22e4bd29ecba1f4fb4c38"}
+{"testProcess":"tests/spark/upstream-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/upstream-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/upstream-projection.test.ts:
+4 | import { Registry } from '../registry/registry';
+5 | import { UmfError, type Document, type Json } from './types';
+6 | export function readDocument(text: string, format: 'json' | 'yaml' = 'yaml'): Document {
+7 |   const value = readJsonValue(text, format);
+8 |   const result = validateDocument(value);
+9 |   if (!result.valid) throw new UmfError('INVALID_DOCUMENT', JSON.stringify(result.diagnostics));
+                               ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/umf","message":"must pass \"const\" keyword validation","severity":"error"}]
+ path: "",
+ code: "INVALID_DOCUMENT"
+
+      at readDocument (/Users/erik/.codex/worktrees/d8be/umf/src/model/document.ts:9:28)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/spark/upstream-projection.test.ts:5:48)
+(fail) US-017-AC7: complete pinned upstream IPC schema recovery agrees with native outcomes [16.42ms]
+(pass) US-017-AC7: extension semantic tags cannot be waived as generic metadata loss [347.84ms]
+
+ 1 pass
+ 1 fail
+ 10 expect() calls
+Ran 2 tests across 1 file. [7.26s]
+{"testProcess":"tests/spark/upstream-projection.test.ts","exitCode":1,"pass":1,"fail":1,"assertions":10,"completeSummary":true,"logSha256":"a56097c12e6f3375370dfd4069e3aa2de4d0763be0adce4f8683e4eda7f7769a"}
+Complete test file failed or terminated: tests/spark/upstream-projection.test.ts
+
+ 20 pass
+ 1 fail
+ 1756 expect() calls
+Ran 21 tests across 9 files. [154.21s]

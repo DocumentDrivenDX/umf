@@ -1,7 +1,6 @@
 {
   "alternatives": [
     "{ state: \"missing\" | \"inapplicable\"; }",
-    "{ state: \"legacy\"; value: Json; }",
     "{ state: \"known\" | \"partial\"; facets: CoreFacets; interpreted: CoreFacetInterpreted; uninterpretedPaths: string[]; }"
   ],
   "authored": false,

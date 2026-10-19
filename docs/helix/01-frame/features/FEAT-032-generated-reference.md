@@ -181,3 +181,14 @@ and Model catalog views. The ontology connects readable type definitions to
 valid object keys and accepted values. Keep API reference separate. Preserve
 existing object/property/catalog bookmarks and collapsed disclosure defaults.
 Do not present this descriptive projection as a replacement instance validator.
+
+## Authority cutover amendment — 2026-10-18
+
+Owner direction supersedes the descriptive bootstrap projection and separate
+explorer-host arrangement above. ADR-005 and CONTRACT-080 require one authored
+current UMF metamodel generating schemas, shapes, portable semantic rules and
+reference/ontology data. TD-091 and STP-091 govern the current-core migration,
+retirement of duplicated rules/old runtime paths, and one route owner for
+ontology/reference/catalog. Native and extension release meanings and historical
+evidence remain exact. No raw authored JSON Schema fragment or handwritten
+per-core-rule callback may remain the model's hidden enforcement authority.

@@ -1,0 +1,28 @@
+{"testProcess":"tests/spark/upstream-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/upstream-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/upstream-projection.test.ts:
+(pass) US-017-AC7: complete pinned upstream IPC schema recovery agrees with native outcomes [49834.93ms]
+(pass) US-017-AC7: extension semantic tags cannot be waived as generic metadata loss [314.87ms]
+
+ 2 pass
+ 0 fail
+ 1104 expect() calls
+Ran 2 tests across 1 file. [58.76s]
+{"testProcess":"tests/spark/upstream-projection.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":1104,"completeSummary":true,"logSha256":"2ac5d1b1501c70dd471d96f52fb92205fbc2cfb806453433168f1d3b2b4e5a41"}
+{"testProcess":"tests/spark/upstream.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/spark/upstream.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/spark/upstream.test.ts:
+(pass) US-017-AC4: pinned upstream schema examples preserve native JSON and rejection boundaries [3063.14ms]
+
+ 1 pass
+ 0 fail
+ 85 expect() calls
+Ran 1 test across 1 file. [13.34s]
+{"testProcess":"tests/spark/upstream.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":85,"completeSummary":true,"logSha256":"c2f1469dead3d46401351b116259e377ec55595f6f21d055fc3eb1c645fb2ddc"}
+
+ 3 pass
+ 0 fail
+ 1189 expect() calls
+Ran 3 tests across 2 files. [72.18s]

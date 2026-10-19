@@ -2,8 +2,8 @@
 
 A reusable, framework-neutral browser for UMF documents, TableSpec tables,
 domain packs, source artifact collections and ontology diagrams. This is the
-same renderer used by the UMF microsite. Version 1.1.2 ships compiled browser
-ESM, TypeScript declarations and static assets; no Bun, Node runtime, framework,
+same renderer used by the UMF microsite. Version 2.0.0 ships compiled browser
+ESM, TypeScript declarations and static assets. No Bun, Node runtime, framework,
 public corpus or network connection to the UMF microsite is required.
 
 ## Install and embed
@@ -11,10 +11,12 @@ public corpus or network connection to the UMF microsite is required.
 Install the public npm package:
 
 ```sh
-npm install @documentdrivendx/umf-schema-browser
-# Reproducible version pin:
-npm install @documentdrivendx/umf-schema-browser@1.1.2
+npm install @documentdrivendx/umf-schema-browser@2.0.0
 ```
+
+For local release review, install from the built package directory. A site
+consumer must pin an exact published package and verify its installed
+distribution before deployment.
 
 Version 1.1.0 adds the [versioned host contract](HOST_CONTRACT.md), published
 catalog schema, selection/navigation/error events, custom categories, annotations,
@@ -24,8 +26,10 @@ build-time validators under strict CSP, with lazy YAML and native recovery.
 The microsite installs the exact integrity-locked release and checks the complete
 runtime asset closure and workspace markup. See [changes](CHANGELOG.md).
 
-Version 1.1.2 fixes accessibility and selected-source loading while retaining the
-1.1.1 reproducible build and fixed-validator profile.
+Version 2.0.0 routes the UMF site's ontology, object reference and model catalog
+through one host while keeping the standalone and embedding package surfaces.
+The package uses the inventoried optional native-schema validator
+cohort, which remains separately versioned from UMF core.
 
 Copy `node_modules/@documentdrivendx/umf-schema-browser/assets/` to your static
 server, for example `/schema-browser/`. Use a bundler for the exported API, or
@@ -99,9 +103,25 @@ Metadata-dependent details link to their source overview when it is not yet load
 
 ## Build
 
-Maintainers run `bun docs/helix/05-deploy/schema-browser/build.ts`, and `npm pack` in the output
-directory. Bun 1.3.14 is a build dependency only. The reusable package contains
-no sample dataset archives; users supply their catalog and original assets.
+The 2.0.0 producer uses Bun 1.4.2. Build an isolated
+package directory and pack it with:
+
+```sh
+bun docs/helix/05-deploy/schema-browser/build.ts /tmp/schema-browser-a
+cd /tmp/schema-browser-a
+npm pack
+```
+
+The reusable package contains no sample dataset archives; users supply their
+catalog and original assets.
+
+To reproduce a candidate, build it twice into separate output directories with
+Bun 1.4.2, then compare `release-manifest.json` and `asset-manifest.json` byte
+for byte. Each output's `provenance.json` records hashes for the actual source,
+model, schema, lockfile and renderer inputs; it does not require a fixed source
+commit hash in this documentation. Package the reviewed output with `npm pack`
+and verify the archive against its `SHA256SUMS` and release manifest. This proves
+reproducibility of that source candidate, not publication or a consumer pin.
 
 ## License
 
@@ -109,6 +129,6 @@ UMF-authored software in this distribution is available under either the MIT
 license or Apache License 2.0, at your option (`MIT OR Apache-2.0`). Bundled third
 party software retains its own licenses; see `THIRD_PARTY_NOTICES.md`.
 
-Embedding controls include `hideHero`, `readOnlyLocalFiles`, `theme`, `themeVariables`, `categories`, `focus()` and `onContentHeight`. `height: '100%'` fills a container with an explicit height. Run `bun docs/helix/05-deploy/schema-browser/example-host.ts <package-directory>` for the generic executable integration host, or `bun scripts/schema-browser-reproducibility.ts --original-source <original-checkout>` under Bun 1.3.14 to compare two complete current-source candidate builds and separately reproduce installed release 1.1.2. The original checkout must be a detached checkout of `00755f5d2b76696b14a4750214c66f1209560939` with its own `bun install --frozen-lockfile` dependencies. The checker authenticates its complete original input inventory before comparing released assets and exported API; current candidate output does not replace or relabel the installed release.
+Embedding controls include `hideHero`, `readOnlyLocalFiles`, `theme`, `themeVariables`, `categories`, `focus()` and `onContentHeight`. `height: '100%'` fills a container with an explicit height. Run `bun docs/helix/05-deploy/schema-browser/example-host.ts <package-directory>` for the generic executable integration host.
 
 The installed package also ships `examples/index.html`: serve the package directory over HTTP(S) and open that page for a no-build, strict-CSP host with inline entries, selection callbacks, dark-mode following and focus controls. It contains a tiny authored schema, no public dataset.

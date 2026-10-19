@@ -1,11 +1,11 @@
 import {postgresqlRecordProjectionCases} from './record-postgresql-projection-cases';
-import {projectRecordToPostgresql,recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
+import {projectRecordToPostgresql, recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
 import {randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlProjectionCases} from './field-postgresql-projection-cases';
-import {projectFieldToPostgresql,recoverFieldFromPostgresql} from '../../src/core-ideals/field-postgresql-projection';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
+import {projectFieldToPostgresql, recoverFieldFromPostgresql} from '../../src/core-ideals/field-postgresql-projection';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+
 import {classifyPostgresqlField} from '../../src/core-ideals/postgresql-field';
 const name='umf-field-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});if(input!==undefined){p.stdin!.write(input);p.stdin!.end();}const [stdout,stderr,status]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(status)throw Error(stderr);return stdout;}
@@ -32,7 +32,7 @@ try{
   for(const column of actual){const field=row.request.fields.find(f=>f.columnName===column.column)!;if(column.typeSchema!=='pg_catalog'||column.typeOid!==expectedTypes[field.nativeType])throw Error('Native record type mismatch');}
  }
  const query=await Bun.file('native/postgresql/catalog/snapshot.sql').text();const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query,snapshot:JSON.parse(await sql(query)),reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
- const nativeSource=JSON.stringify(capture),source=upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'native-only'})).target;let classified=0;
+ const nativeSource=JSON.stringify(capture),source=importPostgresqlCatalogCapture(nativeSource,{id:'native-only'});let classified=0;
  for(const column of getPostgresqlColumnMetadata(source).filter(c=>c.relation.schema==='sales')){const result=classifyPostgresqlField(source,{column:column.path,nativeSource,mode:'strict'});if(result.mapping.origin!=='classified'||result.request.author)throw Error('Author intent inferred');classified++;}
  await Bun.write('fixtures/validation/field-postgresql-projection-native.json',JSON.stringify({scope:'PostgreSQL 17.4 executed Field and flat-record DDL, catalog identities/comments and retained-report ideal recovery; no value-domain equivalence',image,serverVersion:170004,classified,expectedTypes,observed,rows,recordRows,tableComments},null,2)+'\n');console.log(JSON.stringify({executed:rows.length,classified,comments:observed.length,recordCases:recordRows.length,executedRecords:recordRows.filter(r=>r.result.status==='projected').length}));
 }finally{if(created)await run(['docker','rm','-f',name]);}

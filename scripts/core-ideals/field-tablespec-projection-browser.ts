@@ -1,13 +1,14 @@
+// Synthetic current-core fixture for active operation/projection behavior.
 import {recordCase} from './record-tablespec-cases';
 import {projectRecordToTableSpec} from '../../src/core-ideals/record-tablespec-projection';
 import {chromium} from 'playwright';
 import {declareCoreElementKind} from '../../src/model/field-kind';
-import {projectFieldToTableSpec,type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
+import {projectFieldToTableSpec, type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
 import {exportTableSpec} from '../../src/adapters/tablespec';
 import {type Document} from '../../src/model/types';
 const rows:any[]=[];
 for(const nativeType of ['BOOLEAN','INTEGER','DECIMAL','FLOAT','TEXT','VARCHAR','CHAR','DATE','DATETIME','TIMESTAMP'] as const)for(const mode of ['strict','report'] as const)for(const namespace of ['sales','']){
- const source:Document={umf:'0.2.0',id:'source',vocabularies:{},modules:[{id:'m',namespace,elements:[{id:'e',name:'value',extensions:{}}]}]};
+ const source:Document={umf:'0.10.0',id:'source',vocabularies:{},modules:[{id:'m',namespace,elements:[{id:'e',name:'value',extensions:{}}]}]};
  const author=declareCoreElementKind(source,{module:'m',element:'e'},'field'),request:FieldTableSpecRequest={id:'target',tableName:'Sample',columnName:'value',nativeType,mode};
  const result=projectFieldToTableSpec(author,request);if(result.status!==(namespace&&mode==='strict'?'blocked':'projected'))throw Error('Namespace policy');rows.push({author,request,result,...(result.target?{text:exportTableSpec(result.target)}:{})});
 }
@@ -34,7 +35,7 @@ try{
    if(result.status==='blocked'){if('target'in result)throw Error('Partial Field');fieldBlocks++;continue;}
    if(!Array.isArray(result.diagnostics)||result.diagnostics.length!==result.residuals.length)throw Error('Success diagnostics');const legacy=umf.copyJson(result);delete legacy.diagnostics;if(JSON.stringify(umf.recoverFieldFromTableSpec(legacy,row.text))!==JSON.stringify(result.source))throw Error('Legacy recovery');
    for(const format of ['json','yaml']){const back=umf.readJsonValue(umf.writeJsonValue(result,format),format);if(JSON.stringify(umf.recoverFieldFromTableSpec(back,row.text))!==JSON.stringify(row.author.target))throw Error('Ideal recovery');recoveries++;}
-   const nativeOnly=umf.upgradeFieldEnvelope(umf.importTableSpec(row.text,{id:'native-only',format:'json'})).target;
+   const nativeOnly=umf.umf.importTableSpec(row.text,{id:'native-only',format:'json'});
    if(umf.classifyTableSpecField(nativeOnly,{column:0,mode:'strict'}).mapping.origin!=='classified')throw Error('Author intent inferred');
    let refused=false;try{umf.recoverFieldFromTableSpec(result,row.text+' ');}catch{refused=true;}if(!refused)throw Error('Stale native accepted');
   }
@@ -48,7 +49,7 @@ try{
    const result=umf.projectRecordToTableSpec(row.author,row.request);if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Record parity');
    if(result.status==='blocked'){if('target'in result)throw Error('Partial record');recordBlocks++;continue;}
    for(const format of ['json','yaml']){const receipt=umf.readJsonValue(umf.writeJsonValue(result,format),format);if(JSON.stringify(umf.recoverRecordFromTableSpec(receipt,row.text))!==JSON.stringify(row.author.target))throw Error('Record recovery');recordRecoveries++;}
-   const native=umf.upgradeFieldEnvelope(umf.importTableSpec(row.text,{id:'native-record',format:'json'})).target;
+   const native=umf.umf.importTableSpec(row.text,{id:'native-record',format:'json'});
    const classified=umf.classifyTableSpecRecord(native,{recordModule:'records',recordId:'record',mode:'strict'});if(classified.target.modules.at(-1).elements[0].references.length!==3)throw Error('Native record membership');
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {fieldBlocks,projections:rows.length,idealRecoveries:recoveries,lossPolicies:2,recordCases:records.length,recordRecoveries,recordBlocks};

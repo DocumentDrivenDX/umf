@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importAvroSchema,exportAvroBundle} from '../../src/adapters/avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import type {Document} from '../../src/model/types';
 import corpus from '../../fixtures/avro/relationship-discovery-cases.json';
 import proof from '../../fixtures/validation/relationship-avro-discovery-native.json';

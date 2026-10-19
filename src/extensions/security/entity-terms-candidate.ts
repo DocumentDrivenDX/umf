@@ -5,7 +5,7 @@ import {copyJson} from '../../model/json';
 import {checkSchemaLiteral} from '../../model/schema-literals';
 import {ProtectionLiteralBudget} from './protection/literals';
 import {createValidator} from '../../validation/schema';
-import documentSchema from '../../../spec/core/schema-properties-document.schema.json';
+import documentSchema from '../../../spec/core/schema.json';
 import {resolveCandidateSecurityOntology,requireIssuedCandidateSecurityOntology} from './ontology-checks-candidate';
 
 const validator=createValidator();validator.addSchema(documentSchema);

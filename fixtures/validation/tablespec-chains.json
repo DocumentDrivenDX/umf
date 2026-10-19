@@ -4,7 +4,7 @@
     {
       "kind": "postgresql",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "postgresql-avro",
         "vocabularies": {
           "umf.postgresql.catalog": {
@@ -13739,7 +13739,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "postgresql-avro",
           "vocabularies": {
             "umf.postgresql.catalog": {
@@ -27475,7 +27475,7 @@
           "sourceToAvro": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "postgresql-avro",
               "vocabularies": {
                 "umf.postgresql.catalog": {
@@ -41411,7 +41411,7 @@
             ],
             "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"PgRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": [\n        \"null\",\n        \"boolean\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"large\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ],\n      \"doc\": \"Exact amount with native precision and scale\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bounded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"padded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"data\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"time-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"domain_value\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "avro-record",
               "vocabularies": {
                 "umf.avro": {
@@ -42085,7 +42085,7 @@
           "avroToTableSpec": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "avro-record",
               "vocabularies": {
                 "umf.avro": {
@@ -43261,7 +43261,7 @@
             ],
             "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"flag\",\n      \"nullable\": true,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"ordinary\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"large\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"exact\",\n      \"nullable\": true,\n      \"description\": \"Exact amount with native precision and scale\",\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"single\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"wide\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bounded\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"padded\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"data\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"items\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"domain_value\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"document\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"identifier\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "postgresql-tablespec",
               "vocabularies": {
                 "umf.tablespec": {
@@ -44473,7 +44473,7 @@
           }
         ],
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "postgresql-tablespec",
           "vocabularies": {
             "umf.tablespec": {
@@ -45003,7 +45003,7 @@
     {
       "kind": "sqlserver",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "sqlserver-avro",
         "vocabularies": {
           "umf.sqlserver": {
@@ -48207,7 +48207,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "sqlserver-avro",
           "vocabularies": {
             "umf.sqlserver": {
@@ -51412,7 +51412,7 @@
           "sourceToAvro": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "sqlserver-avro",
               "vocabularies": {
                 "umf.sqlserver": {
@@ -54893,7 +54893,7 @@
             ],
             "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"SqlRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 38,\n          \"scale\": 9\n        }\n      ],\n      \"doc\": \"Exact decimal amount\"\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 19,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"small_cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 10,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"approximate\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unlimited\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"SqlRecord_field_17\",\n          \"size\": 8\n        }\n      ]\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"type\": {\n        \"type\": \"fixed\",\n        \"name\": \"SqlRecord_field_18\",\n        \"size\": 8\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"variant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"computed\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "avro-record",
               "vocabularies": {
                 "umf.avro": {
@@ -55878,7 +55878,7 @@
           "avroToTableSpec": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "avro-record",
               "vocabularies": {
                 "umf.avro": {
@@ -57552,7 +57552,7 @@
             ],
             "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"ordinary\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"exact\",\n      \"nullable\": true,\n      \"description\": \"Exact decimal amount\",\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 38,\n      \"scale\": 9\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 3\n    },\n    {\n      \"name\": \"cash\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 19,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"small_cash\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 10,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"approximate\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"single\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unlimited\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 18,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"identifier\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"document\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"variant\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"computed\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "sqlserver-tablespec",
               "vocabularies": {
                 "umf.tablespec": {
@@ -59235,7 +59235,7 @@
           }
         ],
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "sqlserver-tablespec",
           "vocabularies": {
             "umf.tablespec": {
@@ -60027,7 +60027,7 @@
     {
       "kind": "parquet",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "nested",
         "vocabularies": {
           "umf.parquet": {
@@ -60267,7 +60267,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "nested",
           "vocabularies": {
             "umf.parquet": {
@@ -60508,7 +60508,7 @@
           "sourceToAvro": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "nested",
               "vocabularies": {
                 "umf.parquet": {
@@ -60984,7 +60984,7 @@
             ],
             "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"unsigned\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 0\n        }\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"profile\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"ParquetRecord_record_4\",\n          \"fields\": [\n            {\n              \"name\": \"label\",\n              \"type\": \"string\"\n            },\n            {\n              \"name\": \"score\",\n              \"type\": [\n                \"null\",\n                \"float\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"lookup\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_entry_10\",\n            \"fields\": [\n              {\n                \"name\": \"key\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"value\",\n                \"type\": [\n                  \"null\",\n                  \"string\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"matrix\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            {\n              \"type\": \"array\",\n              \"items\": [\n                \"null\",\n                \"long\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-nanos\"\n        }\n      ]\n    },\n    {\n      \"name\": \"local\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"ParquetRecord_fixed_23\",\n          \"size\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "avro",
               "vocabularies": {
                 "umf.avro": {
@@ -61650,7 +61650,7 @@
           "avroToTableSpec": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "avro",
               "vocabularies": {
                 "umf.avro": {
@@ -62692,7 +62692,7 @@
             ],
             "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unsigned\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 0\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"profile\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"items\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"lookup\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"matrix\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"local\",\n      \"nullable\": true,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "parquet-tablespec",
               "vocabularies": {
                 "umf.tablespec": {
@@ -63658,7 +63658,7 @@
           }
         ],
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "parquet-tablespec",
           "vocabularies": {
             "umf.tablespec": {
@@ -64030,7 +64030,7 @@
     {
       "kind": "sqlserver-indexes",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "indexes",
         "vocabularies": {
           "umf.sqlserver": {
@@ -66923,7 +66923,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "indexes",
           "vocabularies": {
             "umf.sqlserver": {
@@ -69817,7 +69817,7 @@
           "sourceToAvro": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "indexes",
               "vocabularies": {
                 "umf.sqlserver": {
@@ -72774,7 +72774,7 @@
             ],
             "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Item\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"email\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"active\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"payload\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "index-projection",
               "vocabularies": {
                 "umf.avro": {
@@ -72924,7 +72924,7 @@
           "avroToTableSpec": {
             "status": "projected",
             "source": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "index-projection",
               "vocabularies": {
                 "umf.avro": {
@@ -73162,7 +73162,7 @@
             ],
             "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Items\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"email\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"active\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"payload\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
             "target": {
-              "umf": "0.1.0",
+              "umf": "0.10.0",
               "id": "sqlserver-indexes-tablespec",
               "vocabularies": {
                 "umf.tablespec": {
@@ -73454,7 +73454,7 @@
           }
         ],
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "sqlserver-indexes-tablespec",
           "vocabularies": {
             "umf.tablespec": {

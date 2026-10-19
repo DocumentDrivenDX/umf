@@ -1,0 +1,48 @@
+{"testProcess":"tests/core-ideals/facets-sqlserver-constraints.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-constraints.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-sqlserver-constraints.test.ts:
+(pass) captured CHECKs yield scoped native facts without changing source or asserting core facets [4056.07ms]
+(pass) disabled, untrusted and replication checks cannot become unconditional guarantees [640.61ms]
+(pass) missing inventory, column association, type and version are explicit [1157.92ms]
+(pass) exact native numeric tokens and future fields survive; unsafe IDs and getters refuse [201.41ms]
+(pass) scope boundaries agree with pinned independent native value probes [0.21ms]
+(pass) empty-string inference requires zero bytes, variable storage and scoped enforcement [638.41ms]
+
+ 6 pass
+ 0 fail
+ 172 expect() calls
+Ran 6 tests across 1 file. [7.57s]
+{"testProcess":"tests/core-ideals/facets-sqlserver-constraints.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":172,"completeSummary":true,"logSha256":"d6878ab5fd0b6d7f9a90cbfea44562f8e9527253bf84a11b7edc5feef94694b8"}
+{"testProcess":"tests/core-ideals/facets-sqlserver-discovery.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-discovery.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+ 6 | const source=importSqlServerCatalog(proof.sourceText,{id:'sqlserver-facets'}),columns=getSqlServerColumnMetadata(source);
+ 7 | const column=(table:string,name='value')=>columns.find(c=>c.table.name===table&&c.element.name===name)!.nativeColumn;
+ 8 | const result=(id:string)=>proof.cases.find((r:any)=>r.id===id).actual;
+ 9 | test('pinned native discovery preserves exact outputs and current inputs',async()=>{
+10 |  expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.observational).toBe(false);expect(proof.serializationRecoveries).toBe(2);expect(proof.columns).toBe(37);expect(proof.cases.length).toBe(86);
+11 |  for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(sha);
+                                                                                                                                                                                          ^
+error: expect(received).toBe(expected)
+
+Expected: "1a7859969e54023981eba0a5ebb867629de2c50ebf82dcd48f502f777db837ba"
+Received: "2b00cb4390a5d74fda80b16412d3aab2b31aa436e1e2233a3cdea53b6af8d018"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-sqlserver-discovery.test.ts:11:182)
+(fail) pinned native discovery preserves exact outputs and current inputs [4.02ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.35ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.51ms]
+
+ 2 pass
+ 1 fail
+ 118 expect() calls
+Ran 3 tests across 1 file. [9.32s]
+{"testProcess":"tests/core-ideals/facets-sqlserver-discovery.test.ts","exitCode":1,"pass":2,"fail":1,"assertions":118,"completeSummary":true,"logSha256":"3da30a699502adf3429e1baa64ed3dfa64b730c3c334ab75e61abec8aa0b31ee"}
+Complete test file failed or terminated: tests/core-ideals/facets-sqlserver-discovery.test.ts
+
+ 8 pass
+ 1 fail
+ 290 expect() calls
+Ran 9 tests across 2 files. [16.93s]

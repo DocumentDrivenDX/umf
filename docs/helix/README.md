@@ -22,8 +22,11 @@ Python adoption and other version-specific authoring expansion remain separate.
 The [current core self-model](../../spec/metamodel/umf.yaml) drives the unified
 Schemas ontology, object reference and model catalog navigation.
 [Self-description evidence](04-build/evidence/generated-reference/ontology/README.md)
-records browser journeys and qualifications. Bootstrap JSON Schema and core
-semantic validators remain authoritative; the model retains their exact rules.
+records browser journeys and qualifications. The [authority cutover plan](04-build/metamodel-authority-plan.md) replaces the
+bootstrap projection with an authored metamodel generating schemas and portable
+validators, and retires duplicate definitions and old runtime/browser paths.
+ADR-005 and CONTRACT-080 govern the desired transition; implementation and new
+qualification remain pending until its recorded gates pass.
 
 [Schema and API reference organization plan](04-build/schema-reference-ia-plan.md)
 defines latest-first concept navigation, key/value explanations and task-based

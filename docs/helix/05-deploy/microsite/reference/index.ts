@@ -3,6 +3,7 @@ import {showOntology} from './ontology';
 import type {SelfModelCatalog} from '../../reference/model';
 import {mountWorkbench} from './workbench';
 import {schemaReader,apiReader,readerRoute} from './reader-view';
+import {mountSchemaBrowser,type SchemaBrowserHandle} from '@documentdrivendx/umf-schema-browser';
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
 const digest=async(bytes:ArrayBuffer)=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
 let manifest:any,index:ReferenceIndex,reader:ReaderCatalog,exampleYaml='';const loaded=new Map<string,Entry>();
@@ -86,15 +87,25 @@ async function start(){
  };
  let navigation=0;
  let selfModel:SelfModelCatalog|undefined;
+ let catalogBrowser:SchemaBrowserHandle|undefined;
+ let catalogRouteKey='';
+ let syncingCatalogHistory=false;
  const changed=async()=>{const current=++navigation;
  if(view==='core'){
-  const params=new URLSearchParams(location.hash.slice(1));const ontology=params.get('view')==='ontology'||!params.has('view')&&!params.has('entry');
-  $('ontology').hidden=!ontology;document.querySelector<HTMLElement>('.workspace')!.hidden=ontology;
-  for(const a of document.querySelectorAll<HTMLAnchorElement>('.schema-views a')){if((ontology?'ontology':'reference')===a.dataset.view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}
+  const params=new URLSearchParams(location.hash.slice(1)),mode=params.get('view')??(!params.has('entry')?'ontology':'reference'),ontology=mode==='ontology',catalog=mode==='catalog';
+  $('ontology').hidden=!ontology;$('model-catalog').hidden=!catalog;document.querySelector<HTMLElement>('.workspace')!.hidden=ontology||catalog;
+  for(const a of document.querySelectorAll<HTMLAnchorElement>('.schema-views a')){if(mode===a.dataset.view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}
+  if(!catalog&&catalogBrowser){catalogBrowser.destroy();catalogBrowser=undefined;}
+  if(catalog){try{
+   const selection=Object.fromEntries(['schema','definition','relationship','revision'].flatMap(key=>params.has(key)?[[key,params.get(key)!]]:[])),key=JSON.stringify(selection);
+   if(!catalogBrowser){catalogRouteKey=key;catalogBrowser=mountSchemaBrowser($('model-catalog'),{assetsUrl:new URL('../schema-browser/assets/',location.href).href,catalogUrl:'../schema-catalog.json',assetBaseUrl:'../',title:'UMF model catalog',...(Object.keys(selection).length?{initialRoute:new URLSearchParams(selection).toString()}:{}),onNavigate:(next)=>{if(!syncingCatalogHistory)history.pushState(null,'','#'+new URLSearchParams({view:'catalog',...next}));catalogRouteKey=JSON.stringify(next);}});await catalogBrowser.ready;}
+   else if(key!==catalogRouteKey){catalogRouteKey=key;if(Object.keys(selection).length){syncingCatalogHistory=true;try{await catalogBrowser.select(selection as any);}finally{syncingCatalogHistory=false;}}}
+   if(current!==navigation)return;
+  }catch(error){$('model-catalog').replaceChildren(element('h2','Catalog unavailable'),element('p',String(error),'callout warning'));}return;}
   if(ontology){try{selfModel??=JSON.parse(decode(await verified('metamodel.json')));if(current!==navigation)return;showOntology($('ontology'),selfModel!,reader);}catch(error){$('ontology').replaceChildren(element('h2','Ontology unavailable'),element('p',String(error),'callout warning'),link('Open object reference','#'+new URLSearchParams({view:'reference',entry:reader.latest.id,concept:'document'})));}return;}
  }
-const params=new URLSearchParams(location.hash.slice(1));if(view==='core'&&!params.has('entry')){history.replaceState(null,'',readerRoute(reader.latest.id,'','document')+'&view=reference');params.set('entry',reader.latest.id);params.set('concept','document');}const id=params.get('entry');if(view==='api'&&id){const selected=reader.api.find(a=>a.id===id);if(selected){task.value=selected.task;kind.value='All kinds';const searchInput=$<HTMLInputElement>('search');if(!matchesWords(selected.title+' '+selected.summary,searchInput.value))searchInput.value='';}}refresh();if(id)try{let selected=await getEntry(id);if(current!==navigation)return;if(view==='core'&&selected.kind==='schema'&&selected.data.profileVersions.length&&selected.id!==reader.latest.id){location.replace(readerRoute(reader.latest.id,params.get('pointer')??'',params.get('concept')??''));return;}const rendered=await show(selected,params.get('pointer')??'',params.get('concept')??'');if(current!==navigation)return;$('inspector').replaceChildren(...Array.from(rendered.childNodes));if(keyboardNavigation){const heading=$('inspector').querySelector('h2');heading?.setAttribute('tabindex','-1');(heading as HTMLElement)?.focus();keyboardNavigation=false;}}catch(error){if(current!==navigation)return;$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'),link('Open Document',readerRoute(reader.latest.id)));}};
- $('search').oninput=()=>{limit=50;refresh();};task.onchange=kind.onchange=()=>{limit=50;refresh();};$('more').onclick=()=>{limit+=50;refresh();};window.addEventListener('hashchange',()=>void changed());
+const params=new URLSearchParams(location.hash.slice(1));if(view==='core'&&!params.has('entry')){history.replaceState(null,'',readerRoute(reader.latest.id,'','document')+'&view=reference');params.set('entry',reader.latest.id);params.set('concept','document');}const id=params.get('entry');if(view==='api'&&id){const selected=reader.api.find(a=>a.id===id);if(selected){task.value=selected.task;kind.value='All kinds';const searchInput=$<HTMLInputElement>('search');if(!matchesWords(selected.title+' '+selected.summary,searchInput.value))searchInput.value='';}}refresh();if(id)try{const selected=await getEntry(id);if(current!==navigation)return;const rendered=await show(selected,params.get('pointer')??'',params.get('concept')??'');if(current!==navigation)return;$('inspector').replaceChildren(...Array.from(rendered.childNodes));if(keyboardNavigation){const heading=$('inspector').querySelector('h2');heading?.setAttribute('tabindex','-1');(heading as HTMLElement)?.focus();keyboardNavigation=false;}}catch(error){if(current!==navigation)return;$('inspector').replaceChildren(element('h2','Reference unavailable'),element('p',String(error),'callout warning'),link('Open Document',readerRoute(reader.latest.id)));}};
+ $('search').oninput=()=>{limit=50;refresh();};task.onchange=kind.onchange=()=>{limit=50;refresh();};$('more').onclick=()=>{limit+=50;refresh();};window.addEventListener('hashchange',()=>void changed());window.addEventListener('popstate',()=>void changed());
  if(!location.hash&&view!=='core'){const first=refresh()[0];if(first)history.replaceState(null,'',readerRoute(first.id,first.pointer??'',first.concept??''));}await changed();
  $('load-status').textContent=readyMessage;
 }

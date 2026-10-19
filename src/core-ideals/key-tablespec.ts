@@ -5,11 +5,7 @@ import {exportTableSpec,exportTableSpecBundle,getTableSpecTable,TABLESPEC_EXTENS
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import nullability from '../../spec/core/nullability-document.schema.json';
-import cardinality from '../../spec/core/cardinality-document.schema.json';
-import facets from '../../spec/core/facet-document.schema.json';
-import keys from '../../spec/core/key-document.schema.json';
+
 import schema from '../../spec/core/tablespec-key-classification.schema.json';
 import manifest from '../../spec/extensions/tablespec-keys/package.json';
 export const TABLESPEC_KEYS_EXTENSION='umf.tablespec.keys';
@@ -28,7 +24,7 @@ export interface TableSpecKeyClassification {
  residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
 const validator=createValidator(false);
-for(const s of [legacy,fields,nullability,cardinality,facets,keys])validator.addSchema(s);
+for(const s of [legacy])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 function canonical(value:Json):string {
  if(Array.isArray(value))return 'a['+value.map(canonical).join(',')+']';

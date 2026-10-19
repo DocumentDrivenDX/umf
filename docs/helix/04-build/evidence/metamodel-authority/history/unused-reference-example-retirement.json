@@ -1,0 +1,12 @@
+{
+  "sourceRevision": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+  "path": "docs/helix/05-deploy/reference/examples/minimal.json",
+  "sha256": "3dde2a516ec14d036ba9aa64125e375118880d2fdca1d691f2a9e5cc7b24bad2",
+  "reason": "Unused historical core example is absent from the reference example catalog and has no source/test consumers. Current catalog examples and generated complete reader examples cover its document/reference intent. The unknown-preservation example retains the two-module correspondence case.",
+  "replacements": [
+    "docs/helix/05-deploy/reference/examples/catalog.json",
+    "docs/helix/05-deploy/reference/examples/unknown.json",
+    "tests/reference/reader.test.ts"
+  ],
+  "inertOriginal": "reference-minimal.json.txt"
+}

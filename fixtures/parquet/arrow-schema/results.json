@@ -3,7 +3,7 @@
     {
       "id": "stored",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "fixtures/parquet/arrow-schema/stored.parquet",
         "vocabularies": {
           "umf.parquet": {
@@ -31,7 +31,7 @@
       },
       "result": {
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "fixtures/parquet/arrow-schema/stored.parquet",
           "vocabularies": {
             "umf.parquet": {
@@ -94,7 +94,7 @@
         "metadataIndex": 1,
         "ipcHex": "ffffffff000200001000000000000a000e000600050008000a000000000104001000000000000a000c000000040008000a0000004000000004000000010000000400000078ffffff1800000004000000080000007072657365727665000000000d0000006675747572652e736368656d610000000400000014010000dc00000088000000180000000000120018000800060007000c000000100014001200000000000105140000005c000000080000001400000000000000050000006c6162656c000000010000000c00000008000c0004000800080000001800000004000000080000007072657365727665000000000c0000006675747572652e6669656c640000000050ffffff4cffffff0000010a1000000020000000040000000000000007000000637265617465640008000c000600080008000000000002000400000010000000416d65726963612f4e65775f596f726b000000009cffffff000001121000000020000000040000000000000007000000656c61707365640000000600080006000600000000000200d0ffffff000001151400000020000000040000000100000028000000060000006576656e747300000400040004000000100014000800060007000c0000001000100000000000010210000000200000000400000000000000040000006974656d0000000008000c000800070008000000000000012000000000000000",
         "message": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "fixtures/parquet/arrow-schema/stored.parquet/parquet-arrow-message",
           "vocabularies": {
             "umf.arrow.flatbuffer": {
@@ -198,7 +198,7 @@
           ]
         },
         "schema": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "fixtures/parquet/arrow-schema/stored.parquet/parquet-arrow-schema",
           "vocabularies": {
             "umf.arrow.flatbuffer": {
@@ -300,7 +300,7 @@
     {
       "id": "absent",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "fixtures/parquet/arrow-schema/physical-only.parquet",
         "vocabularies": {
           "umf.parquet": {
@@ -328,7 +328,7 @@
       },
       "result": {
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "fixtures/parquet/arrow-schema/physical-only.parquet",
           "vocabularies": {
             "umf.parquet": {

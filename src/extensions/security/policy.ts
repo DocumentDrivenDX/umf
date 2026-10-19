@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/security/package.json';
 import ontologySchema from '../../../spec/extensions/security/ontology.schema.json';
 import {Registry} from '../../registry/registry';
@@ -92,7 +93,7 @@ export function inspectSecurityPolicy(input:unknown,resolutionInput?:SecurityRes
     if(!entry||typeof entry!=='object'||Array.isArray(entry)||typeof entry.revision!=='string'||!entry.revision||!entry.document){add('SECURITY_DOCUMENT',path,'Invalid document revision');return;}
     unknown(entry,['revision','document'],path);
     const validation=validateDocument(entry.document);
-    if(!validation.valid||entry.document.umf!=='0.8.0'){add('SECURITY_DOCUMENT',path,'Valid current core 0.8.0 document required');return;}
+    if(!validation.valid||entry.document.umf!==CURRENT_CORE_VERSION){add('SECURITY_DOCUMENT',path,'Valid current core 0.10.0 document required');return;}
     const pin=ontology.documents.find(d=>d.documentId===entry.document.id);
     if(!pin||pin.revision!==entry.revision||documents.has(entry.document.id)){add('SECURITY_REVISION',path,'Unpinned, stale or duplicate document');return;}
     documents.set(entry.document.id,entry.document);

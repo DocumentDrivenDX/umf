@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
 import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
-import {classifySqlServerKeys,verifySqlServerKeyClassification,recoverSqlServerKeySource,sqlserverKeysPackage} from '../../src/core-ideals/key-sqlserver';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifySqlServerKeys, verifySqlServerKeyClassification, recoverSqlServerKeySource, sqlserverKeysPackage} from '../../src/core-ideals/key-sqlserver';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {validateDocument} from '../../src/validation/document';
 import {Registry} from '../../src/registry/registry';
 import proof from '../../fixtures/validation/key-sqlserver-discovery-native.json';

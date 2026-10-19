@@ -1,5 +1,4 @@
 export * from './model/types';
-export * from './model/nullability-transition';
 export * from './model/nullability';
 export * from './adapters/tablespec';
 export * from './adapters/sqlserver';
@@ -18,7 +17,6 @@ export * from './registry/registry';
 export {createUmfRegistry} from './registry/builtins';
 export * from './validation/document';
 export { default as coreSchema } from '../spec/core/schema.json';
-export { default as coreNullabilitySchema } from '../spec/core/nullability-document.schema.json';
 export { default as extensionPackageSchema } from '../spec/core/extension-package.schema.json';
 export * from './adapters/json-schema';
 export * from './adapters/protobuf';
@@ -241,7 +239,6 @@ export * from "./adapters/owl/annotations";
 export * from "./adapters/owl/axioms";
 export * from './adapters/owl/declarations';
 export * from './adapters/owl/list-axioms';
-export * from './model/field-transition';
 export * from './model/field-kind';
 export * from './core-ideals/tablespec-field';
 export * from './core-ideals/field-tablespec-projection';
@@ -286,8 +283,6 @@ export * from './core-ideals/nullability-avro-projection';
 export * from './core-ideals/nullability-parquet';
 export * from './core-ideals/nullability-parquet-projection';
 
-export {default as coreCardinalitySchema} from '../spec/core/cardinality-document.schema.json';
-export * from './model/cardinality-transition';
 export * from './model/cardinality';
 
 export * from './core-ideals/cardinality-tablespec';
@@ -303,8 +298,6 @@ export * from './core-ideals/cardinality-parquet';
 export * from './core-ideals/cardinality-parquet-projection';
 export * from './core-ideals/cardinality-avro-projection';
 
-export {default as coreFacetSchema} from '../spec/core/facet-document.schema.json';
-export * from './model/facet-transition';
 export * from './model/facets';
 
 export * from './core-ideals/facets-tablespec';
@@ -326,14 +319,11 @@ export * from './core-ideals/facets-parquet';
 export * from './core-ideals/facets-parquet-projection';
 
 export * from './model/keys';
-export * from './model/key-transition';
 export {encodeCoreKeyTuple,verifyCoreKeyTuple,readCoreKeyTupleBytes,prepareCoreKeyTuples} from './model/key-tuple';
 export type {CoreKeyIdentity,CoreKeyTupleValue,CoreKeyTupleReceipt,PreparedCoreKeyTuples} from './model/key-tuple';
 export type {CoreKeyDefinition,CoreKeyFieldReference} from './validation/keys';
-export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema.json';
-export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
-export {default as coreKeyTransitionSchema} from '../spec/core/key-transition.schema.json';
-export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation-v3.schema.json';
+export {default as coreKeyOperationSchema} from '../spec/core/key-operation-v2.schema.json';
+export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation-v4.schema.json';
 
 export * from './core-ideals/key-tablespec';
 
@@ -355,16 +345,11 @@ export {validateRelationshipCandidate} from './validation/relationships';
 export type {RelationshipCandidate,CoreRelationship,RelationshipEndpoint,RelationshipTarget,RelationshipMultiplicity} from './validation/relationships';
 export {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from './model/relationships';
 export type {CoreRelationshipRequest,CoreRelationshipIdentity,RelationshipModuleIdentity,CoreRelationshipOperation,CoreRelationshipDeclaration,CoreRelationshipInspection,CoreRelationshipLookup,CoreRelationshipMeaning} from './model/relationships';
-export {upgradeRelationshipEnvelope,rollbackRelationshipEnvelope,verifyRelationshipTransition} from './model/relationship-transition';
-export type {RelationshipUpgradeReceipt,RelationshipRollbackReceipt} from './model/relationship-transition';
-export {default as coreRelationshipDocumentSchema} from '../spec/core/relationship-document.schema.json';
 export {default as coreRelationshipOperationSchema} from '../spec/core/relationship-operation.schema.json';
-export {default as coreRelationshipTransitionSchema} from '../spec/core/relationship-transition.schema.json';
 export {default as coreKeyOperationV2Schema} from '../spec/core/key-operation-v2.schema.json';
-export {default as coreKeyTupleOperationV2Schema} from '../spec/core/key-tuple-operation-v2.schema.json';
 export {selectCoreRelationships} from './model/relationship-selection';
 export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSelectionEntry} from './model/relationship-selection';
-export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection.schema.json';
+export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection-v2.schema.json';
 export * from './core-ideals/relationship-tablespec';
 export * from './core-ideals/relationship-tablespec-projection';
 export * from './core-ideals/relationship-avro';
@@ -383,10 +368,8 @@ export * from './projections/ddd-postgresql';
 export * from './model/schema-properties';
 export * from './adapters/javascript-numeric';
 export * from './adapters/rfc3339-exact-instant';
-export * from './model/schema-properties-transition';
 export {type CoreLiteral} from './model/schema-literals';
 export {coreSchemaPropertiesDocumentSchema,validateSchemaPropertiesDocument} from './validation/schema-properties';
-export {coreSchemaPropertiesTransitionSchema} from './model/schema-properties-transition-schema';
 
 // Declarative action metadata; execution requires a separately qualified consumer.
 export {registerActions,declareAction,inspectActions,editAction,assessAction,actionsPackage} from './extensions/actions';
@@ -488,8 +471,6 @@ export { RAW_TABLE_BINDING_SUBSET, rawTableBindingProfiles, inspectRawTableBindi
 export type { RawTableBindingTarget } from './extensions/binding/raw-profiles';
 export * from './model/bit128';
 export * from './model/uuid';
-export * from './model/bit128-transition';
-export {default as coreBit128DocumentSchema} from '../spec/core/bit128-document.schema.json';
 export {default as coreBit128KeyTupleSchema} from '../spec/core/key-tuple-operation-v4.schema.json';
 export * from './model/scalar-type';
 export * from './model/record-members';
@@ -503,7 +484,6 @@ export {default as coreFacetOperationV5Schema} from '../spec/core/facet-operatio
 export {default as coreKeyOperationV4Schema} from '../spec/core/key-operation-v4.schema.json';
 export {default as coreRelationshipOperationV3Schema} from '../spec/core/relationship-operation-v3.schema.json';
 export {default as coreBit128SelectionSchema} from '../spec/core/bit128-selection.schema.json';
-export {default as coreBit128TransitionSchema} from '../spec/core/bit128-transition.schema.json';
 export {default as coreBit128RelationshipSelectionSchema} from '../spec/core/relationship-metadata-selection-v2.schema.json';
 export {projectBit128Model,recoverBit128ModelProjection,type Bit128ModelProjection} from './projections/bit128-model';
 export * from './extensions/binding/bit128-record';
@@ -518,9 +498,6 @@ export {prepareCoreInspection} from './model/prepared-inspection';
 // Core0.10 semantic reference metadata; term validators remain caller-installed.
 export * from './extensions/semantic-types';
 export * from './model/semantic-types';
-export * from './model/semantic-types-transition';
-export {default as coreSemanticTypesDocumentSchema} from '../spec/core/semantic-types-document.schema.json';
 export {default as coreSemanticTypeReferenceSchema} from '../spec/core/semantic-type-reference.schema.json';
 export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic-types-operation.schema.json';
-export {default as coreSemanticTypesTransitionSchema} from '../spec/core/semantic-types-transition.schema.json';
 export {generatePythonClient,type PythonClientRequest,type PythonClientResult} from './access';

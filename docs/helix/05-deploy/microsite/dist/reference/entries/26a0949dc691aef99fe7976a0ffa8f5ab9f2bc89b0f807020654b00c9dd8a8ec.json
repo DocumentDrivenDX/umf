@@ -5,13 +5,13 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
       }
     ],
     "role": "operation",
@@ -450,7 +450,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
                 }
               }
             },
@@ -1153,7 +1153,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1298,14 +1298,14 @@
   "id": "[\"schema\",\"spec/core/cardinality-sqlserver-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 9096,
+      "bytes": 9097,
       "path": "spec/core/cardinality-sqlserver-projection.schema.json",
-      "sha256": "2078f923149696c5c8917e25de2287398a38fdc968a200d9b972e1446ab66024"
+      "sha256": "64f10b65117c98db2334262d78949f9a7b8bc55f3512026b8acd5beb2cb38bcb"
     }
   ],
   "summary": "spec/core/cardinality-sqlserver-projection.schema.json",

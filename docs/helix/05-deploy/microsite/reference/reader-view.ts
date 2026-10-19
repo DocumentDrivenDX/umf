@@ -51,8 +51,9 @@ export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:Re
   if(prohibited.length){const panel=el('div');forbidden=table(panel,['Key','Meaning','Value','Presence / applicability'],prohibited);disclosure(parent,'Keys not allowed on '+role+' ('+prohibited.length+')',panel);}
   filter.oninput=()=>{for(const row of [...Array.from(body.rows),...Array.from(forbidden?.rows??[])])row.hidden=!row.textContent!.toLowerCase().includes(filter.value.toLowerCase());};
  }
- const rules=schemaRules(node);const ownerPointer=pointer.includes('/properties/')?pointer.slice(0,pointer.lastIndexOf('/properties/')):undefined;
- const ownerRules=ownerPointer!==undefined?schemaRules(resolveSchema(root,schemaNode(root,ownerPointer))).filter(r=>JSON.stringify(r.source).includes('"'+name+'"')):[];
+ const role=concept?.pointer===pointer?concept.role:undefined;
+ const rules=schemaRules(node,role);const ownerPointer=pointer.includes('/properties/')?pointer.slice(0,pointer.lastIndexOf('/properties/')):undefined;
+ const ownerRules=ownerPointer!==undefined?schemaRules(resolveSchema(root,schemaNode(root,ownerPointer)),role).filter(r=>JSON.stringify(r.source).includes('"'+name+'"')):[];
  if(rules.length||ownerRules.length){heading(parent,'Rules and valid combinations');for(const r of [...ownerRules,...rules]){const block=el('div',undefined,'rule');block.append(el('p',r.text));disclosure(block,'Original rule',code(JSON.stringify(r.source,null,2)));parent.append(block);}}
  if(s?.default!==undefined)parent.append(el('p','Schema default annotation: '+JSON.stringify(s.default)+'. This does not insert a value.','callout'));
  if(pointer.includes('/properties/'))parent.append(el('p','Presence and explicit null are different. Omission is governed by the owner’s required/conditional rules; null is accepted only if the value schema explicitly permits it.','quiet'));

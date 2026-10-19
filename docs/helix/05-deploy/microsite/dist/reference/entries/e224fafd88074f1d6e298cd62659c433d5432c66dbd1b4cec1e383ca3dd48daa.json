@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/literal"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/literal"
       },
       {
         "keyword": "$ref",
@@ -30,8 +30,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/facets"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/facets"
       },
       {
         "keyword": "$ref",
@@ -40,8 +40,8 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.9.0#/$defs/facets"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/facets"
       },
       {
         "keyword": "$ref",
@@ -468,7 +468,7 @@
                               "members": {
                                 "$ref": {
                                   "kind": "string",
-                                  "value": "urn:umf:core:0.9.0#/$defs/literal"
+                                  "value": "urn:umf:core:0.10.0#/$defs/literal"
                                 }
                               }
                             },
@@ -486,7 +486,7 @@
                               "members": {
                                 "$ref": {
                                   "kind": "string",
-                                  "value": "urn:umf:core:0.9.0#/$defs/literal"
+                                  "value": "urn:umf:core:0.10.0#/$defs/literal"
                                 }
                               }
                             },
@@ -628,7 +628,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.9.0#/$defs/facets"
+                                          "value": "urn:umf:core:0.10.0#/$defs/facets"
                                         }
                                       }
                                     },
@@ -716,7 +716,7 @@
                                       "members": {
                                         "$ref": {
                                           "kind": "string",
-                                          "value": "urn:umf:core:0.9.0#/$defs/facets"
+                                          "value": "urn:umf:core:0.10.0#/$defs/facets"
                                         }
                                       }
                                     },
@@ -957,7 +957,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.9.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -995,13 +995,13 @@
   "id": "[\"schema\",\"spec/core/facet-operation-v5.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/bit128-document.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7155,
+      "bytes": 7160,
       "path": "spec/core/facet-operation-v5.schema.json",
-      "sha256": "f70a0cf3ee39ee725d5a33def64ed6c8557e7fbef4d3d0ca89afd53a8b6820e3"
+      "sha256": "de87a6c79500be2b99337f5a885698b24b9e4d47a997c6d3cd649c90ea853bca"
     }
   ],
   "summary": "spec/core/facet-operation-v5.schema.json",

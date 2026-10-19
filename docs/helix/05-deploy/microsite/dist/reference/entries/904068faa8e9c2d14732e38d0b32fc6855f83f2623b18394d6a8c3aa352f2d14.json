@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7778,
-        "line": 10,
+        "bytes": 1361,
+        "line": 8,
         "path": "src/validation/document.ts",
-        "sha256": "eb16da5f0f5d8803c226d3380185d65eb07a60459fc6760eaf770b92e3bf3e87"
+        "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateDocument",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, registry?: Registry): Validation"
+      "(input: unknown, registry?: Registry, meter?: ConstraintMeter | undefined): Validation"
     ]
   },
   "id": "[\"api\",\".\",\"validateDocument\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7778,
-      "line": 10,
+      "bytes": 1361,
+      "line": 8,
       "path": "src/validation/document.ts",
-      "sha256": "eb16da5f0f5d8803c226d3380185d65eb07a60459fc6760eaf770b92e3bf3e87"
+      "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
     }
   ],
-  "summary": "Public export · src/validation/document.ts",
+  "summary": "Current structural admission followed by the authored ordered rule program.",
   "title": "validateDocument"
 }

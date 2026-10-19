@@ -1,0 +1,301 @@
+{"testProcess":"tests/avro/projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/avro/projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/avro/projection.test.ts:
+(pass) US-008-AC1: Avro shapes project with explicit losses and independently validated instances [465.67ms]
+(pass) US-008-AC2: strict policy and unresolved interpretation block, dependencies and recursion stay qualified [364.77ms]
+(pass) US-008-AC5: official corpus projections retain sources and validate native targets [2788.32ms]
+
+ 3 pass
+ 0 fail
+ 69 expect() calls
+Ran 3 tests across 1 file. [11.36s]
+{"testProcess":"tests/avro/projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":69,"completeSummary":true,"logSha256":"967dd3cd2a1885d9c401460629c7940543416e1682d9dfaa6c9e11ee67cd5830"}
+{"testProcess":"tests/avro/tablespec-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/avro/tablespec-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/avro/tablespec-projection.test.ts:
+(pass) CONTRACT-038 Avro record projections retain defaults, named dependencies and unknown metadata in source [1259.10ms]
+(pass) CONTRACT-038 carrier families round trip through TableSpec with independent loss reports [263.16ms]
+(pass) CONTRACT-038 unsupported logical types, numeric widths, names and nullability cannot be guessed [1062.25ms]
+
+ 3 pass
+ 0 fail
+ 53 expect() calls
+Ran 3 tests across 1 file. [12.02s]
+{"testProcess":"tests/avro/tablespec-projection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":53,"completeSummary":true,"logSha256":"8526b2b19ef793e7ab78e0a4861b238b165e3df20eea08ecf95f981782672bb4"}
+{"testProcess":"tests/avro/temporal-metadata.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/avro/temporal-metadata.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/avro/temporal-metadata.test.ts:
+(pass) CONTRACT-007 temporal core classification requires exact annotation and carrier [11803.72ms]
+
+ 1 pass
+ 0 fail
+ 327 expect() calls
+Ran 1 test across 1 file. [20.02s]
+{"testProcess":"tests/avro/temporal-metadata.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":327,"completeSummary":true,"logSha256":"902d434c64a712010f7e8f092ff71fb9f4b505f7404e59833caca9cae3b08eae"}
+{"testProcess":"tests/delta/actions.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/actions.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/actions.test.ts:
+(pass) US-018-AC10: known action shapes and exact integer boundaries retain source [330.09ms]
+(pass) US-018-AC10: arbitrary commit provenance and opaque future content remain incomplete [149.62ms]
+
+ 2 pass
+ 0 fail
+ 35 expect() calls
+Ran 2 tests across 1 file. [11.02s]
+{"testProcess":"tests/delta/actions.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":35,"completeSummary":true,"logSha256":"193c0226c14a3574832b5ff994091bf6f7cefe469f4ad33f7bd5789d35cbd226"}
+{"testProcess":"tests/delta/checkpoint-parquet-trial.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/checkpoint-parquet-trial.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/checkpoint-parquet-trial.test.ts:
+(pass) US-018-AC14: Parquet decoder trial agrees with typed native values and exact decimal boundaries [148.88ms]
+
+ 1 pass
+ 0 fail
+ 80 expect() calls
+Ran 1 test across 1 file. [212.00ms]
+{"testProcess":"tests/delta/checkpoint-parquet-trial.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":80,"completeSummary":true,"logSha256":"7a21e07e295fb359a7d681cba850900e576fd88d96db2c487ec5e1a8b2893e86"}
+{"testProcess":"tests/delta/checkpoint.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/checkpoint.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/checkpoint.test.ts:
+4 | import schema from '../../spec/extensions/delta-log/reconciliation.schema.json';
+5 | const ajv=createValidator(false);ajv.addSchema(coreSchema);const check=ajv.compile(schema);
+6 | const text=await Bun.file('fixtures/delta/checkpoint/checkpoint.jsonl').text(),base=text.trim().split('\n').map(line=>JSON.parse(line)).filter(a=>a.txn?.appId!=='other');
+7 | const cp=(actions:unknown[]=base,version='10')=>({version,source:captureDeltaLog(actions.map(a=>JSON.stringify(a)).join('\n'),{id:'cp'})});
+8 | test('US-018-AC13: checkpoint and following commits reproduce native-backed states without earlier history',async()=>{
+9 |  const report=await Bun.file('fixtures/delta/checkpoint/results.json').json();for(const expected of report.results){const actual=reconcileDeltaCheckpoint(expected.checkpoint,expected.sources);expect(actual).toEqual(expected);expect(check(actual)).toBe(true);expect(actual.complete).toBe(false);expect(exportDeltaLog(actual.checkpoint!.source)).toBe(text);}
+                                                                                                                                                                                                                   ^
+error: expect(received).toEqual(expected)
+
+@@ -38,203 +38,14 @@
+      "version": "10",
+    },
+    "complete": false,
+    "diagnostics": [
+      {
+-       "code": "DELTA_LOG_UNVERIFIED",
+-       "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
++       "code": "DELTA_HISTORY_SOURCE",
++       "message": "Invalid source capture envelope",
+        "path": "/checkpoint",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-       "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-       "path": "/checkpoint",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_HISTORY_UNVERIFIED",
+-       "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+-       "path": "",
+-       "severity": "warning",
++       "severity": "error",
+      },
+    ],
+    "sources": [],
+-   "state": {
+-     "adds": [
+-       {
+-         "kind": "object",
+-         "members": {
+-           "dataChange": {
+-             "kind": "boolean",
+-             "value": false,
+-           },
+-           "modificationTime": {
+-             "kind": "number",
+-             "value": "0",
+-           },
+-           "partitionValues": {
+-             "kind": "object",
+-             "members": {},
+-           },
+-           "path": {
+-             "kind": "string",
+-             "value": "b.parquet",
+-           },
+-           "size": {
+-             "kind": "number",
+-             "value": "482",
+-           },
+-           "stats": {
+-             "kind": "string",
+-             "value": "{"numRecords": 1, "minValues": {"id": 2}, "maxValues": {"id": 2}, "nullCount": {"id": 0}}",
+-           },
+-           "tags": {
+-             "kind": "object",
+-             "members": {
+-               "revision": {
+-                 "kind": "string",
+-                 "value": "updated",
+-               },
+-             },
+-           },
+-         },
+-       },
+-       {
+-         "kind": "object",
+-         "members": {
+-           "dataChange": {
+-             "kind": "boolean",
+-             "value": true,
+-           },
+-           "modificationTime": {
+-             "kind": "number",
+-             "value": "0",
+-           },
+-           "partitionValues": {
+-             "kind": "object",
+-             "members": {},
+-           },
+-           "path": {
+-             "kind": "string",
+-             "value": "a.parquet",
+-           },
+-           "size": {
+-             "kind": "number",
+-             "value": "482",
+-           },
+-           "stats": {
+-             "kind": "string",
+-             "value": "{"numRecords": 1, "minValues": {"id": 1}, "maxValues": {"id": 1}, "nullCount": {"id": 0}}",
+-           },
+-         },
+-       },
+-     ],
+-     "commitInfo": [],
+-     "deferred": [],
+-     "domains": [],
+-     "metaData": {
+-       "kind": "object",
+-       "members": {
+-         "configuration": {
+-           "kind": "object",
+-           "members": {},
+-         },
+-         "description": {
+-           "kind": "string",
+-           "value": "metadata replaced",
+-         },
+-         "format": {
+-           "kind": "object",
+-           "members": {
+-             "options": {
+-               "kind": "object",
+-               "members": {},
+-             },
+-             "provider": {
+-               "kind": "string",
+-               "value": "parquet",
+-             },
+-           },
+-         },
+-         "id": {
+-           "kind": "string",
+-           "value": "12345678-1234-1234-1234-123456789abc",
+-         },
+-         "name": {
+-           "kind": "string",
+-           "value": "renamed",
+-         },
+-         "partitionColumns": {
+-           "items": [],
+-           "kind": "array",
+-         },
+-         "schemaString": {
+-           "kind": "string",
+-           "value": "{"type":"struct","fields":[{"name":"id","type":"long","nullable":true,"metadata":{}}]}",
+-         },
+-       },
+-     },
+-     "protocol": {
+-       "kind": "object",
+-       "members": {
+-         "minReaderVersion": {
+-           "kind": "number",
+-           "value": "3",
+-         },
+-         "minWriterVersion": {
+-           "kind": "number",
+-           "value": "7",
+-         },
+-         "readerFeatures": {
+-           "items": [
+-             {
+-               "kind": "string",
+-               "value": "v2Checkpoint",
+-             },
+-           ],
+-           "kind": "array",
+-         },
+-         "writerFeatures": {
+-           "items": [
+-             {
+-               "kind": "string",
+-               "value": "v2Checkpoint",
+-             },
+-           ],
+-           "kind": "array",
+-         },
+-       },
+-     },
+-     "removes": [],
+-     "transactions": [
+-       {
+-         "kind": "object",
+-         "members": {
+-           "appId": {
+-             "kind": "string",
+-             "value": "job",
+-           },
+-           "version": {
+-             "kind": "number",
+-             "value": "2",
+-           },
+-         },
+-       },
+-       {
+-         "kind": "object",
+-         "members": {
+-           "appId": {
+-             "kind": "string",
+-             "value": "other",
+-           },
+-           "version": {
+-             "kind": "number",
+-             "value": "9223372036854775807",
+-           },
+-         },
+-       },
+-     ],
+-     "version": "10",
+-   },
+-   "status": "reconciled",
++   "status": "blocked",
+  }
+
+- Expected  - 193
++ Received  + 4
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/delta/checkpoint.test.ts:9:208)
+(fail) US-018-AC13: checkpoint and following commits reproduce native-backed states without earlier history [18.16ms]
+(pass) US-018-AC13: checkpoint invariants and missing sidecars block without partial state [263.52ms]
+(pass) US-018-AC13: both pinned upstream JSON checkpoints retain source and report unresolved Parquet sidecars [88.62ms]
+
+ 2 pass
+ 1 fail
+ 55 expect() calls
+Ran 3 tests across 1 file. [8.04s]
+{"testProcess":"tests/delta/checkpoint.test.ts","exitCode":1,"pass":2,"fail":1,"assertions":55,"completeSummary":true,"logSha256":"ef6d58cac51e4a9451b9affb077100f5d7a370b05c2e696288524be8cbdf18a6"}
+Complete test file failed or terminated: tests/delta/checkpoint.test.ts
+
+ 12 pass
+ 1 fail
+ 619 expect() calls
+Ran 13 tests across 6 files. [62.83s]

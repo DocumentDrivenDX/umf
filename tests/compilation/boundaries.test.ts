@@ -47,6 +47,55 @@ describe("actual compilation boundary checker", () => {
     rejects("ts", { "src/index.ts": "export const readDocument = () => {};", "src/compilation/ir/index.ts": 'import {readDocument} from "../../index";' }, "DEPENDENCY");
     expect(check("ts", { "src/index.ts": "export interface Document {}", "src/compilation/ir/index.ts": 'import {type Document} from "../../index";' }).exitCode).toBe(0);
   });
+  test("admits direct public semantic symbols through renamed and star re-exports", () => {
+    expect(check("ts", {
+      "src/index.ts": 'export * from "./api";',
+      "src/api.ts": 'export { inspect as inspectDocument, type Document } from "./model/document";',
+      "src/model/document.ts": "export const inspect = () => {}; export interface Document {} export const privateValue = 1;",
+      "src/compilation/admission/index.ts": 'import {inspect as inspectDocument, type Document} from "../../model/document"; export const inspect = inspectDocument;',
+      "src/compilation/ir/index.ts": 'export type Document = import("../../model/document").Document;',
+    }).exitCode).toBe(0);
+  });
+  test("refuses private or same-named impostor symbols and leaf module loading", () => {
+    const api = {
+      "src/index.ts": 'export { inspect } from "./model/document";',
+      "src/model/document.ts": "export const inspect = () => {}; export const privateValue = 1;",
+      "src/model/private.ts": "export const inspect = () => {};",
+    };
+    for (const source of [
+      'import {privateValue} from "../../model/document";',
+      'import {inspect} from "../../model/private";',
+      'import * as document from "../../model/document";',
+      'import document from "../../model/document";',
+      'import "../../model/document";',
+      'export * from "../../model/document";',
+      'export {privateValue as publicValue} from "../../model/document";',
+      'export type Module = typeof import("../../model/document");',
+    ]) rejects("ts", { ...api, "src/compilation/admission/index.ts": source }, "HOST");
+  });
+  test("IR admits erased public type queries but refuses runtime use", () => {
+    const api = {
+      "src/index.ts": 'export { CURRENT_CORE_VERSION } from "./generated/core-model";',
+      "src/generated/core-model.ts": 'export const CURRENT_CORE_VERSION = "current";',
+    };
+    expect(check("ts", { ...api, "src/compilation/ir/index.ts": 'import {CURRENT_CORE_VERSION as marker} from "../../generated/core-model"; export type Version = typeof marker;' }).exitCode).toBe(0);
+    for (const source of [
+      'import {CURRENT_CORE_VERSION} from "../../generated/core-model"; export const marker = CURRENT_CORE_VERSION;',
+      'import {CURRENT_CORE_VERSION} from "../../generated/core-model"; export type Version = typeof CURRENT_CORE_VERSION; export const marker = CURRENT_CORE_VERSION;',
+    ]) rejects("ts", { ...api, "src/compilation/ir/index.ts": source }, "DEPENDENCY");
+  });
+  test("Python metadata's generated marker seam admits no other generated or semantic APIs", () => {
+    const api = {
+      "src/index.ts": 'export * from "./generated/core-model"; export * from "./model/document";',
+      "src/generated/core-model.ts": 'export const CURRENT_CORE_VERSION = "current"; export const corePolicy = {};',
+      "src/model/document.ts": "export const inspect = () => {};",
+    };
+    expect(check("ts", { ...api, "src/compilation/targets/python/index.ts": 'import {CURRENT_CORE_VERSION} from "../../../generated/core-model"; export const metadata = CURRENT_CORE_VERSION;' }).exitCode).toBe(0);
+    rejects("ts", { ...api, "src/compilation/targets/python/index.ts": 'import {corePolicy} from "../../../generated/core-model";' }, "HOST");
+    rejects("ts", { ...api, "src/compilation/targets/python/index.ts": 'import {inspect} from "../../../model/document";' }, "HOST");
+    rejects("ts", { ...api, "src/compilation/admission/index.ts": 'import {corePolicy} from "../../generated/core-model";' }, "PRIVATE");
+    rejects("ts", { ...api, "src/compilation/bundle/index.ts": 'import {CURRENT_CORE_VERSION} from "../../generated/core-model";' }, "HOST");
+  });
   test("rejects network and runtime code execution in portable modules", () => {
     for (const source of ['fetch("https://example.com")', 'new XMLHttpRequest()', 'new WebSocket("wss://example.com")', 'eval("1")', 'new Function("return 1")']) {
       rejects("ts", { "src/compilation/ir/index.ts": source }, "HOST");

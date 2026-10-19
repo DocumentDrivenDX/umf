@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -145,7 +145,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -229,7 +229,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -428,9 +428,9 @@
   ],
   "sources": [
     {
-      "bytes": 2632,
+      "bytes": 2634,
       "path": "spec/extensions/delta-table/rename-result.schema.json",
-      "sha256": "09f9caf9a388c13b5e9b5af3396c758f11998a0a4b30d1ea5b6e860e86c342bd"
+      "sha256": "6762a649379884358dc07401192d097dd031af4c77dc2b00f3a1edf83b507cf3"
     }
   ],
   "summary": "spec/extensions/delta-table/rename-result.schema.json",

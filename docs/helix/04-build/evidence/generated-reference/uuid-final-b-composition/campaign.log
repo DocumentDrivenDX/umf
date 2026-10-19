@@ -1,0 +1,111 @@
+{
+  runDir: "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-composition-6wMCrE",
+}
+{
+  step: "build",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "run", "build"
+  ],
+}
+{
+  step: "testPrerequisites",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/build-test-prerequisites.ts"
+  ],
+}
+{
+  step: "typecheck",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "run", "typecheck"
+  ],
+}
+{
+  step: "schemas",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "run", "test:schemas"
+  ],
+}
+{
+  step: "tests",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/run-tests.ts", "tests/uuid-mixed-model.test.ts", "tests/uuid-model.test.ts",
+    "tests/uuid-file-model.test.ts"
+  ],
+}
+{
+  step: "artifacts",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-artifacts.ts"
+  ],
+}
+{
+  step: "postgresql",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-sql.ts", "postgresql"
+  ],
+}
+{
+  step: "sqlserver",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-sql.ts", "sqlserver"
+  ],
+}
+{
+  step: "files",
+  command: [ "/private/tmp/umf-authority-native-oracles/bin/python", "scripts/uuid/composition-files.py" ],
+}
+{
+  step: "tablespec",
+  command: [ "/Users/erik/Projects/tablespec/.venv/bin/python", "scripts/uuid/composition-tablespec.py" ],
+}
+{
+  step: "recovery",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-recovery.ts"
+  ],
+}
+{
+  step: "returned",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-verify.ts"
+  ],
+}
+{
+  step: "browser",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-browser.ts"
+  ],
+}
+{
+  step: "gates",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "scripts/uuid/composition-gates.ts"
+  ],
+}
+{
+  step: "gateTests",
+  command: [ "/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun",
+    "test", "tests/uuid-composition-gates.test.ts"
+  ],
+}
+{
+  complete: true,
+  runDir: "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-composition-6wMCrE",
+  exits: {
+    build: 0,
+    testPrerequisites: 0,
+    typecheck: 0,
+    schemas: 0,
+    tests: 0,
+    artifacts: 0,
+    postgresql: 0,
+    sqlserver: 0,
+    files: 0,
+    tablespec: 0,
+    recovery: 0,
+    returned: 0,
+    browser: 0,
+    gates: 0,
+    gateTests: 0,
+  },
+}

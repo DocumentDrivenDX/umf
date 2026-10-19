@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {evaluateRecordBody} from './internal/record-body';
 import {copyJson} from './json';
 import {UmfError,pointer,type Document,type Validation,type Diagnostic} from './types';
@@ -16,7 +17,7 @@ export function validateCoreRecordValues(input:Document,identityInput:CoreRecord
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreRecordValueIdentity;
  const values=copyJson(valuesInput) as unknown as CoreRecordFieldValue[];
  const documentValidation=validateDocument(source);
- if(!['0.8.0','0.9.0'].includes(source.umf)||!documentValidation.valid)throw new UmfError('CORE_RECORD_VALUE_SOURCE','Valid core 0.8.0 source required');
+ if(source.umf!==CURRENT_CORE_VERSION||!documentValidation.valid)throw new UmfError('CORE_RECORD_VALUE_SOURCE','Valid current core 0.10.0 source required');
  const body=evaluateRecordBody(source,identity,values,documentValidation,(field,value)=>validateCoreFieldValue(source,field,value));
- return copyJson({operation:body.operation,version:source.umf==='0.9.0'?'2.0.0':body.version,source,identity,values,documentValidation,validation:body.validation,fields:body.fields}) as unknown as CoreRecordValueCheck;
+ return copyJson({operation:body.operation,version:'2.0.0',source,identity,values,documentValidation,validation:body.validation,fields:body.fields}) as unknown as CoreRecordValueCheck;
 }

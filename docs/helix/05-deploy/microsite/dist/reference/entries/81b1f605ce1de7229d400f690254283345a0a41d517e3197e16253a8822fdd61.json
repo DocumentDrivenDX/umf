@@ -36,7 +36,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -3361,7 +3361,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -3414,9 +3414,9 @@
   ],
   "sources": [
     {
-      "bytes": 31315,
+      "bytes": 31316,
       "path": "spec/extensions/shacl/metadata-schema.json",
-      "sha256": "74d1ca223f5b36257c91a0707e409f70e117a7907c0ba9f8921d17c4f786dbee"
+      "sha256": "cb019f1ea51133d8dac3d090838f9b664f143605fcffe8d1fdc82feb08adc47a"
     }
   ],
   "summary": "spec/extensions/shacl/metadata-schema.json",

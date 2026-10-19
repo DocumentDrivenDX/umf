@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture} from '../../src';
+import {captureParquet, exportParquetCapture} from '../../src';
 import {inspectParquetCardinalityShape} from '../../src/core-ideals/parquet-cardinality-shape';
 
 const read=async(path:string,id=path)=>captureParquet(new Uint8Array(await Bun.file(path).arrayBuffer()),{id});

@@ -1,0 +1,4 @@
+[lint.per-file-ignores]
+# Keep compiler-owned output byte-stable across generated resource provenance.
+# All other lint rules still apply to this generated constant/type module.
+"python/umf_access/src/umf_access/generated_core.py" = ["I001"]

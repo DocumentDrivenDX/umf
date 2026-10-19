@@ -1,6 +1,6 @@
 {
   "source": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "simple",
     "vocabularies": {
       "umf.avro": {
@@ -186,7 +186,7 @@
   "result": {
     "status": "projected",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "simple",
       "vocabularies": {
         "umf.avro": {
@@ -445,7 +445,7 @@
     ],
     "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"title\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"optional\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
     "target": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "tablespec-result",
       "vocabularies": {
         "umf.tablespec": {
@@ -605,7 +605,7 @@
   "reverse": {
     "status": "projected",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "tablespec-result",
       "vocabularies": {
         "umf.tablespec": {
@@ -891,7 +891,7 @@
     ],
     "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Simple\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"score\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"optional\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
     "target": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "back",
       "vocabularies": {
         "umf.avro": {

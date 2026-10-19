@@ -1,0 +1,3 @@
+$ /private/tmp/umf-access-wheel-dev2/final-run-success/venv/bin/python -I -c import importlib.metadata,pathlib,umf_access; print('distribution',importlib.metadata.version('umf-access')); print('imported',pathlib.Path(umf_access.__file__).resolve())
+distribution 0.1.0.dev2
+imported /private/tmp/umf-access-wheel-dev2/final-run-success/venv/lib/python3.11/site-packages/umf_access/__init__.py

@@ -1,0 +1,28 @@
+from pathlib import Path
+import re,json,hashlib,collections
+records={};sources=[]
+paths=set(Path('/private/tmp').glob('umf-core-ideals-*.log'))|{Path('/private/tmp/umf-owned-shard-a.log'),Path('/private/tmp/umf-current-operation-tests.log')}
+paths|=set(Path('/private/tmp').glob('umf-*conformance*log'))|set(Path('/private/tmp').glob('umf-relationship-*.log'))
+for p in sorted(paths,key=lambda p:p.stat().st_mtime if p.exists() else 0):
+ if not p.exists():continue
+ text=p.read_text();digest=hashlib.sha256(p.read_bytes()).hexdigest();runtime=re.search(r'bun test v([^\n]+)',text);runtime=runtime.group(1) if runtime else 'not recorded in this log'
+ sources.append({'path':str(p),'sha256':digest,'runtime':runtime})
+ # Exact runner JSON beats any inferred display grouping.
+ for line in text.splitlines():
+  if line.startswith('{"testProcess":'):
+   try:r=json.loads(line)
+   except:continue
+   if 'exitCode' in r and r['exitCode']==0 and r.get('fail')==0 and r.get('completeSummary'):
+    records[r['testProcess']]={**r,'rawLog':str(p),'rawLogSha256':digest,'runtime':runtime,'provenance':'exact isolated run-tests.ts JSON result'}
+ if 'filtered out' in text or '--test-name-pattern' in text:continue
+ matches=list(re.finditer(r'^(tests/[^\n]+\.test\.ts):\s*$',text,re.M))
+ for i,m in enumerate(matches):
+  end=matches[i+1].start() if i+1<len(matches) else len(text);chunk=text[m.end():end]
+  names=re.findall(r'^\((pass|fail)\) ([^\n]+?)(?: \[[^\n]+\])?$',chunk,re.M)
+  complete=i+1<len(matches) or bool(re.search(r'Ran \d+ tests? across \d+ files?',chunk))
+  if names and complete and all(status=='pass' for status,name in names):
+   records[m.group(1)]={'testProcess':m.group(1),'exitCode':0,'pass':len(names),'fail':0,'assertions':None,'completeSummary':True,'rawLog':str(p),'rawLogSha256':digest,'runtime':runtime,'provenance':'Bun file-heading and individual passing-test display in completed aggregate; no invented per-file assertion total','observedTests':[name for status,name in names]}
+result={'scope':'Per-file passing observations normalized from exact isolated runner JSON or completed Bun display groups; aggregate assertion totals are not invented per file. Latest meaningful passing observation retained, with actual runtime/raw log SHA. Source snapshot and final release qualification remain separate.','files':list(records.values()),'logs':sources}
+Path('/private/tmp/umf-normalized-core-observations.json').write_text(json.dumps(result,indent=2)+'\n')
+assigned=[p for p in Path('tests').rglob('*.test.ts') if len(p.parts)>2 and p.parts[1] in ['core','core-ideals','binding','semantic-types','adapters']]
+print('observed',len(records),'assigned',len(assigned));print('\n'.join(str(p) for p in assigned if str(p) not in records))

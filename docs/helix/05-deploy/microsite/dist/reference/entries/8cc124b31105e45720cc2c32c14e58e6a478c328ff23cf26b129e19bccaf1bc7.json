@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
@@ -618,7 +618,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+                          "value": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
                         }
                       }
                     },
@@ -788,7 +788,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -815,7 +815,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -885,15 +885,15 @@
   "id": "[\"schema\",\"spec/core/tablespec-cardinality-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]"
+    "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 5995,
+      "bytes": 5997,
       "path": "spec/core/tablespec-cardinality-classification.schema.json",
-      "sha256": "43e08e8352b173239d35ec7dc709deb5aa35ff2c0742fa5dc956c281bf7183ae"
+      "sha256": "63811d6d8047003d13b10b70d6e35236b42fb1c74e47e2bf838f12e98c7f83da"
     }
   ],
   "summary": "spec/core/tablespec-cardinality-classification.schema.json",

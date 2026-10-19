@@ -1,0 +1,983 @@
+{
+  "scope": "Complete selected 79-file current-core integration regression, isolated Bun processes, original test assertions and bounds. Historical native payload/oracle reports remain unchanged; this receipt does not turn captured historical observations into fresh backend execution.",
+  "status": "passed",
+  "files": 79,
+  "tests": 210,
+  "assertions": 17318,
+  "inventory": [
+    "tests/arrow/capture.test.ts",
+    "tests/arrow/flatbuffer-decode.test.ts",
+    "tests/arrow/flatbuffer-encode.test.ts",
+    "tests/arrow/flatbuffer-schema.test.ts",
+    "tests/arrow/ipc-consistency.test.ts",
+    "tests/arrow/ipc-layout.test.ts",
+    "tests/arrow/ipc-rename.test.ts",
+    "tests/arrow/ipc.test.ts",
+    "tests/arrow/schema.test.ts",
+    "tests/arrow/upstream.test.ts",
+    "tests/avro/bundle.test.ts",
+    "tests/avro/candidate-edit.test.ts",
+    "tests/avro/corpus.test.ts",
+    "tests/avro/integer-metadata.test.ts",
+    "tests/avro/metadata.test.ts",
+    "tests/avro/native-schema.test.ts",
+    "tests/avro/native.test.ts",
+    "tests/avro/projection.test.ts",
+    "tests/avro/tablespec-projection.test.ts",
+    "tests/avro/temporal-metadata.test.ts",
+    "tests/delta/actions.test.ts",
+    "tests/delta/checkpoint-parquet-trial.test.ts",
+    "tests/delta/checkpoint.test.ts",
+    "tests/delta/column-mapping.test.ts",
+    "tests/delta/ddl.test.ts",
+    "tests/delta/history-upstream.test.ts",
+    "tests/delta/log.test.ts",
+    "tests/delta/mapped-nested.test.ts",
+    "tests/delta/multipart.test.ts",
+    "tests/delta/parquet-actions.test.ts",
+    "tests/delta/parquet-checkpoint.test.ts",
+    "tests/delta/reconcile.test.ts",
+    "tests/delta/rename.test.ts",
+    "tests/delta/schema.test.ts",
+    "tests/delta/sidecars.test.ts",
+    "tests/delta/table.test.ts",
+    "tests/delta/upstream.test.ts",
+    "tests/iceberg/promotion-data.test.ts",
+    "tests/iceberg/schema.test.ts",
+    "tests/iceberg/table-context.test.ts",
+    "tests/iceberg/table-promotion.test.ts",
+    "tests/iceberg/table-rename.test.ts",
+    "tests/iceberg/table-transforms.test.ts",
+    "tests/iceberg/table.test.ts",
+    "tests/iceberg/transforms.test.ts",
+    "tests/iceberg/upstream.test.ts",
+    "tests/parquet/arrow-nested.test.ts",
+    "tests/parquet/arrow-rename.test.ts",
+    "tests/parquet/arrow-schema.test.ts",
+    "tests/parquet/avro-arrow-loss.test.ts",
+    "tests/parquet/avro-projection.test.ts",
+    "tests/parquet/bodies.test.ts",
+    "tests/parquet/capture.test.ts",
+    "tests/parquet/containers.test.ts",
+    "tests/parquet/field-metadata.test.ts",
+    "tests/parquet/footer.test.ts",
+    "tests/parquet/hybrid.test.ts",
+    "tests/parquet/levels.test.ts",
+    "tests/parquet/logical.test.ts",
+    "tests/parquet/metadata.test.ts",
+    "tests/parquet/offset-repair.test.ts",
+    "tests/parquet/pages.test.ts",
+    "tests/parquet/physical.test.ts",
+    "tests/parquet/rename.test.ts",
+    "tests/parquet/rows.test.ts",
+    "tests/parquet/schema.test.ts",
+    "tests/parquet/transform.test.ts",
+    "tests/parquet/values-trial.test.ts",
+    "tests/parquet/values.test.ts",
+    "tests/spark/arrow-origin.test.ts",
+    "tests/spark/collations.test.ts",
+    "tests/spark/metadata.test.ts",
+    "tests/spark/parameters.test.ts",
+    "tests/spark/projection.test.ts",
+    "tests/spark/rename.test.ts",
+    "tests/spark/reverse-projection.test.ts",
+    "tests/spark/schema.test.ts",
+    "tests/spark/upstream-projection.test.ts",
+    "tests/spark/upstream.test.ts"
+  ],
+  "results": [
+    {
+      "testProcess": "tests/arrow/capture.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 153,
+      "completeSummary": true,
+      "logSha256": "0bb26f4f780494bc2f705863b10983064a4810887f686db90c6c676303d723d5",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/flatbuffer-decode.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 410,
+      "completeSummary": true,
+      "logSha256": "71e31bd262d0c59dc43440d2c074f48ec0bfadba041a8fd5cf16aaa911a501e1",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/flatbuffer-encode.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 150,
+      "completeSummary": true,
+      "logSha256": "ae90823038b390cbc76094122928a3ad6dd3be5520e0af3f8df73620880d0cc1",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/flatbuffer-schema.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 2217,
+      "completeSummary": true,
+      "logSha256": "5fa16942751db687cfb991f8a27aef8d94b6fc67af5b830025cd52a7933f549e",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/ipc-consistency.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 97,
+      "completeSummary": true,
+      "logSha256": "d1b3ca6396b3ca377fcac81736f1dcc960791778d1d79046f100daf0abbec30c",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/ipc-layout.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 228,
+      "completeSummary": true,
+      "logSha256": "313bb436cfa09c8105cf6836052bb18543d759ec2c02944cf33c9a7e3091b104",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/ipc-rename.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 45,
+      "completeSummary": true,
+      "logSha256": "d1bbf564150b06e426fa914d716b9b7564079654042efe286b3863eb8830c9a5",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/ipc.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 59,
+      "completeSummary": true,
+      "logSha256": "b26de2b78bcef849e1a1f7f47b3698b6247c34468a362c6ee9a2445cdbdf5ed6",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/schema.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 178,
+      "completeSummary": true,
+      "logSha256": "d9ec844da8f36b3d6953374947bce8a65fbb3222d24b4e06a4da9f95c8b9c4c0",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/arrow/upstream.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 15,
+      "completeSummary": true,
+      "logSha256": "4f471c1b515dcd077cdc1e12d49b8ed964baa06016b63b1942b569ef52bd206d",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/bundle.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 22,
+      "completeSummary": true,
+      "logSha256": "0e664575cbe0051f6877ed158659dbb77417de13dcdd62ecec93db3172dc6b53",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/candidate-edit.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 55,
+      "completeSummary": true,
+      "logSha256": "a9676d95235a7b89c16d53534e67b757ab8d7a951428b25f41bca6eb013296dc",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/corpus.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 61,
+      "completeSummary": true,
+      "logSha256": "472981faf54a179ba2a2aeb7c0c9e154947490edd7321c3f42eab84caeb6e99b",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/integer-metadata.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 135,
+      "completeSummary": true,
+      "logSha256": "08d26290c63e15e3e2b3e7b624abb5d42231dc3fe440a47d74bc078c5d96f927",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/metadata.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 16,
+      "completeSummary": true,
+      "logSha256": "1eec8b2ca1422b47e106d41d4d3155f479c6ec5a0a392956dbaa81c1e684b72f",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/native-schema.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 238,
+      "completeSummary": true,
+      "logSha256": "d00ad008e25bb933228399721fe760bec4fc340de12476115464696a9aff9045",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/native.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 22,
+      "completeSummary": true,
+      "logSha256": "bd27b6689ef4e3f0987110b980c814e0345f0dfa64a0e410598ca3fdc37f9616",
+      "log": "umf-native-formats-current-final.log"
+    },
+    {
+      "testProcess": "tests/avro/projection.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 69,
+      "completeSummary": true,
+      "logSha256": "967dd3cd2a1885d9c401460629c7940543416e1682d9dfaa6c9e11ee67cd5830",
+      "log": "umf-native-formats-current-final-remainder.log"
+    },
+    {
+      "testProcess": "tests/avro/tablespec-projection.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 53,
+      "completeSummary": true,
+      "logSha256": "8526b2b19ef793e7ab78e0a4861b238b165e3df20eea08ecf95f981782672bb4",
+      "log": "umf-native-formats-current-final-remainder.log"
+    },
+    {
+      "testProcess": "tests/avro/temporal-metadata.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 327,
+      "completeSummary": true,
+      "logSha256": "902d434c64a712010f7e8f092ff71fb9f4b505f7404e59833caca9cae3b08eae",
+      "log": "umf-native-formats-current-final-remainder.log"
+    },
+    {
+      "testProcess": "tests/delta/actions.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 35,
+      "completeSummary": true,
+      "logSha256": "193c0226c14a3574832b5ff994091bf6f7cefe469f4ad33f7bd5789d35cbd226",
+      "log": "umf-native-formats-current-final-remainder.log"
+    },
+    {
+      "testProcess": "tests/delta/checkpoint-parquet-trial.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 80,
+      "completeSummary": true,
+      "logSha256": "7a21e07e295fb359a7d681cba850900e576fd88d96db2c487ec5e1a8b2893e86",
+      "log": "umf-native-formats-current-final-remainder.log"
+    },
+    {
+      "testProcess": "tests/delta/checkpoint.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 66,
+      "completeSummary": true,
+      "logSha256": "625c4dcc225ebf9fe160c169bc4c4d9eec6a75f03a0f3baf0bdb1d6b8c884b72",
+      "log": "umf-native-formats-current-final-tail.log"
+    },
+    {
+      "testProcess": "tests/delta/column-mapping.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 13,
+      "completeSummary": true,
+      "logSha256": "564329765c7eaebfbf3edec92c2b7900e8e9ff0a300982f330b0c11f47237648",
+      "log": "umf-native-formats-current-final-tail.log"
+    },
+    {
+      "testProcess": "tests/delta/ddl.test.ts",
+      "exitCode": 0,
+      "pass": 13,
+      "fail": 0,
+      "assertions": 106,
+      "completeSummary": true,
+      "logSha256": "2a77108d1c9a10a726db1ee0e42f51af7b22583bda59700b28f4d1bdd11f52c9",
+      "log": "umf-native-formats-current-final-tail.log"
+    },
+    {
+      "testProcess": "tests/delta/history-upstream.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 1517,
+      "completeSummary": true,
+      "logSha256": "fb720f6899a8c01d5fae7fc1d37ad3c383e3ff93e71e4fe8edbd6d6d55ce61aa",
+      "log": "umf-native-formats-current-final-tail.log"
+    },
+    {
+      "testProcess": "tests/delta/log.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 20,
+      "completeSummary": true,
+      "logSha256": "33d4d94658781826132bacc6d8ac1cd09fa221f5cf8eb8ed80962a4d7ac4b0b8",
+      "log": "umf-native-formats-current-final-tail.log"
+    },
+    {
+      "testProcess": "tests/delta/mapped-nested.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 29,
+      "completeSummary": true,
+      "logSha256": "8c3f2135b6a30b1e7bfae488cbc3bf7dbf0dbe279fee7b5709f762dd31e1d2d8",
+      "log": "umf-native-formats-current-final-tail.log"
+    },
+    {
+      "testProcess": "tests/delta/multipart.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 86,
+      "completeSummary": true,
+      "logSha256": "112bc744568801f44ea749785c5766e970f52a2fcc2ee1528db3166d0e8606ea",
+      "log": "umf-native-formats-current-final-tail2.log"
+    },
+    {
+      "testProcess": "tests/delta/parquet-actions.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 357,
+      "completeSummary": true,
+      "logSha256": "5b333fa4d11a23c7d7b0edd08f4ed358175efcc75208f76694aec5b98f9dd923",
+      "log": "umf-native-formats-current-final-tail2.log"
+    },
+    {
+      "testProcess": "tests/delta/parquet-checkpoint.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 205,
+      "completeSummary": true,
+      "logSha256": "b45729e355fdf365107cc23ba8a9f1c6e86ae2d160f495a5d8b5e3a7fecd44a9",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/delta/reconcile.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 55,
+      "completeSummary": true,
+      "logSha256": "f73759128a1a2aed1d84aad4cd0d50f2524ddec0618351c9b49205e6408dced9",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/delta/rename.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 22,
+      "completeSummary": true,
+      "logSha256": "16c6fd3baeafd24f2ff086d69ec22df12e9845ee407d7bc13b1bb074ed6f271b",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/delta/schema.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 122,
+      "completeSummary": true,
+      "logSha256": "b2053df592f7495e584fb05fcd26c600487a1a56c774d2e744cbca00e079afd8",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/delta/sidecars.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 79,
+      "completeSummary": true,
+      "logSha256": "287e17cf76456c4d223cbb7bb2772930d04b9f837526139ae62878f454dea0f8",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/delta/table.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 20,
+      "completeSummary": true,
+      "logSha256": "c92b531736c73ef7efabe6ffc5684df76fa36b0ecbe8dcc7dea68755e87695c3",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/delta/upstream.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 286,
+      "completeSummary": true,
+      "logSha256": "2d08a3d02955e31e74e2ad994ca2da37cf6ce60dccb154f2a47710e97570a846",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/promotion-data.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 80,
+      "completeSummary": true,
+      "logSha256": "f26a13251f9fde057d662961281b9c51b0bdb61f27c349d5d1bffd793310b429",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/schema.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 102,
+      "completeSummary": true,
+      "logSha256": "64dffc2f296ce54ba587f7c064f74cdb6618f8d4d827ba74c27a6f1601bfbba7",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/table-context.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 162,
+      "completeSummary": true,
+      "logSha256": "cb4650ab0a97d7c5a7f9bcbe73f3352a30f5bd62e388fc49d68c150a6ad1446f",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/table-promotion.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 85,
+      "completeSummary": true,
+      "logSha256": "f1223eb6566481e7122c7b5cb1b732ab66f1fbf260729f6e80567f9d7d9cbfbf",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/table-rename.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 60,
+      "completeSummary": true,
+      "logSha256": "99b9cc817ceb303a8b36c03cab489cdaab5251d7214737e6b13ced0211ce8453",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/table-transforms.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 96,
+      "completeSummary": true,
+      "logSha256": "010ca988c099d1f2518f89e04af2ed0cc682c42c99405b7c8a016b4d4c16b636",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/table.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 49,
+      "completeSummary": true,
+      "logSha256": "412d25132a96b3662ca35ec21927285f7557d683ea46a4986ffe702647af8533",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/transforms.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 499,
+      "completeSummary": true,
+      "logSha256": "2968d2a46e5a6eaac0d07541076d6e4d6681433730d481b0eaccefa0bad67d21",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/iceberg/upstream.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 129,
+      "completeSummary": true,
+      "logSha256": "749d4eca3732e05d5009e5609633247e769f2b3d0831acafd7d97aa4353cd7b3",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/arrow-nested.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 51,
+      "completeSummary": true,
+      "logSha256": "15952ca7ce78bddf4d252c16a372048b46763cf89893103c9b8d5250b4320f3b",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/arrow-rename.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 298,
+      "completeSummary": true,
+      "logSha256": "11ea25f0c40f4d2da27763ccad585c3830a549eda40df5176646330e9f241ea5",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/arrow-schema.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 72,
+      "completeSummary": true,
+      "logSha256": "ff241133edae8ad9a81d5b87ebf9594f321c27b8f06e4dbe6dc23f2e4212dbd1",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/avro-arrow-loss.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 85,
+      "completeSummary": true,
+      "logSha256": "3fd61bed9072f3bde1675724fbd331cfd2727416aae9ccf97032d7134155c3c1",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/avro-projection.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 179,
+      "completeSummary": true,
+      "logSha256": "ec0d3091323a197e6aadc7c615268c2d33687d59fb49aa48913eb517694b10e0",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/bodies.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 351,
+      "completeSummary": true,
+      "logSha256": "f35f091bf6886099c836e6568a61322466e286c584444fe74994dcbf2ed008c1",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/capture.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 144,
+      "completeSummary": true,
+      "logSha256": "943d63cdce44b45210ab775016491c3ab6bc7e29175c30961d7a3dffd3621024",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/containers.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 275,
+      "completeSummary": true,
+      "logSha256": "8ac5ada26856885fe69e7193e0429d013a4768bdc4f4cce94c5dc476418a2fbf",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/field-metadata.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 171,
+      "completeSummary": true,
+      "logSha256": "d59e93d8424e3a664e7ea729d302c2bc08010f877f84bb761f0b9c970d69e2c5",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/footer.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 239,
+      "completeSummary": true,
+      "logSha256": "846992a2bcd81c74a8594de1ea2b6af8f11b8b24e2faffb6dfe2329fa18c8a1d",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/hybrid.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 155,
+      "completeSummary": true,
+      "logSha256": "d26e59d10ea3c87bf7ac35b012baabecf0a15e05eab55cfd6b0c1bc8740368f8",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/levels.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 305,
+      "completeSummary": true,
+      "logSha256": "587c3ef0aaa2f6ce0e5a012435c41d7cbb1ff1e87ebc576030984042e80742f5",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/logical.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 317,
+      "completeSummary": true,
+      "logSha256": "9395a6297d4aaa1c964b87aa26b55a24b886d57c08367d8c3797406a69f2698c",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/metadata.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 226,
+      "completeSummary": true,
+      "logSha256": "965155edd2efe9b070950b5f8e158d151475391f0085cc903cd98bfaa95b5673",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/offset-repair.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 30,
+      "completeSummary": true,
+      "logSha256": "619f1054304f946bdd9922e40745956f16844827dd617cfae95f5e235dcf8a9c",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/pages.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 324,
+      "completeSummary": true,
+      "logSha256": "e24eebd880515ffa03ce0f6b5286021c47a1bbc946ee789dd07af72f1ff50399",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/physical.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 333,
+      "completeSummary": true,
+      "logSha256": "9e0ef219ae50841d01459b1085a79df68ed7bda67c544e95ac177f7a6e0ba541",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/rename.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 583,
+      "completeSummary": true,
+      "logSha256": "d646d4f04d7ca151327a0b7f9a0b2c3cfd4b4a550390e655407584b52e38a46f",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/rows.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 274,
+      "completeSummary": true,
+      "logSha256": "45b701dcffc5579b617a1519c37495e86d11c5905f338b61e736583d59f2f68f",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/schema.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 274,
+      "completeSummary": true,
+      "logSha256": "ad1ddad5a0401c1660d92416374539eb2fa7083af61fee7d15e127d49c7702ee",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/transform.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 439,
+      "completeSummary": true,
+      "logSha256": "6969d1b372e484e624a4d74b3274ba7229372c5cff6f6cc20286d6d5b0eb0efc",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/values-trial.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 45,
+      "completeSummary": true,
+      "logSha256": "051b608abff22cb575cff255ee73201873ae659588085c50a20bb99f278f0b16",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/parquet/values.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 303,
+      "completeSummary": true,
+      "logSha256": "aa677cc83f70536da197b3d414fb5d9f62168e8e53b8b8011af6ff9b7a2fcaff",
+      "log": "umf-native-formats-current-final-tail3.log"
+    },
+    {
+      "testProcess": "tests/spark/arrow-origin.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 166,
+      "completeSummary": true,
+      "logSha256": "973b4a59028966764b1133d2db82717798d6863ad79612c96e20accb2add121c",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/collations.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 57,
+      "completeSummary": true,
+      "logSha256": "a52b9040dfbffbee41f4f4a7dca843af7e157f195ef8a5d1e3968dbcbbf09b0f",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/metadata.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 46,
+      "completeSummary": true,
+      "logSha256": "a6222ae31e10aa5874a82bab1eebe309fed2f2815ada340e2fcb5bec4c1b852b",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/parameters.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 74,
+      "completeSummary": true,
+      "logSha256": "c008db1f7d74a3d26853939d695c35a808e9d756c5d6c6443c95547190e01edc",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/projection.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 444,
+      "completeSummary": true,
+      "logSha256": "59b800ffa54c7dfbc3f6b43b36546ccba62f6e576079459be0c4d47ed844ae4e",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/rename.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 30,
+      "completeSummary": true,
+      "logSha256": "80540ab6fa2dcec760a571e328d2067f80e8136eff497dd8de31dbd4e8e512e2",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/reverse-projection.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 772,
+      "completeSummary": true,
+      "logSha256": "6171b7bb7b5aeae16e32ece7dd661ca9d24794862a58a15f002f44b705bdaba9",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/schema.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 157,
+      "completeSummary": true,
+      "logSha256": "a47268f3319d39f5ef6247740f9a67ad220cf692cfd22e4bd29ecba1f4fb4c38",
+      "log": "umf-native-formats-current-final-spark.log"
+    },
+    {
+      "testProcess": "tests/spark/upstream-projection.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 1104,
+      "completeSummary": true,
+      "logSha256": "2ac5d1b1501c70dd471d96f52fb92205fbc2cfb806453433168f1d3b2b4e5a41",
+      "log": "umf-native-formats-current-final-spark-tail.log"
+    },
+    {
+      "testProcess": "tests/spark/upstream.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 85,
+      "completeSummary": true,
+      "logSha256": "c2f1469dead3d46401351b116259e377ec55595f6f21d055fc3eb1c645fb2ddc",
+      "log": "umf-native-formats-current-final-spark-tail.log"
+    }
+  ],
+  "initialFailures": [
+    {
+      "testProcess": "tests/avro/projection.test.ts",
+      "exitCode": 1,
+      "pass": 2,
+      "fail": 1,
+      "assertions": 51,
+      "completeSummary": true,
+      "logSha256": "7a0e67254b18d3f209b14cd63416121e7105e327a835575d43c932d2e94deab3",
+      "log": "umf-native-formats-current-final.log",
+      "resolvedBySubsequentSuccess": true
+    },
+    {
+      "testProcess": "tests/delta/checkpoint.test.ts",
+      "exitCode": 1,
+      "pass": 2,
+      "fail": 1,
+      "assertions": 55,
+      "completeSummary": true,
+      "logSha256": "ef6d58cac51e4a9451b9affb077100f5d7a370b05c2e696288524be8cbdf18a6",
+      "log": "umf-native-formats-current-final-remainder.log",
+      "resolvedBySubsequentSuccess": true
+    },
+    {
+      "testProcess": "tests/delta/multipart.test.ts",
+      "exitCode": 1,
+      "pass": 2,
+      "fail": 3,
+      "assertions": 40,
+      "completeSummary": true,
+      "logSha256": "f58f8ef8d529efd563cfbb87cf920c6d4d896f68056381c1e68acc522d7ebf2c",
+      "log": "umf-native-formats-current-final-tail.log",
+      "resolvedBySubsequentSuccess": true
+    },
+    {
+      "testProcess": "tests/delta/parquet-checkpoint.test.ts",
+      "exitCode": 1,
+      "pass": 0,
+      "fail": 1,
+      "assertions": 0,
+      "completeSummary": true,
+      "logSha256": "ff023deef8ed74a8f035a863231599f8e6567895686da6bc725a2cdedc600122",
+      "log": "umf-native-formats-current-final-tail2.log",
+      "resolvedBySubsequentSuccess": true
+    },
+    {
+      "testProcess": "tests/spark/arrow-origin.test.ts",
+      "exitCode": 1,
+      "pass": 0,
+      "fail": 1,
+      "assertions": 1,
+      "completeSummary": true,
+      "logSha256": "ed09f3135f8ba69322bd5bb076805a5d693e66e9774489e9f20ce0749402590a",
+      "log": "umf-native-formats-current-final-tail3.log",
+      "resolvedBySubsequentSuccess": true
+    },
+    {
+      "testProcess": "tests/spark/upstream-projection.test.ts",
+      "exitCode": 1,
+      "pass": 1,
+      "fail": 1,
+      "assertions": 10,
+      "completeSummary": true,
+      "logSha256": "a56097c12e6f3375370dfd4069e3aa2de4d0763be0adce4f8683e4eda7f7769a",
+      "log": "umf-native-formats-current-final-spark.log",
+      "resolvedBySubsequentSuccess": true
+    }
+  ],
+  "fixes": [
+    "Independent Avro Ajv setup registers external semantic-reference schema before current core.",
+    "Authored capture-envelope markers migrated with exact original/delta ledgers; native reports, binary/log payloads, expected states and schemas unchanged.",
+    "A transient malformed relationship-operation schema from concurrent regeneration was fixed by its owner, independently meta-validated, then the affected file reran."
+  ],
+  "logs": [
+    {
+      "path": "umf-native-formats-current-final.log",
+      "sha256": "8f3b56bf32744844542cde3bcd7564d4005a28853a3a7f96cd2f2e891ad709a2"
+    },
+    {
+      "path": "umf-native-formats-current-final-remainder.log",
+      "sha256": "2548a91ec6314f2008d770a0d4449c3d28965e5c88fef52dba4cbe4bf1b80465"
+    },
+    {
+      "path": "umf-native-formats-current-final-tail.log",
+      "sha256": "6469cede91708cc15c9a6dba459bdf77ad7641bd6a0fe287e4605bf4c7e884c5"
+    },
+    {
+      "path": "umf-native-formats-current-final-tail2.log",
+      "sha256": "0e51921c03717c7c44f78cf996490068645a5a00343805cdf00d9a7e52a567c2"
+    },
+    {
+      "path": "umf-native-formats-current-final-tail3.log",
+      "sha256": "a5518fedd1c63fda20b8583546bafba598464796542e4e47082a7e1e233a1098"
+    },
+    {
+      "path": "umf-native-formats-current-final-spark.log",
+      "sha256": "ee629483add65c42630d58f8238045b224af79cbe5ebe064fab8bae0d95f254a"
+    },
+    {
+      "path": "umf-native-formats-current-final-spark-tail.log",
+      "sha256": "3e69052e1c9c8fc74b650f47d308c1578890a0aaa7aede5a1bfe300b56def3ed"
+    }
+  ]
+}

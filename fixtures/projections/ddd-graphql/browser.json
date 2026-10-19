@@ -8,19 +8,19 @@
     "forgedRefusals": 8,
     "staleRefusals": 8,
     "getterReads": 0,
-    "migrationRollback": true,
+    "currentSourceCustody": true,
     "nativeUnknownRecoveries": 2
   },
   "externalRequests": [],
   "sha256": {
-    "src/index.ts": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
-    "spec/projections/ddd-graphql.schema.json": "8a4a5686d67ee70a8adc3bde0abdae4989e1437aa389fccce6c0a62b2592cb21",
-    "src/projections/ddd-graphql/index.ts": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276",
-    "src/projections/ddd-graphql/entities.ts": "fedc7bc85775a459f790082946ce442347e662398e2f50498e1dfb9e075bff87",
-    "scripts/projections/ddd-graphql-cases.ts": "1a55750bbbe94d659a1b7e0db82a16fcf98a006b1dc5f75a4ca78fe90bad0207",
-    "scripts/projections/ddd-graphql-browser.ts": "3a77c0d83b558269984ecb21b17133e93d6608ddc5f883c17662d4dca7742c38",
-    "fixtures/projections/ddd-graphql/case.json": "b3b54a29cc20bd491a308cc673d0c71985df0d5658216caf81294986a86bb909",
-    "fixtures/projections/ddd-authored-relationships/base.json": "f7187fa40e8c76064cfd08333ef30889bf1203b1a2e2c59f0612a57ca38687d8",
-    "dist/umf.js": "dd4b9dbf646fd9c14180928c91d149d30f66b2b3114272925db58b9d4499b29b"
+    "src/index.ts": "c02a73ee76fb10097f9de6f047fb1dd6f27ee828f5e9369cc4595c9f167300a9",
+    "spec/projections/ddd-graphql.schema.json": "1a550add6922767237364b6ecc0184d165c08c0c34a7208a7db7ad423f9a0042",
+    "src/projections/ddd-graphql/index.ts": "b7adcc269302ff9e06e7626fdcf7cba4ac67f5728d2946e4ff2ad98037afe65a",
+    "src/projections/ddd-graphql/entities.ts": "7e511c56f33dc62a180428296c3fc6c7a253d2d84f11e7b655a2952b7209c79c",
+    "scripts/projections/ddd-graphql-cases.ts": "ef5ce9663a10099341004250d8084854bd64403c9f1e09844993ae6a5ec168ab",
+    "scripts/projections/ddd-graphql-browser.ts": "f50c27bdd89d76ea1810562ed5c09a5da24f53f1e6a98adb9f5ac6fb62bd5450",
+    "fixtures/projections/ddd-graphql/case.json": "805f6423b5af5afcd6e7f28a122e9199bcec214fd84ab8700e55ff88f30794e1",
+    "fixtures/projections/ddd-authored-relationships/base.json": "b9371e1e0ac1954b4787465c94d2996e24c9b264dd79ed1ed5daeaaf5abe2c94",
+    "dist/umf.js": "75e17840770d7b37bc63f0e036049ca4d3281b564e6bb2431b4dcffd71e04d4a"
   }
 }

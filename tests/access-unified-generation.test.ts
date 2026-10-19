@@ -29,7 +29,12 @@ function changed(fn:(model:any)=>void){const model=JSON.parse(original);fn(model
  test('unsupported selected meanings and naming collisions refuse before producing code',()=>{
  for(const text of [
   changed(d=>{d.modules[0].elements[0].scalarType='alien';}),
+  ...['constructor','toString','__proto__'].map(scalar=>changed(d=>{d.modules[0].elements[0].scalarType=scalar;})),
   changed(d=>{d.modules[0].elements[0].nullability='unspecified';}),
+  changed(d=>{delete d.modules[0].elements[0].nullability;}),
+  changed(d=>{d.modules[0].elements[0].nullability='future';}),
+  changed(d=>{delete d.modules[0].elements[0].cardinality;}),
+  changed(d=>{d.modules[0].elements[0].cardinality='future';}),
   changed(d=>{d.modules[0].elements[1].extensions['alien.rules']={expression:'fetch("https://invalid.example")'};}),
   changed(d=>{d.modules[0].elements[1].name='customerId';}),
   changed(d=>{d.modules[0].extensions['umf.actions'].actions[0].parameters[0].name='idempotency_key';}),

@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/create-link.json';
 import {registerActions,inspectActions,assessAction,editAction} from '../../src/extensions/actions';
@@ -7,7 +8,7 @@ import type {ActionExecutorProfile} from '../../src/extensions/actions';
 const source=()=>structuredClone(fixture) as unknown as Document;
 const registry=()=>registerActions(new Registry());
 const identity={module:'sales',action:'create-order'};
-function profile(document:Document):ActionExecutorProfile {return {id:'bounded-reference',version:'1',actionVersion:'0.1.0',coreVersion:'0.8.0',source:document,identity,claims:inspectActions(document,registry()).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://not-authenticated-runtime-proof']}))};}
+function profile(document:Document):ActionExecutorProfile {return {id:'bounded-reference',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source:document,identity,claims:inspectActions(document,registry()).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://not-authenticated-runtime-proof']}))};}
 test('@covers US-900-AC5: complete exact snapshot comparison never proves execution',()=>{
  const document=source(),p=profile(document),result=assessAction(document,identity,p,registry());expect(result.declaredCompatible).toBe(true);expect(result.executionVerified).toBe(false);
  expect(result.outcomes).toHaveLength(inspectActions(document,registry()).actions[0]!.obligations.length);expect(result.outcomes.every(o=>o.status==='supported')).toBe(true);

@@ -3,7 +3,7 @@
   "logicalDocumentId": "ddd-postgresql-graph",
   "logicalCoreVersion": "0.6.0",
   "binding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "ddd-keyed-postgresql-relationship-binding",
     "vocabularies": {
       "umf.binding": {
@@ -16,7 +16,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "ddd-postgresql-graph",
-          "coreVersion": "0.6.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "postgresql",

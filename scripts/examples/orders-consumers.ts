@@ -20,7 +20,7 @@ export function ordersModel(unknownVocabulary=false):Document {
  ]}),{id:'example:orders-table',format:'json'});
  const service=importOpenapiDocument(JSON.stringify({openapi:'3.1.1',info:{title:'Orders',version:'1'},paths:{'/orders':{post:{operationId:'requestOrder',requestBody:{required:true,content:{'application/json':{schema:{type:'object',properties:{orderId:{type:'string'},quantity:{type:'integer',minimum:-2147483648,maximum:2147483647},isActive:{type:'boolean'}},required:['orderId','quantity','isActive'],additionalProperties:false}}}},responses:{'202':{description:'Request accepted'}}}}}}),{id:'example:orders-service',format:'json'});
  const domain=copyJson(sales) as unknown as Document;
- const source:Document={umf:'0.1.0',id:'example:orders-consumers',vocabularies:{...table.vocabularies,...service.vocabularies,...domain.vocabularies},modules:[...table.modules,...service.modules,...domain.modules],extensions:{...table.extensions,...service.extensions,...domain.extensions}};
+ const source:Document={umf:'0.10.0',id:'example:orders-consumers',vocabularies:{...table.vocabularies,...service.vocabularies,...domain.vocabularies},modules:[...table.modules,...service.modules,...domain.modules],extensions:{...table.extensions,...service.extensions,...domain.extensions}};
  for(const column of source.modules[0]!.elements)column.references=[{role:'authored-request-association',module:'sales',element:'Order'}];
  source.modules[1]!.elements[0]!.references=[{role:'authored-service-association',module:'sales',element:'Ordering'}];
  if(unknownVocabulary){source.vocabularies['example.future']={version:'9.0.0'};source.extensions!['example.future']={uninterpreted:{routing:['cold','future'],strength:7}};}

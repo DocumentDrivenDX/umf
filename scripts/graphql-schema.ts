@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import ts from 'typescript-api';
 if((await Bun.file('node_modules/graphql/package.json').json()).version!=='17.0.2')throw new Error('Schema generation requires pinned GraphQL.js 17.0.2');
 const entry='node_modules/graphql/language/ast.d.ts';
@@ -34,7 +35,7 @@ function convert(type:ts.Type):any {
 }
 const root=named('DocumentNode');
 const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:graphql:0.1.0',type:'object',required:['profile','ast','originalSource'],properties:{profile:{const:'graphql-js-17.0.2-sdl'},mode:{enum:['schema','fragment']},ast:root,originalSource:{type:'string'}},$defs:defs};
-const manifest={id:'umf.graphql',version:'0.1.0',coreVersion:'0.1.0',description:'GraphQL SDL native AST and source preservation',schema,semantics:'CONTRACT-009. SDL AST preserves native type/directive/default declarations; original source retains comments. Runtime scalar/directive behavior remains external.',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'GraphQL SDL',version:'GraphQL.js 17.0.2; September 2025 specification plus explicitly reported runtime grammar additions',subset:'Schema definitions/extensions and constant values; executable operations are outside this schema adapter'},evidence:['tests/graphql/native.test.ts','tests/graphql/corpus.test.ts','fixtures/graphql/corpus-oracle-results.json']}};
+const manifest={id:'umf.graphql',version:'0.1.0',coreVersion:CURRENT_CORE_VERSION,description:'GraphQL SDL native AST and source preservation',schema,semantics:'CONTRACT-009. SDL AST preserves native type/directive/default declarations; original source retains comments. Runtime scalar/directive behavior remains external.',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'GraphQL SDL',version:'GraphQL.js 17.0.2; September 2025 specification plus explicitly reported runtime grammar additions',subset:'Schema definitions/extensions and constant values; executable operations are outside this schema adapter'},evidence:['tests/graphql/native.test.ts','tests/graphql/corpus.test.ts','fixtures/graphql/corpus-oracle-results.json']}};
 await Bun.write('spec/extensions/graphql/schema.json',JSON.stringify(schema,null,2)+'\n');
 await Bun.write('spec/extensions/graphql/package.json',JSON.stringify(manifest,null,2)+'\n');
 console.log('GraphQL SDL AST definitions:',Object.keys(defs).length);

@@ -1,0 +1,62 @@
+{"testProcess":"tests/delta/multipart.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/multipart.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/multipart.test.ts:
+(pass) US-018-AC19: Spark hash vectors include signed UTF-8 tails and explicit seeds [0.49ms]
+(pass) US-018-AC19: native multipart recovery preserves all parts and row origins [2910.45ms]
+(pass) US-018-AC19: missing/duplicate parts, mismatched identities and hash-clustering violations block [450.22ms]
+(pass) US-018-AC19: V2 features and repeated actions cannot be assembled as a multipart snapshot [868.34ms]
+(pass) US-018-AC19: invalid finite part counts retain schema-valid blocked evidence [0.13ms]
+
+ 5 pass
+ 0 fail
+ 86 expect() calls
+Ran 5 tests across 1 file. [9.38s]
+{"testProcess":"tests/delta/multipart.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":86,"completeSummary":true,"logSha256":"112bc744568801f44ea749785c5766e970f52a2fcc2ee1528db3166d0e8606ea"}
+{"testProcess":"tests/delta/parquet-actions.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/parquet-actions.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/parquet-actions.test.ts:
+(pass) US-018-AC15: native checkpoint corpus projects exact actions or blocks with source intact [9647.61ms]
+(pass) US-018-AC15: ambiguous maps, typed values, missing required fields and action conflicts cannot silently lower [1451.09ms]
+(pass) US-018-AC17: annotated statistics dates and timestamp fractions have explicit bounds [0.36ms]
+
+ 3 pass
+ 0 fail
+ 357 expect() calls
+Ran 3 tests across 1 file. [16.75s]
+{"testProcess":"tests/delta/parquet-actions.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":357,"completeSummary":true,"logSha256":"5b333fa4d11a23c7d7b0edd08f4ed358175efcc75208f76694aec5b98f9dd923"}
+{"testProcess":"tests/delta/parquet-checkpoint.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/parquet-checkpoint.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/parquet-checkpoint.test.ts:
+
+# Unhandled error between tests
+-------------------------------
+262 |         if (!valid && throwOrLogError) {
+263 |             const message = "schema is invalid: " + this.errorsText();
+264 |             if (this.opts.validateSchema === "log")
+265 |                 this.logger.error(message);
+266 |             else
+267 |                 throw new Error(message);
+                                ^
+error: schema is invalid: data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean, data/properties/$ref must be object,boolean
+      at validateSchema (/Users/erik/.codex/worktrees/d8be/umf/node_modules/ajv/dist/core.js:267:27)
+      at _addSchema (/Users/erik/.codex/worktrees/d8be/umf/node_modules/ajv/dist/core.js:461:18)
+      at addSchema (/Users/erik/.codex/worktrees/d8be/umf/node_modules/ajv/dist/core.js:235:34)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/src/validation/schema.ts:26:382)
+      at /Users/erik/.codex/worktrees/d8be/umf/src/model/relationships.ts:21:185
+-------------------------------
+
+
+ 0 pass
+ 1 fail
+ 1 error
+Ran 1 test across 1 file. [3.46s]
+{"testProcess":"tests/delta/parquet-checkpoint.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":0,"completeSummary":true,"logSha256":"ff023deef8ed74a8f035a863231599f8e6567895686da6bc725a2cdedc600122"}
+Complete test file failed or terminated: tests/delta/parquet-checkpoint.test.ts
+
+ 8 pass
+ 1 fail
+ 443 expect() calls
+Ran 9 tests across 3 files. [29.65s]

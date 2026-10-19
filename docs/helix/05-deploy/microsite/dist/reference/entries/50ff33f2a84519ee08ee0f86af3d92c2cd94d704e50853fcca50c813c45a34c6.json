@@ -6,17 +6,17 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -224,7 +224,7 @@
                       "members": {
                         "$ref": {
                           "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
+                          "value": "urn:umf:core:0.10.0"
                         }
                       }
                     },
@@ -374,7 +374,7 @@
                           "members": {
                             "$ref": {
                               "kind": "string",
-                              "value": "urn:umf:core:0.1.0"
+                              "value": "urn:umf:core:0.10.0"
                             }
                           }
                         },
@@ -507,7 +507,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -581,9 +581,9 @@
   ],
   "sources": [
     {
-      "bytes": 3628,
+      "bytes": 3631,
       "path": "spec/extensions/arrow-ipc/layout-result.schema.json",
-      "sha256": "425f4e34bcd5a9b98799a6e6fed085ca9630f644e984418cb6a60f5604204066"
+      "sha256": "10bcaf62f6cdf55ac6b55348c279a0b3b4ad77747b22dbb9708c01071ff7b63d"
     }
   ],
   "summary": "IPC boundary inspection. Accounted bytes are not a native semantic validity assertion. Core document references resolve against spec/core/schema.json.",

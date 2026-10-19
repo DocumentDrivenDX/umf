@@ -1,0 +1,187 @@
+{
+  "umf": "0.10.0",
+  "id": "security-graph-candidate",
+  "vocabularies": {},
+  "extensions": {},
+  "modules": [
+    {
+      "id": "m",
+      "namespace": "m",
+      "elements": [
+        {
+          "id": "Employee",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "Employee-code"
+            }
+          ],
+          "keys": [
+            {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Employee-code"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "Project",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "Project-code"
+            }
+          ],
+          "keys": [
+            {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Project-code"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "Employee-code",
+          "name": "Employee-code",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Project-code",
+          "name": "Project-code",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Assignment",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "Assignment-active"
+            },
+            {
+              "module": "m",
+              "element": "Assignment-code"
+            }
+          ],
+          "keys": [
+            {
+              "id": "code-key",
+              "name": "code-key",
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "Assignment-code"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "Assignment-code",
+          "name": "Assignment-code",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Assignment-active",
+          "name": "Assignment-active",
+          "kind": "field",
+          "scalarType": "boolean",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        }
+      ],
+      "relationships": [
+        {
+          "id": "BareWorksOn",
+          "name": "BareWorksOn",
+          "source": [
+            {
+              "module": "m",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "code-key"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "WorksOn",
+          "name": "WorksOn",
+          "source": [
+            {
+              "module": "m",
+              "element": "Employee"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "code-key"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": 1
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": 2
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "associationRecord": {
+            "module": "m",
+            "element": "Assignment",
+            "key": "code-key"
+          }
+        }
+      ]
+    }
+  ]
+}

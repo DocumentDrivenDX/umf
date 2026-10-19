@@ -1,5 +1,5 @@
 import {tableSpecKeyAuthors,keyRecord,keyId,keyCode} from './key-tablespec-projection-cases';
-import {declareCoreKey,type CoreKeyDeclaration} from '../../src/model/keys';
+import {declareCoreKey, type CoreKeyDeclaration} from '../../src/model/keys';
 import type {Document} from '../../src/model/types';
 import type {KeyPostgresqlRequest} from '../../src/core-ideals/key-postgresql-projection';
 export function postgresqlKeyAuthors(primary=true){

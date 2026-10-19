@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {schemaProperties} from './internal/inspection-meanings';
 import {evaluateFieldValue} from './internal/field-body';
 import {copyJson} from './json';
@@ -14,7 +15,7 @@ export interface CoreSchemaPropertyPatch {
 }
 function locate(input:Document,identityInput:CoreSchemaPropertyIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreSchemaPropertyIdentity;
- const validation=validateDocument(source);if(!['0.8.0','0.9.0'].includes(source.umf)||!validation.valid)schemaError('Expected valid 0.8.0 envelope');
+ const validation=validateDocument(source);if(source.umf!==CURRENT_CORE_VERSION||!validation.valid)schemaError('Expected valid current 0.10.0 envelope');
  const keys=identity?.scope==='document'?['scope']:identity?.scope==='module'?['scope','module']:identity?.scope==='element'?['scope','module','element']:[];
  knownSchemaMembers(identity,keys,'/identity');if(!keys.length||Object.keys(identity).length!==keys.length)schemaError('Explicit identity required');
  if(identity.scope==='document')return {source,identity,node:source as unknown as Record<string,unknown>,path:'',validation};
@@ -27,7 +28,7 @@ function locate(input:Document,identityInput:CoreSchemaPropertyIdentity){
 }
 export function inspectCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity){
  const located=locate(input,identity),properties=schemaProperties(located.node);
- return {operation:'inspect-core-schema-properties' as const,version:(located.source.umf==='0.9.0'?'2.0.0':'1.0.0') as '1.0.0'|'2.0.0',source:located.source,identity:located.identity,path:located.path,properties,diagnostics:located.validation.diagnostics,provenance:'unverified' as const};
+ return {operation:'inspect-core-schema-properties' as const,version:'2.0.0' as const,source:located.source,identity:located.identity,path:located.path,properties,diagnostics:located.validation.diagnostics,provenance:'unverified' as const};
 }
 export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity,patch:CoreSchemaPropertyPatch):Document {
  const request=copyJson(patch) as unknown as CoreSchemaPropertyPatch;
@@ -37,7 +38,7 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
  if(located.identity.scope==='element'&&node.kind!=='field'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
  for(const key of schemaPropertyNames)if(Object.hasOwn(request,key)){
   if(key==='default'&&node.default)knownSchemaMembers(node.default,['value','on'],located.path+'/default');
-  node[key]=copyJson(request[key]);
+  (node as Record<string,unknown>)[key]=copyJson(request[key as keyof CoreSchemaPropertyPatch]);
  }
  if(Object.hasOwn(request,'facets')){
   knownSchemaMembers(request.facets,['length','collectionSize','range'],'/request/facets');
@@ -73,5 +74,5 @@ export function resolveCoreDefault(input:Document,fieldInput:{module:string;elem
  const applied=!!declaration&&(state.state==='missing'?['missing','missing-or-null'].includes(declaration.on):state.value===null&&['null','missing-or-null'].includes(declaration.on));
  const result:CoreDefaultInput=applied?{state:'present',value:copyJson(declaration!.value) as unknown as CoreLiteral}:state;
  if(result.state==='present'){const validation=validateCoreFieldValue(located.source,field,result.value);if(!validation.valid)schemaError(JSON.stringify(validation.diagnostics));}
- return {operation:'resolve-core-default' as const,version:(located.source.umf==='0.9.0'?'2.0.0':'1.0.0') as '1.0.0'|'2.0.0',source:located.source,identity:copyJson(field),input:state,result,applied};
+ return {operation:'resolve-core-default' as const,version:'2.0.0' as const,source:located.source,identity:copyJson(field),input:state,result,applied};
 }

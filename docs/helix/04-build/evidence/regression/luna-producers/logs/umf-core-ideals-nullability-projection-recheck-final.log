@@ -1,0 +1,18 @@
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/nullability-avro-projection.test.ts:
+(pass) authored Avro availability projects null carriers and recovers every ideal and residual [7660.12ms]
+(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [92.46ms]
+(pass) native changes, forged source/meaning and invalid Avro names refuse [128.05ms]
+(pass) unmapped document, module, relationship and extension meaning remains recoverable [89.43ms]
+
+tests/core-ideals/nullability-parquet-projection.test.ts:
+(pass) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [10806.28ms]
+(pass) scope, cardinality, defaults and precision obligations remain explicit losses [709.71ms]
+(pass) changed bytes, forged receipts, stale authors and invalid native names refuse [223.24ms]
+(pass) document/module metadata and relationships survive report-mode ideal recovery [143.41ms]
+
+ 8 pass
+ 0 fail
+ 1254 expect() calls
+Ran 8 tests across 2 files. [20.03s]

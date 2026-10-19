@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11531,
-        "line": 19,
+        "bytes": 10292,
+        "line": 17,
         "path": "src/model/relationships.ts",
-        "sha256": "8929351add3903d0ab1deec8e060541c2bb4a6ce5ade9b936f7af71619263b90"
+        "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreRelationshipMeaning",
     "runtime": "type-only",
     "signatureText": [
-      "export type CoreRelationshipMeaning={state:'missing'}|{state:'legacy';value:Json}|{state:'known'|'partial';relationships:CoreRelationship[];uninterpretedPaths:string[]};"
+      "export type CoreRelationshipMeaning={state:'missing'}|{state:'known'|'partial';relationships:CoreRelationship[];uninterpretedPaths:string[]};"
     ]
   },
   "id": "[\"api\",\".\",\"CoreRelationshipMeaning\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11531,
-      "line": 19,
+      "bytes": 10292,
+      "line": 17,
       "path": "src/model/relationships.ts",
-      "sha256": "8929351add3903d0ab1deec8e060541c2bb4a6ce5ade9b936f7af71619263b90"
+      "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
     }
   ],
   "summary": "Type declaration · src/model/relationships.ts",

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3838,
-        "line": 15,
+        "bytes": 3149,
+        "line": 12,
         "path": "src/model/scalar-type.ts",
-        "sha256": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d"
+        "sha256": "88aeb627523b02b91e778e011dc4aca858fe310c94ce0427f45ec5806580761a"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreScalarTypeInspection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreScalarTypeInspection {operation:'inspect-core-scalar-type';version:'0.1.0'|'0.2.0'|'0.3.0';source:Document;identity:CoreScalarTypeIdentity;path:string;meaning:CoreScalarTypeMeaning;provenance:'unverified'}"
+      "export interface CoreScalarTypeInspection {operation:'inspect-core-scalar-type';version:'0.3.0';source:Document;identity:CoreScalarTypeIdentity;path:string;meaning:CoreScalarTypeMeaning;provenance:'unverified'}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreScalarTypeInspection\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3838,
-      "line": 15,
+      "bytes": 3149,
+      "line": 12,
       "path": "src/model/scalar-type.ts",
-      "sha256": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d"
+      "sha256": "88aeb627523b02b91e778e011dc4aca858fe310c94ce0427f45ec5806580761a"
     }
   ],
   "summary": "Type declaration · src/model/scalar-type.ts",

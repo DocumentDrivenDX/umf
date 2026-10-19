@@ -44,11 +44,11 @@ const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),
  const context=await browser.newContext({viewport:{width,height:1000}}),host=new URL(base).origin;
  await context.route('**/*',route=>{const url=route.request().url();if(new URL(url).origin!==host){legacyExternal.push(url);return route.abort();}return route.continue();});
  const page=await context.newPage();
- for(const name of ['index.html','docs.html','demo.html','ecosystem.html','explorer.html']){
+ for(const name of ['index.html','docs.html','demo.html','ecosystem.html','reference/core.html#view=ontology']){
  const response=await page.goto(base+name,{waitUntil:'networkidle'});if(!response||response.status()!==200)throw Error('Missing site entry '+name);
- const link=page.locator('nav a[href="actions/index.html"]');if(await link.count()!==1||!await link.isVisible())throw Error('Missing visible Actions navigation '+name);
+ const link=page.getByRole('navigation',{name:'Main navigation',exact:true}).getByRole('link',{name:'Actions',exact:true});if(await link.count()!==1||!await link.isVisible()||new URL(await link.getAttribute('href'),page.url()).href!==base+'actions/index.html')throw Error('Missing visible Actions navigation '+name);
  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1))throw Error('Site entry overflow '+name+' '+width);
- const file=width+'-site-'+name.replace('.html','.png');await page.screenshot({path:path.join(out,file),fullPage:true});screenshots.push(file);
+ const file=width+'-site-'+name.replace(/[^a-z0-9]+/gi,'-')+'.png';await page.screenshot({path:path.join(out,file),fullPage:true});screenshots.push(file);
  await link.click();await page.waitForURL(base+'actions/index.html');if(await page.locator('h1').count()!==1)throw Error('Actions entry navigation failed');
  entryChecks.push({route:name,width,actionsNavigation:true,noOverflow:true});
  }

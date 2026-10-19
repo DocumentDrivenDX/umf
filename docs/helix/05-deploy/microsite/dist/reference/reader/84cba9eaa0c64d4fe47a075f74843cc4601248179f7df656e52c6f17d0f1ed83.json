@@ -25,7 +25,7 @@
       "links": [],
       "name": "version",
       "optional": false,
-      "type": "\"1.0.0\" | \"2.0.0\""
+      "type": "\"2.0.0\""
     },
     {
       "description": "",
@@ -59,7 +59,7 @@
       "links": [],
       "name": "provenance",
       "optional": false,
-      "type": "{ origin: \"authored\"; idealPath: string; basis: \"explicit-author-declaration\"; nativePath: null; binding: { id: string; version: \"1.0.0\" | \"2.0.0\"; }; }"
+      "type": "{ origin: \"authored\"; idealPath: string; basis: \"explicit-author-declaration\"; nativePath: null; binding: { id: string; version: \"2.0.0\"; }; }"
     }
   ],
   "parameters": [],

@@ -266,7 +266,7 @@
           "maxLength": 256
         },
         "umfVersion": {
-          "const": "0.8.0"
+          "const": "0.10.0"
         },
         "sha256": {
           "type": "string",
@@ -314,7 +314,7 @@
           "$ref": "urn:umf:actions:plan:1#/$defs/field"
         },
         "value": {
-          "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+          "$ref": "urn:umf:core:0.10.0#/$defs/literal"
         }
       },
       "required": [

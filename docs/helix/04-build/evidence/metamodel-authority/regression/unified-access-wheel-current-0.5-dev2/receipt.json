@@ -1,0 +1,100 @@
+{
+  "profile": "umf.python-wheel-candidate/1",
+  "status": "passed; local unpublished dev2 candidate only",
+  "package": {
+    "name": "umf-access",
+    "version": "0.1.0.dev2",
+    "previousUpstreamVersion": "0.1.0.dev1",
+    "upstreamDev1Evidence": "preserved; not overwritten or rewritten",
+    "sdkRelationship": "Python host wheel is not included in the SDK package"
+  },
+  "build": {
+    "wheel": "umf_access-0.1.0.dev2-py3-none-any.whl",
+    "sha256": "2a70552bfebcdf1035fc60d8ac190ba80dc63f48aa22fd6648acf23ee105a7a7",
+    "bytes": 218557,
+    "inventoryFile": "wheel-inventory.json",
+    "memberCount": 54,
+    "source": {
+      "python/umf_access/pyproject.toml": {
+        "sha256": "53cb6e5c9ea50bca3e67866cb93ba693f37c70acfc41084a924d28a73638442c",
+        "bytes": 529
+      },
+      "python/umf_access/src/umf_access/unified/__init__.py": {
+        "sha256": "a1791f3add87cdc159a6aa0404b218fe8be8e357c02f0484523eb6009579d946",
+        "bytes": 41724
+      },
+      "python/umf_access/src/umf_access/generated_core.py": {
+        "sha256": "c6d51fd6a1899c6009ccd632079f915a464fc7eeeac2ba9807d5deaad5d52497",
+        "bytes": 315
+      },
+      "python/umf_access/tests/test_unified_binding_identity.py": {
+        "sha256": "94e89deb25a2705c86867fd5f8bdd82da849e7dcedaca1d242aebe8fe1cb9362",
+        "bytes": 8937
+      }
+    }
+  },
+  "installedProof": {
+    "freshVenv": "/private/tmp/umf-access-wheel-dev2/final-run-success/venv",
+    "python": "3.11.17",
+    "installMode": "offline, from existing local uv cache",
+    "isolatedImport": "passed; import resolved from fresh venv site-packages, with Python -I and cwd outside repository",
+    "identityTests": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    },
+    "wholeWheelAuthorityScan": {
+      "passed": true,
+      "checker": "scripts/check-core-authority.ts --distribution <wheel extracted contents>",
+      "files": 54
+    }
+  },
+  "scope": {
+    "claims": [
+      "wheel archive and installed package contents correspond to candidate dev2 artifact",
+      "six binding identity/admission tests pass on installed wheel",
+      "all 54 wheel members pass current-core authority distribution scan"
+    ],
+    "doesNotClaim": [
+      "publication",
+      "SDK inclusion",
+      "native Truss qualification",
+      "broader unified access functionality beyond listed test subset"
+    ]
+  },
+  "attemptNote": "An initial offline install using an intentionally empty temporary UV_CACHE_DIR failed dependency resolution because pydantic was not present in that cache. The diagnostic is preserved as initial-install-cache-miss.log. The successful fresh environment install used the existing local uv cache with network disabled.",
+  "logs": {
+    "build.log": {
+      "sha256": "709098263aa49c8768d33a967e9459c4508f2e90f4cd7b3f94cd63f8b5859538",
+      "bytes": 325
+    },
+    "venv.log": {
+      "sha256": "044e698fd4fb674cd0c39a26de7636889dd1772555d28fd64e8b74f0c8651a28",
+      "bytes": 407
+    },
+    "install.log": {
+      "sha256": "d516abfabc4e38788fcc355d090602e2d34fda15166495ed7dd782296e8c9782",
+      "bytes": 647
+    },
+    "installed-import.log": {
+      "sha256": "29b17370bf1f8c4fd80690b4b29c02037a999565a39b09a5d00732368fbdf293",
+      "bytes": 392
+    },
+    "identity.log": {
+      "sha256": "8ed8980713d5145780ab3730ca479f74b9175af3ba5d3175d1d19405984a0abc",
+      "bytes": 1391
+    },
+    "authority-scan.log": {
+      "sha256": "28403dafc9b234f1552b795a4ef572e9b861fdebe4190f765efd8617b49c6345",
+      "bytes": 351
+    },
+    "initial-install-cache-miss.log": {
+      "sha256": "c2b8676d2fd4efa1057fe166a0ef4a90f65baa74100466ceb5ee2631c7a1a84c",
+      "bytes": 792
+    },
+    "wheel-inventory.json": {
+      "sha256": "6e6cdd09717d9adff7c99c364fa804f19f5d2e7611344e7cf63f8dab4e1d3633",
+      "bytes": 8846
+    }
+  }
+}

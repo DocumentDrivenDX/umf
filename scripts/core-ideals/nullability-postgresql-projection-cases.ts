@@ -1,12 +1,14 @@
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
 import {declareCoreNullability} from '../../src/model/nullability';
 import {carriers} from '../../src/core-ideals/postgresql-syntax';
-import type {Document,Nullability} from '../../src/model/types';
+import type {Document, Nullability} from '../../src/model/types';
 import type {NullabilityPostgresqlRequest} from '../../src/core-ideals/nullability-postgresql-projection';
 export function postgresqlNullabilityProjectionCases(){
  const rows:Array<{id:string;nativeType:keyof typeof carriers;label:Nullability;variant:string;author:ReturnType<typeof declareCoreNullability>;request:NullabilityPostgresqlRequest;status:'blocked'|'projected';expectedNotNull:boolean}>=[];let n=0;
  function add(nativeType:keyof typeof carriers,label:Nullability,variant:string,mode:'strict'|'report'){
   const id='availability_'+n++;
-  const source:Document={umf:'0.3.0',id:'ideal-'+id,vocabularies:{},modules:[{id:'m',namespace:'availability',elements:[{id:'e',name:'value',kind:'field',description:"Availability 'meaning' \\ retained",scalarType:carriers[nativeType][1],extensions:{}}]}]};
+  const source:Document={umf:CURRENT_CORE_VERSION,id:'ideal-'+id,vocabularies:{},modules:[{id:'m',namespace:'availability',elements:[{id:'e',name:'value',kind:'field',description:"Availability 'meaning' \\ retained",scalarType:carriers[nativeType][1],extensions:{}}]}]};
   const request:NullabilityPostgresqlRequest={id,namespace:'availability',tableName:id,columnName:'value',nativeType,mode,scope:'stored-relation',carrier:'sql-null'};
   if(variant==='unknown'){source.modules[0]!.elements[0]!.future={exactness:'unknown'};}
   if(variant==='namespace')source.modules[0]!.namespace='other';

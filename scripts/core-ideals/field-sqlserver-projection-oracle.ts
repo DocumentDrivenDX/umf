@@ -1,9 +1,9 @@
 import {sqlServerRecordCases} from './record-sqlserver-projection-cases';
-import {projectRecordToSqlServer,recoverRecordFromSqlServer} from '../../src';
+import {projectRecordToSqlServer, recoverRecordFromSqlServer} from '../../src';
 import {sqlServerFieldCases} from './field-sqlserver-projection-cases';
-import {projectFieldToSqlServer,recoverFieldFromSqlServer} from '../../src';
-import {classifySqlServerRecord,recoverSqlServerRecordCapture,upgradeFieldEnvelope,classifySqlServerField,recoverSqlServerFieldCapture,readJsonValue,writeJsonValue,copyJson} from '../../src';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
+import {projectFieldToSqlServer, recoverFieldFromSqlServer} from '../../src';
+import {classifySqlServerRecord, recoverSqlServerRecordCapture, classifySqlServerField, recoverSqlServerFieldCapture, readJsonValue, writeJsonValue, copyJson} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, readDocument, writeDocument} from '../../src';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-sqlserver-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
@@ -26,7 +26,7 @@ try{
  const query=await Bun.file('native/sqlserver/catalog.sql').text(),capture=JSON.parse((await sql('umf_source',query)).split(/\r?\n/).join('').trim());capture.query=query;
  if(capture.serverVersion!=='16.0.4295.3')throw Error('Wrong native build');
  for(const row of rows){const table=capture.tables.find((t:any)=>t.schema==='sales'&&t.name===row.request.tableName),column=table?.columns[0];if(table?.columns.length!==1||column.name!==row.request.columnName||column.system_type_id!==row.expectedTypeId||!column.is_nullable||column.is_identity||column.is_computed||column.description!==row.author.target.modules[0]!.elements[0]!.description)throw Error('Native column behavior differs');}
- const nativeSource=JSON.stringify(capture,null,2)+'\n',source=upgradeFieldEnvelope(importSqlServerCatalog(nativeSource,{id:'generated'})).target;
+ const nativeSource=JSON.stringify(capture,null,2)+'\n',source=importSqlServerCatalog(nativeSource,{id:'generated'});
  for(const c of getSqlServerColumnMetadata(source)){const classified=classifySqlServerField(source,{column:c.path,nativeSource,mode:'strict'});if(!classified.target||recoverSqlServerFieldCapture(classified,classified.target)!==nativeSource)throw Error('Native-only recovery');}
  const recordRows=[];let guardChecked=false;
  await sql('umf_replayed','CREATE SCHEMA sales;');

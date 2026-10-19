@@ -2,26 +2,26 @@ import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import corpus from '../../fixtures/relationship/authored/corpus.json';
 import * as u from '../../src';
+import {relationshipCurrentBase} from './relationship-current-base';
 import {relationshipExtraCases} from './relationship-extras-cases';
 import {verifyRelationshipEvidence} from './relationship-evidence';
 import {relationshipTests,digest} from './relationship-gate-inputs';
 
-// @covers US-045-AC1 @covers US-045-AC2 @covers US-045-AC3 @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8 @covers US-045-AC10
+// @covers US-045-AC1 @covers US-045-AC2 @covers US-045-AC3 @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 export function verifyRelationshipAuthoredCorpus(){
  const variants=[...corpus.cases,{id:'bounded-owned-one-to-many',relationship:{...structuredClone(corpus.cases[1]!.relationship),sourceMultiplicity:{min:1,max:2},targetMultiplicity:{min:2,max:3}}}];
  const cases=[];
  for(const c of variants){
-  const legacy=structuredClone(corpus.base) as unknown as u.Document;
-  legacy.extensions={future:{integerText:'9007199254740993',unknown:[null,{retained:true}]}};
-  legacy.vocabularies.future={version:"1.0.0"};
-  (legacy.modules[0] as any).relationships={futureNative:'uninterpreted collision'};
-  const upgrade=u.upgradeRelationshipEnvelope(legacy),author=u.declareCoreRelationship(upgrade.target,{module:'sales'},c.relationship as any),source=author.target;
+  const base=relationshipCurrentBase();
+  base.extensions={future:{integerText:'9007199254740993',unknown:[null,{retained:true}]}};
+  base.vocabularies.future={version:"1.0.0"};
+  const author=u.declareCoreRelationship(base,{module:'sales'},c.relationship as any),source=author.target;
   assert.equal(u.validateRelationshipCandidate(source).valid,true);
   let recoveries=0,refusals=0;
   for(const format of ['json','yaml'] as const){
-   const saved=u.readJsonValue(u.writeJsonValue(upgrade as any,format),format) as unknown as typeof upgrade;
-   const rolled=u.rollbackRelationshipEnvelope(saved,source);assertJsonDataEqual(rolled.target,legacy);assertJsonDataEqual(rolled.source,source);u.verifyRelationshipTransition(rolled);recoveries++;
-   const forged=structuredClone(saved);forged.target.id='forged';assert.throws(()=>u.rollbackRelationshipEnvelope(forged,source));refusals++;
+   const saved=u.readJsonValue(u.writeJsonValue(author as any,format),format) as unknown as typeof author;
+   assertJsonDataEqual(u.verifyCoreRelationshipOperation(saved,source),author);recoveries++;
+   const forged=structuredClone(saved);forged.target.id='forged';assert.throws(()=>u.verifyCoreRelationshipOperation(forged,source));refusals++;
   }
   const extras=[];
   for(const template of relationshipExtraCases().filter(x=>x.name.startsWith((c.id==='bounded-owned-one-to-many'?'owned-one-to-many':c.id)+'-'))){
@@ -42,7 +42,7 @@ export function verifyRelationshipAuthoredCorpus(){
   assert.equal(extras.length,6);cases.push({id:c.id,relationship:c.relationship,sourceSha256:digest(JSON.stringify(source)),recoveries,refusals,extras});
  }
  assert.equal(cases.length,corpus.cases.length+1);
- return {cases,migration:'0.6.0 to 0.7.0 with exact legacy rollback and retained new assertions',unknownContentRetained:true};
+ return {cases,coreVersion:u.CURRENT_CORE_VERSION,operation:'current relationship declaration with retained extension content',unknownContentRetained:true,construction:{base:'independently authored current document',shapeProposals:{path:'fixtures/relationship/authored/corpus.json',originalCoreVersion:'0.6.0',archivedSha256:'aa751e8d09ad68e9423f3067f38ee51dd6bc9885a43bed22d1c8df3919a421bb',use:'relationship proposal values only; historical base is never promoted or treated as a current source'}}};
 }
 // Reexecute the binding tests here: the gate must not merely trust earlier counters.
 export async function verifyRelationshipBindingRoundTrips(){
@@ -52,18 +52,18 @@ export async function verifyRelationshipBindingRoundTrips(){
  const text=out+err,match=text.match(/(\d+) pass[\s\S]*?(\d+) fail/);assert(match,'Missing Bun test result');assert.equal(Number(match[2]),0);assert(Number(match[1])>0);
  return {command:['bun','test',...relationshipTests],passed:Number(match[1]),failed:0,logSha256:digest(text)};
 }
-// @covers US-045-AC9 @covers US-045-AC10
+// @covers US-045-AC9
 export async function verifyRelationshipConformance(){
- const evidence=await verifyRelationshipEvidence(),authored=verifyRelationshipAuthoredCorpus(),roundTrips=await verifyRelationshipBindingRoundTrips();
- assertJsonDataEqual(await verifyRelationshipEvidence(),evidence,'Evidence changed during conformance');
- const admission={idealAdmitted:true,minimumUsefulPriorityMappings:2,usefulSystems:evidence.usefulSystems,usefulMappings:evidence.usefulMappings,qualification:{path:'fixtures/validation/relationship-gate-refresh.json',sha256:evidence.refreshSha256,versions:evidence.versions},authored};
- const delivery={priorityDelivery:true,systems:['postgresql','sqlserver','tablespec','avro','parquet'],extras:['graphql','rdf','linkml'],evidence,roundTrips};
+ const evidence=await verifyRelationshipEvidence(undefined,{allowUnqualifiedHistorical:true}),authored=verifyRelationshipAuthoredCorpus(),roundTrips=await verifyRelationshipBindingRoundTrips();
+ assertJsonDataEqual(await verifyRelationshipEvidence(undefined,{allowUnqualifiedHistorical:true}),evidence,'Evidence changed during conformance');
+ const admission={idealAdmitted:false,sourceOperationsVerified:true,currentNativeQualification:'UNQUALIFIED',minimumUsefulPriorityMappings:2,sourceUsefulSystems:evidence.usefulSystems,sourceUsefulMappings:evidence.usefulMappings,historicalQualification:'PARTIALLY_REVALIDATED',qualification:{path:'fixtures/validation/relationship-gate-refresh.json',sha256:evidence.refreshSha256,versions:evidence.versions},authored};
+ const delivery={priorityDelivery:false,sourceBindingsVerified:['postgresql','sqlserver','tablespec','avro','parquet'],qualifiedBindings:0,currentNativeQualification:'UNQUALIFIED',systems:['postgresql','sqlserver','tablespec','avro','parquet'],extras:['graphql','rdf','linkml'],evidence,roundTrips};
  return {admission,delivery,nativeEquivalence:false,limits:[
-  'Useful priority mappings are qualified PostgreSQL and SQL Server FK/junction mappings with independent insertion controls; remaining endpoint multiplicities, ownership, inverse intent and qualifiers remain explicit residuals.',
-  'The canonical six shapes, alternate Key selection, undirected relationship, keyed Enrollment association and bounded multiplicities are admitted independently of physical representability. Each target matrix retains its own refusals and qualified subset.',
+  'Historical PostgreSQL and SQL Server FK/junction evidence records contain useful insertion controls; their current native qualification remains UNQUALIFIED because original source and oracle artifacts are only partially recoverable.',
+  'The current-source replay exercises six canonical shapes, alternate Key selection, an undirected relationship, a keyed Enrollment association and bounded multiplicities. It does not establish current native admission or physical representability.',
   'TableSpec metadata, Avro/Parquet target-key carriers and GraphQL/RDF/LinkML schema declarations do not enforce graph-wide relationship instances.',
   'Native-only classification retains original archives and records observations without inventing author identity. Retained receipts prove consistency, not authenticity.',
-  'Historical feature-worktree acceptance records remain historical; this gate consumes a successful current-source replay only.'
+  'Current source declaration and recovery behavior is tested separately from historical native acceptance. Missing original artifacts remain explicit and cannot promote current native admission or delivery.'
  ]};
 }
-if(import.meta.main){const result=await verifyRelationshipConformance();await Bun.write('fixtures/validation/relationship-conformance.json',JSON.stringify(result,null,2)+'\n');await Bun.write('fixtures/validation/relationship-admission.json',JSON.stringify({...result.admission,nativeEquivalence:false},null,2)+'\n');await Bun.write('fixtures/validation/relationship-delivery.json',JSON.stringify({...result.delivery,nativeEquivalence:false},null,2)+'\n');console.log(JSON.stringify({idealAdmitted:true,priorityDelivery:true,nativeEquivalence:false,authoredCases:result.admission.authored.cases.length,roundTrips:result.delivery.roundTrips.passed}));}
+if(import.meta.main){const result=await verifyRelationshipConformance();await Bun.write('fixtures/validation/relationship-conformance.json',JSON.stringify(result,null,2)+'\n');await Bun.write('fixtures/validation/relationship-admission.json',JSON.stringify({...result.admission,nativeEquivalence:false},null,2)+'\n');await Bun.write('fixtures/validation/relationship-delivery.json',JSON.stringify({...result.delivery,nativeEquivalence:false},null,2)+'\n');console.log(JSON.stringify({idealAdmitted:false,sourceOperationsVerified:true,priorityDelivery:false,nativeEquivalence:false,authoredCases:result.admission.authored.cases.length,roundTrips:result.delivery.roundTrips.passed}));}

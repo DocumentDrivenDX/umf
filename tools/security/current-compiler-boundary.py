@@ -1,6 +1,7 @@
 """Current-main compiler refusal witness; never native backend acceptance."""
 import argparse,copy,hashlib,json,os,subprocess
 from pathlib import Path
+CURRENT_CORE_VERSION = json.loads(Path('spec/metamodel/generated/python-shapes.json').read_text())['currentVersion']
 p=argparse.ArgumentParser();p.add_argument('--weft-root',type=Path,required=True);p.add_argument('--expected-weft-commit',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 root=a.weft_root.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
 def sha(b):return hashlib.sha256(b).hexdigest()
@@ -9,6 +10,7 @@ if git('rev-parse','HEAD')!=a.expected_weft_commit:raise RuntimeError('Wrong ori
 if git('diff','HEAD','--name-only'):raise RuntimeError('Tracked compiler source is dirty')
 paths=[root/n for n in git('ls-files').splitlines() if not n.startswith('docs/helix/04-build/evidence/')]
 paths += [Path(__file__).resolve(),Path(__file__).with_name('current-compiler-witness.rs').resolve()]
+paths += [Path('spec/metamodel/generated/python-shapes.json').resolve()]
 frozen={p:p.read_bytes() for p in paths if p.is_file()}
 crate=Path('/private/tmp/umf-current-compiler-boundary-20261012');(crate/'src').mkdir(parents=True,exist_ok=True)
 manifest='[package]\nname="umf-current-compiler-boundary"\nversion="0.1.0"\nedition="2021"\n[dependencies]\nweft-core={path='+json.dumps(str(root/'crates/weft-core'))+'}\nserde_json="1"\n'
@@ -20,11 +22,12 @@ target=Path('/private/tmp/weft-042-release-target-a');command=[str(tool/'cargo')
 build=subprocess.run(command,env=env,text=True,capture_output=True,timeout=300);(out/'build.stdout.log').write_text(build.stdout);(out/'build.stderr.log').write_text(build.stderr);build.check_returncode();binary=target/'release/umf-current-compiler-boundary';frozen[binary]=binary.read_bytes()
 fixtures=json.loads((root/'docs/helix/03-test/fixtures/cases.json').read_text());ordinary=next(x['request'] for x in fixtures if x['expected']['status']=='compiled')
 f=json.loads((root/'crates/weft-core/tests/security-source-fixture.json').read_text());source=f['resolution']['documents'][0];doc=copy.deepcopy(source['document'])
+if doc.get('umf') != CURRENT_CORE_VERSION:raise RuntimeError('Current-core native qualification unavailable: upstream source fixture uses a retired core envelope')
 for e in doc['modules'][0]['elements']:
  e['name']=e['id']
  if e.get('scalarType')=='integer':e['facets']={'integerWidth':{'bits':64,'signed':True}}
 def encoded(v):return json.dumps(v,separators=(',',':'),ensure_ascii=False)
-text=encoded(doc);pin={'documentId':doc['id'],'revision':source['revision'],'umfVersion':'0.8.0','sha256':sha(text.encode())}
+text=encoded(doc);pin={'documentId':doc['id'],'revision':source['revision'],'umfVersion':CURRENT_CORE_VERSION,'sha256':sha(text.encode())}
 base=copy.deepcopy(ordinary);base.update(interfaceVersion='weft-security-compile/0.2.0',dialect='weft-sql/0.2.0',sql='SELECT r.resourceId FROM Resource r',modules=[{'documentJson':text,'pin':pin,'selectedModuleIds':['m']}])
 base['security']={'version':'umf.security/0.1.0','policyJson':encoded(f['policy']),'ontologyJson':encoded(f['resolution']['ontology'])}
 profile={'version':'weft.security.query-profile/0.1.0','id':'current-refusal-witness','revision':'p1','action':'read','modelPins':[pin],'policySha256':sha(base['security']['policyJson'].encode()),'ontologySha256':sha(base['security']['ontologyJson'].encode()),'binding':{'backendId':base['target']['backendId'],'backendVersion':base['target']['backendVersion'],'targetProfile':base['target']['targetProfile'],'sha256':sha(base['target']['bindingJson'].encode())},'targets':[{'documentId':'domain','moduleId':'m','elementId':'Resource'}],'bindings':[]}

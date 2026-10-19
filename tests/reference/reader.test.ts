@@ -1,9 +1,9 @@
 import {test,expect} from 'bun:test';
-import {latestProfile,propertyPresence,shape,schemaNode,unknownKeyPolicy,schemaRules,identity} from '../../docs/helix/05-deploy/reference/model';
+import {latestProfile,propertyPresence,shape,schemaNode,unknownKeyPolicy,schemaRules,identity,conditionText} from '../../docs/helix/05-deploy/reference/model';
 import {parseNativeJson,validateDocument,readDocument} from '../../src/index';
-const root=parseNativeJson(await Bun.file('spec/core/semantic-types-document.schema.json').text());
+const root=parseNativeJson(await Bun.file('spec/core/schema.json').text());
 // @covers US-089-AC12 @covers US-089-AC13
-test('latest uses numeric core versions and preserves conditional, open and recursive meaning',()=>{
+test('latest uses numeric core versions and preserves conditional, open and recursive meaning',async()=>{
  expect(latestProfile([{version:'0.9.0'},{version:'0.10.0'}]).version).toBe('0.10.0');
  const node=schemaNode(root,'/$defs/element');
  expect(propertyPresence(node,'scalarType','record')).toContain('Not allowed');
@@ -11,6 +11,11 @@ test('latest uses numeric core versions and preserves conditional, open and recu
  expect(propertyPresence(node,'keys','field')).toContain('Not allowed');
  expect(propertyPresence(node,'itemType','field')).toContain('Conditional');
  expect(schemaRules(node).some(r=>r.text.includes('itemType')&&r.text.includes('array'))).toBe(true);
+ const current=parseNativeJson(await Bun.file('spec/core/schema.json').text()),element=schemaNode(current,'/$defs/element');
+ const recordRules=schemaRules(element,'record').map(r=>r.text).join('\n'),fieldRules=schemaRules(element,'field').map(r=>r.text).join('\n');
+ expect(recordRules).not.toContain('facets.');expect(recordRules).not.toContain('`scalarType` = string');
+ expect(fieldRules).toContain('`facets.length.unit` = unicode-scalar');expect(fieldRules).toContain('`facets.length.unit` = byte');
+ expect(conditionText({properties:{facets:{properties:{length:{properties:{unit:{const:'unicode-scalar'}}}}}}})).toContain('facets.length.unit');
  expect(shape(root,schemaNode(root,'/$defs/scalarType'))).toContain('string');
  expect(shape(root,schemaNode(root,'/$defs/scalarType'))).toContain('uuid');
  expect(unknownKeyPolicy(node)).toContain('allowed');

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5518,
-        "line": 8,
-        "path": "src/validation/keys.ts",
-        "sha256": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb"
+        "bytes": 4966,
+        "line": 23,
+        "path": "src/generated/core-model.ts",
+        "sha256": "c3d6ca3f95259eee0af31661e992844a74a3aefe4919eae09bf00445d8364b77"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreKeyFieldReference",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreKeyFieldReference {module:string;element:string;[key:string]:unknown}"
+      "export type KeyFieldReference = {\"module\":Id;\"element\":Id;[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"CoreKeyFieldReference\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5518,
-      "line": 8,
-      "path": "src/validation/keys.ts",
-      "sha256": "f1afadc0e7bb0eabe76889ed7db4939b5dea8aa1c1cc990716c96859e04ce8cb"
+      "bytes": 4966,
+      "line": 23,
+      "path": "src/generated/core-model.ts",
+      "sha256": "c3d6ca3f95259eee0af31661e992844a74a3aefe4919eae09bf00445d8364b77"
     }
   ],
-  "summary": "Type declaration · src/validation/keys.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "CoreKeyFieldReference"
 }

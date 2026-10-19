@@ -1,11 +1,11 @@
 import {test,expect} from 'bun:test';
 import {postgresqlProjectionCases} from '../../scripts/core-ideals/field-postgresql-projection-cases';
-import {projectFieldToPostgresql,recoverFieldFromPostgresql} from '../../src/core-ideals/field-postgresql-projection';
+import {projectFieldToPostgresql, recoverFieldFromPostgresql} from '../../src/core-ideals/field-postgresql-projection';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlSource} from '../../src/adapters/postgresql';
+import {exportPostgresqlSql, getPostgresqlSource} from '../../src/adapters/postgresql';
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {type Document} from '../../src/model/types';
 test('explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats',async()=>{
  for(const {author,request} of postgresqlProjectionCases()){

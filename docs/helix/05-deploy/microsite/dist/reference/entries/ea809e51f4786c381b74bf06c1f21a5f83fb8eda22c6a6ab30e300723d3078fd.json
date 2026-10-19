@@ -51,12 +51,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
@@ -7003,7 +7003,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -7162,7 +7162,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -7221,9 +7221,9 @@
   ],
   "sources": [
     {
-      "bytes": 64444,
+      "bytes": 64446,
       "path": "spec/extensions/delta-log/parquet-actions.schema.json",
-      "sha256": "19f40d5285a947fb48b5f7bb03ef4fe07c86f24834ed83fade0471eea4d24d29"
+      "sha256": "5b080b56bfad836194e34f8ba55be55e0c37ec0f93b3f7b39c0049eecfa34494"
     }
   ],
   "summary": "spec/extensions/delta-log/parquet-actions.schema.json",

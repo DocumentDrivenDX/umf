@@ -1,7 +1,7 @@
 """Run the shared generated application against PostgreSQL through real Weft SQL.
 
 Requires an explicit ephemeral PostgreSQL DSN, the isolated current Weft build,
-the host package sources, and the cached psycopg used only by this test host.
+an installed host package wheel, and the cached psycopg used only by this test host.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ parser.add_argument("--weft", required=True)
 parser.add_argument("--psycopg", required=True)
 args = parser.parse_args()
 expected_weft_version = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.44")
-expected_host_version = os.environ.get("UMF_UNIFIED_EXPECTED_HOST_VERSION", "0.1.0.dev1")
+expected_host_version = os.environ.get("UMF_UNIFIED_EXPECTED_HOST_VERSION", "0.1.0.dev2")
 
 repo = Path(__file__).resolve().parents[2]
 sys.path[:0] = [
@@ -38,6 +38,7 @@ import weft
 from application import application, assert_shared_edge_cases
 from shop import Actions, Client, Customer, CustomerKey, OrderKey, WriteOutcomeUnknown
 from umf_access.unified import WeftTableBinding
+
 
 SOURCE = (repo / "tests/unified/commerce.json").read_text(encoding="utf-8")
 DIGEST = __import__("hashlib").sha256(SOURCE.encode("utf-8")).hexdigest()

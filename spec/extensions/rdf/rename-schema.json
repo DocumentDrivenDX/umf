@@ -4,7 +4,7 @@
   "type": "object",
   "properties": {
     "source": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "from": {
       "type": "string",
@@ -49,7 +49,7 @@
       }
     },
     "candidate": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "diagnostics": {
       "type": "array",

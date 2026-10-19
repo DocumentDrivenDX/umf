@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
 import {type NativeJson,parseNativeJson,renderTree} from '../model/native-json';
@@ -8,10 +9,9 @@ import {catalogIntegerErrors} from '../validation/catalog-integers';
 export {default as sqlserverNullabilityEvidenceSchema} from '../../spec/extensions/sqlserver-nullability/native.schema.json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import core from '../../spec/core/nullability-document.schema.json';
-import authorSchema from '../../spec/core/nullability-operation.schema.json';
+
+import core from '../../spec/core/schema.json';
+import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/sqlserver-nullability-classification.schema.json';
 import manifest from '../../spec/extensions/sqlserver-nullability/package.json';
@@ -28,7 +28,7 @@ export interface SqlServerNullabilityClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:SqlServerNullabilityRequest['scope'];carrier:SqlServerNullabilityRequest['carrier'];basis:'Captured declarations for stored relation values; not query results, omitted inputs or live enforcement verification'};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const checkEvidence=validator.compile(evidenceSchema);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
@@ -37,7 +37,7 @@ const str=(node:NativeJson|undefined)=>node?.kind==='string'?node.value:undefine
 export function classifySqlServerNullability(input:Document,options:SqlServerNullabilityRequest):SqlServerNullabilityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as SqlServerNullabilityRequest;
  if(!checkRequest(request))throw new UmfError('SQLSERVER_NULLABILITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.3.0')throw new UmfError('SQLSERVER_NULLABILITY_SOURCE','Valid core 0.3.0 required; migrate explicitly');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('SQLSERVER_NULLABILITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const exported=exportSqlServerCatalog(source),root=parseNativeJson(request.nativeSource);
  if(renderTree(root)+'\n'!==exported)throw new UmfError('SQLSERVER_NULLABILITY_ARCHIVE','Native text differs from retained capture');
  if(root.kind!=='object'||str(root.members.serverVersion)!=='16.0.4295.3')throw new UmfError('SQLSERVER_NULLABILITY_VERSION','This binding requires SQL Server 16.0.4295.3');

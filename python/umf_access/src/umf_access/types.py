@@ -8,6 +8,8 @@ from typing import ClassVar, Generic, TypeAlias, TypeVar, final
 from pydantic import MISSING as MISSING  # noqa: PLC0414
 from pydantic import BaseModel, ConfigDict
 
+from .generated_core import CURRENT_CORE_VERSION, CoreVersion
+
 RUNTIME_ABI = "umf-access-runtime/0.1"
 RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
 
@@ -77,7 +79,7 @@ class ActionSource:
     """Exact original document/declaration identity, never an authority token."""
 
     document_id: str
-    core_version: str
+    core_version: CoreVersion
     module: str
     action: str
     document_sha256: str
@@ -101,7 +103,7 @@ class ActionSource:
             raise ValueRuleError("complete original action source required")
         if not re.fullmatch(r"[0-9a-f]{64}", self.document_sha256):
             raise ValueRuleError("original document SHA-256 required")
-        if self.core_version != "0.8.0" or (self.invocation_id, self.invocation_version) != ("umf.actions.tx", "1"):
+        if self.core_version != CURRENT_CORE_VERSION or (self.invocation_id, self.invocation_version) != ("umf.actions.tx", "1"):
             raise ValueRuleError("unsupported original action source profile")
         if not self.action_pointer.startswith("/modules/"):
             raise ValueRuleError("original action pointer required")

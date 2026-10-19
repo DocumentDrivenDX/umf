@@ -9,7 +9,23 @@
       "links": [],
       "name": "version",
       "optional": false,
-      "type": "\"4.0.0\" | \"3.0.0\""
+      "type": "\"4.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "CoreKeyTupleValue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keyPath",
+      "optional": false,
+      "type": "string"
     },
     {
       "description": "",
@@ -29,26 +45,10 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
-      ],
-      "name": "values",
-      "optional": false,
-      "type": "CoreKeyTupleValue[]"
-    },
-    {
-      "description": "",
       "links": [],
       "name": "profile",
       "optional": false,
       "type": "\"umf-key-tuple-v1\" | \"umf-key-tuple-v2\""
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "keyPath",
-      "optional": false,
-      "type": "string"
     },
     {
       "description": "",

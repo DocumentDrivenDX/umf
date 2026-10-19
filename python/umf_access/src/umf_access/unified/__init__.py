@@ -24,6 +24,7 @@ from ..dsl import (
     render_logical,
     render_related_logical,
 )
+from ..generated_core import CURRENT_CORE_VERSION
 
 
 class UnifiedAccessError(RuntimeError):
@@ -39,6 +40,22 @@ class UnifiedAccessError(RuntimeError):
         if self.field is not None:
             error["field"] = self.field
         return {"schema": schema, "error": error}
+
+
+_WEFT_SCALAR_CARRIERS = frozenset({"string", "boolean", "integer", "decimal", "uuid", "bits128", "binary", "date", "timestamp"})
+
+
+def _weft_scalar_availability(field: Mapping[str, object], *, purpose: str) -> tuple[str, bool]:
+    """Admit only the scalar shape and availability this original Weft profile can represent."""
+    scalar = field.get("scalarType")
+    cardinality = field.get("cardinality")
+    nullability = field.get("nullability")
+    extensions = field.get("extensions", {})
+    if (type(scalar) is not str or scalar not in _WEFT_SCALAR_CARRIERS
+            or cardinality != "one" or nullability not in ("required", "absent-allowed")
+            or type(extensions) is not dict or extensions):
+        raise UnifiedAccessError("UNSUPPORTED", f"{purpose} requires an admitted scalar carrier, cardinality one, explicit nullability, and no field extensions")
+    return scalar, nullability == "absent-allowed"
 
 
 def _canonical(value: object) -> str:
@@ -151,8 +168,8 @@ def _digest_source(binding: Mapping[str, object]) -> tuple[str, dict[str, object
         model = json.loads(raw)
     except (ValueError, TypeError):
         raise ValueError("WEFT_SOURCE_INVALID: original model JSON is invalid") from None
-    if type(model) is not dict or model.get("umf") != "0.10.0":
-        raise ValueError("WEFT_SOURCE_INVALID: latest UMF 0.10.0 source is required")
+    if type(model) is not dict or model.get("umf") != CURRENT_CORE_VERSION:
+        raise ValueError("WEFT_SOURCE_INVALID: current UMF source is required")
     return actual, model
 
 
@@ -239,12 +256,10 @@ class WeftTableBinding:
             logical_name = field.get("name", field.get("id"))
             if type(logical_name) is not str or logical_name not in columns:
                 raise UnifiedAccessError("UNSUPPORTED", "field identity has no exact logical column mapping")
-            scalar = field.get("scalarType")
-            if type(scalar) is not str:
-                raise UnifiedAccessError("UNSUPPORTED", "structured field query is outside this binding profile")
+            scalar, nullable = _weft_scalar_availability(field, purpose="field")
             column = columns[logical_name]
             if (column.get("carrier") != scalar
-                    or column.get("nullable") is not (field.get("nullability") != "required")):
+                    or column.get("nullable") is not nullable):
                 raise UnifiedAccessError("UNSUPPORTED", "logical column carrier differs from the exact source field")
             mapped[str(fid[1])] = FieldRef(module_id, record_id, str(fid[1]), logical_name=logical_name)
             source_fields[str(fid[1])] = field
@@ -617,10 +632,7 @@ class WeftTableBinding:
                 field = self.fields.get((field_ref["module"], field_ref["element"]))
                 if field is None:
                     raise UnifiedAccessError("UNSUPPORTED", "action value field is absent from bound source")
-                scalar = field.get("scalarType")
-                if type(scalar) is not str or field.get("cardinality") != "one":
-                    raise UnifiedAccessError("UNSUPPORTED", "action value field must be a scalar field")
-                nullable = field.get("nullability") != "required"
+                scalar, nullable = _weft_scalar_availability(field, purpose="action value field")
                 if parameter_value is None and not nullable:
                     raise UnifiedAccessError("INVALID", "required action value cannot be null")
                 typed_inputs[parameter_id] = _wire_value(parameter_value, scalar)

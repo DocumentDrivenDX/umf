@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import nativeAstSchema from '../../../spec/extensions/postgresql/native-ast.schema.json';
 import {createValidator} from '../../validation/schema';
 import manifest from '../../../spec/extensions/postgresql/package.json';
@@ -40,7 +41,7 @@ function checkBackend(backend:PostgresqlBackend){if(backend?.identity!=='@libpg-
 export async function importPostgresqlSql(source:string,backend:PostgresqlBackend,options:{id:string}):Promise<Document>{
  checkBackend(backend);if(typeof source!=='string'||source.length>LIMITS.maxTextLength||source.includes('\0'))throw new UmfError('POSTGRESQL_SOURCE','Expected bounded SQL without NUL bytes');
  const tree=copyJson(await backend.parse(source));
- const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[POSTGRESQL_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[POSTGRESQL_EXTENSION]:{profile:'postgresql-raw-parse-tree',source,root:parseNativeJson(JSON.stringify(tree))} as unknown as Json}}]}]};payload(document);return document;
+ const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[POSTGRESQL_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[POSTGRESQL_EXTENSION]:{profile:'postgresql-raw-parse-tree',source,root:parseNativeJson(JSON.stringify(tree))} as unknown as Json}}]}]};payload(document);return document;
 }
 /** Original source archive; it deliberately remains the pre-edit source. */
 export function getPostgresqlSource(document:Document){return payload(document).source;}

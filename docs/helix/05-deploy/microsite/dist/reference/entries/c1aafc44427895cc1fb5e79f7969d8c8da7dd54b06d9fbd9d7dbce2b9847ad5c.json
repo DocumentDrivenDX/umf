@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -115,7 +115,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -297,7 +297,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -360,9 +360,9 @@
   ],
   "sources": [
     {
-      "bytes": 2015,
+      "bytes": 2017,
       "path": "spec/extensions/odcs/rename-schema.json",
-      "sha256": "b54b73f35c0f9dd7dd86ad0c8b9282a7582df517b4165d38b180165fc6d17815"
+      "sha256": "6ba2439c20be86a6bf9015f96def23a78cbf848671f373045fa14ca716a8884b"
     }
   ],
   "summary": "spec/extensions/odcs/rename-schema.json",

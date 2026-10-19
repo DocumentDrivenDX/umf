@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {snapshotSchema} from '../validation/internal-schema';
 import {copyJson,LIMITS} from './json';
 import {UmfError,type Document,type Diagnostic,type Validation,type Json} from './types';
@@ -7,8 +8,8 @@ import {validateCoreRecordValues,type CoreRecordValueIdentity,type CoreRecordFie
 import {encodeCoreKeyTuple,type CoreKeyIdentity,type CoreKeyTupleValue,type CoreKeyTupleReceipt} from './key-tuple';
 
 import {createValidator} from '../validation/schema';
-import coreSchema from '../../spec/core/schema-properties-document.schema.json';
-import keySchema from '../../spec/core/key-tuple-operation-v3.schema.json';
+import coreSchema from '../../spec/core/schema.json';
+import keySchema from '../../spec/core/key-tuple-operation-v4.schema.json';
 import operationSchema from '../../spec/core/dataset-value-operation.schema.json';
 const validator=createValidator();validator.addSchema(snapshotSchema(coreSchema));validator.addSchema(snapshotSchema(keySchema));
 const checkReceipt=validator.compile(snapshotSchema(operationSchema)),checkInput=validator.compile(snapshotSchema({$schema:operationSchema.$schema,$id:operationSchema.$id+':input',$ref:'#/$defs/input',$defs:operationSchema.$defs}));
@@ -40,7 +41,7 @@ export function composeCoreDatasetValues(sourceInput:Document,inputInput:CoreDat
  compact?.reserveInput();
  if(!checkInput(input))fail('Dataset request violates its versioned operation schema');
  const documentValidation=compact?.documentValidation??validateDocument(source);
- if(source.umf!=='0.8.0'||!documentValidation.valid)throw new UmfError('CORE_DATASET_SOURCE','Original valid core0.8 source required');
+ if(source.umf!==CURRENT_CORE_VERSION||!documentValidation.valid)throw new UmfError('CORE_DATASET_SOURCE','Valid current core 0.10.0 source required');
  knownSchemaMembers(input,['scope','records','relationships','context'],'/input');
  knownSchemaMembers(input.scope,['id','closure'],'/input/scope');
  if(Object.keys(input.scope).length!==2||typeof input.scope.id!=='string'||!input.scope.id||input.scope.closure!=='supplied-dataset-only')fail('Explicit finite supplied-dataset scope required');

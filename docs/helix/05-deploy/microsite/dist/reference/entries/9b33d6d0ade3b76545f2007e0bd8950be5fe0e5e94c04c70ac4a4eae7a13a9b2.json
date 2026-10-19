@@ -1,38 +1,38 @@
 {
   "data": {
     "conflicts": [],
-    "correspondence": "historical",
+    "correspondence": "unknown",
     "declarations": [],
     "evidence": [
       {
         "closureComplete": false,
         "commands": [],
-        "correspondence": "historical",
+        "correspondence": "unknown",
         "id": "key-gate-record",
         "inputHashes": [
           {
             "path": "scripts/core-ideals/key-conformance.ts",
-            "sha256": "b9195431d28b63c6df101ccd90db53a71f5835894f4d12e6ae03c2bd078e56ab"
+            "sha256": "d4e0d710768933728cb0d228ec34fbcd836c1ea1fb8fc5e30fdfab72e937a54e"
           },
           {
             "path": "scripts/core-ideals/key-evidence.ts",
-            "sha256": "8235a48cf64b0d2632f11794830b6d6e6a12f65d4de687b43c521289bd961da4"
+            "sha256": "d15aeb670df0bd2a8be5c319951176ce755097a04dadc49921ec24df9a421eab"
           },
           {
             "path": "scripts/core-ideals/key-roundtrips.ts",
-            "sha256": "fe9e0a146396b6905f102291b9129861ff95e6cf7945a78b7adb301557374e39"
+            "sha256": "0eafe387c2801d13bd86761d7b1a3f11a0051ac0289857e3d54fcc238813d9d9"
           },
           {
             "path": "scripts/core-ideals/key-native-roundtrips.ts",
-            "sha256": "651b2dcfd2f3f78cd5821645293643743ff80a902909e6bff407b92274fa9ce4"
+            "sha256": "d4e1fa3a24de514c42196733a4506e587b8058495d0fdac362865a3480a50c9d"
           },
           {
             "path": "tests/core-ideals/key-conformance.test.ts",
-            "sha256": "5bebfaa83af7f6f02bf843b3fe02c28a24c24bce6f3065b576994aa58fffc46f"
+            "sha256": "7d11f6806e4e5182f4c9f3ac41390e3fb0e70931624ee501348ab372ad659bc3"
           },
           {
             "path": "tests/core-ideals/key-evidence.test.ts",
-            "sha256": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7"
+            "sha256": "ad4f03a6ade8219623e94eb9d9b61e993d996b81a4c4bd2143c3c36254cdde23"
           },
           {
             "path": "tests/core-ideals/key-authored-roundtrips.test.ts",
@@ -44,7 +44,7 @@
           },
           {
             "path": "fixtures/validation/key-gate-refresh-evidence.json",
-            "sha256": "46f92bc4ceefbad191eab354bb4ee5402f0fe7f258e28a1e04cacec29baad6ae"
+            "sha256": "7ebb1c9f68846708abc875486b12d85d788a84ac5ac06203ef6e88b97a2d9533"
           }
         ],
         "limitations": [
@@ -56,14 +56,14 @@
           "Native-only imports cannot infer authored stable key IDs, names, primary intent or unknown qualifiers. Receipts establish consistency, not authentication.",
           "Complete tested dependency closure is not recorded; current-source qualification is unknown."
         ],
-        "outcome": "passed",
+        "outcome": "failed",
         "readerId": "core-gate",
-        "scope": "Named Key ideal admission and qualified five-system delivery; retained author identity and native representations remain separate",
+        "scope": "Current named Key authoring/receipt behavior and historical native evidence are reported separately",
         "selector": "",
         "source": {
-          "bytes": 8470,
+          "bytes": 47332,
           "path": "fixtures/validation/key-conformance.json",
-          "sha256": "bb2749d9d6700357a63308a76443775d543b464c518f769b65242a462ac8a813"
+          "sha256": "95fc24b364112d12a7aef6a345551201cd35e51f2b0b6088d4f40fb805932ad6"
         },
         "supersedes": [],
         "versions": {}

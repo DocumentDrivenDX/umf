@@ -1,5 +1,6 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 /** Internal explicit transition reconciliation; consistency never authenticates issuer. */
-import sourceSchema from '../../spec/core/relationship-document.schema.json';
+import sourceSchema from '../../spec/core/schema.json';
 import kindsSchema from '../../spec/core/kind-operation-v6.schema.json';
 import receiptSchema from '../../spec/core/record-type-operation-v6.schema.json';
 import resultSchema from '../../spec/core/record-type-journal.schema.json';
@@ -24,11 +25,11 @@ export function inspectCoreRecordTypeJournal(baseInput:Document,currentInput:Doc
  const packet=copyJson({base:baseInput,current:currentInput,events:eventsInput}) as unknown as {base:Document;current:Document;events:CoreRecordTypeJournalEvent[]};
  const {base,current,events}=packet;
  if(!Array.isArray(events)||events.length<1||events.length>32)throw new UmfError('CORE_TYPE_JOURNAL_CAPACITY','One to32 explicit events required');
- for(const model of [base,current])if(model?.umf!=='0.7.0'||!validateDocument(model).valid)throw new UmfError('CORE_TYPE_JOURNAL_SOURCE','Original0.7 valid complete models required');
+ for(const model of [base,current])if(model?.umf!==CURRENT_CORE_VERSION||!validateDocument(model).valid)throw new UmfError('CORE_TYPE_JOURNAL_SOURCE','Current core 0.10.0 valid complete models required');
  let previous=base;
  const verified:CoreRecordTypeJournalEvent[]=[];
  for(const event of events){
-  if(event?.version!=='6.0.0'||!['declare-core-kind','declare-core-record-type'].includes(event.operation))throw new UmfError('CORE_TYPE_JOURNAL_EVENT','Only original0.7/v6 kind and type events admitted');
+  if(event?.version!=='6.0.0'||!['declare-core-kind','declare-core-record-type'].includes(event.operation))throw new UmfError('CORE_TYPE_JOURNAL_EVENT','Only supported v6 kind and record-type events admitted');
   const receipt=event.operation==='declare-core-kind'?verifyCoreKindDeclaration(event,event.target):verifyCoreRecordTypeDeclaration(event,event.target);
   if(!same(receipt.source,previous))throw new UmfError('CORE_TYPE_JOURNAL_GAP','Full event source must equal previous target');
   verified.push(receipt);previous=receipt.target;

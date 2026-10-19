@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import type * as API from '../src/index';
 import type {Document} from '../src/model/types';
 import type {PortableActionPlan,ActionPlanInspectionContext} from '../src/extensions/actions/plan-types';
@@ -7,7 +8,7 @@ import {corpusCapabilities} from './actions-plan-corpus';
 const artifact=(v:unknown)=>{const utf8=typeof v==='string'?v:JSON.stringify(v);return {mediaType:'application/json',utf8,sha256:sha256Text(utf8)};};
 /** Hand-authored portable fixture; this is not a Weft compilation or native permission. */
 export function localPlanFixture(api:typeof API){
- const document=JSON.parse(JSON.stringify(model)) as Document,original=artifact(document),pin={documentId:document.id,revision:original.sha256,umfVersion:'0.8.0' as const,sha256:original.sha256},action={identity:{module:'sales',action:'set-name-local'},documentSha256:original.sha256,invocation:{id:'umf.actions.local-tx',version:'1'}};
+ const document=JSON.parse(JSON.stringify(model)) as Document,original=artifact(document),pin={documentId:document.id,revision:original.sha256,umfVersion:CURRENT_CORE_VERSION,sha256:original.sha256},action={identity:{module:'sales',action:'set-name-local'},documentSha256:original.sha256,invocation:{id:'umf.actions.local-tx',version:'1'}};
  const dependencies=[{module:'sales',element:'product-id'},{module:'sales',element:'product-name'}];
  const context:ActionPlanInspectionContext={registry:api.createUmfRegistry(),models:[{pin,artifact:original}],actions:[{pin:action,artifact:original}],selections:[{profile:{id:'fixture.selection',version:'1'},inspect:()=>({eligible:true,dependencies,diagnostics:[]})}]};
  const plan:PortableActionPlan={protocol:'umf.actions.plan/1',model:pin,action,target:{module:'sales',element:'products',key:'pk'},source:artifact({sql:"UPDATE products SET name='Foo' WHERE id='bar'"}),selection:{profile:{id:'fixture.selection',version:'1'},artifact:artifact({fixtureOnly:true}),dependencies},inputs:{entityParameter:'products',assignments:[{input:'name-value',field:dependencies[1]!,value:{string:'Foo'}}]},execution:{selection:'frozen',atomicity:'batch',conflict:'stop',partition:'manifest-order',batchSize:2},limits:{maxItems:10000,maxManifestBytes:16777216}};

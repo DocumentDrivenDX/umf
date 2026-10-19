@@ -1,0 +1,16 @@
+ 7 | export async function checkBoundaries(){
+ 8 |  const graph=new Map<string,string[]>();let count=0;
+ 9 |  for(const base of roots)for await(const file of new Bun.Glob(base+'**/*.ts').scan({cwd:root,onlyFiles:true})){
+10 |   count++;const code=await Bun.file(resolve(root,file)).text(),ast=ts.createSourceFile(file,code,ts.ScriptTarget.Latest,true);const deps:string[]=[];
+11 |   const inspect=(n:ts.Node)=>{let spec:string|undefined;if((ts.isImportDeclaration(n)||ts.isExportDeclaration(n))&&n.moduleSpecifier&&ts.isStringLiteral(n.moduleSpecifier))spec=n.moduleSpecifier.text;if(ts.isCallExpression(n)&&n.expression.kind===ts.SyntaxKind.ImportKeyword)throw Error('REFERENCE_INPUT dynamic import '+file);
+12 |    if(spec){let target=spec.startsWith('.')?relative(root,resolve(root,file,'..',spec)).replaceAll('\\','/'):spec;if(spec.startsWith('.')){if(awaitExists(target+'.ts'))target+='.ts';else if(awaitExists(target+'/index.ts'))target+='/index.ts';}if(!allowed(file,target))throw Error('REFERENCE_INPUT forbidden import '+file+' → '+target);if(owner(target)&&owner(target)!==owner(file)&&!target.endsWith('/index.ts')&&!target.endsWith('/protocol.ts'))throw Error('REFERENCE_INPUT private cross import '+target);if(owner(target))deps.push(target);}
+
+error: REFERENCE_INPUT forbidden import scripts/reference/renderer-package.ts → scripts/schema-browser-integrity.ts
+      at inspect (/Users/erik/.codex/worktrees/d8be/umf/scripts/reference/check-boundaries.ts:12:275)
+      at visitNodes (/Users/erik/.codex/worktrees/d8be/umf/node_modules/typescript-api/lib/typescript.js:32457:22)
+      at forEachChildInSourceFile (/Users/erik/.codex/worktrees/d8be/umf/node_modules/typescript-api/lib/typescript.js:32670:12)
+      at forEachChild (/Users/erik/.codex/worktrees/d8be/umf/node_modules/typescript-api/lib/typescript.js:32970:35)
+      at inspect (/Users/erik/.codex/worktrees/d8be/umf/scripts/reference/check-boundaries.ts:13:206)
+      at checkBoundaries (/Users/erik/.codex/worktrees/d8be/umf/scripts/reference/check-boundaries.ts:13:232)
+
+Bun v1.4.2 (macOS arm64)

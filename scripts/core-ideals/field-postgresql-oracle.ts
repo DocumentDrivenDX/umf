@@ -1,10 +1,10 @@
-import {classifyPostgresqlComposite,recoverPostgresqlCompositeCapture} from '../../src/core-ideals/postgresql-composite';
-import {classifyPostgresqlRecord,recoverPostgresqlRecordCapture} from '../../src/core-ideals/postgresql-record';
+import {classifyPostgresqlComposite, recoverPostgresqlCompositeCapture} from '../../src/core-ideals/postgresql-composite';
+import {classifyPostgresqlRecord, recoverPostgresqlRecordCapture} from '../../src/core-ideals/postgresql-record';
 import {randomUUID,createHash} from 'node:crypto';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {classifyPostgresqlField,recoverPostgresqlFieldCapture} from '../../src/core-ideals/postgresql-field';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+
+import {classifyPostgresqlField, recoverPostgresqlFieldCapture} from '../../src/core-ideals/postgresql-field';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 const name='umf-field-postgresql-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});if(input!==undefined){p.stdin!.write(input);p.stdin!.end();}const [stdout,stderr,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(stderr);return stdout;}
@@ -18,7 +18,7 @@ try{
  const version=(await sql('SHOW server_version_num')).trim();if(version!=='170004')throw Error('Wrong native version');
  const sourceSql='CREATE SCHEMA sales;\n'+await Bun.file('fixtures/postgresql/scalar-types.sql').text()+'\nCREATE SCHEMA support; CREATE TABLE support.scalar_types(id integer, note text); CREATE TABLE sales.empty_table(); CREATE TABLE sales.partitioned_events(id integer) PARTITION BY RANGE(id); CREATE VIEW sales.scalar_view AS SELECT flag FROM sales.scalar_types; CREATE TYPE sales.address AS (street text COLLATE "C", dropped integer, tags integer[]); ALTER TYPE sales.address DROP ATTRIBUTE dropped; CREATE TYPE support.address AS (id integer); CREATE TYPE sales.contact AS (address sales.address, addresses sales.address[]); CREATE TYPE sales.empty_record AS ();';await sql(sourceSql);
  const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query,snapshot:JSON.parse(await sql(query)),reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
- const nativeSource=' \n'+JSON.stringify(capture,null,2)+'\n',source=upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'live-fields'})).target;
+ const nativeSource=' \n'+JSON.stringify(capture,null,2)+'\n',source=importPostgresqlCatalogCapture(nativeSource,{id:'live-fields'});
  const names=JSON.parse((await sql("SELECT json_agg(attname ORDER BY attnum) FROM pg_attribute WHERE attrelid='sales.scalar_types'::regclass AND attnum>0 AND NOT attisdropped")).trim());
  const columns=getPostgresqlColumnMetadata(source).filter(c=>c.relation.schema==='sales'&&c.relation.name==='scalar_types');if(JSON.stringify(columns.map(c=>c.element.name))!==JSON.stringify(names))throw Error('Native member identities differ');
  const rows=[];for(const c of columns){const result=classifyPostgresqlField(source,{column:c.path,nativeSource,mode:'strict'});if(!result.target)throw Error('Native member blocked');for(const format of ['json','yaml'] as const){const back=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;if(recoverPostgresqlFieldCapture(back,back.target!)!==nativeSource)throw Error('Capture bytes lost');}rows.push({path:c.path,name:c.element.name,kind:'field',scalarType:c.element.scalarType??null,recoveries:2});}

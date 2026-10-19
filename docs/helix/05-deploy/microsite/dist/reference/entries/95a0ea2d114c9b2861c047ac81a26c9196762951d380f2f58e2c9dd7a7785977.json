@@ -20,13 +20,13 @@
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
@@ -36,7 +36,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -807,7 +807,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration"
+                  "value": "urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration"
                 }
               }
             },
@@ -1392,7 +1392,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.4.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1419,7 +1419,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1493,15 +1493,14 @@
   "id": "[\"schema\",\"spec/core/cardinality-parquet-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/cardinality-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 10372,
+      "bytes": 10374,
       "path": "spec/core/cardinality-parquet-projection.schema.json",
-      "sha256": "633f86720229f41409fec137d85c92833f204483cc0487ec8a53cafe0299abc0"
+      "sha256": "2ad1f7f6f6703afdd68c3f6402dcc93569f1e1644014aedd24139db5bea1ff6a"
     }
   ],
   "summary": "spec/core/cardinality-parquet-projection.schema.json",

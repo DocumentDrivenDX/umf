@@ -39,7 +39,7 @@ try{
   return {cases:cases.length,accepted,rejected,recoveries,getterCalls};
  });
  assert.deepEqual(externalRequests,[]);assert.equal(checks.cases,cases.length);assert.equal(checks.recoveries,cases.length*2);
- const paths=['scripts/core-relationship-browser.ts','scripts/core-relationship-cases.ts','scripts/core-relationship-schema.ts','src/validation/relationships.ts','src/validation/keys.ts','src/validation/document.ts','src/validation/schema.ts','src/validation/facets.ts','src/model/json.ts','src/model/types.ts','src/model/serialization.ts','spec/core/relationship-document.schema.json','tests/core/relationship-ideal.test.ts'];
+ const paths=['scripts/core-relationship-browser.ts','scripts/core-relationship-cases.ts','src/validation/relationships.ts','src/validation/document.ts','src/validation/schema.ts','src/model/json.ts','src/model/types.ts','src/model/serialization.ts','spec/core/schema.json','tests/core/relationship-ideal.test.ts'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/core-relationship-candidate-browser.json',JSON.stringify({scope:'Experimental 0.7.0 relationship structural and semantic validation with JSON/YAML metadata recovery; this check does not qualify public entry-point integration, native bindings or ideal admission',browser:browser.version(),checks,externalRequests,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256},null,2)+'\n');
  console.log(JSON.stringify(checks));

@@ -1,4 +1,4 @@
-import {inspectHandlerState,inspectionFailure,type CleanupInspectionReason} from './sandbox-state';
+import {inspectHandlerState,inspectionFailure,armCleanupCommandTimeout,settlementInspectionFailure,type CleanupInspectionReason} from './sandbox-state';
 import {ReferenceHandlerLaunchOwner} from './launch-owner';
 import {createHash} from 'node:crypto';
 import {copyJson} from '../../src/model/json';
@@ -86,11 +86,11 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
   const clients=new Set<ReturnType<typeof Bun.spawn>>();let cleanupTimer:ReturnType<typeof setTimeout>|undefined;
   const cleanupDeadline=performance.now()+2000;let cancelled=false;
   const guard=()=>{if(cancelled||performance.now()>=cleanupDeadline)abort('LIMIT','Owned handler cleanup timed out');};
-  const docker=async(args:string[],maximumMs=2000)=>{
+  const docker=async(args:string[],maximumMs=2000,optionalSettlement=false)=>{
    guard();const client=Bun.spawn(['docker',...args],{stdout:'pipe',stderr:'pipe',env:dockerEnvironment});clients.add(client);
    let commandTimer:ReturnType<typeof setTimeout>|undefined;
    try{const collected=Promise.all([new Response(client.stdout).text(),new Response(client.stderr).text(),client.exited]);
-    const [stdout,stderr,exit]=await Promise.race([collected,new Promise<never>((_,reject)=>{commandTimer=setTimeout(()=>{client.kill();reject(new UmfError('LIMIT','Owned handler cleanup command timed out'));},Math.max(1,Math.min(maximumMs,cleanupDeadline-performance.now())));})]);
+    const [stdout,stderr,exit]=await Promise.race([collected,new Promise<never>((_,reject)=>{commandTimer=armCleanupCommandTimeout(maximumMs,cleanupDeadline-performance.now(),optionalSettlement,error=>{client.kill();reject(error);});})]);
     guard();return {stdout:stdout.trim(),stderr,exit};
    }finally{if(commandTimer)clearTimeout(commandTimer);clients.delete(client);client.kill();}
   };
@@ -112,15 +112,15 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
     while(pendingNativeState()&&performance.now()<settleUntil){
      await new Promise(resolve=>setTimeout(resolve,Math.min(10,Math.max(0,settleUntil-performance.now()))));
      const remaining=settleUntil-performance.now();if(remaining<=0)break;
-     try{const inspected=await docker(['inspect','--format','{{json .State}}',containerId!],remaining);
+     try{const inspected=await docker(['inspect','--format','{{json .State}}',containerId!],remaining,true);
       const parsed=inspectHandlerState('settlement',inspected);
       if('reason'in parsed){inspectionReason=parsed.reason;invalidState=true;break;}
       state=parsed.state;
      }catch(error){
       // An optional final poll may exhaust its own settlement window. Keep the
       // last validated state; other inspection failures still fail closed.
-      if(error instanceof UmfError&&error.code==='LIMIT'&&error.message==='Owned handler cleanup command timed out'&&performance.now()>=settleUntil)break;
-      inspectionReason=inspectionFailure('settlement',error);invalidState=true;break;
+      const reason=settlementInspectionFailure(error);if(reason===undefined)break;
+      inspectionReason=reason;invalidState=true;break;
      }
     }
    }

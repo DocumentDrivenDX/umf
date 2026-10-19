@@ -1,6 +1,6 @@
 {
   "logical": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "parquet-logical",
     "vocabularies": {},
     "modules": [
@@ -27,7 +27,7 @@
     ]
   },
   "binding": {
-    "umf": "0.1.0",
+    "umf": "0.10.0",
     "id": "parquet-layout",
     "vocabularies": {
       "umf.binding": {
@@ -40,7 +40,7 @@
         "profile": "umf-binding-1",
         "logical": {
           "documentId": "parquet-logical",
-          "coreVersion": "0.1.0"
+          "coreVersion": "0.10.0"
         },
         "target": {
           "system": "parquet",

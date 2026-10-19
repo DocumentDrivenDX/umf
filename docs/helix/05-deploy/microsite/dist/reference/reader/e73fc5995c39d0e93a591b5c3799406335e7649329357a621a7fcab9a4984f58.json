@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": false,
+  "authored": true,
   "id": "[\"api\",\".\",\"validateSchemaPropertiesDocument\"]",
   "kind": "Function",
   "members": [],
@@ -20,11 +20,18 @@
       "name": "registry",
       "optional": true,
       "type": "Registry"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "meter",
+      "optional": true,
+      "type": "ConstraintMeter | undefined"
     }
   ],
-  "purpose": "validateSchemaPropertiesDocument accepts input, registry and returns Validation.",
+  "purpose": "Current structural admission followed by the authored ordered rule program.",
   "related": [],
   "returns": "Validation",
   "task": "Read and validate",
-  "type": "(input: unknown, registry?: Registry) => Validation"
+  "type": "(input: unknown, registry?: Registry, meter?: ConstraintMeter) => Validation"
 }

@@ -1,0 +1,1499 @@
+{"testProcess":"tests/delta/checkpoint.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/checkpoint.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/checkpoint.test.ts:
+(pass) US-018-AC13: checkpoint and following commits reproduce native-backed states without earlier history [98.53ms]
+(pass) US-018-AC13: checkpoint invariants and missing sidecars block without partial state [173.81ms]
+(pass) US-018-AC13: both pinned upstream JSON checkpoints retain source and report unresolved Parquet sidecars [61.85ms]
+
+ 3 pass
+ 0 fail
+ 66 expect() calls
+Ran 3 tests across 1 file. [5.64s]
+{"testProcess":"tests/delta/checkpoint.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":66,"completeSummary":true,"logSha256":"625c4dcc225ebf9fe160c169bc4c4d9eec6a75f03a0f3baf0bdb1d6b8c884b72"}
+{"testProcess":"tests/delta/column-mapping.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/column-mapping.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/column-mapping.test.ts:
+(pass) US-018-AC6: mapped nested field IDs and physical paths are checked independently [332.25ms]
+(pass) US-018-AC6: missing mapping context and exact out-of-range IDs are diagnosed without source loss [324.37ms]
+(pass) US-018-AC6: feature-era mapping requires both feature lists; none mode stays separate [218.09ms]
+
+ 3 pass
+ 0 fail
+ 13 expect() calls
+Ran 3 tests across 1 file. [7.28s]
+{"testProcess":"tests/delta/column-mapping.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":13,"completeSummary":true,"logSha256":"564329765c7eaebfbf3edec92c2b7900e8e9ff0a300982f330b0c11f47237648"}
+{"testProcess":"tests/delta/ddl.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/ddl.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/ddl.test.ts:
+(pass) authored Delta definition survives JSON and YAML and emits a complete managed CREATE [330.49ms]
+(pass) unknown definition and core content survive serialization but refuse executable export [271.09ms]
+(pass) DDL refuses incompatible layouts, unsupported properties, expressions and stale columns [398.94ms]
+(pass) metadata, protocol dependent types, case collisions and unknown schema meaning are never discarded [227.16ms]
+(pass) explicit partitioning and retention settings do not force maintenance off [103.46ms]
+(pass) decimal precision and scale remain exact through recovery and DDL [1503.79ms]
+(pass) nested types preserve order, nullability and exact schema through both formats [164.60ms]
+(pass) nested unsupported meaning and collection nullability refuse without source mutation [1187.89ms]
+(pass) complex columns cannot accidentally become partition or clustering keys [127.48ms]
+(pass) column comments preserve exact schema, Unicode and escaped literals at both depths [173.43ms]
+(pass) comment metadata refuses unknown meaning, controls and client macros [362.48ms]
+(pass) bundle preserves ordered complete proposals and detached source recovery [571.26ms]
+(pass) bundle refuses partial export, ambiguous context and identity collisions [660.86ms]
+
+ 13 pass
+ 0 fail
+ 106 expect() calls
+Ran 13 tests across 1 file. [6.21s]
+{"testProcess":"tests/delta/ddl.test.ts","exitCode":0,"pass":13,"fail":0,"assertions":106,"completeSummary":true,"logSha256":"2a77108d1c9a10a726db1ee0e42f51af7b22583bda59700b28f4d1bdd11f52c9"}
+{"testProcess":"tests/delta/history-upstream.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/history-upstream.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/history-upstream.test.ts:
+(pass) US-018-AC12: all pinned ordinary-commit prefixes preserve sources and reproduce state or explicit blocks [26543.83ms]
+
+ 1 pass
+ 0 fail
+ 1517 expect() calls
+Ran 1 test across 1 file. [33.88s]
+{"testProcess":"tests/delta/history-upstream.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":1517,"completeSummary":true,"logSha256":"fb720f6899a8c01d5fae7fc1d37ad3c383e3ff93e71e4fe8edbd6d6d55ce61aa"}
+{"testProcess":"tests/delta/log.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/log.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/log.test.ts:
+(pass) US-018-AC9: full log text preserves line endings, exact numbers, future actions and invalid lines [86.38ms]
+(pass) US-018-AC9: empty and duplicate-key input stay captured; representation additions block export [85.14ms]
+(pass) US-018-AC9: inspection bounds leave uninspected source intact [69.10ms]
+
+ 3 pass
+ 0 fail
+ 20 expect() calls
+Ran 3 tests across 1 file. [6.75s]
+{"testProcess":"tests/delta/log.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":20,"completeSummary":true,"logSha256":"33d4d94658781826132bacc6d8ac1cd09fa221f5cf8eb8ed80962a4d7ac4b0b8"}
+{"testProcess":"tests/delta/mapped-nested.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/mapped-nested.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/mapped-nested.test.ts:
+(pass) US-018-AC7: array and map-value field renames preserve mapping across both protocol families [10693.81ms]
+
+ 1 pass
+ 0 fail
+ 29 expect() calls
+Ran 1 test across 1 file. [17.53s]
+{"testProcess":"tests/delta/mapped-nested.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":29,"completeSummary":true,"logSha256":"8c3f2135b6a30b1e7bfae488cbc3bf7dbf0dbe279fee7b5709f762dd31e1d2d8"}
+{"testProcess":"tests/delta/multipart.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/delta/multipart.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/delta/multipart.test.ts:
+(pass) US-018-AC19: Spark hash vectors include signed UTF-8 tails and explicit seeds [1.39ms]
+4 | import {createValidator} from '../../src/validation/schema';
+5 | import schema from '../../spec/extensions/delta-log/multipart.schema.json';
+6 | const ajv=createValidator(false);ajv.addSchema(coreSchema);const check=ajv.compile(schema),base='fixtures/delta/multipart/',report=await Bun.file(base+'results.json').json();
+7 | test('US-018-AC19: Spark hash vectors include signed UTF-8 tails and explicit seeds',async()=>{for(const v of (await Bun.file(base+'hash-vectors.json').json()).vectors)expect(sparkStringHash(v.value,v.seed)).toBe(v.hash);expect(()=>sparkStringHash('\ud800')).toThrow();});
+8 | test('US-018-AC19: native multipart recovery preserves all parts and row origins',()=>{
+9 |  for(const e of report.results){const parts=e.parts.map(({name,source}:any)=>({name,source})),r=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,parts,e.sources);expect(r).toEqual(e);expect(check(r)).toBe(true);expect(r.recovery?.state?.version).toBe(e.recovery.state.version);for(const [i,p] of r.parts.entries())expect(exportParquetCapture(p.source)).toEqual(exportParquetCapture(parts[i].source));const reversed=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,[...parts].reverse(),e.sources);expect(reversed.status).toBe('reconciled');expect(reversed.recovery?.state).toEqual(r.recovery?.state);expect(reversed.origins?.every(o=>o.part<parts.length)).toBe(true);}
+
+error: expect(received).toEqual(expected)
+
+@@ -1,814 +1,19 @@
+  {
+    "complete": false,
+    "diagnostics": [
+      {
+-       "code": "PARQUET_UNINTERPRETED",
+-       "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-       "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-       "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_ROOT_REPETITION",
+-       "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-       "path": "/parts/0/projection/schema/0/repetition_type",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-       "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/4",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/7",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/16",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/21",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/24",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/31",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/0/projection/schema/38",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+-       "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+-       "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_UNINTERPRETED",
+-       "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-       "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-       "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_ROOT_REPETITION",
+-       "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-       "path": "/parts/0/projection/schema/0/repetition_type",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-       "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+-       "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_VALUES_UNVERIFIED",
+-       "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+-       "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+-       "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+-       "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_VALUE_SCOPE",
+-       "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_LOG_UNVERIFIED",
+-       "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-       "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_PARQUET_ACTION_VIEW",
+-       "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate",
+-       "path": "/parts/0/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_UNINTERPRETED",
+-       "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-       "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-       "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_ROOT_REPETITION",
+-       "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-       "path": "/parts/1/projection/schema/0/repetition_type",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-       "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/4",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/7",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/16",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/21",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/24",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/31",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_UNVERIFIED",
+-       "message": "Nested layout and value rules remain unverified",
+-       "path": "/parts/1/projection/schema/38",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+-       "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+-       "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_UNINTERPRETED",
+-       "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-       "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-       "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_ROOT_REPETITION",
+-       "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-       "path": "/parts/1/projection/schema/0/repetition_type",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-       "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+-       "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_VALUES_UNVERIFIED",
+-       "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+-       "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+-       "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+-       "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "PARQUET_VALUE_SCOPE",
+-       "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_LOG_UNVERIFIED",
+-       "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-       "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_PARQUET_ACTION_VIEW",
+-       "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate",
+-       "path": "/parts/1/projection",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_LOG_UNVERIFIED",
+-       "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
+-       "path": "/recovery/checkpoint",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-       "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-       "path": "/recovery/checkpoint",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_HISTORY_UNVERIFIED",
+-       "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+-       "path": "/recovery",
+-       "severity": "warning",
+-     },
+-     {
+-       "code": "DELTA_MULTIPART_SCOPE",
+-       "message": "Complete explicit part identities and Spark 4.0.1 hash clustering checked. Concurrent-writer provenance, atomicity, file discovery, data-reader support and safe writes remain unverified",
++       "code": "DELTA_MULTIPART_BLOCKED",
++       "message": "Invalid Parquet capture envelope",
+        "path": "",
+-       "severity": "warning",
+-     },
+-   ],
+-   "origins": [
+-     {
+-       "line": 1,
+-       "part": 0,
+-       "row": 1,
+-     },
+-     {
+-       "line": 2,
+-       "part": 0,
+-       "row": 2,
+-     },
+-     {
+-       "line": 3,
+-       "part": 0,
+-       "row": 3,
+-     },
+-     {
+-       "line": 4,
+-       "part": 0,
+-       "row": 4,
+-     },
+-     {
+-       "line": 5,
+-       "part": 0,
+-       "row": 5,
+-     },
+-     {
+-       "line": 6,
+-       "part": 1,
+-       "row": 1,
++       "severity": "error",
+      },
+    ],
+    "partCount": 2,
+    "parts": [
+      {
+        "name": "00000000000000000010.checkpoint.0000000001.0000000002.parquet",
+-       "projection": {
+-         "actions": [
+-           {
+-             "action": "protocol",
+-             "row": 1,
+-             "value": {
+-               "kind": "object",
+-               "members": {
+-                 "minReaderVersion": {
+-                   "kind": "number",
+-                   "value": "1",
+-                 },
+-                 "minWriterVersion": {
+-                   "kind": "number",
+-                   "value": "2",
+-                 },
+-               },
+-             },
+-           },
+-           {
+-             "action": "metaData",
+-             "row": 2,
+-             "value": {
+-               "kind": "object",
+-               "members": {
+-                 "configuration": {
+-                   "kind": "object",
+-                   "members": {},
+-                 },
+-                 "description": {
+-                   "kind": "string",
+-                   "value": "metadata replaced",
+-                 },
+-                 "format": {
+-                   "kind": "object",
+-                   "members": {
+-                     "options": {
+-                       "kind": "object",
+-                       "members": {},
+-                     },
+-                     "provider": {
+-                       "kind": "string",
+-                       "value": "parquet",
+-                     },
+-                   },
+-                 },
+-                 "id": {
+-                   "kind": "string",
+-                   "value": "12345678-1234-1234-1234-123456789abc",
+-                 },
+-                 "name": {
+-                   "kind": "string",
+-                   "value": "renamed",
+-                 },
+-                 "partitionColumns": {
+-                   "items": [],
+-                   "kind": "array",
+-                 },
+-                 "schemaString": {
+-                   "kind": "string",
+-                   "value": "{"type":"struct","fields":[{"name":"id","type":"long","nullable":true,"metadata":{}}]}",
+-                 },
+-               },
+-             },
+-           },
+-           {
+-             "action": "add",
+-             "row": 3,
+-             "value": {
+-               "kind": "object",
+-               "members": {
+-                 "dataChange": {
+-                   "kind": "boolean",
+-                   "value": true,
+-                 },
+-                 "modificationTime": {
+-                   "kind": "number",
+-                   "value": "0",
+-                 },
+-                 "partitionValues": {
+-                   "kind": "object",
+-                   "members": {},
+-                 },
+-                 "path": {
+-                   "kind": "string",
+-                   "value": "a.parquet",
+-                 },
+-                 "size": {
+-                   "kind": "number",
+-                   "value": "482",
+-                 },
+-                 "stats": {
+-                   "kind": "string",
+-                   "value": "{"numRecords": 1, "minValues": {"id": 1}, "maxValues": {"id": 1}, "nullCount": {"id": 0}}",
+-                 },
+-               },
+-             },
+-           },
+-           {
+-             "action": "txn",
+-             "row": 4,
+-             "value": {
+-               "kind": "object",
+-               "members": {
+-                 "appId": {
+-                   "kind": "string",
+-                   "value": "job",
+-                 },
+-                 "version": {
+-                   "kind": "number",
+-                   "value": "2",
+-                 },
+-               },
+-             },
+-           },
+-           {
+-             "action": "txn",
+-             "row": 5,
+-             "value": {
+-               "kind": "object",
+-               "members": {
+-                 "appId": {
+-                   "kind": "string",
+-                   "value": "other",
+-                 },
+-                 "version": {
+-                   "kind": "number",
+-                   "value": "9223372036854775807",
+-                 },
+-               },
+-             },
+-           },
+-         ],
+-         "complete": false,
+-         "diagnostics": [
+-           {
+-             "code": "PARQUET_UNINTERPRETED",
+-             "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-             "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-             "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_ROOT_REPETITION",
+-             "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-             "path": "/schema/0/repetition_type",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-             "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/4",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/7",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/16",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/21",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/24",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/31",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/38",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+-             "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+-             "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_UNINTERPRETED",
+-             "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-             "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-             "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_ROOT_REPETITION",
+-             "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-             "path": "/schema/0/repetition_type",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-             "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+-             "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_VALUES_UNVERIFIED",
+-             "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+-             "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+-             "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+-             "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_VALUE_SCOPE",
+-             "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "DELTA_LOG_UNVERIFIED",
+-             "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-             "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "DELTA_PARQUET_ACTION_VIEW",
+-             "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-         ],
+-         "log": {
+-           "id": "00000000000000000010.checkpoint.0000000001.0000000002.parquet-delta-actions",
+-           "modules": [
+-             {
+-               "elements": [
+-                 {
+-                   "extensions": {
+-                     "umf.delta.log": {
+-                       "profile": "delta-jsonl-source",
+-                       "text": 
+- "{"protocol":{"minReaderVersion":1,"minWriterVersion":2}}
+- {"metaData":{"id":"12345678-1234-1234-1234-123456789abc","name":"renamed","description":"metadata replaced","format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}","partitionColumns":[],"configuration":{}}}
+- {"add":{"path":"a.parquet","partitionValues":{},"size":482,"dataChange":true,"stats":"{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}","modificationTime":0}}
+- {"txn":{"appId":"job","version":2}}
+- {"txn":{"appId":"other","version":9223372036854775807}}
+- "
+- ,
+-                     },
+-                   },
+-                   "id": "source",
+-                 },
+-               ],
+-               "id": "log",
+-               "namespace": "",
+-             },
+-           ],
+-           "umf": "0.1.0",
+-           "vocabularies": {
+-             "umf.delta.log": {
+-               "version": "0.1.0",
+-             },
+-           },
+-         },
+-         "omittedNullFields": [
+-           {
+-             "path": "/protocol/readerFeatures",
+-             "row": 1,
+-           },
+-           {
+-             "path": "/protocol/writerFeatures",
+-             "row": 1,
+-           },
+-           {
+-             "path": "/metaData/createdTime",
+-             "row": 2,
+-           },
+-           {
+-             "path": "/add/tags",
+-             "row": 3,
+-           },
+-           {
+-             "path": "/add/deletionVector",
+-             "row": 3,
+-           },
+-           {
+-             "path": "/add/baseRowId",
+-             "row": 3,
+-           },
+-           {
+-             "path": "/add/defaultRowCommitVersion",
+-             "row": 3,
+-           },
+-           {
+-             "path": "/add/clusteringProvider",
+-             "row": 3,
+-           },
+-           {
+-             "path": "/txn/lastUpdated",
+-             "row": 4,
+-           },
+-           {
+-             "path": "/txn/lastUpdated",
+-             "row": 5,
+-           },
+-         ],
+-         "scalarConversions": [],
+-         "source": {
+-           "id": "00000000000000000010.checkpoint.0000000001.0000000002.parquet",
+-           "modules": [
+-             {
+-               "elements": [
+-                 {
+-                   "extensions": {
+-                     "umf.parquet": {
+-                       "bytes": "5041523115041508150c4c15021500120000040c010000001500151415182c150a15... (22236 bytes truncated) ...001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c0000000921000050415231",
+-                       "encoding": "hex",
+-                       "profile": "parquet-file-source",
+-                     },
+-                   },
+-                   "id": "source",
+-                 },
+-               ],
+-               "id": "parquet",
+-               "namespace": "",
+-             },
+-           ],
+-           "umf": "0.1.0",
+-           "vocabularies": {
+-             "umf.parquet": {
+-               "version": "0.1.0",
+-             },
+-           },
+-         },
+-         "status": "projected",
+-       },
+        "source": {
+          "id": "00000000000000000010.checkpoint.0000000001.0000000002.parquet",
+          "modules": [
+            {
+              "elements": [
+@@ -835,303 +40,10 @@
+          },
+        },
+      },
+      {
+        "name": "00000000000000000010.checkpoint.0000000002.0000000002.parquet",
+-       "projection": {
+-         "actions": [
+-           {
+-             "action": "add",
+-             "row": 1,
+-             "value": {
+-               "kind": "object",
+-               "members": {
+-                 "dataChange": {
+-                   "kind": "boolean",
+-                   "value": false,
+-                 },
+-                 "modificationTime": {
+-                   "kind": "number",
+-                   "value": "0",
+-                 },
+-                 "partitionValues": {
+-                   "kind": "object",
+-                   "members": {},
+-                 },
+-                 "path": {
+-                   "kind": "string",
+-                   "value": "b.parquet",
+-                 },
+-                 "size": {
+-                   "kind": "number",
+-                   "value": "482",
+-                 },
+-                 "stats": {
+-                   "kind": "string",
+-                   "value": "{"numRecords": 1, "minValues": {"id": 2}, "maxValues": {"id": 2}, "nullCount": {"id": 0}}",
+-                 },
+-                 "tags": {
+-                   "kind": "object",
+-                   "members": {
+-                     "revision": {
+-                       "kind": "string",
+-                       "value": "updated",
+-                     },
+-                   },
+-                 },
+-               },
+-             },
+-           },
+-         ],
+-         "complete": false,
+-         "diagnostics": [
+-           {
+-             "code": "PARQUET_UNINTERPRETED",
+-             "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-             "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-             "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_ROOT_REPETITION",
+-             "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-             "path": "/schema/0/repetition_type",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-             "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/4",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/7",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/16",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/21",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/24",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/31",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_UNVERIFIED",
+-             "message": "Nested layout and value rules remain unverified",
+-             "path": "/schema/38",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+-             "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+-             "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_UNINTERPRETED",
+-             "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+-             "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+-             "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_ROOT_REPETITION",
+-             "message": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+-             "path": "/schema/0/repetition_type",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+-             "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+-             "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_VALUES_UNVERIFIED",
+-             "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+-             "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+-             "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+-             "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "PARQUET_VALUE_SCOPE",
+-             "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "DELTA_LOG_UNVERIFIED",
+-             "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-             "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-           {
+-             "code": "DELTA_PARQUET_ACTION_VIEW",
+-             "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate",
+-             "path": "",
+-             "severity": "warning",
+-           },
+-         ],
+-         "log": {
+-           "id": "00000000000000000010.checkpoint.0000000002.0000000002.parquet-delta-actions",
+-           "modules": [
+-             {
+-               "elements": [
+-                 {
+-                   "extensions": {
+-                     "umf.delta.log": {
+-                       "profile": "delta-jsonl-source",
+-                       "text": 
+- "{"add":{"path":"b.parquet","partitionValues":{},"size":482,"dataChange":false,"stats":"{\"numRecords\": 1, \"minValues\": {\"id\": 2}, \"maxValues\": {\"id\": 2}, \"nullCount\": {\"id\": 0}}","tags":{"revision":"updated"},"modificationTime":0}}
+- "
+- ,
+-                     },
+-                   },
+-                   "id": "source",
+-                 },
+-               ],
+-               "id": "log",
+-               "namespace": "",
+-             },
+-           ],
+-           "umf": "0.1.0",
+-           "vocabularies": {
+-             "umf.delta.log": {
+-               "version": "0.1.0",
+-             },
+-           },
+-         },
+-         "omittedNullFields": [
+-           {
+-             "path": "/add/deletionVector",
+-             "row": 1,
+-           },
+-           {
+-             "path": "/add/baseRowId",
+-             "row": 1,
+-           },
+-           {
+-             "path": "/add/defaultRowCommitVersion",
+-             "row": 1,
+-           },
+-           {
+-             "path": "/add/clusteringProvider",
+-             "row": 1,
+-           },
+-         ],
+-         "scalarConversions": [],
+-         "source": {
+-           "id": "00000000000000000010.checkpoint.0000000002.0000000002.parquet",
+-           "modules": [
+-             {
+-               "elements": [
+-                 {
+-                   "extensions": {
+-                     "umf.parquet": {
+-                       "bytes": "504152311504150015024c15001500120000001500150e15122c1502151015061506... (20176 bytes truncated) ...001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000751f000050415231",
+-                       "encoding": "hex",
+-                       "profile": "parquet-file-source",
+-                     },
+-                   },
+-                   "id": "source",
+-                 },
+-               ],
+-               "id": "parquet",
+-               "namespace": "",
+-             },
+-           ],
+-           "umf": "0.1.0",
+-           "vocabularies": {
+-             "umf.parquet": {
+-               "version": "0.1.0",
+-             },
+-           },
+-         },
+-         "status": "projected",
+-       },
+        "source": {
+          "id": "00000000000000000010.checkpoint.0000000002.0000000002.parquet",
+          "modules": [
+            {
+              "elements": [
+@@ -1157,230 +69,9 @@
+            },
+          },
+        },
+      },
+    ],
+-   "recovery": {
+-     "checkpoint": {
+-       "source": {
+-         "id": "multipart-10",
+-         "modules": [
+-           {
+-             "elements": [
+-               {
+-                 "extensions": {
+-                   "umf.delta.log": {
+-                     "profile": "delta-jsonl-source",
+-                     "text": 
+- "{"protocol":{"minReaderVersion":1,"minWriterVersion":2}}
+- {"metaData":{"id":"12345678-1234-1234-1234-123456789abc","name":"renamed","description":"metadata replaced","format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}","partitionColumns":[],"configuration":{}}}
+- {"add":{"path":"a.parquet","partitionValues":{},"size":482,"dataChange":true,"stats":"{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}","modificationTime":0}}
+- {"txn":{"appId":"job","version":2}}
+- {"txn":{"appId":"other","version":9223372036854775807}}
+- {"add":{"path":"b.parquet","partitionValues":{},"size":482,"dataChange":false,"stats":"{\"numRecords\": 1, \"minValues\": {\"id\": 2}, \"maxValues\": {\"id\": 2}, \"nullCount\": {\"id\": 0}}","tags":{"revision":"updated"},"modificationTime":0}}
+- "
+- ,
+-                   },
+-                 },
+-                 "id": "source",
+-               },
+-             ],
+-             "id": "log",
+-             "namespace": "",
+-           },
+-         ],
+-         "umf": "0.1.0",
+-         "vocabularies": {
+-           "umf.delta.log": {
+-             "version": "0.1.0",
+-           },
+-         },
+-       },
+-       "version": "10",
+-     },
+-     "complete": false,
+-     "diagnostics": [
+-       {
+-         "code": "DELTA_LOG_UNVERIFIED",
+-         "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state",
+-         "path": "/checkpoint",
+-         "severity": "warning",
+-       },
+-       {
+-         "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+-         "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+-         "path": "/checkpoint",
+-         "severity": "warning",
+-       },
+-       {
+-         "code": "DELTA_HISTORY_UNVERIFIED",
+-         "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+-         "path": "",
+-         "severity": "warning",
+-       },
+-     ],
+-     "sources": [],
+-     "state": {
+-       "adds": [
+-         {
+-           "kind": "object",
+-           "members": {
+-             "dataChange": {
+-               "kind": "boolean",
+-               "value": true,
+-             },
+-             "modificationTime": {
+-               "kind": "number",
+-               "value": "0",
+-             },
+-             "partitionValues": {
+-               "kind": "object",
+-               "members": {},
+-             },
+-             "path": {
+-               "kind": "string",
+-               "value": "a.parquet",
+-             },
+-             "size": {
+-               "kind": "number",
+-               "value": "482",
+-             },
+-             "stats": {
+-               "kind": "string",
+-               "value": "{"numRecords": 1, "minValues": {"id": 1}, "maxValues": {"id": 1}, "nullCount": {"id": 0}}",
+-             },
+-           },
+-         },
+-         {
+-           "kind": "object",
+-           "members": {
+-             "dataChange": {
+-               "kind": "boolean",
+-               "value": false,
+-             },
+-             "modificationTime": {
+-               "kind": "number",
+-               "value": "0",
+-             },
+-             "partitionValues": {
+-               "kind": "object",
+-               "members": {},
+-             },
+-             "path": {
+-               "kind": "string",
+-               "value": "b.parquet",
+-             },
+-             "size": {
+-               "kind": "number",
+-               "value": "482",
+-             },
+-             "stats": {
+-               "kind": "string",
+-               "value": "{"numRecords": 1, "minValues": {"id": 2}, "maxValues": {"id": 2}, "nullCount": {"id": 0}}",
+-             },
+-             "tags": {
+-               "kind": "object",
+-               "members": {
+-                 "revision": {
+-                   "kind": "string",
+-                   "value": "updated",
+-                 },
+-               },
+-             },
+-           },
+-         },
+-       ],
+-       "commitInfo": [],
+-       "deferred": [],
+-       "domains": [],
+-       "metaData": {
+-         "kind": "object",
+-         "members": {
+-           "configuration": {
+-             "kind": "object",
+-             "members": {},
+-           },
+-           "description": {
+-             "kind": "string",
+-             "value": "metadata replaced",
+-           },
+-           "format": {
+-             "kind": "object",
+-             "members": {
+-               "options": {
+-                 "kind": "object",
+-                 "members": {},
+-               },
+-               "provider": {
+-                 "kind": "string",
+-                 "value": "parquet",
+-               },
+-             },
+-           },
+-           "id": {
+-             "kind": "string",
+-             "value": "12345678-1234-1234-1234-123456789abc",
+-           },
+-           "name": {
+-             "kind": "string",
+-             "value": "renamed",
+-           },
+-           "partitionColumns": {
+-             "items": [],
+-             "kind": "array",
+-           },
+-           "schemaString": {
+-             "kind": "string",
+-             "value": "{"type":"struct","fields":[{"name":"id","type":"long","nullable":true,"metadata":{}}]}",
+-           },
+-         },
+-       },
+-       "protocol": {
+-         "kind": "object",
+-         "members": {
+-           "minReaderVersion": {
+-             "kind": "number",
+-             "value": "1",
+-           },
+-           "minWriterVersion": {
+-             "kind": "number",
+-             "value": "2",
+-           },
+-         },
+-       },
+-       "removes": [],
+-       "transactions": [
+-         {
+-           "kind": "object",
+-           "members": {
+-             "appId": {
+-               "kind": "string",
+-               "value": "job",
+-             },
+-             "version": {
+-               "kind": "number",
+-               "value": "2",
+-             },
+-           },
+-         },
+-         {
+-           "kind": "object",
+-           "members": {
+-             "appId": {
+-               "kind": "string",
+-               "value": "other",
+-             },
+-             "version": {
+-               "kind": "number",
+-               "value": "9223372036854775807",
+-             },
+-           },
+-         },
+-       ],
+-       "version": "10",
+-     },
+-     "status": "reconciled",
+-   },
+    "sources": [],
+-   "status": "reconciled",
++   "status": "blocked",
+    "version": "10",
+  }
+
+- Expected  - 1313
++ Received  + 4
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/delta/multipart.test.ts:9:180)
+(fail) US-018-AC19: native multipart recovery preserves all parts and row origins [16.64ms]
+ 7 | test('US-018-AC19: Spark hash vectors include signed UTF-8 tails and explicit seeds',async()=>{for(const v of (await Bun.file(base+'hash-vectors.json').json()).vectors)expect(sparkStringHash(v.value,v.seed)).toBe(v.hash);expect(()=>sparkStringHash('\ud800')).toThrow();});
+ 8 | test('US-018-AC19: native multipart recovery preserves all parts and row origins',()=>{
+ 9 |  for(const e of report.results){const parts=e.parts.map(({name,source}:any)=>({name,source})),r=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,parts,e.sources);expect(r).toEqual(e);expect(check(r)).toBe(true);expect(r.recovery?.state?.version).toBe(e.recovery.state.version);for(const [i,p] of r.parts.entries())expect(exportParquetCapture(p.source)).toEqual(exportParquetCapture(parts[i].source));const reversed=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,[...parts].reverse(),e.sources);expect(reversed.status).toBe('reconciled');expect(reversed.recovery?.state).toEqual(r.recovery?.state);expect(reversed.origins?.every(o=>o.part<parts.length)).toBe(true);}
+10 | });
+11 | test('US-018-AC19: missing/duplicate parts, mismatched identities and hash-clustering violations block',()=>{
+12 |  const e=report.results[0],parts=e.parts.map(({name,source}:any)=>({name,source}));const cases=[reconcileDeltaMultipartCheckpoint(e.version,2,parts.slice(0,1),[]),reconcileDeltaMultipartCheckpoint(e.version,2,[parts[0],parts[0]],[]),reconcileDeltaMultipartCheckpoint('11',2,parts,[]),reconcileDeltaMultipartCheckpoint(e.version,3,parts,[]),reconcileDeltaMultipartCheckpoint(e.version,2,parts.map((p:any,i:number)=>({...p,source:parts[1-i].source})),[])];for(const r of cases){expect(r.status).toBe('blocked');expect(r.recovery?.state).toBeUndefined();expect(check(r)).toBe(true);expect(r.diagnostics.some(d=>d.severity==='error')).toBe(true);}expect(cases.at(-1)?.diagnostics.at(-1)?.message).toContain('hash partitioning');
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+error: expect(received).toBe(expected)
+
+Expected: true
+Received: false
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/delta/multipart.test.ts:12:569)
+(fail) US-018-AC19: missing/duplicate parts, mismatched identities and hash-clustering violations block [30.90ms]
+10 | });
+11 | test('US-018-AC19: missing/duplicate parts, mismatched identities and hash-clustering violations block',()=>{
+12 |  const e=report.results[0],parts=e.parts.map(({name,source}:any)=>({name,source}));const cases=[reconcileDeltaMultipartCheckpoint(e.version,2,parts.slice(0,1),[]),reconcileDeltaMultipartCheckpoint(e.version,2,[parts[0],parts[0]],[]),reconcileDeltaMultipartCheckpoint('11',2,parts,[]),reconcileDeltaMultipartCheckpoint(e.version,3,parts,[]),reconcileDeltaMultipartCheckpoint(e.version,2,parts.map((p:any,i:number)=>({...p,source:parts[1-i].source})),[])];for(const r of cases){expect(r.status).toBe('blocked');expect(r.recovery?.state).toBeUndefined();expect(check(r)).toBe(true);expect(r.diagnostics.some(d=>d.severity==='error')).toBe(true);}expect(cases.at(-1)?.diagnostics.at(-1)?.message).toContain('hash partitioning');
+13 | });
+14 | test('US-018-AC19: V2 features and repeated actions cannot be assembled as a multipart snapshot',async()=>{
+15 |  const {captureParquet}=await import('../../src');const e=report.results[0];for(const c of (await Bun.file(base+'negative-manifest.json').json()).cases){const parts=e.parts.map(({name,source}:any)=>({name,source}));parts[c.replaces].source=captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id});const r=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,parts,[]);expect(r.status).toBe('blocked');expect(r.recovery?.state).toBeUndefined();expect(check(r)).toBe(true);expect(r.diagnostics.some(d=>c.id==='v2-feature'?d.message.includes('v2Checkpoint forbids'):d.code==='DELTA_HISTORY_DUPLICATE')).toBe(true);}
+
+error: expect(received).toBe(expected)
+
+Expected: true
+Received: false
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/delta/multipart.test.ts:15:486)
+(fail) US-018-AC19: V2 features and repeated actions cannot be assembled as a multipart snapshot [44.91ms]
+(pass) US-018-AC19: invalid finite part counts retain schema-valid blocked evidence [0.12ms]
+
+ 2 pass
+ 3 fail
+ 40 expect() calls
+Ran 5 tests across 1 file. [8.40s]
+{"testProcess":"tests/delta/multipart.test.ts","exitCode":1,"pass":2,"fail":3,"assertions":40,"completeSummary":true,"logSha256":"f58f8ef8d529efd563cfbb87cf920c6d4d896f68056381c1e68acc522d7ebf2c"}
+Complete test file failed or terminated: tests/delta/multipart.test.ts
+
+ 26 pass
+ 3 fail
+ 1791 expect() calls
+Ran 29 tests across 7 files. [85.91s]

@@ -1,3 +1,4 @@
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -5,7 +6,7 @@ import schema from '../../spec/extensions/linkml/merge-schema.json';
 import {proposeLinkmlImportMerge,importLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../../src';
 const fixture=await Bun.file('fixtures/linkml/merge/results.json').json(),cases=fixture.cases;
 test('US-024-AC9: both explicit precedence policies preserve context and candidate round trips',async()=>{
- const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema),native=await Bun.file('fixtures/linkml/merge/oracle-results.json').json();
+ const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core).compile(schema),native=await Bun.file('fixtures/linkml/merge/oracle-results.json').json();
  expect(native.results.filter((r:any)=>r.comparison==='normalized-candidate')).toHaveLength(8);expect(native.results.filter((r:any)=>r.comparison==='unresolved')).toHaveLength(4);
  for(const c of cases)for(const row of c.reports){const r=proposeLinkmlImportMerge(row.report.context,{mode:row.mode});expect(r).toEqual(row.report);expect(check(r)).toBe(true);expect(r.complete).toBe(false);for(const s of r.context.schemas)expect(exportLinkmlDocument(s.document)).toBe(c.sources.find((x:any)=>x.key===s.key).text);if(r.candidate){expect(exportLinkmlDocument(readDocument(writeDocument(r.candidate,row.format),row.format))).toBe(row.output);expect(getLinkmlDocumentNode(r.candidate,'/imports')).toEqual({kind:'array',items:[]});}else expect(r.status).toBe('blocked');}
 });

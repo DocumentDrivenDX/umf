@@ -6,7 +6,7 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -1050,7 +1050,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -1107,9 +1107,9 @@
   ],
   "sources": [
     {
-      "bytes": 9033,
+      "bytes": 9034,
       "path": "spec/extensions/owl/annotations-schema.json",
-      "sha256": "d812a7390903a294926d25ffa55629519b75e9a5f1b3894451334faf90e65e82"
+      "sha256": "124dd4af4cc42169a341570b7818ca5358f5178e98c0b2150c12a6d0e76ae2f2"
     }
   ],
   "summary": "spec/extensions/owl/annotations-schema.json",

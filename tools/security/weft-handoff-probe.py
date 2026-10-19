@@ -1,12 +1,14 @@
 """Actual Rust mapping inspection transport; not security compile activation."""
 import copy,hashlib,json,os,subprocess
 from pathlib import Path
+CURRENT_CORE_VERSION = json.loads(Path('spec/metamodel/generated/python-shapes.json').read_text())['currentVersion']
 root=Path('/Users/erik/Projects/weft');tool=Path('/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin')
 def text(v):return json.dumps(v,ensure_ascii=False,separators=(',',':'))
 def sha(v):return hashlib.sha256(v).hexdigest()
 paths=[Path(__file__),Path('tests/security/weft-source-fixture.json'),root/'Cargo.toml',root/'Cargo.lock']
 paths+=sorted(p for p in (root/'crates/weft-core').rglob('*') if p.is_file() and p.suffix in ['.rs','.toml'])
 paths+=sorted(p for base in ['spec/upstream','docs/helix/02-design/contracts'] for p in (root/base).rglob('*.json'))
+paths += [Path('spec/metamodel/generated/python-shapes.json').resolve()]
 sources={str(p):sha(p.read_bytes()) for p in paths}
 env={**os.environ,'PATH':str(tool)+os.pathsep+os.environ.get('PATH',''),'CARGO_HOME':'/private/tmp/weft-toolchain/cargo'}
 command=[str(tool/'cargo'),'build','--offline','--locked','-p','weft-core','--example','security_mapping_handoff','--target-dir','/private/tmp/umf-security-weft-bridge-target']
@@ -14,10 +16,11 @@ build=subprocess.run(command,cwd=root,env=env,text=True,capture_output=True,time
 if build.returncode:raise RuntimeError(build.stderr[-4000:])
 binary=Path('/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff')
 f=json.loads(Path('tests/security/weft-source-fixture.json').read_text());doc=copy.deepcopy(f['resolution']['documents'][0]['document'])
+if doc.get('umf') != CURRENT_CORE_VERSION:raise RuntimeError('Current-core native qualification unavailable: upstream source fixture uses a retired core envelope')
 for e in doc['modules'][0]['elements']:
  e['name']=e['id']
  if e.get('scalarType')=='integer':e['facets']={'integerWidth':{'bits':64,'signed':True}}
-doc_json=text(doc);pin={'documentId':'domain','revision':'schema-1','umfVersion':'0.8.0','sha256':sha(doc_json.encode())}
+doc_json=text(doc);pin={'documentId':'domain','revision':'schema-1','umfVersion':CURRENT_CORE_VERSION,'sha256':sha(doc_json.encode())}
 policy_json=text(f['policy']);ontology_json=text(f['resolution']['ontology']);binding='{"version":"unqualified-mapping-fixture/0.1.0"}'
 profile={'version':'weft.security.query-profile/0.1.0','id':'inspection-profile','revision':'1','action':'read','modelPins':[pin],'policySha256':sha(policy_json.encode()),'ontologySha256':sha(ontology_json.encode()),'binding':{'backendId':'fixture','backendVersion':'unqualified','targetProfile':'inspection-only','sha256':sha(binding.encode())},'targets':[{'documentId':'domain','moduleId':'m','elementId':'Resource'}],'bindings':[]}
 base={'version':'weft.security.mapping-input/0.1.0','modules':[{'documentJson':doc_json,'pin':pin,'selectedModuleIds':['m']}],'policyJson':policy_json,'ontologyJson':ontology_json,'queryProfileJson':text(profile),'bindingJson':binding,'backendId':'fixture','backendVersion':'unqualified','targetProfile':'inspection-only','sql':"SELECT r.resourceId FROM Resource r WHERE r.resourceId='RA'",'parameters':{},'readProfile':None}

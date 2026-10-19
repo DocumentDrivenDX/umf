@@ -59,10 +59,96 @@ class UnifiedBindingIdentityTests(unittest.TestCase):
             "relationships": [],
         }
 
+    def _binding_with_field(self, changes: Mapping[str, object], *, remove: tuple[str, ...] = ()) -> tuple[dict[str, object], str]:
+        model = json.loads(json.dumps(self.model))
+        field = model["modules"][0]["elements"][0]
+        for key in remove:
+            field.pop(key, None)
+        field.update(changes)
+        model_json = json.dumps(model, separators=(",", ":"))
+        schema = hashlib.sha256(model_json.encode("utf-8")).hexdigest()
+        binding = dict(self.binding)
+        binding["modelJson"] = model_json
+        binding["modelSha256"] = schema
+        return binding, schema
+
+    def test_read_refuses_unavailable_or_extended_scalar_fields_before_weft(self) -> None:
+        class Compiler:
+            calls = 0
+
+            def compile_raw_read_json(self, _request: str) -> object:
+                self.calls += 1
+                return {}
+
+        invalid_shapes = [
+            ({}, ("cardinality",)),
+            ({"cardinality": "array"}, ()),
+            ({"cardinality": "unspecified"}, ()),
+            ({}, ("nullability",)),
+            ({"nullability": "unknown"}, ()),
+            ({"scalarType": "unknown-carrier"}, ()),
+            ({"extensions": {"foreign": {"meaning": "uninterpreted"}}}, ()),
+            ({"extensions": None}, ()),
+        ]
+        for changes, remove in invalid_shapes:
+            with self.subTest(changes=changes, remove=remove):
+                binding_json, schema = self._binding_with_field(changes, remove=remove)
+                compiler = Compiler()
+                binding = WeftTableBinding(binding_json, compiler, self._execute, target="postgresql18")
+                response = asyncio.run(binding.execute({
+                    "contract": "umf.access/1",
+                    "schema": schema,
+                    "kind": "read",
+                    "query": {"record": "sales.region.Order"},
+                    "size": 1,
+                }))
+                self.assertEqual(response.get("error", {}).get("code"), "UNSUPPORTED")
+                self.assertEqual(compiler.calls, 0)
+
+    def test_value_parameter_refuses_unavailable_or_extended_field_before_action(self) -> None:
+        calls: list[str] = []
+
+        async def action_executor(action: str, _inputs: Mapping[str, object], _key: str | None) -> Mapping[str, object]:
+            calls.append(action)
+            return {"schema": self.schema}
+
+        invalid_shapes = [
+            ({}, ("cardinality",)),
+            ({"cardinality": "array"}, ()),
+            ({"cardinality": "unspecified"}, ()),
+            ({}, ("nullability",)),
+            ({"nullability": "unknown"}, ()),
+            ({"scalarType": "unknown-carrier"}, ()),
+            ({"extensions": {"foreign": {"meaning": "uninterpreted"}}}, ()),
+            ({"extensions": None}, ()),
+        ]
+        for changes, remove in invalid_shapes:
+            with self.subTest(changes=changes, remove=remove):
+                binding_json, schema = self._binding_with_field(changes, remove=remove)
+                binding = WeftTableBinding(
+                    binding_json, object(), self._execute, target="postgresql18", action_executor=action_executor
+                )
+                response = asyncio.run(binding.execute({
+                    "contract": "umf.access/1",
+                    "schema": schema,
+                    "kind": "apply",
+                    "action": "sales.region.set.code",
+                    "inputs": {"replacement": "next"},
+                    "idempotency_key": None,
+                }))
+                self.assertEqual(response.get("error", {}).get("code"), "UNSUPPORTED")
+                self.assertEqual(calls, [])
+
     def test_sole_non_primary_key_is_selected(self) -> None:
         binding = WeftTableBinding(self.binding, object(), self._execute, target="postgresql18")
         record, _decl, _fields, _info = binding._record("sales.region.Order")
         self.assertEqual(record.key_id, "external")
+        self.assertEqual([field.field for field in record.key], ["code"])
+
+    def test_empty_field_extensions_preserve_admitted_scalar_selection(self) -> None:
+        binding_json, _schema = self._binding_with_field({"extensions": {}})
+        binding = WeftTableBinding(binding_json, object(), self._execute, target="postgresql18")
+        record, _decl, _fields, _info = binding._record("sales.region.Order")
         self.assertEqual([field.field for field in record.key], ["code"])
 
     def test_dotted_module_and_action_ids_resolve_exactly(self) -> None:

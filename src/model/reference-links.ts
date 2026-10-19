@@ -1,25 +1,22 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {snapshotSchema} from '../validation/internal-schema';
-import bit128Document from '../../spec/core/bit128-document.schema.json';
-import bit128Result from '../../spec/core/reference-links-inspection-v0.3.schema.json';
-/** Internal original reference-link inspection; no bare role gains type authority. */
-import sourceSchema from '../../spec/core/relationship-document.schema.json';
-import currentSourceSchema from '../../spec/core/schema-properties-document.schema.json';
-import currentResultSchema from '../../spec/core/reference-links-inspection-v0.2.schema.json';
-import resultSchema from '../../spec/core/reference-links-inspection.schema.json';
+import currentCore from '../../spec/core/schema.json';
+import inspectionSchema from '../../spec/core/reference-links-inspection-v0.3.schema.json';
+/** Current reference-link inspection; no bare role gains type authority. */
 import {copyJson} from './json';
 import {UmfError,type Document,type Element} from './types';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 export interface CoreReferenceLinkIdentity {module:string;element:string}
 export interface CoreReferenceLink {index:number;path:string;reference:NonNullable<Element['references']>[number];target:{identity:CoreReferenceLinkIdentity;path:string;kind?:string};uninterpretedPaths:string[];typeAssertion:'unverified'}
-export interface CoreReferenceLinksInspection {operation:'inspect-core-reference-links';version:'0.1.0'|'0.2.0'|'0.3.0';source:Document;identity:CoreReferenceLinkIdentity;path:string;meaning:{state:'missing'}|{state:'present';links:CoreReferenceLink[]};provenance:'unverified'}
-const validator=createValidator();validator.addSchema(snapshotSchema(bit128Document));const bit128Check=validator.compile(snapshotSchema(bit128Result));validator.addSchema(sourceSchema);validator.addSchema(currentSourceSchema);const legacyCheck=validator.compile(resultSchema),currentCheck=validator.compile(currentResultSchema);
+export interface CoreReferenceLinksInspection {operation:'inspect-core-reference-links';version:'0.3.0';source:Document;identity:CoreReferenceLinkIdentity;path:string;meaning:{state:'missing'}|{state:'present';links:CoreReferenceLink[]};provenance:'unverified'}
+const validator=createValidator();validator.addSchema(snapshotSchema(currentCore));const checkInspection=validator.compile(snapshotSchema(inspectionSchema));
 /** Resolve only direct core links, preserving order, repetition, roles and opaque qualifiers.
  * CONTRACT-040 requires separate verified receipts for authored record-type assertions. */
 export function inspectCoreReferenceLinks(input:Document,identityInput:CoreReferenceLinkIdentity):CoreReferenceLinksInspection {
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreReferenceLinkIdentity;
  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_REFERENCE_LINKS_IDENTITY','Expected explicit qualified identity');
- if(source?.umf!=='0.7.0'&&source?.umf!=='0.8.0'&&source?.umf!=='0.9.0')throw new UmfError('CORE_REFERENCE_LINKS_VERSION','Only original 0.7 or 0.8 documents are admitted by their versioned inspection profiles');
+ if(source?.umf!==CURRENT_CORE_VERSION)throw new UmfError('CORE_REFERENCE_LINKS_VERSION','Current core 0.10.0 document required');
  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_REFERENCE_LINKS_SOURCE',JSON.stringify(validation.diagnostics));
  const mi=source.modules.findIndex(m=>m.id===identity.module),ei=source.modules[mi]?.elements.findIndex(e=>e.id===identity.element)??-1;
  if(mi<0||ei<0)throw new UmfError('CORE_REFERENCE_LINKS_MISSING','Element identity is absent');
@@ -28,8 +25,8 @@ export function inspectCoreReferenceLinks(input:Document,identityInput:CoreRefer
   const ti=source.modules.findIndex(m=>m.id===reference.module),te=source.modules[ti]!.elements.findIndex(e=>e.id===reference.element),target=source.modules[ti]!.elements[te]!,at=path+'/'+index;
   return {index,path:at,reference,target:{identity:{module:reference.module,element:reference.element},path:`/modules/${ti}/elements/${te}`,...(Object.hasOwn(target,'kind')?{kind:target.kind as string}:{})},uninterpretedPaths:validation.diagnostics.filter(d=>d.severity==='warning'&&d.code==='UNKNOWN_CORE_FIELD'&&(d.path===at||d.path.startsWith(at+'/'))).map(d=>d.path),typeAssertion:'unverified'};
  })};
- const result=copyJson({operation:'inspect-core-reference-links',version:source.umf==='0.9.0'?'0.3.0':source.umf==='0.8.0'?'0.2.0':'0.1.0',source,identity,path,meaning,provenance:'unverified'});
- const check=source.umf==='0.9.0'?bit128Check:source.umf==='0.8.0'?currentCheck:legacyCheck;
+ const result=copyJson({operation:'inspect-core-reference-links',version:'0.3.0',source,identity,path,meaning,provenance:'unverified'});
+ const check=checkInspection;
  if(!check(result))throw new UmfError('CORE_REFERENCE_LINKS_RESULT',JSON.stringify(check.errors));
  return result as unknown as CoreReferenceLinksInspection;
 }

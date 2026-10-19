@@ -1,0 +1,52 @@
+{
+  "profile": "umf.ci-followup.artifact-collection/1",
+  "recordedAt": "2026-10-18T23:51:38.083142+00:00",
+  "baselineCommit": "9f743fbef6051bee3ddfe6cb2ef4d76739a4f97b",
+  "qualification": "Local actual Chromium journey against the existing current built site, using the final uncommitted host-test patch. No UI, renderer/runtime/package/release file or built-site mutation by this journey. This does not infer a remote CI rerun result.",
+  "failure": {
+    "runId": "39177284568",
+    "log": "hosted-failure.log",
+    "sha256": "e24c5739ebb5d35f16cfebb31a00aff11aee6635f5c2d6631ac3df0ca28f6cdd",
+    "cause": "The journey waited for a collection button inside correctly collapsed groups before reaching its collapsed-group assertion."
+  },
+  "change": "Wait for catalog group readiness, assert every group starts closed, expand the chosen pack/Artifacts/Documents groups through visible summary controls, click Original court opinions, and wait for its heading before request baseline. All existing collection/rights/local-assets/bookmark/map/field-history/error/offline assertions are retained.",
+  "command": "bun scripts/artifact-collections-browser.ts",
+  "executor": "Luna consumer_inventory",
+  "runtime": "Bun1.4.2",
+  "exitCode": 0,
+  "browserReport": {
+    "browser": "153.0.8010.12",
+    "checks": 37,
+    "collections": 6,
+    "externalDataRequests": 0,
+    "corpusRequests": 0,
+    "bookmarkAliases": 4
+  },
+  "sourceSha256": {
+    "scripts/artifact-collections-browser.ts": "4e3506e3d9f2feef7c648049ed28485e2c467c2eebbfa0b8181e25d3b982df50"
+  },
+  "servedSite": {
+    "referenceInputDigest": "ac54f3f62a185bd8e7142cf08289e2a544a80029661afd280b8743d58526a591",
+    "artifactSha256": {
+      "docs/helix/05-deploy/microsite/dist/reference/manifest.json": "34d05bf06da60d35554de24205c3991335ac20cbd1de16d63b5b26dabb0659de",
+      "docs/helix/05-deploy/microsite/dist/reference/core.html": "1dd521f996bdb55f42e6b36d71b7fec8c58b0c6e0fcd044ac1dfdf0c3711a74c",
+      "docs/helix/05-deploy/microsite/dist/schema-catalog.json": "071f244a60ba41f09b757e104b0fa1838769a44317482530fbbb75964efdedbf"
+    },
+    "hostScriptRecordedInput": {
+      "bytes": 5570,
+      "path": "scripts/artifact-collections-browser.ts",
+      "sha256": "d36251e475826fcf5668df091ebbbdc09f342835404301a807afc9e029fd9fa8"
+    },
+    "qualification": "Readonly served artifacts captured after the passing run. The existing manifest records the pre-patch host journey hash, so Root must refresh/check reference metadata once before final publication. This local journey qualifies unchanged UI behavior, not fresh source-manifest parity."
+  },
+  "log": {
+    "path": "browser.log",
+    "sha256": "cf79361d5779ea1ed96de454a7fb993c52bc69965fd7b62f69e2a472e10f223e"
+  },
+  "priorLocalObservation": {
+    "path": "browser-preclick.log",
+    "sha256": "cf79361d5779ea1ed96de454a7fb993c52bc69965fd7b62f69e2a472e10f223e",
+    "qualification": "First passing patch before Root requested the additional explicit collection-button click; retained separately, superseded by browser.log."
+  },
+  "census": "No Bun .test.ts source or test census entry changed; this is a standalone CI host journey."
+}

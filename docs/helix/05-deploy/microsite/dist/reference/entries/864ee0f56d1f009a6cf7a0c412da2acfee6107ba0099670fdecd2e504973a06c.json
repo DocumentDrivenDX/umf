@@ -6,62 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.5.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.2.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.3.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.4.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.5.0"
-      },
-      {
-        "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "other",
@@ -1100,64 +1050,9 @@
             "source": {
               "kind": "object",
               "members": {
-                "anyOf": {
-                  "items": [
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.2.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.3.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.4.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.5.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.6.0"
-                        }
-                      }
-                    }
-                  ],
-                  "kind": "array"
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1182,64 +1077,9 @@
             "target": {
               "kind": "object",
               "members": {
-                "anyOf": {
-                  "items": [
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.1.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.2.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.3.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.4.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.5.0"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "object",
-                      "members": {
-                        "$ref": {
-                          "kind": "string",
-                          "value": "urn:umf:core:0.6.0"
-                        }
-                      }
-                    }
-                  ],
-                  "kind": "array"
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1313,18 +1153,13 @@
   "id": "[\"schema\",\"spec/core/sqlserver-key-classification.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/cardinality-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/facet-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/field-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/nullability-document.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 8669,
+      "bytes": 7973,
       "path": "spec/core/sqlserver-key-classification.schema.json",
-      "sha256": "427aebea35e781a2b90c91c95704bffb68ff3c87230e6841fdbf3c4cb32fb097"
+      "sha256": "d976caf6a2efed173f87cd313cede56623ae762b1ff4f304808f885cc52aeca4"
     }
   ],
   "summary": "spec/core/sqlserver-key-classification.schema.json",

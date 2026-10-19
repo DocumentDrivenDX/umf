@@ -1,0 +1,10 @@
+bun test v1.4.2 (744846f84)
+
+tests/access-unified.test.ts:
+(pass) latest UMF unified Python access > generates an isolated stdlib client usable by the independent ontology host [489.83ms]
+(pass) latest UMF unified Python access > runs the same application through compiled Weft SQL on PostgreSQL 18 when configured [4451.78ms]
+
+ 2 pass
+ 0 fail
+ 19 expect() calls
+Ran 2 tests across 1 file. [5.48s]

@@ -1,0 +1,29 @@
+{"testProcess":"tests/core-ideals/field-parquet-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-parquet-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-parquet-projection.test.ts:
+(pass) explicit Parquet carrier/repetition schemas recover authored meaning through both formats [6880.53ms]
+18 | const checker=(version:unknown)=>version==='8.0.0'?checkBit128:version==='6.0.0'?checkV6:refuse;
+19 | function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_KIND_RESULT',JSON.stringify(check.errors));return result as T;}
+20 | function locate(input:Document,identityInput:CoreKindIdentity){
+21 |  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreKindIdentity;
+22 |  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_KIND_IDENTITY','Expected explicit module and element identities');
+23 |  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_KIND_SOURCE',JSON.stringify(validation.diagnostics));
+                                                                                                                                                 ^
+UmfError: [{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must have required property 'kind'","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must match \"then\" schema","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must have required property 'scalarType'","severity":"error"},{"code":"SEMANTIC_TYPE_STRUCTURE","path":"/modules/0/elements/0","message":"must match \"then\" schema","severity":"error"}]
+      at locate (/Users/erik/.codex/worktrees/d8be/umf/src/model/field-kind.ts:23:141)
+      at declareCoreElementKind (/Users/erik/.codex/worktrees/d8be/umf/src/model/field-kind.ts:40:16)
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/field-parquet-projection.test.ts:3:353)
+(fail) unsupported meaning is explicit and malformed names or wrong roles never project [5.61ms]
+
+ 1 pass
+ 1 fail
+ 144 expect() calls
+Ran 2 tests across 1 file. [7.24s]
+{"testProcess":"tests/core-ideals/field-parquet-projection.test.ts","exitCode":1,"pass":1,"fail":1,"assertions":144,"completeSummary":true,"logSha256":"9d701f2d946ae132543d462fa096a1259204c0927ebab5d6efb1c92d6710ced9"}
+Complete test file failed or terminated: tests/core-ideals/field-parquet-projection.test.ts
+
+ 1 pass
+ 1 fail
+ 144 expect() calls
+Ran 2 tests across 1 files. [7.25s]

@@ -1,0 +1,23 @@
+{"runDir":"/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-dU0SZz","scope":"Fresh owned-fixture UUID qualification; stops at first failed step"}
+{"step":1,"total":18,"key":"build","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","run","build"]}
+{"step":2,"total":18,"key":"testPrerequisites","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","scripts/build-test-prerequisites.ts"]}
+{"step":3,"total":18,"key":"typecheck","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","run","typecheck"]}
+{"step":4,"total":18,"key":"schemas","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","run","test:schemas"]}
+{"step":5,"total":18,"key":"tests","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","scripts/run-tests.ts","tests/uuid-model.test.ts","tests/uuid-file-model.test.ts","tests/bit128.test.ts","tests/uuid.test.ts","tests/core-uuid.test.ts","tests/core-uuid-key.test.ts","tests/binding-uuid.test.ts","tests/uuid-native-projection.test.ts"]}
+{"step":6,"total":18,"key":"bindingRegression","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","scripts/run-tests.ts","tests/binding"]}
+{"step":7,"total":18,"key":"postgresql","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","scripts/uuid/sql-model-oracle.ts","postgresql"]}
+{"step":8,"total":18,"key":"sqlserver","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","scripts/uuid/sql-model-oracle.ts","sqlserver"]}
+{"step":9,"total":18,"key":"artifacts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","scripts/uuid/file-model-artifacts.ts"]}
+{"step":10,"total":18,"key":"files","command":["/private/tmp/umf-authority-native-oracles/bin/python","scripts/uuid/file-model-oracle.py"]}
+{"step":11,"total":18,"key":"tablespec","command":["/Users/erik/Projects/tablespec/.venv/bin/python","scripts/uuid/tablespec-model-oracle.py"]}
+37 |   console.log(JSON.stringify({step:i+1,total:steps.length,key:step.key,command:step.command}));
+38 |   const child=Bun.spawn(step.command,{stdout:'pipe',stderr:'pipe',env:{...env,...step.extraEnv}});
+39 |   const [stdout,stderr,code]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
+40 |   await Bun.write(join(runDir,step.log),stdout+'\n'+stderr);exits[step.key]=code;
+41 |   await Bun.write(join(runDir,'uuid-model-exits.json'),JSON.stringify(exits)+'\n');
+42 |   if(code!==0)throw Error('Qualification failed at '+step.key+'; inspect '+join(runDir,step.log));
+                         ^
+error: Qualification failed at tablespec; inspect /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-uuid-qualification-dU0SZz/uuid-tablespec-model.log
+      at /Users/erik/.codex/worktrees/d8be/umf/scripts/uuid/qualify.ts:42:21
+
+Bun v1.4.2 (macOS arm64)

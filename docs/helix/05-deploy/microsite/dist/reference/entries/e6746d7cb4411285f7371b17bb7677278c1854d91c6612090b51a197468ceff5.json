@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "extension-payload",
@@ -208,7 +208,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -431,7 +431,7 @@
                   "members": {
                     "$ref": {
                       "kind": "string",
-                      "value": "urn:umf:core:0.1.0"
+                      "value": "urn:umf:core:0.10.0"
                     }
                   }
                 },
@@ -524,9 +524,9 @@
   ],
   "sources": [
     {
-      "bytes": 3047,
+      "bytes": 3049,
       "path": "spec/extensions/rdf/merge-schema.json",
-      "sha256": "363b2d1cece92fe6e455b52f9a8b74aa3571593ab7f0fe7bf1632231423937d6"
+      "sha256": "018bf1b9d701324d5fee8cfb974e07a90b5681b1d2e0f917701cefa3b63ffa1a"
     }
   ],
   "summary": "spec/extensions/rdf/merge-schema.json",

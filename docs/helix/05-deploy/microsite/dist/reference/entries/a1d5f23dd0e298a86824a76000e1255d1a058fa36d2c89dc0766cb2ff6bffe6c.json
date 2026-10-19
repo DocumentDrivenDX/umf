@@ -5,18 +5,18 @@
     "references": [
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-        "target": "urn:umf:core:0.6.0"
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
-        "resolvedId": "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
-        "target": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+        "resolvedId": "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
+        "target": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -196,7 +196,7 @@
                   "members": {
                     "$ref": {
                       "kind": "string",
-                      "value": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+                      "value": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
                     }
                   }
                 },
@@ -984,7 +984,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.6.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1011,7 +1011,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -1085,15 +1085,14 @@
   "id": "[\"schema\",\"spec/core/key-avro-projection.schema.json\",\"\"]",
   "kind": "schema",
   "links": [
-    "[\"schema\",\"spec/core/key-document.schema.json\",\"\"]",
-    "[\"schema\",\"spec/core/key-operation.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/key-operation-v2.schema.json\",\"\"]",
     "[\"schema\",\"spec/core/schema.json\",\"\"]"
   ],
   "sources": [
     {
-      "bytes": 7526,
+      "bytes": 7528,
       "path": "spec/core/key-avro-projection.schema.json",
-      "sha256": "09600e303c9e595d8f9c83ef6d3d3b163595fd2d4508b4ee5b6a0e08d21d912e"
+      "sha256": "781aced9b08f154685a0613117a838b59f81a3ade2eb34fb006706fa549c943b"
     }
   ],
   "summary": "spec/core/key-avro-projection.schema.json",

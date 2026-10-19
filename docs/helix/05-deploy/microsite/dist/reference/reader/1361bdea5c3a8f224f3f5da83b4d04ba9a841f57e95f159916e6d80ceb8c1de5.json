@@ -5,9 +5,9 @@
   "kind": "Constant",
   "members": [],
   "parameters": [],
-  "purpose": "Value family only; native refinements determine the actual domain and behavior.",
+  "purpose": "Shared model-owned current value families; native refinements remain separate.",
   "related": [],
   "returns": "",
   "task": "Other APIs",
-  "type": "readonly [\"boolean\", \"integer\", \"decimal\", \"float\", \"string\", \"binary\", \"date\", \"time\", \"timestamp\"]"
+  "type": "readonly [\"boolean\", \"integer\", \"decimal\", \"float\", \"string\", \"binary\", \"date\", \"time\", \"timestamp\", \"bits128\", \"uuid\"]"
 }

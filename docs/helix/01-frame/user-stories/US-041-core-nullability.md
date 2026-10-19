@@ -19,6 +19,22 @@ ddx:
 
 **Feature**: FEAT-005
 
+## Current authority qualification
+
+The authoritative metamodel cutover retains the original criteria and historical
+acceptance observations below. Current source operations, retained native-payload
+equality, recovery and refusal checks are recorded separately from a fresh native
+qualification. Current native admission and priority delivery remain
+**UNQUALIFIED**; US-041-AC8, US-041-AC9 are **UNTESTED** in the current
+acceptance ledger. Earlier qualified-delivery statements describe their original
+source and artifact pins and do not establish the current qualification.
+
+The [current qualification policy](../../04-build/evidence/metamodel-authority/current-native-qualification.json)
+records the exact criteria and evidence. Historical core upgrade/rollback
+observations remain historical; the current runtime refuses retired core markers
+and does not expose a migration dispatch path. This note does not downgrade
+unrelated source-functional criteria.
+
 ## Story
 
 **As a** data platform engineer, **I want** to state when a field may supply no value,

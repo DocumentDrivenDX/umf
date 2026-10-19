@@ -1,0 +1,1256 @@
+{
+  "profile": "umf.metamodel-authority.integration-regressions/1",
+  "createdAt": "2026-10-18T19:29:14.891557+00:00",
+  "runtime": "Bun1.4.3",
+  "runner": "scripts/run-tests.ts",
+  "scope": "Complete selected file inventories, one fresh Bun process per test file. Security uses a separate native handler launch directory. These are local integration observations, not a published release or blanket native equivalence claim.",
+  "closingAuthoritySources": {
+    "src/validation/document.ts": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe",
+    "src/validation/constraint-kernel.ts": "66cb1964109d1a5c4b88dc911e7a61e545e26da61b3658a0d4ceed79b73f93d5",
+    "src/validation/constraint-language.ts": "2b4dc4d2f9a309cae8dba6e91bb6f0ed3fb587356e5646fbfade7b6dd378c110",
+    "src/validation/current-policy.ts": "7cf6032ef21bdc7fd8ffbe58b5c3d443f22cc1152d7f6dc7c8de12cc4bd2a342",
+    "src/validation/literal-kernel.ts": "80ae452f0a2e357f73d526d83b43d9408affdc32d2d35cad67db7aaef422a75c",
+    "src/validation/literal-policy.ts": "80673d19b570c649078f62756993d89d866055f9312ccb0aa38d08f453edfc29",
+    "src/generated/core-model.ts": "8b82fa9bd93d284e0201e2649ae072d1e494bca94bb0065663b03ade64c49d2b",
+    "src/generated/core-validators.ts": "5c81f5a944f440d39bbc04c03976df5960bb153375513544a56a2b13a9e044ec",
+    "spec/metamodel/umf.yaml": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
+    "spec/core/schema.json": "7b94c82d89cfbd761e6ff4aa83b342c598af5a50e49985e6d498f90ec49d7588",
+    "spec/metamodel/generated/core-constraints.json": "74cb7fdd608f24a9e1353a6af68daf83258c8a4b2e1d8155fb9515225a02fc11",
+    "spec/metamodel/generated/domain-policy.json": "fe2402c43cf8defe2b0c5693ba7aad1a60cae97b12d4cdc063cbf0b666017ddd"
+  },
+  "hashTiming": "Authority hashes captured after these runs; final release qualification remains a separate gate.",
+  "results": [
+    {
+      "selection": "tests/security",
+      "log": "security.log",
+      "logSha256": "28b486c7a4c6e2030b737deb131fe6716aacd68b0a87fca4f78e315cfe5591ba",
+      "files": 62,
+      "tests": 324,
+      "assertions": 5739,
+      "failed": 0,
+      "inventoryComplete": true,
+      "perFile": [
+        {
+          "testProcess": "tests/security/action-purposes.test.ts",
+          "exitCode": 0,
+          "pass": 6,
+          "fail": 0,
+          "assertions": 171,
+          "completeSummary": true,
+          "logSha256": "1a257209757cbd563ef45fe854fbc92f3e6fe8222882f93e713879ed56e61846"
+        },
+        {
+          "testProcess": "tests/security/association-expression.test.ts",
+          "exitCode": 0,
+          "pass": 12,
+          "fail": 0,
+          "assertions": 67,
+          "completeSummary": true,
+          "logSha256": "b444d1cc496d5759612438803aba5fe9267a66c10a7ac426f67a10ce37cab9af"
+        },
+        {
+          "testProcess": "tests/security/association-selector.test.ts",
+          "exitCode": 0,
+          "pass": 11,
+          "fail": 0,
+          "assertions": 69,
+          "completeSummary": true,
+          "logSha256": "99f30cc9f003cd2fcf5b41497e7291e22d0d11c0b8a485db92869d95797b1c70"
+        },
+        {
+          "testProcess": "tests/security/association-witness.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 15,
+          "completeSummary": true,
+          "logSha256": "d1b1515d216b47f84fae3eef656efd068fe01625a2550032d9f754bc58e51790"
+        },
+        {
+          "testProcess": "tests/security/authority-guard.test.ts",
+          "exitCode": 0,
+          "pass": 7,
+          "fail": 0,
+          "assertions": 20,
+          "completeSummary": true,
+          "logSha256": "44773731873fc801a40f2e4b00a46037d2e8198369d86377edfa1b02dbf97b71"
+        },
+        {
+          "testProcess": "tests/security/candidate-domains.test.ts",
+          "exitCode": 0,
+          "pass": 6,
+          "fail": 0,
+          "assertions": 27,
+          "completeSummary": true,
+          "logSha256": "015f5ec350ac939f89013d1214944ec51f665aca43c8d2c942567f3c5fb4303a"
+        },
+        {
+          "testProcess": "tests/security/catalog-collection.test.ts",
+          "exitCode": 0,
+          "pass": 11,
+          "fail": 0,
+          "assertions": 52,
+          "completeSummary": true,
+          "logSha256": "35a5989e61b28777dedae3f3362fd1b5159f20e3303f4254187706f711fdfd8b"
+        },
+        {
+          "testProcess": "tests/security/catalog-disclosure-batch.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 181,
+          "completeSummary": true,
+          "logSha256": "53dbd8120f6670363dac484511d54be5cf745a3147e82f8010519f80bad29e93"
+        },
+        {
+          "testProcess": "tests/security/catalog-disclosure-selection.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 42,
+          "completeSummary": true,
+          "logSha256": "5a35f2e1cd8bd47a942624ac6bbcd5ae9e1aed1a909480bb9a90d27450fc824c"
+        },
+        {
+          "testProcess": "tests/security/catalog-operation-batch.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 50,
+          "completeSummary": true,
+          "logSha256": "3b43b53eebef1d9fb935ccc8b3bd4001bb82b060a0395d03c5e6104f2797f704"
+        },
+        {
+          "testProcess": "tests/security/catalog-program.test.ts",
+          "exitCode": 0,
+          "pass": 8,
+          "fail": 0,
+          "assertions": 47,
+          "completeSummary": true,
+          "logSha256": "e97b8f476e0535217a7b16b1701591ad3286e12f25651392635d0d5cb54699b3"
+        },
+        {
+          "testProcess": "tests/security/catalog-rule-duty-batch.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 47,
+          "completeSummary": true,
+          "logSha256": "cc40fef8d1d25210c4c89648e2adbc958d49ebd86ccc06621bec8c48ddb29c1a"
+        },
+        {
+          "testProcess": "tests/security/catalog-runtime.test.ts",
+          "exitCode": 0,
+          "pass": 15,
+          "fail": 0,
+          "assertions": 68,
+          "completeSummary": true,
+          "logSha256": "20c00b156bbd1eb97fd17ead759f8b981fcb6caa7d2aa8ad571b70a5278a7acf"
+        },
+        {
+          "testProcess": "tests/security/catalog-scan-batch.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 56,
+          "completeSummary": true,
+          "logSha256": "12686abddb5913184dc41ba323c2434e93d3359ebaae3a58c32a5145b7a35f32"
+        },
+        {
+          "testProcess": "tests/security/catalog-scan.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 78,
+          "completeSummary": true,
+          "logSha256": "12550f6b28ad507ea83bb76fd7fa56e6777c084a39b522126d1a024eaa4599a0"
+        },
+        {
+          "testProcess": "tests/security/catalog-write.test.ts",
+          "exitCode": 0,
+          "pass": 18,
+          "fail": 0,
+          "assertions": 55,
+          "completeSummary": true,
+          "logSha256": "397613d32263d13f7e3457b81758c379f034314ee5decf114a39cfa556fe9121"
+        },
+        {
+          "testProcess": "tests/security/compact-conditions.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 29,
+          "completeSummary": true,
+          "logSha256": "c24314cbbb7af8248cd3b419e00f213a3671f444407be51d6758d36a7a19b284"
+        },
+        {
+          "testProcess": "tests/security/core-extension-closure.test.ts",
+          "exitCode": 0,
+          "pass": 7,
+          "fail": 0,
+          "assertions": 32,
+          "completeSummary": true,
+          "logSha256": "821b077cfa222a22ecfeb860d270cbd9c65da9d51bd4aa6e31a37060a21f8f31"
+        },
+        {
+          "testProcess": "tests/security/current-disclosure-child.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 104,
+          "completeSummary": true,
+          "logSha256": "575dcd2b0ffe493f82383207c0d1287533d347f540693f26c723f179de8dc6b0"
+        },
+        {
+          "testProcess": "tests/security/current-native-disclosure-child.test.ts",
+          "exitCode": 0,
+          "pass": 8,
+          "fail": 0,
+          "assertions": 662,
+          "completeSummary": true,
+          "logSha256": "c6c1558a1fd22aca39ee35f0e78bcc4919451e9eedf18c2b1170dab6eeb75141"
+        },
+        {
+          "testProcess": "tests/security/current-query-child.test.ts",
+          "exitCode": 0,
+          "pass": 6,
+          "fail": 0,
+          "assertions": 46,
+          "completeSummary": true,
+          "logSha256": "3ccf0b90be4507112093e5b3d5a09f58d2dc22509d1859165a4b1a59c1fd6b8d"
+        },
+        {
+          "testProcess": "tests/security/dependencies.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 7,
+          "completeSummary": true,
+          "logSha256": "bb4a53a06be04c9890ed2257a3641f756a9e91cda96fb28c5bc4a7dd334cf0a8"
+        },
+        {
+          "testProcess": "tests/security/disclosure.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 11,
+          "completeSummary": true,
+          "logSha256": "8b7db5840a0fcb5a8552d132ebb562e2c11e9a9afb3ed662409c8eff679aa964"
+        },
+        {
+          "testProcess": "tests/security/entity-terms-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 27,
+          "completeSummary": true,
+          "logSha256": "0ce8a7247460edefff293cd07de1ee30b7b2b79ad1b65af35e74ab9ce8dd829f"
+        },
+        {
+          "testProcess": "tests/security/evaluate.test.ts",
+          "exitCode": 0,
+          "pass": 15,
+          "fail": 0,
+          "assertions": 86,
+          "completeSummary": true,
+          "logSha256": "f72f7ae9ed5fb8b0e9fe4f391cadd381691d8e69cb6f81f302a9519fc27359db"
+        },
+        {
+          "testProcess": "tests/security/identity-transport.test.ts",
+          "exitCode": 0,
+          "pass": 8,
+          "fail": 0,
+          "assertions": 17,
+          "completeSummary": true,
+          "logSha256": "00e6421d839298d01845b6461628bd74be42a3d9bab8ac9596f6bdfd5022e9b4"
+        },
+        {
+          "testProcess": "tests/security/live-original-integer-sum.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 21,
+          "completeSummary": true,
+          "logSha256": "dec1a910cde7e57e8436ad0585c99827085880dde630f6842a330ccbc3c8ec90"
+        },
+        {
+          "testProcess": "tests/security/logic.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 853,
+          "completeSummary": true,
+          "logSha256": "e6956ca05ac9e7237ca9f63479d0ea1b3d7caa33abbfcc43dd2066551666e00a"
+        },
+        {
+          "testProcess": "tests/security/native/pg18-projection-expressions.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 129,
+          "completeSummary": true,
+          "logSha256": "99748b814ce18cbcca047d28c0f5f493a9881ff99962ababa796193fbbacf6ec"
+        },
+        {
+          "testProcess": "tests/security/nested-graph-conditions.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 98,
+          "completeSummary": true,
+          "logSha256": "771fe17b876a47ab3a991b1c9e8d4893c26a97ef03d0eab794d34ef5469e2b22"
+        },
+        {
+          "testProcess": "tests/security/ontology-checks-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 20,
+          "completeSummary": true,
+          "logSha256": "63cf46626508796a86bd67e1e81a23489cb9f4a8c612fd55b94030b3ceecb2a1"
+        },
+        {
+          "testProcess": "tests/security/ontology-migration-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 29,
+          "completeSummary": true,
+          "logSha256": "49d268dadceaf873bd4f7df72001a0d661e71f9713322615a9f5d888b48802ad"
+        },
+        {
+          "testProcess": "tests/security/operation-budget-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 20,
+          "completeSummary": true,
+          "logSha256": "69ff202fda406dc8268291bcfc44d9c78d395108c38f7768a230be6e639afdba"
+        },
+        {
+          "testProcess": "tests/security/policy-checks-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 10,
+          "fail": 0,
+          "assertions": 60,
+          "completeSummary": true,
+          "logSha256": "06932b3354d04252040157f73c4143d039f7b7604a0153b7ed93154b9335c3ac"
+        },
+        {
+          "testProcess": "tests/security/policy-migration-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 16,
+          "completeSummary": true,
+          "logSha256": "96afe1985ab6a2e4ba4ab765a81971590b1ae6fafa6c8d43277320fbe118ccc9"
+        },
+        {
+          "testProcess": "tests/security/policy.test.ts",
+          "exitCode": 0,
+          "pass": 10,
+          "fail": 0,
+          "assertions": 84,
+          "completeSummary": true,
+          "logSha256": "3f8e7708b2d0127a8d4196fbf019829238308d4d67e19d1bc6952b396322bb93"
+        },
+        {
+          "testProcess": "tests/security/preparation-sources.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 26,
+          "completeSummary": true,
+          "logSha256": "b875d20722878c09ae819ca6d336476d9fb4838fb7538cb9d8479da24ea3a057"
+        },
+        {
+          "testProcess": "tests/security/projection-query-child-v2.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 158,
+          "completeSummary": true,
+          "logSha256": "7ea1e78b38858754141f7243010aa5145c71df1f9bb2d6ec6073ea0a4ba83a43"
+        },
+        {
+          "testProcess": "tests/security/protection/catalog.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 37,
+          "completeSummary": true,
+          "logSha256": "7d69fd9920c0e9ebc4f062cdd4c55fb6a719e6ff5c8a9b1ac1b8f5796d0f8bb3"
+        },
+        {
+          "testProcess": "tests/security/protection/current-query-read.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 11,
+          "completeSummary": true,
+          "logSha256": "0a95d6b4a1aee81c02313b865f7423962de12c7b45c6022494c15ecaf3182d2f"
+        },
+        {
+          "testProcess": "tests/security/protection/current-query-source.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 19,
+          "completeSummary": true,
+          "logSha256": "6bbb3dda908e7161491acaddb1fdd44edcd48def7b2b0953042b933364c63db2"
+        },
+        {
+          "testProcess": "tests/security/protection/disclosure.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 192,
+          "completeSummary": true,
+          "logSha256": "950dd0a717384970f18872bd84d92c9095f6f91fa626338e8153d7a2136e6ab1"
+        },
+        {
+          "testProcess": "tests/security/protection/domains.test.ts",
+          "exitCode": 0,
+          "pass": 6,
+          "fail": 0,
+          "assertions": 176,
+          "completeSummary": true,
+          "logSha256": "22a9701ad985f2cea249d3653a86ea54170d60dea5f20f96232ed388e292a684"
+        },
+        {
+          "testProcess": "tests/security/protection/functions.test.ts",
+          "exitCode": 0,
+          "pass": 10,
+          "fail": 0,
+          "assertions": 58,
+          "completeSummary": true,
+          "logSha256": "3f4ab73a2872942e7f6bbc1f86a17cf37a7ad1b9174da9a6a62e719c7b212939"
+        },
+        {
+          "testProcess": "tests/security/protection/obligations.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 177,
+          "completeSummary": true,
+          "logSha256": "938a3b159785364d580face5b6ea560b3b0091542f549b068e5de2a705ea5e27"
+        },
+        {
+          "testProcess": "tests/security/protection/policy-v2.test.ts",
+          "exitCode": 0,
+          "pass": 8,
+          "fail": 0,
+          "assertions": 71,
+          "completeSummary": true,
+          "logSha256": "9b81f7eef06033286e9b816e9388d5dd0a75e8fb2ea4f4911f540de91a71f7f0"
+        },
+        {
+          "testProcess": "tests/security/protection/query-properties.test.ts",
+          "exitCode": 0,
+          "pass": 9,
+          "fail": 0,
+          "assertions": 82,
+          "completeSummary": true,
+          "logSha256": "f265097ce02be2e9913cfa15d8df1fbe8e8659d431a2fb7bd5d00e5952f0ed55"
+        },
+        {
+          "testProcess": "tests/security/protection/source.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 23,
+          "completeSummary": true,
+          "logSha256": "0ff59c8434fa54de61d244f44dc039d9d66427e625436953faf1523cf762428b"
+        },
+        {
+          "testProcess": "tests/security/protection/wire.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 58,
+          "completeSummary": true,
+          "logSha256": "99c36d50d0c8b3a73ae545ce565bd85dcda2676ba0829946ba2da04ca747c3fb"
+        },
+        {
+          "testProcess": "tests/security/publication-custody.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 2,
+          "completeSummary": true,
+          "logSha256": "959a4f6c18d0bc5989eb09ed1170e5dbe1d35217fc89e45f4368add16a7fade4"
+        },
+        {
+          "testProcess": "tests/security/query-value-route-evaluation.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 481,
+          "completeSummary": true,
+          "logSha256": "79eaeb0abc9086c98dd66f4dce985c335888338e4d36db4c2538372898a4b7ce"
+        },
+        {
+          "testProcess": "tests/security/query-value-routes.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 309,
+          "completeSummary": true,
+          "logSha256": "cd429150708828f48ddf5d84357ad063b51ae2aeb3c7d595a9b1be303b892846"
+        },
+        {
+          "testProcess": "tests/security/query-value-source.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 73,
+          "completeSummary": true,
+          "logSha256": "25d2ec0268fe97b78aa9c54a9379d1e19338ac4a6160f56e329f8d3d6d9407ce"
+        },
+        {
+          "testProcess": "tests/security/query-value-three-valued.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 4,
+          "completeSummary": true,
+          "logSha256": "1fb8db24c32b8b7ffad30444051304a160f9ba188443a448ec66ac0230d69265"
+        },
+        {
+          "testProcess": "tests/security/read-projection-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 25,
+          "completeSummary": true,
+          "logSha256": "88cdd21d33696c8ae428bbb977eac9c81fe72243467d1875795dda44827c22db"
+        },
+        {
+          "testProcess": "tests/security/registration.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 86,
+          "completeSummary": true,
+          "logSha256": "cbd2f68585ce4008b2c7e9f3e5a55c7713ced8d10db5fb41d1b73d2168a55063"
+        },
+        {
+          "testProcess": "tests/security/relationship-candidate.test.ts",
+          "exitCode": 0,
+          "pass": 9,
+          "fail": 0,
+          "assertions": 63,
+          "completeSummary": true,
+          "logSha256": "bd886490c59884546f913e4a36493f41818fe1c7435fdac33298caaf81166b6e"
+        },
+        {
+          "testProcess": "tests/security/run-command.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 12,
+          "completeSummary": true,
+          "logSha256": "25920d731593c5b99d09c7ceacbc57cb6459f44a96a76487bfc81fed4a844fac"
+        },
+        {
+          "testProcess": "tests/security/shared-source.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 24,
+          "completeSummary": true,
+          "logSha256": "07366a8c81d6fa772b57f70c3ef219c9f99554bfd492210b2ed2cc4f47983d22"
+        },
+        {
+          "testProcess": "tests/security/stored-query.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 77,
+          "completeSummary": true,
+          "logSha256": "ada8ecc25dc6731beeb894a6c6dc4521815ce9f7d1e03a4a7e0c82257f417a4a"
+        },
+        {
+          "testProcess": "tests/security/write-read-protection.test.ts",
+          "exitCode": 0,
+          "pass": 10,
+          "fail": 0,
+          "assertions": 51,
+          "completeSummary": true,
+          "logSha256": "b84befde5238daa92199d3d6b1a4eb9aa1447ee85a589d014525e20685907860"
+        },
+        {
+          "testProcess": "tests/security/write.test.ts",
+          "exitCode": 0,
+          "pass": 14,
+          "fail": 0,
+          "assertions": 48,
+          "completeSummary": true,
+          "logSha256": "5e48f42542bc4a6d12fe6ade985a481154ce7d5ebcd3b9c85eea29f1848d3bd2"
+        }
+      ]
+    },
+    {
+      "selection": "tests/actions",
+      "log": "actions.log",
+      "logSha256": "5953f1022d2e9732b6bf7207fb036d1c2adb9b7da46c5610cdee12591bc922a9",
+      "files": 10,
+      "tests": 63,
+      "assertions": 512,
+      "failed": 0,
+      "inventoryComplete": true,
+      "perFile": [
+        {
+          "testProcess": "tests/actions/api.test.ts",
+          "exitCode": 0,
+          "pass": 15,
+          "fail": 0,
+          "assertions": 65,
+          "completeSummary": true,
+          "logSha256": "ad2c5c8f7aef4ee43af48b649832c7588ccf8c097a4ab247c90e298d381975c2"
+        },
+        {
+          "testProcess": "tests/actions/assessment.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 30,
+          "completeSummary": true,
+          "logSha256": "db09b068ebe3c2d0b718db6a111cfe1c2e0951684b67fe0feb6be2ff23abe147"
+        },
+        {
+          "testProcess": "tests/actions/bundled-sdk.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 11,
+          "completeSummary": true,
+          "logSha256": "446713c78b0266af1ba3552f79ac0511c9c0badd73ac85ca24e505ac699d66ff"
+        },
+        {
+          "testProcess": "tests/actions/contracts.test.ts",
+          "exitCode": 0,
+          "pass": 8,
+          "fail": 0,
+          "assertions": 94,
+          "completeSummary": true,
+          "logSha256": "a65694ac9d3f12a0e7d96c7bcb0a369a3be95af11479da40b110ba6615165891"
+        },
+        {
+          "testProcess": "tests/actions/corpus.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 2,
+          "completeSummary": true,
+          "logSha256": "62ddea967225216fa4822820cb02cdfe76bbf9a61fa8d1c14eaa5e10402e80f7"
+        },
+        {
+          "testProcess": "tests/actions/interpreter.test.ts",
+          "exitCode": 0,
+          "pass": 15,
+          "fail": 0,
+          "assertions": 65,
+          "completeSummary": true,
+          "logSha256": "5c49ac4d17b3328ab0a2ad2b52f2559dcb441bcfd3abd98b4d06c0227d4d0639"
+        },
+        {
+          "testProcess": "tests/actions/prepared-identities.test.ts",
+          "exitCode": 0,
+          "pass": 7,
+          "fail": 0,
+          "assertions": 169,
+          "completeSummary": true,
+          "logSha256": "202d1aa7c07c91e6c09d051ee159216a3d687a6005b7d625b268ff92941bd162"
+        },
+        {
+          "testProcess": "tests/actions/preservation.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 42,
+          "completeSummary": true,
+          "logSha256": "b9f7dc09a4a435f3626ea99db2626098fc53f834d64c5cd5e64282f4f3a0081c"
+        },
+        {
+          "testProcess": "tests/actions/reports.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 16,
+          "completeSummary": true,
+          "logSha256": "982771b63f396dbdb335f0f206590418cf70542634bf7d2527c957834447c314"
+        },
+        {
+          "testProcess": "tests/actions/structure.test.ts",
+          "exitCode": 0,
+          "pass": 6,
+          "fail": 0,
+          "assertions": 18,
+          "completeSummary": true,
+          "logSha256": "523b64943704e163a564c5b1d3fb052340962e28b9323778d752b145a1a53917"
+        }
+      ]
+    },
+    {
+      "selection": "tests/compilation",
+      "log": "compilation.log",
+      "logSha256": "2afcd5b0e139686ca41bee0bca01edcf66681d62b266baa187526df93bdae4ed",
+      "files": 18,
+      "tests": 881,
+      "assertions": 5005,
+      "failed": 0,
+      "inventoryComplete": true,
+      "perFile": [
+        {
+          "testProcess": "tests/compilation/access-census-completeness.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 2119,
+          "completeSummary": true,
+          "logSha256": "06e2e409eb125ce6ffa41eb466dfb93728602902ab1042de714ab7d5ddf87110"
+        },
+        {
+          "testProcess": "tests/compilation/access-context.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 7,
+          "completeSummary": true,
+          "logSha256": "d1343b2fce1df6b7f3c9178d4aec546a5ca6290c69f3c426cf1124a3378ba7c3"
+        },
+        {
+          "testProcess": "tests/compilation/access-diff.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 6,
+          "completeSummary": true,
+          "logSha256": "69d32bf19f672fc3c60d39e6d73c8ff56dd0efce3de000af9241c3032e79f576"
+        },
+        {
+          "testProcess": "tests/compilation/access-digest.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 12,
+          "completeSummary": true,
+          "logSha256": "82915bf2c288573864834fcc4e1cdcf299426d6178412a8a85fc30a86c05cd76"
+        },
+        {
+          "testProcess": "tests/compilation/access-extension.test.ts",
+          "exitCode": 0,
+          "pass": 357,
+          "fail": 0,
+          "assertions": 372,
+          "completeSummary": true,
+          "logSha256": "35085f3057cb1540d9996b967f6b65f478ae2755d6e16777142e47a0a80decd1"
+        },
+        {
+          "testProcess": "tests/compilation/access-generator.test.ts",
+          "exitCode": 0,
+          "pass": 27,
+          "fail": 0,
+          "assertions": 151,
+          "completeSummary": true,
+          "logSha256": "0297865976ac36b98cce2ceb3b416a40db032063fcd2dc085b9ec7999cc53c9b"
+        },
+        {
+          "testProcess": "tests/compilation/access-golden-vectors.test.ts",
+          "exitCode": 0,
+          "pass": 72,
+          "fail": 0,
+          "assertions": 216,
+          "completeSummary": true,
+          "logSha256": "9862825f0ed7c758ed852653ddb745835edb299fa5b81b3b327e29aa952975c1"
+        },
+        {
+          "testProcess": "tests/compilation/access-join-multiplicity.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 8,
+          "completeSummary": true,
+          "logSha256": "f9926465620e9e5194af4b066779e66518ace520e89213085ec5dbec03fd73f1"
+        },
+        {
+          "testProcess": "tests/compilation/access-joins.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 9,
+          "completeSummary": true,
+          "logSha256": "a146c6ae3142272c3203829e3609b9a32778c5511196a9307da600eae7031b7a"
+        },
+        {
+          "testProcess": "tests/compilation/access-many-navigation.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 22,
+          "completeSummary": true,
+          "logSha256": "600c9d2191934a29183fcf494c0bf3867d1d13840b9642965e00cadda5872dac"
+        },
+        {
+          "testProcess": "tests/compilation/access-matrix.test.ts",
+          "exitCode": 0,
+          "pass": 352,
+          "fail": 0,
+          "assertions": 1678,
+          "completeSummary": true,
+          "logSha256": "90f6811ca71bfa67795645b458a1ae5d46e81651f1d04aa1ca178cf670c05746"
+        },
+        {
+          "testProcess": "tests/compilation/access-naming.test.ts",
+          "exitCode": 0,
+          "pass": 9,
+          "fail": 0,
+          "assertions": 143,
+          "completeSummary": true,
+          "logSha256": "98c91597b96b9b3e6b7f8980e5df52950a9c189ee6b1ec543c7f3a423e2f524e"
+        },
+        {
+          "testProcess": "tests/compilation/access-package-limits.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 20,
+          "completeSummary": true,
+          "logSha256": "397e25cf0b0835bcd616b79fc44f7cfab77e51f3792273f9e42eed6d15267deb"
+        },
+        {
+          "testProcess": "tests/compilation/access-raw-columns.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 31,
+          "completeSummary": true,
+          "logSha256": "f1dd79686de5562114a8740a493ad72d7bb09aa014d33486a99d9eab316bffd0"
+        },
+        {
+          "testProcess": "tests/compilation/access-schemas.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 6,
+          "completeSummary": true,
+          "logSha256": "38996fee1973d5f78a613727818abb2a463a1da06c93fe19814f084639bb94de"
+        },
+        {
+          "testProcess": "tests/compilation/access-search.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 25,
+          "completeSummary": true,
+          "logSha256": "2ad1e5bc885a9afce9d6f043b9d39acd5a4d1c3f501cc2603165e481f5fb0b47"
+        },
+        {
+          "testProcess": "tests/compilation/access-writer.test.ts",
+          "exitCode": 0,
+          "pass": 15,
+          "fail": 0,
+          "assertions": 81,
+          "completeSummary": true,
+          "logSha256": "42d10f202105075627690059945be5eb4a21cccd79ec7ea2e182dfa444455a60"
+        },
+        {
+          "testProcess": "tests/compilation/boundaries.test.ts",
+          "exitCode": 0,
+          "pass": 17,
+          "fail": 0,
+          "assertions": 99,
+          "completeSummary": true,
+          "logSha256": "6af3d8906875a4ec7b541dea93c4e7ad83f39b98741217167bc97a22303b8e82"
+        }
+      ]
+    },
+    {
+      "selection": "tests/actions-reference",
+      "log": "actions-reference.log",
+      "logSha256": "41e6cbfac0809e0437add1b3b2767149025499df8618a61e303a5294a4409f08",
+      "files": 41,
+      "tests": 123,
+      "assertions": 1974,
+      "failed": 0,
+      "inventoryComplete": true,
+      "perFile": [
+        {
+          "testProcess": "tests/actions-reference/admission.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 23,
+          "completeSummary": true,
+          "logSha256": "34adea5ff796bcdf465d7cf9b706d58403eb25d97afc0e23c075973087b1e6c2"
+        },
+        {
+          "testProcess": "tests/actions-reference/attempts.test.ts",
+          "exitCode": 0,
+          "pass": 15,
+          "fail": 0,
+          "assertions": 146,
+          "completeSummary": true,
+          "logSha256": "86933edfc59ad42e9dc593f9ef4ade2c0491a109363d5dc863d742fa1bc39837"
+        },
+        {
+          "testProcess": "tests/actions-reference/audit.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 83,
+          "completeSummary": true,
+          "logSha256": "ab2122a2ff422673396b0c811b25bcded44cc2a731a35564251997e1ba2bc7a1"
+        },
+        {
+          "testProcess": "tests/actions-reference/composite-key.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 51,
+          "completeSummary": true,
+          "logSha256": "5634e4c1bda57e0d7c812c14da54a1e5a89e2e0dbd183f032375a57cebbe0183"
+        },
+        {
+          "testProcess": "tests/actions-reference/create.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 31,
+          "completeSummary": true,
+          "logSha256": "e02a6aa94f12ebe79d797a77fd46fa4333d62f195f7aada6b3c183376a2f9c8c"
+        },
+        {
+          "testProcess": "tests/actions-reference/creation-relationships.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 8,
+          "completeSummary": true,
+          "logSha256": "e09cc0e1660e6d147bb312488c312dd6653fb28f25abf0e85cfa661544c937df"
+        },
+        {
+          "testProcess": "tests/actions-reference/delete.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 21,
+          "completeSummary": true,
+          "logSha256": "4043a48421729375782f0172ee66f7ab64363428ad42ae5578ae48971c412090"
+        },
+        {
+          "testProcess": "tests/actions-reference/discovery.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 21,
+          "completeSummary": true,
+          "logSha256": "bf82121da7c6db03b2bc82a775af2519e76ddd29005cd34d83f18aad9704372b"
+        },
+        {
+          "testProcess": "tests/actions-reference/evolution.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 57,
+          "completeSummary": true,
+          "logSha256": "8f47232e921071d86a50887985c4b8af2d263a91678dbb2957c8d71d877befda"
+        },
+        {
+          "testProcess": "tests/actions-reference/executor.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 58,
+          "completeSummary": true,
+          "logSha256": "2c0d90ab58763fb7d9c1b8800f9c557c5710ba6d50ac55db7a4c5dbe9ab7ddd7"
+        },
+        {
+          "testProcess": "tests/actions-reference/fresh-admission.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 9,
+          "completeSummary": true,
+          "logSha256": "9d005ad1656cb6a9980bcf90532a92fa6d0b58ef2413e85e8fc1e1dbd4897e21"
+        },
+        {
+          "testProcess": "tests/actions-reference/gateway.test.ts",
+          "exitCode": 0,
+          "pass": 11,
+          "fail": 0,
+          "assertions": 349,
+          "completeSummary": true,
+          "logSha256": "c24f36def028527f4563061ca5553ac0ba1484372f666414528b478ee91d0019"
+        },
+        {
+          "testProcess": "tests/actions-reference/graph.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 15,
+          "completeSummary": true,
+          "logSha256": "2540de67035b01cdb715ebd388a0057111f58fae7921b76d6dfb52ebf4d191dc"
+        },
+        {
+          "testProcess": "tests/actions-reference/handler-executor.test.ts",
+          "exitCode": 0,
+          "pass": 8,
+          "fail": 0,
+          "assertions": 211,
+          "completeSummary": true,
+          "logSha256": "a93675cce402185b049e8b3729bcb94186d966d51eb653f417a99793733211d9"
+        },
+        {
+          "testProcess": "tests/actions-reference/handlers.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 10,
+          "completeSummary": true,
+          "logSha256": "2a82a5151f4214f969062308e95dc369cbd2190e56e9736f5b6770246dff8567"
+        },
+        {
+          "testProcess": "tests/actions-reference/intent.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 7,
+          "completeSummary": true,
+          "logSha256": "62b5d90d95af596d4a48e679cd47591db39bb55e7581b099552c46c38a73f459"
+        },
+        {
+          "testProcess": "tests/actions-reference/invariant-mutants.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 6,
+          "completeSummary": true,
+          "logSha256": "432c485bbed8282576e49ec8247779ccd0bd82f0f53804064efe1f086f7e3693"
+        },
+        {
+          "testProcess": "tests/actions-reference/launch-owner-metadata.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 4,
+          "completeSummary": true,
+          "logSha256": "7224e79ac64dddd9804c051dfcaa9b3e1d7e7d4cb55b5a7b6764badd63819269"
+        },
+        {
+          "testProcess": "tests/actions-reference/launch-owner.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 40,
+          "completeSummary": true,
+          "logSha256": "c68d00d0f87202f29e1c8387721df99d171964a2b913ebc485af231f341aebc6"
+        },
+        {
+          "testProcess": "tests/actions-reference/link-executor.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 79,
+          "completeSummary": true,
+          "logSha256": "bbd433d896d312f21199d1d981f2c0e26340f236dec431339bc712e6c781d683"
+        },
+        {
+          "testProcess": "tests/actions-reference/lookup-horizon.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 15,
+          "completeSummary": true,
+          "logSha256": "cb04d20161aa6192b989064e96e36e7a3f942139365d882aecc2eb65d17a32d3"
+        },
+        {
+          "testProcess": "tests/actions-reference/native-refinement.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 8,
+          "completeSummary": true,
+          "logSha256": "09d080772e706547c6ee3076b0bd9e77aa8f2bf22b5d04f27d8ba80b3afa8f76"
+        },
+        {
+          "testProcess": "tests/actions-reference/outcomes.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 19,
+          "completeSummary": true,
+          "logSha256": "70b499d130cf7339b354dbc78ea7fa5fdf4bcbf7aea01980f3d872c9f2677431"
+        },
+        {
+          "testProcess": "tests/actions-reference/policy.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 16,
+          "completeSummary": true,
+          "logSha256": "39aafb0a9b5796e1705d9a3be52a2ecf0a1b002a30ffb6541b0109b5027e7856"
+        },
+        {
+          "testProcess": "tests/actions-reference/preparation.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 15,
+          "completeSummary": true,
+          "logSha256": "b93a562d68e47914d2a016c38ad859937af32932d65cb1fc154e003d778f17ad"
+        },
+        {
+          "testProcess": "tests/actions-reference/preview.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 23,
+          "completeSummary": true,
+          "logSha256": "65ab83b4d66a806d24dcf26db3456fccd471d2b748e7cab07d099e08328828ee"
+        },
+        {
+          "testProcess": "tests/actions-reference/process-recovery.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 39,
+          "completeSummary": true,
+          "logSha256": "1c058fe92470ccfcda0baae5d697d2f40b383d9e1f1b115087776e2ecf983d48"
+        },
+        {
+          "testProcess": "tests/actions-reference/projection.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 63,
+          "completeSummary": true,
+          "logSha256": "9052b5509a97c8d900e2e4269c713e8eda337f1fbf0094ce8a9c0e3c8e5d4442"
+        },
+        {
+          "testProcess": "tests/actions-reference/reader-revocation.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 16,
+          "completeSummary": true,
+          "logSha256": "bf12019b6fe9175538468cbad20019e5463fbeb9ca61226f815e93aa6f3ae3f2"
+        },
+        {
+          "testProcess": "tests/actions-reference/receipts.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 45,
+          "completeSummary": true,
+          "logSha256": "6464e1b17151e378fa06bb21a3bfb977f35bdf0044ab948bb96c236c17c0f1f2"
+        },
+        {
+          "testProcess": "tests/actions-reference/recipe.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 10,
+          "completeSummary": true,
+          "logSha256": "7be50b487845e797d2a9f35fe9dec9d8cac2b676ed4842c5706ea71ee839c7b8"
+        },
+        {
+          "testProcess": "tests/actions-reference/recovery.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 91,
+          "completeSummary": true,
+          "logSha256": "3a04710357c4786ba303fac330e744f58cb6d8c0c25e3f09184b43904e5f0441"
+        },
+        {
+          "testProcess": "tests/actions-reference/relationship-gateway.test.ts",
+          "exitCode": 0,
+          "pass": 4,
+          "fail": 0,
+          "assertions": 49,
+          "completeSummary": true,
+          "logSha256": "052ec99d814818629d5e9dafdf8096f44fdab5d33918098750f00763215a0775"
+        },
+        {
+          "testProcess": "tests/actions-reference/relationship-snapshot.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 27,
+          "completeSummary": true,
+          "logSha256": "74bbf94f769d8a483f002cc9becec4c25b9b8663666f8dee9eae793ca10daf01"
+        },
+        {
+          "testProcess": "tests/actions-reference/restore.test.ts",
+          "exitCode": 0,
+          "pass": 5,
+          "fail": 0,
+          "assertions": 60,
+          "completeSummary": true,
+          "logSha256": "5065543eaaed4a20997f56ee2b325653eb81fd0ecd2e943cfd5be72aacdb94d2"
+        },
+        {
+          "testProcess": "tests/actions-reference/revisions.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 12,
+          "completeSummary": true,
+          "logSha256": "bee56f3e537959bf71311ed2f07eece6fcf344335d38846a64ae2b585f37a64c"
+        },
+        {
+          "testProcess": "tests/actions-reference/sandbox-security.test.ts",
+          "exitCode": 0,
+          "pass": 7,
+          "fail": 0,
+          "assertions": 140,
+          "completeSummary": true,
+          "logSha256": "7bfcca453b00f506cb8d2e663556ca091448231902618fdec124ff6e7276590d"
+        },
+        {
+          "testProcess": "tests/actions-reference/sandbox-state.test.ts",
+          "exitCode": 0,
+          "pass": 2,
+          "fail": 0,
+          "assertions": 14,
+          "completeSummary": true,
+          "logSha256": "031fde818d1aff84dff0f3f68594711589f56147e0211e2f1cae64149787791b"
+        },
+        {
+          "testProcess": "tests/actions-reference/sandbox.test.ts",
+          "exitCode": 0,
+          "pass": 9,
+          "fail": 0,
+          "assertions": 27,
+          "completeSummary": true,
+          "logSha256": "f244d6b03964cbee5ed6167f535d8c176b02b96922ef0fb0def4cb476abf0e4b"
+        },
+        {
+          "testProcess": "tests/actions-reference/state.test.ts",
+          "exitCode": 0,
+          "pass": 1,
+          "fail": 0,
+          "assertions": 15,
+          "completeSummary": true,
+          "logSha256": "5ed5e3762d7141e4ac170e456010680eaa028afbda8cacf52ffbd76fc5945c93"
+        },
+        {
+          "testProcess": "tests/actions-reference/store.test.ts",
+          "exitCode": 0,
+          "pass": 3,
+          "fail": 0,
+          "assertions": 41,
+          "completeSummary": true,
+          "logSha256": "9a8a36ab81541062df76dcadb8138845941df656c71d04a017b5b3912b1d429a"
+        }
+      ]
+    }
+  ],
+  "additionalReceipts": [
+    "root-native-formats.json",
+    "../host-tools-migration.json",
+    "../../generated-reference/actions-guides-current/receipt.json"
+  ]
+}

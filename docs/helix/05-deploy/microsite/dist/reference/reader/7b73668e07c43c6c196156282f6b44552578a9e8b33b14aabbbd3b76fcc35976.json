@@ -13,16 +13,25 @@
       "type": "unknown"
     },
     {
-      "description": "Default: true.",
-      "links": [],
-      "name": "validateBase",
+      "description": "Default: new Registry().",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
       "optional": true,
-      "type": "boolean"
+      "type": "Registry"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "meter",
+      "optional": true,
+      "type": "ConstraintMeter | undefined"
     }
   ],
-  "purpose": "Explicit candidate validator; never reinterprets an older envelope.",
+  "purpose": "Current structural admission followed by the authored ordered rule program.",
   "related": [],
   "returns": "Validation",
   "task": "Read and validate",
-  "type": "(input: unknown, validateBase?: boolean) => Validation"
+  "type": "(input: unknown, registry?: Registry, meter?: ConstraintMeter) => Validation"
 }

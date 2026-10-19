@@ -1,4 +1,5 @@
-import sourceSchema from '../../spec/core/relationship-document.schema.json';
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
+import sourceSchema from '../../spec/core/schema.json';
 import kindSchema from '../../spec/core/kind-operation-v6.schema.json';
 import typeSchema from '../../spec/core/record-type-operation-v6.schema.json';
 import resultSchema from '../../spec/core/record-type-journal.schema.json';
@@ -11,7 +12,7 @@ import {inspectCoreRecordTypeReceipt} from '../../src/model/record-type-inspecti
 import {copyJson} from '../../src/model/json';
 import {UmfError,type Document} from '../../src/model/types';
 export function journalFixture(){
- const base:Document={umf:'0.7.0',id:'journal',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{},references:[{role:'future-role',module:'other',element:'R','future/qualifier':{values:['b','a']}}],'future/field':{values:['b','a']}},{id:'w',extensions:{}},{id:'R',kind:'record',extensions:{}}]},{id:'other',namespace:'other',elements:[{id:'R',extensions:{}},{id:'v',kind:'field',extensions:{}}]}]};
+ const base:Document={umf:CURRENT_CORE_VERSION,id:'journal',vocabularies:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',extensions:{},references:[{role:'future-role',module:'other',element:'R','future/qualifier':{values:['b','a']}}],'future/field':{values:['b','a']}},{id:'w',extensions:{}},{id:'R',kind:'record',extensions:{}}]},{id:'other',namespace:'other',elements:[{id:'R',extensions:{}},{id:'v',kind:'field',extensions:{}}]}]};
  const field=declareCoreElementKind(base,{module:'m',element:'v'},'field'),record=declareCoreElementKind(field.target,{module:'other',element:'R'},'record');
  const first=declareCoreRecordType(declareCoreElementKind(record.target,{module:'m',element:'v'},'field'),record);
  const secondField=declareCoreElementKind(first.target,{module:'m',element:'w'},'field'),secondRecord=declareCoreElementKind(secondField.target,{module:'other',element:'R'},'record');
@@ -60,7 +61,7 @@ export function runRecordTypeJournalCases(){
  ] as [string,(e:any)=>void][]){const events=structuredClone(f.events);mutate(events);refuses(id,()=>inspectCoreRecordTypeJournal(f.base,f.current,events))}
  const changedKind=declareCoreElementKind(f.current,{module:'other',element:'R'},'group');refuses('later target kind invalidates earlier types',()=>inspectCoreRecordTypeJournal(f.base,changedKind.target,[...f.events,changedKind]),'CORE_TYPE_JOURNAL_LINK');
  const changedField=declareCoreElementKind(f.current,{module:'m',element:'v'},'group');refuses('later Field kind invalidates earlier types',()=>inspectCoreRecordTypeJournal(f.base,changedField.target,[...f.events,changedField]),'CORE_TYPE_JOURNAL_LINK');
- const older=structuredClone(f.base);older.umf='0.6.0';refuses('older envelope unavailable',()=>inspectCoreRecordTypeJournal(older,f.current,f.events),'CORE_TYPE_JOURNAL_SOURCE');
+ const older={...structuredClone(f.base),umf:'0.6.0'} as unknown as Document;refuses('older envelope unavailable',()=>inspectCoreRecordTypeJournal(older,f.current,f.events),'CORE_TYPE_JOURNAL_SOURCE');
  const getter:any={};Object.defineProperty(getter,'base',{enumerable:true,get(){throw Error('getter invoked')}});refuses('getter input rejected',()=>inspectCoreRecordTypeJournal(getter,f.current,f.events),'NON_JSON');
  (result.events[0]!.source.modules[0]!.elements[0]!['future/field'] as any).values.reverse();check('copied receipts isolate caller',JSON.stringify(f.base.modules[0]!.elements[0]!['future/field'])==='{"values":["b","a"]}');
  result.types[0]!.link.reference.module='changed';check('copied result link isolates source',f.current.modules[0]!.elements[0]!.references![1]!.module==='other');

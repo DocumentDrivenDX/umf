@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
@@ -5,7 +6,7 @@ import {getAvroFieldMetadata,exportAvroBundle} from '../adapters/avro';
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/avro-field-classification.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/avro-field-classification.schema.json';
 export {default as avroFieldClassificationSchema} from '../../spec/core/avro-field-classification.schema.json';
 export interface AvroFieldRequest {column:string;nativeSource:string;dependencies?:{id:string;schema:string}[];mode:'strict'|'report';author?:CoreKindDeclaration}
 const binding={id:'umf.avro.field',version:'1.0.0',nativeVersion:'1.12.0',subset:'Declared record/error field membership with named dependencies; logical refinements, presence and value-domain equivalence excluded'} as const;
@@ -14,12 +15,12 @@ export interface AvroFieldClassification {
  mapping:{origin:'classified';kind:'field';idealPath:string;nativePath:string;dependencyId?:string;nativeFragment:Json;basis:'checked-record-field-membership';outcome:'exact'|'unknown'};
  residuals:{path:string;value:Json;reason:string;recovery:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 /** Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding. */
 export function classifyAvroField(input:Document,options:AvroFieldRequest):AvroFieldClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as AvroFieldRequest;
  if(!checkRequest(request))throw new UmfError('AVRO_FIELD_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('AVRO_FIELD_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('AVRO_FIELD_VERSION','Valid current 0.10.0 envelope required');
  const exported=exportAvroBundle(source);
  if(exported.schema!==renderTree(parseNativeJson(request.nativeSource))+'\n'||exported.dependencies.length!==(request.dependencies??[]).length||exported.dependencies.some((dep,i)=>dep.id!==request.dependencies![i]!.id||dep.schema!==renderTree(parseNativeJson(request.dependencies![i]!.schema))+'\n'))throw new UmfError('AVRO_FIELD_ARCHIVE','Native bundle archive differs from retained schemas');
  const metadata=getAvroFieldMetadata(source).find(c=>c.element.id===request.column);

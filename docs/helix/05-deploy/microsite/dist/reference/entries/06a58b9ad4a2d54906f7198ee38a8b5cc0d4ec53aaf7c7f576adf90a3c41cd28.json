@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6188,
-        "line": 11,
-        "path": "src/validation/relationships.ts",
-        "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+        "bytes": 4966,
+        "line": 28,
+        "path": "src/generated/core-model.ts",
+        "sha256": "c3d6ca3f95259eee0af31661e992844a74a3aefe4919eae09bf00445d8364b77"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreRelationship",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreRelationship {id:string;name:string;source:RelationshipEndpoint[];target:RelationshipTarget[];sourceMultiplicity:RelationshipMultiplicity;targetMultiplicity:RelationshipMultiplicity;targetLifecycle:'owned'|'independent'|'unspecified'|(string&{});directed:boolean;inverse?:string;associationRecord?:RelationshipEndpoint;[key:string]:unknown}"
+      "export type Relationship = {\"id\":Id;\"name\":Id;\"source\":(RelationshipEndpoint)[];\"target\":(RelationshipTarget)[];\"sourceMultiplicity\":RelationshipMultiplicity;\"targetMultiplicity\":RelationshipMultiplicity;\"targetLifecycle\":string;\"directed\":boolean;\"inverse\"?:Id;\"associationRecord\"?:RelationshipEndpoint;[key:string]:unknown;};"
     ]
   },
   "id": "[\"api\",\".\",\"CoreRelationship\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6188,
-      "line": 11,
-      "path": "src/validation/relationships.ts",
-      "sha256": "47e2ebbb68a6a85f06035429e32a556720d905b27c51d423fb32d3e5183e3fd8"
+      "bytes": 4966,
+      "line": 28,
+      "path": "src/generated/core-model.ts",
+      "sha256": "c3d6ca3f95259eee0af31661e992844a74a3aefe4919eae09bf00445d8364b77"
     }
   ],
-  "summary": "Type declaration · src/validation/relationships.ts",
+  "summary": "Type declaration · src/generated/core-model.ts",
   "title": "CoreRelationship"
 }

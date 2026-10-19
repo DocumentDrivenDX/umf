@@ -1,5 +1,5 @@
 import {readDocument} from '../model/document';
-import {UmfError, type Document, type Element} from '../model/types';
+import {CURRENT_CORE_VERSION,UmfError, type Document, type Element} from '../model/types';
 import {admitAction} from '../extensions/actions/structure';
 import {analyzeAction} from '../extensions/actions/analysis';
 import type {Action} from '../extensions/actions/types';
@@ -38,8 +38,9 @@ function py(value:unknown):string {
  throw new Error('Non-JSON generation metadata');
 }
 function type(f:FieldInfo,missing=f.missing):string {
- let result=({string:'str',integer:'int',decimal:'Decimal',boolean:'bool',binary:'bytes',date:'date',timestamp:'ExactTimestamp',uuid:'UUID',bits128:'bytes'} as Record<string,string>)[f.scalar];
- if(!result)fail(f.id,'Scalar cannot be represented exactly');
+ const carriers:Record<string,string>={string:'str',integer:'int',decimal:'Decimal',boolean:'bool',binary:'bytes',date:'date',timestamp:'ExactTimestamp',uuid:'UUID',bits128:'bytes'};
+ if(!Object.hasOwn(carriers,f.scalar))fail(f.id,'Scalar cannot be represented exactly');
+ let result=carriers[f.scalar]!;
  if(f.cardinality==='array')result='tuple['+type(f.item!,false)+', ...]';
  if(f.allowed?.length&&f.allowed.every(v=>typeof v==='string'||typeof v==='boolean'||typeof v==='number'))result='Literal['+f.allowed.map(py).join(', ')+']';
  return result+(f.nullable?' | None':'')+(missing?' | Missing':'');
@@ -49,7 +50,7 @@ function type(f:FieldInfo,missing=f.missing):string {
 export function generatePythonClient(request:PythonClientRequest):PythonClientResult {
  if(!request||typeof request.text!=='string'||!request.package||!(/^[a-z][a-z0-9_]*$/).test(request.package)||keywords.has(request.package)||['uuid','decimal','typing','dataclasses','datetime','base64','re','json','enum','collections'].includes(request.package))fail('/package','Ordinary non-shadowing Python package required');
  const doc=readDocument(request.text,request.format??'json');
- if(doc.umf!=='0.10.0')fail('/umf','Use current UMF 0.10');
+ if(doc.umf!==CURRENT_CORE_VERSION)fail('/umf','Use current UMF source');
  const sourceDigest=sha256Text(request.text),elements=new Map<string,Element>();
  for(const m of doc.modules)for(const e of m.elements){
   const id=refId({module:m.id,element:e.id});
@@ -59,9 +60,9 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  const field=(ref:Ref,stack:string[]=[]):FieldInfo=>{
   const id=refId(ref),e=elements.get(id);if(!e||e.kind!=='field')fail(id,'Field reference does not identify a Field');
   if(stack.includes(id)||stack.length>16)fail(id,'Unbounded recursive field');
-  if(e!.nullability==='unspecified'||e!.cardinality==='unspecified')fail(id,'Availability and cardinality must be defined');
+  if(e!.nullability!=='required'&&e!.nullability!=='absent-allowed')fail(id,'Availability must have a supported explicit meaning');
   if(Object.keys(e!.extensions??{}).length)fail(id+'/extensions','Unknown selected Field extension meaning');
-  const scalar=String(e!.scalarType??''),cardinality=String(e!.cardinality??'one');
+  const scalar=String(e!.scalarType??''),cardinality=String(e!.cardinality??'');
   const result:FieldInfo={id:ref.element,python:name(String(e!.name??ref.element).split('.').at(-1)!,'field',id),scalar,cardinality,
    missing:e!.nullability==='absent-allowed',nullable:e!.nullability==='absent-allowed',facets:object(e!.facets),semanticTypes:e!.semanticTypes??[],semanticTypeInterpretation:'reference-only'};
   if(Array.isArray(e!.semanticTypes))for(const semantic of e!.semanticTypes)if(Object.keys(object(semantic)).some(k=>!['vocabulary','version','term'].includes(k)))fail(id+'/semanticTypes','Unknown semantic type qualifier');
@@ -129,7 +130,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  const metadata=Object.fromEntries(records.map(r=>[r.id,{fields:r.fields,key:r.key,key_id:r.keyId,selected:r.selected}]));
  const actionMetadata=Object.fromEntries(actions.map(a=>[a.id,{parameters:a.parameters,affected:a.affected,declaration:a.raw}]));
  const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,limits:{page:100,getManyKeys:100}};
- const lines=['# Generated from UMF 0.10. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, Query, Field, Relationship, Missing, MISSING, Transport, Receipt, ExactTimestamp, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
+ const lines=['# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, Query, Field, Relationship, Missing, MISSING, Transport, Receipt, ExactTimestamp, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
  for(const r of records){
   lines.push('@dataclass(frozen=True)',`class ${r.python}Key:`);
   for(const f of r.key)lines.push(`    ${f.python}: ${type(f,false)}`);

@@ -13,8 +13,8 @@ export function facetCases():FacetCase[]{
  for(const [precision,scale,valid] of [[1,0,true],[1,1,true],[1,2,false],[0,0,false],[38,-1,false],[38,1.5,false],[1.5,1,false],[Number.MAX_SAFE_INTEGER,Number.MAX_SAFE_INTEGER,true]] as const)add('decimal-'+precision+'-'+scale,field('decimal',{precision,scale}),valid);
  for(const [name,facets] of [['precision-only',{precision:3}],['scale-only',{scale:0}],['null-precision',{precision:null,scale:0}],['width-without-sign',{integerWidth:{bits:8}}],['string-sign',{integerWidth:{bits:8,signed:'false'}}],['length-without-unit',{length:{max:8}}],['empty-unit',{length:{max:8,unit:''}}]] as [string,JsonObject][])add(name,field(name.includes('width')||name.includes('sign')?'integer':name.includes('length')||name.includes('unit')?'string':'decimal',facets),false);
  for(const kind of ['record','group','future'])add('kind-'+kind,{...field('string',{}),kind},false);
- for(const cardinality of ['one','unspecified','array','map','future'])add('shape-'+cardinality,{...field('string',{}),cardinality},cardinality==='one'||cardinality==='unspecified');
- add('unknown-only-container',{id:'container',kind:'field',cardinality:'array',facets:{future:{bounds:'unknown'}},extensions:{}},false);
+ for(const cardinality of ['one','unspecified','array','map','future'])add('shape-'+cardinality,{...field('string',{}),cardinality},cardinality==='one'||cardinality==='unspecified'||cardinality==='future',cardinality==='future');
+ add('unknown-only-container',{id:'container',kind:'field',cardinality:'array',facets:{future:{bounds:'unknown'}},extensions:{}},true,true);
  add('record-reference',{...field('integer',{integerWidth:{bits:8,signed:false}}),references:[{role:'record-type',module:'m',element:'record'}]},false);
  add('unknown-unit-string',field('string',{length:{max:4,unit:'future-codepoints'}}),true,true);
  add('unknown-unit-binary',field('binary',{length:{max:4,unit:'future-codepoints'}}),true,true);

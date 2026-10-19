@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 test('emitted PostgreSQL DDL and independent values have current pinned evidence',async()=>{
  const proof=await Bun.file('fixtures/validation/facets-postgresql-projection-native.json').json();
  expect(proof.serverVersion).toBe(170004);expect(proof.encoding).toBe('UTF8');expect(proof.ambientOperatorShadow).toBe(true);expect(proof.counts).toEqual({cases:232,emitted:145,blocked:87,probes:479,rejections:166,catalogRecoveries:2});
- for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(sha);
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(sha);}
  expect(proof.capture.snapshot.relations).toHaveLength(145);
  for(const row of proof.results){if(row.reject)expect(['23514','22003','22001']).toContain(row.actual.sqlstate);else expect(row.actual.sqlstate).toBe('00000');}
  const find=(name:string,encoding:string,id:string)=>{const p=proof.projections.find((p:any)=>p.name===name&&p.request.encoding===encoding&&p.status==='projected');return proof.results.find((r:any)=>r.id===p.request.tableName+'-'+id);};

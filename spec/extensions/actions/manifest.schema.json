@@ -91,7 +91,7 @@
               "components": {
                 "type": "array",
                 "items": {
-                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                  "$ref": "urn:umf:core:0.10.0#/$defs/literal"
                 },
                 "minItems": 1,
                 "maxItems": 256
@@ -136,7 +136,7 @@
             "additionalProperties": {
               "anyOf": [
                 {
-                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                  "$ref": "urn:umf:core:0.10.0#/$defs/literal"
                 },
                 {
                   "type": "object",
@@ -147,7 +147,7 @@
                     "components": {
                       "type": "array",
                       "items": {
-                        "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                        "$ref": "urn:umf:core:0.10.0#/$defs/literal"
                       },
                       "minItems": 1,
                       "maxItems": 256
@@ -251,7 +251,7 @@
         "components": {
           "type": "array",
           "items": {
-            "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+            "$ref": "urn:umf:core:0.10.0#/$defs/literal"
           },
           "minItems": 1,
           "maxItems": 256
@@ -268,7 +268,7 @@
       "additionalProperties": {
         "anyOf": [
           {
-            "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+            "$ref": "urn:umf:core:0.10.0#/$defs/literal"
           },
           {
             "type": "object",
@@ -279,7 +279,7 @@
               "components": {
                 "type": "array",
                 "items": {
-                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                  "$ref": "urn:umf:core:0.10.0#/$defs/literal"
                 },
                 "minItems": 1,
                 "maxItems": 256

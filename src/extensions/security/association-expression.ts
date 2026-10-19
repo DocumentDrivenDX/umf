@@ -1,5 +1,5 @@
 import {createValidator} from '../../validation/schema';
-import documentSchema from '../../../spec/core/schema-properties-document.schema.json';
+import documentSchema from '../../../spec/core/schema.json';
 import {checkSchemaLiteral} from '../../model/schema-literals';
 import {createCandidateEntityTermScope,readCandidateEntityTermScope,readCandidateEntityTermScopeRoot,resolveCandidateEntityTerm} from './entity-terms-candidate';
 import {resolveCandidateSecurityOntology} from './ontology-checks-candidate';

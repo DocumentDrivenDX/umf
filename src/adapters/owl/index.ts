@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/owl/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -9,7 +10,7 @@ export const owlPackage=manifest as unknown as ExtensionPackage;
 type Value=RdfNode|RdfLiteral;
 function rdfEnvelope(p:Json):Document {
  const payload=copyJson(p) as Record<string,Json>;delete payload.owlVersion;
- return {umf:'0.1.0',id:'owl:graph',vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:payload}}]}]};
+ return {umf:CURRENT_CORE_VERSION,id:'owl:graph',vocabularies:{[RDF_EXTENSION]:{version:'0.1.0'}},modules:[{id:'dataset',namespace:'',elements:[{id:'dataset',extensions:{[RDF_EXTENSION]:payload}}]}]};
 }
 function inspect(p:Json):Diagnostic[]{return [...inspectRdfDocument(rdfEnvelope(p)).diagnostics,{code:'OWL_SCOPE',path:'',severity:'warning',message:'OWL 2 RDF graph preservation only. Axiom validation, profiles, import resolution, consistency and entailment are not implemented.'}];}
 export function owlRegistry(){return new Registry().register(owlPackage,inspect);}

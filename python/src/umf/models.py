@@ -1,11 +1,14 @@
-"""Pydantic access models; the canonical JSON Schemas govern structure."""
+"""Pydantic access models derived from generated current-core shapes."""
+
+from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
 
+from .generated_resources import generated_resource
 from .json import copy_json
-from .schemas import core_schema, core_validator
+from .schemas import core_schema, core_validator, current_core_version
 
 
 class OpenModel(BaseModel):
@@ -16,64 +19,74 @@ class OpenModel(BaseModel):
         return copy_json(self.model_dump(by_alias=True, exclude_unset=True))
 
 
-class Vocabulary(OpenModel):
-    version: str
+def _object_shape(schema: dict, pointer: str) -> dict:
+    if pointer.startswith("#/"):
+        node: Any = schema
+        for part in pointer[2:].split("/"):
+            node = node[part.replace("~1", "/").replace("~0", "~")]
+        return node
+    raise ValueError("Unsupported generated model shape reference")
 
 
-class Reference(OpenModel):
-    module: str
-    element: str
-    role: str
+def _model_fields(schema: dict, nested: dict[str, Any] | None = None) -> dict[str, Any]:
+    nested = nested or {}
+    properties = schema.get("properties", {})
+    required = set(schema.get("required", []))
+    fields: dict[str, Any] = {}
+    for name in properties:
+        if name in nested:
+            annotation = nested[name]
+        else:
+            # The generated JSON Schema performs exact structure admission;
+            # Any keeps Pydantic from coercing or reinterpreting that structure.
+            annotation = Any
+        default = ... if name in required else None
+        fields[name] = (annotation, Field(default))
+    return fields
 
 
-class Element(OpenModel):
-    id: str
-    extensions: dict[str, Any]
-    name: str | None = None
-    description: str | None = None
-    scalarType: Any = None
-    kind: Any = None
-    nullability: Any = None
-    cardinality: Any = None
-    itemType: Any = None
-    references: list[Reference] | None = None
-    facets: Any = None
-    members: Any = None
-    keys: Any = None
-    title: Any = None
-    aliases: Any = None
-    examples: Any = None
-    allowedValues: Any = None
-    default: Any = None
+def _create(name: str, schema: dict, *, base=OpenModel, nested=None):
+    return create_model(name, __base__=base, **_model_fields(schema, nested))
 
+
+_shapes = generated_resource("python_shapes")
+_current_schema = _shapes["schema"]
+_defs = _current_schema["$defs"]
+_reference_schema = _shapes["referenceSchema"]
+
+Vocabulary = _create(
+    "Vocabulary", _current_schema["properties"]["vocabularies"]["additionalProperties"]
+)
+Reference = _create("Reference", _defs["reference"])
+CoreItemTypeReference = _create("CoreItemTypeReference", _defs["itemType"])
+CoreSemanticTypeReference = _create("CoreSemanticTypeReference", _reference_schema)
+
+class ElementBase(OpenModel):
     @property
     def scalar_type(self):
-        return self.scalarType
+        return getattr(self, "scalarType", None)
 
     @scalar_type.setter
     def scalar_type(self, value):
         self.scalarType = value
 
 
-class Module(OpenModel):
-    id: str
-    namespace: str
-    elements: list[Element]
-    extensions: dict[str, Any] | None = None
-    relationships: Any = None
-    title: Any = None
-    aliases: Any = None
+_element_nested: dict[str, Any] = {
+    "references": list[Reference],
+    "itemType": CoreItemTypeReference,
+    "semanticTypes": list[CoreSemanticTypeReference],
+}
+Element = _create("Element", _defs["element"], base=ElementBase, nested=_element_nested)
 
 
-class Document(OpenModel):
-    umf: str
-    id: str
-    vocabularies: dict[str, Vocabulary]
-    modules: list[Module]
-    extensions: dict[str, Any] | None = None
-    title: Any = None
-    aliases: Any = None
+class ModuleBase(OpenModel):
+    pass
 
+
+Module = _create("Module", _defs["module"], base=ModuleBase, nested={"elements": list[Element]})
+
+
+class DocumentBase(OpenModel):
     @model_validator(mode="before")
     @classmethod
     def canonical_structure(cls, value):
@@ -82,8 +95,9 @@ class Document(OpenModel):
         data = copy_json(value)
         if not isinstance(data, dict):
             raise TypeError("UMF document must be an object")
-        validator = core_validator(data.get("umf"))
-        errors = list(validator.iter_errors(data))
+        if data.get("umf") != current_core_version():
+            raise ValueError(f"Unsupported UMF core version: {data.get('umf')}")
+        errors = list(core_validator().iter_errors(data))
         if errors:
             error = errors[0]
             path = "/" + "/".join(str(part) for part in error.absolute_path)
@@ -92,9 +106,17 @@ class Document(OpenModel):
 
     @classmethod
     def model_json_schema(cls, *args, **kwargs):
-        """The current canonical UMF schema, rather than a generated fork."""
+        """Return the generated current canonical UMF schema."""
         return core_schema()
 
-    def checked_copy(self) -> "Document":
+    def checked_copy(self) -> Document:
         """Revalidate mutable model state and return an isolated document."""
         return Document.model_validate(self.to_dict())
+
+
+Document = _create(
+    "Document",
+    _current_schema,
+    base=DocumentBase,
+    nested={"vocabularies": dict[str, Vocabulary], "modules": list[Module]},
+)

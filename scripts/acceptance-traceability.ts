@@ -89,6 +89,20 @@ export async function buildAcceptanceLedger() {
   // reviewed, fresh execution gate and an authored acceptance decision.
   const securityGatePath='docs/helix/04-build/evidence/security/acceptance.json';
   const securityGate=await Bun.file(securityGatePath).exists()?await Bun.file(securityGatePath).json():null;
+  const nativePolicyPath='docs/helix/04-build/evidence/metamodel-authority/current-native-qualification.json';
+  const nativePolicy=await Bun.file(nativePolicyPath).json();
+  const nativeCriteria=new Map<string,{evidence:string[];rationale:string}>();
+  for(const row of nativePolicy.criteria){
+    if(!criteria.has(row.criterion)||nativeCriteria.has(row.criterion)||row.currentQualification!=='UNQUALIFIED'||!Array.isArray(row.evidence)||typeof row.rationale!=='string')throw Error('Invalid current native qualification disposition: '+row.criterion);
+    nativeCriteria.set(row.criterion,row);
+  }
+  const retirementPolicy=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/retired-core-acceptance.json').json();
+  const retiredCriteria=new Map<string,{evidence:string[];rationale:string}>();
+  for(const row of retirementPolicy.criteria){
+    if(!/^US-04[0-5]-AC10$/.test(row.criterion)||!criteria.has(row.criterion)||retiredCriteria.has(row.criterion)||nativeCriteria.has(row.criterion)||row.status!=='REVIEWED_EXCEPTION'||!Array.isArray(row.evidence)||typeof row.rationale!=='string')throw Error('Invalid retired core acceptance disposition: '+row.criterion);
+    retiredCriteria.set(row.criterion,row);
+  }
+  if(retiredCriteria.size!==6)throw Error('Incomplete retired core acceptance dispositions');
   const dangling = [...new Set([...tests.citations.keys(), ...scripts.citations.keys()])]
     .filter(id => !criteria.has(id)).sort();
   if (dangling.length) throw new Error(`Dangling @covers citations: ${dangling.join(', ')}`);
@@ -97,6 +111,10 @@ export async function buildAcceptanceLedger() {
     const testCitations = [...(tests.citations.get(id) ?? [])].sort();
     const scriptCitations = [...(scripts.citations.get(id) ?? [])].sort();
     const testMentions = [...(tests.mentions.get(id) ?? [])].filter(item => !testCitations.includes(item)).sort();
+    const retiredDisposition=retiredCriteria.get(id);
+    if(retiredDisposition)return {id,story,status:'REVIEWED_EXCEPTION' as const,evidence:[...testCitations,...scriptCitations,...retiredDisposition.evidence],rationale:retiredDisposition.rationale};
+    const nativeDisposition=nativeCriteria.get(id);
+    if(nativeDisposition)return {id,story,status:'UNTESTED' as const,evidence:[...testCitations,...scriptCitations,...nativeDisposition.evidence],rationale:nativeDisposition.rationale};
     if(securityCriteria.has(id)){
       const authored=storyAcceptance.get(id)??false;
       if(!authored||securityGate?.status!=='passed')return {id,story,status:'UNTESTED' as const,

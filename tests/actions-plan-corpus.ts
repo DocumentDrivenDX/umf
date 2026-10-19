@@ -1,3 +1,4 @@
+import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 import modelFixture from '../docs/helix/03-test/fixtures/bulk-update/model.json';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';
 import type * as API from '../src/index';
@@ -6,7 +7,7 @@ import type {ActionPlanArtifact,ActionPlanInspectionContext,PortableActionPlan,A
 const copy=<T>(value:T):T=>JSON.parse(JSON.stringify(value));
 const artifact=(value:unknown):ActionPlanArtifact=>{const utf8=typeof value==='string'?value:JSON.stringify(value);return {mediaType:'application/json',utf8,sha256:sha256Text(utf8)};};
 export function createPlanCorpusFixture(api:typeof API){
- const document=copy(modelFixture) as unknown as Document,original=artifact(document),pin={documentId:document.id,revision:'fixture1',umfVersion:'0.8.0' as const,sha256:original.sha256};
+ const document=copy(modelFixture) as unknown as Document,original=artifact(document),pin={documentId:document.id,revision:'fixture1',umfVersion:CURRENT_CORE_VERSION,sha256:original.sha256};
  const action={identity:{module:'sales',action:'set-active'},documentSha256:original.sha256,invocation:{id:'umf.actions.tx',version:'1'}},field={module:'sales',element:'last-seen'},target={module:'sales',element:'customer',key:'pk'};
  const context:ActionPlanInspectionContext={registry:api.createUmfRegistry(),models:[{pin,artifact:original}],actions:[{pin:action,artifact:original}],selections:[{profile:{id:'fixture.selection',version:'1'},inspect:(a)=>{const ast=JSON.parse(a.utf8);return {eligible:ast.kind==='fixture'&&ast.field===field.element,dependencies:[field],diagnostics:[]};}}]};
  const plan:PortableActionPlan={protocol:'umf.actions.plan/1',model:pin,action,target,source:artifact({sql:'UPDATE Customer SET active=FALSE WHERE last_seen<100'}),selection:{profile:{id:'fixture.selection',version:'1'},artifact:artifact({kind:'fixture',field:field.element}),dependencies:[field]},inputs:{entityParameter:'customer',assignments:[{input:'active-value',field:{module:'sales',element:'active'},value:{boolean:false}}]},execution:{selection:'frozen',atomicity:'batch',conflict:'stop',partition:'manifest-order',batchSize:2},limits:{maxItems:10000,maxManifestBytes:16777216}};
@@ -15,7 +16,7 @@ export function createPlanCorpusFixture(api:typeof API){
 export function corpusCapabilities(api:typeof API,s:ReturnType<typeof createPlanCorpusFixture>):ActionPlanCapabilities {
  const claims={plan:['integrity','actionBinding'],selection:['interpretation','completeRead'],manifest:['partition','sealCustody'],guard:['identityVersion'],snapshot:['coherentCut'],bulk:['atomicBatch','replay','principal','recovery','cancel','retention']};
  const caps:any={};for(const [family,ids] of Object.entries(claims))caps[family]={profile:{id:family==='selection'?'fixture.selection':family==='guard'||family==='snapshot'?'fixture.'+family:'umf.actions.'+family,version:'1'},claims:ids.map(id=>({id:family+'.'+id,status:'supported',evidence:['fixture://unverified']}))};
- caps.action={id:'fixture.executor',version:'1',coreVersion:'0.8.0',actionVersion:'0.1.0',source:s.document,identity:s.action.identity,claims:api.inspectActions(s.document,s.context.registry).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['fixture://unverified']}))};return caps;
+ caps.action={id:'fixture.executor',version:'1',coreVersion:CURRENT_CORE_VERSION,actionVersion:'0.1.0',source:s.document,identity:s.action.identity,claims:api.inspectActions(s.document,s.context.registry).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['fixture://unverified']}))};return caps;
 }
 /** Hand-authored expected refusals; parity is checked separately from these outcomes. */
 export function runActionPlanCorpus(api:typeof API){

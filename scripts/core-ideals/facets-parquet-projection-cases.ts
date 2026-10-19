@@ -1,4 +1,6 @@
-import {declareCoreFacets,type CoreFacetPatch} from '../../src/model/facets';
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreFacets, type CoreFacetPatch} from '../../src/model/facets';
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import type {Document} from '../../src/model/types';
 import type {FacetsParquetRequest} from '../../src/core-ideals/facets-parquet-projection';
@@ -15,7 +17,7 @@ const seeds:{family:string;facets?:CoreFacetPatch;carrier:FacetsParquetRequest['
 ];
 export function parquetFacetProjectionCases(){
  return seeds.flatMap((seed,i)=>{
-  const document:Document={umf:'0.5.0',id:`ideal-${i}`,vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType:seed.family,extensions:{}}]}]};
+  const document:Document={umf:CURRENT_CORE_VERSION,id:`ideal-${i}`,vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType:seed.family,extensions:{}}]}]};
   const author=seed.facets?declareCoreFacets(document,identity,seed.facets):declareCoreElementKind(document,identity,'field');
   return (['declared-schema','pyarrow-21'] as const).flatMap(profile=>(['native-type','metadata-only','carrier-only'] as const).flatMap(encoding=>(['strict','report'] as const).map(mode=>({id:`${i}-${profile}-${encoding}-${mode}`,author,request:{id:'native',recordName:'Record',fieldName:'value',nullable:false,carrier:seed.carrier,mode,encoding,profile,obligation:seed.exact?'exact-input':'value-domain'} as FacetsParquetRequest}))));
  });

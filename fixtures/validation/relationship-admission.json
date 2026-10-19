@@ -1,17 +1,12 @@
 {
-  "idealAdmitted": true,
+  "idealAdmitted": false,
+  "sourceOperationsVerified": true,
+  "currentNativeQualification": "UNQUALIFIED",
   "minimumUsefulPriorityMappings": 2,
-  "usefulSystems": [
-    "postgresql",
-    "sqlserver"
-  ],
-  "usefulMappings": {
-    "postgresql": 8,
-    "sqlserver": 20
-  },
+  "historicalQualification": "PARTIALLY_REVALIDATED",
   "qualification": {
     "path": "fixtures/validation/relationship-gate-refresh.json",
-    "sha256": "05670cf0950c7dad502424e3a960152b3687ccced9a1287070b7f3c4f55dd6fc",
+    "sha256": "d542c59b348c5665c6a021b2a899baa519ad499ba5a64d708fdb8148081faf7d",
     "versions": {
       "postgresql": 170004,
       "sqlserver": "16.0.4295.3",
@@ -62,7 +57,7 @@
           "directed": true,
           "inverse": "order"
         },
-        "sourceSha256": "c5ad51fbd6b4cbec79885e32c922143eba5697ae959adcc0d7aec3a608491ee0",
+        "sourceSha256": "c250aed37ebd98d987c3c7cb50d48addfe9ab91a6ff3c580e3a9b7f519874b5a",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -131,7 +126,7 @@
           "directed": true,
           "inverse": "order"
         },
-        "sourceSha256": "bcfb115a0ea6ebabcec9db7d949c51f5aefb3b6ae66dbf6249a479e4f797f97e",
+        "sourceSha256": "ddc9c4984c4de8ee116b42cb92ad9215152557eceb983f32ef19b8cad93b422a",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -200,7 +195,7 @@
           "directed": true,
           "inverse": "orders"
         },
-        "sourceSha256": "f49fc38f8ce4956094621bcae681a0b967ac45bd3bbb352f02358d93162c2e9e",
+        "sourceSha256": "1a0d0970be95071f2c07898237eb62a9e79546c21307deceece1687fb128f784",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -268,7 +263,7 @@
           "targetLifecycle": "independent",
           "directed": true
         },
-        "sourceSha256": "aac671ff5b96535dee15bb97a4c76d5d9d6c91647c26c2949373e492d684fe18",
+        "sourceSha256": "dd37ddc4c7d5bc7b2cb91f8c0eaf5f59cfbac97b9deb0cf38bc067c5aadf7936",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -340,7 +335,7 @@
           "targetLifecycle": "independent",
           "directed": true
         },
-        "sourceSha256": "a3b9c36311f7f112057314829424733ec7cd26b20688791c27e07bdcd6273375",
+        "sourceSha256": "2b3bc8d3580ddfb00894ada59b12c31567250d051e510654d04bd93f72d4b010",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -409,7 +404,7 @@
           "directed": true,
           "inverse": "reports"
         },
-        "sourceSha256": "62d3c80f9e030c6dff0ba8022355dae81d90fb77e32a0c6af71756da37e428b7",
+        "sourceSha256": "12aab2f1555f78ce9c27c7dfc340e7877b52da3e58ad0f4a9b2f48b2797bbeb6",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -477,7 +472,7 @@
           "targetLifecycle": "unspecified",
           "directed": false
         },
-        "sourceSha256": "5d818c210f93d6d6ca04563e6d77b7b6c1da81d84f405c77462f511423868ee2",
+        "sourceSha256": "7a59143678bd90895eb4f5f2e44b1c34f9f7a890bd76cf89f0ba2895cdde4421",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -550,7 +545,7 @@
           "directed": true,
           "inverse": "students"
         },
-        "sourceSha256": "f267ebd0b31a3f8dc257f1bbed829fed87ff7252d3cb97b827ac889b16ad64f3",
+        "sourceSha256": "de29c20a25dcf90940f6fee18c28760374bcf81112b02d63640c8180b16167fe",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -619,7 +614,7 @@
           "directed": true,
           "inverse": "order"
         },
-        "sourceSha256": "f3a78a44b8346c5fb923facc7ca9bbf12b4fe21e56f78693721b45aa50a2f2f1",
+        "sourceSha256": "866db05af479db2599d144de584bd289da73a62ce02f94325f9b25484a6353f7",
         "recoveries": 20,
         "refusals": 5,
         "extras": [
@@ -659,8 +654,26 @@
         ]
       }
     ],
-    "migration": "0.6.0 to 0.7.0 with exact legacy rollback and retained new assertions",
-    "unknownContentRetained": true
+    "coreVersion": "0.10.0",
+    "operation": "current relationship declaration with retained extension content",
+    "unknownContentRetained": true,
+    "construction": {
+      "base": "independently authored current document",
+      "shapeProposals": {
+        "path": "fixtures/relationship/authored/corpus.json",
+        "originalCoreVersion": "0.6.0",
+        "archivedSha256": "aa751e8d09ad68e9423f3067f38ee51dd6bc9885a43bed22d1c8df3919a421bb",
+        "use": "relationship proposal values only; historical base is never promoted or treated as a current source"
+      }
+    }
   },
-  "nativeEquivalence": false
+  "nativeEquivalence": false,
+  "sourceUsefulSystems": [
+    "postgresql",
+    "sqlserver"
+  ],
+  "sourceUsefulMappings": {
+    "postgresql": 8,
+    "sqlserver": 20
+  }
 }

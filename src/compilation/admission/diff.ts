@@ -1,4 +1,5 @@
-import {readDocument,type Document} from '../../index';
+import {readDocument} from '../../model/document';
+import type {Document} from '../../model/types';
 import {inspectAccessViews} from './access/index';
 import type {AccessResult,AccessSymbol,AccessSource,ResolvedRecord,ResolvedField} from '../ir/index';
 export interface AccessSymbolChange {symbol:string;role:AccessSymbol['role'];classification:'source-compatible'|'value-compatible'|'breaking';change:'added'|'removed'|'changed'|'unchanged';reason:string;before?:AccessSymbol;after?:AccessSymbol}

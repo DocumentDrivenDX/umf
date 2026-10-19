@@ -1,0 +1,37 @@
+{
+  "id": "umf.metamodel-authority.initial-parity",
+  "capturedAt": "2026-10-18T18:18:48.324883+00:00",
+  "runtime": "Bun1.4.3",
+  "phaseComparison": {
+    "cases": 139,
+    "compared": 122,
+    "structuralRejectionsNotExecuted": 17,
+    "orderedDiagnosticDifferences": 0,
+    "registry": "empty stub only for isolated phases; these phases contain no registry operations"
+  },
+  "fullComparison": {
+    "cases": 139,
+    "differences": 0,
+    "exceptions": 0,
+    "registry": "real Registry with current package envelope; exact original declaration ID/version/callback retained"
+  },
+  "scope": "Initial generated schema+program equivalence before reviewed C002 blanket-warning correction. Not final browser/Python/native/distribution or release qualification.",
+  "inputHashesAtRecord": {
+    "spec/metamodel/umf.yaml": "8cf3f010b1fad7190b64645af7c311ca87eef53dde143ba0a145aad1d6e44ac1",
+    "spec/metamodel/generated/core-constraints.json": "0cd33c6dda34eae6f8ababa833ca8924c60c81fe05e34023705838ec4b0c8122",
+    "spec/metamodel/generated/domain-policy.json": "090dc20cfdd4a0840c913e9a1d9a6f17a5576ff85dd3deaf95ba8eca8bed3e0d",
+    "src/generated/core-validators.ts": "fe963da96438ce7f0e8dd04102cf33c107001c291fb776d7c87b3a60ba3bd699",
+    "src/validation/constraint-kernel.ts": "7b179a79f6f58b59ed454f6653b3de6398417f402dadcf198cdafcfbffbd2700",
+    "src/validation/literal-kernel.ts": "b393ed72dd9777364d3d06bcc659748cdb8d23910c129b0c3f865e8d0e90c9f0",
+    "src/validation/document.ts": "a821b61264039b1dc371ae98db8a7915e3eeef4551dd3aaf671f18eacc1f844c",
+    "docs/helix/04-build/evidence/metamodel-authority/baseline-current/cases.json": "7f9e365319b08aa3a4e2d7b24390bdaa67853284f5beefe3e5375f1344dcd30e",
+    "docs/helix/04-build/evidence/metamodel-authority/baseline-current/ts-results.json": "f9b9ce7633258947cae03f4b231d09b405ecdd19d5c9706bc69d57be3391d049"
+  },
+  "outputHashes": {
+    "key-relationship-parity.json": "ec481df2eb3626f0fcdf5717d775946fe4da92a323650685e7704122af88eacf",
+    "full-parity.json": "f553256bc622804877c5f61e36e01efe0528498c6da6aa89fc510eadbf61b9f5",
+    "phase-build-runner.txt": "1ab3730d8a4d353795b46dd2a86e096b197e2c4bbe513eb31864358fd5d171d9",
+    "phase-runner.txt": "07f75549c11ef7cee95c9ac653a12237afb67ecbcf76d27284e69e3ed053eb90",
+    "full-runner.txt": "a45396c6c9fdbb8f8274e1a5a05cad3155c1258ac6b3927c5c8bb40b98e163bd"
+  }
+}

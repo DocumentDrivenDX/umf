@@ -15,7 +15,7 @@ for(const s of selections){
  const path=`fixtures/parquet/facets/${s.id}.parquet`;paths.push(path);
  const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());
  const native=u.importParquetSchema(bytes,{id:`facets-${s.id}`});
- const source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(native).target).target).target).target;
+ const source=native;
  source.modules.push({id:'logical',namespace:'',elements:[{id:'v',kind:'field',cardinality:'one',scalarType:s.family,extensions:{}}]});
  for(const profile of ['declared-schema','pyarrow-safe-array-input','unresolved'] as const)for(const mode of ['strict','report'] as const)for(const obligation of ['value-domain','exact-input'] as const){
   const request:u.ParquetFacetRequest={location:{index:s.index??1,scope:'present-non-null-leaf'},identity:{module:'logical',element:'v'},profile,mode,obligation};

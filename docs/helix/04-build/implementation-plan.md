@@ -13044,6 +13044,14 @@ and Chromium checks. Record exact source fingerprints and failed attempts under
 04-build/evidence/core-semantic-types-010/. Native delivery and other authoring
 profile expansion remain outside this source integration.
 
+## Current metamodel authority cutover — 2026-10-18
+
+The [scoped completion plan](metamodel-authority-plan.md) owns ADR-005 /
+CONTRACT-080 / TD-091 / STP-091 execution: authored current metamodel, generated
+schema/validation/types, active consumer migration, old authority/path retirement,
+real-browser qualification and deployed build-signature verification. Historical
+execution evidence above retains its original source and support boundaries.
+
 ## Unified generated Python access — 2026-10-18
 
 Owner-authorized FEAT-033 / SD-033 / CONTRACT-079 implements the same typed

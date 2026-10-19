@@ -6,12 +6,12 @@
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       },
       {
         "keyword": "$ref",
         "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
-        "target": "urn:umf:core:0.1.0"
+        "target": "urn:umf:core:0.10.0"
       }
     ],
     "role": "operation",
@@ -417,7 +417,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             },
@@ -444,7 +444,7 @@
               "members": {
                 "$ref": {
                   "kind": "string",
-                  "value": "urn:umf:core:0.1.0"
+                  "value": "urn:umf:core:0.10.0"
                 }
               }
             }
@@ -489,9 +489,9 @@
   ],
   "sources": [
     {
-      "bytes": 2882,
+      "bytes": 2884,
       "path": "spec/projections/avro-json-schema.schema.json",
-      "sha256": "af3db3c985cb9b87f4956f343e21a2d46869493fdbfca17d5d18a45013a724c1"
+      "sha256": "ec94fb4156487ca7a250d28e53baea120e1a57d2dff6f41685ced6b1d484d5af"
     }
   ],
   "summary": "spec/projections/avro-json-schema.schema.json",

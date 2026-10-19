@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 15310,
-        "line": 24,
+        "bytes": 15294,
+        "line": 25,
         "path": "src/projections/ddd-graphql/index.ts",
-        "sha256": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276"
+        "sha256": "b7adcc269302ff9e06e7626fdcf7cba4ac67f5728d2946e4ff2ad98037afe65a"
       }
     ],
     "entrypoint": ".",
     "exportName": "DddGraphqlProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface DddGraphqlProjection extends Omit<DddGraphqlEntityProjection,'policy'> {\n  operation:'project-ddd-graphql';version:'1.0.0';policy:DddGraphqlPolicy;lossPolicy:'strict'|'report';diagnostics:Diagnostic[];\n  sourceVersions:{core:'0.7.0';ddd:'0.1.0'};\n  targetVersions:{graphqlJs:'17.0.2';graphqlCore:'3.2.12';subset:'schema SDL with scalar fields, object relationships and explicit output unions; no execution'};\n}"
+      "export interface DddGraphqlProjection extends Omit<DddGraphqlEntityProjection,'policy'> {\n  operation:'project-ddd-graphql';version:'1.0.0';policy:DddGraphqlPolicy;lossPolicy:'strict'|'report';diagnostics:Diagnostic[];\n  sourceVersions:{core:typeof CURRENT_CORE_VERSION;ddd:'0.1.0'};\n  targetVersions:{graphqlJs:'17.0.2';graphqlCore:'3.2.12';subset:'schema SDL with scalar fields, object relationships and explicit output unions; no execution'};\n}"
     ]
   },
   "id": "[\"api\",\".\",\"DddGraphqlProjection\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 15310,
-      "line": 24,
+      "bytes": 15294,
+      "line": 25,
       "path": "src/projections/ddd-graphql/index.ts",
-      "sha256": "563bea88e749cecf7bd5d9eff566ef9f52e02309737fd8a117b5a35c562a7276"
+      "sha256": "b7adcc269302ff9e06e7626fdcf7cba4ac67f5728d2946e4ff2ad98037afe65a"
     }
   ],
   "summary": "Type declaration · src/projections/ddd-graphql/index.ts",
