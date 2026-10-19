@@ -813,3 +813,50 @@ explicit no-command, unknown-operation-meaning and invalid-conflict refusals.
 The full Chromium harness passes42 assertions with no external requests or host
 globals. This changes the acceptance expectation for the newly implemented
 surface; it does not widen native execution authority. Hosted rerun is pending.
+
+## Finite native dates, instants and numeric domains — 2026-10-19
+
+The [finite temporal packet](evidence/praxis-p2/finite-temporal/receipt.json)
+qualifies generated date/instant/decimal projections, predicates, writes, atomic
+batches, effect recovery and source-declared transaction timestamp defaults on
+PG18.6. All six driver/pool variants pass88 assertions with62 balanced leases,
+both transaction owners, finite year boundaries, pre-lease rounding refusal and
+unchanged alternate ambient timezone/date-format settings. The native deployment
+tampering fixture passes116 assertions; the prior non-domain ledger fixture
+passes101. SDK source/wheel/installed bytes match across75 runtime modules.
+
+New date/instant/numeric domain constraints enter the source-derived expected
+catalog. New finite-domain sources use nested witness0.2 typed expression trees:
+the first native run exposed timezone/date-format deparser differences that
+could masquerade as installed-generation drift. The new representation removes
+that rendering dependency without changing existing non-domain witness0.1 bytes.
+Original source scratch correspondence, engine/location pins, owner/policy/ACL
+inventory and pre/post checks remain required. Timezone-free native timestamps
+and unqualified temporal refinements remain refused.
+
+Weft f910d9c6137861e15f93fe9b316703fb5412cf8d is pushed and now pinned by CI.
+Its pure shared parser normalizes only exact finite instants without clocks,
+floats or timezone databases; generic raw APIs retain their refusals. Native
+Python/CLI and actual browser WASM match34 cases;10 self-rehashed program controls
+refuse. Its full workspace run passes944 tests across80 groups. UMF's actual
+Chromium harness passes44 assertions and its installed embedded generator passes
+19 complete corpus cases with external JavaScript executables/network/subprocesses
+forbidden. All three local wheels retain MIT OR Apache-2.0 metadata and notices.
+Local version labels remain candidate labels; no release/tag/assets are published.
+
+Hosted a94705017 passed the native source cohort, Linux/macOS embedded compiler,
+Pydantic compatibility, typed client and table-browser jobs. Its remaining
+boundary failure was an eight-process test exceeding Bun's five-second test
+timeout. Only that test now has a30-second timeout; all24 boundary tests/170
+assertions pass locally without weakening any assertion. New hosted results
+remain pending this push.
+
+Read-only inspection of the selected private branch confirms32 blocking quality
+checks:26 enumerations and six ranges. These require explicit source-derived
+native/domain support; they must not be discarded during conversion. Fixed
+statement syntax also uses server-time expressions, requiring declared typed
+assignments rather than an SQL escape. These concrete gaps join seed execution,
+broader forward evolution/runtime upgrade, private full-method/data conversion,
+available managed runtime acceptance and immutable publication as the next
+required work. Private source, SQL, names and values remain outside public code
+and evidence. The full release goal stays active.

@@ -3,6 +3,7 @@ import type {CoreLiteral} from '../model/schema-literals';
 import type {TableExpression,TableNativeType,TableDeclaration} from '../extensions/tables';
 import type {DeploymentContext} from './types';
 import {deploymentError} from './configuration';
+import {nativeDate,nativeInstant} from './temporal';
 export const quoteIdentifier=(value:string):string=>'"'+value.replaceAll('"','""')+'"';
 /** E quoting does not depend on standard_conforming_strings or host search_path. */
 export const quoteText=(value:string):string=>{
@@ -24,8 +25,8 @@ export function literalSql(value:CoreLiteral):string{
  if('integerToken'in value)return quoteText(value.integerToken)+'::pg_catalog.numeric';
  if('decimalToken'in value)return quoteText(value.decimalToken)+'::pg_catalog.numeric';
  if('uuid'in value)return quoteText(value.uuid)+'::pg_catalog.uuid';
- if('date'in value)return quoteText(value.date)+'::pg_catalog.date';
- if('timestamp'in value)deploymentError('Timestamp literals require a qualified timezone/precision codec');
+ if('date'in value)return quoteText(nativeDate(value.date))+'::pg_catalog.date';
+ if('timestamp'in value)return quoteText(nativeInstant(value.timestamp))+'::pg_catalog.timestamptz';
  if('binaryHex'in value)return "pg_catalog.decode("+quoteText(value.binaryHex)+",'hex')";
  if('bits128Hex'in value)return "pg_catalog.decode("+quoteText(value.bits128Hex)+",'hex')";
  deploymentError('Literal carrier is not qualified for deployment expressions');

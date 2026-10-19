@@ -37,6 +37,12 @@ connects declared typed module methods to those native executors, with80 PG18
 assertions, three static checkers and Bun/Chromium/embedded-Python parity.
 Remaining lifecycle/codec, private acceptance and release gates stay open.
 
+The [finite temporal evidence](04-build/evidence/praxis-p2/finite-temporal/receipt.json)
+adds explicit date/UTC-instant/decimal native execution and finite-domain checks,
+with88 PG18 assertions across all six driver/pool variants. Source-declared
+current timestamps and ambient timezone/date-format independence are qualified;
+blocking enum/range and remaining lifecycle/consumer/release work stay open.
+
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and
 ontologies. Developers compose reads directly and change the binding to change

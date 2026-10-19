@@ -2,6 +2,7 @@
 import {canonicalSchemaJson,checkSchemaLiteral} from '../../model/schema-literals';
 import {UmfError,pointer,type Diagnostic,type Document,type Element,type Module} from '../../model/types';
 import type {TableRef} from './types';
+import {nativeDate,nativeInstant} from './temporal';
 export const refKey=(r:TableRef):string=>JSON.stringify([r.module,r.element]);
 export class TableContext {
  readonly diagnostics:Diagnostic[]=[];
@@ -18,7 +19,13 @@ export class TableContext {
   return value;
  }
  literal(field:Element,value:unknown,path:string):void{
-  try{checkSchemaLiteral(this.document,field,value);}catch(error){if(!(error instanceof UmfError))throw error;this.add('TABLES_LITERAL',path,error.message);}
+  try{
+   if(field.scalarType==='date'||field.scalarType==='timestamp'){
+    if(Object.keys(field.facets??{}).length||field.allowedValues?.length){this.add('TABLES_TEMPORAL_QUALIFIER',path,'Temporal refinements require a separately qualified native interpretation',true);return;}
+    checkSchemaLiteral(this.document,field,value,false);
+    if(value!==null){const literal=value as {date?:string;timestamp?:string};if(field.scalarType==='date')nativeDate(literal.date!);else nativeInstant(literal.timestamp!);}
+   }else checkSchemaLiteral(this.document,field,value);
+  }catch(error){if(!(error instanceof UmfError))throw error;this.add('TABLES_LITERAL',path,error.message);}
  }
  identifier(name:string,path:string):void{if(new TextEncoder().encode(name).length>63||name.includes('\0'))this.add('TABLES_IDENTIFIER',path,'Native identifier exceeds 63 UTF-8 bytes or contains NUL');}
  charge(path:string,depth:number):boolean{

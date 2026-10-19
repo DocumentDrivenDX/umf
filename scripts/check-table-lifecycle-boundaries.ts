@@ -4,7 +4,8 @@ import {readdir,readFile} from 'node:fs/promises';
 const model=['../../model/types','../../model/schema-literals'];
 const owners:Record<string,readonly string[]>={
  'types.ts':model,
- 'context.ts':[...model,'./types'],
+ 'temporal.ts':['../../model/types'],
+ 'context.ts':[...model,'./types','./temporal'],
  'expressions.ts':['../../model/types','./context','./types'],
  'columns.ts':[...model,'./context','./expressions','./types'],
  'policies.ts':['./context','./types'],

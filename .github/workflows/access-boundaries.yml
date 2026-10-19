@@ -34,7 +34,7 @@ jobs:
       - run: bun scripts/check-table-lifecycle-boundaries.ts
       - run: bun scripts/check-table-deployment-boundaries.ts
       - run: >-
-          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
+          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
           tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
       - run: bunx playwright install --with-deps chromium
       - name: Actual browser metadata parity and preservation
@@ -209,7 +209,7 @@ jobs:
         if: matrix.weft-cohort == 'source-dbapi'
         with:
           repository: DocumentDrivenDX/weft
-          ref: 4c7c2eb0382e8dd5a5fca91e65d7f39cdecfc49b
+          ref: f910d9c6137861e15f93fe9b316703fb5412cf8d
           path: .ci-weft
       - uses: dtolnay/rust-toolchain@stable
         if: matrix.weft-cohort == 'source-dbapi'
@@ -254,6 +254,8 @@ jobs:
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
           python -I tests/unified/table_reads_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-reads-native.json
+          bun tests/unified/table-temporal-fixture.ts /tmp/umf-temporal-model.json
+          python -I tests/unified/table_reads_native.py --temporal --source /tmp/umf-temporal-model.json --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-temporal-native.json
           python -I tests/unified/table_reads_native.py --mutations --generated --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-generated-native.json
           python -I tests/unified/table_reads_native.py --mutations --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-writes-native.json
       - uses: actions/upload-artifact@v4
@@ -273,3 +275,4 @@ jobs:
             /tmp/umf-table-reads-native.json
             /tmp/umf-table-writes-native.json
             /tmp/umf-table-generated-native.json
+            /tmp/umf-table-temporal-native.json

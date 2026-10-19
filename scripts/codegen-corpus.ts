@@ -3,6 +3,7 @@
 import {generatePythonClient,type PythonClientRequest} from '../src/access';
 import {stringify} from 'yaml';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
+import {temporalSource} from '../tests/unified/table-temporal-fixture';
 const original=await Bun.file(new URL('../tests/unified/commerce.json',import.meta.url)).text();
 const document=JSON.parse(original);
 const native=JSON.stringify(tableOperationSource());
@@ -27,6 +28,7 @@ cases.push({name:'invalid-package-refuses',request:{text:original,package:'../es
 cases.push({name:'invalid-json-refuses',request:{text:'{"umf":',package:'shop'}});
 cases.push({name:'declared-native-module',request:{text:native,package:'native_demo'}});
 cases.push({name:'native-yaml-profile-refuses',request:{text:native,format:'yaml',package:'native_demo'}});
+cases.push({name:'declared-native-temporal-module',request:{text:JSON.stringify(temporalSource()),package:'temporal_demo'}});
 const corpus=cases.map(item=>{try{return {...item,expected:{ok:true,result:generatePythonClient(item.request)}};}catch(error){const e=error as {code?:string;message?:string;path?:string};return {...item,expected:{ok:false,error:{code:e.code??'GENERATION_FAILED',message:e.message??'Generation refused',...(e.path===undefined?{}:{path:e.path})}}};}});
 await Bun.write(process.argv[2]??'/private/tmp/umf-codegen-corpus.json',JSON.stringify(corpus,null,2)+'\n');
 console.log(JSON.stringify(corpus.map(x=>({name:x.name,accepted:x.expected.ok}))));

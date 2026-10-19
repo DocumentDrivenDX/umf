@@ -21,14 +21,14 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
    if(field.facets&&Object.keys(field.facets).some(k=>!['precision','scale'].includes(k)))deploymentError('Logical facet requires a qualified native constraint',p);
    if(field.allowedValues?.length)deploymentError('Logical allowedValues requires an explicit qualified native constraint',p);
    if(c.nativeType.kind==='numeric'&&(field.facets?.precision!==c.nativeType.precision||field.facets?.scale!==c.nativeType.scale))deploymentError('Native numeric capacity must equal the declared logical precision/scale',p);
-   if(['char','float4','float8','timestamp','timestamptz'].includes(c.nativeType.kind))deploymentError('Native padding/float/time codec is not yet qualified',p);
+   if(['char','float4','float8','timestamp'].includes(c.nativeType.kind))deploymentError('Native padding/float/time codec is not yet qualified',p);
    if(c.nativeType.kind==='bytea'&&field.scalarType!=='binary')deploymentError('bits128 bytea requires a separately qualified width constraint',p);
    let sql=q(c.name)+' '+nativeType(c.nativeType);
    if(['text','varchar'].includes(c.nativeType.kind))sql+=' COLLATE pg_catalog."C"';
    if(field.nullability==='required')sql+=' NOT NULL';
    if(c.generated)sql+=' GENERATED '+(c.generated.generation==='always'?'ALWAYS':'BY DEFAULT')+' AS IDENTITY';
    if(c.default){
-    const value=c.default.kind==='literal'?literalSql(c.default.value):c.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':deploymentError('Current timestamp default requires a qualified time codec',p+'/default');
+    const value=c.default.kind==='literal'?literalSql(c.default.value):c.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP';
     sql+=' DEFAULT '+value;
    }
    expectations.push({table:table.id,name:c.name,field:c.field,sourcePath:p,...nativeTypeExpectation(c.nativeType),nullable:field.nullability!=='required',collation:['text','varchar'].includes(c.nativeType.kind)?'C':null,identity:c.generated?(c.generated.generation==='always'?'a':'d'):'',definitionSql:sql});
@@ -44,6 +44,19 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
    const definitionSql='CONSTRAINT '+q(name)+' '+(key.primary?'PRIMARY KEY':'UNIQUE')+' ('+names.map(q).join(', ')+')';
    columns.push(definitionSql);
    keys.push({table:table.id,id:key.id,name,primary:key.primary===true,columns:names,definitionSql});
+  }
+  for(const c of table.columns){
+   const name='umf_d_'+hashCanonical([table.id,c.field,'finite-domain']).slice(0,32),column=q(c.name);
+   const kind=c.nativeType.kind;
+   const predicate=kind==='numeric'?`${column} NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric)`:
+    kind==='date'?`${column} >= '0001-01-01'::pg_catalog.date AND ${column} <= '9999-12-31'::pg_catalog.date`:
+    kind==='timestamptz'?`${column} >= '0001-01-01T00:00:00Z'::pg_catalog.timestamptz AND ${column} <= '9999-12-31T23:59:59.999999Z'::pg_catalog.timestamptz`:null;
+   if(predicate){
+    if(constraintNames.has(name))deploymentError('Generated domain constraint name collision',path);
+    constraintNames.add(name);
+    const definitionSql='CONSTRAINT '+q(name)+' CHECK ('+predicate+')';
+    columns.push(definitionSql);checks.push({table:table.id,id:'domain:'+c.field.module+'.'+c.field.element,name,definitionSql});
+   }
   }
   for(const check of table.checks){const definitionSql='CONSTRAINT '+q(check.name)+' CHECK ('+expressionSql(check.expression,table,ctx)+')';columns.push(definitionSql);checks.push({table:table.id,id:check.id,name:check.name,definitionSql});}
   ctx.add('table',path,'CREATE TABLE '+ctx.relation(table)+' (\n  '+columns.join(',\n  ')+'\n)');

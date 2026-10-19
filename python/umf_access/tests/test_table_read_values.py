@@ -27,6 +27,8 @@ class TableReadValues(unittest.TestCase):
             ('bits128','ff'*16,{'bits128Hex':'ff'*16}),
             ('string','雪%_"', '雪%_"'),
             ('boolean',True,True),
+            ('date','0001-01-01',{'date':'0001-01-01'}),
+            ('timestamp','9999-12-31T23:59:59.999999Z',{'timestamp':'9999-12-31T23:59:59.999999Z'}),
         ]:
             self.assertEqual(value_from_native(text,{'carrier':carrier,'nullable':False}),wire)
             self.assertEqual(key_literal(wire,carrier),
@@ -36,7 +38,8 @@ class TableReadValues(unittest.TestCase):
     def test_native_values_cannot_lie_about_carriers_or_required_presence(self):
         for carrier,value in [('integer',1),('integer','01'),('decimal','NaN'),('decimal','Infinity'),
                               ('decimal',1.5),('boolean',1),('string',b'text'),('uuid','invalid'),
-                              ('bits128','FF'*16),('string',None)]:
+                              ('bits128','FF'*16),('string',None),('date','1900-02-29'),('date','infinity'),
+                              ('timestamp','2026-01-01T00:00:00.1234567Z'),('timestamp','2026-01-01T00:00:00.123456+01:00')]:
             with self.subTest(carrier=carrier,value=value), self.assertRaises(SessionError):
                 value_from_native(value,{'carrier':carrier,'nullable':False})
 

@@ -50,6 +50,11 @@ def _capture_witness(connection: Any, source: dict[str, Any]) -> dict[str, Any]:
 
 def _witness_steps(source: dict[str, Any]) -> dict[str, Any]:
     schema = source['configuration']['schema']
+    # Native expression trees retain typed constants without locale/timezone deparsing.
+    # Keep existing non-domain witness0.1 bytes unchanged.
+    exact_nodes=any(check['id'].startswith('domain:') for check in source['expectedCatalog']['checks'])
+    column_query=_COLUMN_QUERY.replace('pg_catalog.pg_get_expr(d.adbin,d.adrelid)','d.adbin::pg_catalog.text') if exact_nodes else _COLUMN_QUERY
+    constraint_query=_CONSTRAINTS.replace('pg_catalog.pg_get_constraintdef(co.oid,true)','CASE WHEN co.conbin IS NULL THEN pg_catalog.pg_get_constraintdef(co.oid,true) ELSE co.conbin::pg_catalog.text END') if exact_nodes else _CONSTRAINTS
     roles = sorted({source['configuration'][k] for k in ('ownerRole', 'personRole', 'batchRole')} | set(source['configuration']['groupRoles'].values()))
     tables = []
     for table in source['expectedCatalog']['tables']:
@@ -59,9 +64,9 @@ def _witness_steps(source: dict[str, Any]) -> dict[str, Any]:
         for audience in ('person', 'batch'):
             for command in ('select', 'insert', 'update', 'delete'):
                 policies.append([audience, command, (yield _Query('one', _POLICY, (schema, name, 'umf_' + audience + '_' + command)))])
-        tables.append({'id': table['id'], 'relation': relation, 'columns': (yield _Query('all', _COLUMN_QUERY, (schema, name))), 'constraints': (yield _Query('all', _CONSTRAINTS, (schema, name))), 'indexes': (yield _Query('all', _INDEXES, (schema, name))), 'tableAcl': (yield _Query('all', _TABLE_ACL, (schema, name))), 'columnAcl': (yield _Query('all', _COLUMN_ACL, (schema, name))), 'policies': policies})
+        tables.append({'id': table['id'], 'relation': relation, 'columns': (yield _Query('all', column_query, (schema, name))), 'constraints': (yield _Query('all', constraint_query, (schema, name))), 'indexes': (yield _Query('all', _INDEXES, (schema, name))), 'tableAcl': (yield _Query('all', _TABLE_ACL, (schema, name))), 'columnAcl': (yield _Query('all', _COLUMN_ACL, (schema, name))), 'policies': policies})
     role_rows = []
     for role_name in roles:
         role_rows.append((yield _Query('one', 'SELECT oid,rolname FROM pg_catalog.pg_roles WHERE rolname=%s', (role_name,))))
-    result = {'version': 'umf.native-table-witness/0.1', 'serverVersion': (yield _Query('one', "SELECT current_setting('server_version_num')::pg_catalog.int4", ()))[0], 'database': (yield _Query('one', 'SELECT oid,datname FROM pg_catalog.pg_database WHERE datname=current_database()', ())), 'schema': (yield _Query('one', 'SELECT oid,nspowner FROM pg_catalog.pg_namespace WHERE nspname=%s', (schema,))), 'roles': role_rows, 'tables': tables}
+    result = {'version': 'umf.native-table-witness/0.2' if exact_nodes else 'umf.native-table-witness/0.1', 'serverVersion': (yield _Query('one', "SELECT current_setting('server_version_num')::pg_catalog.int4", ()))[0], 'database': (yield _Query('one', 'SELECT oid,datname FROM pg_catalog.pg_database WHERE datname=current_database()', ())), 'schema': (yield _Query('one', 'SELECT oid,nspowner FROM pg_catalog.pg_namespace WHERE nspname=%s', (schema,))), 'roles': role_rows, 'tables': tables}
     return cast(dict[str, Any], json.loads(_json_bytes(result)))

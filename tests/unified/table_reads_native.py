@@ -18,6 +18,8 @@ import time
 import sys
 import tempfile
 import importlib
+from datetime import date
+from decimal import Decimal
 
 import psycopg
 from psycopg import sql
@@ -40,8 +42,11 @@ parser.add_argument('--dsn', required=True)
 parser.add_argument('--report', required=True, type=Path)
 parser.add_argument('--mutations',action='store_true')
 parser.add_argument('--generated',action='store_true')
+parser.add_argument('--temporal',action='store_true')
+parser.add_argument('--source',type=Path)
 args = parser.parse_args()
-source = json.loads(Path(__file__).with_name('table-operation-model.json').read_text())
+if args.temporal:args.generated=True;args.mutations=True
+source = json.loads((args.source or Path(__file__).with_name('table-operation-model.json')).read_text())
 module = source['modules'][0]; content = {'module':'demo','element':'content'}
 module['elements'].insert(2, {'id':'content','kind':'field','scalarType':'string','cardinality':'one',
                             'nullability':'absent-allowed','extensions':{}})
@@ -87,8 +92,8 @@ plan = planned['plan']
 binding = {'version':'umf.raw-read-binding/0.1','schema':cfg['schema'],
     'modelJson':bundle['source']['utf8'],'modelSha256':bundle['sourceDigest'],
     'tables':[{'logical':['demo','Note'],'native':'notes','key':['id'],
-               'columns':[{'logical':name,'native':name,'carrier':'string','nullable':name=='content'}
-                          for name in ('id','owner','content')]}], 'relationships':[],
+               'columns':[{'logical':name,'native':name,'carrier':next(e['scalarType'] for e in module['elements'] if e['id']==name),'nullable':name=='content'}
+                          for name in (('id','owner','content','day','at','amount') if args.temporal else ('id','owner','content'))]}], 'relationships':[],
     'nativeLifecycle':{'version':'umf.table-lifecycle/0.1','module':'demo',
         'configurationDigest':bundle['configurationDigest'],'deploymentDigest':bundle['bundleDigest']}}
 observations = []; leases = {}; secret = b'independent synthetic test secret 000000'
@@ -666,10 +671,114 @@ async def generated_async_cases(label,factory,adapter):
     check(label+'-generated-async-cleanup',leases[label]['acquired']==leases[label]['released'])
 
 
+
+def temporal_params(key,role):
+    return {'id':key,'owner':role,'day':date(1,1,1),
+            'at':client_module.ExactTimestamp('2026-01-01T00:30:00.123456000+01:00'),'amount':Decimal('12.30')}
+
+
+def temporal_sync_cases(label,factory,adapter):
+    with factory(a) as c:
+        statement="SELECT pg_catalog.set_config('DateStyle','SQL, DMY',false),pg_catalog.set_config('TimeZone','Pacific/Kiritimati',false)"
+        if isinstance(c,psycopg.Connection):c.execute(statement);c.commit()
+        elif hasattr(c,'get_transaction_status'):
+            with c.cursor() as cursor:cursor.execute(statement)
+            c.commit()
+        else:c.exec_driver_sql(statement);c.commit()
+    host=SyncNativeTableBinding(adapter(factory,policy),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+    client=client_module.SyncClient(host.for_identity(a)).modules.demo
+    batch=client_module.SyncClient(host.for_identity(job)).modules.demo
+    key=label+'-temporal';params=temporal_params(key,alice)
+    result=client.create(**params,idempotency_key=key)
+    row=result.items[0].rows[0]
+    check(label+'-temporal-exact-read-write',row.day==date(1,1,1) and row.at.text=='2025-12-31T23:30:00.123456Z' and row.amount==Decimal('12.30'))
+    clock={k:v for k,v in params.items() if k!='at'};clock['id']=key+'-clock'
+    check(label+'-temporal-source-clock-default',client.create_clock(**clock,idempotency_key=key+'-clock').items[0].rows[0].at.text.endswith('Z'))
+    check(label+'-temporal-instant-predicate',any(row.id==key for row in client.read_before(at=client_module.ExactTimestamp('2026-01-01T00:00:00Z'))))
+    check(label+'-temporal-date-predicate',any(row.id==key for row in client.read_on_day(day=date(1,1,1))))
+    check(label+'-temporal-recovery',isinstance(client.create(**params,idempotency_key=key),client_module.Recovered))
+    read=client.read_page(owner=alice,size=1)
+    check(label+'-temporal-typed-projection',type(read.items[0].day) is date and type(read.items[0].amount) is Decimal and isinstance(read.items[0].at,client_module.ExactTimestamp))
+    before=leases[label]['acquired']
+    try:client.create(**{**params,'id':key+'-round','at':client_module.ExactTimestamp('2026-01-01T00:00:00.1234567Z')},idempotency_key=key+'-round')
+    except client_module.AccessError:check(label+'-temporal-rounding-before-lease',leases[label]['acquired']==before)
+    else:raise AssertionError('submicrosecond rounding accepted')
+    items=(client_module.DemoCreateBatchInput(**{**params,'id':key+'-bulk1'}),client_module.DemoCreateBatchInput(**{**params,'id':key+'-bulk2','owner':bob,'day':date(9999,12,31),'at':client_module.ExactTimestamp('9999-12-31T23:59:59.999999Z')}))
+    bulk=batch.create_batch_batch(items=items,idempotency_key=key+'-bulk')
+    check(label+'-temporal-batch-boundaries',bulk.items[1].rows[0].at.text=='9999-12-31T23:59:59.999999Z')
+    with factory(a) as c,rollback_caller(c):
+        @contextmanager
+        def borrowed(_):yield c
+        caller_host=SyncNativeTableBinding(adapter(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+        caller=client_module.SyncClient(caller_host.for_identity(a)).modules.demo
+        check(label+'-temporal-caller-pending',caller.create(**{**params,'id':key+'-caller'},idempotency_key=key+'-caller').durability=='pending-caller-commit')
+    check(label+'-temporal-caller-rollback',isinstance(client.create_observe(**{**params,'id':key+'-caller'},idempotency_key=key+'-caller'),client_module.NotObserved))
+    for column,value in [('amount','NaN'),('day','infinity'),('day','10000-01-01'),('at','infinity'),('at','0001-01-01 00:00:00+01')]:
+        try:
+            with admin.transaction():
+                admin.execute(sql.SQL('UPDATE {} SET {}=%s WHERE id=%s').format(bound_table,sql.Identifier(column)),(value,key))
+        except psycopg.errors.CheckViolation:check(label+'-native-finite-'+column+'-'+value,True)
+        else:raise AssertionError('native finite domain accepted '+value)
+    with factory(a) as c:
+        query="SELECT pg_catalog.current_setting('DateStyle'),pg_catalog.current_setting('TimeZone')"
+        if isinstance(c,psycopg.Connection):settings=c.execute(query).fetchone();c.commit()
+        elif hasattr(c,'get_transaction_status'):
+            with c.cursor() as cursor:cursor.execute(query);settings=cursor.fetchone()
+            c.commit()
+        else:settings=tuple(c.exec_driver_sql(query).one());c.commit()
+        check(label+'-temporal-ambient-settings-preserved',settings==('SQL, DMY','Pacific/Kiritimati'))
+    check(label+'-temporal-leases-balanced',leases[label]['acquired']==leases[label]['released'])
+
+
+async def temporal_async_cases(label,factory,adapter):
+    async with factory(a) as c:
+        statement="SELECT pg_catalog.set_config('DateStyle','SQL, DMY',false),pg_catalog.set_config('TimeZone','Pacific/Kiritimati',false)"
+        if isinstance(c,psycopg.AsyncConnection):await c.execute(statement)
+        else:await c.exec_driver_sql(statement)
+        await c.commit()
+    host=NativeTableBinding(adapter(factory,policy),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+    client=client_module.Client(host.for_identity(a)).modules.demo
+    batch=client_module.Client(host.for_identity(job)).modules.demo
+    key=label+'-temporal';params=temporal_params(key,alice)
+    result=await client.create(**params,idempotency_key=key)
+    check(label+'-temporal-async-exact',result.items[0].rows[0].day==date(1,1,1) and result.items[0].rows[0].at.text=='2025-12-31T23:30:00.123456Z')
+    clock={k:v for k,v in params.items() if k!='at'};clock['id']=key+'-clock'
+    check(label+'-temporal-async-source-clock-default',(await client.create_clock(**clock,idempotency_key=key+'-clock')).items[0].rows[0].at.text.endswith('Z'))
+    check(label+'-temporal-async-predicate',any(row.id==key for row in await client.read_before(at=client_module.ExactTimestamp('2026-01-01T00:00:00Z'))))
+    check(label+'-temporal-async-recovery',isinstance(await client.create(**params,idempotency_key=key),client_module.Recovered))
+    items=(client_module.DemoCreateBatchInput(**{**params,'id':key+'-bulk1'}),client_module.DemoCreateBatchInput(**{**params,'id':key+'-bulk2','owner':bob}))
+    check(label+'-temporal-async-bulk',(await batch.create_batch_batch(items=items,idempotency_key=key+'-bulk')).receipt.effects==(1,1))
+    before=leases[label]['acquired']
+    try:await client.create(**{**params,'id':key+'-round','at':client_module.ExactTimestamp('2026-01-01T00:00:00.1234567Z')},idempotency_key=key+'-round')
+    except client_module.AccessError:check(label+'-temporal-async-rounding-before-lease',leases[label]['acquired']==before)
+    else:raise AssertionError('submicrosecond rounding accepted')
+    async with factory(a) as c:
+        native=isinstance(c,psycopg.AsyncConnection)
+        @asynccontextmanager
+        async def borrowed(_):yield c
+        caller_host=NativeTableBinding(adapter(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+        caller=client_module.Client(caller_host.for_identity(a)).modules.demo
+        tx=c.transaction(force_rollback=True) if native else c.begin()
+        async with tx:
+            if native:await c.execute('SELECT current_user')
+            else:await c.exec_driver_sql('SELECT current_user')
+            check(label+'-temporal-async-caller-pending',(await caller.create(**{**params,'id':key+'-caller'},idempotency_key=key+'-caller')).durability=='pending-caller-commit')
+            if not native:await tx.rollback()
+    check(label+'-temporal-async-caller-rollback',isinstance(await client.create_observe(**{**params,'id':key+'-caller'},idempotency_key=key+'-caller'),client_module.NotObserved))
+    async with factory(a) as c:
+        query="SELECT pg_catalog.current_setting('DateStyle'),pg_catalog.current_setting('TimeZone')"
+        if isinstance(c,psycopg.AsyncConnection):settings=await (await c.execute(query)).fetchone()
+        else:settings=tuple((await c.exec_driver_sql(query)).one())
+        await c.commit()
+        check(label+'-temporal-async-settings-preserved',settings==('SQL, DMY','Pacific/Kiritimati'))
+    check(label+'-temporal-async-cleanup',leases[label]['acquired']==leases[label]['released'])
+
 if args.mutations:
     sync_cases,async_cases=write_sync_cases,write_async_cases
 if args.generated:
     sync_cases,async_cases=generated_sync_cases,generated_async_cases
+if args.temporal:
+    sync_cases,async_cases=temporal_sync_cases,temporal_async_cases
 
 
 with psycopg.connect(args.dsn,autocommit=True) as admin:
@@ -687,7 +796,10 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
         reference=installed['installationReference']
         bound_table=sql.SQL(sql.Identifier(cfg['schema'],'notes').as_string(admin).replace('%','%%'))
         for key,role in [('a2',alice),('a1',alice),('b1',bob)]:
-            admin.execute(sql.SQL('INSERT INTO {} (id,owner,content) VALUES (%s,%s,%s)').format(bound_table),(key,role,key))
+            if args.temporal:
+                admin.execute(sql.SQL('INSERT INTO {} (id,owner,content,day,at,amount) VALUES (%s,%s,%s,%s,%s,%s)').format(bound_table),(key,role,key,'2000-02-29','2026-01-01T00:00:00Z','12.30'))
+            else:
+                admin.execute(sql.SQL('INSERT INTO {} (id,owner,content) VALUES (%s,%s,%s)').format(bound_table),(key,role,key))
         with ConnectionPool(args.dsn,min_size=1,max_size=1) as pool:
             pool.wait();label='psycopg3';leases[label]={'acquired':0,'released':0}
             @contextmanager
@@ -736,7 +848,7 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 refused('compressed-oversize-frame-is-atomic-refusal',lambda:r.read(a,'read_content',inputs(alice)))
                 check('oversize-refusal-restores-session',r.read(b,'read_count',inputs(bob))['count']=={'integerToken':'1'})
         report={'postgresql':admin.info.server_version,'sourceDigest':bundle['sourceDigest'],'observations':observations,
-                'leases':leases,'scope':('generated typed native module methods' if args.generated else 'SDK-owned declared mutation/outcome component' if args.mutations else 'SDK-owned declared reads')+'; six native driver/pool configurations',
+                'leases':leases,'scope':('generated typed native temporal module methods' if args.temporal else 'generated typed native module methods' if args.generated else 'SDK-owned declared mutation/outcome component' if args.mutations else 'SDK-owned declared reads')+'; six native driver/pool configurations',
                 'remaining':['full mutation race/uncertainty/fault qualification' if args.mutations else 'durable write outcomes',* ([] if args.generated else ['generated native module methods']),'remaining lifecycle codecs and evolution','private Praxis and managed Lakebase acceptance','prerelease publication']}
     finally:
         if schema_created:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))

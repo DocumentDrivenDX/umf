@@ -252,3 +252,19 @@ observation with the same key. Generation currently requires original JSON for
 this native profile. The scoped native fixture covers text projections/counts;
 remaining exact native codecs, lifecycle evolution and private Praxis/Lakebase
 release acceptance remain open. These candidates have not been published.
+
+The local finite temporal candidate accepts `datetime.date` and generated
+`ExactTimestamp` values for explicitly authored native dates and UTC instants.
+For example, `ExactTimestamp("2026-01-01T00:30:00.123456+01:00")` returns the same
+instant as `2025-12-31T23:30:00.123456Z`. Fractions that would round at native
+microseconds refuse before acquiring a connection. Preserve the original inputs
+when observing an outcome with its original key. A timezone-free native timestamp
+is not converted by choosing a zone. Source-declared current timestamp defaults
+follow PostgreSQL transaction-time semantics.
+
+New finite-domain CHECKs reject native nonfinite numerics and out-of-profile
+dates/instants. Their witness0.2 stores native typed expression trees so an
+ambient timezone or date-format change cannot masquerade as schema drift. The
+six-driver fixture exercises non-default ambient settings and verifies that
+those caller settings remain unchanged. This support does not qualify arbitrary
+temporal refinements, seeds, legacy adoption or broader schema evolution.

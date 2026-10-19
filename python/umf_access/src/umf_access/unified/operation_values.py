@@ -7,6 +7,7 @@ import hashlib
 import hmac
 import json
 import re
+from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from uuid import UUID
 
@@ -90,6 +91,16 @@ def value_from_native(value,output):
     if type(value) is not str:raise SessionError('native result carrier differs')
     value.encode('utf-8')
     if kind=='string':return value
+    if kind=='date':
+        try:
+            if re.fullmatch('[0-9]{4}-[0-9]{2}-[0-9]{2}',value) and date.fromisoformat(value).isoformat()==value:return {'date':value}
+        except ValueError:pass
+    if kind=='timestamp':
+        try:
+            if re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{6}Z',value):
+                datetime.fromisoformat(value)
+                return {'timestamp':value}
+        except ValueError:pass
     if kind=='integer' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)',value):return {'integerToken':value}
     if kind=='decimal' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',value):
         try:

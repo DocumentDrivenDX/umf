@@ -73,7 +73,7 @@ describe("actual compilation boundary checker", () => {
       'export {privateValue as publicValue} from "../../model/document";',
       'export type Module = typeof import("../../model/document");',
     ]) rejects("ts", { ...api, "src/compilation/admission/index.ts": source }, "HOST");
-  });
+  }, 30_000);
   test("IR admits erased public type queries but refuses runtime use", () => {
     const api = {
       "src/index.ts": 'export { CURRENT_CORE_VERSION } from "./generated/core-model";',

@@ -786,3 +786,29 @@ catalog/privilege admission, command wire, nontransactional recovery and
 stronger security composition remain separate implementation gates. No date or
 released feature support follows from this contract. Existing P1 native evidence
 qualifies sessions/transport, not this deployment or mutation surface.
+
+## Finite PostgreSQL temporal/domain candidate
+
+The unpublished implementation admits native `date` and `timestamptz` columns
+for explicit current-core date and instant fields. It preserves source/request
+lexemes and normalizes instants to UTC without rounding. The finite native profile
+covers Gregorian years0001–9999 and microsecond-exact instants with explicit
+numeric offset or `Z`; unknown offsets, leap seconds, UTC year overflow and
+sub-microsecond rounding refuse. Date/timestamp facets and allowedValues remain
+unqualified. A timezone-free native `timestamp` mapping remains refused.
+
+Deployment emits source-derived named CHECK constraints for finite date/instant
+year bounds and nonfinite numeric rejection. These constraints join the exact
+expected catalog inventory and cannot be removed without invalidating admission.
+The explicit `currentTimestamp` default is PostgreSQL transaction timestamp;
+returned instants use fixed UTC formatting. Nullability remains independent of
+CHECK's ordinary unknown-result semantics.
+
+New sources with generated finite-domain checks issue nested native witness0.2.
+Default and CHECK expression custody uses PostgreSQL native expression trees,
+which retain typed constants without ambient timezone/date-format deparsing.
+The native engine/location pins and full original-source scratch correspondence
+still apply. Existing sources without these generated checks retain their
+witness0.1 representation. No installed witness is silently upgraded or blessed
+from newly observed state. Earlier cohorts and broader runtime upgrades require
+explicit qualification/migration.
