@@ -151,7 +151,7 @@ asyncio.run(main())
   if(exit!==0)throw new Error(stderr);
   const result=JSON.parse(stdout);
   expect(result.status).toBe('pass');
-  expect(result.weft).toBe('0.4.46');
+  expect(result.weft).toBe(process.env.UMF_UNIFIED_EXPECTED_WEFT_VERSION??'0.4.47');
   expect(result.hostRuntime).toBe('0.1.0.dev3');
   expect(result.postgresql).toBe('18');
   expect(result.compiledReads).toBe(8);

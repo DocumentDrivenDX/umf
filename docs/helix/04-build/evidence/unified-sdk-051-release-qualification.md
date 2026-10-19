@@ -62,3 +62,63 @@ handler execution, production authorization or commit policy. See the existing
 [P1 compatibility evidence](praxis-p1.md), and
 [current Praxis fixture and provenance](unified-praxis-current010/README.md)
 for their separately scoped claims.
+
+## Final 0.5.1 artifact and stack addendum — 2026-10-19
+
+This addendum supersedes the earlier candidate-only and pending-publication
+statements above for the exact SDK/core/host and native cohorts named here. The
+earlier attempts and raw captures remain intact; the first native stack capture
+is a real failed attempt caused by a stale expected Weft version, not a passing
+receipt.
+
+- The existing `umf-sdk.tgz` archive remains SHA-256
+  `4ade5b0ab89a5c36ccc1ef93b4c08d4a7eb7c8fcd78d3f5fa52a4d54eed0ecef`.
+  Its authoritative embedded file manifest is
+  `/private/tmp/umf-051-final-artifacts-20261019/sdk-manifest.json`, SHA-256
+  `fbc53d94e546ef947cdd5ee2cc2b5c0c9847f6ab9d4ea9436e3240e45826605b`.
+  This exact manifest is the release receipt; a separate older sidecar is
+  stale and must not be substituted. The recorded archive inventory has 1,715
+  regular files, including 1,709 manifest payload entries; all payload entries
+  matched, and the receipt confirms all three license files.
+- The final metadata-only `umf_core` 0.10.0 wheel is
+  `/private/tmp/umf-051-final-artifacts-20261019/core/umf_core-0.10.0-py3-none-any.whl`,
+  SHA-256 `49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9`.
+  Its 20 runtime payload files are byte-identical to the previously qualified
+  wheel (`692271d23216241e60c83296ce70bdb1021928c1751362f55d4b120d6cb9acaa`);
+  this rebuild changes package metadata only.
+- The final `umf_access` 0.1.0.dev3 current-UMF-0.10 host wheel is
+  `/private/tmp/umf-current010-release-20261019/host-dev3-current010/umf_access-0.1.0.dev3-py3-none-any.whl`,
+  SHA-256 `9c53221fa17deefb1a205a53a1d03aba94daab08e1a6fa83aa62d67cfd57b243`.
+  Its build receipt identifies source `4fc64adf3`, matches all 50 checked
+  files, and records four installed compiler-transport tests. The tested
+  published stack is Weft 0.4.47 and Truss 0.0.40 on local macOS ARM64 with
+  PostgreSQL 18.6.
+- The initial native capture at
+  `/private/tmp/umf-051-published-stack-native.log` records the independent
+  ontology-host and Praxis cases passing, then a commerce case failing only
+  because its assertion still expected Weft 0.4.46 while the installed,
+  published compiler reported 0.4.47. The corrected commerce gate and reviewed
+  read/transport capture at `/private/tmp/umf-051-published-stack-affected.log`
+  and `.json` pass: commerce passes against Weft 0.4.47; 23 reviewed tests pass
+  and two tests explicitly skip because the generated reporting fixture is not
+  available. Together with the two passing cases from the first capture, the
+  three native stack cases pass. This is scoped integration evidence, not the
+  complete Praxis lifecycle or full Truss stress qualification.
+- `/private/tmp/umf-051-final-pydantic-compatibility.json` records 58 installed
+  host tests passing under Python 3.11/Pydantic 2.13.5 and another 58 passing
+  under Python 3.11/Pydantic 2.14.1. Both runs verified installed wheel bytes;
+  exact decimal handling, missing-versus-null behavior, and the listed
+  refusal cases passed. The second run records Pydantic Core 2.50.1; the first
+  records 2.46.5.
+- The current-source microsite cleanup removes the retired pre-0.10 action
+  compiler demo while retaining historical native-owner source/assets in the
+  archive. Its current generated catalog contains 28 packs and 313 entries;
+  four focused tests pass with 47 assertions. The current page inventory gate
+  passes for 21 pages. No published microsite claim or signer activation is
+  recorded here.
+
+The broader Praxis per-call lifecycle, genuine sync/async native adapters,
+pool/fork/cancellation matrix, complete frozen dependency lock, and managed
+service acceptance remain open. Bun-free generation/index qualification is
+also not claimed by this record. The evidence above does not close FEAT-033's
+broader adoption requirements or assert production Praxis/Hohfeld behavior.

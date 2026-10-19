@@ -20,7 +20,7 @@ test.skipIf(!process.env.UMF_UNIFIED_POSTGRES_DSN)(
  if(exit!==0)throw Error(stderr);
  const result=JSON.parse(stdout);
  expect(result.status).toBe('pass');expect(result.sourceDigest).toBe(generated.sourceDigest);
- expect(result.weft).toBe(process.env.UMF_UNIFIED_EXPECTED_WEFT_VERSION??'0.4.46');
+ expect(result.weft).toBe(process.env.UMF_UNIFIED_EXPECTED_WEFT_VERSION??'0.4.47');
  expect(result.host).toBe(process.env.UMF_UNIFIED_EXPECTED_HOST_VERSION??'0.1.0.dev3');
  expect(result.compiledReads).toBe(5);expect(result.actionCalls).toBe(1);
  expect(result.manyRelationship).toBe('explicitly unsupported');

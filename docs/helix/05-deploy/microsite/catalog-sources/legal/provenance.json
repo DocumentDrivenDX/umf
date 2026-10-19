@@ -5,7 +5,7 @@
   "source_status": "Canonical UMF mixed pack 1.1.0; metadata/schema snapshot only, no source PDF redistribution",
   "files": {
     "domain-pack.json": "2c9d3da15f1bd6a950c6e5ac1e7ddec2d65dbab632934bd144af5906c384205f",
-    "ontology.json": "507688cdfb7b9048645abcf39d133cce64c10311a778d275b832fa9a2faa1069",
+    "ontology.json": "460fb388e30b6f8ca8a5927eba74197affbec5aebf613d074d6b6d668921afa8",
     "umf/cases.json": "55dd58805dd4049c935fbaa6ef259f73000b5344634b4c490c69f5ac072e4572",
     "umf/clients.json": "b748ce7a780224e48e23782f0c80cb7e1031719099a5e20785a99c872e5499fd",
     "umf/documents.json": "e6df787e59f2754ba4fbe23f94eab6465ca83dc90c0154cf9552025f7fdde91e",
@@ -17,5 +17,16 @@
     "umf/matters.json": "459ddd9800cdc95ee69345a236775d858485e9cc2b26b2dff3b2d71ee8ab0127",
     "umf/time_entries.json": "c88696e99ad5e30d038d1766031303cbc07456fd2300391563dcd966695d0cec",
     "umf/timekeepers.json": "cb58494b937cfd6b444567f00d3261f210b61cece9d170164b864b98a2c609b5"
+  },
+  "current_source_derivation": {
+    "date": "2026-10-19",
+    "source_revision": "5d6721da30ae86c55ea0145f6ea45528be56c1b9",
+    "canonical_path": "spec/domain-packs/legal/ontology.json",
+    "original_snapshot_sha256": "507688cdfb7b9048645abcf39d133cce64c10311a778d275b832fa9a2faa1069",
+    "derived_sha256": "460fb388e30b6f8ca8a5927eba74197affbec5aebf613d074d6b6d668921afa8",
+    "changed_json_pointers": [
+      "/umf"
+    ],
+    "meaning": "All remaining JSON content equals the retained snapshot. This derived current010 source is not a new capture of the original source."
   }
 }
