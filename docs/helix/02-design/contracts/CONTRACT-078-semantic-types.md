@@ -186,7 +186,10 @@ inspection/getter/declaration APIs supply typed references; the generic Document
 type MUST NOT retroactively promise an array on older envelopes.
 
 Generic read/write, document validation, semantic-type operations and element
-selection support core0.10.0. Other version-specific authoring/value/native APIs
+selection support core0.10.0. The selected security catalog-program/query-child/native-disclosure subset
+also consumes actual 0.10 source under CONTRACT-062. It distinguishes the
+unconditional envelope advisory from unresolved semantic references without
+changing the original validation result. Other version-specific authoring/value/native APIs
 retain their exact published envelope limits and MUST refuse unsupported inputs.
 Portable UUID/128-bit codecs remain independently usable. Older envelopes use the
 existing explicit migrations before the core0.9-to0.10 semantic upgrade.

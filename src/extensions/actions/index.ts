@@ -15,7 +15,7 @@ const fail=(code:string,message:string,path=''):never=>{throw new UmfError(code,
 export function registerActions(registry:Registry):Registry {
  return registry.register(actionsPackage,(payload,context)=>{
   const diagnostics:Diagnostic[]=[];
-  if(context.document.umf!=='0.8.0')return [{code:'ACTION_STRUCTURE',path:context.path,message:'Actions require exact core 0.8.0',severity:'error'}];
+  if(context.document.umf!=='0.10.0')return [{code:'ACTION_STRUCTURE',path:context.path,message:'Action semantics require exact core 0.10.0',severity:'error'}];
   const data=payload as unknown as {actions:Action[]},ids=new Set<string>(),names=new Set<string>();
   for(const key of Object.keys(data))if(key!=='actions')diagnostics.push({code:'ACTION_UNCHECKED',path:context.path+'/'+pointer(key),message:'Unknown action attachment meaning',severity:'warning'});
   data.actions.forEach((action,i)=>{
