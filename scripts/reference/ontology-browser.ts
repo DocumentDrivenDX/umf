@@ -5,7 +5,7 @@ import {canonical} from '../../docs/helix/05-deploy/reference/model';
 import {readDocument} from '../../src/index';
 import {parse as parseYaml} from 'yaml';
 const site=resolve('docs/helix/05-deploy/microsite/dist'),live=process.env.UMF_SITE_URL;
-const evidence=resolve('docs/helix/04-build/evidence/generated-reference/ontology/'+(live?'live':'local'));await mkdir(evidence,{recursive:true});
+const evidence=resolve(process.env.UMF_ONTOLOGY_EVIDENCE_DIR??('docs/helix/04-build/evidence/generated-reference/ontology/'+(live?'live':'local')));await mkdir(evidence,{recursive:true});
 const server=live?undefined:Bun.serve({hostname:'127.0.0.1',port:0,async fetch(req){const path=resolve(site,new URL(req.url).pathname.replace(/^\/umf\//,''));if(!path.startsWith(site+'/'))return new Response('Not found',{status:404});const file=Bun.file(path);return await file.exists()?new Response(file):new Response('Not found',{status:404});}});
 const origin=live??`http://127.0.0.1:${server!.port}/umf/`,browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
 const page=await browser.newPage({viewport:{width:1280,height:960}}),errors:string[]=[],external:string[]=[],checks:string[]=[];
@@ -13,6 +13,20 @@ page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url()
 const assert=(ok:unknown,message:string)=>{if(!ok)throw Error(message);};
 const ontology=async(hash='')=>{await page.goto(origin+'reference/core.html'+hash);await page.locator('#load-status').filter({hasText:'assets verified'}).waitFor();await page.locator('#ontology-detail h3').waitFor();};
 try{
+ // Keep the graph and selection useful on the first screen, without scrolling.
+ for(const [width,height] of [[1440,900],[1280,800],[798,900],[390,844]] as const){
+  await page.setViewportSize({width,height});await ontology();
+  const layout=await page.evaluate(()=>{const graph=document.querySelector('#ontology-map svg')!.getBoundingClientRect(),detail=document.querySelector('#ontology-detail')!.getBoundingClientRect(),heading=document.querySelector('#ontology-detail h3')!.getBoundingClientRect();return {graph:{top:graph.top,left:graph.left,right:graph.right},detail:{top:detail.top,left:detail.left},headingBottom:heading.bottom,overflow:document.documentElement.scrollWidth>innerWidth};});
+  assert(!layout.overflow,'Cold ontology document overflow '+width);
+  assert(layout.graph.top<height-120&&layout.headingBottom<height,'Graph and selected definition must appear on the first screen '+width+': '+JSON.stringify(layout));
+  if(width>=1001){assert(layout.graph.top<height/2&&layout.detail.top<height/2,'Desktop workspace is buried '+width);assert(layout.detail.left>layout.graph.left,'Desktop graph and details must be side by side');}
+  await page.screenshot({path:join(evidence,'first-screen-'+width+'.png')});
+  await ontology('#'+new URLSearchParams({view:'ontology',node:JSON.stringify(['umf','element.scalarType'])}));
+  assert(await page.locator('#ontology-detail h3').evaluate(node=>node.getBoundingClientRect().bottom<innerHeight),'Selected Field title is below the first screen '+width);
+  await page.screenshot({path:join(evidence,'field-first-screen-'+width+'.png')});
+ }
+ checks.push('Graph and selected Record/Field details share the first screen at 1440/1280/798/390px; desktop uses adjacent panes');
+ await page.setViewportSize({width:1280,height:960});
  // @covers US-089-AC17 @covers US-089-AC18
  await ontology();assert(await page.locator('#ontology-detail h3').innerText()==='Document','Cold landing not Document ontology');assert(await page.locator('.workspace').isHidden(),'Competing browser remains visible');assert(await page.getByRole('navigation',{name:'Main navigation'}).getByRole('link',{name:'Schemas',exact:true}).getAttribute('href')==='core.html#view=ontology','Primary entry differs');
  assert(await page.locator('#ontology details[open]').count()===0,'Self-model starts expanded: '+await page.locator('#ontology details[open]').evaluateAll(nodes=>nodes.map(n=>n.outerHTML).join('\n')));await page.screenshot({path:join(evidence,'ontology-desktop.png'),fullPage:true});checks.push('Cold Schemas landing opens a focused, collapsed Document ontology');
