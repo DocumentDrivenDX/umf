@@ -18,6 +18,14 @@ export function checkGeneratedClaim(bytes:Uint8Array,claim:any,keyId:string,colo
 export function checkInventory(declared:unknown,actual:string[]):asserts declared is string[] {
  if(!Array.isArray(declared)||!declared.length||new Set(declared).size!==declared.length||declared.some(path=>typeof path!=='string'||!directories.some(dir=>path.startsWith(dir+'/')&&/^[a-z0-9-]+\.html$/.test(path.slice(dir.length+1))))||JSON.stringify([...declared].sort())!==JSON.stringify([...actual].sort()))throw Error('GENERATED_SEAL_INVENTORY generated page membership changed');
 }
+export function generatedClaimName(file:string):string {
+ return file.slice('docs/helix/05-deploy/microsite/dist/'.length).replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'')+'.attestation.json';
+}
+export function checkExistingClaims(pages:string[],existing:string[]):void {
+ const expected=new Set(pages.map(generatedClaimName));
+ const orphan=existing.filter(file=>file.endsWith('.json')&&!expected.has(file)).sort();
+ if(orphan.length)throw Error('GENERATED_SEAL_ORPHAN public claims have no configured page: '+orphan.join(', '));
+}
 export async function run(args:string[],root=process.cwd()):Promise<void> {
  const mode=args[0];if(!['--inventory','--check','--seal'].includes(mode!)||args.slice(1).length&&!(args.length===3&&args[1]==='--innsigle'))throw Error('GENERATED_SEAL_ARGUMENT expected --inventory, --check or --seal [--innsigle path]');
  const config=await json(resolve(root,'.innsigle/config.json')),keys=await json(resolve(root,'.innsigle/public/keys.json')),policy=await json(resolve(root,'.innsigle/generated-pages.json')),colophon=await json(resolve(root,'.innsigle/generated-colo.json'));
@@ -26,9 +34,18 @@ export async function run(args:string[],root=process.cwd()):Promise<void> {
  const actual=(await Promise.all(directories.map(async dir=>(await readdir(resolve(root,dir))).filter(file=>file.endsWith('.html')).map(file=>dir+'/'+file)))).flat();
  checkInventory(policy.files,actual);
  const cli=resolve(root,args[2]??'.tools/innsigle/src/cli.mjs');
- const claimPath=(file:string)=>resolve(root,'.innsigle/public/claims',file.slice('docs/helix/05-deploy/microsite/dist/'.length).replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'')+'.attestation.json');
+ const claimsDirectory=resolve(root,'.innsigle/public/claims');
+ const claimPath=(file:string)=>resolve(claimsDirectory,generatedClaimName(file));
  const configured=new Set<string>();for(const pattern of config.content_globs??[])for await(const file of new Bun.Glob(pattern).scan({cwd:root,onlyFiles:true}))configured.add(file);
  checkInventory([...configured],actual);
+ // Claims may be absent before sealing; existing public JSON must belong to
+ // an actual configured page, so retired claims fail before a build or seal.
+ // Publish overlays this served directory, so deleting only the source claim
+ // cannot remove an orphan left by an earlier publication.
+ for(const directory of [claimsDirectory,resolve(root,directories[0]!,'.well-known/innsigle/claims')]){
+  const existing=await readdir(directory).catch((error:NodeJS.ErrnoException)=>{if(error.code==='ENOENT')return [];throw error;});
+  checkExistingClaims(actual,existing);
+ }
  if(config.default_composition!=='model-primary'||config.kind_from_frontmatter!==false)throw Error('GENERATED_SEAL_POLICY all site pages must be model-primary');
  if(mode==='--inventory'){console.log(JSON.stringify({sitePages:actual.length,signerRole:'build',mode}));return;}
  if(mode==='--seal'){

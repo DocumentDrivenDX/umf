@@ -93,6 +93,10 @@
     {
       "path": "docs/helix/04-build/evidence/generated-reference/ci-followup/handler-cleanup/receipt.json",
       "sha256": "b54541d6db9825867ae1fde1c0e25103dab6f48dde9fe6e52e1d10ffd022afb7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/generated-reference/ci-followup/orphan-page-claim-inventory/receipt.json",
+      "sha256": "5b872150929cc07dd646d7ba8dede4718c848d1aaff527b9bbb6cfa903c14aca"
     }
   ],
   "files": [
@@ -7902,21 +7906,42 @@
     },
     {
       "path": "tests/generated-page-seals.test.ts",
-      "currentTestSourceSha256": "d8e5bb60c98b8f6b27f58db128b094221a4fab3701169d4929c508b410086dee",
+      "currentTestSourceSha256": "3e41039ceb5db6d8d2f738ffe7854defe2e16d476764ae137f1f073a1af4ca0e",
       "owner": "Root",
       "status": "observed-pass",
       "observation": {
         "testProcess": "tests/generated-page-seals.test.ts",
         "exitCode": 0,
-        "pass": 5,
+        "pass": 7,
         "fail": 0,
-        "assertions": 29,
+        "assertions": 46,
         "completeSummary": true,
-        "logSha256": "959a9ebfa120b267a4d84536d484d23f5fd58c470a9ca8858a82698f0835213c",
-        "integrationLog": "umf-top-level-current-final-remainder.log",
-        "testSourceSha256": "d8e5bb60c98b8f6b27f58db128b094221a4fab3701169d4929c508b410086dee",
-        "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-top-level.json"
-      }
+        "runtime": "Bun1.4.2",
+        "executor": "Sol",
+        "log": "docs/helix/04-build/evidence/generated-reference/ci-followup/orphan-page-claim-inventory/tests.log",
+        "logSha256": "197801873ccb64f73707fea081e51d1c2bec07ea4cd1dfd39a6e6ac8c96ce429",
+        "observedTestSourceSha256": "3e41039ceb5db6d8d2f738ffe7854defe2e16d476764ae137f1f073a1af4ca0e",
+        "receipt": "docs/helix/04-build/evidence/generated-reference/ci-followup/orphan-page-claim-inventory/receipt.json",
+        "qualification": "Fresh local orphan-claim inventory follow-up; original5/29 observation retained. No complete production reseal or remote CI success inferred."
+      },
+      "priorObservations": [
+        {
+          "testSourceInventorySha256": "d8e5bb60c98b8f6b27f58db128b094221a4fab3701169d4929c508b410086dee",
+          "status": "observed-pass",
+          "observation": {
+            "testProcess": "tests/generated-page-seals.test.ts",
+            "exitCode": 0,
+            "pass": 5,
+            "fail": 0,
+            "assertions": 29,
+            "completeSummary": true,
+            "logSha256": "959a9ebfa120b267a4d84536d484d23f5fd58c470a9ca8858a82698f0835213c",
+            "integrationLog": "umf-top-level-current-final-remainder.log",
+            "testSourceSha256": "d8e5bb60c98b8f6b27f58db128b094221a4fab3701169d4929c508b410086dee",
+            "receipt": "docs/helix/04-build/evidence/metamodel-authority/regression/root-top-level.json"
+          }
+        }
+      ]
     },
     {
       "path": "tests/graphql/corpus.test.ts",

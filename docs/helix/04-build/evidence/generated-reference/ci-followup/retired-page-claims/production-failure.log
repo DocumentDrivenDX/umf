@@ -1,0 +1,32 @@
+build	Verify page signatures and signer roles	﻿2026-10-19T00:19:01.6997674Z ##[group]Run bun scripts/generated-page-seals.ts --check
+build	Verify page signatures and signer roles	2026-10-19T00:19:01.6998105Z ^[[36;1mbun scripts/generated-page-seals.ts --check^[[0m
+build	Verify page signatures and signer roles	2026-10-19T00:19:01.6998480Z ^[[36;1mnode .tools/innsigle/src/cli.mjs verify --all^[[0m
+build	Verify page signatures and signer roles	2026-10-19T00:19:01.7061355Z shell: /usr/bin/bash -e {0}
+build	Verify page signatures and signer roles	2026-10-19T00:19:01.7061679Z ##[endgroup]
+build	Verify page signatures and signer roles	2026-10-19T00:19:01.7316103Z {"generatedPages":22,"signerRole":"build","mode":"--check"}
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8205637Z VALID docs/helix/05-deploy/microsite/dist/action-compiler.html (action-compiler-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8209898Z VALID docs/helix/05-deploy/microsite/dist/actions/api-reference.html (actions-api-reference-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8213410Z VALID docs/helix/05-deploy/microsite/dist/actions/concepts.html (actions-concepts-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8218217Z VALID docs/helix/05-deploy/microsite/dist/actions/declarations.html (actions-declarations-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8223910Z VALID docs/helix/05-deploy/microsite/dist/actions/execution.html (actions-execution-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8227999Z VALID docs/helix/05-deploy/microsite/dist/actions/formal-analysis.html (actions-formal-analysis-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8231642Z VALID docs/helix/05-deploy/microsite/dist/actions/getting-started.html (actions-getting-started-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8234815Z VALID docs/helix/05-deploy/microsite/dist/actions/glossary.html (actions-glossary-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8239286Z VALID docs/helix/05-deploy/microsite/dist/actions/index.html (actions-index-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8243908Z VALID docs/helix/05-deploy/microsite/dist/actions/receipts-and-queries.html (actions-receipts-and-queries-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8246712Z VALID docs/helix/05-deploy/microsite/dist/actions/support-and-evidence.html (actions-support-and-evidence-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8249208Z VALID docs/helix/05-deploy/microsite/dist/demo.html (demo-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8251687Z VALID docs/helix/05-deploy/microsite/dist/docs.html (docs-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8266571Z VALID docs/helix/05-deploy/microsite/dist/ecosystem.html (ecosystem-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8267062Z ORPHAN - (explorer-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8267679Z VALID docs/helix/05-deploy/microsite/dist/index.html (index-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8268277Z VALID docs/helix/05-deploy/microsite/dist/reference/api.html (reference-api-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8269283Z VALID docs/helix/05-deploy/microsite/dist/reference/core.html (reference-core-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8269942Z VALID docs/helix/05-deploy/microsite/dist/reference/examples.html (reference-examples-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8270604Z VALID docs/helix/05-deploy/microsite/dist/reference/extensions.html (reference-extensions-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8271414Z VALID docs/helix/05-deploy/microsite/dist/reference/index.html (reference-index-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8272468Z VALID docs/helix/05-deploy/microsite/dist/reference/integrations.html (reference-integrations-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8273971Z VALID docs/helix/05-deploy/microsite/dist/reference/workbench.html (reference-workbench-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8274612Z ORPHAN - (schema-browser-html.attestation.json)
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8276230Z INVALID: 2 claim(s)/file(s) not VALID
+build	Verify page signatures and signer roles	2026-10-19T00:19:09.8405287Z ##[error]Process completed with exit code 1.
