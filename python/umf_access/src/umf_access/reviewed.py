@@ -142,6 +142,39 @@ def _dbapi_order(sql: str, order: list[str]) -> list[str]:
     return [order[index] for _, _, index in positions]
 
 
+def _compiler_transport(artifact: Mapping[str, object], *, catalog: bool = False) -> bool:
+    """Retain transport sealed by the compiler; legacy catalogs keep their ABI.
+
+    This digest is an integrity check within trusted build/catalog custody, not
+    authentication of an arbitrary program supplied by a caller.
+    """
+    structural = dict(artifact)
+    structural.pop("generatedSource", None)
+    structural.pop("stageOne", None)
+    digest = structural.pop("structuralDigest", None)
+    present = ("dbapiSql" in structural, "dbapiParameterOrder" in structural)
+    if present[0] != present[1]:
+        raise ReadBuildError("compiler transport inventory incomplete")
+    if digest == hashlib.sha256(_json(structural).encode()).hexdigest():
+        if not present[0]:
+            return False
+        sql, order, native_order = structural["dbapiSql"], structural["dbapiParameterOrder"], structural.get("parameterOrder")
+        if (not isinstance(sql, str) or not sql or not isinstance(order, list)
+            or not isinstance(native_order, list) or any(not isinstance(name, str) for name in native_order)
+            or any(not isinstance(name, str) or name not in native_order for name in order)):
+            raise ReadBuildError("compiler transport inventory invalid")
+        return True
+    # Older SDK catalogs appended their own transport after compiler sealing.
+    # Only catalog loading permits that form; a build must not accept supplied
+    # but unsealed compiler transport and silently reinterpret it.
+    if catalog and present[0]:
+        structural.pop("dbapiSql")
+        structural.pop("dbapiParameterOrder")
+        if digest == hashlib.sha256(_json(structural).encode()).hexdigest():
+            return False
+    raise ReadBuildError("compiler artifact digest mismatch")
+
+
 def parameter_style(sql: str, count: int) -> tuple[str, tuple[int, ...]]:
     """Build-time DB-API conversion with explicit compiler slot ordinals."""
     positions = _parameter_positions(sql)
@@ -405,8 +438,9 @@ class ReviewedSQL(Generic[P, R]):
             )
         _require_source_exact(artifact)
         catalog_fence(artifact)
-        artifact["dbapiSql"] = _dbapi(cast(str, artifact["sql"]))
-        artifact["dbapiParameterOrder"] = _dbapi_order(cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"]))
+        if not _compiler_transport(artifact):
+            artifact["dbapiSql"] = _dbapi(cast(str, artifact["sql"]))
+            artifact["dbapiParameterOrder"] = _dbapi_order(cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"]))
         sources = _model_sources(self.parameters, self.result)
         source = sources[0] if sources else None
         if source is not None:
@@ -585,20 +619,13 @@ class CatalogRead(Generic[P, R]):
             _check_source(source, cast(Mapping[str, object], artifact["binding"]))
         elif self.expected_source is not None or model_sources:
             raise ReadBuildError("CATALOG_STALE: catalog lacks generated model provenance")
-        structural = dict(artifact)
-        structural.pop("generatedSource", None)
-        structural.pop("stageOne", None)
-        structural.pop("dbapiSql", None)
-        structural.pop("dbapiParameterOrder", None)
-        compiler_digest = structural.pop("structuralDigest", None)
-        if compiler_digest != hashlib.sha256(_json(structural).encode()).hexdigest():
-            raise ReadBuildError("compiler artifact digest mismatch")
-        if artifact.get("dbapiSql") != _dbapi(cast(str, artifact.get("sql"))):
-            raise ReadBuildError("catalog parameter style mismatch")
-        if artifact.get("dbapiParameterOrder") != _dbapi_order(
-            cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"])
-        ):
-            raise ReadBuildError("catalog parameter order mismatch")
+        if not _compiler_transport(artifact, catalog=True):
+            if artifact.get("dbapiSql") != _dbapi(cast(str, artifact.get("sql"))):
+                raise ReadBuildError("catalog parameter style mismatch")
+            if artifact.get("dbapiParameterOrder") != _dbapi_order(
+                cast(str, artifact["sql"]), cast(list[str], artifact["parameterOrder"])
+            ):
+                raise ReadBuildError("catalog parameter order mismatch")
         _require_source_exact(artifact)
         catalog_fence(artifact)
         return artifact
