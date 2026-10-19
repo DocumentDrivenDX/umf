@@ -34,7 +34,7 @@ jobs:
       - run: bun scripts/check-table-lifecycle-boundaries.ts
       - run: bun scripts/check-table-deployment-boundaries.ts
       - run: >-
-          bun test tests/binding/tables.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
+          bun test tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
           tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
       - run: bunx playwright install --with-deps chromium
       - name: Actual browser metadata parity and preservation
@@ -223,6 +223,8 @@ jobs:
           python -I tests/unified/table_privileges_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-privileges-native.json
           bun tests/unified/table-ledger-fixture.ts /tmp/umf-table-ledger-plans.json
           python -I tests/unified/table_ledger_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-table-ledger-plans.json --report /tmp/umf-table-ledger-native.json
+          bun tests/unified/table-ledger-fixture.ts /tmp/umf-operation-ledger-plans.json --typed-operations
+          python -I tests/unified/table_ledger_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-operation-ledger-plans.json --report /tmp/umf-operation-ledger-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -234,3 +236,4 @@ jobs:
             /tmp/umf-table-role-native.json
             /tmp/umf-table-privileges-native.json
             /tmp/umf-table-ledger-native.json
+            /tmp/umf-operation-ledger-native.json

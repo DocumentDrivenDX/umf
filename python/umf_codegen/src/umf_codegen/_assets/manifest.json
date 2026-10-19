@@ -5,10 +5,12 @@
   "operations": [
     "generatePythonClient",
     "compileTableDeployment",
-    "verifyTableDeployment"
+    "verifyTableDeployment",
+    "compileTableMigration",
+    "verifyTableMigration"
   ],
   "v8": "14.4.258.23",
-  "bundleSha256": "bba922cb18a8644291453aedfd7d11053021ce4409047c1bd80f24172133b8d7",
+  "bundleSha256": "46bc9002b035c784ed5e63d4eb3952676bc5b70f64cee09108f182263ad11a71",
   "builder": "bun@1.4.3",
   "license": "MIT OR Apache-2.0",
   "inputs": {
@@ -181,7 +183,9 @@
     "spec/core/semantic-type-reference.schema.json": "11237c7587def3d04a4b682553b017fc7b11d7d504a8fe5fe8cd7d5b01c910b8",
     "spec/extensions/actions/package.json": "77006f8c094af31c4c1f5c95424ff15eb97da6de6e969f8b3a91150960f200b8",
     "spec/extensions/actions/schema.json": "0263c21ddd91347bf3afc2b7ab14b2c0943f1da5f5c493658cd105277f6d8d09",
+    "spec/extensions/tables/operation.schema.json": "e37f5f00f44a5252e56f74a8c12aeb4fccf5ef827811584f3a5d2e2b1e30a2e0",
     "spec/extensions/tables/package.json": "15092ecdaf56263b9682657363eda4b2a733b6ac0d896e84cc3e0d7c6ff0f3d3",
+    "spec/extensions/tables/schema.json": "5d9b04c587153ddfaaf709f5598d3974315e7efe158b20008ff8d9007836427c",
     "spec/metamodel/generated/core-constraints.json": "d7adfd1b339595b42c297c89f126774ae115b2c45e37216537a0c8a31bed4dfc",
     "spec/metamodel/generated/domain-policy.json": "3a453befd96f7b78bbc2da9758a9dcdfb3a16849383e82427f883b0ea69e549d",
     "src/access/index.ts": "21ef9998bc6905d6454d94faf9f39d53872885600782934ac6ca8894ae06bb13",
@@ -198,10 +202,11 @@
     "src/extensions/tables/columns.ts": "fcc9ba32f1dea910f0cbe4b079df6e98e550c7de1c5c82640b513c4c43068e35",
     "src/extensions/tables/context.ts": "2ed73e9a196819b709d81c6883315ee862959b82a3f6cf184122cf20663d7f62",
     "src/extensions/tables/expressions.ts": "aaeac099934a1ecc116493c5bbade878484465f5bea2c0c74a629428750a0f5e",
-    "src/extensions/tables/index.ts": "b7a74c0faeb45c382a67f3ca927ef2bb31c667502bf07ce8e14c7d799e329428",
+    "src/extensions/tables/index.ts": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
+    "src/extensions/tables/operations.ts": "9c961ba4344ccdc72b64b0ee41b9fd508c7088852aa7b8863f597ebcbff9feb9",
     "src/extensions/tables/policies.ts": "802e067a568dc3cd6e03c210ae0f8c577bcfa7f9f85af0f995084b33bd15e059",
     "src/extensions/tables/seeds.ts": "4aa5941ec205930592435b2e1799a587e4d28f75a30fa549c758d25f0eed3a43",
-    "src/extensions/tables/types.ts": "1cfeae445edf516ed0f7a59438fd5c5a9274456a927498f954ec2dcf131a3bd5",
+    "src/extensions/tables/types.ts": "46fc13f882cdb947cdb428507ec497b41823cdf6ff1071c5c4e41e800805398e",
     "src/generated/core-model.ts": "0ef1496d281813a61236c4b05b5ce8c85fcf4bbbcdfe08917a677eed35c3b597",
     "src/generated/core-validators.ts": "24a42999deb36217b8c0f4438d0e4f50b90288cd4b96eafb9c4495e89813067d",
     "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
@@ -231,7 +236,7 @@
     "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
     "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
     "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
-    "scripts/build-codegen.ts": "9b702eb942da3364f083fc5119d11b003c3e76ab0665e09bb9c270c8eafbad95",
+    "scripts/build-codegen.ts": "294737ccac19d0b840fa54c874d0ceea90b7eccd330e7ecd6340b37334a8e527",
     "scripts/codegen/gzip.ts": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3"
   },
   "dependencies": [
@@ -277,7 +282,7 @@
     }
   ],
   "files": {
-    "generator.js.gz": "16c4853484f5f8eecaf7fee0cfa7675f3e00a96f11d340b6849efd0fdc3e90a8",
+    "generator.js.gz": "50e10e02cffd0f2c23bec95d4a1a1ca8a008a3405202a4ed7d32c7869ba54ebf",
     "notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
     "notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
     "notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",

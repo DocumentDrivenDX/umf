@@ -245,3 +245,78 @@ usage failures return2. Concurrent cooperating generators MUST serialize or
 refuse; host filesystem races and untrusted concurrent filesystem writers are
 outside the authoring boundary. No published release is inferred from this
 proposed surface; wheel, sdist and installed parity evidence remain required.
+
+
+## Declared native table operation candidate — 2026-10-19
+
+CONTRACT-081's `module.extensions["umf.tables"].commands` now has a separately
+versioned declaration candidate, `umf.table-operation/0.1`. The exact shape is
+[`operation.schema.json`](../../../../spec/extensions/tables/operation.schema.json).
+This is metadata/type admission, not generated execution qualification. Existing
+client generation remains guarded for selected lifecycle modules; Weft's
+conditional table-read candidate still refuses nonempty command inventories.
+
+Each declaration has stable `id`, `version`, required typed `parameters`, `body`,
+`consistency`, `replay`, and optional write `batch:{maxItems}`. The module owns its
+operation; `body.table` names one table ID in that module. Parameters name original
+column Fields in the same module. Their logical domain, explicit availability
+and native capacity must equal the selected operand/assignment column. Every
+parameter is required and used; omitted input and explicit null are distinct.
+Unknown versions and unknown members remain recoverable and block complete
+interpretation. Invalid recognized declarations are errors. No declaration
+contains SQL, a driver name, a connection, role selection or executable code.
+
+A value is `{kind:"parameter",parameter:id}` or
+`{kind:"literal",value:CoreLiteral}`. Predicates have explicit `all`, `and/or`
+argument lists, `not`, `isNull`, bounded `in`, and field/value `eq/ne/lt/le/gt/ge/
+startsWith` forms. Field references identify original Fields of the operation's
+single table. `all` intentionally selects every authorized row; bounded writes
+must roll back rather than clip effects above their declared maximum. Equality
+and inequality use null-safe comparison; ordered comparisons and boolean
+composition preserve SQL three-valued semantics. `startsWith` is literal prefix
+comparison, never a LIKE-pattern or SQL fragment. Weft must independently admit
+and lower every selected predicate before execution; inspection grants none.
+
+Read bodies declare `fields`, `where`, `orderBy`, `result`, `maxRows` and optional
+`cursorKey`. Results are `many`, `one`, `optional`, `page` or exact integer `count`.
+Projection order follows the explicit Field list. Singleton/count result bounds
+are exactly one. Count has no projected fields
+or ordering. Row results require nonempty projections. `one` and `optional` must
+verify their cardinality; `many` must refuse truncation. A page names an original
+Key, orders by its complete component list ascending, and projects every Key
+component. The host binds continuation to operation, exact inputs, source,
+deployment/ledger generation, verified principal and current role/policy scope.
+Statement consistency describes one native statement, never a cross-page
+snapshot. Transaction consistency uses the caller's admitted transaction context.
+
+Insert bodies declare `values`, `returning` and `maxRows:1`. Update adds explicit
+`where` and a bound; delete has `where`, `returning` and a bound. Assignments are
+unique original Fields. Creates must supply required columns unless source
+provides a default or generated identity. Ordinary operations cannot assign
+identity columns; updates cannot change any original Key, immutable or generated
+column. Empty returning lists still return an exact affected count, with no
+invented result rows. Upsert additionally declares original `conflictKey`,
+`onConflict:"ignore"|"update"`, and `updateFields`. All conflict components are
+present in create input. Ignore has no updates; update has a nonempty mutable
+whitelist also present in create input. No conflict target is inferred from
+observed indexes. Native ON CONFLICT/RETURNING and concurrent races remain gates.
+
+Writes require `consistency:"transaction"` and explicit
+`replay:"caller-key-required"|"caller-key-optional"`. Reads use `replay:"none"`
+and cannot declare write batches. A write batch applies one declared operation
+to at most `batch.maxItems` typed input objects, in one transaction; it cannot mix
+modules or invent operations. Batch size is1–1000, parameters0–64, read bound1–1000,
+update/delete bound1–10000 and write-single-row bounds are exactly1. The whole
+batch is atomic and its durable replay binds the ordered exact inputs plus the
+existing CONTRACT-081 authority/principal/generation context. Optional replay
+means no automatic retry is safe without a supplied key. Read execution as a
+scheduled batch identity is independently controlled by native table policy;
+the write-batch shape grants no batch principal authority.
+
+This declaration subset covers single-table projections/counts and scalar
+CRUD/upsert operations. Joins/aggregate business outputs, parameter lists,
+optional-input omission and cross-operation transactions require explicit wire
+extensions and qualification before selection. They are not converted to raw SQL
+callbacks. Standard composed queries and graph Actions retain their existing
+contracts and independent authority; this native declaration does not reinterpret
+a graph-write recipe or authorize a Truss/Ashlar operation.

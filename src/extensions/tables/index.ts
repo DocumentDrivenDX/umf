@@ -8,6 +8,7 @@ import {inspectUnknown,refKey,TableContext} from './context';
 import {inspectTable} from './columns';
 import {inspectPolicies} from './policies';
 import {inspectSeeds} from './seeds';
+import {inspectOperations} from './operations';
 import type {TableLifecyclePayload} from './types';
 export * from './types';
 export const TABLES_EXTENSION='umf.tables';
@@ -22,7 +23,7 @@ function semantics(value:Json,context:{document:Document;path:string;scope:strin
  const module=match?context.document.modules[Number(match[1])]:undefined;
  if(context.scope!=='module'||!module)return [{code:'TABLES_SCOPE',path:context.path,message:'Table declarations belong to an exact module',severity:'error'}];
  const ctx=new TableContext(context.document,module,context.path),payload=value as unknown as TableLifecyclePayload;
- inspectUnknown(value,manifest.schema,manifest.schema.$defs,ctx,context.path);
+ inspectUnknown({...payload,commands:[]},manifest.schema,manifest.schema.$defs,ctx,context.path);
  ctx.unique(payload.tables,t=>t.id,context.path+'/tables','table ID');ctx.unique(payload.tables,t=>t.name,context.path+'/tables','native table name');ctx.unique(payload.tables,t=>refKey(t.record),context.path+'/tables','Record binding');
  if(payload.tables.reduce((n,t)=>n+t.columns.length,0)>4096)ctx.add('TABLES_COLUMN_LIMIT',context.path+'/tables','Module column inventory exceeds 4096');
  if(payload.seedSets.reduce((n,s)=>n+s.rows.length,0)>10000)ctx.add('TABLES_SEED_LIMIT',context.path+'/seedSets','Module seed inventory exceeds 10000 rows');
@@ -35,7 +36,7 @@ function semantics(value:Json,context:{document:Document;path:string;scope:strin
   }
  }
  inspectPolicies(payload,ctx);inspectSeeds(payload,ctx);
- if(payload.commands.length)ctx.add('TABLES_COMMAND_PENDING',context.path+'/commands','Named command payloads are retained but require a separately implemented wire contract',true);
+ inspectOperations(payload,ctx);
  return ctx.diagnostics;
 }
 /** Explicit registry; no global registration or implicit native/plugin loading. */

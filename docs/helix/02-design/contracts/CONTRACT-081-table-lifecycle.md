@@ -83,8 +83,10 @@ index,10000 seed rows per module,4096 expression/rule nodes per module and depth
 Via paths have at most4 steps. The inspector retains at most256 ordinary
 semantic diagnostics, followed by a refusal diagnostic on exhaustion. These
 bounds are metadata admission ceilings, independent of stricter native/host
-limits. Unknown object members are retained and diagnosed; nonempty command
-inventories remain incomplete until the exact command wire is implemented.
+limits. Unknown object members are retained and diagnosed; unknown command
+inventories remain incomplete. The separately versioned CONTRACT-079 native
+table-operation candidate admits known declaration shapes; execution remains
+unqualified and generated lifecycle modules remain guarded.
 
 `Ref` is the existing exact `{module,element}` core reference. `KeyRef` is
 `{record:Ref,key:string}` naming an authored stable Key ID. Display names do not

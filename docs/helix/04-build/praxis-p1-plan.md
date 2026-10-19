@@ -445,3 +445,38 @@ operation wires, required native codecs and generated data admission, then close
 mutations/replay/paging, necessary migrations/seeds and consumer/release gates.
 The guarded UMF generator remains closed to selected lifecycle modules. No full
 Praxis prerelease was published; Weft0.4.46 coordination remains separate.
+
+## Declared typed table operations — 2026-10-19
+
+CONTRACT-079 now specifies `umf.table-operation/0.1` declarations for explicit
+single-table reads/counts/pages, insert/update/delete/upsert and atomic batches of
+one named write. The source table payload remains preservation-oriented:
+unknown commands retain their exact source and block complete interpretation.
+Known versions receive structural and contextual checks for owning module,
+original columns and Keys, exact logical/native parameter domains, required
+create values, immutable/generated fields, conflict whitelists, result bounds,
+replay/consistency, cursor order and predicate complexity. This is declaration
+admission; no callback or raw SQL execution escape is introduced.
+
+The [typed operation packet](evidence/praxis-p2/typed-operations.json) records42
+passing declaration/deployment/migration/boundary tests and36 actual Chromium
+assertions. Installed embedded V8 agrees on16 client,15 deployment and12 migration
+cases, refusing30 deployment and44 migration rehashed-tamper controls plus4 invalid
+deadlines with subprocess/lookup/network disabled. The generator manifest now
+accurately lists its existing migration bridge methods. Source/sdist wheels are
+byte-identical; source and wheel license checks pass. Existing generated-access
+regression passes35 tests with its native data test explicitly skipped.
+
+An actual installed PostgreSQL18.6 run passes49 ledger assertions over initial
+and append sources containing11 typed declarations. Those checks cover
+administrative source retention, native catalog/role/privilege proof, concurrent
+migration/replay, drift and transaction ownership. They do not execute the new
+operations. CI now includes the operation unit/browser/installed corpus and the
+additional native source-ledger fixture; new hosted outcomes remain pending.
+
+Next: lower these exact declarations through shared Weft Rust APIs, carry operation
+identity/module/input/result bounds through native host admission, and generate
+typed module methods. Keep Weft's nonempty-command and UMF's generated lifecycle
+guards until their replacements enforce that authority. Required native codecs,
+actual typed mutations/bulk/upsert/durable outcomes, consumer conversion and
+full release acceptance remain part of the active goal, not optional follow-up.

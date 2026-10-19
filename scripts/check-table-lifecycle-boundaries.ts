@@ -9,7 +9,8 @@ const owners:Record<string,readonly string[]>={
  'columns.ts':[...model,'./context','./expressions','./types'],
  'policies.ts':['./context','./types'],
  'seeds.ts':['./columns','./context','./types'],
- 'index.ts':['../../../spec/extensions/tables/package.json','../../model/types','../../model/json','../../registry/registry','../../validation/document','./context','./columns','./policies','./seeds','./types'],
+ 'operations.ts':['../../../spec/extensions/tables/operation.schema.json','../../../spec/extensions/tables/schema.json','../../validation/schema','./columns','./context','./types'],
+ 'index.ts':['../../../spec/extensions/tables/package.json','../../model/types','../../model/json','../../registry/registry','../../validation/document','./context','./columns','./policies','./seeds','./operations','./types'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','window','postMessage']);
 export function checkTableLifecycleBoundaries(sources:Record<string,string>):string[]{

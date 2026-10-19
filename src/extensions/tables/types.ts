@@ -20,3 +20,22 @@ export interface TableFieldValue {field:TableRef;value:CoreLiteral}
 export interface TableSeedRow {table:string;values:TableFieldValue[]}
 export interface TableSeedSet {id:string;rows:TableSeedRow[];conflict:'error'|'ignore'}
 export interface TableLifecyclePayload {profile:'postgresql18/0.1';tables:TableDeclaration[];seedSets:TableSeedSet[];commands:unknown[]}
+
+/** Named operation declarations; interpretation never grants native authority. */
+export type TableOperationValue={kind:'parameter';parameter:string}|{kind:'literal';value:CoreLiteral};
+export type TableOperationPredicate={op:'all'}|{op:'and';args:TableOperationPredicate[]}|{op:'or';args:TableOperationPredicate[]}|{op:'not';arg:TableOperationPredicate}|{op:'isNull';field:TableRef}|{op:'in';field:TableRef;values:TableOperationValue[]}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge'|'startsWith';field:TableRef;value:TableOperationValue};
+export interface TableOperationAssignment {field:TableRef;value:TableOperationValue}
+export type TableOperationBody=
+ |{kind:'read';table:string;fields:TableRef[];where:TableOperationPredicate;orderBy:{field:TableRef;direction:'asc'|'desc'}[];result:'many'|'one'|'optional'|'page'|'count';maxRows:number;cursorKey?:string}
+ |{kind:'insert';table:string;values:TableOperationAssignment[];returning:TableRef[];maxRows:1}
+ |{kind:'update';table:string;where:TableOperationPredicate;values:TableOperationAssignment[];returning:TableRef[];maxRows:number}
+ |{kind:'delete';table:string;where:TableOperationPredicate;returning:TableRef[];maxRows:number}
+ |{kind:'upsert';table:string;conflictKey:string;values:TableOperationAssignment[];onConflict:'ignore'|'update';updateFields:TableRef[];returning:TableRef[];maxRows:1};
+export interface TableOperation {
+ version:'umf.table-operation/0.1';id:string;
+ parameters:{id:string;field:TableRef}[];
+ body:TableOperationBody;
+ consistency:'statement'|'transaction';
+ replay:'none'|'caller-key-required'|'caller-key-optional';
+ batch?:{maxItems:number};
+}
