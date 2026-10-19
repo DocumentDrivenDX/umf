@@ -51,6 +51,9 @@ class AsyncSession:
         self._pid = os.getpid()
         self._active: set[int] = set()
 
+    def _prepare_connection(self, connection):
+        return connection
+
     @asynccontextmanager
     async def open(self, identity: SessionIdentity, *, read_only: bool = True) -> AsyncIterator[Any]:
         if os.getpid() != self._pid:
@@ -72,6 +75,8 @@ class AsyncSession:
                 raise SessionError("connection already leased by this adapter")
             self._active.add(key)
             registered = True
+            native = connection
+            connection = self._prepare_connection(native)
             status = int(connection.info.transaction_status)
             if status not in (0, 2):
                 raise SessionError("connection is not idle or in a healthy caller transaction")
@@ -104,7 +109,7 @@ class AsyncSession:
                 for name in settings:
                     await cursor.execute(GET_SETTING, (name,))
                     effective[name] = (await cursor.fetchone())[0]
-            yield connection
+            yield native
         except BaseException:
             failure = sys.exc_info()
             raise

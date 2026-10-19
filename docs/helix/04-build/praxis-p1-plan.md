@@ -195,3 +195,11 @@ Psycopg2/SQLAlchemy, successor Weft qualification and the remaining table,
 security, deployment, command and release gates. Source publication of this
 bounded P1 slice enables hosted codegen platform checks; it is not a prerelease
 support claim or completion of the broader lifecycle objective.
+
+P1-04 now has106 local native assertions across Psycopg3, Psycopg2 and
+SQLAlchemy Core sync/async, preserving the original connections and each driver's
+transaction bookkeeping. The source-bound receipt and explicit parameter-free
+fixture limit are recorded in the continuation evidence. P1-05 Linux/macOS
+hosted generation gates pass at7c335aaf4. Production artifact admission,
+parameterized DBAPI transport, physical policy/deployment, complete mutations and
+release/distribution/consumer acceptance remain open under the active full goal.

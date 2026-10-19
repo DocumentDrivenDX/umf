@@ -23,6 +23,8 @@ parser.add_argument('--generated', required=True)
 parser.add_argument('--weft')
 parser.add_argument('--psycopg')
 parser.add_argument('--pool')
+parser.add_argument('--psycopg2', action='store_true')
+parser.add_argument('--sqlalchemy', action='store_true')
 parser.add_argument('--report', required=True)
 args = parser.parse_args()
 sys.path[:0] = [args.generated, *[p for p in (args.weft,args.psycopg,args.pool) if p]]
@@ -297,6 +299,239 @@ async def async_tests():
             check('broken_pool_connection_discarded',connection.info.backend_pid!=dead)
             check('replacement_pool_identity',await (await connection.execute('SELECT current_user')).fetchone()==(bob_role,))
 
+
+if args.psycopg2:
+    import psycopg2
+    from psycopg2.pool import ThreadedConnectionPool
+    from umf_access.unified import Psycopg2Session
+
+    report['psycopg2'] = psycopg2.__version__
+    def query2(connection, statement, parameters=None):
+        with connection.cursor() as cursor:
+            cursor.execute(statement, parameters)
+            return cursor.fetchall() if cursor.description else cursor.rowcount
+
+    def read2(connection, artifact, request):
+        # Bounded parameter-free generated read only. Parameterized transport is
+        # a separate Weft compiler gate; never rewrite $n SQL in this host.
+        assert artifact['parameterOrder'] == []
+        return rows(artifact, query2(connection, artifact['sql']))
+
+    for autocommit in (False, True):
+        connection = psycopg2.connect(**connection_args)
+        connection.autocommit = autocommit
+        try:
+            session2 = Psycopg2Session(lambda _:nullcontext(connection), policy)
+            for identity, expected in ((alice,['a1','a2']),(bob,['b1']),(batch,['a1','a2','b1'])):
+                client = SyncClient(SyncSessionTransport(session2, identity, binding, weft, read2, cursor_secret=b'x'*32))
+                result = Customer.objects.using(client).all(limit=100)
+                check(f'psycopg2_{autocommit}_weft_{identity.subject}', sorted(row.customer_id for row in result) == expected)
+            committed = uuid4()
+            with session2.open(alice, read_only=False) as leased:
+                check(f'psycopg2_{autocommit}_original_connection', leased is connection)
+                query2(leased, 'UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s', (str(committed),'a1'))
+            check(f'psycopg2_{autocommit}_commit', observed_uuid()==committed)
+            try:
+                with session2.open(alice, read_only=False):
+                    query2(connection, 'UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s', (str(uuid4()),'a1'))
+                    raise ValueError('rollback')
+            except ValueError:pass
+            check(f'psycopg2_{autocommit}_rollback', observed_uuid()==committed)
+            try:
+                with session2.open(alice):
+                    query2(connection, 'UPDATE customers SET "customerUuid"=%s', (str(uuid4()),))
+            except psycopg2.errors.ReadOnlySqlTransaction:pass
+            else:raise AssertionError('Psycopg2 read lease wrote')
+            check(f'psycopg2_{autocommit}_read_only_rollback',connection.get_transaction_status()==0)
+            # Driver context opens the caller transaction even with autocommit.
+            with connection:
+                query2(connection,'SET TRANSACTION READ ONLY')
+                before=query2(connection,"SELECT current_user,current_setting('search_path')")
+                caller2=Psycopg2Session(lambda _:nullcontext(connection), policy, transaction_owner='caller')
+                with caller2.open(alice):
+                    check(f'psycopg2_{autocommit}_caller_role',query2(connection,'SELECT current_user')==[(alice_role,)])
+                check(f'psycopg2_{autocommit}_caller_restored',query2(connection,"SELECT current_user,current_setting('search_path')")==before)
+                try:
+                    with caller2.open(bob):query2(connection,'SELECT 1/0')
+                except psycopg2.errors.DivisionByZero:pass
+                else:raise AssertionError('expected native error')
+                check(f'psycopg2_{autocommit}_caller_error_preserved',connection.get_transaction_status()==2 and query2(connection,'SELECT 1')==[(1,)])
+            # A write through a savepoint must remain invisible outside the
+            # caller transaction and disappear when that caller rolls back.
+            try:
+                with connection:
+                    query2(connection,'SELECT 1')
+                    caller2=Psycopg2Session(lambda _:nullcontext(connection), policy, transaction_owner='caller')
+                    with caller2.open(alice,read_only=False):
+                        query2(connection,'UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(uuid4()),'a1'))
+                    check(f'psycopg2_{autocommit}_caller_does_not_commit',observed_uuid()==committed)
+                    raise ValueError('outer rollback')
+            except ValueError:pass
+            check(f'psycopg2_{autocommit}_caller_outer_rollback',observed_uuid()==committed)
+            check(f'psycopg2_{autocommit}_autocommit_preserved',connection.autocommit is autocommit)
+        finally:connection.close()
+
+    pool2=ThreadedConnectionPool(1,1,**connection_args)
+    @contextmanager
+    def pooled2(_):
+        c=pool2.getconn()
+        try:yield c
+        finally:pool2.putconn(c,close=bool(c.closed))
+    try:
+        pooled_session2=Psycopg2Session(pooled2,policy)
+        with pooled_session2.open(alice) as c:backend=c.get_backend_pid()
+        with pooled_session2.open(batch) as c:
+            check('psycopg2_pool_identity_reused',c.get_backend_pid()==backend and query2(c,'SELECT current_user')==[(batch_role,)])
+        try:
+            with pooled_session2.open(alice) as c:
+                with psycopg.connect(args.dsn,autocommit=True) as admin:
+                    admin.execute('SELECT pg_catalog.pg_terminate_backend(%s)',(backend,))
+                query2(c,'SELECT 1')
+        except psycopg2.Error:pass
+        else:raise AssertionError('terminated backend accepted')
+        with pooled_session2.open(bob) as c:
+            check('psycopg2_broken_pool_discarded',c.get_backend_pid()!=backend and query2(c,'SELECT current_user')==[(bob_role,)])
+    finally:pool2.closeall()
+
+if args.sqlalchemy:
+    import sqlalchemy
+    from sqlalchemy import create_engine
+    from sqlalchemy.engine import URL
+    from sqlalchemy.ext.asyncio import create_async_engine
+    from umf_access.unified import SQLAlchemySession, AsyncSQLAlchemySession
+
+    report['sqlalchemy']=sqlalchemy.__version__
+    for driver in ('psycopg2','psycopg'):
+        engine=create_engine(URL.create('postgresql+'+driver),connect_args=connection_args,pool_size=1,max_overflow=0)
+        session_sa=SQLAlchemySession(lambda _:engine.connect(),policy)
+        def read_sa(c,artifact,request):
+            assert artifact['parameterOrder']==[]
+            return rows(artifact,c.exec_driver_sql(artifact['sql']).fetchall())
+        try:
+            for identity,expected in ((alice,['a1','a2']),(bob,['b1']),(batch,['a1','a2','b1'])):
+                client=SyncClient(SyncSessionTransport(session_sa,identity,binding,weft,read_sa,cursor_secret=b'x'*32))
+                result=Customer.objects.using(client).all(limit=100)
+                check(f'sqlalchemy_{driver}_weft_{identity.subject}', sorted(row.customer_id for row in result)==expected)
+            committed=uuid4()
+            with session_sa.open(alice,read_only=False) as c:
+                c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(committed),'a1'))
+            check(f'sqlalchemy_{driver}_owned_commit',observed_uuid()==committed)
+            try:
+                with session_sa.open(alice,read_only=False) as c:
+                    c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(uuid4()),'a1'))
+                    raise ValueError('rollback')
+            except ValueError:pass
+            check(f'sqlalchemy_{driver}_owned_rollback',observed_uuid()==committed)
+            try:
+                with session_sa.open(alice) as c:
+                    c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s',(str(uuid4()),))
+            except sqlalchemy.exc.DBAPIError:pass
+            else:raise AssertionError('SQLAlchemy read lease wrote')
+            with engine.connect() as c:
+                backend=c.exec_driver_sql('SELECT pg_backend_pid()').scalar_one()
+                c.rollback()
+                check(f'sqlalchemy_{driver}_pool_reset',c.exec_driver_sql('SELECT current_user').scalar_one()==login)
+                c.rollback()
+                caller_sa=SQLAlchemySession(lambda _:nullcontext(c),policy,transaction_owner='caller')
+                with c.begin():
+                    c.exec_driver_sql('SET TRANSACTION READ ONLY')
+                    before=tuple(c.exec_driver_sql("SELECT current_user,current_setting('search_path')").one())
+                    with caller_sa.open(alice) as leased:
+                        check(f'sqlalchemy_{driver}_original_connection',leased is c)
+                    check(f'sqlalchemy_{driver}_caller_restored',tuple(c.exec_driver_sql("SELECT current_user,current_setting('search_path')").one())==before)
+                    try:
+                        with caller_sa.open(bob):c.exec_driver_sql('SELECT 1/0')
+                    except sqlalchemy.exc.DBAPIError:pass
+                    else:raise AssertionError('expected native error')
+                    check(f'sqlalchemy_{driver}_caller_error_preserved',c.in_transaction() and c.exec_driver_sql('SELECT 1').scalar_one()==1)
+                try:
+                    with c.begin():
+                        c.exec_driver_sql('SELECT 1')
+                        with caller_sa.open(alice,read_only=False):
+                            c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(uuid4()),'a1'))
+                        check(f'sqlalchemy_{driver}_caller_does_not_commit',observed_uuid()==committed)
+                        raise ValueError('outer rollback')
+                except ValueError:pass
+                check(f'sqlalchemy_{driver}_caller_outer_rollback',observed_uuid()==committed and not c.in_transaction())
+            # Verify explicit rejection rather than running SET LOCAL outside a
+            # real transaction under SQLAlchemy's DBAPI-autocommit bookkeeping.
+            with engine.connect().execution_options(isolation_level='AUTOCOMMIT') as c:
+                try:
+                    with SQLAlchemySession(lambda _:nullcontext(c),policy).open(alice):pass
+                except SessionError:pass
+                else:raise AssertionError('SQLAlchemy autocommit accepted')
+                check(f'sqlalchemy_{driver}_autocommit_refused',not c.in_transaction())
+            try:
+                with session_sa.open(alice) as c:
+                    backend=c.exec_driver_sql('SELECT pg_backend_pid()').scalar_one()
+                    with psycopg.connect(args.dsn,autocommit=True) as admin:
+                        admin.execute('SELECT pg_catalog.pg_terminate_backend(%s)',(backend,))
+                    c.exec_driver_sql('SELECT 1')
+            except sqlalchemy.exc.DBAPIError:pass
+            else:raise AssertionError('terminated SQLAlchemy backend accepted')
+            with session_sa.open(bob) as c:
+                check(f'sqlalchemy_{driver}_broken_pool_discarded',c.exec_driver_sql('SELECT pg_backend_pid()').scalar_one()!=backend and c.exec_driver_sql('SELECT current_user').scalar_one()==bob_role)
+        finally:engine.dispose()
+
+    async def sqlalchemy_async_tests():
+        engine=create_async_engine(URL.create('postgresql+psycopg'),connect_args=connection_args,pool_size=1,max_overflow=0)
+        session_sa=AsyncSQLAlchemySession(lambda _:engine.connect(),policy)
+        async def read_sa(c,artifact,request):
+            assert artifact['parameterOrder']==[]
+            return rows(artifact,(await c.exec_driver_sql(artifact['sql'])).fetchall())
+        try:
+            for identity,expected in ((alice,['a1','a2']),(bob,['b1']),(batch,['a1','a2','b1'])):
+                client=Client(AsyncSessionTransport(session_sa,identity,binding,weft,read_sa,cursor_secret=b'x'*32))
+                result=await Customer.objects.using(client).all(limit=100)
+                check('sqlalchemy_async_weft_'+identity.subject,sorted(row.customer_id for row in result)==expected)
+            committed=uuid4()
+            async with session_sa.open(alice,read_only=False) as c:
+                await c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(committed),'a1'))
+            check('sqlalchemy_async_owned_commit',observed_uuid()==committed)
+            try:
+                async with session_sa.open(alice,read_only=False) as c:
+                    await c.exec_driver_sql('UPDATE customers SET "customerUuid"=%s WHERE "customerId"=%s',(str(uuid4()),'a1'))
+                    raise ValueError('rollback')
+            except ValueError:pass
+            check('sqlalchemy_async_owned_rollback',observed_uuid()==committed)
+            @asynccontextmanager
+            async def borrow(_):yield c
+            async with engine.connect() as c:
+                caller_sa=AsyncSQLAlchemySession(borrow,policy,transaction_owner='caller')
+                async with c.begin():
+                    await c.exec_driver_sql('SET TRANSACTION READ ONLY')
+                    async with caller_sa.open(alice) as leased:
+                        check('sqlalchemy_async_original_connection',leased is c)
+                    check('sqlalchemy_async_caller_restored',(await c.exec_driver_sql('SELECT current_user')).scalar_one()==login and c.in_transaction())
+                    try:
+                        async with caller_sa.open(alice):await c.exec_driver_sql('SELECT 1/0')
+                    except sqlalchemy.exc.DBAPIError:pass
+                    else:raise AssertionError('expected native error')
+                    check('sqlalchemy_async_caller_error_preserved',c.in_transaction() and (await c.exec_driver_sql('SELECT 1')).scalar_one()==1)
+            backend=[]
+            async def sleeper():
+                async with session_sa.open(alice) as c:
+                    backend.append((await c.exec_driver_sql('SELECT pg_backend_pid()')).scalar_one())
+                    await c.exec_driver_sql('SELECT pg_sleep(20)')
+            task=asyncio.create_task(sleeper())
+            async with await psycopg.AsyncConnection.connect(args.dsn,autocommit=True) as observer:
+                active=False
+                for _ in range(100):
+                    if backend:
+                        result=await (await observer.execute("SELECT state='active' AND query LIKE '%%pg_sleep%%' FROM pg_catalog.pg_stat_activity WHERE pid=%s",(backend[0],))).fetchone()
+                        if result and result[0]:active=True;break
+                    await asyncio.sleep(0.05)
+                check('sqlalchemy_async_native_cancel_observed',active)
+            task.cancel()
+            try:await task
+            except asyncio.CancelledError:pass
+            else:raise AssertionError('SQLAlchemy cancellation swallowed')
+            async with session_sa.open(bob) as c:
+                check('sqlalchemy_async_cancel_pool_identity',(await c.exec_driver_sql('SELECT current_user')).scalar_one()==bob_role)
+                check('sqlalchemy_async_cancel_usable',(await c.exec_driver_sql('SELECT 1')).scalar_one()==1)
+            check('sqlalchemy_async_no_checked_out_leases',engine.pool.checkedout()==0)
+        finally:await engine.dispose()
+    asyncio.run(sqlalchemy_async_tests())
 
 asyncio.run(async_tests())
 Path(args.report).write_text(json.dumps(report,indent=2)+'\n')

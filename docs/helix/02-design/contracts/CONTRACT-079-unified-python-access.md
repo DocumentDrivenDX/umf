@@ -185,13 +185,37 @@ write did not commit, and MUST NOT cause automatic retry.
 `SessionPolicy.cursor_secret(identity, root_secret)` derives a stable authority-
 and policy-bound cursor secret from a host root of at least 32 bytes. Person,
 batch and differently configured policy sessions MUST NOT accept one another's
-page tokens. The generated wire protocol is unchanged. Psycopg2, SQLAlchemy,
-full artifact execution and managed Lakebase qualification remain release gates;
-this proposed surface is not evidence of their completion.
+page tokens. The generated wire protocol is unchanged. Native driver support
+is qualified separately from full artifact execution and managed Lakebase.
+
+`Psycopg2Session` accepts synchronous Psycopg2 2.9 connections with the same
+factory, policy and ownership contract. Adapter ownership uses the driver's
+transaction context, including autocommit connections; caller ownership MUST
+use a library-named savepoint rather than the driver's connection context, which
+would commit the outer transaction. `open` yields the original connection.
+Psycopg2 async connections refuse; async access uses Psycopg3.
+
+`SQLAlchemySession` and `AsyncSQLAlchemySession` accept SQLAlchemy 2 Core
+Connection/AsyncConnection leases with PostgreSQL Psycopg drivers. They MUST use
+SQLAlchemy `begin`/`begin_nested` and `exec_driver_sql` for session control,
+preserving SQLAlchemy transaction bookkeeping. Reading native driver state is
+permitted for admission; raw driver commit/rollback is forbidden. Driver and
+SQLAlchemy transaction states MUST agree. DBAPI autocommit refuses, since a
+SQLAlchemy transaction object alone does not establish a native transaction in
+that mode. This adapter MUST NOT change isolation level or autocommit. Async
+supports the Psycopg3 driver; ORM Session and other dialects/drivers refuse.
+`open` yields the original Core connection. Failed cleanup MUST invalidate the
+SQLAlchemy connection before it can return to the engine pool. Existing
+cancellation shielding and person/batch policy apply without an event-loop
+bridge. These contracts are not qualification evidence; exact native results
+and bounded parameter transport are recorded separately.
 
 Native semantics references: [Psycopg transaction contexts](https://www.psycopg.org/psycopg3/docs/basic/transactions.html),
 [async cancellation](https://www.psycopg.org/psycopg3/docs/advanced/async.html),
 and [PostgreSQL 18 SET ROLE](https://www.postgresql.org/docs/18/sql-set-role.html).
+Driver-specific references: [Psycopg2 transaction contexts](https://www.psycopg.org/docs/usage.html#with-statement),
+[SQLAlchemy Core transactions and autocommit](https://docs.sqlalchemy.org/en/20/core/connections.html),
+and [SQLAlchemy async Core connections](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html).
 
 ## Proposed installed Python generator (P1-05)
 

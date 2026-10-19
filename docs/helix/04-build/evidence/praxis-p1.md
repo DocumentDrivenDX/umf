@@ -286,3 +286,39 @@ Weft work continues in isolated `/private/tmp/umf-praxis-weft`, branch
 The original Weft checkout/branch is preserved. No Weft lifecycle source change
 or prerelease is claimed yet; production DB-API/compiler execution and remaining
 physical-policy/deployment/mutation gates still govern the full goal.
+
+## Multi-driver native continuation — 2026-10-19
+
+The repair at7c335aaf4 passes hosted
+[Typed access boundaries39256785835](https://github.com/DocumentDrivenDX/umf/actions/runs/39256785835),
+including Linux/macOS embedded generator installation and native Linux PostgreSQL,
+and [Python support39256785669](https://github.com/DocumentDrivenDX/umf/actions/runs/39256785669).
+The earlier Linux framing and Ruff failures are resolved at this exact head.
+
+The installed candidate now passes106 local PostgreSQL18.6 assertions with
+Psycopg3 3.2.13/pool3.3.3, Psycopg2 2.9.11 and SQLAlchemy2.0.44/greenlet3.2.4.
+Psycopg2 covers autocommit on/off, original connection yield, generated person/
+batch reads, committed/rolled-back writes, caller savepoints and native-error
+recovery, caller write invisibility/outer rollback and broken-pool replacement.
+SQLAlchemy covers sync Psycopg2/Psycopg3 and async Psycopg3, original Core
+connections, generated identities, owned commit/rollback, caller savepoint/error
+recovery, SQLAlchemy bookkeeping, pool reset/replacement, explicit DBAPI-
+autocommit refusal and observed native async cancellation before pool reuse.
+The exact wheel/source/test hashes and assertion inventory are in the
+[native receipt](praxis-p1/session-native-postgresql.json). Hosted CI now runs
+these pinned drivers and flags; that new source needs its own hosted result.
+
+`session_psycopg2` owns driver-context versus savepoint selection;
+`session_sqlalchemy` owns Core state admission, transaction/execution facades and
+invalidation. Both reuse the same authority/settings and lease cleanup contract.
+Neither imports a driver, opens a pool or compiles SQL. The original connection
+identity remains the concurrency-guard key. Source boundary checks pass61 host
+modules; the existing22 installed scheduling/binding tests still pass.
+
+Limits remain material: the fixture executor does not implement full production
+catalog/privilege admission; direct writes qualify session lifetime only. New
+Psycopg2/SQLAlchemy generated reads use parameter-free compiler SQL. Weft-owned
+DBAPI parameter transport is being implemented and must receive separate native
+qualification. SQLAlchemy supports transactional Core connections, not ORM
+Session, DBAPI autocommit, two-phase transactions or other dialects/drivers.
+The full lifecycle release remains pending; no prerelease has been published.

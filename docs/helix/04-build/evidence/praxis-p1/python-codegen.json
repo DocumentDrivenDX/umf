@@ -123,7 +123,6 @@
   },
   "corpusSha256": "47ba0ccf22e1befac2c8c735f12ab747d559c8b49e82e11ae324f4f058cef57f",
   "limits": [
-    "Linux CI replay pending after deterministic framing correction",
     "index/release publication pending"
   ],
   "references": {
@@ -137,5 +136,15 @@
     "cases": 6,
     "assertions": 18,
     "result": "pass"
+  },
+  "hostedQualification": {
+    "commit": "7c335aaf4fba418a4004b8b018a370a312a4787a",
+    "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/39256785835",
+    "platforms": [
+      "ubuntu-latest",
+      "macos-14"
+    ],
+    "result": "passed",
+    "scope": "installed parity, packaging/freshness and writer/integrity controls"
   }
 }

@@ -68,13 +68,36 @@ uncertain write. Bind an unbound query to the desired mode; changing a query
 already bound to the other mode refuses. Keys, fields, relationship builders,
 wire documents and error codes are shared. Hosts still own resources and
 execution. The async WeftTableBinding retains its existing contract. Native sync/async
-session adapters are working candidates; live driver, transaction and pool
-qualification remains an open P1 gate.
+session adapters now have scoped local PostgreSQL18.6 qualification. The
+remaining production compiler-obligation executor and lifecycle profile remain
+release gates; see the exact native receipt below.
 
 The host runtime's Pydantic requirement is >=2.13,<3. Its MISSING compatibility
 import uses the actual Pydantic sentinel, preserving absence/null across 2.13.5
 and 2.14.1. Generated stdlib-only clients do not require Pydantic. See
 [P1 evidence](../evidence/praxis-p1.md) for commands, tested subset and limits.
+
+Use `SyncSession` / `AsyncSession` with Psycopg3, `Psycopg2Session` with
+synchronous Psycopg2 2.9, or `SQLAlchemySession` / `AsyncSQLAlchemySession` with
+SQLAlchemy2 Core connections. SQLAlchemy sync supports PostgreSQL Psycopg2 and
+Psycopg3; async supports Psycopg3. Supply a lease factory per authenticated
+identity, such as `lambda identity: engine.connect()`. These adapters never
+create an engine or pool. `transaction_owner="adapter"` requires an idle
+connection; `"caller"` requires a healthy active native transaction and uses a
+savepoint. SQLAlchemy DBAPI-autocommit connections refuse; configure the engine
+for transactional use. `open` yields the original driver/Core connection.
+
+Construct `SessionPolicy(people, batches, schema)` from trusted configuration
+and `SessionIdentity("person", subject)` or `SessionIdentity("batch", run)`
+after authentication. Registries authorize role selection; native grants/RLS
+decide rows and commands. `SyncSessionTransport` / `AsyncSessionTransport`
+compose sessions with the generated client and trusted Weft artifact executors.
+The [native harness](../../../../tests/unified/session_native_e2e.py) currently
+uses a bounded fixture executor: Psycopg2/SQLAlchemy generated reads are
+parameter-free. Parameterized driver transport, complete artifact admission and
+Weft mutations are separate pending work. The
+[native receipt](../evidence/praxis-p1/session-native-postgresql.json) records
+versions, source hashes, transaction/pool/cancellation checks and these limits.
 
 
 ## Python build entry point (local P1-05 candidate)

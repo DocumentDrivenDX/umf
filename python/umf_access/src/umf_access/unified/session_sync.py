@@ -60,6 +60,9 @@ class SyncSession:
         self._active: set[int] = set()
         self._lock = threading.Lock()
 
+    def _prepare_connection(self, connection):
+        return connection
+
     @contextmanager
     def open(self, identity: SessionIdentity, *, read_only: bool = True) -> Iterator[Any]:
         if os.getpid() != self._pid:
@@ -75,6 +78,8 @@ class SyncSession:
                 self._active.add(key)
             entered = False
             try:
+                native = connection
+                connection = self._prepare_connection(native)
                 status = int(connection.info.transaction_status)
                 if status not in (0, 2):
                     raise SessionError("connection is not idle or in a healthy caller transaction")
@@ -108,7 +113,7 @@ class SyncSession:
                     for name in settings:
                         cursor.execute(GET_SETTING, (name,))
                         effective[name] = cursor.fetchone()[0]
-                yield connection
+                yield native
                 with connection.cursor() as cursor:
                     cursor.execute(ROLE_CHECK)
                     verify_role(cursor.fetchone(), settings["role"], session_user)

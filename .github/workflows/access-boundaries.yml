@@ -129,6 +129,7 @@ jobs:
         run: >-
           python -m pip install /tmp/umf-session-wheels/*.whl
           pydantic==2.13.5 'psycopg[binary]==3.2.13' psycopg-pool==3.3.3
+          psycopg2-binary==2.9.11 sqlalchemy==2.0.44 greenlet==3.2.4
       - name: Install immutable Weft compiler cohort
         run: >-
           python -m pip install --no-deps
@@ -143,6 +144,7 @@ jobs:
           python -I tests/unified/session_native_e2e.py
           --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres"
           --generated /tmp/umf-session-client --report /tmp/umf-session-native.json
+          --psycopg2 --sqlalchemy
       - uses: actions/upload-artifact@v4
         if: always()
         with:
