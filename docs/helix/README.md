@@ -32,6 +32,11 @@ version0.2 metadata references and commit/cancellation handling across the nativ
 driver configurations. Generated typed module integration, remaining codecs,
 seeds/evolution, private consumer acceptance and publication remain required.
 
+The [generated module evidence](04-build/evidence/praxis-p2/generated-modules/receipt.json)
+connects declared typed module methods to those native executors, with80 PG18
+assertions, three static checkers and Bun/Chromium/embedded-Python parity.
+Remaining lifecycle/codec, private acceptance and release gates stay open.
+
 [Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
 turns a current UMF schema into one typed model/query/action API for tables and
 ontologies. Developers compose reads directly and change the binding to change

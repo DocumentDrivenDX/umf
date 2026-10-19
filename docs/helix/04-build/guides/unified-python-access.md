@@ -206,3 +206,49 @@ The administrative upgrade operation for those earlier installations remains a
 separate pending lifecycle gate.
 These unpublished components still require generated module integration,
 remaining lifecycle/codec work and full private consumer/release acceptance.
+
+## Generated declared module clients
+
+The local unpublished JSON-native candidate connects generated module methods
+to the SDK-owned executor. Generate from the exact approved bundle source using
+`umf_codegen.generate_python_client` or the pinned portable API, then mount it:
+
+```python
+from umf_access.unified import SyncNativeTableBinding
+from my_plugin import SyncClient, Applied, WriteOutcomeUnknown
+
+host = SyncNativeTableBinding(
+    session, approved_bundle, committed_reference, binding,
+    cursor_secret=host_cursor_secret, outcome_secret=host_outcome_secret,
+)
+client = SyncClient(host.for_identity(authenticated_identity))
+notes = client.modules.demo.read_many(owner=owner_role)
+try:
+    outcome = client.modules.demo.create(
+        id=note_id, owner=owner_role, idempotency_key=operation_key,
+    )
+except WriteOutcomeUnknown:
+    outcome = client.modules.demo.create_observe(
+        id=note_id, owner=owner_role, idempotency_key=operation_key,
+    )
+if isinstance(outcome, Applied):
+    fresh_rows = outcome.items[0].rows
+```
+
+Names above follow the public synthetic `demo` declaration; use the generated
+names for your own module. With an optional key, retain the chosen key yourself
+when recovery must survive a fully lost response. Use `NativeTableBinding` and
+`Client` for async sessions and await methods. The transport acquires through
+the supplied per-call session factory. `for_identity` does not create a pool or
+accept identity from wire parameters. Batch input classes belong to their
+specific declared operation; bulk methods use the `_batch` suffix, while outcome
+observation uses `_observe`. A batch-capable operation literally named
+`create_batch` therefore exposes `create_batch_batch` for multiple items.
+
+Inspect `outcome.status` and `durability`. Recovered results contain effect
+receipts without historical business rows. An unobserved receipt is no guarantee
+against a still-running attempt. Cancellation can follow commit; use fresh
+observation with the same key. Generation currently requires original JSON for
+this native profile. The scoped native fixture covers text projections/counts;
+remaining exact native codecs, lifecycle evolution and private Praxis/Lakebase
+release acceptance remain open. These candidates have not been published.

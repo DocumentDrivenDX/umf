@@ -6,6 +6,9 @@ import {analyzeAction} from '../extensions/actions/analysis';
 import type {Action} from '../extensions/actions/types';
 import {sha256Text} from '../compilation/bundle/index';
 import {pythonRuntime} from './python-runtime';
+import {tableRuntime} from './table-runtime';
+import {tableClients} from './table-client';
+import type {FieldInfo,Ref} from './types';
 
 export interface PythonClientRequest {
  text:string; format?:'json'|'yaml'; package:string;
@@ -16,8 +19,6 @@ export interface PythonClientResult {
  sourceDigest:string; description:Record<string,unknown>;
  files:{path:string;text:string;sha256:string}[];
 }
-type Ref={module:string;element:string};
-type FieldInfo={id:string;python:string;scalar:string;cardinality:string;missing:boolean;nullable:boolean;facets:Record<string,unknown>;item?:FieldInfo;allowed?:unknown[];semanticTypes?:unknown;semanticTypeInterpretation?:string};
 type RecordInfo={id:string;module:string;element:string;python:string;fields:FieldInfo[];key:FieldInfo[];keyId:string;selected:boolean};
 const fail=(path:string,message:string):never=>{throw new UmfError('ACCESS_UNSUPPORTED',message,path);};
 const object=(v:unknown):Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,any>:{};
@@ -77,24 +78,31 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  };
  const wanted=request.records&&new Set(request.records.map(refId));
  const records:RecordInfo[]=[],used=new Set<string>(reserved);
+ const nativeSelected=doc.modules.some(m=>Object.hasOwn(m.extensions??{},'umf.tables')&&m.elements.some(e=>e.kind==='record'&&(!wanted||wanted.has(m.id+'.'+e.id))));
+ if(nativeSelected){
+  if((request.format??'json')!=='json')fail('/format','Native operation clients currently require original JSON source');
+  for(const symbol of ['ModuleClients','SyncModuleClients','Applied','Recovered','NotObserved','EffectReceipt','MutationItem','table_call','table_call_sync'])used.add(symbol);
+ }
+ const native=tableClients(doc,wanted,{field,name,type,py,fail,used});
  for(const m of doc.modules)for(const e of m.elements){
   if(e.kind!=='record'||!Array.isArray(e.keys)||!e.keys.length)continue;
   const id=refId({module:m.id,element:e.id}),keys=e.keys as {id:string;primary?:boolean;fields:Ref[]}[];
+  if(Object.hasOwn(m.extensions??{},'umf.tables'))continue;
   const key=keys.find(k=>k.primary)??(keys.length===1?keys[0]:undefined);if(!key)fail(id,'Record requires an unambiguous identity Key');
   const python=name(String(e.name??e.id),'class',id);
   for(const symbol of [python,python+'Key',python+'Columns']){if(used.has(symbol))fail(id,'Generated type collision');used.add(symbol);}
   const keyFields=key!.fields.map(r=>field(r)),selected=!wanted||wanted.has(id);
-  if(selected&&Object.hasOwn(m.extensions??{},'umf.tables'))fail('/modules/'+doc.modules.indexOf(m)+'/extensions/umf.tables','Native table lifecycle client interpretation is not qualified');
   const fields=selected?(e.members as Ref[]).map(r=>field(r)):keyFields;
   if(new Set(fields.map(f=>f.python)).size!==fields.length)fail(id,'Field name collision');
   if(keyFields.some(f=>f.missing||f.nullable||f.cardinality!=='one'))fail(id,'Identity components must be required scalars');
   records.push({id,module:m.id,element:e.id,python,fields,key:keyFields,keyId:key!.id,selected});
  }
- if(wanted)for(const id of wanted)if(!records.some(r=>r.id===id))fail(id,'Selected Record not found');
- if(!records.some(r=>r.selected))fail('/records','Select at least one keyed Record');
+ if(wanted)for(const id of wanted)if(!records.some(r=>r.id===id)&&!native.ids.has(id))fail(id,'Selected Record not found');
+ if(!records.some(r=>r.selected)&&!native.modules.length)fail('/records','Select at least one keyed Record');
  const rels:{owner:string;target:string;module:string;id:string;python:string;direction:'forward'|'inverse';sourceMultiplicity:unknown;targetMultiplicity:unknown}[]=[];
  for(const m of doc.modules)for(const raw of (m.relationships??[]) as any[]){
   const owner=records.find(r=>r.id===refId(raw.source?.[0]??{})),target=records.find(r=>r.id===refId(raw.target?.[0]??{}));
+  if((native.ids.has(refId(raw.source?.[0]??{}))&&target?.selected)||(native.ids.has(refId(raw.target?.[0]??{}))&&owner?.selected))fail(m.id+'/'+raw.id,'Cross-profile relationship requires explicit lowering');
   if(!owner||!target||!owner.selected&&!target.selected)continue;
   if(raw.source.length!==1||raw.target.length!==1||raw.directed!==true||raw.target[0].key!==target.keyId)fail(m.id+'/'+raw.id,'Relationship endpoint meaning requires explicit lowering');
   const python=name(String(raw.name??raw.id),'field',m.id+'/'+raw.id);
@@ -135,8 +143,9 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  if(actionSelection)for(const id of actionSelection)if(!actions.some(a=>a.id===id))fail(id,'Selected Action not found');
  const metadata=Object.fromEntries(records.map(r=>[r.id,{fields:r.fields,key:r.key,key_id:r.keyId,selected:r.selected}]));
  const actionMetadata=Object.fromEntries(actions.map(a=>[a.id,{parameters:a.parameters,affected:a.affected,declaration:a.raw}]));
- const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,limits:{page:100,getManyKeys:100}};
+ const description={contract:'umf.access/1',umf:doc.umf,sourceDigest,records:metadata,relationships:rels,actions:actionMetadata,...(native.modules.length?{tableModules:native.modules,nativeExecutionQualified:false}:{}),limits:{page:100,getManyKeys:100}};
  const lines=['# SPDX-License-Identifier: MIT OR Apache-2.0','# Generated from UMF '+CURRENT_CORE_VERSION+'. Regenerate; do not edit.','from __future__ import annotations','from dataclasses import dataclass','from datetime import date','from decimal import Decimal','from uuid import UUID','from typing import Any, ClassVar, Literal, cast','from ._runtime import Client as RuntimeClient, SyncClient as RuntimeSyncClient, Query, SyncQuery, Field, Relationship, Missing, MISSING, Transport, SyncTransport, AsyncTransport, Receipt, ExactTimestamp, AccessError, validate_model',`SOURCE_DIGEST = ${py(sourceDigest)}`,`_METADATA: dict[str, Any] = ${py(metadata)}`,`_ACTIONS: dict[str, Any] = ${py(actionMetadata)}`,''];
+ if(native.modules.length)lines.push('from ._runtime import Page','from ._table_runtime import Applied, Recovered, NotObserved, EffectReceipt, MutationItem, table_call, table_call_sync','',...native.lines);
  for(const r of records){
   lines.push('@dataclass(frozen=True)',`class ${r.python}Key:`);
   for(const f of r.key)lines.push(`    ${f.python}: ${type(f,false)}`);
@@ -159,7 +168,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  for(const mode of [{client:'Client',base:'RuntimeClient',actions:'Actions',async:true},{client:'SyncClient',base:'RuntimeSyncClient',actions:'SyncActions',async:false}]){
   const transport=mode.async?'Transport':'SyncTransport';
   lines.push(`class ${mode.client}(${mode.base}):`,`    def __init__(self, transport: ${transport}) -> None:`,
-   '        super().__init__(transport, SOURCE_DIGEST, _METADATA, _ACTIONS)','',`class ${mode.actions}:`,
+   '        super().__init__(transport, SOURCE_DIGEST, _METADATA, _ACTIONS)',...(native.modules.length?[`        self.modules: ${mode.async?'ModuleClients':'SyncModuleClients'} = ${mode.async?'ModuleClients':'SyncModuleClients'}(self)`]:[]),'',`class ${mode.actions}:`,
    `    def __init__(self, client: ${mode.client}) -> None:`,
    `        if not isinstance(client, ${mode.base}): raise AccessError('CLIENT_TYPE')`,
    '        self._client = client','');
@@ -174,6 +183,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
  const files=[{path:request.package+'/__init__.py',text:'# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import '+['AccessError','Unsupported','SchemaMismatch','PreconditionFailed','WriteOutcomeUnknown','Page','Receipt','ExactTimestamp','MISSING','Missing','Transport','AsyncTransport','SyncTransport'].map(symbol=>symbol+' as '+symbol).join(', ')+'\n'},
  {path:request.package+'/models.py',text:lines.join('\n')+'\n'},
  {path:request.package+'/_runtime.py',text:pythonRuntime},
+ ...(native.modules.length?[{path:request.package+'/_table_runtime.py',text:tableRuntime}]:[]),
  {path:request.package+'/source.json',text:request.text},
  {path:request.package+'/description.json',text:JSON.stringify(description,null,2)+'\n'},
  {path:request.package+'/py.typed',text:''}].map(f=>({...f,sha256:sha256Text(f.text)}));

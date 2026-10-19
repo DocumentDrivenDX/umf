@@ -1,0 +1,80 @@
+{
+  "capturedAt": "2026-10-19T23:00:19.973218+00:00",
+  "scope": "unpublished JSON-native generated module integration; full Praxis release remains gated",
+  "umfParent": "384504967592d1b680ea4762a0668e444020e8fd",
+  "weftCommit": "4c7c2eb0382e8dd5a5fca91e65d7f39cdecfc49b",
+  "sourceFiles": {
+    ".github/workflows/access-boundaries.yml": "5bd0936df9a72574408c063b582e191cd6dd7f04ad4c315d59f968f799bc02c0",
+    "docs/helix/02-design/contracts/CONTRACT-079-unified-python-access.md": "851aa03d81662b3ca5dfc66ecdc27276add3d792622f428c301c35b5156f0285",
+    "docs/helix/04-build/guides/unified-python-access.md": "fe147a46c03e3cd17d86302dd6283300fd36f9d8b7cba4bf7b65ad389fa25cd5",
+    "docs/helix/04-build/praxis-p1-plan.md": "0fe2aa9de4f20bb65eb5ae6eefda2f943d7ac116e60164e6a664627018b298c7",
+    "docs/helix/README.md": "2e9726b60ce9f4d1912cd9face0f6b024edec993cc7d4a580f37338230471e26",
+    "python/umf_access/src/umf_access/unified/__init__.py": "0840a2129c63979b7ee2306056f665a9b31842347e7171cb8bb9081c58312445",
+    "python/umf_access/src/umf_access/unified/native_binding.py": "efe9fd6b3b8ec8e2b2b16b586e9a1ade4bea882f2753afca17bf45f4e43eee60",
+    "python/umf_access/tests/test_native_binding.py": "3139d314a7fe67208ca71737188c39efd6f12097821e608bc29fcfd324af3273",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "ad65d1aa6c676a561c0c87d2f8ef49008fc35c696a66e659fe55f1cb80ab1545",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "76417efd22244cdfcee5c69094cc641ebf64c2e0e2f856fa9be8f5a67e3386e6",
+    "python/umf_codegen/src/umf_codegen/_release.py": "71e627587f5b8aa34f5607317305f48479f2eba5b86ae3e3a1eb811a8e73abfc",
+    "scripts/codegen-corpus.ts": "d6473153bb47f240d585c1b88b9c273629e91f8e52f0d9f0770d5782476f9a54",
+    "scripts/verify-native-client-types.py": "487e40c9980556b7814d03fd4988dd1501193cb69e7357ddad1028d28d5f06f3",
+    "src/access/index.ts": "645b58d2b76d20a59d289b69ccbc7f399d6ea052a8c35ad2f3a575fd5574201f",
+    "src/access/python-runtime.ts": "b471129b6ec6b8d5b6c828b99247b5ea6bdecb11ca7b9b5a312180cc6be5b8a6",
+    "src/access/table-client.ts": "fe60b97246671bfb8d82ef4fa020f0633a9a38a42ff7945a6b3fa783cc13c05c",
+    "src/access/table-runtime.ts": "2d1513f86bac3497b84cb7d1214f88e1528e966aa950c17840331ab78cfe72f9",
+    "src/access/types.ts": "4d8e44ebc1ada336fe18aeaf67f14fe2c42e0c8a59f1d73bdf9c1738a28f2f7d",
+    "tests/access-native-table.test.ts": "8c638294b286b3264472cd941cfc2f79bf8f6c3dcac7d31339efce956443dfcf",
+    "tests/access-unified-browser.test.ts": "acd783e4ca308fc4f2849d51075f217e98309903b7e71b97a36bd67cc9a7bbb7",
+    "tests/binding/table-operations.test.ts": "1d6689be50b85ebaf0d557312186941cf18bde56e2a0226e0ddc86c59b25c19d",
+    "tests/binding/tables.test.ts": "347cf2765a5a3e77d27efe8f4801268779288669f7d15212540b3a4c11bc0860",
+    "tests/unified/native-types/negative.py": "367321f48237a78bd5071ebdd0fe99d6cfa51c21fe35dc23f89c351993f4b8a8",
+    "tests/unified/native-types/positive.py": "e77eafdc3fa323ca0f45c98c53ded45d78cace110f06982b8c3c6ea12aa82eb2",
+    "tests/unified/table-client-fixture.ts": "8ce5ac7a4bc4575098aaa2eed21408412966e92a1001bd3a63a2a49a5626715a",
+    "tests/unified/table_reads_native.py": "68fee48a5589a5f702f6333f1d60aea292a04b955e17101e295326d15e2176b9"
+  },
+  "localWheels": {
+    "umf_codegen-0.1.0a1-py3-none-any.whl": "bc4a510b2367a2da35cb7bdd85b49d06fc0ff68a53e53f871d3945cf005388be",
+    "umf_access-0.1.0.dev2-py3-none-any.whl": "37d0d6eb7b9f114cbc3085aa0b7af193baa16d609d968968600ff7a3569d17e6"
+  },
+  "checks": {
+    "postgresql": "18.6",
+    "nativeAssertions": 80,
+    "driverPoolConfigurations": 6,
+    "trackedLeasesAcquired": 68,
+    "trackedLeasesReleased": 68,
+    "staticCheckers": {
+      "mypy": "2.4.0",
+      "pyright": "1.1.414",
+      "ty": "0.0.88"
+    },
+    "staticNegativeSitesPerChecker": 5,
+    "portableTestsPassed": 55,
+    "portableTestsSkipped": 1,
+    "portableAssertions": 376,
+    "browser": "Chromium153.0.8010.12; ordinary and native generated file parity with Bun1.4.3",
+    "embeddedCompleteParityCases": 18,
+    "embeddedExternalJavaScriptNetworkAndSubprocesses": "forbidden",
+    "closedWireUnitTests": 4,
+    "sessionUnitTests": 25,
+    "boundaryTests": 24,
+    "boundaryAssertions": 170,
+    "pythonImportGraphModules": 80,
+    "sourceWheelInstalledRuntimeModules": 75,
+    "typescript": "library and tools pass",
+    "ruff": "0.17.1 full python tree passes",
+    "license": "MIT OR Apache-2.0"
+  },
+  "nativeCoverage": [
+    "generated sync/async read, pages, count, optional, insert, upsert-ignore, declared atomic bulk, effect receipt recovery and fresh observations",
+    "authenticated person/batch identities outside wire; native role RLS",
+    "adapter ownership and pending caller-owned writes disappear after outer rollback",
+    "async generated repeated cancellation propagates at actual advisory wait; pool remains usable",
+    "all tracked native leases balanced"
+  ],
+  "remaining": [
+    "native temporal/domain codecs and constraints",
+    "seed execution and broader forward schema/policy/operation evolution",
+    "explicit old runtime upgrade and legacy adoption",
+    "selected private Praxis source/data conversion and available managed Lakebase acceptance",
+    "cohort version bumps, immutable artifacts and index/release publication"
+  ]
+}

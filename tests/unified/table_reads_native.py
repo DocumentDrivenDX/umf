@@ -15,6 +15,9 @@ import json
 from pathlib import Path
 import uuid
 import time
+import sys
+import tempfile
+import importlib
 
 import psycopg
 from psycopg import sql
@@ -23,12 +26,12 @@ from psycopg2.pool import ThreadedConnectionPool
 from psycopg2.extensions import parse_dsn
 from sqlalchemy import create_engine, URL
 from sqlalchemy.ext.asyncio import create_async_engine
-from umf_codegen import compile_table_deployment, compile_table_migration
+from umf_codegen import compile_table_deployment, compile_table_migration, generate_python_client
 from umf_access.lifecycle import apply_table_migration
 from umf_access.lifecycle import prepare_table_correspondence, inspect_table_history, read_table_head
 from umf_access.unified import (SyncTableReader, AsyncTableReader, SyncSession, AsyncSession,
     Psycopg2Session, SQLAlchemySession, AsyncSQLAlchemySession, SessionIdentity, SessionPolicy, SessionError,
-    SyncTableWriter, AsyncTableWriter, WriteOutcomeUnknown)
+    SyncTableWriter, AsyncTableWriter, WriteOutcomeUnknown, SyncNativeTableBinding, NativeTableBinding)
 from umf_access.unified.outcome_values import outcome_slot
 from umf_access.unified.operation_values import native_arguments
 
@@ -36,6 +39,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dsn', required=True)
 parser.add_argument('--report', required=True, type=Path)
 parser.add_argument('--mutations',action='store_true')
+parser.add_argument('--generated',action='store_true')
 args = parser.parse_args()
 source = json.loads(Path(__file__).with_name('table-operation-model.json').read_text())
 module = source['modules'][0]; content = {'module':'demo','element':'content'}
@@ -569,8 +573,103 @@ def write_fault_cases():
         check('legacy-write-refusal-acquires-no-lease',not acquired)
 
 
+if args.generated:
+    generated_dir=tempfile.TemporaryDirectory(prefix='umf-generated-native-')
+    generated=generate_python_client(text=bundle['source']['utf8'],package='native_demo')
+    for file in generated['files']:
+        path=Path(generated_dir.name)/file['path'];path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_text(file['text'])
+    sys.path.insert(0,generated_dir.name)
+    client_module=importlib.import_module('native_demo')
+
+
+def generated_sync_cases(label,factory,adapter):
+    host=SyncNativeTableBinding(adapter(factory,policy),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+    client=client_module.SyncClient(host.for_identity(a)).modules.demo
+    foreign=client_module.SyncClient(host.for_identity(b)).modules.demo
+    batch=client_module.SyncClient(host.for_identity(job)).modules.demo
+    first=client.read_page(owner=alice)
+    check(label+'-generated-page',first.items[0].id=='a1' and first.next_cursor is not None)
+    check(label+'-generated-page-next',client.read_page(owner=alice,cursor=first.next_cursor).items[0].id=='a2')
+    check(label+'-generated-rls',foreign.read_many(owner=alice)==())
+    check(label+'-generated-count',batch.read_count(owner=alice)>=2)
+    check(label+'-generated-optional',foreign.read_optional(owner=alice) is None)
+    before=leases[label]['acquired']
+    try:client.read_many(owner=1)
+    except (TypeError,ValueError):check(label+'-generated-invalid-before-lease',leases[label]['acquired']==before)
+    else:raise AssertionError('wrong typed argument accepted')
+    key=label+'-generated'
+    applied=client.create(id=key,owner=alice,idempotency_key=key)
+    check(label+'-generated-write',isinstance(applied,client_module.Applied) and applied.items[0].rows[0].id==key and applied.durability=='committed')
+    check(label+'-generated-replay',isinstance(client.create(id=key,owner=alice,idempotency_key=key),client_module.Recovered))
+    check(label+'-generated-observe',client.create_observe(id=key,owner=alice,idempotency_key=key).receipt==applied.receipt)
+    check(label+'-generated-foreign-observe',isinstance(foreign.create_observe(id=key,owner=alice,idempotency_key=key),client_module.NotObserved))
+    items=(client_module.DemoCreateBatchInput(id=key+'-1',owner=alice),client_module.DemoCreateBatchInput(id=key+'-2',owner=bob))
+    check(label+'-generated-batch',batch.create_batch_batch(items=items,idempotency_key=key+'-bulk').receipt.effects==(1,1))
+    check(label+'-generated-upsert',client.put_ignore(id=key,owner=alice,idempotency_key=key+'-ignore').receipt.effects==(0,))
+    with factory(a) as c,rollback_caller(c):
+        @contextmanager
+        def borrowed(_):yield c
+        caller_host=SyncNativeTableBinding(adapter(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+        caller=client_module.SyncClient(caller_host.for_identity(a)).modules.demo
+        check(label+'-generated-caller-pending',caller.create(id=key+'-caller',owner=alice,idempotency_key=key+'-caller').durability=='pending-caller-commit')
+    check(label+'-generated-caller-rollback',isinstance(client.create_observe(id=key+'-caller',owner=alice,idempotency_key=key+'-caller'),client_module.NotObserved))
+    check(label+'-generated-cleanup',leases[label]['acquired']==leases[label]['released'])
+
+
+async def generated_async_cases(label,factory,adapter):
+    host=NativeTableBinding(adapter(factory,policy),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+    client=client_module.Client(host.for_identity(a)).modules.demo
+    foreign=client_module.Client(host.for_identity(b)).modules.demo
+    batch=client_module.Client(host.for_identity(job)).modules.demo
+    check(label+'-generated-async-rls',await foreign.read_optional(owner=alice) is None)
+    key=label+'-generated'
+    applied=await client.create(id=key,owner=alice,idempotency_key=key)
+    check(label+'-generated-async-write',isinstance(applied,client_module.Applied) and applied.items[0].rows[0].id==key)
+    check(label+'-generated-async-recovery',isinstance(await client.create(id=key,owner=alice,idempotency_key=key),client_module.Recovered))
+    items=(client_module.DemoCreateBatchInput(id=key+'-1',owner=alice),client_module.DemoCreateBatchInput(id=key+'-2',owner=bob))
+    check(label+'-generated-async-batch',(await batch.create_batch_batch(items=items,idempotency_key=key+'-bulk')).receipt.effects==(1,1))
+    async with factory(a) as c:
+        native=isinstance(c,psycopg.AsyncConnection)
+        @asynccontextmanager
+        async def borrowed(_):yield c
+        caller_host=NativeTableBinding(adapter(borrowed,policy,transaction_owner='caller'),bundle,reference,binding,cursor_secret=secret,outcome_secret=secret)
+        caller=client_module.Client(caller_host.for_identity(a)).modules.demo
+        tx=c.transaction(force_rollback=True) if native else c.begin()
+        async with tx:
+            if native:await c.execute('SELECT current_user')
+            else:await c.exec_driver_sql('SELECT current_user')
+            check(label+'-generated-async-caller-pending',(await caller.create(id=key+'-caller',owner=alice,idempotency_key=key+'-caller')).durability=='pending-caller-commit')
+            if not native:await tx.rollback()
+    check(label+'-generated-async-caller-rollback',isinstance(await client.create_observe(id=key+'-caller',owner=alice,idempotency_key=key+'-caller'),client_module.NotObserved))
+    lock=int.from_bytes(hashlib.sha256(('umf.table-lifecycle/0.1\0'+cfg['schema']).encode()).digest()[:8],'big',signed=True)
+    with admin.transaction():
+        admin.execute('SELECT pg_catalog.pg_advisory_xact_lock(%s)',(lock,))
+        before=leases[label]['acquired']
+        task=asyncio.create_task(client.read_page(owner=alice))
+        waiting=False
+        try:
+            async with await psycopg.AsyncConnection.connect(args.dsn,autocommit=True) as monitor:
+                deadline=time.monotonic()+15
+                while time.monotonic()<deadline:
+                    if leases[label]['acquired']>before:
+                        row=await (await monitor.execute('SELECT wait_event_type,wait_event FROM pg_catalog.pg_stat_activity WHERE pid=%s',(leases[label]['pid'],))).fetchone()
+                        if row==('Lock','advisory'):waiting=True;break
+                    if task.done():await task;break
+                    await asyncio.sleep(.01)
+            check(label+'-generated-actual-wait',waiting)
+        finally:
+            task.cancel();await asyncio.sleep(0);task.cancel()
+            try:await task
+            except asyncio.CancelledError:check(label+'-generated-cancel-propagates',True)
+    check(label+'-generated-usable-after-cancel',await batch.read_all_count()>0)
+    check(label+'-generated-async-cleanup',leases[label]['acquired']==leases[label]['released'])
+
+
 if args.mutations:
     sync_cases,async_cases=write_sync_cases,write_async_cases
+if args.generated:
+    sync_cases,async_cases=generated_sync_cases,generated_async_cases
 
 
 with psycopg.connect(args.dsn,autocommit=True) as admin:
@@ -621,8 +720,8 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 sync_cases(label,factory,SQLAlchemySession)
             finally:engine.dispose()
         asyncio.run(run_async())
-        if args.mutations:write_fault_cases()
-        if not args.mutations:
+        if args.mutations and not args.generated:write_fault_cases()
+        if not args.mutations and not args.generated:
             with psycopg.connect(args.dsn,autocommit=True) as c:
                 @contextmanager
                 def direct(_):yield c
@@ -637,8 +736,8 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 refused('compressed-oversize-frame-is-atomic-refusal',lambda:r.read(a,'read_content',inputs(alice)))
                 check('oversize-refusal-restores-session',r.read(b,'read_count',inputs(bob))['count']=={'integerToken':'1'})
         report={'postgresql':admin.info.server_version,'sourceDigest':bundle['sourceDigest'],'observations':observations,
-                'leases':leases,'scope':('SDK-owned declared mutation/outcome component' if args.mutations else 'SDK-owned declared reads')+'; six native driver/pool configurations',
-                'remaining':['full mutation race/uncertainty/fault qualification' if args.mutations else 'durable write outcomes','generated native module methods','remaining lifecycle codecs and evolution','private Praxis and managed Lakebase acceptance','prerelease publication']}
+                'leases':leases,'scope':('generated typed native module methods' if args.generated else 'SDK-owned declared mutation/outcome component' if args.mutations else 'SDK-owned declared reads')+'; six native driver/pool configurations',
+                'remaining':['full mutation race/uncertainty/fault qualification' if args.mutations else 'durable write outcomes',* ([] if args.generated else ['generated native module methods']),'remaining lifecycle codecs and evolution','private Praxis and managed Lakebase acceptance','prerelease publication']}
     finally:
         if schema_created:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))
         for role in reversed(created):admin.execute(sql.SQL('DROP OWNED BY {}').format(sql.Identifier(role)))

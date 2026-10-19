@@ -15,7 +15,10 @@ test('CONTRACT-079/081: all declared result/write/conflict/batch shapes admit wi
  expect(payload(result.source).commands).toHaveLength(11);
  result.modules[0]!.payload.commands.length=0;expect(d).toEqual(before);expect(payload(result.source).commands).toHaveLength(11);
  for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(d,format),format);expect(restored).toEqual(d);expect(inspect(restored).complete).toBe(true);}
- expect(()=>generatePythonClient({text:JSON.stringify(d),package:'operation_demo'})).toThrow('Native table lifecycle');
+ const generated=generatePythonClient({text:JSON.stringify(d),package:'operation_demo'});
+ expect(generated.description.nativeExecutionQualified).toBe(false);
+ expect(generated.files.find(f=>f.path==='operation_demo/models.py')!.text).toContain('class DemoModule:');
+ expect(d).toEqual(before);
 });
 
 test('unknown operation versions and nested members retain exact source and block completeness',()=>{

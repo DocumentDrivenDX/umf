@@ -88,7 +88,7 @@ test('CONTRACT-081: malformed input, unknown revisions and bounded diagnostic ex
 });
 
 test('CONTRACT-081: client generation refuses lifecycle source until its operation interpretation is qualified',()=>{
- expect(()=>generatePythonClient({text:JSON.stringify(source()),package:'notes'})).toThrow('Native table lifecycle client interpretation is not qualified');
+ expect(()=>generatePythonClient({text:JSON.stringify(source()),package:'notes'})).toThrow('Native table lifecycle client requires declared operations');
 });
 
 test('CONTRACT-081: an action cannot bypass pending table interpretation through an unselected module dependency',async()=>{

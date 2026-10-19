@@ -773,3 +773,35 @@ transport. Required temporal/domain/native constraints, seed execution, broader
 forward schema/policy/command evolution, runtime upgrades, private source/data
 conversion, available managed Lakebase acceptance and immutable publication
 remain required; this component does not redefine the release scope.
+
+## Generated declared module integration — 2026-10-19
+
+The user's selected replacement for the private SQL escape is declared typed
+operations. `generatePythonClient` now emits module-only native methods, exact
+keyword input and projection dataclasses, typed read terminals and immutable
+applied/recovered/unobserved unions. No native `.objects` escape is generated.
+An SDK-owned closed native binding maps those requests to the existing checked
+Weft reader/writer; authenticated person/batch identity is bound outside wire
+input, with per-call factory/session behavior retained. Source/operation/profile
+mismatches and unsupported meanings refuse. Native JSON is the qualified source
+format; ordinary generator profiles retain their own support contract.
+
+The [generated-module evidence](evidence/praxis-p2/generated-modules/receipt.json)
+records80 PG18 assertions across six native driver/pool variants and both
+transaction owners,68 balanced tracked leases, generated async cancellation at
+actual advisory waits, source/role RLS, paging, CRUD recovery, upsert and atomic
+batches. This augments the prior162 native mutation and126 read assertions;
+it does not replace their broader fault controls. Three pinned static checkers
+accept the generated package/positive sites and reject exactly five reviewed
+misuses each. Actual Chromium matches Bun bytes; the installed embedded Python
+compiler matches18 complete accepted/refused corpus results with external
+JavaScript executables, network and subprocesses forbidden. Four wire controls
+cover identity/mutation/SQL injection, session-mode mismatch, sanitized diagnostics
+and cancellation propagation. CI preserves these checks.
+
+No release tag or asset is published. Required remaining work includes the
+native temporal/domain constraint and codec profile, seeds, broader forward
+schema/policy/command evolution and old-runtime upgrade, read-only selected
+private source conversion/data acceptance, available managed Lakebase testing,
+version bumps, hashes/licenses and immutable UMF/Weft publication. The full goal
+remains active.

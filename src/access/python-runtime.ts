@@ -31,7 +31,8 @@ class AccessError(ValueError):
 class Unsupported(AccessError): pass
 class SchemaMismatch(AccessError): pass
 class PreconditionFailed(AccessError): pass
-class WriteOutcomeUnknown(AccessError): pass
+class WriteOutcomeUnknown(AccessError):
+    key: str | None = None
 
 @dataclass(frozen=True)
 class ExactTimestamp:
@@ -211,7 +212,7 @@ class Client:
             code = error['code']
             exception = {'UNSUPPORTED': Unsupported, 'SCHEMA_MISMATCH': SchemaMismatch,
                          'PRECONDITION_FAILED': PreconditionFailed, 'WRITE_OUTCOME_UNKNOWN': WriteOutcomeUnknown}.get(code, AccessError)
-            if code not in {'INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS', 'BUSY',
+            if code not in {'INVALID', 'DENIED', 'CONFLICT', 'PRECONDITION_FAILED', 'TOO_MANY_ROWS', 'LIMIT_EXCEEDED', 'BUSY',
                             'UNSUPPORTED', 'SCHEMA_MISMATCH', 'WRITE_OUTCOME_UNKNOWN', 'NOT_YET_CURRENT', 'INVALID_CURSOR'}:
                 raise AccessError('INVALID_RESPONSE')
             raise exception(code, error.get('field') or error.get('precondition'))

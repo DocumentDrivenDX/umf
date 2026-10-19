@@ -12,6 +12,7 @@ from .head_session import (
     verify_table_correspondence,
     verify_table_correspondence_async,
 )
+from .native_binding import NativeTableBinding, SyncNativeTableBinding
 from .session_async import AsyncSession
 from .session_policy import SessionError, SessionIdentity, SessionPolicy
 from .session_psycopg2 import Psycopg2Session
@@ -165,11 +166,13 @@ __all__ = [
     "AsyncSession",
     "AsyncTableReader",
     "AsyncTableWriter",
+    "NativeTableBinding",
     "Psycopg2Session",
     "SQLAlchemySession",
     "SessionError",
     "SessionIdentity",
     "SessionPolicy",
+    "SyncNativeTableBinding",
     "SyncSession",
     "SyncTableReader",
     "SyncTableWriter",

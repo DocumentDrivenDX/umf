@@ -82,15 +82,37 @@ jobs:
           python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
           python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
           python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
+          python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
       - name: Check portable sync and async clients
         run: >-
-          bun test tests/access-unified.test.ts tests/access-unified-sync.test.ts
+          bun test tests/access-native-table.test.ts tests/access-unified.test.ts tests/access-unified-sync.test.ts
           tests/access-unified-generation.test.ts tests/compilation/access-generator.test.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: p1-compatibility-pydantic-${{ matrix.pydantic }}
           path: /tmp/umf-p1-compatibility.json
+
+
+  native-client-types:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: bun install --frozen-lockfile
+      - run: python -m venv /tmp/native-client-checkers
+      - run: /tmp/native-client-checkers/bin/pip install mypy==2.4.0 pyright==1.1.414 ty==0.0.88
+      - run: python scripts/verify-native-client-types.py --environment /tmp/native-client-checkers --work-dir /tmp/native-client-types
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-client-types
+          path: /tmp/native-client-types/*-*.log
 
 
   python-codegen:
@@ -232,6 +254,7 @@ jobs:
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --report /tmp/umf-head-adapter-native.json
           python -I tests/unified/head_session_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --plans /tmp/umf-head-adapter-plans.json --correspondence --report /tmp/umf-correspondence-adapter-native.json
           python -I tests/unified/table_reads_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-reads-native.json
+          python -I tests/unified/table_reads_native.py --mutations --generated --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-generated-native.json
           python -I tests/unified/table_reads_native.py --mutations --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --report /tmp/umf-table-writes-native.json
       - uses: actions/upload-artifact@v4
         if: always()
@@ -249,3 +272,4 @@ jobs:
             /tmp/umf-correspondence-adapter-native.json
             /tmp/umf-table-reads-native.json
             /tmp/umf-table-writes-native.json
+            /tmp/umf-table-generated-native.json

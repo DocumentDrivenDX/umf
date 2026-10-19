@@ -10,7 +10,7 @@
     "verifyTableMigration"
   ],
   "v8": "14.4.258.23",
-  "bundleSha256": "46bc9002b035c784ed5e63d4eb3952676bc5b70f64cee09108f182263ad11a71",
+  "bundleSha256": "9f645bde0357ae19dd78a8cfe49f5783479cdbe5ed5900b93eb3517d4ec8ba5a",
   "builder": "bun@1.4.3",
   "license": "MIT OR Apache-2.0",
   "inputs": {
@@ -188,8 +188,10 @@
     "spec/extensions/tables/schema.json": "5d9b04c587153ddfaaf709f5598d3974315e7efe158b20008ff8d9007836427c",
     "spec/metamodel/generated/core-constraints.json": "d7adfd1b339595b42c297c89f126774ae115b2c45e37216537a0c8a31bed4dfc",
     "spec/metamodel/generated/domain-policy.json": "3a453befd96f7b78bbc2da9758a9dcdfb3a16849383e82427f883b0ea69e549d",
-    "src/access/index.ts": "21ef9998bc6905d6454d94faf9f39d53872885600782934ac6ca8894ae06bb13",
-    "src/access/python-runtime.ts": "a4347c1f6d61e9343910caeef491fb0dd4a9fada47f35dd1148144a5080b454b",
+    "src/access/index.ts": "645b58d2b76d20a59d289b69ccbc7f399d6ea052a8c35ad2f3a575fd5574201f",
+    "src/access/python-runtime.ts": "b471129b6ec6b8d5b6c828b99247b5ea6bdecb11ca7b9b5a312180cc6be5b8a6",
+    "src/access/table-client.ts": "fe60b97246671bfb8d82ef4fa020f0633a9a38a42ff7945a6b3fa783cc13c05c",
+    "src/access/table-runtime.ts": "2d1513f86bac3497b84cb7d1214f88e1528e966aa950c17840331ab78cfe72f9",
     "src/compilation/bundle/hash.ts": "b0e4ee708c5f24af83d426eaede3e531dc381b45fb53dc82e80902274c1d32fa",
     "src/compilation/bundle/index.ts": "f4ee94b9e7fa6564cde401a8ea158b0cdd5a41e982cf363ca4c74f8e702dfd11",
     "src/extensions/actions/analysis.ts": "8333e5586eb0bc939bcacd8a4edb22735f5e09b9ffda4ee1b29d9a2a178f4561",
@@ -282,7 +284,7 @@
     }
   ],
   "files": {
-    "generator.js.gz": "50e10e02cffd0f2c23bec95d4a1a1ca8a008a3405202a4ed7d32c7869ba54ebf",
+    "generator.js.gz": "ad65d1aa6c676a561c0c87d2f8ef49008fc35c696a66e659fe55f1cb80ab1545",
     "notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
     "notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
     "notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",

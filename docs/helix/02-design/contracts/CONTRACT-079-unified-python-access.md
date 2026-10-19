@@ -405,3 +405,39 @@ extensions and qualification before selection. They are not converted to raw SQL
 callbacks. Standard composed queries and graph Actions retain their existing
 contracts and independent authority; this native declaration does not reinterpret
 a graph-write recipe or authorize a Truss/Ashlar operation.
+
+## Declared native module client candidate
+
+For selected current-core Records owned by `umf.tables`0.1.0 modules, the JSON
+source profile emits `Client.modules.<module>.<operation>` and its synchronous
+counterpart. Native Records do not also acquire ordinary composed `.objects`
+queries. The declared operation owns its keyword parameters, result projection,
+cardinality, batch bound and required/optional replay key. Each operation has a
+frozen input class and, when projected, a frozen result class. Bulk methods take
+a tuple of that operation's input class. Generated names that collide refuse.
+Bare table declarations without commands and unsupported selected meanings refuse
+before output. YAML native execution is not qualified by this candidate.
+
+The closed `kind="table"` wire carries original source identity, module,
+operation, exact CoreLiteral inputs, optional page continuation and explicit
+invoke/observe phase. It carries no SQL, connection, role or authentication
+claim. `SyncNativeTableBinding` and `NativeTableBinding` mount one approved
+module on the existing native session/reader/writer components. Their
+`for_identity` transport receives an authenticated registered person/batch
+identity outside the request. Every call retains the source check, native
+admission, transaction ownership and cleanup contracts above; host query
+callbacks are unnecessary.
+
+Read methods return typed tuples, single/optional rows, `Page[Row]` or exact
+integer counts. Writes return `Applied[Row] | Recovered`; observations return
+`Recovered | NotObserved`. The frozen `status` literal discriminates these
+unions. Only applied results have business rows. A malformed/lost mutation
+response raises generated `WriteOutcomeUnknown` with the attempted key and
+never triggers an automatic retry. Caller-owned durability stays explicit.
+BaseException cancellation propagates after the underlying session cleanup.
+
+The portable generator, embedded Python compiler and actual Chromium emit the
+same deterministic package. The native packet in the implementation plan records
+the scoped six-driver PG18 evidence; generation alone keeps
+`nativeExecutionQualified=false`. Remaining native codecs, constraints,
+seed/evolution and full consumer/cohort publication gates remain independent.
