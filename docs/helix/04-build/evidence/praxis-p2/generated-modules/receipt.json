@@ -7,7 +7,7 @@
     ".github/workflows/access-boundaries.yml": "5bd0936df9a72574408c063b582e191cd6dd7f04ad4c315d59f968f799bc02c0",
     "docs/helix/02-design/contracts/CONTRACT-079-unified-python-access.md": "851aa03d81662b3ca5dfc66ecdc27276add3d792622f428c301c35b5156f0285",
     "docs/helix/04-build/guides/unified-python-access.md": "fe147a46c03e3cd17d86302dd6283300fd36f9d8b7cba4bf7b65ad389fa25cd5",
-    "docs/helix/04-build/praxis-p1-plan.md": "0fe2aa9de4f20bb65eb5ae6eefda2f943d7ac116e60164e6a664627018b298c7",
+    "docs/helix/04-build/praxis-p1-plan.md": "55088384ff67ed28338d5ec6fbc9cd373d9009c286031628243a0704cf1fa548",
     "docs/helix/README.md": "2e9726b60ce9f4d1912cd9face0f6b024edec993cc7d4a580f37338230471e26",
     "python/umf_access/src/umf_access/unified/__init__.py": "0840a2129c63979b7ee2306056f665a9b31842347e7171cb8bb9081c58312445",
     "python/umf_access/src/umf_access/unified/native_binding.py": "efe9fd6b3b8ec8e2b2b16b586e9a1ade4bea882f2753afca17bf45f4e43eee60",
@@ -29,7 +29,8 @@
     "tests/unified/native-types/negative.py": "367321f48237a78bd5071ebdd0fe99d6cfa51c21fe35dc23f89c351993f4b8a8",
     "tests/unified/native-types/positive.py": "e77eafdc3fa323ca0f45c98c53ded45d78cace110f06982b8c3c6ea12aa82eb2",
     "tests/unified/table-client-fixture.ts": "8ce5ac7a4bc4575098aaa2eed21408412966e92a1001bd3a63a2a49a5626715a",
-    "tests/unified/table_reads_native.py": "68fee48a5589a5f702f6333f1d60aea292a04b955e17101e295326d15e2176b9"
+    "tests/unified/table_reads_native.py": "68fee48a5589a5f702f6333f1d60aea292a04b955e17101e295326d15e2176b9",
+    "scripts/table-lifecycle-browser.ts": "739c97aeee78c5342fa688526b0519140d35b7e41b12d8f5322a7e2867d2564d"
   },
   "localWheels": {
     "umf_codegen-0.1.0a1-py3-none-any.whl": "bc4a510b2367a2da35cb7bdd85b49d06fc0ff68a53e53f871d3945cf005388be",
@@ -61,7 +62,9 @@
     "sourceWheelInstalledRuntimeModules": 75,
     "typescript": "library and tools pass",
     "ruff": "0.17.1 full python tree passes",
-    "license": "MIT OR Apache-2.0"
+    "license": "MIT OR Apache-2.0",
+    "fullTableBrowserAssertions": 42,
+    "fullTableBrowserScope": "inspection/deployment/migration and generated native module parity; malformed, unknown and no-command refusals retained"
   },
   "nativeCoverage": [
     "generated sync/async read, pages, count, optional, insert, upsert-ignore, declared atomic bulk, effect receipt recovery and fresh observations",
@@ -76,5 +79,6 @@
     "explicit old runtime upgrade and legacy adoption",
     "selected private Praxis source/data conversion and available managed Lakebase acceptance",
     "cohort version bumps, immutable artifacts and index/release publication"
-  ]
+  ],
+  "hostedFollowup": "b3d5a7e37 exposed a stale browser assertion expecting all declared native clients to refuse. Replaced it with full generated-result parity and explicit no-command/unknown/invalid refusals; local Chromium42 assertions pass. New hosted run remains pending."
 }

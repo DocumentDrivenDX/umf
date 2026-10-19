@@ -805,3 +805,11 @@ schema/policy/command evolution and old-runtime upgrade, read-only selected
 private source conversion/data acceptance, available managed Lakebase testing,
 version bumps, hashes/licenses and immutable UMF/Weft publication. The full goal
 remains active.
+
+The first hosted generated-module run exposed a stale full-table browser
+assertion that still required declared operation generation to refuse. The
+harness now compares the complete generated result against Bun and retains
+explicit no-command, unknown-operation-meaning and invalid-conflict refusals.
+The full Chromium harness passes42 assertions with no external requests or host
+globals. This changes the acceptance expectation for the newly implemented
+surface; it does not widen native execution authority. Hosted rerun is pending.
