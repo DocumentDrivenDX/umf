@@ -19,6 +19,7 @@ changed('foreign-field-extension-refuses',doc=>{doc.modules[0].elements[0].exten
 changed('nullable-key-refuses',doc=>{doc.modules[0].elements[0].nullability='absent-allowed';});
 changed('reserved-name-refuses',doc=>{doc.modules[0].elements.find((e:any)=>e.id==='Customer').name='Client';});
 changed('unknown-facet-refuses',doc=>{doc.modules[0].elements.find((e:any)=>e.id==='customerName').facets={futureLimit:3};});
+changed('table-lifecycle-refuses-unqualified-client',doc=>{doc.vocabularies['umf.tables']={version:'0.1.0'};doc.modules[0].extensions['umf.tables']={profile:'postgresql18/0.1',tables:[],seedSets:[],commands:[]};});
 cases.push({name:'source-core-refuses',request:{text:original.replace('0.10.0','0.8.0'),package:'shop'}});
 cases.push({name:'invalid-package-refuses',request:{text:original,package:'../escape'}});
 cases.push({name:'invalid-json-refuses',request:{text:'{"umf":',package:'shop'}});

@@ -23,6 +23,27 @@ jobs:
       - run: bun run test:access-boundaries
       - run: bun run check:access-boundaries
 
+  table-declarations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile
+      - run: bun scripts/check-table-lifecycle-boundaries.ts
+      - run: bun test tests/binding/tables.test.ts tests/compilation/table-lifecycle-boundaries.test.ts
+      - run: bunx playwright install --with-deps chromium
+      - name: Actual browser metadata parity and preservation
+        env:
+          UMF_TABLE_BROWSER_EVIDENCE: /tmp/umf-table-browser.json
+        run: bun scripts/table-lifecycle-browser.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: table-declaration-browser
+          path: /tmp/umf-table-browser.json
+
   p1-compatibility:
     runs-on: ubuntu-latest
     strategy:

@@ -84,6 +84,7 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   const python=name(String(e.name??e.id),'class',id);
   for(const symbol of [python,python+'Key',python+'Columns']){if(used.has(symbol))fail(id,'Generated type collision');used.add(symbol);}
   const keyFields=key!.fields.map(r=>field(r)),selected=!wanted||wanted.has(id);
+  if(selected&&Object.hasOwn(m.extensions??{},'umf.tables'))fail('/modules/'+doc.modules.indexOf(m)+'/extensions/umf.tables','Native table lifecycle client interpretation is not qualified');
   const fields=selected?(e.members as Ref[]).map(r=>field(r)):keyFields;
   if(new Set(fields.map(f=>f.python)).size!==fields.length)fail(id,'Field name collision');
   if(keyFields.some(f=>f.missing||f.nullable||f.cardinality!=='one'))fail(id,'Identity components must be required scalars');
@@ -109,7 +110,11 @@ export function generatePythonClient(request:PythonClientRequest):PythonClientRe
   const payload=object(m.extensions?.['umf.actions']);
   for(const raw of payload.actions??[]){
    const id=m.id+'.'+raw.id;if(actionSelection&&!actionSelection.has(id))continue;
-   const action=admitAction(raw),analysis=analyzeAction(doc,action,'/modules/'+m.id+'/actions/'+raw.id);
+   if(Object.hasOwn(m.extensions??{},'umf.tables'))fail('/modules/'+doc.modules.indexOf(m)+'/extensions/umf.tables','Native table lifecycle action interpretation is not qualified');
+   const action=admitAction(raw);
+   const nativeDependency=doc.modules.find(module=>Object.hasOwn(module.extensions??{},'umf.tables')&&[...action.reads,...action.writes].some(frame=>frame.record.module===module.id));
+   if(nativeDependency)fail('/modules/'+doc.modules.indexOf(nativeDependency)+'/extensions/umf.tables','Native table lifecycle action interpretation is not qualified');
+   const analysis=analyzeAction(doc,action,'/modules/'+m.id+'/actions/'+raw.id);
    if(analysis.diagnostics.some(d=>d.severity==='error'))fail(id,'Invalid action declarations: '+analysis.diagnostics.filter(d=>d.severity==='error').map(d=>d.code).join(','));
    if(action.binding.kind!=='recipe'||action.outputs.length)fail(id,'Action requires a declared recipe with no unsupported business outputs');
    const parameters=action.parameters.map(p=>{

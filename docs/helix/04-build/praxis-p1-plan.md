@@ -203,3 +203,26 @@ fixture limit are recorded in the continuation evidence. P1-05 Linux/macOS
 hosted generation gates pass at7c335aaf4. Production artifact admission,
 parameterized DBAPI transport, physical policy/deployment, complete mutations and
 release/distribution/consumer acceptance remain open under the active full goal.
+
+## P2 declaration foundation — 2026-10-19
+
+CONTRACT-081 records the proposed current-core `umf.tables`0.1.0 module
+vocabulary and PostgreSQL18 native lifecycle boundary. The explicit inspector
+and registry now validate copied declarations, native mappings, typed constraints
+and seeds, original relationship/FK policy paths, unknown-content preservation
+and bounded diagnostics. Inspection always reports `nativeQualified:false`.
+The generator refuses selected lifecycle modules and action dependencies until
+their operation interpretation is qualified; it cannot silently ignore policy.
+
+The [inspection receipt](evidence/praxis-p2/declaration-inspection.json) records
+85 focused tests/5003 assertions and14 real Chromium assertions, browser/Bun
+parity, JSON/YAML retention and module boundaries. The embedded Python generator
+passes the expanded16-case parity corpus and current packaging/integrity gates;
+source and self-contained-sdist wheels match. Historical hosted receipts retain
+their predecessor identity; current source CI follows publication of this slice.
+
+Next implement exact deployment bundle/canonicalization and native catalog
+verification, RLS/grants/containment, digest-checked forward migrations, then the
+Weft operation vocabulary and typed command wire. Native writes, command replay,
+full consumer acceptance and prerelease publication remain open. This metadata
+foundation does not qualify the full lifecycle release objective.

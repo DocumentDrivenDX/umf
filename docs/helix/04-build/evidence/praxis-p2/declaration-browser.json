@@ -1,0 +1,25 @@
+{
+  "scope": "current-core native table declaration inspection; no DDL or production execution qualification",
+  "browser": "153.0.8010.12",
+  "result": {
+    "assertions": 14,
+    "metadataParity": true,
+    "nativeQualificationClaimed": false,
+    "nodeGlobalsAbsent": true
+  },
+  "externalRequests": [],
+  "bundleSha256": "155f5974dff37ade552e9dc0f0dec3075f7566a5c3c9555352acf3a0a71dd788",
+  "sourceHashes": {
+    "scripts/table-lifecycle-browser.ts": "5391a8b4cebacdaad2bc6f6445a055ae11a53b45c5a9dcab66b700ab6bfe3c06",
+    "tests/binding/fixtures/table-lifecycle-note.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+    "spec/extensions/tables/schema.json": "5d9b04c587153ddfaaf709f5598d3974315e7efe158b20008ff8d9007836427c",
+    "spec/extensions/tables/package.json": "15092ecdaf56263b9682657363eda4b2a733b6ac0d896e84cc3e0d7c6ff0f3d3",
+    "src/extensions/tables/types.ts": "1cfeae445edf516ed0f7a59438fd5c5a9274456a927498f954ec2dcf131a3bd5",
+    "src/extensions/tables/context.ts": "2ed73e9a196819b709d81c6883315ee862959b82a3f6cf184122cf20663d7f62",
+    "src/extensions/tables/expressions.ts": "aaeac099934a1ecc116493c5bbade878484465f5bea2c0c74a629428750a0f5e",
+    "src/extensions/tables/columns.ts": "fcc9ba32f1dea910f0cbe4b079df6e98e550c7de1c5c82640b513c4c43068e35",
+    "src/extensions/tables/policies.ts": "802e067a568dc3cd6e03c210ae0f8c577bcfa7f9f85af0f995084b33bd15e059",
+    "src/extensions/tables/seeds.ts": "4aa5941ec205930592435b2e1799a587e4d28f75a30fa549c758d25f0eed3a43",
+    "src/extensions/tables/index.ts": "b7a74c0faeb45c382a67f3ca927ef2bb31c667502bf07ce8e14c7d799e329428"
+  }
+}

@@ -64,6 +64,11 @@
       "completeBytesAndRefusalEqual": true
     },
     {
+      "name": "table-lifecycle-refuses-unqualified-client",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
       "name": "source-core-refuses",
       "accepted": false,
       "completeBytesAndRefusalEqual": true
@@ -83,15 +88,15 @@
   "externalJavascriptProcesses": "forbidden",
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "status": "local-candidate-not-published",
-  "baseCommit": "a7ce41803",
+  "baseCommit": "2cb873ab5",
   "nativeDatabaseQualification": false,
   "wheel": {
     "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
-    "sha256": "c1924d7c266e1786c35e43ab3fdce9cafc46d6ba6f81ffcca0b8f0c2165f88c1"
+    "sha256": "4a107efa02d307c6d2a917ad5146839c9708c47750406e63bf9d73b14119b5d8"
   },
   "sdist": {
     "name": "umf_codegen-0.1.0a1.tar.gz",
-    "sha256": "5c50d06039d29cb6be3612ad7bc5ae7c82483b1ac3c0e33bfc3226e5eb920a0b"
+    "sha256": "e4ebb40af1dd18dfad6e9eaa9c58b14e70ccfb6e12e762ef402f32ec8fca84ea"
   },
   "reproducibility": {
     "sourceAndSdistWheelIdentical": true,
@@ -118,10 +123,10 @@
     "python/umf_codegen/src/umf_codegen/__init__.py": "f99a905ee4bd8c18adb812ec9c4a90e7aa24f3616b8369851fd198b129ec9d6f",
     "python/umf_codegen/src/umf_codegen/__main__.py": "a839c18cc28fbce5498e88a10057c6422e4c293eb719f39a17ffa039769e33a6",
     "python/umf_codegen/src/umf_codegen/_embedded.py": "553930f310e9578a4f84b73570ffd823ba42914bfca317ab96e33b034cec2bef",
-    "python/umf_codegen/src/umf_codegen/_release.py": "b4f1ba920cccd0e856fedf1e917c69819077a85f2ef80016be2ca5ff15a64d7f",
+    "python/umf_codegen/src/umf_codegen/_release.py": "3564eb9e1cce32ddda00bd85ff6ae2a95e2df86157433db9af0af37e55c20334",
     "python/umf_codegen/src/umf_codegen/_writer.py": "61a30ef49ba532fdff09f4f86de985b527dcb7e0f6c777bc3f386d545c792082"
   },
-  "corpusSha256": "47ba0ccf22e1befac2c8c735f12ab747d559c8b49e82e11ae324f4f058cef57f",
+  "corpusSha256": "34780dbadf9310ae35c75addfb67916f6065c75f2613c73b1742654962ffb22c",
   "limits": [
     "index/release publication pending"
   ],
@@ -145,6 +150,6 @@
       "macos-14"
     ],
     "result": "passed",
-    "scope": "installed parity, packaging/freshness and writer/integrity controls"
+    "scope": "historical predecessor: installed parity, packaging/freshness and writer/integrity controls; current 16-case successor hosted result pending"
   }
 }
