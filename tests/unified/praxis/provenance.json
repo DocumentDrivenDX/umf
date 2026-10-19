@@ -1,0 +1,470 @@
+{
+  "status": "fixture/design preparation; not native or production Praxis integration qualification",
+  "sourceRepository": "https://synaptiq.ghe.com/Skadden/praxis-harness.git",
+  "sourceCommit": "0d7a11d0faf48ecff744e4e89f34f753050c5cb6",
+  "originalCatalog": {
+    "path": "config/hohfeld/catalog/catalog.umf.json",
+    "sha256": "6b59abf445829667ee1ae9d66f2402064ba613edc26bde026467c041b947f507",
+    "bytes": 73079,
+    "umf": "0.7.0"
+  },
+  "seed": {
+    "path": "config/hohfeld/catalog/seed.json",
+    "sha256": "bf6147c3967d818686d12e49d102404a0b0bb24da8e88a312657142fd2509230",
+    "bytes": 40461,
+    "steps": 131,
+    "derivation": "unchanged UTF-8 bytes; ordinary data/action invocations, not a source-format adapter"
+  },
+  "target": {
+    "path": "tests/unified/praxis/catalog.json",
+    "umf": "0.10.0",
+    "actions": 20,
+    "records": 6,
+    "relationships": 9,
+    "sha256": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "bytes": 245249
+  },
+  "derivation": [
+    "New authored current010 fixture; not the original capture",
+    "All original elements, relationships, DDD and presentation metadata retained structurally",
+    "Only source envelope, actions vocabulary and action declaration location/form changed",
+    "All 20 source action identities/typed inputs/preconditions/ordered effects retained",
+    "Handler identities and authority profile are inert consumer-owned metadata, not executable code or authenticated grants",
+    "No legacy source syntax is admitted by the runtime; original declarations remain provenance inside unchecked handler metadata"
+  ],
+  "actionMappings": [
+    {
+      "sourcePointer": "/modules/0/actions/0",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/0",
+      "id": "AddUseCase",
+      "sourceActionSha256": "dad10d704714fdba75d16a15b39a24d83c02b1a9fcd611a5d934f666f74cd71c",
+      "parameterIds": [
+        "code",
+        "name",
+        "practiceArea",
+        "description",
+        "problem"
+      ],
+      "preconditionIds": [
+        "fresh"
+      ],
+      "effectKinds": [
+        "create"
+      ],
+      "currentEffectKinds": [
+        "create"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/1",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/1",
+      "id": "AddSolution",
+      "sourceActionSha256": "fa6104ac3ffcf1c00e3c7c5f4045dd8b36bc543479947366f392d6b4f28517dc",
+      "parameterIds": [
+        "code",
+        "name",
+        "deliveryMode",
+        "summary",
+        "workflow",
+        "prompt",
+        "audience",
+        "launchUrl",
+        "useCase"
+      ],
+      "preconditionIds": [
+        "fresh",
+        "useCase_exists"
+      ],
+      "effectKinds": [
+        "create",
+        "link"
+      ],
+      "currentEffectKinds": [
+        "create",
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/2",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/2",
+      "id": "AddProduct",
+      "sourceActionSha256": "2c0b50dc006ced1d7291449003a09c5aa67385f3ad5a077460e4db1cbe7d2b80",
+      "parameterIds": [
+        "code",
+        "name",
+        "vendor",
+        "category",
+        "summary",
+        "lifecycleStatus",
+        "availability",
+        "caveat"
+      ],
+      "preconditionIds": [
+        "fresh"
+      ],
+      "effectKinds": [
+        "create"
+      ],
+      "currentEffectKinds": [
+        "create"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/3",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/3",
+      "id": "SetSolutionProvider",
+      "sourceActionSha256": "8fba183cf9a4848e9efc8b43e5fef01c64eaf3b2c1b880d1f15e880d5ac93247",
+      "parameterIds": [
+        "solution",
+        "product"
+      ],
+      "preconditionIds": [
+        "solution_exists",
+        "product_exists"
+      ],
+      "effectKinds": [
+        "link"
+      ],
+      "currentEffectKinds": [
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/4",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/4",
+      "id": "AssertCoverage",
+      "sourceActionSha256": "851ed114f8226e52d192042985e606b091512b9716b4b359bcf7fb0252b30fe9",
+      "parameterIds": [
+        "code",
+        "level",
+        "notes",
+        "product",
+        "useCase"
+      ],
+      "preconditionIds": [
+        "fresh",
+        "product_exists",
+        "useCase_exists"
+      ],
+      "effectKinds": [
+        "create",
+        "link",
+        "link"
+      ],
+      "currentEffectKinds": [
+        "create",
+        "link",
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/5",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/5",
+      "id": "CorrectUseCase",
+      "sourceActionSha256": "7ea2bcbd9c43197fb08524bfce39ae0028d642597946098c999c648b5ec46562",
+      "parameterIds": [
+        "practiceArea",
+        "description",
+        "problem",
+        "useCase"
+      ],
+      "preconditionIds": [
+        "useCase_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/6",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/6",
+      "id": "RenameUseCase",
+      "sourceActionSha256": "de3a2e6bb11d72791eaaa7d7674c3ada882fef5b311d9229fb07dc8137feaf7d",
+      "parameterIds": [
+        "name",
+        "useCase"
+      ],
+      "preconditionIds": [
+        "useCase_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/7",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/7",
+      "id": "CorrectSolution",
+      "sourceActionSha256": "d2bd2cffacdbae9dd9f554081da0da4db4de3bbfa24a3ea4b210bdabaa47f288",
+      "parameterIds": [
+        "summary",
+        "workflow",
+        "prompt",
+        "audience",
+        "launchUrl",
+        "solution"
+      ],
+      "preconditionIds": [
+        "solution_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/8",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/8",
+      "id": "RenameSolution",
+      "sourceActionSha256": "37f78b4db0b39e6e1c9cd513790da5e1c7ec7d83e23f2ff4f231f54f150e56ae",
+      "parameterIds": [
+        "name",
+        "solution"
+      ],
+      "preconditionIds": [
+        "solution_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/9",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/9",
+      "id": "ChangeSolutionDelivery",
+      "sourceActionSha256": "2590178134cf9642d397f3a2fa0398483c5bc2f94b9324409883068ef1f94061",
+      "parameterIds": [
+        "deliveryMode",
+        "solution"
+      ],
+      "preconditionIds": [
+        "solution_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/10",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/10",
+      "id": "RetireSolution",
+      "sourceActionSha256": "1c5de8282ebf7ace4f8fbd49bd594dbb3acb176c6575d7ee5437099d14129a4a",
+      "parameterIds": [
+        "solution"
+      ],
+      "preconditionIds": [
+        "solution_exists"
+      ],
+      "effectKinds": [
+        "delete"
+      ],
+      "currentEffectKinds": [
+        "delete"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/11",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/11",
+      "id": "CorrectProduct",
+      "sourceActionSha256": "aa9908bf5f11ab5bccb321fd132cf2ce90e655b835168ed35fa4886fadef871a",
+      "parameterIds": [
+        "vendor",
+        "category",
+        "summary",
+        "lifecycleStatus",
+        "availability",
+        "caveat",
+        "product"
+      ],
+      "preconditionIds": [
+        "product_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/12",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/12",
+      "id": "RenameProduct",
+      "sourceActionSha256": "81f7bd9265ac77617eb7596527926d687ed75d44eacd147f2f45ff9e66a02a1c",
+      "parameterIds": [
+        "name",
+        "product"
+      ],
+      "preconditionIds": [
+        "product_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/13",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/13",
+      "id": "ChangeCoverageLevel",
+      "sourceActionSha256": "dc9d384600d559e4a685a465f4010a6ac84cfc763485739729c60c29a981ac5c",
+      "parameterIds": [
+        "level",
+        "coverageAssertion"
+      ],
+      "preconditionIds": [
+        "coverageAssertion_exists"
+      ],
+      "effectKinds": [
+        "update"
+      ],
+      "currentEffectKinds": [
+        "set"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/14",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/14",
+      "id": "RetireCoverage",
+      "sourceActionSha256": "2db9d624a9a58965fdfcb5fb52be5616afc8799a1db58ff689bb32400ef79c1c",
+      "parameterIds": [
+        "coverageAssertion"
+      ],
+      "preconditionIds": [
+        "coverageAssertion_exists"
+      ],
+      "effectKinds": [
+        "delete"
+      ],
+      "currentEffectKinds": [
+        "delete"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/15",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/15",
+      "id": "AddProductVersion",
+      "sourceActionSha256": "d78d08d5e8addc19af8bd3acf0f3dbdb9557735ed15c6c1d66fe5cc02625baef",
+      "parameterIds": [
+        "code",
+        "label",
+        "status",
+        "product"
+      ],
+      "preconditionIds": [
+        "fresh",
+        "product_exists"
+      ],
+      "effectKinds": [
+        "create",
+        "link"
+      ],
+      "currentEffectKinds": [
+        "create",
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/16",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/16",
+      "id": "AddFinding",
+      "sourceActionSha256": "630d34e1219c3ea9e6edb3f50f6b4df92142916379adebb20b46cd5f97542e8f",
+      "parameterIds": [
+        "code",
+        "statement",
+        "kind",
+        "status",
+        "product"
+      ],
+      "preconditionIds": [
+        "fresh",
+        "product_exists"
+      ],
+      "effectKinds": [
+        "create",
+        "link"
+      ],
+      "currentEffectKinds": [
+        "create",
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/17",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/17",
+      "id": "SetFindingVersion",
+      "sourceActionSha256": "6437140b6ad6b25c43c748d02c76ffd8eb7ce1dab6023dd1b59ec60c302eb12e",
+      "parameterIds": [
+        "finding",
+        "productVersion"
+      ],
+      "preconditionIds": [
+        "finding_exists",
+        "productVersion_exists"
+      ],
+      "effectKinds": [
+        "link"
+      ],
+      "currentEffectKinds": [
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/18",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/18",
+      "id": "ApplyFindingTo",
+      "sourceActionSha256": "ea6ff9bd9ae3b90489b65637084ddeff93a30eb248be48776723c1d437be0b51",
+      "parameterIds": [
+        "finding",
+        "useCase"
+      ],
+      "preconditionIds": [
+        "finding_exists",
+        "useCase_exists"
+      ],
+      "effectKinds": [
+        "link"
+      ],
+      "currentEffectKinds": [
+        "link"
+      ]
+    },
+    {
+      "sourcePointer": "/modules/0/actions/19",
+      "targetPointer": "/modules/0/extensions/umf.actions/actions/19",
+      "id": "RelateFindingTo",
+      "sourceActionSha256": "7ef632913ed8ee3d22b4f71bdda6577b17174822ee566a59abfdb6892a23a102",
+      "parameterIds": [
+        "finding",
+        "useCase"
+      ],
+      "preconditionIds": [
+        "finding_exists",
+        "useCase_exists"
+      ],
+      "effectKinds": [
+        "link"
+      ],
+      "currentEffectKinds": [
+        "link"
+      ]
+    }
+  ],
+  "actionHashEncoding": "SHA-256 of parsed original action serialized as compact UTF-8 JSON with ensure_ascii=False and original member order; not a hash of a raw source-text substring"
+}

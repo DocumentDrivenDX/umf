@@ -101,7 +101,10 @@ Python carriers are int, Decimal, UUID, bytes, date and ExactTimestamp respectiv
 Missing is an explicit sentinel distinct from None. No numeric carrier uses float.
 
 Read transport failures are sanitized. A lost action response raises
-WriteOutcomeUnknown; the client never retries writes automatically. Authorization,
+WriteOutcomeUnknown; cancellation while awaiting a dispatched write does too.
+Read cancellation propagates normally. The client never retries writes automatically.
+`PreconditionFailed.precondition` preserves the refusal identity separately from
+`field`; exception messages contain only the fixed error code. Authorization,
 atomic commit, idempotency storage and freshness are host responsibilities.
 
 ## Binding ownership and evidence

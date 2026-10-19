@@ -29,7 +29,7 @@ describe('latest UMF unified Python access',()=>{
   const run=`import asyncio, json, sys
 sys.path.insert(0, ${JSON.stringify(work)})
 sys.path.insert(0, ${JSON.stringify(join(root,'tests/unified'))})
-from shop import Client, Order, OrderKey, Customer, CustomerKey, Actions, AccessError, MISSING
+from shop import Client, Order, OrderKey, Customer, CustomerKey, Actions, AccessError, PreconditionFailed, WriteOutcomeUnknown, MISSING
 from application import application, assert_shared_edge_cases
 from ontology_transport import OntologyTransport
 from decimal import Decimal
@@ -86,6 +86,39 @@ async def main():
     else:
         raise AssertionError('schema-mismatched response accepted')
 
+    class PreconditionHost:
+        async def execute(self, request):
+            return {'schema': request['schema'], 'error': {'code': 'PRECONDITION_FAILED',
+                    'field': 'status', 'precondition': 'order-open', 'message': 'private instance data'}}
+    try:
+        await Actions(Client(PreconditionHost())).ship_order(order=OrderKey(order_id='o-100'))
+    except PreconditionFailed as error:
+        assert error.field == 'status' and error.precondition == 'order-open'
+        assert str(error) == 'PRECONDITION_FAILED'
+    else:
+        raise AssertionError('precondition refusal accepted')
+
+    class CancelledHost:
+        calls = 0
+        async def execute(self, request):
+            self.calls += 1
+            raise asyncio.CancelledError('private cancellation detail')
+    cancelled = CancelledHost()
+    try:
+        await Actions(Client(cancelled)).ship_order(order=OrderKey(order_id='o-100'))
+    except WriteOutcomeUnknown as error:
+        assert str(error) == 'WRITE_OUTCOME_UNKNOWN'
+    else:
+        raise AssertionError('cancelled write outcome treated as settled')
+    assert cancelled.calls == 1
+    try:
+        await Order.objects.using(Client(cancelled)).first()
+    except asyncio.CancelledError:
+        pass
+    else:
+        raise AssertionError('read cancellation did not propagate')
+    assert cancelled.calls == 2
+
     print(json.dumps({'result': result, 'calls': len(host.calls), 'edgeCases': edge_cases}))
 
 asyncio.run(main())
@@ -117,8 +150,8 @@ asyncio.run(main())
   if(exit!==0)throw new Error(stderr);
   const result=JSON.parse(stdout);
   expect(result.status).toBe('pass');
-  expect(result.weft).toBe('0.4.44');
-  expect(result.hostRuntime).toBe('0.1.0.dev2');
+  expect(result.weft).toBe('0.4.45');
+  expect(result.hostRuntime).toBe('0.1.0.dev3');
   expect(result.postgresql).toBe('18');
   expect(result.compiledReads).toBe(8);
   expect(result.result).toEqual(['Ada','shipped','postgresql18-unified-commit-1']);

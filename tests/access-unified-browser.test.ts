@@ -3,8 +3,8 @@ import {chromium} from 'playwright';
 import {generatePythonClient} from '../src/access';
 
 // @covers US-091-AC9 US-092-AC8
- test('current UMF client generation has exact Chromium parity without host globals',async()=>{
- const source=await Bun.file(new URL('./unified/commerce.json',import.meta.url)).text();
+for (const fixture of ['commerce.json', 'praxis/catalog.json']) test(`current UMF ${fixture} generation has exact Chromium parity without host globals`,async()=>{
+ const source=await Bun.file(new URL('./unified/'+fixture,import.meta.url)).text();
  const expected=generatePythonClient({text:source,package:'shop'}).files;
  const built=await Bun.build({entrypoints:[new URL('../src/access/index.ts',import.meta.url).pathname],target:'browser',format:'esm'});
  expect(built.success).toBe(true);
