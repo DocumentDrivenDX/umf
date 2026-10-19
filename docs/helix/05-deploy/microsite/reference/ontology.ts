@@ -1,9 +1,10 @@
 import {renderRecordMap} from '@documentdrivendx/umf-schema-browser';
+import {relationshipGeometry} from '../ontology-layout';
 import {selfModelGraph,type SelfModelCatalog,type ReaderCatalog} from '../../reference/model';
 const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 const link=(text:string,href:string)=>{const a=el('a',text) as HTMLAnchorElement;a.href=href;return a;};
 const meta=(value:any)=>value?.extensions?.['umf.metamodel']??{};
-const route=(view:string,id:string)=>'#'+new URLSearchParams({view,node:JSON.stringify(['umf',id])});
+const route=(view:string,id:string)=>{const next=new URLSearchParams({view,node:JSON.stringify(['umf',id])}),focus=new URLSearchParams(location.hash.slice(1)).get('focus');if(view==='ontology'&&focus)next.set('focus',focus);return '#'+next;};
 function linksIn(shape:any,out:string[]=[]):string[]{if(!shape||typeof shape!=='object'||Array.isArray(shape))return out;if(shape.tag==='link'&&typeof shape.target==='string')out.push(shape.target);for(const [key,value]of Object.entries(shape))if(key!=='target'){if(Array.isArray(value))value.forEach(v=>linksIn(v,out));else linksIn(value,out);}return out;}
 function schemaPointer(item:any,all:any[]):string{
  if(item.kind==='record')return item.id==='document'?'':'/$defs/'+item.id;
@@ -48,6 +49,42 @@ function shapeView(shape:any,all:any[],seen=new Set<string>()):HTMLElement{
  for(const [key,value]of Object.entries(shape))if(key!=='tag'&&key!=='description'&&key!=='min'&&key!=='max'&&value&&typeof value==='object')box.append(shapeView(value,all,seen));
  return box;
 }
+// The host owns viewport sizing; the released renderer owns nodes and relationships.
+const graphViews=new WeakMap<HTMLElement,{dispose:()=>void;zoom:number|null;left:number;top:number}>();
+function graphViewport(map:HTMLElement,root:HTMLElement,model:ReturnType<typeof selfModelGraph>,focus:string){
+ const previous=graphViews.get(root);previous?.dispose();
+ const svg=map.querySelector('svg')!,canvas=map.querySelector('.ontology-map')!,controls=map.querySelector('.map-controls')!;
+ const viewport=el('div',undefined,'ontology-viewport');viewport.tabIndex=0;viewport.setAttribute('role','region');viewport.setAttribute('aria-label','Ontology graph; scroll to pan when zoomed');svg.before(viewport);viewport.append(svg);
+ const relationships=map.querySelector('.map-relationships')!,legend=el('details',undefined,'ontology-connections');legend.append(el('summary','Connections · '+relationships.childElementCount),relationships);canvas.append(legend);
+ const zoomControls=el('div',undefined,'graph-zoom'),status=el('output');status.setAttribute('aria-live','polite');
+ const state={dispose:()=>{},zoom:previous?.zoom??null,left:previous?.left??0,top:previous?.top??0};
+ // Reflow the released renderer's existing SVG elements; keep its navigation,
+ // labels, markers and the shared relationship geometry intact.
+ const edges=focus?model.edges.filter(e=>e.source===focus||e.target===focus):model.edges;
+ const ids=new Set([focus,...edges.flatMap(e=>[e.source,e.target])]);const records=focus?model.records.filter(r=>ids.has(r.id)):model.records;
+ const recordNodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect record "]')),edgeNodes=Array.from(svg.querySelectorAll<SVGAElement>('[aria-label^="Inspect relationship "]'));
+ const original=recordNodes.map(n=>{const r=n.querySelector('rect')!;return {x:Number(r.getAttribute('x')),y:Number(r.getAttribute('y'))};});
+ const pairs=new Map<string,typeof edges>();for(const edge of model.edges){const key=JSON.stringify([edge.source,edge.target].sort()),group=pairs.get(key)??[];group.push(edge);pairs.set(key,group);}
+ const extra=Math.max(0,...Array.from(pairs.values(),group=>Math.max(0,(group.length-1)/2)*48)),step=130+extra;
+ let width=880,height=180,fit=1;
+ const resize=()=>{
+  let best=0,columns=1;
+  for(let cols=1;cols<=Math.min(6,records.length);cols++){const w=cols*250+80,h=Math.ceil(records.length/cols)*step+65+extra,scale=Math.min(viewport.clientWidth/w,viewport.clientHeight/h);if(scale>best){best=scale;columns=cols;}}
+  const positions=new Map(records.map((r,i)=>[r.id,{x:35+(i%columns)*250,y:60+Math.floor(i/columns)*step}]));
+  width=columns*250+80;height=Math.ceil(records.length/columns)*step+65+extra;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+  recordNodes.forEach((node,i)=>{const p=positions.get(records[i]!.id)!;node.setAttribute('transform',`translate(${p.x-original[i]!.x} ${p.y-original[i]!.y})`);});
+  edgeNodes.forEach((node,i)=>{const edge=edges[i]!,from=positions.get(edge.source)!,to=positions.get(edge.target)!,siblings=pairs.get(JSON.stringify([edge.source,edge.target].sort()))!,index=siblings.indexOf(edge),geometry=relationshipGeometry(from,to,edge.source===edge.target?index:index-(siblings.length-1)/2,78,(siblings.length-1)/2);node.querySelector('path')!.setAttribute('d',geometry.path);const circle=node.querySelector('circle')!,text=node.querySelector('text')!;circle.setAttribute('cx',String(geometry.x));circle.setAttribute('cy',String(geometry.y));text.setAttribute('x',String(geometry.x));text.setAttribute('y',String(geometry.y+4));});
+  const bounds=svg.getBBox();width=bounds.width+48;height=bounds.height+48;svg.setAttribute('viewBox',`${bounds.x-24} ${bounds.y-24} ${width} ${height}`);
+  fit=Math.min(viewport.clientWidth/width,viewport.clientHeight/height);const scale=state.zoom??fit;svg.style.width=width*scale+'px';svg.style.height=height*scale+'px';status.textContent=Math.round(scale*100)+'%';
+ };
+ const button=(title:string,action:()=>void)=>{const b=el('button',title) as HTMLButtonElement;b.type='button';b.onclick=action;zoomControls.append(b);};
+ button('Fit graph',()=>{state.zoom=null;resize();viewport.scrollTo(0,0);});
+ button('−',()=>{state.zoom=Math.max(Math.min(.25,fit/4),(state.zoom??fit)/1.25);resize();});zoomControls.lastElementChild!.setAttribute('aria-label','Zoom out');
+ button('+',()=>{state.zoom=Math.min(Math.max(3,fit*4),(state.zoom??fit)*1.25);resize();});zoomControls.lastElementChild!.setAttribute('aria-label','Zoom in');
+ button('100%',()=>{state.zoom=1;resize();});zoomControls.append(status);controls.append(zoomControls);
+ const observer=new ResizeObserver(resize);observer.observe(viewport);state.dispose=()=>observer.disconnect();graphViews.set(root,state);
+ viewport.onscroll=()=>{state.left=viewport.scrollLeft;state.top=viewport.scrollTop;};resize();viewport.scrollTo(state.left,state.top);
+}
 export function showOntology(root:HTMLElement,catalog:SelfModelCatalog,reader:ReaderCatalog){
  const keyboardNavigation=root.dataset.keyboardNavigation==='true';delete root.dataset.keyboardNavigation;
  root.onkeydown=event=>{if(event.key==='Enter'||event.key===' ')root.dataset.keyboardNavigation='true';};root.onpointerdown=()=>{delete root.dataset.keyboardNavigation;};
@@ -57,13 +94,20 @@ export function showOntology(root:HTMLElement,catalog:SelfModelCatalog,reader:Re
  const downloads=el('div',undefined,'chips');downloads.append(link('Download authored UMF model · YAML','umf.yaml'),link('JSON','umf.json'));const about=el('details',undefined,'ontology-about');about.append(el('summary','About & downloads'),el('div',undefined,'ontology-about-content'));about.lastElementChild!.append(el('p','Browse the authored current language model. Record members resolve to their single declared Fields; Field shapes show only relationships stated in the model. JSON Schema and validators are generated outputs.'),downloads,el('p','This view reports authored language definitions and source relationships only. It does not infer inheritance, instance counts, native storage meaning or enforcement beyond the separately generated validators.'));root.append(el('h2','UMF ontology','visually-hidden'));
  const layout=el('div',undefined,'ontology-layout'),aside=el('aside',undefined,'ontology-types');aside.setAttribute('aria-label','UMF language definitions');const label=el('label','Find a definition');const search=el('input') as HTMLInputElement;search.type='search';search.placeholder='Record, Field, Key…';label.append(search);aside.append(label);const list=el('div',undefined,'ontology-groups');aside.append(list,about);
  const content=el('div',undefined,'ontology-content'),map=el('div');map.id='ontology-map';content.append(map);layout.append(aside,content);root.append(layout);
- const graph=selfModelGraph(catalog);const owner=selected.kind==='record'?selected:records.find(r=>(r.members??[]).some((m:any)=>m.module===selected.module&&m.element===selected.id));const focus=owner?JSON.stringify([owner.module,owner.id]):'';
+ const graph=selfModelGraph(catalog);const owner=selected.kind==='record'?selected:records.find(r=>(r.members??[]).some((m:any)=>m.module===selected.module&&m.element===selected.id));const focus=params.get('focus')??'';if(focus&&!graph.records.some(r=>r.id===focus))throw Error('SELF_MODEL_LINK unknown focus');
  const edgeId=params.get('edge'),selectedEdge=graph.edges.find(e=>e.id===edgeId);if(edgeId&&!selectedEdge)throw Error('SELF_MODEL_LINK unknown connection');
  const recordList=el('details') as HTMLDetailsElement;recordList.append(el('summary','Records · '+records.length));
  const fieldList=el('details') as HTMLDetailsElement;fieldList.append(el('summary','Fields · '+fields.length));
  const add=(parent:HTMLElement,items:any[])=>{for(const item of items){const a=link(item.name??item.id,route('ontology',item.id));if(item===selected)a.setAttribute('aria-current','true');a.dataset.element=item.id;parent.append(a);}};
  const refresh=()=>{recordList.replaceChildren(el('summary','Records · '+records.length));fieldList.replaceChildren(el('summary','Fields · '+fields.length));const recordOptions=el('div',undefined,'definition-options'),fieldOptions=el('div',undefined,'definition-options');recordList.append(recordOptions);fieldList.append(fieldOptions);const query=search.value.toLocaleLowerCase();add(recordOptions,records.filter(e=>(e.name+' '+e.id+' '+(e.description??'')).toLocaleLowerCase().includes(query)));add(fieldOptions,fields.filter(e=>(e.name+' '+e.id+' '+(e.description??'')).toLocaleLowerCase().includes(query)));if(!recordList.querySelector('a')&&!fieldList.querySelector('a'))list.replaceChildren(el('p','No matching definitions.'));else list.replaceChildren(recordList,fieldList);};search.oninput=refresh;refresh();
- if(graph.records.length)renderRecordMap(map,graph,{focus:focus||graph.records[0]!.id,onNavigate:(id,kind)=>{if(kind==='relationship'){const edge=graph.edges.find(e=>e.id===id);if(edge)location.hash=route('ontology',JSON.parse(edge.source)[1])+'&edge='+encodeURIComponent(id);}else location.hash=route('ontology',JSON.parse(id)[1]);},onFocusChange:(next)=>{const params=new URLSearchParams(location.hash.slice(1));if(next){params.set('node',next);params.delete('edge');location.hash=params.toString();}}});
+ const graphRoute=(id:string)=>{const next=new URLSearchParams(route('ontology',id).slice(1));if(focus)next.set('focus',focus);return '#'+next;};
+ if(graph.records.length){
+  renderRecordMap(map,graph,{focus,onNavigate:(id,kind)=>{if(kind==='relationship'){const edge=graph.edges.find(e=>e.id===id);if(edge)location.hash=graphRoute(JSON.parse(edge.source)[1])+'&edge='+encodeURIComponent(id);}else location.hash=graphRoute(JSON.parse(id)[1]);},onFocusChange:(next)=>{const params=new URLSearchParams(location.hash.slice(1));params.set('view','ontology');params.delete('edge');if(next){params.set('focus',next);params.set('node',next);}else params.delete('focus');const hash='#'+params;if(location.hash===hash)showOntology(root,catalog,reader);else location.hash=hash;}});
+  const current=owner?graph.records.findIndex(r=>r.id===JSON.stringify([owner.module,owner.id])):-1;
+  if(current>=0)map.querySelector(`[aria-label="Inspect record ${graph.records[current]!.label} · unchanged"]`)?.setAttribute('aria-current','true');
+  graphViewport(map,root,graph,focus);
+ }
+
  const detail=el('section');detail.id='ontology-detail';detail.tabIndex=-1;content.append(detail);detail.append(el('p',selected.kind==='record'?'Record definition':'Field definition','eyebrow'),el('h3',selected.name??selected.id),el('p',selected.description??''));
  detail.append(link('Open generated object reference →','#'+new URLSearchParams({view:'reference',entry:reader.latest.id,pointer:schemaPointer(selected,elements)})));
  const sourceInfo=meta(selected);const role=sourceInfo.role;
