@@ -212,9 +212,10 @@ def _installation(connection: Any, bundle: dict[str, object], *,
             _one(connection, "SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)", (str(statement_timeout_ms), str(lock_timeout_ms)))
             state = _one(connection, """SELECT current_user, r.rolsuper,r.rolbypassrls,r.rolcreatedb,
 r.rolcreaterole,r.rolcanlogin,n.nspowner=r.oid,pg_catalog.current_schemas(false),
-pg_catalog.current_setting('transaction_read_only'),pg_catalog.current_setting('server_version_num')::pg_catalog.int4
+pg_catalog.current_setting('transaction_read_only'),pg_catalog.current_setting('server_version_num')::pg_catalog.int4,
+pg_catalog.current_setting('row_security'),pg_catalog.current_setting('session_replication_role'),pg_catalog.current_setting('server_encoding'),pg_catalog.current_setting('transaction_isolation')
 FROM pg_catalog.pg_roles r JOIN pg_catalog.pg_namespace n ON n.nspname=%s WHERE r.rolname=current_user""", (schema,))
-            if state is None or tuple(state[:9]) != (owner, False, False, False, False, False, True, ["pg_catalog"], "off") or state[9] // 10000 != 18:
+            if state is None or tuple(state[:9]) != (owner, False, False, False, False, False, True, ["pg_catalog"], "off") or state[9] // 10000 != 18 or tuple(state[10:]) != ('on','origin','UTF8','read committed'):
                 raise CatalogError("install-authority-required")
             lock = int.from_bytes(hashlib.sha256(("umf.table-lifecycle/0.1\0" + schema).encode()).digest()[:8], "big", signed=True)
             _one(connection, "SELECT pg_catalog.pg_advisory_xact_lock(%s)", (lock,))

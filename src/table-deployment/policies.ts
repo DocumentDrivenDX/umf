@@ -13,7 +13,7 @@ export function policySql(rule:TableRowRule,table:TableDeclaration,ctx:Deploymen
   return 'pg_catalog.pg_has_role(CURRENT_USER, '+s(role)+", 'MEMBER')";
  }
  if(rule.kind==='memberOf'){
-  const groups=Object.values(ctx.configuration.groupRoles);if(!groups.length)deploymentError('Per-row group membership requires trusted group-role bindings',path);
+  const groups=Object.keys(ctx.configuration.groupRoles).sort().map(alias=>ctx.configuration.groupRoles[alias]!);if(!groups.length)deploymentError('Per-row group membership requires trusted group-role bindings',path);
   // An unknown per-row group never becomes an arbitrary native-role lookup.
   return '(EXISTS (SELECT 1 FROM pg_catalog.pg_roles AS '+q('umf_group')+' WHERE '+q('umf_group')+'.rolname::pg_catalog.text COLLATE pg_catalog."C" = '+column(rule.field)+' COLLATE pg_catalog."C" AND '+q('umf_group')+'.rolname::pg_catalog.text IN ('+groups.map(s).join(', ')+') AND pg_catalog.pg_has_role(CURRENT_USER, '+q('umf_group')+".oid, 'MEMBER')))";
  }

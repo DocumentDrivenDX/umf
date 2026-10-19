@@ -383,3 +383,30 @@ records exact source/wheel identities and local qualification. Linux/macOS hoste
 CI includes the new corpus; publication and hosted results remain separate.
 Native durable ledger execution, approved-plan application and forward replay
 are the next required implementation step.
+
+## Native approved-plan ledger — 2026-10-19
+
+The installed administrative migration executor now applies original verified
+initial/append-table plans with explicit approval digest and prior native head.
+It verifies the fixed private metadata relation before trusting rows, rechecks
+every original plan/link/digest, and captures native witnesses only after complete
+source catalog/privilege/role correspondence. DDL, final verification and history
+insert share the caller's transaction; the library never commits or retries.
+Replay verifies the current cohort and historical authority without rerunning
+migration steps. Metadata source remains inaccessible to person/batch principals.
+
+The [native ledger packet](evidence/praxis-p2/native-ledger.json) records49 native
+ledger assertions: caller rollback/commit, actual competing-migrator lock wait
+and replay, a real SQL error after history insertion, source/history/native drift,
+private metadata and bounded count/bytes before payload loading. The final
+catalog/role/privilege regressions pass112/64/133 assertions. Caller row factories
+and healthy transactions are preserved. The installed compiler's14-case expanded
+deployment corpus catches metadata-name reservation and deterministic group-map
+SQL after JSONB key reordering; migration/client parity remains intact.
+
+This profile requires READ COMMITTED, UTF8, native row security and origin
+replication mode; runtime principals cannot SET replication mode. History is
+bounded to128 entries/32MiB, never silently compacted or rewritten. Only initial
+and appended-table migrations are executable in this cohort. Ordinary generated
+Weft operations/admission, remaining necessary migration/codecs/seeds, consumer
+acceptance and immutable prerelease delivery still gate the active full goal.

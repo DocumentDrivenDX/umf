@@ -63,6 +63,16 @@ test('per-row group lookup is bounded to host declared groups',()=>{
  expect(sql).toContain("IN (E'plugin_readers')");expect(sql).toContain("pg_catalog.pg_has_role(CURRENT_USER");
  expect(compile(d,{...configuration,groupRoles:{}}).status).toBe('blocked');
 });
+test('role alias object ordering cannot change native SQL after JSONB storage',()=>{
+ const d=source();payload(d).tables[0].policy.person.select={kind:'memberOf',field:{module:'demo',element:'owner'}};
+ const a=compiled(d,{...configuration,groupRoles:{z:'group_z',aa:'group_a','20':'group_20','3':'group_3'}});
+ const b=compiled(d,{...configuration,groupRoles:{aa:'group_a',z:'group_z','3':'group_3','20':'group_20'}});
+ expect(a.steps).toEqual(b.steps);expect(a.bundleDigest).toBe(b.bundleDigest);
+});
+test('lifecycle metadata table and index names cannot be authored as plugin data',()=>{
+ for(const name of ['umf_lifecycle_history','UMF_LIFECYCLE_history']){const d=source();payload(d).tables[0].name=name;expect(compile(d).status).toBe('blocked');}
+ const d=source();payload(d).tables[0].indexes.push({id:'metadata',name:'umf_lifecycle_history_pkey',fields:[{module:'demo',element:'id'}],include:[],unique:false});expect(compile(d).status).toBe('blocked');
+});
 
 test('via correlation cannot be shadowed by an authored table name and requires audience SELECT closure',()=>{
  const d=structuredClone(deploymentFixtureSource),p=payload(d);p.tables[0].name='umf_v_1_0';

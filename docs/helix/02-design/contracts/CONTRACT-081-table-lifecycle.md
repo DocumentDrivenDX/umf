@@ -355,7 +355,8 @@ includes every role reachable by a SET chain followed by an INHERIT chain;
 MEMBER alone does not imply effective privileges. The owner can reach only itself.
 Person/group roles cannot reach batch or owner; batch cannot reach person or
 owner. No selected principal or effective role can be superuser, BYPASSRLS,
-CREATEROLE, CREATEDB or REPLICATION. Disabled membership edges are not guessed to
+CREATEROLE, CREATEDB or REPLICATION, or possess SET authority over
+`session_replication_role`. Disabled membership edges are not guessed to
 confer privileges. Native predefined roles and membership ADMIN authority also
 refuse: ADMIN can regrant an otherwise disabled INHERIT/SET edge. A person may
 legitimately have other plugin memberships;
@@ -425,6 +426,55 @@ member. A plan exceeding24MB refuses. `verifyTableMigration` recompiles both
 source bundles and the entire plan, including self-consistently rehashed edits.
 Consistency verification does not authenticate a supplied predecessor; the
 trusted native ledger and selected source authority remain required.
+
+The native administrative ledger uses reserved `umf_lifecycle_` relation/index
+names inside the plugin's private schema. Authored native tables/indexes cannot
+occupy that prefix. A fixed metadata table is owned solely by the configured
+non-login install owner; person/batch/PUBLIC have no metadata read/write grant.
+Its original native definition, constraints/indexes, ownership, ACL, relation
+kind, trigger/rule/inheritance and policy absence must be verified before rows
+are trusted. Recognizing a name alone never exempts an object from inventory.
+
+Application requires the exact approved plan digest and expected native ledger
+head (initial null), supplied by trusted host deployment code. The library does
+not infer approval or expose install authority through generated data clients.
+Every history entry retains the complete original plan plus a source-verified
+native catalog witness. A separate entry digest binds position, preceding entry
+digest, plan digest and witness. Positions/IDs are unique; all links, source
+bundles and plan digests are reverified before application or replay. Native
+witnesses are captured only after complete source-derived catalog/privilege/role
+correspondence succeeds, not from an arbitrary first-observed schema.
+
+Initial application requires an empty allocated private schema. Later plans
+must name the exact current bundle and predecessor plan/entry. DDL, final native
+verification and history insertion share the caller-owned transaction and
+module advisory/exclusive table locks. A failure rolls back the library's
+savepoint, including partially applied DDL. Success remains pending the caller's
+commit; the library neither commits nor retries. Replay checks the full history
+and current native cohort without rerunning migration steps; source verification
+still creates/removes its protected scratch objects. A lost commit response
+requires observing durable history, not assuming rollback.
+
+The installed Psycopg3 administrative entry points now are
+`apply_table_migration(connection,plan,approved_digest=...,expected_head=...,person_roles=...)`
+and `inspect_table_history(connection,bundle,person_roles=...)`. They require a
+healthy, writable caller-owned READ COMMITTED transaction, UTF8 server encoding,
+pg_catalog resolution, `row_security=on` and `session_replication_role=origin`.
+They preserve caller row factories and timeout settings. Success is
+`applied-in-transaction`, with caller commit responsibility; identical historical
+replay reports `already-applied` and the verified current generation. Inspection
+requires the caller's expected current bundle and returns IDs/digests, not source
+or seed contents. Every outcome still reports `lifecycleAdmission:false`.
+
+This initial ledger profile bounds history to128 entries and32MiB of native JSON
+text before payload loading, refusing rather than rewriting history at capacity.
+Witness hashing accepts only fixed ASCII object keys and native strings,
+booleans, null, arrays and safe integers, with depth64/node200000 bounds. Both
+source revalidation and exact native witnesses are required before replay. The
+qualified native scope is PostgreSQL18.6 with the recorded wheel/source hashes;
+managed engines, broader migration operations and ordinary data admission remain
+separate gates. Authored role alias-map order cannot affect emitted native SQL or
+invalidate original-plan verification after JSONB key reordering.
 
 This plan-generation subset supports initial deployment and appended tables.
 Root/module metadata, existing elements/relationships and native tables,

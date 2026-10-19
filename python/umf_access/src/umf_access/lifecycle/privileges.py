@@ -11,6 +11,7 @@ from typing import Any
 from uuid import uuid4
 
 from .catalog import CatalogError, _all, _execute, _installation, _one, _q
+from .ledger_schema import HISTORY, _verify_history_schema
 from .roles import verify_native_role_scope
 
 _TABLE_ACL = """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
@@ -116,7 +117,10 @@ FROM pg_catalog.aclexplode(pg_catalog.acldefault('n',%s::pg_catalog.oid))""",(ow
             raise CatalogError('privilege-mismatch')
         inventory=_all(connection,"""SELECT c.relname FROM pg_catalog.pg_class c WHERE c.relnamespace=%s
 AND c.relkind NOT IN ('i','I') ORDER BY c.relname""",(schema_id,))
-        if inventory != sorted((t['name'],) for t in source['expectedCatalog']['tables']):
+        expected_inventory = [(t['name'],) for t in source['expectedCatalog']['tables']]
+        if _verify_history_schema(connection,source):
+            expected_inventory.append((HISTORY,))
+        if inventory != sorted(expected_inventory):
             raise CatalogError('catalog-mismatch')
         for table in source['expectedCatalog']['tables']:
             _execute(connection,'LOCK TABLE '+_q(schema)+'.'+_q(table['name'])+' IN ACCESS EXCLUSIVE MODE')

@@ -58,6 +58,9 @@ def verify_native_role_scope(connection: Any, bundle: dict[str, object], *,
             administrators = _one(connection, "SELECT EXISTS (SELECT FROM pg_catalog.pg_auth_members WHERE member=ANY(%s::pg_catalog.oid[]) AND admin_option)", ([row[0] for row in effective],))
             if administrators != (False,):
                 raise CatalogError("role-scope-mismatch")
+            for row in effective:
+                if _one(connection,"SELECT pg_catalog.has_parameter_privilege(%s::pg_catalog.oid,'session_replication_role','SET')",(row[0],)) != (False,):
+                    raise CatalogError("role-scope-mismatch")
             reached = {row[1] for row in effective}
             forbidden = {owner, batch} if name != batch else {owner, person}
             if name == owner:

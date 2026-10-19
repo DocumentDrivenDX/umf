@@ -92,7 +92,8 @@ def check(root: Path) -> int:
         package = target.split(".")[0]
         if source_owner == "lifecycle" and package in {"psycopg", "umf_codegen"}:
             public = (target == "psycopg" and member == "Error" or target == "psycopg.rows" and member == "tuple_row"
-                      or target == "umf_codegen" and member == "verify_table_deployment")
+                      or target == "psycopg.types.json" and member == "Jsonb"
+                      or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"})
             if not public:
                 fail(path, "PRIVATE", "administration uses only the original public verifier and native exception boundary")
                 return

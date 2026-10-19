@@ -13,6 +13,7 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
  const relationNames=new Set(ctx.payload.tables.flatMap(t=>[t.name,...t.indexes.map(i=>i.name)]));
  for(const[i,table]of ctx.payload.tables.entries()){
   const path=ctx.path+'/tables/'+i,record=ctx.document.modules.find(m=>m.id===table.record.module)!.elements.find(e=>e.id===table.record.element)!;
+  if([table.name,...table.indexes.map(index=>index.name)].some(name=>/^umf_lifecycle_/i.test(name)))deploymentError('Native lifecycle metadata relation/index names are reserved',path);
   const columns=table.columns.map((c,j)=>{
    const field=ctx.field(c.field),p=path+'/columns/'+j;
    // Unknown logical qualifiers must not acquire an executable interpretation.

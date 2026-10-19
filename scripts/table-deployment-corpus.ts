@@ -15,5 +15,7 @@ const unknown=source();unknown.modules[0].extensions['umf.tables'].future={prese
 const missing=source();missing.modules[0].extensions['umf.tables'].tables[0].columns.pop();add('missing-native-mapping-refuses',missing);
 const padded=source();padded.modules[0].extensions['umf.tables'].tables[0].columns[0].nativeType={kind:'char',length:4};add('unqualified-codec-refuses',padded);
 const named=source();named.modules[0].extensions['umf.tables'].commands.push({future:'retained'});add('unqualified-command-refuses',named);
+const reserved=source();reserved.modules[0].extensions['umf.tables'].tables[0].name='umf_lifecycle_history';add('reserved-metadata-name-refuses',reserved);
+const grouped=source();grouped.modules[0].extensions['umf.tables'].tables[0].policy.person.select={kind:'memberOf',field:{module:'demo',element:'owner'}};add('deterministic-group-map',grouped,{...configuration,groupRoles:{z:'group_z',aa:'group_a'}});
 const corpus=cases.map(item=>({...item,expected:compileTableDeployment(item.request)}));
 await Bun.write(process.argv[2]!,JSON.stringify(corpus,null,2)+'\n');console.log(JSON.stringify({cases:corpus.length,compiled:corpus.filter(c=>c.expected.status==='compiled').length}));

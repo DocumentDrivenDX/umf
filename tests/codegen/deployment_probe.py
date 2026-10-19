@@ -21,6 +21,7 @@ parser.add_argument('--report', required=True, type=Path)
 args = parser.parse_args()
 cases = json.loads(args.corpus.read_text())
 observations = []
+tamper_count = 0
 with patch.object(subprocess,'Popen',side_effect=AssertionError('external process forbidden')), \
      patch.object(shutil,'which',side_effect=AssertionError('executable lookup forbidden')), \
      patch.object(socket,'create_connection',side_effect=AssertionError('external network forbidden')), \
@@ -52,7 +53,8 @@ with patch.object(subprocess,'Popen',side_effect=AssertionError('external proces
                     assert error.code == 'TABLE_DEPLOYMENT_UNSUPPORTED'
                 else:
                     raise AssertionError('forged bundle admitted: '+mutation)
+                tamper_count += 1
         observations.append({'name':case['name'],'status':result['status'],'completeParity':True})
-report = {'scope':'installed initial deployment compiler and source recompilation only','cases':observations,'tamperControls':20,'externalJavascriptProcesses':'forbidden','nativeLifecycleReleaseQualified':False}
+report = {'scope':'installed initial deployment compiler and source recompilation only','cases':observations,'tamperControls':tamper_count,'externalJavascriptProcesses':'forbidden','nativeLifecycleReleaseQualified':False}
 args.report.write_text(json.dumps(report,indent=2)+'\n')
-print(json.dumps({'parityCases':len(observations),'tamperControls':20}))
+print(json.dumps({'parityCases':len(observations),'tamperControls':tamper_count}))
