@@ -13,7 +13,7 @@ from commerce.actions import (
     ShipOrderRejected,
 )
 from commerce.keys import OrderKey
-from pydantic import MISSING
+from umf_access.types import MISSING
 from umf_access.codec_support import (
     initialize_action_rejection,
     initialize_rejection,

@@ -60,3 +60,11 @@ function changed(fn:(model:any)=>void){const model=JSON.parse(original);fn(model
  await expect(writeAccessPackage(output,replacement,{fault:stage=>{if(stage==='before-install-rename')throw new Error('injected writer fault');}})).rejects.toThrow();
  expect(await checkAccessPackage(output,candidate)).toEqual([]);
 });
+
+// @covers US-091-AC7
+test('sync and async public client names remain reserved',()=>{
+ for(const symbol of ['SyncClient','AsyncClient','SyncActions','AsyncActions','SyncTransport','AsyncTransport','SyncQuery']){
+  const text=changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name=symbol;});
+  expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
+ }
+});

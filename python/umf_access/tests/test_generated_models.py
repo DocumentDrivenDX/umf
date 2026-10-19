@@ -16,7 +16,7 @@ import commerce
 from commerce.codecs import decode_Order, encode_Order_create, encode_Order_patch
 from commerce.keys import BUNDLE_INPUT_DIGEST, OrderKey, OrderLineKey
 from commerce.models import OrderCreate, OrderPatch
-from pydantic import MISSING
+from umf_access.types import MISSING
 
 
 class GeneratedModels(unittest.TestCase):

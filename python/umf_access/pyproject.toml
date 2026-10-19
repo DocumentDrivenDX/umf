@@ -9,7 +9,7 @@ name = "umf_access"
 version = "0.1.0.dev2"
 description = "Local prerelease typed access runtime; target qualification pending"
 requires-python = ">=3.11,<3.15"
-dependencies = ["pydantic==2.14.1", "typing-extensions==4.16.0"]
+dependencies = ["pydantic>=2.13,<3", "typing-extensions==4.16.0"]
 
 [project.scripts]
 umf-access = "umf_access.build.catalog:main"

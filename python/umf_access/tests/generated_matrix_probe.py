@@ -59,7 +59,7 @@ def refuses(call):
 def main():
     generated, wheel, vectors_file = map(Path, sys.argv[1:])
     import umf_access
-    from pydantic import MISSING
+    from umf_access.types import MISSING
 
     assert sys.version_info[:2] in {(3, 11), (3, 14)}
     assert importlib.metadata.version("pydantic") == "2.14.1"

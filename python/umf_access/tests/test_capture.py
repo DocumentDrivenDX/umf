@@ -3,7 +3,7 @@
 
 import unittest
 
-from pydantic import MISSING
+from umf_access.types import MISSING
 from umf_access.capture import CaptureError, capture
 from umf_access.dsl import Column, FieldRef, Param, Query, RecordRef, if_present, query
 

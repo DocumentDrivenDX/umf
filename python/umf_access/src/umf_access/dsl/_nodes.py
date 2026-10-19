@@ -9,7 +9,8 @@ from datetime import UTC, date, datetime, timezone
 from decimal import Decimal
 from typing import Generic, Literal, TypeVar, cast, get_args
 
-from pydantic import MISSING, BaseModel
+from pydantic import BaseModel
+from ..types import MISSING
 
 from ..generated_core import CURRENT_CORE_VERSION, CoreVersion
 from ._context import CaptureError

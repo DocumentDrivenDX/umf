@@ -13,7 +13,8 @@ from itertools import combinations
 from types import UnionType
 from typing import Any, Union, cast, get_args, get_origin, get_type_hints
 
-from pydantic import MISSING, BaseModel
+from pydantic import BaseModel
+from .types import MISSING
 
 from .dsl import GeneratedSource, Join, Param, Terminal
 from .dsl._context import CURRENT, CaptureContext

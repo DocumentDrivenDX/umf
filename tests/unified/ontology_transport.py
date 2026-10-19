@@ -144,6 +144,9 @@ class OntologyTransport:
         return rows
 
     async def execute(self, request: dict[str, Any]) -> dict[str, Any]:
+        return self.execute_sync(request)
+
+    def execute_sync(self, request: dict[str, Any]) -> dict[str, Any]:
         self.calls.append(request)
         response: dict[str, Any] = {"schema": request["schema"]}
         if request["kind"] == "read":

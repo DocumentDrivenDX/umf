@@ -22,7 +22,8 @@ from typing import (
     overload,
 )
 
-from pydantic import MISSING, BaseModel
+from pydantic import BaseModel
+from ..types import MISSING
 
 from ..types import ActionRef, SnapshotVersions, validate_snapshot_versions
 from ._context import CaptureError, require_capture

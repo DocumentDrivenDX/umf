@@ -29,8 +29,8 @@ without depending on an execution framework.
 ## Context
 
 The developer starts with the reviewed description from US-091. The portable
-plugin uses an async convention even when its backend implementation is synchronous;
-the consumer binding owns that adaptation. Generated code has no connection,
+plugin selects a typed sync or async client explicitly. Both use the same
+request contract; the consumer binding owns execution and scheduling. Generated code has no connection,
 authorization or effect-evaluation authority.
 
 ## Walkthrough
@@ -54,14 +54,18 @@ authorization or effect-evaluation authority.
 - [ ] **US-092-AC2** — Given positive and deliberately invalid plugin call sites,
   when pinned pyright, mypy and ty check them, then valid code passes and wrong
   entity keys, argument types, field filters and unselected operations fail,
-  without generated suppression comments.
+  without generated suppression comments. Sync and async transport/key/action
+  mismatches must also be rejected.
 - [ ] **US-092-AC3** — Given absent, explicit null and exact numeric/temporal
   values, when supported codecs encode and decode them, then no distinctions
   or precision are lost and unsupported conversions refuse.
 - [ ] **US-092-AC4** — Given the same async plugin source, when it runs against
   local-sync, local-async, remote-sync and remote-async backend arrangements,
   and table/ontology storage, then the imported client and call sites remain
-  unchanged for supported operations. Unsupported capabilities fail explicitly.
+  unchanged for supported operations. A separately typed synchronous calling
+  mode must work in ordinary synchronous code, inside a running event loop
+  without managing that loop, and in a spawned worker with child-owned resources.
+  Unsupported capabilities fail explicitly.
 - [ ] **US-092-AC5** — Given fixed-code business failures and a lost write
   response, when the binding reports them, then typed business refusals remain
   distinct from uncertain commitment and no automatic write retry occurs.

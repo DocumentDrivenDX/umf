@@ -78,7 +78,10 @@ after the user explicitly approved publication. Both checkouts are clean and
 match origin. Automatic review initially rejected publication without that
 explicit approval; no rejected operation was bypassed.
 
-UMF, Weft, Truss and Hohfeld remain local reviewable changes. No package-index
+The owner subsequently authorized committing and pushing UMF, Weft, Truss and
+Hohfeld too. UMF licensing commit 0699d31f is published on
+`codex/praxis-p1-lifecycle`; Weft 93d1f817, Truss e1e1e377 and Hohfeld 34a6c8e
+are published on their existing `main` branches. No package-index
 publication, public wheel replacement or release tag was performed. Existing
 release artifacts keep their old metadata; issue new immutable package versions
 when publishing rebuilt distributions. Requalify source-bound native certificates

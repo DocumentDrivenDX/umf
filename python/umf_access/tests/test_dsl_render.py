@@ -313,7 +313,7 @@ class LogicalFormCoverage(unittest.TestCase):
 
     # @covers US-082-AC1
     def test_absent_optional_omits_whole_top_level_filter(self):
-        from pydantic import MISSING
+        from umf_access.types import MISSING
         from umf_access.dsl import if_present
 
         @query

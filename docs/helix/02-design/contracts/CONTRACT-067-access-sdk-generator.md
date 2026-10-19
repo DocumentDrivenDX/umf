@@ -88,12 +88,12 @@ reservedNames:string[], importedNames:string[], assertionKinds:string[],
 subset:string, codeSha256:string}`. `codeSha256` is the SHA-256 of the
 profile's trusted code module bytes; two profiles with equal metadata and
 different code are different inputs. Dependencies MUST pin exact versions,
-including `umf_access` (recorded in the result as `runtimeAbi`), `pydantic` (2.14
-or later for the stable `MISSING` sentinel) and the
+including `umf_access` (recorded in the result as `runtimeAbi`), `pydantic` (2.13
+or later within major 2, using the host compatibility import for `MISSING`) and the
 type checkers whose static claims the profile makes, with their exact
 configuration (for mypy at least `check_untyped_defs`; for pyright and ty the
 strictness level and the environment they resolve dependencies from). The first
-profile supports Python 3.11 and later, Pydantic 2.14 or later, and pyright, mypy
+profile supports Python 3.11 and later, Pydantic >=2.13,<3, and pyright, mypy
 and ty; generated code must type-check cleanly under every checker the profile
 names. Artifact content MUST NOT
 locate or load a profile, template, plugin or dependency.

@@ -170,7 +170,7 @@ class SchemaIdentityAndContinuations(unittest.TestCase):
     def test_continuation_keeps_key_sort_states_and_target(self):
         from dataclasses import FrozenInstanceError
 
-        from pydantic import MISSING
+        from umf_access.types import MISSING
         from umf_access.dsl import Continuation
 
         continuation = Continuation(

@@ -1,0 +1,9 @@
+tests/unified/sync_typecheck_negative.py:15:12: error[invalid-argument-type] Argument to `SyncClient.__init__` is incorrect: Expected `SyncTransport`, found `AsyncHost`
+tests/unified/sync_typecheck_negative.py:16:8: error[invalid-argument-type] Argument to `Client.__init__` is incorrect: Expected `Transport`, found `SyncHost`
+tests/unified/sync_typecheck_negative.py:17:9: error[invalid-argument-type] Argument to `Actions.__init__` is incorrect: Expected `Client`, found `SyncClient`
+tests/unified/sync_typecheck_negative.py:18:13: error[invalid-argument-type] Argument to `SyncActions.__init__` is incorrect: Expected `SyncClient`, found `Client`
+tests/unified/sync_typecheck_negative.py:19:31: error[invalid-argument-type] Argument to bound method `SyncQuery.get` is incorrect: Expected `OrderKey`, found `CustomerKey`
+tests/unified/sync_typecheck_negative.py:20:30: error[invalid-argument-type] Argument to bound method `SyncActions.ship_order` is incorrect: Expected `OrderKey`, found `Literal["o-1"]`
+tests/unified/sync_typecheck_negative.py:24:12: error[invalid-return-type] Return type does not match returned value: expected `Order | None`, found `CoroutineType[Any, Any, Order | None]`
+tests/unified/sync_typecheck_negative.py:28:11: error[invalid-await] `Order | None` is not awaitable
+Found 8 diagnostics

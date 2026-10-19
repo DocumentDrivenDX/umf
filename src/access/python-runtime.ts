@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-export const pythonRuntime = String.raw`# SPDX-License-Identifier: MIT OR Apache-2.0
+const asyncRuntime = String.raw`# SPDX-License-Identifier: MIT OR Apache-2.0
 """Generated typed request builders. Standard library only; no SQL or host I/O."""
 from __future__ import annotations
 
@@ -8,7 +8,8 @@ from dataclasses import dataclass, fields, replace
 from datetime import date
 from decimal import Decimal, DecimalException
 from enum import Enum
-from typing import Any, Generic, Protocol, TypeVar, cast
+from typing import Any, Generic, Protocol, TypeVar, cast, overload
+from inspect import iscoroutinefunction
 from uuid import UUID
 import base64
 import re
@@ -332,3 +333,45 @@ class Query(Generic[R, K]):
         if len(page.items) > 1 or page.next_cursor: raise AccessError('NON_UNIQUE_KEY')
         return page.items[0] if page.items else None
 `;
+
+// Derive only the scheduling-dependent classes from the controlled template.
+// Values, wire validation, fields, predicates and relationships stay shared.
+const binding = `    def using(self, client: Client) -> Query[R, K]:
+        if self.record not in client.records or not client.records[self.record].get('selected'):
+            raise Unsupported('UNSUPPORTED')
+        return replace(self, client=client, source=self.source.using(client) if self.source is not None else None)`;
+const overloadedBinding = `    @overload
+    def using(self, client: SyncClient) -> SyncQuery[R, K]: ...
+    @overload
+    def using(self, client: Client) -> Query[R, K]: ...
+    def using(self, client: Client | SyncClient) -> Query[R, K] | SyncQuery[R, K]:
+        if not isinstance(client, (Client, SyncClient)):
+            raise AccessError('CLIENT_TYPE')
+        if self.client is not None and isinstance(client, SyncClient):
+            raise AccessError('CLIENT_TYPE')
+        if self.record not in client.records or not client.records[self.record].get('selected'):
+            raise Unsupported('UNSUPPORTED')
+        if isinstance(client, SyncClient):
+            return SyncQuery(self.record, client, self.predicates, self.ordering,
+                             self.source.using(client) if self.source is not None else None,
+                             self.relationship, self.selected_key)
+        return replace(self, client=client, source=self.source.using(client) if self.source is not None else None)`;
+if (!asyncRuntime.includes(binding)) throw new Error('Runtime query binding template changed');
+const syncClasses = asyncRuntime.slice(asyncRuntime.indexOf('class Client:'))
+ .replace(/\basync def /g, 'def ').replace(/\bawait /g, '')
+ .replace(/\b(Client|Query|Transport)\b/g, name => 'Sync' + name)
+ .replace('        self.transport, self.schema = transport, schema',
+          `        if not callable(getattr(transport, 'execute', None)) or iscoroutinefunction(transport.execute):
+            raise TypeError('SyncTransport.execute must be synchronous')
+        self.transport, self.schema = transport, schema`)
+ .replace('    def using(self, client: SyncClient) -> SyncQuery[R, K]:\n',
+          `    def using(self, client: SyncClient) -> SyncQuery[R, K]:
+        if not isinstance(client, SyncClient): raise AccessError('CLIENT_TYPE')
+`);
+export const pythonRuntime = asyncRuntime.replace(binding, overloadedBinding) + `
+AsyncTransport = Transport
+
+class SyncTransport(Protocol):
+    def execute(self, request: dict[str, Any]) -> Mapping[str, Any]: ...
+
+` + syncClasses;

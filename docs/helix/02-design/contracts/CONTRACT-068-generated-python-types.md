@@ -63,7 +63,9 @@ immutable; revalidation is what detects invalid nested state.
 
 ### Presence
 
-Absence uses Pydantic's `MISSING` sentinel (stable since Pydantic 2.14). A field
+Absence uses Pydantic's `MISSING` sentinel. The host dependency admits
+Pydantic >=2.13,<3; exact installed-version compatibility is qualified
+separately by the P1 evidence (2.13.5 and 2.14.1). A field
 whose CONTRACT-070 view admits `missing` is typed `T | MISSING` (or
 `T | None | MISSING` when null is also admitted) with default `MISSING`; a field
 admitting only null is typed `T | None` with no default; a required field is `T`

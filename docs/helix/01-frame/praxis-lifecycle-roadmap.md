@@ -49,7 +49,20 @@ WS-1 through WS-4 are already allocated by the domain-pack roadmap and remain un
 | WS-8 | Graph-host convergence | Current-core Hohfeld, protected Truss, publication-bound Ashlar | Hohfeld, Truss and Ashlar maintainers | active planning |
 | WS-9 | Distribution and licensing | Dual licensing, reproducible wheels, index publication, release manifests | Stack release maintainers | active; licensing implemented separately |
 
-## Gap assessment and proposed fixes
+## P1 implementation checkpoint
+
+The owner authorized P1 implementation after publication of the licensing work.
+[The build plan](../04-build/praxis-p1-plan.md) sequences the implementation.
+Portable generated SyncClient/SyncActions and explicit async aliases are now
+implemented, with unchanged wire/codec semantics. The host Pydantic dependency
+admits >=2.13,<3, including the shared sentinel compatibility import; installed
+2.13.5 and 2.14.1 checks are recorded in
+[P1 evidence](../04-build/evidence/praxis-p1.md).
+Native connection/session/driver qualification, the Bun-free generator and index
+publication remain open. No P1 release or complete-P1 acceptance is claimed.
+The table below retains the original baseline audit and proposed landing cuts.
+
+## Baseline gap assessment and proposed fixes
 
 “Partial” means the cited subset exists; it is not an assertion that the full Praxis requirement is supported. Versions in the last column are **proposed landing targets**, not approved dates or existing releases. Core schema version, SDK archive version and Python distribution version are independent.
 

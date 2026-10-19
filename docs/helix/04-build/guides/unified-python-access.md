@@ -45,3 +45,33 @@ The compiler lives in Weft. Generated Python builds schema-referenced requests;
 the host authorizes and executes them. Backend limitations raise typed failures.
 The [execution evidence](../evidence/unified-python-access.md) records what is
 implemented and tested.
+
+## Synchronous calling mode
+
+The same generated package exposes SyncClient/SyncActions and explicit
+AsyncClient/AsyncActions aliases for the existing Client/Actions API:
+
+```python
+from shop import SyncClient, SyncActions, Order, OrderKey
+
+def ship(sync_transport):
+    client = SyncClient(sync_transport)
+    order = Order.objects.using(client).get(OrderKey(order_id="o-100"))
+    receipt = SyncActions(client).ship_order(order=OrderKey(order_id="o-100"))
+    return order, receipt
+```
+
+`SyncTransport.execute(request)` returns a mapping directly. Sync query terminals
+and actions return their values directly, including when called from within a
+running event loop. No generated code creates/runs an event loop or retries an
+uncertain write. Bind an unbound query to the desired mode; changing a query
+already bound to the other mode refuses. Keys, fields, relationship builders,
+wire documents and error codes are shared. Hosts still own resources and
+execution. The async WeftTableBinding retains its existing contract; native
+synchronous Weft/driver adapters and request-scoped session lifecycle are the
+next P1 slice, with separate native acceptance gates.
+
+The host runtime's Pydantic requirement is >=2.13,<3. Its MISSING compatibility
+import uses the actual Pydantic sentinel, preserving absence/null across 2.13.5
+and 2.14.1. Generated stdlib-only clients do not require Pydantic. See
+[P1 evidence](../evidence/praxis-p1.md) for commands, tested subset and limits.
