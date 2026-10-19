@@ -1,0 +1,20 @@
+{
+  "scope": "legacy reviewed read compiler/catalog DBAPI compatibility, no native execution qualification",
+  "baseCommit": "f4eaf24d9",
+  "actualCompiler": "0.4.46",
+  "actualCompilerSealedTransport": true,
+  "sourceExactProfile": "independently authored core0.8.0 fixture",
+  "actualCompilerCohortsTested": [
+    "0.4.44 published wheel",
+    "0.4.46 local candidate from e686c27e transport source"
+  ],
+  "testsPerCohort": 4,
+  "negativeAttemptsPerCohort": 11,
+  "legacyCatalogAbiPreserved": true,
+  "sealedTransportReinterpretation": "forbidden by patched fallback functions during positive build/load",
+  "knownSeparateGap": "Current0.10 source-exact ColumnSet admission remains hard-coded0.8 in original compiler; existing reviewed0.10 fixtures refuse before transport. No source document was relabeled to bypass it.",
+  "sourceHashes": {
+    "python/umf_access/src/umf_access/reviewed.py": "175526a3af2a9634e218355a6035181a3b21518f56f98118ee96a991a9133a84",
+    "python/umf_access/tests/test_reviewed_dbapi_transport.py": "d8cbd9bd66cff1e08b24631f3e576b9bf6a86ca4a05904809225cfbd537e249b"
+  }
+}
