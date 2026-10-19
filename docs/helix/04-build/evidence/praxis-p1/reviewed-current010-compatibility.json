@@ -1,0 +1,27 @@
+{
+  "scope": "Current core0.10 reviewed compilation and native production read executor with sealed compiler DBAPI transport",
+  "weftSource": "8b0a95fd92535bf6a382da0dd52c5d10b2614f7c",
+  "compilerTransport": "Actual compiler output required; no synthesized successor transport",
+  "compilerDelivery": "Rebuilt Rust example CLI; not a published wheel",
+  "compilerSha256": "b7bdf953630904987db69caaf203b968490c9dbd586216bc59264ef802bad425",
+  "postgresql": "18.6 Homebrew; isolated temporary cluster stopped after suite",
+  "pythonEnvironment": "umf-praxis-native-installed; Pydantic2.13.5, Psycopg3.2.13",
+  "command": "PYTHONPATH=python/umf_access/src:python/umf_access/tests UMF_WEFT_RAW_COMPILER=<rebuilt CLI> UMF_PG_TEST_DSN=<isolated cluster> python -m unittest test_reviewed_reads test_reviewed_dbapi_transport -v",
+  "tests": {
+    "run": 25,
+    "passed": 23,
+    "skipped": 2,
+    "failed": 0
+  },
+  "skips": [
+    "test_actual_generated_join_runs_through_weft_and_postgres: generated reporting fixture absent",
+    "test_catalog_cli_public_functions_sync_async_and_drift: generated reporting fixture absent"
+  ],
+  "logSha256": "4737577c4ca1f482b0f90dbd86426822835d5c0e0c2a1c2ac6696853e59a5f73",
+  "sourceHashes": {
+    "python/umf_access/src/umf_access/reviewed.py": "175526a3af2a9634e218355a6035181a3b21518f56f98118ee96a991a9133a84",
+    "python/umf_access/tests/test_reviewed_dbapi_transport.py": "45cec9952f162768ea8ab468a98beb3e9d8d1c1d214aac15896c73821e68aafb",
+    "python/umf_access/tests/test_reviewed_reads.py": "3cb320690d2fa029fe47ccc99d802c2b5865aa4a76eaa7c38f64c99d370dd866"
+  },
+  "limits": "No new native mutation/DDL/table admission qualification; no published wheel or full Truss matrix claim."
+}
