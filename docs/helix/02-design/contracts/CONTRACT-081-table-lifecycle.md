@@ -340,6 +340,32 @@ and native exception class; those dependencies do not become available to the
 portable DSL or ordinary runtime. Current native evidence covers PostgreSQL18.6;
 the major18 guard does not establish managed/minor-version qualification.
 
+The administrative `verify_native_role_scope(connection,bundle,person_roles=...)`
+shares that source verification, install transaction, advisory lock and timeout
+boundary. The trusted host supplies an exact tuple of at most1024 selected person
+roles; an empty tuple qualifies configured roles for a batch-only installation.
+This is not a census of every member of the audience roles. A trusted pool issuer
+may intentionally switch to both audiences and MUST NOT be substituted for a
+person identity. Successful output binds the exact selected role inventory.
+
+Configured owner/person/batch/group roles must exist and be non-login roles.
+Selected people must inherit the person audience with native `USAGE`, so a
+SET-only membership cannot replace the individual identity. Native closure
+includes every role reachable by a SET chain followed by an INHERIT chain;
+MEMBER alone does not imply effective privileges. The owner can reach only itself.
+Person/group roles cannot reach batch or owner; batch cannot reach person or
+owner. No selected principal or effective role can be superuser, BYPASSRLS,
+CREATEROLE, CREATEDB or REPLICATION. Disabled membership edges are not guessed to
+confer privileges. A person may legitimately have other plugin memberships;
+schema/object ACL containment remains a separate mandatory check.
+
+The role checker never changes memberships or commits. It returns
+`{bundleDigest,roleScopeVerified:true,verifiedPersonRoles:[...],lifecycleAdmission:false}`.
+Native role membership can change outside the module advisory lock; this bounded
+administrative observation does not freeze role catalogs or admit a later call.
+Trusted operators must quiesce lifecycle access for changes, and final normal
+operation admission must recheck the actual selected principal and privileges.
+
 ### Forward migrations and retirement
 
 A migration carries `{version:"umf.table-migration/0.1",id,predecessor,

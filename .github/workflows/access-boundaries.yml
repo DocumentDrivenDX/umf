@@ -203,7 +203,7 @@ jobs:
           --generated /tmp/umf-session-client --report /tmp/umf-session-native.json
           --psycopg2 --sqlalchemy
           $DBAPI_FLAG
-      - name: Initial deployment compiler native fixture
+      - name: Source-derived deployment catalog and role scope fixtures
         if: matrix.weft-cohort == 'source-dbapi'
         env:
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
@@ -212,6 +212,7 @@ jobs:
           python -m pip install /tmp/umf-deployment-wheels/*.whl
           bun tests/unified/table-deployment-fixture.ts /tmp/umf-table-deployment.json
           python -I tests/unified/table_deployment_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-deployment-native.json
+          python -I tests/unified/table_role_scope_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-role-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -220,3 +221,4 @@ jobs:
             /tmp/umf-session-native.json
             /tmp/umf-weft-wheel-sha256.txt
             /tmp/umf-table-deployment-native.json
+            /tmp/umf-table-role-native.json

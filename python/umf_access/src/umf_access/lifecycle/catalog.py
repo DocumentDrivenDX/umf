@@ -8,6 +8,8 @@ remain separate gates. Expected shape always comes from recompiled source.
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Iterator
+from contextlib import contextmanager
 from typing import Any, cast
 from uuid import uuid4
 
@@ -186,15 +188,10 @@ def _verify_policies(connection: Any, bundle: dict[str, Any]) -> None:
             raise CatalogError("catalog-mismatch")
 
 
-def verify_native_catalog(connection: Any, bundle: dict[str, object], *,
-                          statement_timeout_ms: int = 30_000, lock_timeout_ms: int = 5_000) -> dict[str, object]:
-    """Check source shape/policies; never commit the caller or admit data methods.
-
-    Requires a healthy active Psycopg3 transaction, configured NOLOGIN install
-    owner and exactly pg_catalog resolution. Success leaves no scratch objects;
-    failure rolls back this function's savepoint. Full lifecycle admission remains
-    false until grants and transitive role closure also qualify.
-    """
+@contextmanager
+def _installation(connection: Any, bundle: dict[str, object], *,
+                  statement_timeout_ms: int, lock_timeout_ms: int) -> Iterator[dict[str, Any]]:
+    """Shared source, install authority, lock, deadline and savepoint boundary."""
     for timeout in (statement_timeout_ms, lock_timeout_ms):
         if type(timeout) is not int or not 1 <= timeout <= 300_000:
             raise ValueError("administrative timeouts must be 1..300000 milliseconds")
@@ -221,22 +218,37 @@ FROM pg_catalog.pg_roles r JOIN pg_catalog.pg_namespace n ON n.nspname=%s WHERE 
                 raise CatalogError("install-authority-required")
             lock = int.from_bytes(hashlib.sha256(("umf.table-lifecycle/0.1\0" + schema).encode()).digest()[:8], "big", signed=True)
             _one(connection, "SELECT pg_catalog.pg_advisory_xact_lock(%s)", (lock,))
-            for table in source["expectedCatalog"]["tables"]:
-                relation = _q(schema) + "." + _q(table["name"])
-                _execute(connection, "LOCK TABLE " + relation + " IN ACCESS EXCLUSIVE MODE")
-            for table in source["expectedCatalog"]["tables"]:
-                native = _one(connection, """SELECT c.relkind,c.relrowsecurity,c.relforcerowsecurity,r.rolname,c.relpersistence,
-c.relispartition,c.relhassubclass,EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
-c.relhasrules,EXISTS(SELECT FROM pg_catalog.pg_inherits inh WHERE inh.inhrelid=c.oid),c.relreplident
-FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace JOIN pg_catalog.pg_roles r ON r.oid=c.relowner
-WHERE n.nspname=%s AND c.relname=%s""", (schema, table["name"]))
-                if native != ("r", True, True, owner, "p", False, False, False, False, False, "d"):
-                    raise CatalogError("catalog-mismatch")
-                _verify_table_shape(connection, source, table)
-            _verify_policies(connection, source)
+            yield source
             _one(connection, "SELECT pg_catalog.set_config('statement_timeout',%s,true),pg_catalog.set_config('lock_timeout',%s,true)", tuple(previous))
     except CatalogError:
         raise
     except (NativeError, ValueError, TypeError, KeyError, IndexError):
         raise CatalogError("catalog-verification-failed") from None
+
+
+def verify_native_catalog(connection: Any, bundle: dict[str, object], *,
+                          statement_timeout_ms: int = 30_000, lock_timeout_ms: int = 5_000) -> dict[str, object]:
+    """Check source shape/policies; never commit the caller or admit data methods.
+
+    Requires a healthy active Psycopg3 transaction, configured NOLOGIN install
+    owner and exactly pg_catalog resolution. Success leaves no scratch objects;
+    failure rolls back this function's savepoint. Full lifecycle admission remains
+    false until grants and transitive role closure also qualify.
+    """
+    with _installation(connection, bundle, statement_timeout_ms=statement_timeout_ms,
+                       lock_timeout_ms=lock_timeout_ms) as source:
+        schema, owner = source["configuration"]["schema"], source["configuration"]["ownerRole"]
+        for table in source["expectedCatalog"]["tables"]:
+            relation = _q(schema) + "." + _q(table["name"])
+            _execute(connection, "LOCK TABLE " + relation + " IN ACCESS EXCLUSIVE MODE")
+        for table in source["expectedCatalog"]["tables"]:
+            native = _one(connection, """SELECT c.relkind,c.relrowsecurity,c.relforcerowsecurity,r.rolname,c.relpersistence,
+c.relispartition,c.relhassubclass,EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
+c.relhasrules,EXISTS(SELECT FROM pg_catalog.pg_inherits inh WHERE inh.inhrelid=c.oid),c.relreplident
+FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace JOIN pg_catalog.pg_roles r ON r.oid=c.relowner
+WHERE n.nspname=%s AND c.relname=%s""", (schema, table["name"]))
+            if native != ("r", True, True, owner, "p", False, False, False, False, False, "d"):
+                raise CatalogError("catalog-mismatch")
+            _verify_table_shape(connection, source, table)
+        _verify_policies(connection, source)
     return {"bundleDigest": source["bundleDigest"], "catalogShapeVerified": True, "lifecycleAdmission": False}

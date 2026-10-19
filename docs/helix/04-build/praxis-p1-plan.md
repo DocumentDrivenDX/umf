@@ -303,3 +303,23 @@ Next verify native ACLs and effective/transitive role containment, then install
 trusted generation and forward digest-checked ledger authority. Weft typed
 operations, generated client adoption, remaining native codecs and the selected
 Praxis branch acceptance remain required before a full lifecycle prerelease.
+
+## Selected native role scope — 2026-10-19
+
+The installed administrative `verify_native_role_scope` now checks configured
+owner/person/batch/group principals and an explicit host-selected person registry
+using PostgreSQL's native SET and USAGE semantics. Switch chains followed by
+inherited privilege chains cannot reach another audience, install ownership or
+unsafe native role attributes. Batch-only setup requires no person. Trusted pool
+issuers are distinct from selected people; other legitimate plugin memberships
+are preserved. The shared source/install/savepoint/deadline guard also serves
+the existing catalog verifier.
+
+The [role-scope packet](evidence/praxis-p2/role-scope.json) records56 actual
+PostgreSQL18.6 role assertions and112 catalog regression assertions with the
+installed host wheel. A mistaken overlapping fixture run was discarded; final
+suites run sequentially, and cleanup now owns only schemas created by its run.
+Hosted native CI includes the role suite sequentially after catalog verification.
+Role scope remains explicitly non-admitting: ACL/external-object containment,
+trusted installed generation, migrations and actual generated Weft operations
+still gate the full Praxis lifecycle release.

@@ -63,6 +63,7 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
     check('installed-original-compiler-verifies-source',True)
     check('native-major-18', admin.info.server_version // 10000 == 18)
     created = []
+    schema_created = False
     try:
         for role in roles:
             admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE').format(sql.Identifier(role)))
@@ -70,6 +71,7 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
         for role in (alice,bob):
             admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE, SET FALSE').format(sql.Identifier(person),sql.Identifier(role)))
         admin.execute(sql.SQL('CREATE SCHEMA {} AUTHORIZATION {}').format(sql.Identifier(schema),sql.Identifier(owner)))
+        schema_created = True
         with admin.transaction():
             admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
             admin.execute('SET LOCAL search_path=pg_catalog')
@@ -271,7 +273,8 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
         check('cross-schema-create-not-granted',not admin.execute('SELECT pg_catalog.has_schema_privilege(%s,%s,\'CREATE\')',(alice,schema)).fetchone()[0])
         report={'scope':'initial inert compiler output; fixture executor, no production admission/migrations','serverVersion':admin.info.server_version,'psycopg':psycopg.__version__,'bundleDigest':bundle['bundleDigest'],'sourceDigest':bundle['sourceDigest'],'fixtureSha256':hashlib.sha256(args.bundle.read_bytes()).hexdigest(),'observations':observations,'nativeLifecycleReleaseQualified':False}
     finally:
-        admin.execute(sql.SQL('DROP SCHEMA IF EXISTS {} CASCADE').format(sql.Identifier(schema)))
+        if schema_created:
+            admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(schema)))
         for role in reversed(created):
             admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
 args.report.write_text(json.dumps(report,indent=2)+'\n')
