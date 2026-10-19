@@ -23,7 +23,7 @@ const fail=(path:string,message:string):never=>{throw new UmfError('ACCESS_UNSUP
 const object=(v:unknown):Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,any>:{};
 const refId=(r:Ref)=>r.module+'.'+r.element;
 const keywords=new Set('False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case'.split(' '));
-const reserved=new Set(['Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
+const reserved=new Set(['Any','ClassVar','Literal','RuntimeClient','RuntimeSyncClient','Client','AsyncClient','SyncClient','Actions','AsyncActions','SyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError','Query','Field','Ordering','Relationship','Receipt','Page','Transport','Missing','ExactTimestamp','Decimal','UUID','date','MISSING','c','objects']);
 function name(raw:string,kind:'class'|'field',path:string):string {
  const words=raw.replace(/([a-z0-9])([A-Z])/g,'$1_$2').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').split(/[_. -]+/);
  const value=kind==='class'?words.map(w=>w[0]?.toUpperCase()+w.slice(1)).join(''):words.map(w=>w.toLowerCase()).join('_');

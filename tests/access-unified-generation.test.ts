@@ -96,7 +96,7 @@ test('current Praxis handler declarations generate typed methods and omit MISSIN
 
 // @covers US-091-AC7
 test('sync and async public client names remain reserved',()=>{
- for(const symbol of ['SyncClient','AsyncClient','SyncActions','AsyncActions','SyncTransport','AsyncTransport','SyncQuery']){
+ for(const symbol of ['SyncClient','AsyncClient','SyncActions','AsyncActions','SyncTransport','AsyncTransport','SyncQuery','AccessError']){
   const text=changed(d=>{d.modules[0].elements.find((e:any)=>e.kind==='record').name=symbol;});
   expect(()=>generatePythonClient({text,package:'shop'})).toThrow();
  }
