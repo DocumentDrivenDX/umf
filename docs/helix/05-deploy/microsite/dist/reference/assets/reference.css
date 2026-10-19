@@ -27,7 +27,7 @@
 .table-hint{display:none;font-size:12px;color:var(--muted);margin-bottom:0}@media(max-width:1100px){.table-hint{display:block}}
 
 .example-formats{display:flex;gap:6px;margin-top:12px}.example-formats button[aria-pressed="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}.schema-example pre{margin-top:8px}
-/* Unified schema workspace; graph uses the released renderer's public API. */
+/* Unified schema workspace; graph content comes from the released renderer. */
 .schema-views{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:12px 0 22px;margin-bottom:24px}.schema-views a{padding:9px 15px;border:1px solid var(--line);border-radius:4px}.schema-views a[aria-current]{background:var(--ink);color:var(--paper)}.ontology-layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:16px 0 45px}.ontology-types{min-width:0}.ontology-types input{width:100%;margin:8px 0}.ontology-types a{display:block;padding:6px 10px;text-decoration:none;font-size:14px}.ontology-types a[aria-current]{background:var(--panel);border-left:3px solid var(--olive)}.ontology-content{min-width:0}.ontology-content h3{font:normal 32px Georgia,serif}.ontology-content .table-wrap{margin-top:20px}.umf-record-map-view{padding:0}.umf-record-map-view svg{min-width:600px}.umf-record-map-view text{fill:var(--ink)}#ontology-detail{border-top:1px solid var(--line);padding-top:16px}#ontology pre{max-height:350px}@media(max-width:650px){.ontology-layout{grid-template-columns:minmax(0,1fr)}.ontology-types>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:180px;overflow:auto}.ontology-content{overflow:hidden}}
 #model-catalog{min-height:850px}#model-catalog iframe{display:block;width:100%;min-height:850px;border:0;border-radius:4px;background:var(--paper)}
 .umf-record-map-view .umf-map-number{fill:var(--paper)}
@@ -102,3 +102,26 @@
  .schema-page #ontology-detail{padding:12px}
 }
 @media(min-width:1001px){.schema-page #ontology-detail{position:sticky;top:12px;max-height:calc(100dvh - 24px);overflow:auto}}
+
+/* Fit the complete ontology into the remaining workspace; zooming pans locally. */
+.schema-page .ontology-content{gap:16px;grid-template-columns:minmax(0,1fr) clamp(320px,28vw,420px)}
+.schema-page .umf-record-map-view .ontology-map{max-height:none;overflow:visible}
+.schema-page .ontology-viewport{height:max(360px,calc(100dvh - 320px));overflow:auto;border:1px solid var(--line);border-radius:5px;background:var(--white);overscroll-behavior:contain}
+.schema-page .ontology-viewport svg{min-width:0;max-width:none;display:block;margin:auto}
+.schema-page .graph-zoom{display:flex;align-items:center;gap:5px;margin-left:auto}
+.schema-page .graph-zoom button{padding:5px 9px}
+.schema-page .graph-zoom output{font:11px ui-monospace,monospace;min-width:38px;text-align:right}
+.schema-page .ontology-connections{padding:6px 0;border:0}
+.schema-page .ontology-connections summary{font-size:12px}
+.schema-page .ontology-connections .map-relationships{margin:8px 0}
+@media(max-width:1000px){
+ .schema-page .ontology-content{grid-template-columns:minmax(0,1fr)}
+ .schema-page .ontology-viewport{height:max(380px,calc(100dvh - 330px))}
+}
+@media(max-width:600px){
+ .schema-page .umf-record-map-view .map-controls{gap:6px}
+ .schema-page .graph-zoom{width:100%;margin:0}
+ .schema-page .ontology-viewport{height:max(420px,calc(100dvh - 350px))}
+}
+
+.schema-page .ontology-viewport [aria-current] rect{stroke-width:4;fill:var(--panel)}
