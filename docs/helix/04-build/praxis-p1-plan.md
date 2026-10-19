@@ -323,3 +323,28 @@ Hosted native CI includes the role suite sequentially after catalog verification
 Role scope remains explicitly non-admitting: ACL/external-object containment,
 trusted installed generation, migrations and actual generated Weft operations
 still gate the full Praxis lifecycle release.
+
+## Source-derived native privileges — 2026-10-19
+
+The installed `verify_native_privileges` reparses source grant steps on private
+scratch tables and compares exact native table/column ACLs. It verifies schema
+USAGE, default privileges, declared relation inventory and dedicated-schema
+root authority using native privilege checks. No observed ACL is repaired.
+Actual people may access other plugins; owner/person/batch roots cannot acquire
+external table/column/sequence/routine/schema, foreign-server/wrapper or
+large-object authority. Native role scope now also rejects predefined roles and
+ADMIN authority, including otherwise disabled membership edges that ADMIN could
+regrant.
+
+The [privilege packet](evidence/praxis-p2/source-privileges.json) records133 ACL,
+62 role and112 catalog assertions on the final installed PostgreSQL18.6 candidate
+wheel. Native object-kind evaluation required explicit CASE guards; the failed
+precursor and final fix are retained. License/header/metadata checks, scoped
+strict typing and boundary controls pass. Hosted CI now runs all three fixture
+suites sequentially. Earlier packets preserve their own source/wheel identities.
+
+Trusted installed-generation authority and forward digest-checked migration
+history remain next. Administrative observations do not admit normal operations,
+freeze native catalogs or qualify identity sequences. Complete Weft lifecycle
+methods, native codecs, generated client conversion and consumer/release gates
+remain required by the active full goal.

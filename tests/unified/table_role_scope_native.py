@@ -110,6 +110,9 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
             ('batch-login',[sql.SQL('ALTER ROLE {} LOGIN').format(sql.Identifier(batch))]),
             ('group-login',[sql.SQL('ALTER ROLE {} LOGIN').format(sql.Identifier(group))]),
             ('person-has-only-set-audience',[grant(person,alice,False,True)]),
+            ('disabled-admin-edge-can-regrant-batch',[sql.SQL('GRANT {} TO {} WITH ADMIN TRUE, INHERIT FALSE, SET FALSE').format(sql.Identifier(batch),sql.Identifier(alice))]),
+            ('transitive-role-admin-authority',[sql.SQL('GRANT {} TO {} WITH ADMIN TRUE, INHERIT FALSE, SET FALSE').format(sql.Identifier(batch),sql.Identifier(bridge)),grant(bridge,alice)]),
+            ('predefined-all-data-role',[grant('pg_read_all_data',alice)]),
         ]
         for label, statements in mutations:
             try:

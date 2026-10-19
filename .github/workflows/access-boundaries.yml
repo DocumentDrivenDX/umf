@@ -213,6 +213,7 @@ jobs:
           bun tests/unified/table-deployment-fixture.ts /tmp/umf-table-deployment.json
           python -I tests/unified/table_deployment_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-deployment-native.json
           python -I tests/unified/table_role_scope_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-role-native.json
+          python -I tests/unified/table_privileges_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-privileges-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -222,3 +223,4 @@ jobs:
             /tmp/umf-weft-wheel-sha256.txt
             /tmp/umf-table-deployment-native.json
             /tmp/umf-table-role-native.json
+            /tmp/umf-table-privileges-native.json

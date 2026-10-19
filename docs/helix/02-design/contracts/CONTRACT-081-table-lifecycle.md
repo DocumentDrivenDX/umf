@@ -356,7 +356,9 @@ MEMBER alone does not imply effective privileges. The owner can reach only itsel
 Person/group roles cannot reach batch or owner; batch cannot reach person or
 owner. No selected principal or effective role can be superuser, BYPASSRLS,
 CREATEROLE, CREATEDB or REPLICATION. Disabled membership edges are not guessed to
-confer privileges. A person may legitimately have other plugin memberships;
+confer privileges. Native predefined roles and membership ADMIN authority also
+refuse: ADMIN can regrant an otherwise disabled INHERIT/SET edge. A person may
+legitimately have other plugin memberships;
 schema/object ACL containment remains a separate mandatory check.
 
 The role checker never changes memberships or commits. It returns
@@ -365,6 +367,39 @@ Native role membership can change outside the module advisory lock; this bounded
 administrative observation does not freeze role catalogs or admit a later call.
 Trusted operators must quiesce lifecycle access for changes, and final normal
 operation admission must recheck the actual selected principal and privileges.
+
+The installed administrative `verify_native_privileges` combines selected native
+role scope with source-derived table/column ACL correspondence and dedicated
+schema preconditions. It takes the same transaction/advisory/deadline boundary,
+then exclusive table locks. Fresh scratch relations reparse original column
+definitions; only the exact single native table target in original grant steps
+is rebound to the scratch relation. Native table and column ACLs, including
+grantor, grantee and grant options, must agree exactly with the reparsed source.
+This does not build a second command/grant emitter or repair observed privileges.
+
+The selected schema has exactly its native owner default ACL plus source person
+and batch USAGE. Owner default table/sequence privileges may not grant anything
+to another role or introduce grant options. Schema relation inventory must equal
+declared tables and their separately checked indexes. Identity-sequence privileges
+remain unqualified. Extra objects refuse; the future trusted ledger requires its
+own explicitly qualified ownership/inventory rule.
+
+Owner/person/batch root roles cannot CREATE databases or other user schemas,
+access tables/columns/sequences outside this schema, execute user-defined
+routines, use foreign servers/wrappers or access large objects. Native checks
+include inherited and PUBLIC privileges; routine execution checks conservatively
+include user routines even when schema resolution would currently deny them.
+This dedicated-schema profile requires the operator to arrange those global
+preconditions; the installer never revokes unrelated/PUBLIC privileges to force
+qualification. Actual people may have other plugin grants; exact target ACLs and
+the role boundary govern their access to this module. Native system functions
+and session-local temporary objects retain the declared PostgreSQL trust boundary.
+
+The return is `{bundleDigest,nativePrivilegesVerified:true,verifiedPersonRoles:[...],
+lifecycleAdmission:false}`. It does not replace source catalog shape verification,
+freeze native privilege catalogs, establish installed-generation authority or
+admit normal data execution. Native `CASE` guards object-specific privilege
+functions by relation kind; predicate evaluation order is not assumed.
 
 ### Forward migrations and retirement
 

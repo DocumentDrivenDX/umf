@@ -51,7 +51,12 @@ def verify_native_role_scope(connection: Any, bundle: dict[str, object], *,
             identities[name] = row[0]
         for name in [*configured, *person_roles]:
             effective = _all(connection, _CLOSURE, (identities[name],))
-            if not effective or any(any(row[2:]) for row in effective):
+            if not effective or any(any(row[2:]) or row[1].startswith('pg_') for row in effective):
+                raise CatalogError("role-scope-mismatch")
+            # ADMIN can re-enable a disabled membership edge and grant it to
+            # another principal. It is authority even without INHERIT or SET.
+            administrators = _one(connection, "SELECT EXISTS (SELECT FROM pg_catalog.pg_auth_members WHERE member=ANY(%s::pg_catalog.oid[]) AND admin_option)", ([row[0] for row in effective],))
+            if administrators != (False,):
                 raise CatalogError("role-scope-mismatch")
             reached = {row[1] for row in effective}
             forbidden = {owner, batch} if name != batch else {owner, person}
