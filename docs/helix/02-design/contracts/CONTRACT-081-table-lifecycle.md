@@ -201,14 +201,49 @@ and SET ROLE reachability MUST be inspected transitively. Person/batch grant
 sets cannot overlap through inheritance. Installation MUST NOT alter unrelated
 schemas, roles or default privileges. No module can name arbitrary grant targets.
 
-A compiled bundle is inert JSON with
-`{version:"umf.table-deployment/0.1",source,configuration,sourceDigest,
-configurationDigest,bundleDigest,modules,steps,expectedCatalog,diagnostics}`.
-`source` retains complete original bytes and all pinned dependency documents.
-Digests are SHA-256 over exact UTF-8 bytes for original sources and the declared
-canonical JSON representation for generated objects. `bundleDigest` excludes
-only its own value. Input copies and the canonicalization profile MUST be
-specified by the implementation's machine-readable schema before release.
+A compiled bundle follows `spec/extensions/tables/deployment.schema.json`:
+`{version:"umf.table-deployment/0.1",canonicalization:"RFC8785",source,
+configuration,sourceDigest,configurationDigest,bundleDigest,module,profile,
+steps,expectedCatalog,seedSets,nativeQualified:false}`. The current initial
+compiler takes `{text,format?:"json"|"yaml",configuration}` through
+`compileTableDeployment` and returns either `{status:"compiled",bundle,
+diagnostics:[]}` or `{status:"blocked",diagnostics}` with no partial SQL.
+`source:{format,utf8}` retains the complete supplied source string, including
+whitespace. This cut refuses external native dependencies; it must add exact
+dependency archives before interpreting them.
+
+Digests are lowercase hexadecimal SHA-256. `sourceDigest` covers exact UTF-8
+bytes of `source.utf8`; configuration and bundle identities use RFC8785 over
+copied interoperable JSON, with `bundleDigest` excluding only its own member.
+Lone surrogates and noninteroperable JSON values refuse. Steps have
+`{id,kind,sourcePath,transaction:"required",sql}`; IDs are ordered `step-00001`
+through the bounded inventory. This cut generates initial creation only, with
+at most8192 steps,1MB UTF-8 per statement,4MB source and16MB canonical body.
+The ordinary JSON structural admission limit also applies. No statement executes
+during compilation. `verifyTableDeployment` recompiles retained source and
+configuration and compares the complete bundle, so rehashing tampered SQL is
+insufficient. Hosts additionally require their own trusted installed digest;
+untrusted self-consistency cannot establish deployment authority.
+
+Initial DDL creates all tables before foreign keys, declares original primary
+and alternate Keys, explicit indexes/checks, ENABLE/FORCE RLS, all8 audience
+command policies, required table/column privileges and schema USAGE. Key
+constraint names are `umf_k_` plus the first32 hex characters of SHA-256 over
+canonical `[table.id,key.id]`; collisions with authored relation/constraint names
+refuse. Install role/schema creation and role memberships are host preconditions,
+not generated source permissions. Every statement executes as the configured
+install owner in an already allocated private schema with pg_catalog-first
+resolution. No guessed identity-sequence name is granted. Ordinary UPDATE grants
+exclude Key, immutable and generated columns. Per-row group membership is bounded
+to native groups declared in trusted configuration. Related-table SELECT denial
+refuses via compilation rather than adding a broader policy.
+
+The initial executable compiler subset refuses unqualified char padding,
+float/time codecs, identity sequence privileges, semantic-type/extension
+composition, unsupported logical facets and implicit logical allowedValues.
+Numeric native precision/scale must equal the original logical declaration.
+Seed inventories remain inert and explicit. These refusals are remaining work,
+not assertions that the complete proposed lifecycle profile is delivered.
 
 Client description, Weft bindings/programs and deployment name the same source
 and configuration digests. A compiled status alone is not deployment authority.
@@ -340,8 +375,8 @@ type/Key, role containment or installed-generation check is changed.
 ## Non-Normative Notes
 
 The profile and wire/schema details remain proposals until implementation and
-native/consumer gates pass. Resource limits and canonical bundle schemas need
-machine-readable definitions; command wire, nontransactional recovery and
+native/consumer gates pass. The initial bundle schema is implemented; production
+catalog/privilege admission, command wire, nontransactional recovery and
 stronger security composition remain separate implementation gates. No date or
 released feature support follows from this contract. Existing P1 native evidence
 qualifies sessions/transport, not this deployment or mutation surface.

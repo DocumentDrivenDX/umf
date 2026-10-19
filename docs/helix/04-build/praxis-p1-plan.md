@@ -226,3 +226,28 @@ verification, RLS/grants/containment, digest-checked forward migrations, then th
 Weft operation vocabulary and typed command wire. Native writes, command replay,
 full consumer acceptance and prerelease publication remain open. This metadata
 foundation does not qualify the full lifecycle release objective.
+
+## P2 inert initial deployment compiler — 2026-10-19
+
+The browser-compatible `compileTableDeployment` now emits source/configuration
+digest-bound initial table/Key/FK/check/index/RLS/grant statements and retained
+inert seed declarations. Its exact bundle schema and RFC8785 identities are in
+CONTRACT-081. Verification recompiles full source; changed SQL, reordered steps,
+unknown envelope fields and attacker-recomputed digests refuse. Unknown logical
+meaning and unqualified native codecs remain explicit refusals. Hosts must
+allocate the private schema/install role and supply installed authority; no
+compilation result establishes native admission.
+
+[Source-bound execution evidence](evidence/praxis-p2/initial-deployment.json)
+records26 PostgreSQL18.6 assertions with a synthetic fixture executor,19 actual
+Chromium assertions and native constraint, covering-index, role/RLS, ordinary
+column grant, owner/parent correlation and exact default checks. The namespace
+shadowing control and related SELECT dependency closure pass. The earlier
+declaration/codegen cohort5e5ece1a6 passes hosted qualification, including the
+16-case Linux/macOS installed generator corpus.
+
+Next implement the source-bound native catalog/privilege verifier and trusted
+administrative executor, forward digest-checked ledger and drift/replay refusal.
+Then extend the shared Weft command model and typed generated lifecycle methods.
+Initial emitted SQL under a bounded fixture executor is not production migration
+or mutation support. Release readiness remains false under the full goal.

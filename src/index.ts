@@ -505,3 +505,5 @@ export {generatePythonClient,type PythonClientRequest,type PythonClientResult} f
 
 // Explicit native table declaration inspection; no native deployment authority.
 export * from './extensions/tables';
+// Inert initial deployment compilation; hosts retain native admission authority.
+export * from './table-deployment';

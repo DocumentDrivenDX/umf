@@ -32,7 +32,10 @@ jobs:
           bun-version: 1.4.3
       - run: bun install --frozen-lockfile
       - run: bun scripts/check-table-lifecycle-boundaries.ts
-      - run: bun test tests/binding/tables.test.ts tests/compilation/table-lifecycle-boundaries.test.ts
+      - run: bun scripts/check-table-deployment-boundaries.ts
+      - run: >-
+          bun test tests/binding/tables.test.ts tests/binding/table-deployment.test.ts
+          tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
       - run: bunx playwright install --with-deps chromium
       - name: Actual browser metadata parity and preservation
         env:
@@ -190,6 +193,13 @@ jobs:
           --generated /tmp/umf-session-client --report /tmp/umf-session-native.json
           --psycopg2 --sqlalchemy
           $DBAPI_FLAG
+      - name: Initial deployment compiler native fixture
+        if: matrix.weft-cohort == 'source-dbapi'
+        env:
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+        run: |
+          bun tests/unified/table-deployment-fixture.ts /tmp/umf-table-deployment.json
+          python -I tests/unified/table_deployment_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-deployment-native.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -197,3 +207,4 @@ jobs:
           path: |
             /tmp/umf-session-native.json
             /tmp/umf-weft-wheel-sha256.txt
+            /tmp/umf-table-deployment-native.json

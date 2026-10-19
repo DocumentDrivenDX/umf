@@ -33,6 +33,13 @@ Review after each native gate or a dependency/release change. Beyond P3, broader
 
 [Product vision](../00-discover/product-vision.md), [PRD](prd.md), [ADR-004](../02-design/adr/ADR-004-typed-data-access-sdk.md), [FEAT-033](features/FEAT-033-generated-ontology-access.md) and [CONTRACT-079](../02-design/contracts/CONTRACT-079-unified-python-access.md) require one schema-derived API, exact values, explicit bindings and visible unsupported capabilities. Tables do not need an ontology or DDD annotation. [Shared security](features/FEAT-008-shared-security.md), CONTRACT-062/063 and SD-008 govern policy semantics; a Praxis-specific row_scope must map to them rather than establish a second policy language.
 
+CONTRACT-081 distinguishes explicit PostgreSQL RLS declarations from the stronger
+shared `umf.security` semantics. Native owner/group/via/batch policies must retain
+their actual PostgreSQL behavior and are not evidence that CONTRACT-063 is
+implemented. A source selecting both profiles refuses until combined enforcement
+is qualified. This clarification supersedes interpreting the row_scope mapping
+above as permission to relabel native RLS as the stronger policy profile.
+
 UMF owns schema semantics, versioned declarations, reusable schema/DDL generation, generated client types and transport contracts. Weft owns query/action logical semantics and SQL lowering, using the same Rust core for native Python and browser WASM. Bindings own native execution, identity, transactions, installed-state checks and publication. Truss owns mutable graph admission, invariants and journals; Ashlar owns immutable publication construction, selection and freshness. Hohfeld is a host integration layer. Praxis injects authenticated identity/connection custody and calls the generated API; it must not retain a query compiler or policy/DDL emitter.
 
 FEAT-033's exclusion of production execution and grants still applies to the portable generator. The stack lifecycle work introduces reusable host/deployment components, not execution inside UMF's portable metamodel or generated application package. Before implementation, amend the relevant feature/design/contract/test artifacts with the accepted slices below; these proposals do not silently approve new core fields or extension wire formats.

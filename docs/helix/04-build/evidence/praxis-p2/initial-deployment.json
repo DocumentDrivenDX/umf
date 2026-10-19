@@ -1,0 +1,38 @@
+{
+  "scope": "inert initial deployment compiler; no production execution or migration qualification",
+  "baseCommit": "5e5ece1a6",
+  "tests": {
+    "regressionSuite": {
+      "passed": 90,
+      "assertions": 5028
+    },
+    "finalDeploymentAndBoundarySuite": {
+      "passed": 10,
+      "assertions": 64
+    }
+  },
+  "browser": {
+    "assertions": 19,
+    "report": "initial-deployment-browser.json"
+  },
+  "native": {
+    "assertions": 26,
+    "report": "initial-deployment-native.json",
+    "bundle": "initial-deployment-bundle.json"
+  },
+  "typescript": [
+    "tsconfig.json passed",
+    "tsconfig.tools.json passed"
+  ],
+  "codegenPayloadFreshness": "unchanged 207-input payload current",
+  "moduleOwners": 6,
+  "boundaries": "8 negative native/compiler/I-O/executable controls passed",
+  "nativeLifecycleReleaseQualified": false,
+  "remaining": [
+    "source-bound catalog and privilege closure",
+    "trusted administrative executor and forward migration ledger",
+    "remaining native types/defaults/identity grants",
+    "typed Weft commands and runtime wire",
+    "consumer acceptance and release publication"
+  ]
+}

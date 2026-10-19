@@ -1,0 +1,55 @@
+{
+  "scope": "initial inert compiler output; fixture executor, no production admission/migrations",
+  "serverVersion": 180006,
+  "psycopg": "3.2.13",
+  "bundleDigest": "31bd725a44851599e545dfc529e13045b4013885f17d0f84c0a8f0c9b4437bc3",
+  "sourceDigest": "893e1bc82c5f1b4c1e8645f63b3ffba2b5b3e6ac01f877e0434cc8ec929c4169",
+  "fixtureSha256": "112e45a6beece22de722c1e4b8a745e7cc1153a6df1b4d487e6f8c109e22002e",
+  "observations": [
+    "native-major-18",
+    "both-tables-owned-and-forced-rls",
+    "eight-command-policies-per-table",
+    "parents-person-sees-only-own-p2_556789e66468_owner_alice",
+    "parents-person-sees-only-own-p2_556789e66468_owner_bob",
+    "parents-batch-has-independent-select",
+    "parents-no-implicit-outsider-or-batch-write-p2_556789e66468_batch",
+    "parents-no-implicit-outsider-or-batch-write-p2_556789e66468_owner_outsider",
+    "notes-person-sees-only-own-p2_556789e66468_owner_alice",
+    "notes-person-sees-only-own-p2_556789e66468_owner_bob",
+    "notes-batch-has-independent-select",
+    "notes-no-implicit-outsider-or-batch-write-p2_556789e66468_batch",
+    "notes-no-implicit-outsider-or-batch-write-p2_556789e66468_owner_outsider",
+    "new-owner-check",
+    "immutable-key-grant",
+    "parent-visibility-check",
+    "invisible-parent-refused-before-effect",
+    "native-check-constraint",
+    "quoted-default-exact-no-extra-statement",
+    "old-row-hidden-update-count",
+    "ordinary-update-owned-row",
+    "delete-own-child",
+    "native-foreign-key-even-for-admin",
+    "declared-covering-index-valid",
+    "install-owner-forced-denied",
+    "cross-schema-create-not-granted"
+  ],
+  "nativeLifecycleReleaseQualified": false,
+  "sourceHashes": {
+    "src/table-deployment/policies.ts": "78126643873bf614048a90cef61acefe6e7e9713cb4b88815b7e73ff6247a9ad",
+    "src/table-deployment/sql.ts": "00c5055b6308e8e0bee09cb7cb1ee5b9e207a5c3b4520946a8bfa194518a70d6",
+    "src/table-deployment/types.ts": "7b9c17012e03f3fef68776a6f20f9ed26572c065ee49085602ad53a3836a4cee",
+    "src/table-deployment/index.ts": "bb27689c98fe0293ecad1a1eb88a19c24ca3de0db52687900c4481759911fc05",
+    "src/table-deployment/ddl.ts": "e5ceba47de2e959336312c2fcdea6393637727de6602194789071b785e2fd5c6",
+    "src/table-deployment/configuration.ts": "adc510b21141db111aa57cb2ca4e1d2d98424a93c37e4ade946a5a74e1ca5482",
+    "tests/unified/table-deployment-fixture.ts": "d70f6b0383d06e749da491022fe15a6b5a52d1720b8a16837678e2086b939a9a",
+    "tests/unified/table_deployment_native.py": "c7e574fc4221180b3712005fc930a669b79bc7a0aff41bbdbc5ff549a5c8ebcf",
+    "spec/extensions/tables/deployment.schema.json": "ed7bf7a052506b83f83c55812459df1cf487a0a5acc0476c8debcd00a0782c34"
+  },
+  "baseCommit": "5e5ece1a6",
+  "failedPrecursors": [
+    {
+      "kind": "fixture assertion",
+      "detail": "Incorrectly expected the authorized person umbrella role to lack its declared INSERT grant; replaced with an ungranted outsider role. No policy or runtime permission was weakened."
+    }
+  ]
+}
