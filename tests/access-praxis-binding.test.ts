@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import {generatePythonClient} from '../src/access';
 
 test.skipIf(!process.env.UMF_UNIFIED_POSTGRES_DSN)(
- 'real current Praxis fixture runs generated read/list/single action through installed host and Weft045',async()=>{
+ 'real current Praxis fixture runs generated read/list/single action through installed host and Weft046',async()=>{
  const root=resolve(import.meta.dir,'..');
  const source=await Bun.file(join(root,'tests/unified/praxis/catalog.json')).text();
  const generated=generatePythonClient({text:source,package:'praxis_catalog'});
@@ -20,7 +20,7 @@ test.skipIf(!process.env.UMF_UNIFIED_POSTGRES_DSN)(
  if(exit!==0)throw Error(stderr);
  const result=JSON.parse(stdout);
  expect(result.status).toBe('pass');expect(result.sourceDigest).toBe(generated.sourceDigest);
- expect(result.weft).toBe(process.env.UMF_UNIFIED_EXPECTED_WEFT_VERSION??'0.4.45');
+ expect(result.weft).toBe(process.env.UMF_UNIFIED_EXPECTED_WEFT_VERSION??'0.4.46');
  expect(result.host).toBe(process.env.UMF_UNIFIED_EXPECTED_HOST_VERSION??'0.1.0.dev3');
  expect(result.compiledReads).toBe(5);expect(result.actionCalls).toBe(1);
  expect(result.manyRelationship).toBe('explicitly unsupported');

@@ -24,7 +24,7 @@ parser.add_argument("--dsn", required=True)
 parser.add_argument("--weft", required=True)
 parser.add_argument("--psycopg", required=True)
 args = parser.parse_args()
-expected_weft_version = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.45")
+expected_weft_version = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.46")
 expected_host_version = os.environ.get("UMF_UNIFIED_EXPECTED_HOST_VERSION", "0.1.0.dev3")
 
 repo = Path(__file__).resolve().parents[2]

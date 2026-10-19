@@ -47,7 +47,7 @@ seed = json.loads((root / "tests/unified/praxis/seed.json").read_text())
 
 async def main() -> None:
     expected_host = os.environ.get("UMF_UNIFIED_EXPECTED_HOST_VERSION", "0.1.0.dev3")
-    expected_weft = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.45")
+    expected_weft = os.environ.get("UMF_UNIFIED_EXPECTED_WEFT_VERSION", "0.4.46")
     assert importlib.metadata.version("umf_access") == expected_host
     assert weft.__version__ == expected_weft
     assert Path(umf_access.__file__).resolve().is_relative_to(Path(sys.prefix).resolve()), "Host must come from the installed environment"
