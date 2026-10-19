@@ -410,3 +410,38 @@ bounded to128 entries/32MiB, never silently compacted or rewritten. Only initial
 and appended-table migrations are executable in this cohort. Ordinary generated
 Weft operations/admission, remaining necessary migration/codecs/seeds, consumer
 acceptance and immutable prerelease delivery still gate the active full goal.
+
+
+## Conditional Weft table read custody — 2026-10-19
+
+The owner's selected consumer target remains local `prebill-plugin-port` at
+`e195822083fae6993b253af7fb3ac0b4bfdc3546`. Named reads/writes and the old execute
+escape must become declared typed operations, as recorded in CONTRACT-081.
+Private source was inspected read-only; public fixtures are independent synthetic
+examples with no consumer SQL, table names or data copied.
+
+Weft successor commit `713186b604e602549607b4a1e63052cc236199ac` is pushed on
+`codex/praxis-lifecycle-047`. It interprets original core0.10/umf.tables0.1 table
+custody through an explicit conditional read profile, checking the owning module,
+complete native mappings, primary Keys and source FK relationships. A distinct
+`weft.table-read/0.1` program retains source and unresolved host obligations for
+ledger/current generation, person/batch identity, forced RLS and privileges.
+No normal operation is authorized by this program. Selected unknown members
+refuse without altering the original preservation schema or source; explicit
+CoreLiteral map keys retain their meaning.
+
+The [source-bound packet](evidence/praxis-p2/weft-table-read.json) records ten
+focused integration tests, one map-preservation test and eighteen installed
+native-Python/CLI comparisons, plus WASM target compilation, boundary/spec and
+source/wheel license checks. The earlier full PostgreSQL library regression
+passed184 tests at the separately identified predecessor. The final negative
+control and its correction remain visible in the Weft evidence. Actual browser
+execution and native table data access are not qualified by these results.
+
+UMF e48's hosted run39293707044 passed all eight lifecycle jobs, including Linux
+and macOS generator checks and Pydantic2.13.5/2.14.1 compatibility. The broader
+release goal stays active. Next work must specify and implement typed table
+operation wires, required native codecs and generated data admission, then close
+mutations/replay/paging, necessary migrations/seeds and consumer/release gates.
+The guarded UMF generator remains closed to selected lifecycle modules. No full
+Praxis prerelease was published; Weft0.4.46 coordination remains separate.

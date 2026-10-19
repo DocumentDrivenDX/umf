@@ -1,0 +1,123 @@
+{
+  "scope": "conditional Weft table read custody; does not enable generated table execution",
+  "umfSourceCommit": "e48c0ba96674e7b20cf3001e3d90c368b7ced5ad",
+  "weftSourceCommit": "713186b604e602549607b4a1e63052cc236199ac",
+  "weftBranch": "codex/praxis-lifecycle-047",
+  "weftEvidence": "https://github.com/DocumentDrivenDX/weft/tree/713186b604e602549607b4a1e63052cc236199ac/docs/helix/04-build/evidence/praxis-table-lifecycle",
+  "consumerDecision": "declared typed operations; no raw SQL execution escape",
+  "consumerSource": {
+    "selection": "local prebill-plugin-port",
+    "revision": "e195822083fae6993b253af7fb3ac0b4bfdc3546",
+    "custody": "read-only private source inspection; independent public synthetic fixtures only"
+  },
+  "compilerEvidence": {
+    "candidate": "weft-sql0.4.47 unpublished local candidate",
+    "base": "e2d83d8a",
+    "scope": "original core0.10.0/umf.tables0.1.0 conditional read custody; no data execution",
+    "nativeExecutionQualified": false,
+    "browserExecutionQualified": false,
+    "verification": {
+      "focusedIntegrationTests": {
+        "passed": 10,
+        "failed": 0
+      },
+      "postgresqlLibraryRegression": {
+        "passed": 184,
+        "failed": 0,
+        "testedRevision": "52d0926d0ce5f3e3c5614fbe70ceebc6e83567a8",
+        "scope": "full prior library regression; final selected-profile closure separately tested"
+      },
+      "installedPythonCliParity": {
+        "passed": 18,
+        "failed": 0,
+        "receipt": "bindings.json"
+      },
+      "pythonRawReadFeatureCheck": "passed on52d0926d; final default-feature native wheel also built and tested",
+      "wasm32RawReadFeatureCheck": "passed; compilation only",
+      "moduleBoundaries": {
+        "packages": 11,
+        "status": "passed"
+      },
+      "specs": {
+        "governedArtifacts": 89,
+        "schemas": 101,
+        "fixtureScenarios": 636,
+        "status": "passed"
+      },
+      "sourceLicenseAudit": {
+        "headers": 707,
+        "expression": "MIT OR Apache-2.0",
+        "status": "passed"
+      },
+      "coreLiteralMapClosureTest": {
+        "passed": 1,
+        "failed": 0
+      }
+    },
+    "toolchain": {
+      "rust": "1.90.0",
+      "python": "3.11.17",
+      "maturin": "1.9.6",
+      "platform": "macOS arm64",
+      "wheelProfile": "dev"
+    },
+    "localWheel": {
+      "filename": "weft_sql-0.4.47-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "ec8548e256a3062208058d5399c869ac50918be865d50bf393cd7fade95938be",
+      "license": "MIT OR Apache-2.0",
+      "licenseFiles": [
+        "LICENSE.md",
+        "LICENSE-MIT",
+        "LICENSE-APACHE",
+        "THIRD-PARTY-LICENSES.txt"
+      ],
+      "published": false
+    },
+    "sourceFiles": {
+      "crates/weft-core/src/table_lifecycle.rs": "bfd1f10b32fc3f1ac13249619e71fe2ac97f010fd6571c4c938dd2c4e18daf41",
+      "crates/weft-postgresql/tests/table_lifecycle.rs": "b8d04d5507d5adb2e064c1c9e01321cc597971cc8a4a23257e76a45ae4e8fcea",
+      "tests/raw-postgresql/table-lifecycle-bindings-check.py": "edd1dada61eff75e50c563ae4bf738b6cf1eb2a306404249b46062b4d11d7e1a",
+      "tests/raw-postgresql/table-lifecycle-model.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "tests/raw-postgresql/table-lifecycle-read-template.json": "6600380b749e7c44d7694b184aecb242db3e5aba0c63c4ee6df281e183fa7ed9",
+      "tests/raw-postgresql/table-lifecycle-related-model.json": "837db75ee3fc0ebb7f30eea6f1fc0252dad1e11ad301645d3ff16f258310bc76",
+      "spec/upstream/umf-tables-0.1.0.schema.json": "5d9b04c587153ddfaaf709f5598d3974315e7efe158b20008ff8d9007836427c"
+    },
+    "fixedPrecursor": {
+      "revision": "52d0926d0ce5f3e3c5614fbe70ceebc6e83567a8",
+      "control": "unknown selected payload member",
+      "expected": "blocked",
+      "observed": "compiled",
+      "nativeExecutionQualified": false,
+      "resolution": "private closed interpretation schema derived from unchanged upstream preservation schema; eight selected member locations now refuse; explicit CoreLiteral map keys remain supported"
+    }
+  },
+  "weftReceiptSha256": "a4e39d0a806d82558f9a1b1f9ae657dafd17416068ffb2bf350f0bd342be4780",
+  "umfHostedVerification": {
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/39293707044",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      "p1-compatibility (2.14.1)",
+      "table-declarations",
+      "python-codegen (ubuntu-latest)",
+      "native-sessions (source-dbapi)",
+      "native-sessions (published044)",
+      "python-codegen (macos-14)",
+      "boundaries",
+      "p1-compatibility (2.13.5)"
+    ]
+  },
+  "release": {
+    "published": false,
+    "fullPraxisSupport": false,
+    "coordination": "Weft0.4.46 remains separately owned; no retagging or immutable asset replacement"
+  },
+  "nextRequired": [
+    "declare exact typed operation wires under CONTRACT-079/081",
+    "native codecs/facets required by pinned consumer",
+    "source-ledger/current-principal/privilege admission for normal generated data calls",
+    "mutations/bulk/upsert/replay and cursor policy-generation binding",
+    "necessary seed/evolution migration support",
+    "consumer/native/browser/platform acceptance and immutable release publication"
+  ]
+}
