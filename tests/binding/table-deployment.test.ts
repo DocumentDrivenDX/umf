@@ -26,7 +26,7 @@ test('deployment is deterministic inert copied output with exact bytes and confi
 });
 
 test('deployment verification rejects tampering even with recomputed untrusted digests',()=>{
- for(const mutate of [(b:any)=>b.steps[0].sql='DROP SCHEMA public CASCADE',(b:any)=>b.steps.reverse(),(b:any)=>b.extra='unknown',(b:any)=>b.source.utf8+=' ']){
+ for(const mutate of [(b:any)=>b.steps[0].sql='DROP SCHEMA public CASCADE',(b:any)=>b.steps.reverse(),(b:any)=>b.extra='unknown',(b:any)=>b.source.utf8+=' ',(b:any)=>b.expectedCatalog.columns[0].definitionSql='id text DEFAULT malicious()',(b:any)=>b.expectedCatalog.columns[0].typeMod=777,(b:any)=>b.expectedCatalog.keys[0].definitionSql='CONSTRAINT injected CHECK (true)']){
   const b=compiled();mutate(b);const {bundleDigest,...body}=b;b.bundleDigest=hashCanonical(body);expect(()=>verifyTableDeployment(b)).toThrow();
  }
 });

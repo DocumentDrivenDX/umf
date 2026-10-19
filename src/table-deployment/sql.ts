@@ -10,6 +10,9 @@ export const quoteText=(value:string):string=>{
  return "E'"+value.replaceAll('\\','\\\\').replaceAll("'","''")+"'";
 };
 const nativeNames:Record<string,string>={boolean:'bool',text:'text',varchar:'varchar',char:'bpchar',int2:'int2',int4:'int4',int8:'int8',float4:'float4',float8:'float8',numeric:'numeric',date:'date',timestamp:'timestamp',timestamptz:'timestamptz',uuid:'uuid',bytea:'bytea'};
+export function nativeTypeExpectation(type:TableNativeType):{typeSchema:'pg_catalog';typeName:string;typeMod:number}{
+ return {typeSchema:'pg_catalog',typeName:nativeNames[type.kind]!,typeMod:type.kind==='varchar'||type.kind==='char'?type.length+4:type.kind==='numeric'?(type.precision<<16)+type.scale+4:-1};
+}
 export function nativeType(type:TableNativeType):string{
  const name='pg_catalog.'+quoteIdentifier(nativeNames[type.kind]!);
  return type.kind==='varchar'||type.kind==='char'?name+'('+type.length+')':type.kind==='numeric'?name+'('+type.precision+','+type.scale+')':name;

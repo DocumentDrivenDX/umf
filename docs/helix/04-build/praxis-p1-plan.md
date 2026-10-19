@@ -279,3 +279,27 @@ conversion must replace a raw-SQL escape method rather than add an untyped API.
 The Python deployment toolchain cohort7043e2099 passes all8 hosted typed access
 jobs, including Linux/macOS installed deployment parity and source-DBAPI native
 execution. Release readiness remains false.
+
+## Source-derived administrative catalog shape — 2026-10-19
+
+The installed `umf_access.lifecycle.verify_native_catalog` now verifies original
+source shape, defaults, Keys/checks/FKs/indexes and all command policies under
+caller-owned PostgreSQL18 transactions. Compiler expectations retain exact native
+definitions; the host reparses them on temporary private-schema objects and
+compares native meaning, rather than trusting a supplied fingerprint. Private
+tuple cursors preserve caller row factories; bounded lock/statement timeouts and
+savepoints preserve healthy caller state after failure. Native data admission is
+explicitly false.
+
+The [catalog packet](evidence/praxis-p2/source-catalog.json) records112 installed
+PostgreSQL18.6 assertions, source hashes,32 focused tests/210 assertions,19 real
+Chromium assertions, installed generator/deployment parity and reproducible
+source/sdist wheels. Deliberate catalog/policy drift, forged expectations and a
+real blocked table lock refuse. Scoped strict typing covers the two new lifecycle
+modules; whole-SDK strict typing is not claimed. Historical compiler receipts
+retain their original wheel/source identities.
+
+Next verify native ACLs and effective/transitive role containment, then install
+trusted generation and forward digest-checked ledger authority. Weft typed
+operations, generated client adoption, remaining native codecs and the selected
+Praxis branch acceptance remain required before a full lifecycle prerelease.

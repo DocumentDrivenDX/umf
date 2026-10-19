@@ -225,6 +225,17 @@ configuration and compares the complete bundle, so rehashing tampered SQL is
 insufficient. Hosts additionally require their own trusted installed digest;
 untrusted self-consistency cannot establish deployment authority.
 
+`expectedCatalog` carries the source Table inventory and separately generated
+column, Key, check, foreign-key and index expectations. A column records exact
+Field identity, source path, native type schema/name/typmod, nullability,
+collation, identity mode and its original `definitionSql`. Keys/checks/foreign
+keys retain original constraint definition SQL; a foreign key also names the
+native index of its original target Key. Index expectations retain uniqueness
+and the original `USING ...` definition. These members are emitted by the same
+code that emits deployment SQL; the host MUST NOT reconstruct another logical
+DDL interpretation from names or observed tables. The machine schema closes
+their shape, and full source recompilation closes their authority.
+
 The installed `umf_codegen` Python API exposes the same implementation as
 `compile_table_deployment(text,configuration=...,format="json")` and
 `verify_table_deployment(bundle)`. The former returns the compiled/blocked
@@ -291,6 +302,43 @@ source/configuration/bundle identity and verified native shape/privileges;
 subsequent calls recheck that authority and native drift before effects or
 disclosure. This is a proposed host protocol until executable qualification;
 native policy replay alone does not verify columns, grants or role containment.
+
+The initial host implementation is
+`umf_access.lifecycle.verify_native_catalog(connection,bundle)` for an installed
+Psycopg3 connection in a healthy caller-owned transaction. It verifies the
+original bundle using `umf_codegen`, requires the configured non-login,
+non-superuser/non-BYPASSRLS install owner, owned schema, writable transaction and
+exact pg_catalog resolution, then takes a transaction advisory lock and exclusive
+locks on all declared tables. The advisory key is the first8 SHA-256 bytes of
+UTF-8 `"umf.table-lifecycle/0.1\0"+schema`, interpreted as a signed big-endian64-bit
+integer within the current database.
+
+Within its own savepoint it recreates source column/constraint/index definitions
+on fresh private-schema scratch relations. Key/index names are rebased only
+through explicit definition prefixes, never through global SQL replacement.
+Actual type/typmod/nullability/collation/identity and source defaults must agree;
+native constraint definitions, enforcement/validation/deferral, referenced Key
+and index operator classes, collation, field order/include, predicates and
+validity must agree with the reparsed source. Native-generated NOT NULL names
+are compared by exact Field inventory; authored constraint identities remain
+exact. Extra constraints/indexes, inheritance, rewriting rules, user triggers,
+unexpected replica identity and unsupported relation kinds refuse. This is
+administrative verification, not a first-observed fingerprint or a data executor.
+
+Private tuple cursors preserve the caller's row factory. Administrative statement
+and lock timeouts are bounded to1..300000 milliseconds (defaults30000/5000);
+the verifier restores prior local settings on success and its savepoint restores
+them on failure, including a real blocked-lock timeout.
+
+The function never commits the caller. Success drops every scratch object;
+failure rolls back its savepoint and emits a fixed reason without raw database
+diagnostics. It returns `{bundleDigest,catalogShapeVerified:true,
+lifecycleAdmission:false}`. ACL/transitive role closure, trusted ledger authority,
+normal-operation admission and migration coordination remain separate gates.
+Only the lifecycle administration owner may import the public source verifier
+and native exception class; those dependencies do not become available to the
+portable DSL or ordinary runtime. Current native evidence covers PostgreSQL18.6;
+the major18 guard does not establish managed/minor-version qualification.
 
 ### Forward migrations and retirement
 

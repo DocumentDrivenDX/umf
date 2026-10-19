@@ -17,6 +17,7 @@ from unittest.mock import patch
 import psycopg
 from psycopg import sql
 from umf_codegen import verify_table_deployment
+from umf_access.lifecycle import CatalogError, verify_native_catalog
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsn', required=True)
@@ -77,6 +78,93 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
         tables = admin.execute('SELECT c.relname,c.relrowsecurity,c.relforcerowsecurity,r.rolname FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace JOIN pg_catalog.pg_roles r ON r.oid=c.relowner WHERE n.nspname=%s AND c.relkind=\'r\' ORDER BY c.relname',(schema,)).fetchall()
         check('both-tables-owned-and-forced-rls', tables == [('notes',True,True,owner),('parents',True,True,owner)])
         check('eight-command-policies-per-table',admin.execute('SELECT count(*) FROM pg_catalog.pg_policies WHERE schemaname=%s',(schema,)).fetchone()[0] == 16)
+        refused=False
+        try:
+            verify_native_catalog(admin,bundle)
+        except CatalogError as error:
+            refused=str(error)=='transaction-required'
+        check('catalog-requires-caller-owned-transaction',refused)
+        for label,identity,path,read_only in [('person',alice,'pg_catalog',False),('batch',batch,'pg_catalog',False),('search-path',owner,'pg_catalog,public',False),('read-only',owner,'pg_catalog',True)]:
+            with admin.transaction():
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(identity)))
+                admin.execute('SET LOCAL search_path='+path)
+                if read_only:
+                    admin.execute('SET TRANSACTION READ ONLY')
+                refused=False
+                try:
+                    verify_native_catalog(admin,bundle)
+                except CatalogError as error:
+                    refused=str(error)=='install-authority-required'
+                check('catalog-refuses-unqualified-install-context-'+label,refused)
+        with admin.transaction():
+            admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
+            admin.execute('SET LOCAL search_path=pg_catalog')
+            transaction_id=admin.execute('SELECT pg_catalog.pg_current_xact_id()::pg_catalog.text').fetchone()
+            previous_timeouts=admin.execute("SELECT current_setting('statement_timeout'),current_setting('lock_timeout')").fetchone()
+            forged=json.loads(json.dumps(bundle));forged['expectedCatalog']['columns'][0]['definitionSql']='injected text DEFAULT malicious()'
+            refused=False
+            try:
+                verify_native_catalog(admin,forged)
+            except CatalogError as error:
+                refused=str(error)=='source-mismatch'
+            check('catalog-rejects-supplied-expected-fingerprint',refused)
+            verified=verify_native_catalog(admin,bundle)
+            check('installed-catalog-verifier-source-shape-and-policies',verified == {'bundleDigest':bundle['bundleDigest'],'catalogShapeVerified':True,'lifecycleAdmission':False})
+            check('catalog-verifier-does-not-commit-caller',admin.execute('SELECT pg_catalog.pg_current_xact_id()::pg_catalog.text').fetchone() == transaction_id)
+            check('catalog-success-restores-timeouts',admin.execute("SELECT current_setting('statement_timeout'),current_setting('lock_timeout')").fetchone() == previous_timeouts)
+            from psycopg.rows import dict_row
+            previous_factory=admin.row_factory
+            try:
+                admin.row_factory=dict_row
+                check('catalog-private-cursors-support-caller-dict-factory',verify_native_catalog(admin,bundle)['catalogShapeVerified'] is True)
+                check('catalog-does-not-change-caller-row-factory',admin.execute('SELECT 1 AS value').fetchone() == {'value':1})
+            finally:
+                admin.row_factory=previous_factory
+            note_key=next(k['name'] for k in bundle['expectedCatalog']['keys'] if k['table']=='notes' and k['primary'])
+            for label,alteration in [
+                ('native-type','ALTER COLUMN amount TYPE pg_catalog.numeric(8,2)'),
+                ('nullability','ALTER COLUMN caption SET NOT NULL'),
+                ('default',"ALTER COLUMN caption SET DEFAULT 'changed'"),
+                ('extra-column','ADD COLUMN unexpected pg_catalog.text'),
+                ('row-security','DISABLE ROW LEVEL SECURITY'),
+                ('primary-key','DROP CONSTRAINT "'+note_key+'"'),
+                ('check','DROP CONSTRAINT amount_nonnegative'),
+                ('check-validation','DROP CONSTRAINT amount_nonnegative, ADD CONSTRAINT amount_nonnegative CHECK(amount>=0) NOT VALID'),
+                ('foreign-key-action',f'DROP CONSTRAINT parent_fk, ADD CONSTRAINT parent_fk FOREIGN KEY(parent_id) REFERENCES "{schema}".parents(id) ON DELETE CASCADE'),
+                ('index-order',f'DROP INDEX "{schema}".owner_lookup; CREATE INDEX owner_lookup ON "{schema}".notes USING btree(owner DESC) INCLUDE(caption)'),
+                ('extra-index',f'CREATE INDEX unexpected_index ON "{schema}".notes USING btree(id)'),
+                ('replica-identity','REPLICA IDENTITY FULL'),
+                ('inheritance',f'INHERIT "{schema}".parents'),
+                ('rewrite-rule',f'CREATE RULE hidden_insert AS ON INSERT TO "{schema}".notes DO INSTEAD NOTHING'),
+            ]:
+                with admin.transaction(force_rollback=True):
+                    if label in ('index-order','extra-index','rewrite-rule'):
+                        admin.execute(alteration)
+                    else:
+                        admin.execute(sql.SQL('ALTER TABLE {} '+alteration).format(sql.Identifier(schema,'notes')))
+                    refused=False
+                    try:
+                        verify_native_catalog(admin,bundle)
+                    except CatalogError:
+                        refused=True
+                    check('installed-catalog-'+label+'-drift-refuses',refused)
+                    check('failed-catalog-verification-keeps-caller-healthy-'+label,admin.execute('SELECT 1').fetchone() == (1,))
+                    check('failed-catalog-no-scratch-relation-'+label,admin.execute('SELECT count(*) FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname LIKE \'umf_verify_%%\'',(schema,)).fetchone() == (0,))
+            check('installed-catalog-restores-original-after-controls',verify_native_catalog(admin,bundle)['catalogShapeVerified'] is True)
+        with psycopg.connect(args.dsn,autocommit=True) as blocker, blocker.transaction():
+            blocker.execute(sql.SQL('LOCK TABLE {} IN ACCESS SHARE MODE').format(sql.Identifier(schema,'notes')))
+            with admin.transaction():
+                admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
+                admin.execute('SET LOCAL search_path=pg_catalog')
+                previous=admin.execute("SELECT current_setting('statement_timeout'),current_setting('lock_timeout')").fetchone()
+                refused=False
+                try:
+                    verify_native_catalog(admin,bundle,lock_timeout_ms=50)
+                except CatalogError as error:
+                    refused=str(error)=='catalog-verification-failed'
+                check('catalog-lock-wait-is-bounded',refused)
+                check('catalog-timeout-preserves-caller-transaction',admin.execute('SELECT 1').fetchone() == (1,))
+                check('catalog-failure-restores-timeouts',admin.execute("SELECT current_setting('statement_timeout'),current_setting('lock_timeout')").fetchone() == previous)
         policy_steps=[step for step in bundle['steps'] if step['kind']=='policy']
         with admin.transaction():
             admin.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
@@ -90,11 +178,31 @@ with psycopg.connect(args.dsn, autocommit=True) as admin:
                 with admin.transaction(force_rollback=True):
                     admin.execute(sql.SQL('ALTER POLICY umf_person_select ON {} '+alteration).format(sql.Identifier(schema,'notes')))
                     check('native-policy-'+label+'-drift-refuses',not source_policy_matches(admin,select_step))
+                    refused=False
+                    try:
+                        verify_native_catalog(admin,bundle)
+                    except CatalogError as error:
+                        refused=str(error)=='catalog-mismatch'
+                    check('installed-catalog-policy-'+label+'-drift-refuses',refused)
             for label,before,after in [('mode','AS PERMISSIVE','AS RESTRICTIVE'),('command','FOR SELECT','FOR DELETE')]:
                 with admin.transaction(force_rollback=True):
                     admin.execute(sql.SQL('DROP POLICY umf_person_select ON {}').format(sql.Identifier(schema,'notes')))
                     admin.execute(select_step['sql'].replace(before,after,1))
                     check('native-policy-'+label+'-drift-refuses',not source_policy_matches(admin,select_step))
+                    refused=False
+                    try:
+                        verify_native_catalog(admin,bundle)
+                    except CatalogError as error:
+                        refused=str(error)=='catalog-mismatch'
+                    check('installed-catalog-policy-'+label+'-drift-refuses',refused)
+            with admin.transaction(force_rollback=True):
+                admin.execute(sql.SQL('CREATE POLICY unexpected_policy ON {} FOR SELECT TO PUBLIC USING(true)').format(sql.Identifier(schema,'notes')))
+                refused=False
+                try:
+                    verify_native_catalog(admin,bundle)
+                except CatalogError as error:
+                    refused=str(error)=='catalog-mismatch'
+                check('installed-catalog-extra-policy-refuses',refused)
             failed=False
             with patch(__name__+'.native_policy',side_effect=lambda connection,*_: connection.execute('SELECT 1/0')):
                 try:

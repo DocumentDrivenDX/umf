@@ -178,6 +178,11 @@
                 },
                 "minItems": 1,
                 "maxItems": 32
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
               }
             },
             "required": [
@@ -185,16 +190,220 @@
               "id",
               "name",
               "primary",
-              "columns"
+              "columns",
+              "definitionSql"
             ],
             "additionalProperties": false
           },
           "maxItems": 8192
+        },
+        "columns": {
+          "type": "array",
+          "maxItems": 4096,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "field": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "sourcePath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "typeSchema": {
+                "const": "pg_catalog"
+              },
+              "typeName": {
+                "enum": [
+                  "bool",
+                  "text",
+                  "varchar",
+                  "bpchar",
+                  "int2",
+                  "int4",
+                  "int8",
+                  "float4",
+                  "float8",
+                  "numeric",
+                  "date",
+                  "timestamp",
+                  "timestamptz",
+                  "uuid",
+                  "bytea"
+                ]
+              },
+              "typeMod": {
+                "type": "integer",
+                "minimum": -1,
+                "maximum": 2147483647
+              },
+              "nullable": {
+                "type": "boolean"
+              },
+              "collation": {
+                "enum": [
+                  "C",
+                  null
+                ]
+              },
+              "identity": {
+                "enum": [
+                  "",
+                  "a",
+                  "d"
+                ]
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              }
+            },
+            "required": [
+              "table",
+              "name",
+              "field",
+              "sourcePath",
+              "typeSchema",
+              "typeName",
+              "typeMod",
+              "nullable",
+              "collation",
+              "identity",
+              "definitionSql"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "checks": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "definitionSql"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "foreignKeys": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              },
+              "targetKey": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "definitionSql",
+              "targetKey"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "indexes": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 63
+              },
+              "definitionSql": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000000
+              },
+              "unique": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "table",
+              "id",
+              "name",
+              "definitionSql",
+              "unique"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
         "tables",
-        "keys"
+        "keys",
+        "columns",
+        "checks",
+        "foreignKeys",
+        "indexes"
       ],
       "additionalProperties": false
     },

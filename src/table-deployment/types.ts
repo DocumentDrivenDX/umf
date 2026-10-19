@@ -9,13 +9,21 @@ export interface TableDeploymentStep {
  id:string;kind:'table'|'foreignKey'|'index'|'policy'|'grant';sourcePath:string;
  transaction:'required';sql:string;
 }
+export interface TableColumnExpectation {
+ table:string;name:string;field:TableRef;sourcePath:string;
+ typeSchema:'pg_catalog';typeName:string;typeMod:number;
+ nullable:boolean;collation:'C'|null;identity:''|'a'|'d';
+ definitionSql:string;
+}
+export interface TableConstraintExpectation {table:string;id:string;name:string;definitionSql:string}
+export interface TableIndexExpectation extends TableConstraintExpectation {unique:boolean}
 export interface TableDeploymentBundle {
  version:'umf.table-deployment/0.1';canonicalization:'RFC8785';
  source:{format:'json'|'yaml';utf8:string};sourceDigest:string;
  configuration:TableDeploymentConfiguration;configurationDigest:string;
  module:string;profile:'postgresql18/0.1';
  steps:TableDeploymentStep[];
- expectedCatalog:{tables:TableDeclaration[];keys:{table:string;id:string;name:string;primary:boolean;columns:string[]}[]};
+ expectedCatalog:{tables:TableDeclaration[];columns:TableColumnExpectation[];keys:(TableConstraintExpectation&{primary:boolean;columns:string[]})[];checks:TableConstraintExpectation[];foreignKeys:(TableConstraintExpectation&{targetKey:string})[];indexes:TableIndexExpectation[]};
  seedSets:TableLifecyclePayload['seedSets'];
  bundleDigest:string;nativeQualified:false;
 }

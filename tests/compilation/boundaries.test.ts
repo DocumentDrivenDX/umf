@@ -170,6 +170,14 @@ describe("actual Python boundary checker", () => {
     rejects("py", { [prefix + "surprise.py"]: "" }, "MODULE");
     rejects("py", { [prefix + "types.py"]: "from .dsl import Query", [prefix + "dsl/__init__.py"]: "class Query: pass" }, "DEPENDENCY");
   });
+  test("lifecycle administration owns only its public compiler verifier and native exception imports",()=>{
+    const prefix="python/umf_access/src/umf_access/";
+    expect(check("py",{[prefix+"lifecycle/catalog.py"]:"from umf_codegen import verify_table_deployment\nfrom psycopg import Error\nfrom psycopg.rows import tuple_row"}).exitCode).toBe(0);
+    for(const source of ["import umf_codegen._embedded","from umf_codegen import generate_python_client","import psycopg","from psycopg import Connection"])
+      rejects("py",{[prefix+"lifecycle/catalog.py"]:source},"PRIVATE");
+    rejects("py",{[prefix+"runtime/read.py"]:"from umf_codegen import verify_table_deployment"},"DEPENDENCY");
+    rejects("py",{[prefix+"dsl/__init__.py"]:"from umf_access.lifecycle import verify_native_catalog",[prefix+"lifecycle/__init__.py"]:"def verify_native_catalog(): pass"},"DEPENDENCY");
+  });
 });
 
 test("local command and installed pre-commit hook reject real violations", () => {

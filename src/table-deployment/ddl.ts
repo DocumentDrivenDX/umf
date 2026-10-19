@@ -3,11 +3,13 @@ import {hashCanonical} from '../compilation/bundle/hash';
 import type {TableDeclaration} from '../extensions/tables';
 import type {DeploymentContext,TableDeploymentBundle} from './types';
 import {deploymentError} from './configuration';
-import {expressionSql,literalSql,nativeType,quoteIdentifier as q} from './sql';
+import {expressionSql,literalSql,nativeType,nativeTypeExpectation,quoteIdentifier as q} from './sql';
 import {policySql} from './policies';
 const keyName=(table:string,id:string):string=>'umf_k_'+hashCanonical([table,id]).slice(0,32);
 export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['expectedCatalog']{
  const keys:TableDeploymentBundle['expectedCatalog']['keys']=[];
+ const expectations:TableDeploymentBundle['expectedCatalog']['columns']=[];
+ const checks:TableDeploymentBundle['expectedCatalog']['checks']=[],foreignKeys:TableDeploymentBundle['expectedCatalog']['foreignKeys']=[],indexes:TableDeploymentBundle['expectedCatalog']['indexes']=[];
  const relationNames=new Set(ctx.payload.tables.flatMap(t=>[t.name,...t.indexes.map(i=>i.name)]));
  for(const[i,table]of ctx.payload.tables.entries()){
   const path=ctx.path+'/tables/'+i,record=ctx.document.modules.find(m=>m.id===table.record.module)!.elements.find(e=>e.id===table.record.element)!;
@@ -28,6 +30,7 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
     const value=c.default.kind==='literal'?literalSql(c.default.value):c.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':deploymentError('Current timestamp default requires a qualified time codec',p+'/default');
     sql+=' DEFAULT '+value;
    }
+   expectations.push({table:table.id,name:c.name,field:c.field,sourcePath:p,...nativeTypeExpectation(c.nativeType),nullable:field.nullability!=='required',collation:['text','varchar'].includes(c.nativeType.kind)?'C':null,identity:c.generated?(c.generated.generation==='always'?'a':'d'):'',definitionSql:sql});
    return sql;
   });
   const constraintNames=new Set([...table.checks,...table.foreignKeys].map(c=>c.name));
@@ -37,10 +40,11 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
    if(relationNames.has(name)||constraintNames.has(name))deploymentError('Generated Key name collides with an authored native name',path);
    relationNames.add(name);constraintNames.add(name);
    const names=key.fields.map(f=>ctx.column(table,f));
-   columns.push('CONSTRAINT '+q(name)+' '+(key.primary?'PRIMARY KEY':'UNIQUE')+' ('+names.map(q).join(', ')+')');
-   keys.push({table:table.id,id:key.id,name,primary:key.primary===true,columns:names});
+   const definitionSql='CONSTRAINT '+q(name)+' '+(key.primary?'PRIMARY KEY':'UNIQUE')+' ('+names.map(q).join(', ')+')';
+   columns.push(definitionSql);
+   keys.push({table:table.id,id:key.id,name,primary:key.primary===true,columns:names,definitionSql});
   }
-  for(const check of table.checks)columns.push('CONSTRAINT '+q(check.name)+' CHECK ('+expressionSql(check.expression,table,ctx)+')');
+  for(const check of table.checks){const definitionSql='CONSTRAINT '+q(check.name)+' CHECK ('+expressionSql(check.expression,table,ctx)+')';columns.push(definitionSql);checks.push({table:table.id,id:check.id,name:check.name,definitionSql});}
   ctx.add('table',path,'CREATE TABLE '+ctx.relation(table)+' (\n  '+columns.join(',\n  ')+'\n)');
   ctx.add('table',path,'ALTER TABLE '+ctx.relation(table)+' ENABLE ROW LEVEL SECURITY');
   ctx.add('table',path,'ALTER TABLE '+ctx.relation(table)+' FORCE ROW LEVEL SECURITY');
@@ -53,12 +57,18 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
    if(!key)deploymentError('Foreign Key target has no deployed exact Key',path+'/foreignKeys/'+j);
    const action={restrict:'RESTRICT',noAction:'NO ACTION',cascade:'CASCADE',setNull:'SET NULL'};
    const deferrability=fk.deferrable===false?'NOT DEFERRABLE':fk.deferrable==='immediate'?'DEFERRABLE INITIALLY IMMEDIATE':'DEFERRABLE INITIALLY DEFERRED';
-   ctx.add('foreignKey',path+'/foreignKeys/'+j,'ALTER TABLE '+ctx.relation(table)+' ADD CONSTRAINT '+q(fk.name)+' FOREIGN KEY ('+fk.fields.map(f=>q(ctx.column(table,f))).join(', ')+') REFERENCES '+ctx.relation(target)+' ('+key.columns.map(q).join(', ')+') ON UPDATE '+action[fk.onUpdate]+' ON DELETE '+action[fk.onDelete]+' '+deferrability);
+   const definitionSql='CONSTRAINT '+q(fk.name)+' FOREIGN KEY ('+fk.fields.map(f=>q(ctx.column(table,f))).join(', ')+') REFERENCES '+ctx.relation(target)+' ('+key.columns.map(q).join(', ')+') ON UPDATE '+action[fk.onUpdate]+' ON DELETE '+action[fk.onDelete]+' '+deferrability;
+   foreignKeys.push({table:table.id,id:fk.id,name:fk.name,targetKey:key.name,definitionSql});
+   ctx.add('foreignKey',path+'/foreignKeys/'+j,'ALTER TABLE '+ctx.relation(table)+' ADD '+definitionSql);
   }
-  for(const[j,index]of table.indexes.entries())ctx.add('index',path+'/indexes/'+j,'CREATE '+(index.unique?'UNIQUE ':'')+'INDEX '+q(index.name)+' ON '+ctx.relation(table)+' USING btree ('+index.fields.map(f=>q(ctx.column(table,f))).join(', ')+')'+(index.include.length?' INCLUDE ('+index.include.map(f=>q(ctx.column(table,f))).join(', ')+')':''));
+  for(const[j,index]of table.indexes.entries()){
+   const definitionSql='USING btree ('+index.fields.map(f=>q(ctx.column(table,f))).join(', ')+')'+(index.include.length?' INCLUDE ('+index.include.map(f=>q(ctx.column(table,f))).join(', ')+')':'');
+   indexes.push({table:table.id,id:index.id,name:index.name,unique:index.unique,definitionSql});
+   ctx.add('index',path+'/indexes/'+j,'CREATE '+(index.unique?'UNIQUE ':'')+'INDEX '+q(index.name)+' ON '+ctx.relation(table)+' '+definitionSql);
+  }
   emitPolicies(table,path,ctx);
  }
- return {tables:ctx.payload.tables,keys};
+ return {tables:ctx.payload.tables,columns:expectations,keys,checks,foreignKeys,indexes};
 }
 function emitPolicies(table:TableDeclaration,path:string,ctx:DeploymentContext):void{
  const relation=ctx.relation(table);
