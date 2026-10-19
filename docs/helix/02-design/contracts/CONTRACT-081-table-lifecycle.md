@@ -271,6 +271,27 @@ roles; ordinary identities cannot reach install authority. Migration is separate
 from normal generated data methods. Seed execution is explicit and uses the
 same typed command/compiler and declared conflict semantics.
 
+Native policy correspondence MUST be derived from source, not an initial
+fingerprint of an arbitrary existing table. The proposed install-time verifier
+holds the module's administrative lock and exclusive native table locks,
+recompiles the complete trusted bundle, and reparses each original policy into
+an ephemeral verification policy on the same relation. It compares native
+command, permissive mode, role OIDs, normalized USING/WITH CHECK expressions and
+dependency closure against the installed original, then removes the verification
+policy before commit. Different policy names do not change interpretation.
+Verification SQL is generated from the original compiler output; it never
+accepts an arbitrary diagnostic query or supplied expected fingerprint.
+Verification policies cannot become externally visible or survive a failure.
+
+All normal operations share the installed generation lock; migrations and
+retirement acquire it exclusively. Trusted administrators must use this lifecycle
+path or quiesce the plugin before privileged native changes. Runtime principals
+cannot obtain install authority. Catalog evidence records exact engine build,
+source/configuration/bundle identity and verified native shape/privileges;
+subsequent calls recheck that authority and native drift before effects or
+disclosure. This is a proposed host protocol until executable qualification;
+native policy replay alone does not verify columns, grants or role containment.
+
 ### Forward migrations and retirement
 
 A migration carries `{version:"umf.table-migration/0.1",id,predecessor,

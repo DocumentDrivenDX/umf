@@ -208,6 +208,8 @@ jobs:
         env:
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
         run: |
+          python -m build --wheel --outdir /tmp/umf-deployment-wheels python/umf_codegen
+          python -m pip install /tmp/umf-deployment-wheels/*.whl
           bun tests/unified/table-deployment-fixture.ts /tmp/umf-table-deployment.json
           python -I tests/unified/table_deployment_native.py --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres" --bundle /tmp/umf-table-deployment.json --report /tmp/umf-table-deployment-native.json
       - uses: actions/upload-artifact@v4

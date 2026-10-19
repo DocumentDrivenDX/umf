@@ -259,3 +259,23 @@ tamper controls with external JavaScript processes and network forbidden.
 The original16 client-generation cases remain unchanged and pass. This
 toolchain interface provides source verification for the next host executor;
 it does not execute migrations or establish trusted installed authority.
+
+## Source-derived native policy verifier probe — 2026-10-19
+
+The proposed install verifier now has a [native probe](evidence/praxis-p2/source-policy-native.json)
+against the source-verified bundle using the installed original Python compiler.
+All16 policies match reparsed source for command, permissive mode, native roles,
+normalized old/new predicates and dependency closure under exclusive table locks.
+Deliberate predicate, audience, command and mode changes refuse. An actual native
+SQL error after scratch-policy creation rolls back its savepoint, retains the
+original policy and leaves no verification policy. The full synthetic initial
+deployment probe now passes50 PostgreSQL18.6 assertions.
+
+This establishes the policy-correspondence technique, not a production catalog
+verifier. The source-bound column/Key/check/index/default inventory, role and ACL
+closure, durable forward ledger and admission-generation coordination remain
+next. The owner chose declared typed operations for consumer acceptance;
+conversion must replace a raw-SQL escape method rather than add an untyped API.
+The Python deployment toolchain cohort7043e2099 passes all8 hosted typed access
+jobs, including Linux/macOS installed deployment parity and source-DBAPI native
+execution. Release readiness remains false.
