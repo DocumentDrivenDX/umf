@@ -480,3 +480,41 @@ typed module methods. Keep Weft's nonempty-command and UMF's generated lifecycle
 guards until their replacements enforce that authority. Required native codecs,
 actual typed mutations/bulk/upsert/durable outcomes, consumer conversion and
 full release acceptance remain part of the active goal, not optional follow-up.
+
+
+## Shared Weft operation lowering and native session composition — 2026-10-19
+
+Weft106ae554 on `codex/praxis-lifecycle-048` now compiles the exact typed
+declarations from UMF6d623fc52. The dedicated shared Rust frontend admits closed
+module-owned input/result domains and original Keys; PostgreSQL lowers read,
+count, page, insert, update, delete, conflict-ignore/update and atomic batches of
+one declared write. Data is bound, exact numeric driver values are canonical,
+per-call read size cannot exceed the source, and direct-effect mutation bounds
+fail atomically rather than clipping. The existing raw and generator guards stay
+closed. Every program still declares nativeExecutionQualified false.
+
+The [source-bound packet](evidence/praxis-p2/weft-table-operations.json) records20
+focused tests,27 installed Python/native comparisons,10 rehashed-tamper controls
+and50 native PostgreSQL18.6 assertions through the public SyncSession/AsyncSession
+adapters with Psycopg3.2.13/Pydantic2.13.5. All37 sync and8 async leases exit;
+caller-savepoint rollback, person/batch RLS and repeated cancellation during an
+observed backend lock wait pass, with restored connection reuse. These synthetic
+SQL/session tests do not issue production authorization or provide generated
+methods. Psycopg2/SQLAlchemy operation composition and real-pool parity remain
+separately required. The complete184-test prior PostgreSQL library regression is
+qualified at its precursor; final operation changes receive focused/native reruns.
+
+The candidate includes the independently published0.4.47 packaging repair at
+12051af8. Rebasing changed no compiler/runtime source; rebuilt wheel, focused
+tests, native/parity and the repaired1,000-record/twelve-field capacity smoke
+with5 rejection controls pass. WASM target compilation, workspace/default feature
+checks, adopted module boundaries, specs and dual-license source/wheel audit pass.
+No new Weft browser outcome or0.4.48 publication is claimed. UMF6d623fc52 hosted
+run39301326934 now passes all8 jobs, including both Pydantic pins and Linux/macOS
+embedded code generation. The new Weft hosted job remains pending.
+
+Next implement normal-operation native admission against the approved current
+ledger generation and complete privilege closure, then generated typed module
+execution. Authenticated cursors, durable data outcomes, necessary native codecs,
+schema evolution/seeds and complete pinned private consumer/available Lakebase
+acceptance remain release gates. The user's full Praxis goal remains active.
